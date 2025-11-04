@@ -1,0 +1,19 @@
+# 5-Fixers-Cascade.yaml
+objectif: "Résoudre cascade d’erreurs post-migration (types, imports, parts, annotations)."
+checklist:
+  - "Erreurs de 'part' / 'part of' : corriger noms et cohérence des fichiers."
+  - "Annotations manquantes (@freezed, @JsonSerializable, @HiveType/@HiveField)."
+  - "Adapters Hive non générés : vérifier part 'xxx.g.dart' et registration."
+  - "Imports circulaires : extraire types communs dans un fichier dédié."
+procedure:
+  - "Scanner logs build + compiler, lister erreurs uniques."
+  - "Traiter de la plus structurante à la plus simple."
+commandes:
+  - "dart run build_runner build --delete-conflicting-outputs | tee .cursor/build_gen_step5.log"
+criteres_acceptation:
+  - "Zero erreurs bloquantes build_runner."
+  - "Zero erreurs de compilation sur 'flutter analyze'."
+  - "Adapters Hive présents pour tous les models requis."
+garde_fous:
+  - "Si un fix implique une migration de données Hive -> STOP & signaler."
+next_step: "6-Run-Stable"

@@ -1,0 +1,17 @@
+# 2-Clean-Gen.yaml
+objectif: "Nettoyer les fichiers générés obsolètes puis régénérer proprement."
+actions:
+  - "Supprimer tous les '*.g.dart' et '*.freezed.dart' (hors code source non généré)."
+  - "Lancer une génération complète."
+commandes:
+  - "fd -H \"\\.g\\.dart$|\\.freezed\\.dart$\" | xargs -I{} rm {} || true"
+  - "dart run build_runner build --delete-conflicting-outputs"
+criteres_acceptation:
+  - "La commande build_runner se termine sans erreur fatale."
+  - "Présence des .g.dart attendus (adapters Hive, models freezed)."
+evidence:
+  - "Sauver le log dans .cursor/build_gen_step2.log"
+garde_fous:
+  - "Ne pas supprimer de fichiers .dart non générés."
+  - "Ne pas modifier la arborescence Hive."
+next_step: "3-Imports-Riverpod3"

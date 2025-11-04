@@ -1,0 +1,12 @@
+# 8-Stabilisation-Finale.yaml
+objectif: "Acter la stabilisation et préparer l’entretien long terme."
+actions:
+  - "Créer RAPPORT_DE_STABILISATION_RIVERPOD3.md (résumé exécutif: état stable, métriques de build, to-do mineurs)."
+  - "Configurer tâche périodique (script) 'flutter analyze' + 'dart run build_runner build --delete-conflicting-outputs' à la CI locale."
+  - "Lister dettes techniques restantes (si any) et ordre de traitement."
+criteres_acceptation:
+  - "Rapport final produit et versionné."
+  - "Aucun résidu de v2 (StateNotifier, StateNotifierProvider) dans le code."
+  - "Guide succinct pour onboarding futur dev/IA."
+garde_fous:
+  - "Toute suggestion touchant au schéma Hive doit être précédée d’un audit et d’un plan de migration versionnée (hors périmètre présent)."

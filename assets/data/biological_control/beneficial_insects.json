@@ -1,0 +1,427 @@
+[
+  {
+    "id": "ladybug",
+    "name": "Coccinelle à sept points",
+    "scientificName": "Coccinella septempunctata",
+    "preyPests": ["aphid_green", "aphid_black", "whitefly", "spider_mite"],
+    "attractiveFlowers": ["yarrow", "fennel", "dill", "marigold", "tansy", "coriander"],
+    "habitat": {
+      "needsWater": true,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Présence de fleurs nectarifères",
+        "Zones non traitées chimiquement",
+        "Abris hivernaux (feuilles mortes, pierres, écorces)",
+        "Diversité végétale",
+        "Points d'eau à proximité"
+      ]
+    },
+    "lifeCycle": "Une femelle pond 400 œufs jaunes en groupes sous les feuilles. Les larves noires tachetées sont très voraces (jusqu'à 150 pucerons/jour). Cycle complet : 4-7 semaines.",
+    "description": "La coccinelle est l'auxiliaire le plus connu. Adultes et larves sont d'excellents prédateurs de pucerons.",
+    "effectiveness": 90
+  },
+  {
+    "id": "lacewing",
+    "name": "Chrysope verte",
+    "scientificName": "Chrysoperla carnea",
+    "preyPests": ["aphid_green", "aphid_black", "whitefly", "spider_mite", "leaf_miner"],
+    "attractiveFlowers": ["yarrow", "fennel", "coriander", "dill", "angelica"],
+    "habitat": {
+      "needsWater": true,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Haies et arbustes pour abri",
+        "Fleurs riches en pollen",
+        "Herbes hautes en bordure",
+        "Pas de pesticides"
+      ]
+    },
+    "lifeCycle": "Ponte sous les feuilles. Les larves, appelées 'lions des pucerons', sont extrêmement voraces (jusqu'à 500 pucerons durant leur développement). Adultes pollinisateurs.",
+    "description": "Insecte délicat aux ailes transparentes. Ses larves sont parmi les meilleurs prédateurs de pucerons.",
+    "effectiveness": 95
+  },
+  {
+    "id": "hoverfly",
+    "name": "Syrphe",
+    "scientificName": "Syrphidae",
+    "preyPests": ["aphid_green", "aphid_black", "whitefly"],
+    "attractiveFlowers": ["marigold", "nasturtium", "sunflower", "fennel", "dill", "coriander", "buckwheat"],
+    "habitat": {
+      "needsWater": true,
+      "needsShelter": false,
+      "favorableConditions": [
+        "Prairies fleuries",
+        "Grande diversité florale",
+        "Floraisons étalées dans le temps",
+        "Bandes fleuries en bordure de potager"
+      ]
+    },
+    "lifeCycle": "Adultes ressemblant à des petites guêpes (mimétisme). Ils se nourrissent de nectar et pollen. Les larves, vert translucide, dévorent les pucerons.",
+    "description": "Excellent pollinisateur dont les larves sont de redoutables prédateurs de pucerons.",
+    "effectiveness": 85
+  },
+  {
+    "id": "parasitic_wasp",
+    "name": "Guêpe parasitoïde",
+    "scientificName": "Aphidius spp.",
+    "preyPests": ["aphid_green", "aphid_black", "cabbage_worm", "tomato_hornworm", "cutworm", "carrot_fly"],
+    "attractiveFlowers": ["fennel", "dill", "yarrow", "buckwheat", "phacelia"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Petites fleurs à nectar accessible",
+        "Haies diversifiées",
+        "Plantes ombellifères",
+        "Absence de pesticides"
+      ]
+    },
+    "lifeCycle": "Minuscules guêpes qui pondent dans les pucerons ou chenilles. Les larves se développent à l'intérieur de l'hôte qui devient une 'momie' dorée.",
+    "description": "Micro-guêpes inoffensives pour l'homme, très efficaces contre pucerons et chenilles.",
+    "effectiveness": 88
+  },
+  {
+    "id": "ground_beetle",
+    "name": "Carabe doré",
+    "scientificName": "Carabus auratus",
+    "preyPests": ["slug", "cabbage_worm", "cutworm", "colorado_beetle", "carrot_fly", "flea_beetle"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Paillage et couverture du sol",
+        "Pierres et planches comme refuges",
+        "Sol non travaillé en excès",
+        "Haies et bordures sauvages",
+        "Zones humides sous couvert"
+      ]
+    },
+    "lifeCycle": "Adultes et larves chassent au sol la nuit. Ils consomment limaces, escargots, chenilles et divers ravageurs. Cycle de 2-3 ans.",
+    "description": "Coléoptère noir ou doré, prédateur terrestre nocturne très efficace contre limaces et chenilles.",
+    "effectiveness": 80
+  },
+  {
+    "id": "predatory_mite",
+    "name": "Acarien prédateur",
+    "scientificName": "Phytoseiulus persimilis",
+    "preyPests": ["spider_mite"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": true,
+      "needsShelter": false,
+      "favorableConditions": [
+        "Humidité élevée",
+        "Pas de poussière",
+        "Température 20-30°C",
+        "Présence de proies"
+      ]
+    },
+    "lifeCycle": "Minuscule acarien orange qui chasse activement les tétranyques. Se reproduit plus vite que ses proies en conditions favorables.",
+    "description": "Acarien prédateur spécialisé dans la lutte contre les acariens ravageurs (tétranyques).",
+    "effectiveness": 92
+  },
+  {
+    "id": "rove_beetle",
+    "name": "Staphylin",
+    "scientificName": "Staphylinidae",
+    "preyPests": ["slug", "aphid_green", "spider_mite", "leaf_miner"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Compost et matière organique en décomposition",
+        "Paillage épais",
+        "Zones humides ombragées",
+        "Sol riche en humus"
+      ]
+    },
+    "lifeCycle": "Petit coléoptère noir allongé. Adultes et larves sont prédateurs. Actifs au sol dans les zones humides.",
+    "description": "Petit coléoptère noir, prédateur généraliste actif dans la litière et le compost.",
+    "effectiveness": 75
+  },
+  {
+    "id": "earwig",
+    "name": "Perce-oreille",
+    "scientificName": "Forficula auricularia",
+    "preyPests": ["aphid_green", "aphid_black", "spider_mite", "whitefly"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Pots retournés remplis de paille",
+        "Zones sombres et humides",
+        "Écorces et planches au sol",
+        "Tas de bois"
+      ]
+    },
+    "lifeCycle": "Insecte nocturne qui se cache le jour. Peut être à la fois prédateur (pucerons) et ravageur (pétales, fruits mûrs).",
+    "description": "Auxiliaire nocturne efficace contre pucerons, mais peut occasionnellement grignoter fruits et fleurs.",
+    "effectiveness": 70
+  },
+  {
+    "id": "assassin_bug",
+    "name": "Punaise prédatrice",
+    "scientificName": "Reduviidae",
+    "preyPests": ["aphid_green", "whitefly", "cabbage_worm", "spider_mite", "colorado_beetle"],
+    "attractiveFlowers": ["goldenrod", "yarrow", "fennel"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Végétation dense et diversifiée",
+        "Plantes vivaces",
+        "Pas de pesticides",
+        "Zones sauvages préservées"
+      ]
+    },
+    "lifeCycle": "Punaise prédatrice qui perce ses proies avec son rostre pour sucer leurs fluides corporels. Adultes et larves sont prédateurs.",
+    "description": "Punaise allongée, prédateur efficace de nombreux ravageurs. Ne pas confondre avec punaises phytophages.",
+    "effectiveness": 82
+  },
+  {
+    "id": "spider",
+    "name": "Araignée de jardin",
+    "scientificName": "Araneae",
+    "preyPests": ["aphid_green", "whitefly", "flea_beetle", "leaf_miner"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Végétation dense pour toiles",
+        "Zones non perturbées",
+        "Paillage et couverture",
+        "Diversité structurale (haies, arbustes)"
+      ]
+    },
+    "lifeCycle": "Prédateurs généralistes qui capturent insectes volants et rampants dans leurs toiles ou à l'affût.",
+    "description": "Prédateur généraliste très efficace. Les araignées sont des alliées précieuses du jardinier.",
+    "effectiveness": 78
+  },
+  {
+    "id": "ant_lion",
+    "name": "Fourmilion",
+    "scientificName": "Myrmeleon formicarius",
+    "preyPests": ["aphid_green", "aphid_black", "flea_beetle"],
+    "attractiveFlowers": ["yarrow", "tansy"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Sol sablonneux ou poudreux",
+        "Zones abritées (sous auvent, abri)",
+        "Sol sec",
+        "Endroits non perturbés"
+      ]
+    },
+    "lifeCycle": "Larves créent des pièges en entonnoir dans le sable. Adultes ressemblent à des libellules. Les larves capturent petits insectes tombant dans leur piège.",
+    "description": "Larves créant des pièges en entonnoir dans le sable pour capturer petits insectes.",
+    "effectiveness": 65
+  },
+  {
+    "id": "praying_mantis",
+    "name": "Mante religieuse",
+    "scientificName": "Mantis religiosa",
+    "preyPests": ["aphid_green", "whitefly", "cabbage_worm", "flea_beetle", "spider_mite"],
+    "attractiveFlowers": ["tall_grasses"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Végétation haute et dense",
+        "Prairies et herbes folles",
+        "Zones non fauchées",
+        "Abris pour ponte (tiges sèches)"
+      ]
+    },
+    "lifeCycle": "Ponte dans oothèque (masse d'œufs). Éclosion au printemps de nombreuses jeunes mantes. Prédateur à l'affût.",
+    "description": "Prédateur impressionnant mais généraliste (peut manger insectes utiles). Utile en cas de forte pression de ravageurs.",
+    "effectiveness": 72
+  },
+  {
+    "id": "minute_pirate_bug",
+    "name": "Punaise minute",
+    "scientificName": "Orius insidiosus",
+    "preyPests": ["thrips", "spider_mite", "aphid_green", "whitefly"],
+    "attractiveFlowers": ["yarrow", "fennel", "alyssum", "dill"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Fleurs riches en pollen",
+        "Plantes hôtes alternatives",
+        "Haies et bordures fleuries",
+        "Absence de pesticides"
+      ]
+    },
+    "lifeCycle": "Petite punaise prédatrice très vorace. Les nymphes et adultes se nourrissent de ravageurs. Cycle rapide (3-4 semaines).",
+    "description": "Minuscule punaise (2-3mm) mais prédateur féroce. Excellente contre thrips et acariens.",
+    "effectiveness": 88
+  },
+  {
+    "id": "damsel_bug",
+    "name": "Nabide",
+    "scientificName": "Nabis spp.",
+    "preyPests": ["aphid_green", "aphid_black", "leaf_miner", "thrips", "spider_mite"],
+    "attractiveFlowers": ["fennel", "dill", "yarrow", "caraway"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Graminées et herbes hautes",
+        "Zones non fauchées en bordure",
+        "Végétation diversifiée",
+        "Plantes couvre-sol"
+      ]
+    },
+    "lifeCycle": "Punaise allongée mobile. Chasse activement dans la végétation. Nymphes et adultes prédateurs.",
+    "description": "Punaise prédatrice rapide et efficace. Bon complément aux autres auxiliaires.",
+    "effectiveness": 80
+  },
+  {
+    "id": "soldier_beetle",
+    "name": "Téléphore",
+    "scientificName": "Cantharis spp.",
+    "preyPests": ["aphid_green", "aphid_black", "slug", "caterpillar"],
+    "attractiveFlowers": ["goldenrod", "hydrangea", "catnip", "zinnia"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Fleurs composées plates",
+        "Zones sauvages préservées",
+        "Paillage et litière",
+        "Plantes vivaces"
+      ]
+    },
+    "lifeCycle": "Coléoptère allongé rouge et noir. Les larves vivent dans le sol et sont prédatrices. Adultes pollinisateurs et prédateurs.",
+    "description": "Coléoptère bénéfique à double rôle : pollinisateur et prédateur. Larves terrestres voraces.",
+    "effectiveness": 77
+  },
+  {
+    "id": "big_eyed_bug",
+    "name": "Punaise à gros yeux",
+    "scientificName": "Geocoris spp.",
+    "preyPests": ["aphid_green", "whitefly", "thrips", "spider_mite", "leaf_miner"],
+    "attractiveFlowers": ["sunflower", "goldenrod", "yarrow"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Couvre-sol et paillage",
+        "Végétation basse",
+        "Zones ombragées partiellement",
+        "Sol non perturbé"
+      ]
+    },
+    "lifeCycle": "Punaise au sol avec de gros yeux caractéristiques. Chasse au sol et sur plantes basses. Cycle 4-6 semaines.",
+    "description": "Punaise prédatrice efficace contre ravageurs de petite taille. Active du sol aux plantes basses.",
+    "effectiveness": 83
+  },
+  {
+    "id": "centipede",
+    "name": "Scolopendre/Chilopode",
+    "scientificName": "Chilopoda",
+    "preyPests": ["slug", "cutworm", "aphid_green", "spider_mite"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Sol humide et abrité",
+        "Paillage épais",
+        "Pierres et planches au sol",
+        "Compost et litière",
+        "Zones sombres"
+      ]
+    },
+    "lifeCycle": "Myriapode prédateur nocturne. Chasse activement au sol. Peut vivre plusieurs années.",
+    "description": "Prédateur terrestre rapide et vorace. Chasse la nuit dans la litière et sous les pierres.",
+    "effectiveness": 75
+  },
+  {
+    "id": "green_lacewing_larva",
+    "name": "Larve de chrysope (Lion des pucerons)",
+    "scientificName": "Chrysoperla carnea (larve)",
+    "preyPests": ["aphid_green", "aphid_black", "whitefly", "thrips", "spider_mite", "scale_insect"],
+    "attractiveFlowers": ["yarrow", "fennel", "coriander", "dill", "angelica", "buckwheat"],
+    "habitat": {
+      "needsWater": true,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Haies et arbustes pour abri adultes",
+        "Fleurs riches en pollen et nectar",
+        "Herbes hautes en bordure",
+        "Pas de pesticides",
+        "Diversité végétale"
+      ]
+    },
+    "lifeCycle": "Les larves sont extrêmement voraces (jusqu'à 600 pucerons durant leur développement en 2-3 semaines). Adultes pollinisateurs. Vente possible en jardinerie.",
+    "description": "LA larve la plus vorace contre les pucerons. Souvent vendue en lutte biologique. Efficacité redoutable.",
+    "effectiveness": 98
+  },
+  {
+    "id": "nematode",
+    "name": "Nématodes entomopathogènes",
+    "scientificName": "Steinernema/Heterorhabditis",
+    "preyPests": ["vine_weevil", "japanese_beetle", "cutworm", "slug", "onion_fly", "carrot_fly"],
+    "attractiveFlowers": [],
+    "habitat": {
+      "needsWater": true,
+      "needsShelter": false,
+      "favorableConditions": [
+        "Sol humide",
+        "Température 12-28°C",
+        "Application au crépuscule",
+        "Arrosage après application"
+      ]
+    },
+    "lifeCycle": "Vers microscopiques qui parasitent les larves d'insectes dans le sol. Se reproduisent dans l'hôte. Efficaces 4-6 semaines.",
+    "description": "Auxiliaires invisibles extrêmement efficaces contre larves souterraines. Achat et application simple.",
+    "effectiveness": 91
+  },
+  {
+    "id": "trichogramma",
+    "name": "Trichogrammes",
+    "scientificName": "Trichogramma spp.",
+    "preyPests": ["corn_earworm", "cabbage_worm", "tomato_hornworm", "codling_moth"],
+    "attractiveFlowers": ["fennel", "dill", "buckwheat", "alyssum"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Haies et bosquets",
+        "Fleurs nectarifères",
+        "Végétation diverse",
+        "Absence de pesticides"
+      ]
+    },
+    "lifeCycle": "Minuscules guêpes (0.5mm) qui pondent dans les œufs de lépidoptères. La larve se développe dans l'œuf du ravageur. Disponibles à l'achat.",
+    "description": "Micro-guêpes parasitoïdes d'œufs. Lutte biologique de précision contre chenilles. Lâchers programmés possibles.",
+    "effectiveness": 86
+  },
+  {
+    "id": "tachinid_fly",
+    "name": "Mouche tachinaire",
+    "scientificName": "Tachinidae",
+    "preyPests": ["cabbage_worm", "tomato_hornworm", "cutworm", "japanese_beetle"],
+    "attractiveFlowers": ["dill", "fennel", "yarrow", "tansy", "buckwheat"],
+    "habitat": {
+      "needsWater": false,
+      "needsShelter": true,
+      "favorableConditions": [
+        "Fleurs composées et ombellifères",
+        "Zones fleuries continues",
+        "Haies et bordures",
+        "Végétation diverse"
+      ]
+    },
+    "lifeCycle": "Mouches ressemblant à des mouches domestiques poilues. Pondent sur ou près des chenilles. Larves parasitent l'hôte.",
+    "description": "Mouches parasitoïdes de chenilles. Pollinisateurs également. Efficaces contre grosses chenilles.",
+    "effectiveness": 82
+  }
+]
+

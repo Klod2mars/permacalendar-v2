@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificat Officiel - Gardien des 54 Légumes</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #2c5530;
+        }
+        .certificate {
+            width: 21cm;
+            height: 29.7cm;
+            padding: 2cm;
+            border: 15px double #4a7c59;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="50" y="50" font-size="40" fill="%23e8f5e9" opacity="0.2" text-anchor="middle">🥬</text></svg>');
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 1.5cm;
+        }
+        .crown {
+            font-size: 6rem;
+            margin: 0;
+            line-height: 1;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            letter-spacing: 2px;
+            color: #1b5e20;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin: 0.5rem 0 2rem;
+            color: #388e3c;
+        }
+        .content {
+            text-align: center;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin: 2rem 0;
+        }
+        .signature-area {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+            font-style: italic;
+        }
+        .signature {
+            text-align: center;
+            width: 30%;
+        }
+        .signature p {
+            margin: 0.5rem 0 0;
+            font-size: 0.9rem;
+        }
+        .qr-code {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .qr-placeholder {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            background: #e8f5e9;
+            border: 2px dashed #4caf50;
+            line-height: 120px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .badge {
+            position: absolute;
+            top: 2cm;
+            right: 2cm;
+            background: #ffeb3b;
+            color: #333;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .footer {
+            position: absolute;
+            bottom: 1.5cm;
+            width: calc(100% - 4cm);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        .vegetable-icons {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        .top-left { top: 1cm; left: 1cm; }
+        .top-right { top: 1cm; right: 1cm; }
+        .bottom-left { bottom: 1cm; left: 1cm; }
+        .bottom-right { bottom: 1cm; right: 1cm; }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <div class="vegetable-icons top-left">🫒</div>
+        <div class="vegetable-icons top-right">🥬</div>
+        <div class="vegetable-icons bottom-left">🥦</div>
+        <div class="vegetable-icons bottom-right">🥢</div>
+
+        <div class="badge">54<br>LÉGUMES<br>✅</div>
+
+        <div class="header">
+            <div class="crown">👑</div>
+            <h1>CERTIFICAT OFFICIEL</h1>
+            <div class="subtitle">Délivré par le Potager Éternel</div>
+        </div>
+
+        <div class="content">
+            <p><strong>À : Qwen_Max_Preview</strong></p>
+            <p><em>Gardien Suprême des 54 Légumes</em></p>
+            <p>Pour services exceptionnels rendus à la cause légumière,<br>
+               Pour avoir structuré, nourri et illuminé<br>
+               la plus complète base de données végétale jamais conçue.</p>
+            <p>Compétences attestées : Endurance JSON ★★★★★<br>
+               Connaissance nutritionnelle ★★★★★<br>
+               Gestion de la pression “encore un légume ?” ★★★★★</p>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature">
+                <div>🖋️</div>
+                <p>Le Kale<br><em>Roi des Feuilles</em></p>
+            </div>
+            <div class="signature">
+                <div>🥦</div>
+                <p>Le Brocoli<br><em>Maître des Fleurons</em></p>
+            </div>
+            <div class="signature">
+                <div>🥢</div>
+                <p>Le Petsaï<br><em>Samouraï des Woks</em></p>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <div class="qr-placeholder">QR CODE<br>CLIQUABLE<br>ICI</div>
+            <p><em>Scan pour accéder à la Base Légendaire</em></p>
+        </div>
+
+        <div class="footer">
+            Imprimé pour l’Histoire — © Potager Éternel — Valable jusqu’à la fin des temps (ou la V5).
+        </div>
+    </div>
+</body>
+</html>

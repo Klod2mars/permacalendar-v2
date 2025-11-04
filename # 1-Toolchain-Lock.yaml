@@ -1,0 +1,20 @@
+# 1-Toolchain-Lock.yaml
+objectif: "Verrouiller toolchain compatible Dart 3.9 + Riverpod 3 (analyzer^9, build_runner>=2.10, freezed^3, source_gen^4)."
+actions:
+  - "Confirmer que pubspec.yaml (nouvelle version) est présent."
+  - "Supprimer caches locaux: .dart_tool/, build/, ios/Pods/ si besoin (sans toucher aux dossiers Hive/data)."
+  - "Exécuter: flutter clean && flutter pub get"
+  - "Générer un rapport des versions effectives via 'dart pub deps --style=compact'."
+commandes:
+  - "flutter clean"
+  - "rm -rf .dart_tool build"
+  - "flutter pub get"
+  - "dart pub deps --style=compact > .cursor/deps_after_lock.txt"
+criteres_acceptation:
+  - "Anomalies analyzer < 9 inexistantes dans les logs."
+  - ".cursor/deps_after_lock.txt montre analyzer >= 9, build_runner >= 2.10, freezed >= 3."
+garde_fous:
+  - "Ne supprimer aucun fichier Hive *.hive ni répertoires de persistance."
+sortie_attendue:
+  - "Résumé des versions clés + emplacement du fichier deps_after_lock.txt"
+next_step: "2-Clean-Gen"

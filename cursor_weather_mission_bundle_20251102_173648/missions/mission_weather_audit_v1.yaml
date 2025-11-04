@@ -1,0 +1,38 @@
+schema_version: 1.1
+
+mission:
+  id: "READ-WEATHER-20251102_173648"
+  intent: "read_context"
+  scope: "permacalendar_v2_weather"
+  # IMPORTANT: replace this with your local absolute path before running with Cursor
+  workspace_root: "<ABSOLUTE_PATH_TO_REPO>"
+  guardrails:
+    sanctuary_excludes: ["data/sanctuary_hive/"]
+    max_depth: 8
+  tasks:
+    - name: task_weather_audit_tokens
+      type: read
+      params:
+        include_ext: [".dart", ".yaml", ".yml", ".md", ".gradle", ".xml", ".json", ".sh", ".kt", ".swift"]
+        exclude_dirs: ["build/", ".dart_tool/", ".git/", "ios/Pods/", "android/.gradle/"]
+        tokens:
+          - "weather"
+          - "meteo"
+          - "openmeteo"
+          - "open_meteo"
+          - "open-meteo"
+          - "forecast"
+          - "Weather"
+          - "weatherBox"
+          - "weather_repository"
+          - "WeatherService"
+          - "current_weather"
+          - "weather_widget"
+          - "WeatherBloc"
+          - "WeatherCubit"
+      outputs:
+        report_md: "reports/weather_audit/context_report.md"
+        session_log: "reports/sessions/session_${TIMESTAMP}.md"
+        raw_hits: "reports/weather_audit/audit_raw_results.txt"
+        table_csv: "reports/weather_audit/audit_table.csv"
+        table_md: "reports/weather_audit/audit_table.md"

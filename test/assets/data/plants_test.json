@@ -1,0 +1,72 @@
+[
+  {
+    "id": "tomato_test",
+    "commonName": "Tomate Test",
+    "scientificName": "Solanum lycopersicum",
+    "family": "Solanaceae",
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Été",
+    "daysToMaturity": 80,
+    "spacing": 60,
+    "depth": 0.5,
+    "sunExposure": "Plein soleil",
+    "waterNeeds": "Moyen",
+    "description": "Tomate de test pour les tests unitaires",
+    "sowingMonths": ["M", "A"],
+    "harvestMonths": ["J", "J", "A"],
+    "marketPricePerKg": 3.5,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 18,
+      "proteinG": 0.9
+    },
+    "germination": {
+      "minTemperature": 18,
+      "optimalTemperature": {
+        "min": 22,
+        "max": 25
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "custom_plant_test",
+    "commonName": "Plante Custom Test",
+    "scientificName": "Plantus customus",
+    "family": "Testaceae",
+    "plantingSeason": "Automne",
+    "harvestSeason": "Hiver",
+    "daysToMaturity": 45,
+    "spacing": 30,
+    "depth": 1.0,
+    "sunExposure": "Mi-ombre",
+    "waterNeeds": "Faible",
+    "description": "Plante custom ajoutée pour tester l'ajout libre de nouvelles plantes",
+    "sowingMonths": ["S", "O"],
+    "harvestMonths": ["D", "J"],
+    "marketPricePerKg": 5.0,
+    "defaultUnit": "pièce",
+    "culturalTips": ["Arroser modérément", "Protéger du gel"],
+    "metadata": {
+      "isCustom": true,
+      "addedBy": "test_user"
+    }
+  },
+  {
+    "id": "invalid_plant",
+    "commonName": "Plante Invalide",
+    "scientificName": "Plantus invalidus",
+    "family": "Erroraceae",
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Été",
+    "daysToMaturity": "invalid_number",
+    "spacing": -10,
+    "depth": "not_a_number",
+    "sunExposure": "Plein soleil",
+    "waterNeeds": "Moyen",
+    "description": "Plante avec des données invalides pour tester la tolérance aux erreurs",
+    "sowingMonths": ["M"],
+    "harvestMonths": ["J"],
+    "metadata": {}
+  }
+]

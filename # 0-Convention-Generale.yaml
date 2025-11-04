@@ -1,0 +1,23 @@
+# 0-Convention-Generale.yaml
+role: "architecte-devops"
+audience: "Cursor (IA pair-programmeur)"
+contexte:
+  projet: "PermaCalendar v2"
+  date: "2025-11-03"
+  sanctuaire_hive:
+    intouchable: true
+    type_ids_legacy: "0-18"
+    type_ids_modern: "25-30"
+principes:
+  - "AUCUNE migration de schéma Hive."
+  - "Toujours préférer riverpod/riverpod.dart côté core/domain/data ; flutter_riverpod uniquement dans l’UI Flutter."
+  - "Audit préalable avant toute suppression/mv de fichiers générés."
+  - "Run Rouge pour changement majeur de toolchain; Run Jaune ensuite si nécessaire."
+livrables_generiques:
+  - "Logs build_runner (texte)."
+  - "Diffs concis par fichier modifié."
+  - ".cursor/RAPPORT_MIGRATION_RIVERPOD3.md (mise à jour incrémentale)."
+format_sortie_souhaite:
+  - "Checklist réussite/échec"
+  - "Liste d’actions appliquées"
+  - "Next step recommandée"

@@ -1,0 +1,344 @@
+[
+  {
+    "id": "aphid_green",
+    "name": "Puceron vert",
+    "scientificName": "Aphis fabae",
+    "affectedPlants": ["tomato", "pepper", "bean", "lettuce", "spinach"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Feuilles enroulées et déformées",
+      "Miellat collant sur les feuilles",
+      "Déformation des tiges et bourgeons",
+      "Présence de fourmis (qui élèvent les pucerons)",
+      "Croissance ralentie de la plante"
+    ],
+    "naturalPredators": ["ladybug", "lacewing", "hoverfly", "parasitic_wasp"],
+    "repellentPlants": ["nasturtium", "garlic", "chives", "basil"],
+    "description": "Le puceron vert est un ravageur très commun qui se nourrit de la sève des plantes. Il se reproduit rapidement par temps chaud.",
+    "preventionTips": "Favoriser la biodiversité au jardin pour attirer les prédateurs naturels. Éviter l'excès d'azote qui favorise les tissus tendres appréciés des pucerons."
+  },
+  {
+    "id": "aphid_black",
+    "name": "Puceron noir",
+    "scientificName": "Aphis fabae",
+    "affectedPlants": ["bean", "artichoke", "nasturtium", "poppy"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Colonies noires sur les tiges",
+      "Feuilles recroquevillées",
+      "Miellat et fumagine",
+      "Avortement des fleurs"
+    ],
+    "naturalPredators": ["ladybug", "lacewing", "hoverfly"],
+    "repellentPlants": ["savory", "mint", "catnip"],
+    "description": "Le puceron noir affecte particulièrement les fèves et légumineuses. Il peut transmettre des virus.",
+    "preventionTips": "Pincer les extrémités des fèves pour limiter leur attractivité. Associer avec des plantes aromatiques."
+  },
+  {
+    "id": "cabbage_worm",
+    "name": "Piéride du chou",
+    "scientificName": "Pieris brassicae",
+    "affectedPlants": ["cabbage", "broccoli", "kale", "cauliflower", "radish"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Trous importants dans les feuilles",
+      "Excréments verts visibles",
+      "Chenilles vertes sur les feuilles",
+      "Feuilles squelettisées"
+    ],
+    "naturalPredators": ["parasitic_wasp", "ground_beetle", "bird"],
+    "repellentPlants": ["thyme", "sage", "peppermint", "rosemary"],
+    "description": "La piéride est un papillon blanc dont les chenilles dévorent les choux et crucifères.",
+    "preventionTips": "Installer des filets anti-insectes. Planter des aromatiques en bordure. Favoriser les oiseaux insectivores."
+  },
+  {
+    "id": "colorado_beetle",
+    "name": "Doryphore",
+    "scientificName": "Leptinotarsa decemlineata",
+    "affectedPlants": ["potato", "eggplant", "tomato"],
+    "defaultSeverity": "critical",
+    "symptoms": [
+      "Défoliation rapide et importante",
+      "Larves oranges avec points noirs",
+      "Adultes rayés jaune et noir",
+      "Feuilles réduites aux nervures"
+    ],
+    "naturalPredators": ["ground_beetle", "parasitic_wasp"],
+    "repellentPlants": ["nasturtium", "tansy", "catnip", "coriander"],
+    "description": "Le doryphore est un ravageur majeur des solanacées. Il peut détruire une culture de pommes de terre rapidement.",
+    "preventionTips": "Ramassage manuel quotidien. Rotation des cultures. Paillage épais. Plantes compagnes répulsives."
+  },
+  {
+    "id": "slug",
+    "name": "Limace",
+    "scientificName": "Arion spp.",
+    "affectedPlants": ["lettuce", "cabbage", "strawberry", "tomato", "bean"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Trous irréguliers dans les feuilles",
+      "Traces de mucus argenté",
+      "Jeunes plants entièrement dévorés",
+      "Dégâts nocturnes principalement"
+    ],
+    "naturalPredators": ["ground_beetle", "hedgehog", "bird"],
+    "repellentPlants": ["garlic", "fennel", "chives"],
+    "description": "Les limaces sont actives la nuit et par temps humide. Elles apprécient particulièrement les jeunes plants.",
+    "preventionTips": "Paillage de fougère ou sciure. Barrières de cendre ou coquilles d'œuf. Abris pour hérissons."
+  },
+  {
+    "id": "whitefly",
+    "name": "Mouche blanche",
+    "scientificName": "Trialeurodes vaporariorum",
+    "affectedPlants": ["tomato", "cucumber", "pepper", "eggplant"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Nuage d'insectes blancs au toucher",
+      "Jaunissement des feuilles",
+      "Miellat et fumagine",
+      "Affaiblissement général"
+    ],
+    "naturalPredators": ["lacewing", "ladybug", "parasitic_wasp"],
+    "repellentPlants": ["marigold", "basil", "nasturtium"],
+    "description": "La mouche blanche se développe particulièrement sous serre et par temps chaud.",
+    "preventionTips": "Ventilation des serres. Pièges jaunes englués. Pulvérisation d'eau pour déloger les adultes."
+  },
+  {
+    "id": "tomato_hornworm",
+    "name": "Sphinx de la tomate",
+    "scientificName": "Manduca quinquemaculata",
+    "affectedPlants": ["tomato", "pepper", "eggplant", "potato"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Défoliation importante",
+      "Grosses chenilles vertes (jusqu'à 10 cm)",
+      "Excréments noirs sur les feuilles",
+      "Fruits partiellement dévorés"
+    ],
+    "naturalPredators": ["parasitic_wasp", "bird"],
+    "repellentPlants": ["marigold", "borage", "basil"],
+    "description": "Grosse chenille verte très vorace qui peut causer des dégâts importants en peu de temps.",
+    "preventionTips": "Inspection régulière. Ramassage manuel. Laisser les chenilles parasitées (couvertes de cocons blancs)."
+  },
+  {
+    "id": "spider_mite",
+    "name": "Tétranyque tisserand",
+    "scientificName": "Tetranychus urticae",
+    "affectedPlants": ["tomato", "bean", "cucumber", "strawberry", "eggplant"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Fines toiles d'araignée sous les feuilles",
+      "Points jaunes sur les feuilles",
+      "Feuilles qui brunissent et se dessèchent",
+      "Minuscules acariens visibles à la loupe"
+    ],
+    "naturalPredators": ["lacewing", "ladybug", "predatory_mite"],
+    "repellentPlants": ["garlic", "onion", "coriander"],
+    "description": "Acarien très petit qui prolifère par temps chaud et sec. Peut causer des dégâts importants.",
+    "preventionTips": "Maintenir l'humidité. Douches régulières des plantes. Éviter l'excès d'azote."
+  },
+  {
+    "id": "carrot_fly",
+    "name": "Mouche de la carotte",
+    "scientificName": "Psila rosae",
+    "affectedPlants": ["carrot", "parsnip", "celery"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Feuillage qui rougit puis se dessèche",
+      "Galeries dans les racines",
+      "Racines pourries",
+      "Asticots blancs dans les carottes"
+    ],
+    "naturalPredators": ["ground_beetle", "parasitic_wasp"],
+    "repellentPlants": ["onion", "leek", "rosemary", "sage"],
+    "description": "La mouche pond ses œufs près des carottes. Les larves creusent des galeries dans les racines.",
+    "preventionTips": "Voile anti-insectes. Semis tardifs. Association avec oignons et poireaux. Éviter d'éclaircir par temps calme."
+  },
+  {
+    "id": "cutworm",
+    "name": "Ver gris",
+    "scientificName": "Agrotis spp.",
+    "affectedPlants": ["lettuce", "cabbage", "tomato", "pepper", "bean"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Jeunes plants sectionnés au niveau du sol",
+      "Plants qui tombent soudainement",
+      "Chenilles grises enroulées dans le sol",
+      "Dégâts nocturnes"
+    ],
+    "naturalPredators": ["ground_beetle", "parasitic_wasp", "bird"],
+    "repellentPlants": ["tansy", "wormwood"],
+    "description": "Chenilles nocturnes qui sectionnent les jeunes plants à la base. Elles se cachent dans le sol le jour.",
+    "preventionTips": "Collerettes autour des plants. Binage régulier. Travail du sol pour exposer les chrysalides."
+  },
+  {
+    "id": "leaf_miner",
+    "name": "Mineuse des feuilles",
+    "scientificName": "Liriomyza spp.",
+    "affectedPlants": ["spinach", "chard", "beet", "lettuce"],
+    "defaultSeverity": "low",
+    "symptoms": [
+      "Galeries sinueuses claires dans les feuilles",
+      "Larves visibles dans les galeries",
+      "Affaiblissement esthétique",
+      "Réduction de la photosynthèse"
+    ],
+    "naturalPredators": ["parasitic_wasp", "lacewing"],
+    "repellentPlants": ["marigold", "basil"],
+    "description": "Petites mouches dont les larves creusent des galeries dans les feuilles. Dégâts souvent esthétiques.",
+    "preventionTips": "Retirer et détruire les feuilles atteintes. Voile anti-insectes. Rotation des cultures."
+  },
+  {
+    "id": "flea_beetle",
+    "name": "Altise",
+    "scientificName": "Phyllotreta spp.",
+    "affectedPlants": ["radish", "turnip", "cabbage", "arugula", "eggplant"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Petits trous ronds dans les feuilles (aspect criblé)",
+      "Petits coléoptères noirs sauteurs",
+      "Dégâts importants sur jeunes plants",
+      "Jaunissement et dessèchement"
+    ],
+    "naturalPredators": ["ground_beetle", "parasitic_wasp", "bird"],
+    "repellentPlants": ["catnip", "garlic", "tansy"],
+    "description": "Petits coléoptères noirs qui sautent comme des puces. Particulièrement actifs par temps chaud et sec.",
+    "preventionTips": "Voiles de protection. Arrosages fréquents. Plantes vigoureuses résistent mieux. Paillage."
+  },
+  {
+    "id": "vine_weevil",
+    "name": "Otiorhynque",
+    "scientificName": "Otiorhynchus sulcatus",
+    "affectedPlants": ["strawberry", "raspberry", "blueberry", "grape"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Encoches semi-circulaires sur bords des feuilles",
+      "Larves blanches en forme de C dans le sol",
+      "Flétrissement soudain des plantes",
+      "Racines rongées"
+    ],
+    "naturalPredators": ["ground_beetle", "parasitic_wasp", "bird"],
+    "repellentPlants": ["garlic", "tansy"],
+    "description": "Coléoptère nocturne dont les larves s'attaquent aux racines. Peut causer la mort des plantes.",
+    "preventionTips": "Patrouilles nocturnes. Nématodes parasites. Maintenir le sol propre."
+  },
+  {
+    "id": "scale_insect",
+    "name": "Cochenille",
+    "scientificName": "Coccoidea",
+    "affectedPlants": ["tomato", "cucumber", "citrus", "grape"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Petites coquilles brunes ou blanches sur tiges",
+      "Miellat collant",
+      "Fumagine noire",
+      "Affaiblissement de la plante"
+    ],
+    "naturalPredators": ["ladybug", "lacewing", "parasitic_wasp"],
+    "repellentPlants": ["nasturtium", "marigold"],
+    "description": "Insectes piqueurs-suceurs protégés par une coquille cireuse. Difficiles à contrôler.",
+    "preventionTips": "Huile de neem. Savon noir. Retrait manuel avec coton-tige imbibé d'alcool."
+  },
+  {
+    "id": "japanese_beetle",
+    "name": "Scarabée japonais",
+    "scientificName": "Popillia japonica",
+    "affectedPlants": ["bean", "grape", "raspberry", "strawberry", "corn"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Squelettisation des feuilles",
+      "Fleurs dévorées",
+      "Coléoptères métalliques vert-bronze",
+      "Dégâts en groupes"
+    ],
+    "naturalPredators": ["parasitic_wasp", "ground_beetle", "bird"],
+    "repellentPlants": ["garlic", "catnip", "tansy", "rue"],
+    "description": "Coléoptère très vorace qui se nourrit en groupe. Les larves endommagent les pelouses.",
+    "preventionTips": "Ramassage manuel tôt le matin. Pièges à phéromones (loin du jardin). Nématodes pour larves."
+  },
+  {
+    "id": "asparagus_beetle",
+    "name": "Criocère de l'asperge",
+    "scientificName": "Crioceris asparagi",
+    "affectedPlants": ["asparagus"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Feuillage défolié",
+      "Larves grises sur tiges",
+      "Coléoptères bleu-noir avec taches",
+      "Réduction de vigueur"
+    ],
+    "naturalPredators": ["parasitic_wasp", "ladybug", "lacewing"],
+    "repellentPlants": ["tomato", "marigold"],
+    "description": "Coléoptère spécialisé sur les asperges. Adultes et larves se nourrissent du feuillage.",
+    "preventionTips": "Récolte quotidienne des turions. Ramassage manuel. Paillage. Laisser un feuillage sain."
+  },
+  {
+    "id": "corn_earworm",
+    "name": "Ver de l'épi de maïs",
+    "scientificName": "Helicoverpa zea",
+    "affectedPlants": ["corn", "tomato", "pepper", "bean"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Chenilles dans les épis de maïs",
+      "Fruits troués",
+      "Excréments dans les épis",
+      "Grains endommagés"
+    ],
+    "naturalPredators": ["parasitic_wasp", "lacewing", "bird"],
+    "repellentPlants": ["marigold", "nasturtium"],
+    "description": "Chenille polyphage qui s'attaque particulièrement au maïs et aux tomates.",
+    "preventionTips": "Huile minérale sur soies du maïs. Ramassage manuel. Rotation des cultures."
+  },
+  {
+    "id": "thrips",
+    "name": "Thrips",
+    "scientificName": "Thysanoptera",
+    "affectedPlants": ["onion", "leek", "tomato", "pepper", "cucumber"],
+    "defaultSeverity": "moderate",
+    "symptoms": [
+      "Taches argentées sur feuilles",
+      "Déformation des feuilles",
+      "Insectes minuscules jaunes ou noirs",
+      "Fleurs tachetées"
+    ],
+    "naturalPredators": ["lacewing", "ladybug", "predatory_mite", "parasitic_wasp"],
+    "repellentPlants": ["basil", "marigold", "garlic"],
+    "description": "Minuscules insectes piqueurs-suceurs. Vecteurs de virus. Prolifèrent par temps chaud et sec.",
+    "preventionTips": "Pièges chromatiques bleus. Douches régulières. Maintenir humidité."
+  },
+  {
+    "id": "onion_fly",
+    "name": "Mouche de l'oignon",
+    "scientificName": "Delia antiqua",
+    "affectedPlants": ["onion", "leek", "garlic", "shallot"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Feuillage qui jaunit et se flétrit",
+      "Asticots blancs dans bulbes",
+      "Bulbes pourris",
+      "Mort des plants"
+    ],
+    "naturalPredators": ["ground_beetle", "parasitic_wasp", "rove_beetle"],
+    "repellentPlants": ["carrot", "parsley", "celery"],
+    "description": "Mouche dont les larves creusent dans les bulbes d'oignons et apparentés.",
+    "preventionTips": "Voile anti-insectes. Association avec carottes. Rotation sur 4 ans. Éviter fumier frais."
+  },
+  {
+    "id": "squash_bug",
+    "name": "Punaise de la courge",
+    "scientificName": "Anasa tristis",
+    "affectedPlants": ["squash", "pumpkin", "zucchini", "cucumber", "melon"],
+    "defaultSeverity": "high",
+    "symptoms": [
+      "Flétrissement des feuilles",
+      "Taches jaunes puis brunes",
+      "Punaises brunes plates",
+      "Œufs bronze sous les feuilles"
+    ],
+    "naturalPredators": ["parasitic_wasp", "assassin_bug"],
+    "repellentPlants": ["nasturtium", "tansy", "catnip"],
+    "description": "Punaise qui injecte une toxine causant le flétrissement des cucurbitacées.",
+    "preventionTips": "Inspection quotidienne. Retrait des œufs. Planches pièges. Paillage. Rotation."
+  }
+]
+

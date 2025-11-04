@@ -1,0 +1,15 @@
+# 6-Run-Stable.yaml
+objectif: "Obtenir un run stable sur device/simulateur sans erreurs Riverpod/Hive."
+actions:
+  - "Lancer l’app en mode debug."
+  - "Parcourir écrans clés (garden, activity, météo) pour instancier les providers."
+  - "Observer les logs pour détections tardives."
+commandes:
+  - "flutter run"
+criteres_acceptation:
+  - "Démarrage, navigation et rafraîchissements sans exceptions non gérées."
+  - "Providers Notifier/AsyncNotifier résolvent correctement leurs dépendances."
+  - "Aucune régression apparente sur lecture/écriture Hive."
+livrables:
+  - ".cursor/run_notes_step6.md (symptômes restants, s’il y en a)"
+next_step: "7-Docs"

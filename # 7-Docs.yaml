@@ -1,0 +1,10 @@
+# 7-Docs.yaml
+objectif: "Documenter la migration et verrouiller la connaissance."
+actions:
+  - "Créer/mettre à jour: .cursor/RAPPORT_MIGRATION_RIVERPOD3.md, README.md, CHANGELOG.md."
+  - "Y consigner: versions, liste des providers migrés, patterns utilisés, pièges rencontrés, checksum des principaux .dart (optionnel)."
+  - "Ajouter section 'Fin du patch AOT' et 'Politique Run Vert/Jaune/Rouge'."
+criteres_acceptation:
+  - "Docs présentes et lisibles."
+  - "Changelog explicite: Riverpod 3 only, analyzer^9, build_runner>=2.10, freezed^3."
+next_step: "8-Stabilisation-Finale"
