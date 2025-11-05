@@ -7,6 +7,7 @@ import '../providers/plant_intelligence_providers.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../providers/notification_providers.dart';
 import '../providers/plant_intelligence_ui_providers.dart';
+import '../../domain/entities/intelligence_state.dart';
 import '../../domain/entities/plant_condition.dart';
 import '../../domain/entities/comprehensive_garden_analysis.dart';
 import '../../domain/entities/pest_threat_analysis.dart';

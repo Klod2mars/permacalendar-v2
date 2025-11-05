@@ -1,0 +1,96 @@
+name: PATCH 5.1 - Core Intelligence Runtime Providers
+description: >
+  Création ou complétion de lib/core/providers/intelligence_runtime_providers.dart
+  en y centralisant les Notifiers principaux avec leurs méthodes d’action manquantes.
+
+tasks:
+  - file: lib/core/providers/intelligence_runtime_providers.dart
+    create_if_missing: true
+    actions:
+      - replace: ".*"
+        with: |
+          import 'package:riverpod/riverpod.dart';
+          import 'package:permacalendar/features/plant_intelligence/domain/entities/notification_alert.dart';
+          import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
+          import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_state.dart';
+
+          // ------------------------------------------------------------
+          // 🧠 Core Runtime Providers - Notifiers Autoritatifs
+          // ------------------------------------------------------------
+
+          class CurrentIntelligenceGardenIdNotifier extends Notifier<String?> {
+            @override
+            String? build() => null;
+          }
+
+          class IntelligentAlertsState {
+            final List<NotificationAlert> activeAlerts;
+            IntelligentAlertsState({this.activeAlerts = const []});
+          }
+
+          class IntelligentAlertsNotifier extends Notifier<IntelligentAlertsState> {
+            @override
+            IntelligentAlertsState build() => IntelligentAlertsState();
+
+            void dismissAlert(String id) {
+              state = IntelligentAlertsState(
+                activeAlerts: state.activeAlerts.where((a) => a.id != id).toList(),
+              );
+            }
+
+            void acknowledgeAlert(String id) {
+              // TODO: Persister dans le repository
+            }
+
+            void resolveAlert(String id) {
+              // TODO: Implémenter la logique de résolution
+            }
+          }
+
+          class ContextualRecommendationsState {
+            final List<Recommendation> contextualRecommendations;
+            ContextualRecommendationsState({this.contextualRecommendations = const []});
+          }
+
+          class ContextualRecommendationsNotifier
+              extends Notifier<ContextualRecommendationsState> {
+            @override
+            ContextualRecommendationsState build() =>
+                ContextualRecommendationsState();
+
+            void applyRecommendation(String id) {
+              // TODO: Implémenter la logique d’application
+            }
+
+            void dismissRecommendation(String id) {
+              // TODO: Implémenter la logique de rejet
+            }
+          }
+
+          class RealTimeAnalysisState {
+            final bool isRunning;
+            const RealTimeAnalysisState({this.isRunning = false});
+          }
+
+          class RealTimeAnalysisNotifier extends Notifier<RealTimeAnalysisState> {
+            @override
+            RealTimeAnalysisState build() => const RealTimeAnalysisState();
+
+            void startRealTimeAnalysis() => state = const RealTimeAnalysisState(isRunning: true);
+            void stopRealTimeAnalysis() => state = const RealTimeAnalysisState(isRunning: false);
+          }
+
+          // Providers publics
+          final currentIntelligenceGardenIdProvider =
+              NotifierProvider<CurrentIntelligenceGardenIdNotifier, String?>(() => CurrentIntelligenceGardenIdNotifier());
+
+          final intelligentAlertsProvider =
+              NotifierProvider<IntelligentAlertsNotifier, IntelligentAlertsState>(() => IntelligentAlertsNotifier());
+
+          final contextualRecommendationsProvider =
+              NotifierProvider<ContextualRecommendationsNotifier, ContextualRecommendationsState>(
+                  () => ContextualRecommendationsNotifier());
+
+          final realTimeAnalysisProvider =
+              NotifierProvider<RealTimeAnalysisNotifier, RealTimeAnalysisState>(
+                  () => RealTimeAnalysisNotifier());

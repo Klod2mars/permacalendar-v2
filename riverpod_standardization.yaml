@@ -1,0 +1,19 @@
+name: PATCH 5.4 - Riverpod Standardization
+description: >
+  Uniformise les imports Riverpod et reconstruit les fichiers générés.
+
+tasks:
+  - file: lib/features/plant_intelligence/presentation/providers/intelligence_state_providers.dart
+    actions:
+      - search: "package:flutter_riverpod/flutter_riverpod.dart"
+        replace_with: "package:riverpod/riverpod.dart"
+
+  - file: lib/features/plant_intelligence/presentation/providers/plant_intelligence_providers.dart
+    actions:
+      - search: "package:flutter_riverpod/flutter_riverpod.dart"
+        replace_with: "package:riverpod/riverpod.dart"
+
+  - run: |
+      flutter pub get
+      dart run build_runner build --delete-conflicting-outputs
+      flutter analyze

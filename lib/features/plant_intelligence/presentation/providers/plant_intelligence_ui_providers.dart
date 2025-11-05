@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/providers/intelligence_runtime_providers.dart' as core_intel;
 
 // ==================== PROVIDERS D'AFFICHAGE ====================
 
@@ -209,61 +210,18 @@ class ChartSettingsNotifier extends Notifier<ChartSettings> {
   }
 }
 
-// ==================== MINIMAL COMPATIBILITY PROVIDERS FOR MIGRATION ====================
-// Minimal compatibility providers for migration (Notifier-backed)
+// ------------------------------------------------------------
+// 🌿 Presentation Provider Aliases - Intelligence Runtime
+// ------------------------------------------------------------
 
-class CurrentIntelligenceGardenIdNotifier extends Notifier<String?> {
-  @override
-  String? build() => null;
-}
+@Deprecated('Utiliser core_intel.currentIntelligenceGardenIdProvider')
+final currentIntelligenceGardenIdProvider = core_intel.currentIntelligenceGardenIdProvider;
 
-final currentIntelligenceGardenIdProvider =
-    NotifierProvider<CurrentIntelligenceGardenIdNotifier, String?>(
-        CurrentIntelligenceGardenIdNotifier.new);
+@Deprecated('Utiliser core_intel.intelligentAlertsProvider')
+final intelligentAlertsProvider = core_intel.intelligentAlertsProvider;
 
-class IntelligentAlertsState {
-  final List<String> activeAlerts;
+@Deprecated('Utiliser core_intel.contextualRecommendationsProvider')
+final contextualRecommendationsProvider = core_intel.contextualRecommendationsProvider;
 
-  IntelligentAlertsState({this.activeAlerts = const []});
-}
-
-class IntelligentAlertsNotifier extends Notifier<IntelligentAlertsState> {
-  @override
-  IntelligentAlertsState build() => IntelligentAlertsState();
-}
-
-final intelligentAlertsProvider =
-    NotifierProvider<IntelligentAlertsNotifier, IntelligentAlertsState>(
-        IntelligentAlertsNotifier.new);
-
-class ContextualRecommendationsState {
-  final List<dynamic> contextualRecommendations;
-
-  ContextualRecommendationsState({this.contextualRecommendations = const []});
-}
-
-class ContextualRecommendationsNotifier
-    extends Notifier<ContextualRecommendationsState> {
-  @override
-  ContextualRecommendationsState build() => ContextualRecommendationsState();
-}
-
-final contextualRecommendationsProvider =
-    NotifierProvider<ContextualRecommendationsNotifier,
-            ContextualRecommendationsState>(
-        ContextualRecommendationsNotifier.new);
-
-class RealTimeAnalysisState {
-  final bool isRunning;
-
-  RealTimeAnalysisState({this.isRunning = false});
-}
-
-class RealTimeAnalysisNotifier extends Notifier<RealTimeAnalysisState> {
-  @override
-  RealTimeAnalysisState build() => RealTimeAnalysisState();
-}
-
-final realTimeAnalysisProvider =
-    NotifierProvider<RealTimeAnalysisNotifier, RealTimeAnalysisState>(
-        RealTimeAnalysisNotifier.new);
+@Deprecated('Utiliser core_intel.realTimeAnalysisProvider')
+final realTimeAnalysisProvider = core_intel.realTimeAnalysisProvider;

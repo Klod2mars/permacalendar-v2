@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../widgets/cards/recommendation_card.dart';
 import '../../domain/entities/recommendation.dart';
+import '../../domain/entities/intelligence_state.dart';
+import '../providers/plant_intelligence_ui_providers.dart';
 
 /// Écran des recommandations d'intelligence végétale
 class RecommendationsScreen extends ConsumerStatefulWidget {

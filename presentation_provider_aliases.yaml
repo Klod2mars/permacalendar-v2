@@ -1,0 +1,28 @@
+name: PATCH 5.2 - Presentation Provider Aliases
+description: >
+  Supprime les implémentations locales dans lib/features/plant_intelligence/presentation/providers/
+  et crée des alias vers les providers du core.
+
+tasks:
+  - file: lib/features/plant_intelligence/presentation/providers/plant_intelligence_ui_providers.dart
+    actions:
+      - replace: ".*"
+        with: |
+          import 'package:flutter_riverpod/flutter_riverpod.dart';
+          import 'package:permacalendar/core/providers/intelligence_runtime_providers.dart' as core_intel;
+
+          // ------------------------------------------------------------
+          // 🌿 Presentation Provider Aliases
+          // ------------------------------------------------------------
+
+          @Deprecated('Utiliser core_intel.currentIntelligenceGardenIdProvider')
+          final currentIntelligenceGardenIdProvider = core_intel.currentIntelligenceGardenIdProvider;
+
+          @Deprecated('Utiliser core_intel.intelligentAlertsProvider')
+          final intelligentAlertsProvider = core_intel.intelligentAlertsProvider;
+
+          @Deprecated('Utiliser core_intel.contextualRecommendationsProvider')
+          final contextualRecommendationsProvider = core_intel.contextualRecommendationsProvider;
+
+          @Deprecated('Utiliser core_intel.realTimeAnalysisProvider')
+          final realTimeAnalysisProvider = core_intel.realTimeAnalysisProvider;

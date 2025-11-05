@@ -3,6 +3,12 @@
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import '../../domain/entities/intelligence_state.dart';
+import '../../domain/entities/weather_condition.dart';
+import '../../domain/entities/plant_condition.dart';
+import '../../domain/entities/analysis_result.dart';
+import '../../domain/entities/recommendation.dart';
+import '../providers/plant_intelligence_providers.dart';
+import '../../../../core/di/intelligence_module.dart';
 
 // ==================== PROVIDER ====================
 
