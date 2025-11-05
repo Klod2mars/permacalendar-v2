@@ -5,7 +5,7 @@ import '../services/aggregation/modern_data_adapter.dart';
 import '../services/aggregation/intelligence_data_adapter.dart';
 import '../services/aggregation/data_consistency_manager.dart';
 import '../services/aggregation/migration_progress_tracker.dart';
-import '../../features/plant_intelligence/presentation/providers/plant_intelligence_providers.dart';
+import '../di/intelligence_module.dart';
 import '../models/unified_garden_context.dart';
 
 /// Providers pour le Garden Aggregation Hub
@@ -29,7 +29,7 @@ final modernDataAdapterProvider = Provider<ModernDataAdapter>((ref) {
 /// Dépend du PlantIntelligenceRepository
 final intelligenceDataAdapterProvider =
     Provider<IntelligenceDataAdapter>((ref) {
-  final intelligenceRepository = ref.read(plantIntelligenceRepositoryProvider);
+  final intelligenceRepository = ref.read(IntelligenceModule.repositoryImplProvider);
   return IntelligenceDataAdapter(
       intelligenceRepository: intelligenceRepository);
 });

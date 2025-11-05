@@ -1,0 +1,27 @@
+meta:
+  name: "Patch 2 - Correction intelligence_auto_notifier"
+  description: >
+    Corrige les imports et références aux providers dans lib/core/services/intelligence_auto_notifier.dart.
+
+tasks:
+  - id: patch_imports
+    actions:
+      - find_replace:
+          path: "lib/core/services/intelligence_auto_notifier.dart"
+          pattern: "../../features/plant_intelligence/presentation/providers/.*"
+          multiple: true
+          replacement: "../../providers/intelligence_runtime_providers.dart"
+  - id: replace_provider_calls
+    actions:
+      - find_replace:
+          path: "lib/core/services/intelligence_auto_notifier.dart"
+          pattern: "currentIntelligenceGardenIdProvider"
+          multiple: true
+          replacement: "currentIntelligenceGardenIdProviderCore"
+      - find_replace:
+          path: "lib/core/services/intelligence_auto_notifier.dart"
+          pattern: "intelligenceStateProvider"
+          multiple: true
+          replacement: "intelligenceStateProviderCore"
+  - id: verify_build
+    run: flutter analyze lib/core/services/intelligence_auto_notifier.dart

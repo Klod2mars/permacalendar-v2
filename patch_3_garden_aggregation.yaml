@@ -1,0 +1,23 @@
+meta:
+  name: "Patch 3 - Garden Aggregation Providers"
+  description: >
+    Corrige les imports dans lib/core/providers/garden_aggregation_providers.dart
+    pour éliminer la dépendance vers presentation.
+
+tasks:
+  - id: patch_imports
+    actions:
+      - find_replace:
+          path: "lib/core/providers/garden_aggregation_providers.dart"
+          pattern: "../../features/plant_intelligence/presentation/providers/plant_intelligence_providers.dart"
+          multiple: false
+          replacement: "../di/intelligence_module.dart"
+  - id: patch_repository_ref
+    actions:
+      - find_replace:
+          path: "lib/core/providers/garden_aggregation_providers.dart"
+          pattern: "plantIntelligenceRepositoryProvider"
+          multiple: true
+          replacement: "IntelligenceModule.repositoryImplProvider"
+  - id: verify_patch
+    run: flutter analyze lib/core/providers/garden_aggregation_providers.dart

@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import '../../features/climate/domain/models/weather_view_data.dart';
-import '../../features/climate/presentation/providers/weather_providers.dart'
-    as weather_providers;
+import '../../features/climate/domain/entities/weather_alert.dart';
 
 /// Service de détection d'alertes météo intelligentes
 /// Analyse les prévisions météo et génère des alertes contextuelles basées sur les plantes actives
@@ -13,9 +12,9 @@ class WeatherAlertService {
       28.0; // °C pour besoins hydriques élevés
 
   /// Analyser les prévisions météo et générer alertes intelligentes
-  List<weather_providers.WeatherAlert> generateAlerts(
+  List<WeatherAlert> generateAlerts(
       WeatherViewData weather, List<PlantData> activePlants) {
-    final alerts = <weather_providers.WeatherAlert>[];
+    final alerts = <WeatherAlert>[];
     final tomorrow = DateTime.now().add(const Duration(days: 1));
 
     // Analyser conditions météo
@@ -28,10 +27,10 @@ class WeatherAlertService {
       // ALERTE GEL (priorité absolue)
       if (tomorrowWeather.tMinC != null &&
           tomorrowWeather.tMinC! <= FROST_THRESHOLD) {
-        alerts.add(weather_providers.WeatherAlert(
+        alerts.add(WeatherAlert(
           id: 'frost_${DateTime.now().millisecondsSinceEpoch}',
-          type: weather_providers.WeatherAlertType.frost,
-          severity: weather_providers.AlertSeverity.warning,
+          type: WeatherAlertType.frost,
+          severity: AlertSeverity.warning,
           title: "Risque de gel demain",
           description:
               "Température minimale prévue : ${tomorrowWeather.tMinC!.round()}°C",
@@ -52,10 +51,10 @@ class WeatherAlertService {
       // ALERTE CANICULE (priorité élevée)
       if (tomorrowWeather.tMaxC != null &&
           tomorrowWeather.tMaxC! >= HEATWAVE_THRESHOLD) {
-        alerts.add(weather_providers.WeatherAlert(
+        alerts.add(WeatherAlert(
           id: 'heatwave_${DateTime.now().millisecondsSinceEpoch}',
-          type: weather_providers.WeatherAlertType.heatwave,
-          severity: weather_providers.AlertSeverity.critical,
+          type: WeatherAlertType.heatwave,
+          severity: AlertSeverity.critical,
           title: "Forte chaleur prévue",
           description:
               "Température maximale prévue : ${tomorrowWeather.tMaxC!.round()}°C",
@@ -119,7 +118,7 @@ class WeatherAlertService {
   }
 
   /// Générer alerte arrosage intelligent UNIQUEMENT si conditions strictes réunies
-  weather_providers.WeatherAlert? _generateSmartWateringAlert(
+  WeatherAlert? _generateSmartWateringAlert(
       WeatherConditions conditions,
       List<PlantData> activePlants,
       DateTime tomorrow) {
@@ -147,17 +146,17 @@ class WeatherAlertService {
 
     // ACTIVATION : Conditions réunies pour arrosage intelligent
     final severity = conditions.nextTemperatureMax >= HEATWAVE_THRESHOLD
-        ? weather_providers.AlertSeverity.critical
-        : weather_providers.AlertSeverity.warning;
+        ? AlertSeverity.critical
+        : AlertSeverity.warning;
 
     final plantNames = plantsNeedingWater.map((p) => p.name).take(3).join(", ");
     final morePlants = plantsNeedingWater.length > 3
         ? " et ${plantsNeedingWater.length - 3} autres"
         : "";
 
-    return weather_providers.WeatherAlert(
+    return WeatherAlert(
       id: 'watering_${DateTime.now().millisecondsSinceEpoch}',
-      type: weather_providers.WeatherAlertType.watering,
+      type: WeatherAlertType.watering,
       severity: severity,
       title: "Arrosage recommandé",
       description:

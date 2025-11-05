@@ -4,8 +4,8 @@ import 'package:riverpod/riverpod.dart';
 import '../../features/plant_intelligence/domain/entities/plant_condition.dart';
 import '../../features/plant_intelligence/domain/entities/weather_condition.dart';
 import '../../features/plant_intelligence/data/services/plant_notification_service.dart';
-import '../../features/plant_intelligence/presentation/providers/intelligence_state_providers.dart';
-import '../../features/plant_intelligence/presentation/providers/plant_intelligence_ui_providers.dart';
+import '../providers/intelligence_runtime_providers.dart';
+import '../../features/plant_intelligence/domain/entities/intelligence_state.dart';
 
 /// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
 ///
@@ -51,13 +51,13 @@ class IntelligenceAutoNotifier {
 
     // Listen to current garden id and subscribe to the correct family instance
     _gardenIdSubscription = _ref.listen<String?>(
-      currentIntelligenceGardenIdProvider,
+      currentIntelligenceGardenIdProviderCore,
       (previousGardenId, nextGardenId) {
         _stateSubscription?.close();
         _stateSubscription = null;
         if (nextGardenId != null) {
           _stateSubscription = _ref.listen<IntelligenceState>(
-            intelligenceStateProvider(nextGardenId),
+            intelligenceStateProviderCore(nextGardenId),
             (previous, next) {
               if (previous != null) _handleIntelligenceStateChange(previous, next);
             },
@@ -65,10 +65,10 @@ class IntelligenceAutoNotifier {
         }
       },
     );
-    final initialGardenId = _ref.read(currentIntelligenceGardenIdProvider);
+    final initialGardenId = _ref.read(currentIntelligenceGardenIdProviderCore);
     if (initialGardenId != null) {
       _stateSubscription = _ref.listen<IntelligenceState>(
-        intelligenceStateProvider(initialGardenId),
+        intelligenceStateProviderCore(initialGardenId),
         (previous, next) {
           if (previous != null) _handleIntelligenceStateChange(previous, next);
         },
