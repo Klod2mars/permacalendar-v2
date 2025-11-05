@@ -5,6 +5,7 @@ import '../../features/plant_intelligence/domain/entities/plant_condition.dart';
 import '../../features/plant_intelligence/domain/entities/weather_condition.dart';
 import '../../features/plant_intelligence/data/services/plant_notification_service.dart';
 import '../../features/plant_intelligence/presentation/providers/intelligence_state_providers.dart';
+import '../../features/plant_intelligence/presentation/providers/plant_intelligence_ui_providers.dart';
 
 /// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
 ///
@@ -28,6 +29,7 @@ class IntelligenceAutoNotifier {
   final PlantNotificationService _notificationService;
 
   ProviderSubscription<IntelligenceState>? _stateSubscription;
+  ProviderSubscription<String?>? _gardenIdSubscription;
   bool _isInitialized = false;
 
   // Cache pour éviter les notifications en double
@@ -47,15 +49,31 @@ class IntelligenceAutoNotifier {
     developer.log('🔔 Initialisation IntelligenceAutoNotifier',
         name: 'AutoNotifier');
 
-    // Écouter les changements d'état intelligence
-    _stateSubscription = _ref.listen<IntelligenceState>(
-      intelligenceStateProvider,
-      (previous, next) {
-        if (previous != null) {
-          _handleIntelligenceStateChange(previous, next);
+    // Listen to current garden id and subscribe to the correct family instance
+    _gardenIdSubscription = _ref.listen<String?>(
+      currentIntelligenceGardenIdProvider,
+      (previousGardenId, nextGardenId) {
+        _stateSubscription?.close();
+        _stateSubscription = null;
+        if (nextGardenId != null) {
+          _stateSubscription = _ref.listen<IntelligenceState>(
+            intelligenceStateProvider(nextGardenId),
+            (previous, next) {
+              if (previous != null) _handleIntelligenceStateChange(previous, next);
+            },
+          );
         }
       },
     );
+    final initialGardenId = _ref.read(currentIntelligenceGardenIdProvider);
+    if (initialGardenId != null) {
+      _stateSubscription = _ref.listen<IntelligenceState>(
+        intelligenceStateProvider(initialGardenId),
+        (previous, next) {
+          if (previous != null) _handleIntelligenceStateChange(previous, next);
+        },
+      );
+    }
 
     _isInitialized = true;
     developer.log('✅ IntelligenceAutoNotifier initialisé',
@@ -296,6 +314,7 @@ class IntelligenceAutoNotifier {
   void dispose() {
     developer.log('🛑 Arrêt IntelligenceAutoNotifier', name: 'AutoNotifier');
     _stateSubscription?.close();
+    _gardenIdSubscription?.close();
     _lastNotificationTime.clear();
     _isInitialized = false;
   }

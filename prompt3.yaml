@@ -1,0 +1,67 @@
+name: fix-auto-notifier-and-build
+description: Fix initialize() in IntelligenceAutoNotifier to listen to garden id then to intelligenceStateProvider(gardenId) and run build.
+steps:
+  - name: patch_auto_notifier
+    run: |
+      git apply -p0 <<'PATCH'
+      *** Begin Patch
+      *** Update File: lib/core/services/intelligence_auto_notifier.dart
+      @@
+       import '../../features/plant_intelligence/presentation/providers/intelligence_state_providers.dart';
+      +import '../../features/plant_intelligence/presentation/providers/plant_intelligence_ui_providers.dart';
+      @@
+-  ProviderSubscription<IntelligenceState>? _stateSubscription;
+-  bool _isInitialized = false;
++  ProviderSubscription<IntelligenceState>? _stateSubscription;
++  ProviderSubscription<String?>? _gardenIdSubscription;
++  bool _isInitialized = false;
+      @@
+-    // Écouter les changements d'état intelligence
+-    _stateSubscription = _ref.listen<IntelligenceState>(
+-      intelligenceStateProvider,
+-      (previous, next) {
+-        if (previous != null) {
+-          _handleIntelligenceStateChange(previous, next);
+-        }
+-      },
+-    );
++    // Listen to current garden id and subscribe to the correct family instance
++    _gardenIdSubscription = _ref.listen<String?>(
++      currentIntelligenceGardenIdProvider,
++      (previousGardenId, nextGardenId) {
++        _stateSubscription?.close();
++        _stateSubscription = null;
++        if (nextGardenId != null) {
++          _stateSubscription = _ref.listen<IntelligenceState>(
++            intelligenceStateProvider(nextGardenId),
++            (previous, next) {
++              if (previous != null) _handleIntelligenceStateChange(previous, next);
++            },
++          );
++        }
++      },
++    );
++    final initialGardenId = _ref.read(currentIntelligenceGardenIdProvider);
++    if (initialGardenId != null) {
++      _stateSubscription = _ref.listen<IntelligenceState>(
++        intelligenceStateProvider(initialGardenId),
++        (previous, next) {
++          if (previous != null) _handleIntelligenceStateChange(previous, next);
++        },
++      );
++    }
+      @@
+-    _stateSubscription?.close();
++    _stateSubscription?.close();
++    _gardenIdSubscription?.close();
+*** End Patch
+PATCH
+
+  - name: run_pub_and_build
+    run: |
+      flutter pub get
+      # Optional: upgrade analyzer/riverpod_generator if you validated changes
+      # flutter pub upgrade || true
+      flutter pub run build_runner build --delete-conflicting-outputs || true
+      flutter analyze || true
+      echo "Maintenant relancer votre script Run-Stable (mission #6) ou `flutter run`."

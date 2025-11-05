@@ -2,6 +2,7 @@
 
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
+import '../../domain/entities/intelligence_state.dart';
 
 // ==================== PROVIDER ====================
 

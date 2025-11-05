@@ -208,3 +208,62 @@ class ChartSettingsNotifier extends Notifier<ChartSettings> {
     state = const ChartSettings();
   }
 }
+
+// ==================== MINIMAL COMPATIBILITY PROVIDERS FOR MIGRATION ====================
+// Minimal compatibility providers for migration (Notifier-backed)
+
+class CurrentIntelligenceGardenIdNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+}
+
+final currentIntelligenceGardenIdProvider =
+    NotifierProvider<CurrentIntelligenceGardenIdNotifier, String?>(
+        CurrentIntelligenceGardenIdNotifier.new);
+
+class IntelligentAlertsState {
+  final List<String> activeAlerts;
+
+  IntelligentAlertsState({this.activeAlerts = const []});
+}
+
+class IntelligentAlertsNotifier extends Notifier<IntelligentAlertsState> {
+  @override
+  IntelligentAlertsState build() => IntelligentAlertsState();
+}
+
+final intelligentAlertsProvider =
+    NotifierProvider<IntelligentAlertsNotifier, IntelligentAlertsState>(
+        IntelligentAlertsNotifier.new);
+
+class ContextualRecommendationsState {
+  final List<dynamic> contextualRecommendations;
+
+  ContextualRecommendationsState({this.contextualRecommendations = const []});
+}
+
+class ContextualRecommendationsNotifier
+    extends Notifier<ContextualRecommendationsState> {
+  @override
+  ContextualRecommendationsState build() => ContextualRecommendationsState();
+}
+
+final contextualRecommendationsProvider =
+    NotifierProvider<ContextualRecommendationsNotifier,
+            ContextualRecommendationsState>(
+        ContextualRecommendationsNotifier.new);
+
+class RealTimeAnalysisState {
+  final bool isRunning;
+
+  RealTimeAnalysisState({this.isRunning = false});
+}
+
+class RealTimeAnalysisNotifier extends Notifier<RealTimeAnalysisState> {
+  @override
+  RealTimeAnalysisState build() => RealTimeAnalysisState();
+}
+
+final realTimeAnalysisProvider =
+    NotifierProvider<RealTimeAnalysisNotifier, RealTimeAnalysisState>(
+        RealTimeAnalysisNotifier.new);
