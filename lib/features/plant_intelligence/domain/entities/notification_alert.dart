@@ -58,6 +58,19 @@ enum NotificationStatus {
   dismissed,
 }
 
+/// Sévérité de l'alerte
+@HiveType(typeId: 44)
+enum AlertSeverity {
+  @HiveField(0)
+  info,
+
+  @HiveField(1)
+  warning,
+
+  @HiveField(2)
+  error,
+}
+
 /// Modèle des notifications d'alerte pour l'intelligence végétale
 @freezed
 @HiveType(typeId: 43, adapterName: 'NotificationAlertAdapter')
@@ -79,6 +92,11 @@ class NotificationAlert with _$NotificationAlert {
 
     /// Priorité de la notification
     @HiveField(4) required NotificationPriority priority,
+
+    /// Sévérité de l'alerte
+    @HiveField(14)
+    @Default(AlertSeverity.info)
+    AlertSeverity severity,
 
     /// Date de création
     @HiveField(5) required DateTime createdAt,

@@ -6,18 +6,21 @@ import 'package:go_router/go_router.dart';
 import '../providers/plant_intelligence_providers.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../providers/notification_providers.dart';
-import '../providers/plant_intelligence_ui_providers.dart';
 import '../../domain/entities/intelligence_state.dart';
 import '../../domain/entities/plant_condition.dart';
 import '../../domain/entities/comprehensive_garden_analysis.dart';
 import '../../domain/entities/pest_threat_analysis.dart';
 import '../../domain/entities/bio_control_recommendation.dart';
 import '../../domain/entities/intelligence_report.dart';
+import '../../domain/entities/notification_alert.dart';
 import '../../../garden/providers/garden_provider.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
 import '../../../../app_router.dart';
 import '../../../../core/providers/garden_aggregation_providers.dart';
+import '../../../../core/providers/providers.dart' as core_intel;
+import '../../../../core/providers/providers.dart' show IntelligentAlertsState;
+import '../providers/plant_intelligence_ui_providers.dart' as ui_intel;
 import '../widgets/charts/condition_radar_chart_simple.dart';
 import '../widgets/garden_selector_widget.dart';
 import 'plant_evolution_history_screen.dart';
@@ -79,7 +82,7 @@ class _PlantIntelligenceDashboardScreenState
           name: 'PlantIntelligenceDashboard');
 
       // Définir le jardin actuel pour l'intelligence
-      ref.read(currentIntelligenceGardenIdProvider.notifier).state = gardenId;
+      ref.read(core_intel.currentIntelligenceGardenIdProvider.notifier).state = gardenId;
 
       print(
           '🔴 [DIAGNOSTIC] Appel intelligenceStateProvider($gardenId).notifier.initializeForGarden()...');
@@ -121,7 +124,7 @@ class _PlantIntelligenceDashboardScreenState
     final theme = Theme.of(context);
 
     // Récupérer le jardin actuel
-    final currentGardenId = ref.watch(currentIntelligenceGardenIdProvider);
+    final currentGardenId = ref.watch(core_intel.currentIntelligenceGardenIdProvider);
 
     // Si aucun jardin n'est sélectionné, afficher un message
     if (currentGardenId == null) {
@@ -137,7 +140,7 @@ class _PlantIntelligenceDashboardScreenState
 
     final intelligenceState =
         ref.watch(intelligenceStateProvider(currentGardenId));
-    final alertsState = ref.watch(intelligentAlertsProvider);
+    final alertsState = ref.watch(core_intel.intelligentAlertsProvider);
     print(
         '🔴 [DIAGNOSTIC] intelligenceState: isInitialized=${intelligenceState.isInitialized}, isAnalyzing=${intelligenceState.isAnalyzing}');
     print(
@@ -215,27 +218,27 @@ class _PlantIntelligenceDashboardScreenState
           // ✅ NOUVEAU - Phase 3 : Sélecteur de mode de vue
           Consumer(
             builder: (context, ref, _) {
-              final viewMode = ref.watch(viewModeProvider);
-              return PopupMenuButton<ViewMode>(
+              final viewMode = ref.watch(ui_intel.viewModeProvider);
+              return PopupMenuButton<ui_intel.ViewMode>(
                 icon: Icon(
-                  viewMode == ViewMode.dashboard
+                  viewMode == ui_intel.ViewMode.dashboard
                       ? Icons.dashboard
                       : Icons.view_list,
                   size: 24,
                 ),
                 tooltip: 'Mode d\'affichage',
                 onSelected: (mode) {
-                  ref.read(viewModeProvider.notifier).state = mode;
+                  ref.read(ui_intel.viewModeProvider.notifier).state = mode;
                 },
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    value: ViewMode.dashboard,
+                    value: ui_intel.ViewMode.dashboard,
                     child: Row(
                       children: [
                         Icon(
                           Icons.dashboard,
                           size: 20,
-                          color: viewMode == ViewMode.dashboard
+                          color: viewMode == ui_intel.ViewMode.dashboard
                               ? theme.colorScheme.primary
                               : theme.colorScheme.onSurface,
                         ),
@@ -243,10 +246,10 @@ class _PlantIntelligenceDashboardScreenState
                         Text(
                           'Dashboard',
                           style: TextStyle(
-                            color: viewMode == ViewMode.dashboard
+                            color: viewMode == ui_intel.ViewMode.dashboard
                                 ? theme.colorScheme.primary
                                 : theme.colorScheme.onSurface,
-                            fontWeight: viewMode == ViewMode.dashboard
+                            fontWeight: viewMode == ui_intel.ViewMode.dashboard
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -255,13 +258,13 @@ class _PlantIntelligenceDashboardScreenState
                     ),
                   ),
                   PopupMenuItem(
-                    value: ViewMode.list,
+                    value: ui_intel.ViewMode.list,
                     child: Row(
                       children: [
                         Icon(
                           Icons.view_list,
                           size: 20,
-                          color: viewMode == ViewMode.list
+                          color: viewMode == ui_intel.ViewMode.list
                               ? theme.colorScheme.primary
                               : theme.colorScheme.onSurface,
                         ),
@@ -269,10 +272,10 @@ class _PlantIntelligenceDashboardScreenState
                         Text(
                           'Liste',
                           style: TextStyle(
-                            color: viewMode == ViewMode.list
+                            color: viewMode == ui_intel.ViewMode.list
                                 ? theme.colorScheme.primary
                                 : theme.colorScheme.onSurface,
-                            fontWeight: viewMode == ViewMode.list
+                            fontWeight: viewMode == ui_intel.ViewMode.list
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -281,13 +284,13 @@ class _PlantIntelligenceDashboardScreenState
                     ),
                   ),
                   PopupMenuItem(
-                    value: ViewMode.grid,
+                    value: ui_intel.ViewMode.grid,
                     child: Row(
                       children: [
                         Icon(
                           Icons.grid_view,
                           size: 20,
-                          color: viewMode == ViewMode.grid
+                          color: viewMode == ui_intel.ViewMode.grid
                               ? theme.colorScheme.primary
                               : theme.colorScheme.onSurface,
                         ),
@@ -295,10 +298,10 @@ class _PlantIntelligenceDashboardScreenState
                         Text(
                           'Grille',
                           style: TextStyle(
-                            color: viewMode == ViewMode.grid
+                            color: viewMode == ui_intel.ViewMode.grid
                                 ? theme.colorScheme.primary
                                 : theme.colorScheme.onSurface,
-                            fontWeight: viewMode == ViewMode.grid
+                            fontWeight: viewMode == ui_intel.ViewMode.grid
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -373,7 +376,7 @@ class _PlantIntelligenceDashboardScreenState
         ],
       ),
       body: _buildBody(
-          theme, intelligenceState, alertsState, ref.watch(viewModeProvider)),
+          theme, intelligenceState, alertsState, ref.watch(ui_intel.viewModeProvider)),
       floatingActionButton: _buildFAB(intelligenceState),
     );
   }
@@ -382,7 +385,7 @@ class _PlantIntelligenceDashboardScreenState
     ThemeData theme,
     IntelligenceState intelligenceState,
     IntelligentAlertsState alertsState,
-    ViewMode viewMode,
+    ui_intel.ViewMode viewMode,
   ) {
     // État d'erreur
     if (intelligenceState.error != null) {
@@ -396,11 +399,11 @@ class _PlantIntelligenceDashboardScreenState
 
     // ✅ NOUVEAU - Phase 3 : Affichage selon le mode de vue sélectionné
     switch (viewMode) {
-      case ViewMode.list:
+      case ui_intel.ViewMode.list:
         return _buildListView(theme, intelligenceState, alertsState);
-      case ViewMode.grid:
+      case ui_intel.ViewMode.grid:
         return _buildGridView(theme, intelligenceState, alertsState);
-      case ViewMode.dashboard:
+      case ui_intel.ViewMode.dashboard:
       default:
         return _buildDashboardView(theme, intelligenceState, alertsState);
     }
@@ -792,7 +795,7 @@ class _PlantIntelligenceDashboardScreenState
             FilledButton.icon(
               onPressed: () {
                 final currentGardenId =
-                    ref.read(currentIntelligenceGardenIdProvider);
+                    ref.read(core_intel.currentIntelligenceGardenIdProvider);
                 if (currentGardenId != null) {
                   ref
                       .read(intelligenceStateProvider(currentGardenId).notifier)
@@ -945,7 +948,7 @@ class _PlantIntelligenceDashboardScreenState
     final recommendationsCount = intelligenceState.plantRecommendations.values
         .fold<int>(0, (sum, recs) => sum + recs.length);
     final alertsCount =
-        ref.watch(intelligentAlertsProvider).activeAlerts.length;
+        ref.watch(core_intel.intelligentAlertsProvider).activeAlerts.length;
     final averageScore = _calculateAverageHealthScore(intelligenceState);
 
     // 🔴 DIAGNOSTIC UI - Vérifier les valeurs affichées
@@ -1166,7 +1169,7 @@ class _PlantIntelligenceDashboardScreenState
                           _getAlertIcon(alert.type),
                           _getAlertColor(theme, alert.severity),
                           onDismiss: () => ref
-                              .read(intelligentAlertsProvider.notifier)
+                              .read(core_intel.intelligentAlertsProvider.notifier)
                               .dismissAlert(alert.id),
                         ),
                       ],
@@ -1181,31 +1184,33 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  IconData _getAlertIcon(String type) {
-    switch (type.toLowerCase()) {
-      case 'temperature':
-        return Icons.thermostat;
-      case 'humidity':
-        return Icons.water_drop;
-      case 'light':
+  IconData _getAlertIcon(NotificationType type) {
+    switch (type) {
+      case NotificationType.weatherAlert:
         return Icons.wb_sunny;
-      case 'frost':
-        return Icons.ac_unit;
-      case 'drought':
-        return Icons.water_drop_outlined;
+      case NotificationType.plantCondition:
+        return Icons.eco;
+      case NotificationType.recommendation:
+        return Icons.lightbulb;
+      case NotificationType.reminder:
+        return Icons.notifications;
+      case NotificationType.criticalCondition:
+        return Icons.warning;
+      case NotificationType.optimalCondition:
+        return Icons.check_circle;
       default:
         return Icons.warning;
     }
   }
 
-  Color _getAlertColor(ThemeData theme, String severity) {
-    switch (severity.toUpperCase()) {
-      case 'CRITICAL':
+  Color _getAlertColor(ThemeData theme, AlertSeverity severity) {
+    switch (severity) {
+      case AlertSeverity.error:
         return theme.colorScheme.error;
-      case 'HIGH':
+      case AlertSeverity.warning:
         return Colors.orange;
-      case 'MEDIUM':
-        return Colors.amber;
+      case AlertSeverity.info:
+        return theme.colorScheme.secondary;
       default:
         return theme.colorScheme.secondary;
     }
@@ -1311,10 +1316,10 @@ class _PlantIntelligenceDashboardScreenState
               // Toggle pour afficher/masquer les graphiques
               Consumer(
                 builder: (context, ref, _) {
-                  final chartSettings = ref.watch(chartSettingsProvider);
+                  final chartSettings = ref.watch(ui_intel.chartSettingsProvider);
                   return IconButton(
                     onPressed: () {
-                      ref.read(chartSettingsProvider.notifier).toggleTrends();
+                      ref.read(ui_intel.chartSettingsProvider.notifier).toggleTrends();
                     },
                     icon: Icon(
                       chartSettings.showTrends
@@ -1333,7 +1338,7 @@ class _PlantIntelligenceDashboardScreenState
           const SizedBox(height: 16),
           Consumer(
             builder: (context, ref, _) {
-              final chartSettings = ref.watch(chartSettingsProvider);
+              final chartSettings = ref.watch(ui_intel.chartSettingsProvider);
 
               if (!chartSettings.showTrends) {
                 // Affichage compact sans graphiques
@@ -1781,7 +1786,7 @@ class _PlantIntelligenceDashboardScreenState
                             priority: rec.priority.name,
                             onComplete: () {
                               ref
-                                  .read(contextualRecommendationsProvider
+                                  .read(core_intel.contextualRecommendationsProvider
                                       .notifier)
                                   .applyRecommendation(rec.id);
                             },
@@ -2551,7 +2556,7 @@ class _PlantIntelligenceDashboardScreenState
 
   /// Section d'actions rapides pour la lutte biologique (Mobile First)
   Widget _buildQuickActionsSection(BuildContext context, ThemeData theme) {
-    final currentGardenId = ref.watch(currentIntelligenceGardenIdProvider);
+    final currentGardenId = ref.watch(core_intel.currentIntelligenceGardenIdProvider);
     final gardenId = currentGardenId ?? '';
     final hasGarden = gardenId.isNotEmpty;
 
@@ -2759,8 +2764,13 @@ class _PlantIntelligenceDashboardScreenState
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: hasGarden
-                ? () =>
-                    _showPlantSelectionForEvolution(context, intelligenceState)
+                ? () {
+                    final currentGardenId = ref.read(core_intel.currentIntelligenceGardenIdProvider);
+                    if (currentGardenId != null) {
+                      final state = ref.read(intelligenceStateProvider(currentGardenId));
+                      _showPlantSelectionForEvolution(context, state);
+                    }
+                  }
                 : null,
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -2897,7 +2907,7 @@ class _PlantIntelligenceDashboardScreenState
     setState(() => _isRefreshing = true);
 
     try {
-      final currentGardenId = ref.read(currentIntelligenceGardenIdProvider);
+      final currentGardenId = ref.read(core_intel.currentIntelligenceGardenIdProvider);
       if (currentGardenId != null) {
         final intelligenceState =
             ref.read(intelligenceStateProvider(currentGardenId));
@@ -2947,7 +2957,7 @@ class _PlantIntelligenceDashboardScreenState
     print('🔴 [DIAGNOSTIC] _analyzeAllPlants() DÉBUT');
     developer.log('🌱 Début analyse COMPLÈTE du jardin', name: 'Dashboard');
 
-    final gardenId = ref.read(currentIntelligenceGardenIdProvider);
+    final gardenId = ref.read(core_intel.currentIntelligenceGardenIdProvider);
     print('🔴 [DIAGNOSTIC] gardenId=$gardenId');
 
     if (gardenId == null) {

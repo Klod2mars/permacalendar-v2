@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:permacalendar/core/providers/intelligence_runtime_providers.dart' as core_intel;
+import 'package:permacalendar/core/providers/providers.dart' as core_intel;
 
 // ==================== PROVIDERS D'AFFICHAGE ====================
 
@@ -210,18 +210,18 @@ class ChartSettingsNotifier extends Notifier<ChartSettings> {
   }
 }
 
-// ------------------------------------------------------------
-// 🌿 Presentation Provider Aliases - Intelligence Runtime
-// ------------------------------------------------------------
+// -----------------------------------------------------------------
+// 🧩 TEMP COMPATIBILITY ALIASES — WILL BE REMOVED AFTER MIGRATION
+// -----------------------------------------------------------------
 
-@Deprecated('Utiliser core_intel.currentIntelligenceGardenIdProvider')
+@Deprecated('Use core_intel.currentIntelligenceGardenIdProvider instead')
 final currentIntelligenceGardenIdProvider = core_intel.currentIntelligenceGardenIdProvider;
 
-@Deprecated('Utiliser core_intel.intelligentAlertsProvider')
+@Deprecated('Use core_intel.intelligentAlertsProvider instead')
 final intelligentAlertsProvider = core_intel.intelligentAlertsProvider;
 
-@Deprecated('Utiliser core_intel.contextualRecommendationsProvider')
+@Deprecated('Use core_intel.contextualRecommendationsProvider instead')
 final contextualRecommendationsProvider = core_intel.contextualRecommendationsProvider;
 
-@Deprecated('Utiliser core_intel.realTimeAnalysisProvider')
+@Deprecated('Use core_intel.realTimeAnalysisProvider instead')
 final realTimeAnalysisProvider = core_intel.realTimeAnalysisProvider;

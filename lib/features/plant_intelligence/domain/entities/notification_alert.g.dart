@@ -22,6 +22,7 @@ class NotificationAlertAdapter extends TypeAdapter<NotificationAlert> {
       message: fields[2] as String,
       type: fields[3] as NotificationType,
       priority: fields[4] as NotificationPriority,
+      severity: fields[14] as AlertSeverity,
       createdAt: fields[5] as DateTime,
       readAt: fields[6] as DateTime?,
       plantId: fields[7] as String?,
@@ -37,7 +38,7 @@ class NotificationAlertAdapter extends TypeAdapter<NotificationAlert> {
   @override
   void write(BinaryWriter writer, NotificationAlert obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -48,6 +49,8 @@ class NotificationAlertAdapter extends TypeAdapter<NotificationAlert> {
       ..write(obj.type)
       ..writeByte(4)
       ..write(obj.priority)
+      ..writeByte(14)
+      ..write(obj.severity)
       ..writeByte(5)
       ..write(obj.createdAt)
       ..writeByte(6)
@@ -236,6 +239,50 @@ class NotificationStatusAdapter extends TypeAdapter<NotificationStatus> {
           typeId == other.typeId;
 }
 
+class AlertSeverityAdapter extends TypeAdapter<AlertSeverity> {
+  @override
+  final int typeId = 44;
+
+  @override
+  AlertSeverity read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return AlertSeverity.info;
+      case 1:
+        return AlertSeverity.warning;
+      case 2:
+        return AlertSeverity.error;
+      default:
+        return AlertSeverity.info;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, AlertSeverity obj) {
+    switch (obj) {
+      case AlertSeverity.info:
+        writer.writeByte(0);
+        break;
+      case AlertSeverity.warning:
+        writer.writeByte(1);
+        break;
+      case AlertSeverity.error:
+        writer.writeByte(2);
+        break;
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AlertSeverityAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -248,6 +295,8 @@ _$NotificationAlertImpl _$$NotificationAlertImplFromJson(
       message: json['message'] as String,
       type: $enumDecode(_$NotificationTypeEnumMap, json['type']),
       priority: $enumDecode(_$NotificationPriorityEnumMap, json['priority']),
+      severity: $enumDecodeNullable(_$AlertSeverityEnumMap, json['severity']) ??
+          AlertSeverity.info,
       createdAt: DateTime.parse(json['createdAt'] as String),
       readAt: json['readAt'] == null
           ? null
@@ -275,6 +324,7 @@ Map<String, dynamic> _$$NotificationAlertImplToJson(
       'message': instance.message,
       'type': _$NotificationTypeEnumMap[instance.type]!,
       'priority': _$NotificationPriorityEnumMap[instance.priority]!,
+      'severity': _$AlertSeverityEnumMap[instance.severity]!,
       'createdAt': instance.createdAt.toIso8601String(),
       'readAt': instance.readAt?.toIso8601String(),
       'plantId': instance.plantId,
@@ -300,6 +350,12 @@ const _$NotificationPriorityEnumMap = {
   NotificationPriority.medium: 'medium',
   NotificationPriority.high: 'high',
   NotificationPriority.critical: 'critical',
+};
+
+const _$AlertSeverityEnumMap = {
+  AlertSeverity.info: 'info',
+  AlertSeverity.warning: 'warning',
+  AlertSeverity.error: 'error',
 };
 
 const _$NotificationStatusEnumMap = {

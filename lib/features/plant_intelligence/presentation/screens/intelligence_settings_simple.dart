@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../../../../core/di/intelligence_module.dart';
-import '../providers/plant_intelligence_ui_providers.dart';
+import '../../../../core/providers/providers.dart';
 
 /// Version simplifiée de l'écran des paramètres d'intelligence
 class IntelligenceSettingsSimple extends ConsumerStatefulWidget {

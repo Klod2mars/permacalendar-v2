@@ -4,7 +4,7 @@ import '../providers/intelligence_state_providers.dart';
 import '../widgets/cards/recommendation_card.dart';
 import '../../domain/entities/recommendation.dart';
 import '../../domain/entities/intelligence_state.dart';
-import '../providers/plant_intelligence_ui_providers.dart';
+import '../../../../core/providers/providers.dart';
 
 /// Écran des recommandations d'intelligence végétale
 class RecommendationsScreen extends ConsumerStatefulWidget {
@@ -147,7 +147,7 @@ class _RecommendationsScreenState extends ConsumerState<RecommendationsScreen> {
       ContextualRecommendationsState contextualRecsState) {
     final recommendations =
         _getFilteredRecommendations(intelligenceState, contextualRecsState);
-    final appliedRecommendations = contextualRecsState.appliedRecommendations;
+    final appliedRecommendations = { for (final rec in contextualRecsState.appliedRecommendations) rec.id: true };
 
     if (recommendations.isEmpty) {
       return RefreshIndicator(
@@ -209,7 +209,7 @@ class _RecommendationsScreenState extends ConsumerState<RecommendationsScreen> {
     // Obtenir toutes les recommandations depuis les différentes sources
     final allRecommendations = <dynamic>[
       ...intelligenceState.plantRecommendations.values.expand((recs) => recs),
-      ...contextualRecsState.contextualRecommendations,
+      ...(contextualRecsState.contextualRecommendations ?? []),
     ];
 
     if (_selectedFilter == 'all') {

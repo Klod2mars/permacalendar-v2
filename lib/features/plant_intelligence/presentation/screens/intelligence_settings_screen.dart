@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../providers/plant_intelligence_ui_providers.dart';
 
 /// Écran des paramètres de l'intelligence végétale
 class IntelligenceSettingsScreen extends ConsumerStatefulWidget {

@@ -40,6 +40,10 @@ mixin _$NotificationAlert {
   @HiveField(4)
   NotificationPriority get priority => throw _privateConstructorUsedError;
 
+  /// Sévérité de l'alerte
+  @HiveField(14)
+  AlertSeverity get severity => throw _privateConstructorUsedError;
+
   /// Date de création
   @HiveField(5)
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -94,6 +98,7 @@ abstract class $NotificationAlertCopyWith<$Res> {
       @HiveField(2) String message,
       @HiveField(3) NotificationType type,
       @HiveField(4) NotificationPriority priority,
+      @HiveField(14) AlertSeverity severity,
       @HiveField(5) DateTime createdAt,
       @HiveField(6) DateTime? readAt,
       @HiveField(7) String? plantId,
@@ -123,6 +128,7 @@ class _$NotificationAlertCopyWithImpl<$Res, $Val extends NotificationAlert>
     Object? message = null,
     Object? type = null,
     Object? priority = null,
+    Object? severity = null,
     Object? createdAt = null,
     Object? readAt = freezed,
     Object? plantId = freezed,
@@ -154,6 +160,10 @@ class _$NotificationAlertCopyWithImpl<$Res, $Val extends NotificationAlert>
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as NotificationPriority,
+      severity: null == severity
+          ? _value.severity
+          : severity // ignore: cast_nullable_to_non_nullable
+              as AlertSeverity,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -208,6 +218,7 @@ abstract class _$$NotificationAlertImplCopyWith<$Res>
       @HiveField(2) String message,
       @HiveField(3) NotificationType type,
       @HiveField(4) NotificationPriority priority,
+      @HiveField(14) AlertSeverity severity,
       @HiveField(5) DateTime createdAt,
       @HiveField(6) DateTime? readAt,
       @HiveField(7) String? plantId,
@@ -235,6 +246,7 @@ class __$$NotificationAlertImplCopyWithImpl<$Res>
     Object? message = null,
     Object? type = null,
     Object? priority = null,
+    Object? severity = null,
     Object? createdAt = null,
     Object? readAt = freezed,
     Object? plantId = freezed,
@@ -266,6 +278,10 @@ class __$$NotificationAlertImplCopyWithImpl<$Res>
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as NotificationPriority,
+      severity: null == severity
+          ? _value.severity
+          : severity // ignore: cast_nullable_to_non_nullable
+              as AlertSeverity,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -315,6 +331,7 @@ class _$NotificationAlertImpl extends _NotificationAlert {
       @HiveField(2) required this.message,
       @HiveField(3) required this.type,
       @HiveField(4) required this.priority,
+      @HiveField(14) this.severity = AlertSeverity.info,
       @HiveField(5) required this.createdAt,
       @HiveField(6) this.readAt,
       @HiveField(7) this.plantId,
@@ -354,6 +371,12 @@ class _$NotificationAlertImpl extends _NotificationAlert {
   @override
   @HiveField(4)
   final NotificationPriority priority;
+
+  /// Sévérité de l'alerte
+  @override
+  @JsonKey()
+  @HiveField(14)
+  final AlertSeverity severity;
 
   /// Date de création
   @override
@@ -411,7 +434,7 @@ class _$NotificationAlertImpl extends _NotificationAlert {
 
   @override
   String toString() {
-    return 'NotificationAlert(id: $id, title: $title, message: $message, type: $type, priority: $priority, createdAt: $createdAt, readAt: $readAt, plantId: $plantId, gardenId: $gardenId, actionId: $actionId, status: $status, metadata: $metadata, archivedAt: $archivedAt, dismissedAt: $dismissedAt)';
+    return 'NotificationAlert(id: $id, title: $title, message: $message, type: $type, priority: $priority, severity: $severity, createdAt: $createdAt, readAt: $readAt, plantId: $plantId, gardenId: $gardenId, actionId: $actionId, status: $status, metadata: $metadata, archivedAt: $archivedAt, dismissedAt: $dismissedAt)';
   }
 
   @override
@@ -425,6 +448,8 @@ class _$NotificationAlertImpl extends _NotificationAlert {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.priority, priority) ||
                 other.priority == priority) &&
+            (identical(other.severity, severity) ||
+                other.severity == severity) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.readAt, readAt) || other.readAt == readAt) &&
@@ -450,6 +475,7 @@ class _$NotificationAlertImpl extends _NotificationAlert {
       message,
       type,
       priority,
+      severity,
       createdAt,
       readAt,
       plantId,
@@ -482,6 +508,7 @@ abstract class _NotificationAlert extends NotificationAlert {
       @HiveField(2) required final String message,
       @HiveField(3) required final NotificationType type,
       @HiveField(4) required final NotificationPriority priority,
+      @HiveField(14) final AlertSeverity severity,
       @HiveField(5) required final DateTime createdAt,
       @HiveField(6) final DateTime? readAt,
       @HiveField(7) final String? plantId,
@@ -521,6 +548,11 @@ abstract class _NotificationAlert extends NotificationAlert {
   /// Priorité de la notification
   @HiveField(4)
   NotificationPriority get priority;
+  @override
+
+  /// Sévérité de l'alerte
+  @HiveField(14)
+  AlertSeverity get severity;
   @override
 
   /// Date de création
