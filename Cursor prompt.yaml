@@ -1,0 +1,348 @@
+# Cursor prompt - Analyse non destructive des "orphelins" Dart/Flutter (Riverpod 3)
+# Ajoute des marqueurs de preuve: 【message_idx†source】 pour chaque item détecté.
+name: detect-orphans-riverpod3-with-citations
+description: >
+  Analyse non destructive qui repère fichiers / providers / classes / fonctions
+  présents dans lib/ mais jamais utilisés (ou faiblement référencés).
+  Produit rapports, templates d'issues et ajoute des marqueurs de preuve
+  `【message_idx†source】` pour chaque item (source = fichier[:ligne]).
+version: "1.1"
+language: bash
+params:
+  repo_path: "."                      # chemin local ou URL du repo
+  output_dir: "cursor_orphan_results" # dossier de sortie
+  tmp_parent: "/tmp"                  # parent pour clone temporaire
+  use_rg: true                        # ripgrep recommandé
+  keep_tmp: false                     # si true, conserve copie temporaire
+  message_idx: 12                     # valeur utilisée dans les marqueurs 【message_idx†source】
+prerequisites:
+  - git
+  - dart SDK
+  - ripgrep (rg) recommandé
+  - (optionnel) flutter SDK
+safety:
+  - "Toujours travailler sur une copie temporaire (git clone -> tmp). Ne pas modifier/commit/push sur origin."
+  - "Ne pas supprimer de fichiers dans le repo d'origine."
+  - "Les fichiers créés/modifiés (dev_dependencies, analysis_options.yaml) ne le sont que dans la copie temporaire."
+  - "Produire tous les artefacts et zipper le résultat."
+steps:
+  - name: prepare-temp-clone
+    run: |
+      set -euo pipefail
+      REPO_PATH="${REPO_PATH:-.}"
+      OUTPUT_DIR="${OUTPUT_DIR:-cursor_orphan_results}"
+      TMP_PARENT="${TMP_PARENT:-/tmp}"
+      TIMESTAMP=$(date +%s)
+      TMPDIR="${TMP_PARENT%/}/rehydrate_analysis_${TIMESTAMP}"
+      echo "Cloning ${REPO_PATH} -> ${TMPDIR}"
+      git clone --depth 1 "${REPO_PATH}" "${TMPDIR}"
+      cd "${TMPDIR}"
+      echo "TMPDIR=${TMPDIR}" > "/tmp/rehydrate_env_${TIMESTAMP}.env"
+      echo "OUTPUT_DIR=${OUTPUT_DIR}" >> "/tmp/rehydrate_env_${TIMESTAMP}.env"
+      echo "TIMESTAMP=${TIMESTAMP}" >> "/tmp/rehydrate_env_${TIMESTAMP}.env"
+      echo "REPO_CLONE=${TMPDIR}" >> "/tmp/rehydrate_env_${TIMESTAMP}.env"
+      echo "ENVFILE=/tmp/rehydrate_env_${TIMESTAMP}.env" >> "/tmp/rehydrate_env_${TIMESTAMP}.env"
+      echo "MESSAGE_IDX=${MESSAGE_IDX:-12}" >> "/tmp/rehydrate_env_${TIMESTAMP}.env"
+      echo "Prepared temp clone: ${TMPDIR}"
+  - name: install-dev-deps
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      echo "Adding dev dependencies in temp clone..."
+      dart pub add --dev dart_code_metrics || true
+      dart pub add --dev analyzer || true
+      dart pub get
+      echo "Dev deps installed."
+  - name: write-analysis-options
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      cat > analysis_options.yaml <<'YAML'
+      analyzer:
+        errors:
+          todo: ignore
+      dart_code_metrics:
+        anti-patterns:
+          - long-method
+        metrics-exclude:
+          - test/**
+          - build/**
+          - lib/generated/**
+          - **/*.g.dart
+          - **/*.freezed.dart
+        rules:
+          - no-unused-code
+          - no-equal-then-else
+      YAML
+      echo "Wrote temporary analysis_options.yaml"
+  - name: run-dart-code-metrics
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      mkdir -p "${OUTPUT_DIR}"
+      dart run dart_code_metrics:metrics analyze lib > "${OUTPUT_DIR}/dart_code_metrics_report.txt" 2>&1 || true
+      echo "dart_code_metrics report: ${OUTPUT_DIR}/dart_code_metrics_report.txt"
+  - name: find-unreferenced-files
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      mkdir -p "${OUTPUT_DIR}"
+      command -v rg >/dev/null 2>&1 && USE_RG=true || USE_RG=false
+      cat > scripts/find_unreferenced_files.sh <<'SH'
+      #!/usr/bin/env bash
+      set -euo pipefail
+      PKG_NAME=$(awk '/^name:/{print $2; exit}' pubspec.yaml || echo "")
+      if [[ -z "$PKG_NAME" ]]; then PKG_NAME=$(basename "$(pwd)"); fi
+      USE_RG=$(command -v rg >/dev/null 2>&1 && echo true || echo false)
+      find lib -name '*.dart' | while read -r file; do
+        rel="${file#lib/}"
+        pkg_import="package:$PKG_NAME/$rel"
+        base="$(basename "$file" .dart)"
+        matched=false
+        if $USE_RG; then
+          rg -n --hidden --no-ignore -S --no-line-number "$pkg_import" lib >/dev/null 2>&1 && matched=true || true
+          if ! $matched; then rg -n --hidden --no-ignore -S --no-line-number "import .*${base}\.dart" lib >/dev/null 2>&1 && matched=true || true; fi
+          if ! $matched; then rg -n --hidden --no-ignore -S --no-line-number "export .*${base}\.dart" lib >/dev/null 2>&1 && matched=true || true; fi
+          if ! $matched; then rg -n --hidden --no-ignore -S --no-line-number "\\b$base\\b" lib | rg -v "^$file:" >/dev/null 2>&1 && matched=true || true; fi
+        else
+          grep -R --line-number -E "$pkg_import" lib >/dev/null 2>&1 && matched=true || true
+          if ! $matched; then grep -R --line-number -E "import .*${base}\.dart" lib >/dev/null 2>&1 && matched=true || true; fi
+          if ! $matched; then grep -R --line-number -E "export .*${base}\.dart" lib >/dev/null 2>&1 && matched=true || true; fi
+          if ! $matched; then grep -R --line-number -E "\\b$base\\b" lib | grep -v "^$file:" >/dev/null 2>&1 && matched=true || true; fi
+        fi
+        if ! $matched; then
+          echo "Non référencé: $file"
+        fi
+      done
+      SH
+      chmod +x scripts/find_unreferenced_files.sh
+      ./scripts/find_unreferenced_files.sh > "${OUTPUT_DIR}/unreferenced_files.txt" 2>&1 || true
+      echo "Unreferenced files: ${OUTPUT_DIR}/unreferenced_files.txt"
+  - name: detect-riverpod-providers
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      mkdir -p "${OUTPUT_DIR}"
+      cat > scripts/find_orphan_providers.sh <<'SH'
+      #!/usr/bin/env bash
+      set -euo pipefail
+      command -v rg >/dev/null 2>&1 || { echo "rg not available - skipping provider detection"; exit 0; }
+      rg -n --no-heading 'final\s+\w+\s*=\s*.*Provider|StateNotifierProvider|ChangeNotifierProvider|FutureProvider|StreamProvider' lib \
+        | while IFS=: read -r file lineno rest; do
+          decl=$(sed -n "${lineno},$((lineno+5))p" "$file" | tr '\n' ' ' | sed -E 's/^\s+//')
+          name=$(echo "$decl" | sed -E 's/.*final\s+([A-Za-z0-9_]+)\s*=.*/\1/' || true)
+          if [[ -z "$name" ]]; then continue; fi
+          # check usage outside declaring file
+          if rg -n --hidden --no-ignore -S "\b${name}\b" lib | rg -v "^$file:" >/dev/null 2>&1; then
+            echo "UTILISE: ${name} (declared in ${file}:${lineno})"
+          else
+            echo "ORPHELIN: ${name} (declared in ${file}:${lineno})"
+          fi
+        done
+      SH
+      chmod +x scripts/find_orphan_providers.sh
+      ./scripts/find_orphan_providers.sh > "${OUTPUT_DIR}/orphan_providers.txt" 2>&1 || true
+      echo "Providers analysis: ${OUTPUT_DIR}/orphan_providers.txt"
+  - name: run-dart-analyzer-script
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      mkdir -p "${OUTPUT_DIR}"
+      cat > tools/detect_unused.dart <<'DART'
+      // tools/detect_unused.dart
+      import 'dart:io';
+      import 'package:analyzer/dart/analysis/utilities.dart';
+
+      void main() {
+        final libDir = Directory('lib');
+        if (!libDir.existsSync()) { stderr.writeln('No lib/'); exit(1); }
+        final files = libDir.listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart')).toList();
+        final fileContents = <String,String>{};
+        for (var f in files) {
+          try { fileContents[f.path] = f.readAsStringSync(); } catch (e) { fileContents[f.path] = ''; }
+        }
+        final unused = <String, List<Map<String,dynamic>>>{};
+        for (var f in files) {
+          final parsed = parseString(content: f.readAsStringSync(), path: f.path);
+          final unit = parsed.unit;
+          for (var decl in unit.declarations) {
+            String? name; int? line; String kind='declaration';
+            if (decl is ClassDeclaration) { name = decl.name.name; line = unit.lineInfo.getLocation(decl.offset).lineNumber; kind='class'; }
+            else if (decl is EnumDeclaration) { name = decl.name.name; line = unit.lineInfo.getLocation(decl.offset).lineNumber; kind='enum'; }
+            else if (decl is FunctionDeclaration) { name = decl.name?.name; line = unit.lineInfo.getLocation(decl.offset).lineNumber; kind='function'; }
+            else if (decl is TopLevelVariableDeclaration) {
+              for (var v in decl.variables.variables) {
+                final varName = v.name.name;
+                final used = _isSymbolUsed(varName, f.path, fileContents);
+                if (!used) {
+                  final loc = unit.lineInfo.getLocation(v.offset);
+                  unused.putIfAbsent(f.path, () => []).add({'name': varName, 'line': loc.lineNumber, 'kind':'top-level-var'});
+                }
+              }
+              continue;
+            }
+            if (name == null) continue;
+            final used = _isSymbolUsed(name, f.path, fileContents);
+            if (!used) {
+              unused.putIfAbsent(f.path, () => []).add({'name': name, 'line': line, 'kind': kind});
+            }
+          }
+        }
+        if (unused.isEmpty) { print('Aucun symbole top-level non référencé trouvé.'); return; }
+        for (var entry in unused.entries) {
+          print('== Fichier: ${entry.key}');
+          for (var info in entry.value) {
+            print(' - ${info['kind']}: ${info['name']} @ligne ${info['line']}');
+          }
+        }
+      }
+
+      bool _isSymbolUsed(String name, String declaringFile, Map<String,String> fileContents) {
+        final pattern = RegExp(r'\b' + RegExp.escape(name) + r'\b');
+        for (var entry in fileContents.entries) {
+          if (entry.key == declaringFile) continue;
+          if (pattern.hasMatch(entry.value)) return true;
+        }
+        return false;
+      }
+      DART
+
+      dart run tools/detect_unused.dart > "${OUTPUT_DIR}/unused_symbols.txt" 2>&1 || true
+      echo "Unused symbols: ${OUTPUT_DIR}/unused_symbols.txt"
+  - name: assemble-report-with-citations
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      mkdir -p "${OUTPUT_DIR}/issues"
+      MSGIDX="${MESSAGE_IDX:-12}"
+
+      # Header
+      echo "# Rapport d'analyse des orphelins" > "${OUTPUT_DIR}/orphan_report.md"
+      echo "" >> "${OUTPUT_DIR}/orphan_report.md"
+      echo "## Résumé" >> "${OUTPUT_DIR}/orphan_report.md"
+      echo "- Date: $(date -u)" >> "${OUTPUT_DIR}/orphan_report.md"
+      echo "- Repo clone: ${REPO_CLONE}" >> "${OUTPUT_DIR}/orphan_report.md"
+      echo "" >> "${OUTPUT_DIR}/orphan_report.md"
+
+      # dart_code_metrics excerpt with citation marker
+      echo "### dart_code_metrics (extraits pertinents)" >> "${OUTPUT_DIR}/orphan_report.md"
+      echo '```' >> "${OUTPUT_DIR}/orphan_report.md"
+      head -n 200 "${OUTPUT_DIR}/dart_code_metrics_report.txt" >> "${OUTPUT_DIR}/orphan_report.md" || true
+      echo '```' >> "${OUTPUT_DIR}/orphan_report.md"
+      echo "" >> "${OUTPUT_DIR}/orphan_report.md"
+
+      # Unreferenced files with citation marker per file
+      echo "### Fichiers probablement non référencés" >> "${OUTPUT_DIR}/orphan_report.md"
+      if [[ -s "${OUTPUT_DIR}/unreferenced_files.txt" ]]; then
+        awk -v msgidx="$MSGIDX" '/^Non référencé:/ { sub(/^Non référencé: /,""); file=$0; print "- " file " 【" msgidx "†" file "】" }' "${OUTPUT_DIR}/unreferenced_files.txt" >> "${OUTPUT_DIR}/orphan_report.md"
+      else
+        echo "Aucun fichier non référencé détecté." >> "${OUTPUT_DIR}/orphan_report.md"
+      fi
+      echo "" >> "${OUTPUT_DIR}/orphan_report.md"
+
+      # Providers with citation marker (file:line)
+      echo "### Providers (potentiellement orphelins)" >> "${OUTPUT_DIR}/orphan_report.md"
+      if [[ -s "${OUTPUT_DIR}/orphan_providers.txt" ]]; then
+        # Print orphelins with markers and generate issue templates
+        grep '^ORPHELIN:' "${OUTPUT_DIR}/orphan_providers.txt" || true
+        grep '^ORPHELIN:' "${OUTPUT_DIR}/orphan_providers.txt" | while IFS= read -r line; do
+          # line format: ORPHELIN: name (declared in path:lineno)
+          name=$(echo "$line" | awk '{print $2}')
+          decl=$(echo "$line" | cut -d'(' -f2- | sed 's/declared in //; s/)$//')
+          file=$(echo "$decl" | sed -E 's/:.*//')
+          lineno=$(echo "$decl" | sed -E 's/.*:([0-9]+)$/\1/')
+          echo "- ${name} (decl: ${file}:${lineno}) 【${MSGIDX}†${file}:${lineno}】" >> "${OUTPUT_DIR}/orphan_report.md"
+          # Issue template
+          safe_name=$(echo "${name}" | tr '/:' '_' )
+          cat > "${OUTPUT_DIR}/issues/rehydrate_orphan_provider_${safe_name}.md" <<ISS
+# [rehydrate] Provider orphelin: ${name}
+- **Type**: provider (Riverpod)
+- **Déclaration**: ${file}:${lineno} 【${MSGIDX}†${file}:${lineno}】
+- **Détecté par**: scripts/find_orphan_providers.sh
+- **Preuves**: ${OUTPUT_DIR}/orphan_providers.txt
+- **Plan de ré-intégration**:
+  1. Vérifier exports/barrel files et références indirectes.
+  2. Rechercher usages dynamiques (.family, .notifier, string-based routes).
+  3. Ajouter usages/tests et réintroduire import si nécessaire.
+ISS
+        done
+      else
+        echo "Aucun provider orphelin détecté." >> "${OUTPUT_DIR}/orphan_report.md"
+      fi
+      echo "" >> "${OUTPUT_DIR}/orphan_report.md"
+
+      # Top-level symbols with markers
+      echo "### Symboles top-level non référencés" >> "${OUTPUT_DIR}/orphan_report.md"
+      if [[ -s "${OUTPUT_DIR}/unused_symbols.txt" ]]; then
+        awk -v msgidx="$MSGIDX" '
+          /^== Fichier: /{file=$3; next}
+          /^ - /{
+            sub(/^ - /,"");
+            # line like: kind: name @ligne N
+            if (match($0, /(.*): ([^@]+) @ligne ([0-9]+)/, m)) {
+              kind=m[1]; name=m[2]; line=m[3];
+              print "- " file " :: " kind " :: " name " @ligne " line " 【" msgidx "†" file ":" line "】"
+            }
+          }' "${OUTPUT_DIR}/unused_symbols.txt" >> "${OUTPUT_DIR}/orphan_report.md"
+      else
+        echo "Aucun symbole top-level non référencé détecté." >> "${OUTPUT_DIR}/orphan_report.md"
+      fi
+      echo "" >> "${OUTPUT_DIR}/orphan_report.md"
+
+      # Append false-positive checklist
+      cat >> "${OUTPUT_DIR}/orphan_report.md" <<CHECK
+## Checklist de faux-positifs (à vérifier manuellement)
+- Exports via barrel files (lib/*.dart ou lib/src/*)
+- Références dynamiques / reflection / code généré (.g.dart, .freezed.dart)
+- Usage uniquement dans tests, intégrations ou config dynamique
+- Providers utilisés via .family, .notifier, ou par référence indirecte
+- Widgets référencés via des strings (routes)
+- Code conditionnel (asserts, platform-specific)
+CHECK
+
+      echo "Assembled report with citations: ${OUTPUT_DIR}/orphan_report.md"
+  - name: package-and-clean
+    run: |
+      set -euo pipefail
+      source "${ENVFILE}"
+      cd "${REPO_CLONE}"
+      ZIPNAME="orphan_analysis_${TIMESTAMP}.zip"
+      zip -r "${ZIPNAME}" "${OUTPUT_DIR}" > /dev/null 2>&1 || true
+      mv "${ZIPNAME}" "${OUTPUT_DIR}/"
+      if [ "${KEEP_TMP:-false}" = "false" ]; then
+        rm -rf "${REPO_CLONE}" || true
+        echo "Temporary clone removed."
+      else
+        echo "Keeping temporary clone: ${REPO_CLONE}"
+      fi
+      echo "Results archived: ${OUTPUT_DIR}/${ZIPNAME}"
+outputs:
+  - path: "${OUTPUT_DIR}/dart_code_metrics_report.txt"
+  - path: "${OUTPUT_DIR}/unreferenced_files.txt"
+  - path: "${OUTPUT_DIR}/orphan_providers.txt"
+  - path: "${OUTPUT_DIR}/unused_symbols.txt"
+  - path: "${OUTPUT_DIR}/orphan_report.md"
+  - path: "${OUTPUT_DIR}/issues/"
+  - path: "${OUTPUT_DIR}/orphan_analysis_${TIMESTAMP}.zip"
+notes: |
+  - Chaque item détecté est annoté par un marqueur de preuve `【message_idx†source】`.
+    - `message_idx` est le paramètre configurable (ex: 12).
+    - `source` est `chemin/vers/fichier` ou `chemin/vers/fichier:ligne`.
+  - Ce workflow est **non destructif** : il travaille sur un clone temporaire.
+  - Les marqueurs permettent d'agréger automatiquement les preuves dans un système
+    (issue tracker, Notion...) et de retrouver rapidement la position exacte.
+  - Si tu veux, Cursor peut aussi générer des issues directement via l'API GitHub
+    — je ne l'active pas par défaut pour rester safe.
+example-run:
+  - export REPO_PATH="/chemin/vers/ton/repo"
+  - export OUTPUT_DIR="cursor_orphan_results"
+  - export TMP_PARENT="/tmp"
+  - export MESSAGE_IDX="12"
+  - bash run_this_yaml_pipeline.sh
