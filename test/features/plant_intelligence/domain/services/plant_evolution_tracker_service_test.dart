@@ -1,689 +1,498 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
+import 'package:permacalendar/core/models/plant_v2.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
+import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
-import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_evolution_report.dart';
+import 'package:permacalendar/features/plant_intelligence/domain/models/plant_health_status.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/services/plant_evolution_tracker_service.dart';
-import 'package:uuid/uuid.dart';
+import 'package:test/test.dart';
 
-/// 🧪 CURSOR PROMPT A5 - Plant Evolution Tracker Service Tests
-/// 
-/// Comprehensive test coverage for PlantEvolutionTrackerService
-/// 
-/// Test Coverage:
-/// 1. ✅ Stable report → trend = "stable", all unchanged
-/// 2. ✅ Score increase → trend = "up", some improvements
-/// 3. ✅ Score decrease → trend = "down", some degradations
-/// 4. ✅ Empty reports → handled gracefully
-/// 5. ✅ Null values in conditions → safe comparison
-/// 6. ✅ Exact boundary threshold (±1%)
-/// 7. ✅ Conditions added/removed between reports
-/// 8. ✅ Different plants → ArgumentError
-/// 9. ✅ All conditions improved
-/// 10. ✅ Mixed condition changes
-/// 11. ✅ Extension methods work correctly
+Plant _createPlant() => Plant(
+      id: 'plant_1',
+      name: 'Tomate',
+      species: 'Solanum lycopersicum',
+      family: 'Solanaceae',
+      growthCycles: const ['spring'],
+    );
+
+PlantCondition _condition({
+  required String plantId,
+  required ConditionType type,
+  required ConditionStatus status,
+  required double value,
+  required DateTime measuredAt,
+}) {
+  return PlantCondition(
+    id: '${type.name}_${measuredAt.microsecondsSinceEpoch}',
+    plantId: plantId,
+    gardenId: 'garden_1',
+    type: type,
+    status: status,
+    value: value,
+    optimalValue: value,
+    minValue: value - 5,
+    maxValue: value + 5,
+    unit: 'unit',
+    measuredAt: measuredAt,
+    createdAt: measuredAt,
+    updatedAt: measuredAt,
+    description: null,
+    recommendations: const [],
+  );
+}
+
+PlantAnalysisResult _analysis({
+  required String plantId,
+  required DateTime analyzedAt,
+  required ConditionStatus temperature,
+  required ConditionStatus humidity,
+  required ConditionStatus light,
+  required ConditionStatus soil,
+  required double healthScore,
+}) {
+  return PlantAnalysisResult(
+    id: 'analysis_${analyzedAt.microsecondsSinceEpoch}',
+    plantId: plantId,
+    temperature: _condition(
+      plantId: plantId,
+      type: ConditionType.temperature,
+      status: temperature,
+      value: 24,
+      measuredAt: analyzedAt,
+    ),
+    humidity: _condition(
+      plantId: plantId,
+      type: ConditionType.humidity,
+      status: humidity,
+      value: 70,
+      measuredAt: analyzedAt,
+    ),
+    light: _condition(
+      plantId: plantId,
+      type: ConditionType.light,
+      status: light,
+      value: 80,
+      measuredAt: analyzedAt,
+    ),
+    soil: _condition(
+      plantId: plantId,
+      type: ConditionType.soil,
+      status: soil,
+      value: 65,
+      measuredAt: analyzedAt,
+    ),
+    overallHealth: soil,
+    healthScore: healthScore,
+    warnings: const [],
+    strengths: const [],
+    priorityActions: const [],
+    confidence: 0.85,
+    analyzedAt: analyzedAt,
+    metadata: const {},
+  );
+}
+
+PlantIntelligenceReport _report({
+  required String plantId,
+  required double score,
+  required DateTime generatedAt,
+  required PlantAnalysisResult analysis,
+}) {
+  return PlantIntelligenceReport(
+    id: 'report_${generatedAt.microsecondsSinceEpoch}',
+    plantId: plantId,
+    plantName: 'Tomate',
+    gardenId: 'garden_1',
+    analysis: analysis,
+    recommendations: const [],
+    plantingTiming: PlantingTimingEvaluation(
+      isOptimalTime: true,
+      timingScore: 80,
+      reason: 'Fenêtre idéale',
+      optimalPlantingDate: generatedAt,
+      favorableFactors: const [],
+      unfavorableFactors: const [],
+      risks: const [],
+    ),
+    activeAlerts: const [],
+    intelligenceScore: score,
+    confidence: 0.9,
+    generatedAt: generatedAt,
+    expiresAt: generatedAt.add(const Duration(hours: 6)),
+    metadata: const {},
+  );
+}
+
+PlantHealthComponent _component({
+  required PlantHealthFactor factor,
+  required double score,
+  required PlantHealthLevel level,
+  String trend = 'stable',
+}) {
+  return PlantHealthComponent(
+    factor: factor,
+    score: score,
+    level: level,
+    trend: trend,
+    value: score,
+    optimalValue: score,
+    minValue: score - 10,
+    maxValue: score + 10,
+    unit: 'unit',
+  );
+}
+
+PlantHealthStatus _healthStatus({
+  required String plantId,
+  required double overallScore,
+  required PlantHealthLevel level,
+  required DateTime lastUpdated,
+  Map<PlantHealthFactor, PlantHealthComponent>? overrides,
+}) {
+  PlantHealthComponent defaultComponent(PlantHealthFactor factor) {
+    final componentScore = overallScore;
+    return _component(
+      factor: factor,
+      score: componentScore,
+      level: level,
+    );
+  }
+
+  final components = <PlantHealthFactor, PlantHealthComponent>{
+    for (final factor in PlantHealthFactor.values) factor: defaultComponent(factor),
+    if (overrides != null) ...overrides,
+  };
+
+  return PlantHealthStatus(
+    plantId: plantId,
+    gardenId: 'garden_1',
+    overallScore: overallScore,
+    level: level,
+    humidity: components[PlantHealthFactor.humidity]!,
+    light: components[PlantHealthFactor.light]!,
+    temperature: components[PlantHealthFactor.temperature]!,
+    nutrients: components[PlantHealthFactor.nutrients]!,
+    soilMoisture: components[PlantHealthFactor.soilMoisture],
+    waterStress: components[PlantHealthFactor.waterStress],
+    pestPressure: components[PlantHealthFactor.pestPressure],
+    lastUpdated: lastUpdated,
+    lastSyncedAt: lastUpdated,
+    activeAlerts: const [],
+    recommendedActions: const [],
+    healthTrend: 'stable',
+    factorTrends: const {},
+    metadata: const {},
+  );
+}
 
 void main() {
   group('PlantEvolutionTrackerService', () {
-    late PlantEvolutionTrackerService tracker;
-    
-    setUp(() {
-      tracker = PlantEvolutionTrackerService(
-        stabilityThreshold: 1.0,
-        enableLogging: false,
+    test('tracks evolution for single plant across days', () {
+      final service = const PlantEvolutionTrackerService();
+      final plant = _createPlant();
+      final baseDate = DateTime(2025, 1, 10);
+
+      final previousAnalysis = _analysis(
+        plantId: plant.id,
+        analyzedAt: baseDate.subtract(const Duration(days: 2)),
+        temperature: ConditionStatus.fair,
+        humidity: ConditionStatus.fair,
+        light: ConditionStatus.good,
+        soil: ConditionStatus.fair,
+        healthScore: 68,
       );
+
+      final previousReport = _report(
+        plantId: plant.id,
+        score: 68,
+        generatedAt: baseDate.subtract(const Duration(days: 2)),
+        analysis: previousAnalysis,
+      );
+
+      final currentAnalysis = _analysis(
+        plantId: plant.id,
+        analyzedAt: baseDate,
+        temperature: ConditionStatus.good,
+        humidity: ConditionStatus.good,
+        light: ConditionStatus.good,
+        soil: ConditionStatus.good,
+        healthScore: 80,
+      );
+
+      final currentReport = _report(
+        plantId: plant.id,
+        score: 80,
+        generatedAt: baseDate,
+        analysis: currentAnalysis,
+      );
+
+      final previousHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 68,
+        level: PlantHealthLevel.fair,
+        lastUpdated: baseDate.subtract(const Duration(days: 2)),
+      );
+
+      final currentHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 80,
+        level: PlantHealthLevel.good,
+        lastUpdated: baseDate,
+        overrides: {
+          PlantHealthFactor.humidity: _component(
+            factor: PlantHealthFactor.humidity,
+            score: 85,
+            level: PlantHealthLevel.good,
+            trend: 'up',
+          ),
+        },
+      );
+
+      final result = service.trackEvolution(
+        plant: plant,
+        currentReport: currentReport,
+        currentHealthStatus: currentHealth,
+        intelligenceHistory: [previousReport],
+        healthHistory: [previousHealth],
+      );
+
+      expect(result, isNotNull);
+      expect(result!.evolution.trend, equals('up'));
+      expect(result.healthComparison.improvedFactors,
+          contains(PlantHealthFactor.humidity));
+      expect(result.trend.direction, equals('up'));
+      expect(result.intelligenceHistory.length, equals(2));
+      expect(result.healthHistory.length, equals(2));
     });
-    
-    // ==================== TEST CASE 1: Stable Report ====================
-    
-    test('should return stable trend when no significant changes', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'tomato_1',
-        intelligenceScore: 75.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'tomato_1',
-        intelligenceScore: 75.5, // +0.5 (within 1.0 threshold)
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.plantId, 'tomato_1');
-      expect(result.trend, 'stable');
-      expect(result.deltaScore, 0.5);
-      expect(result.previousScore, 75.0);
-      expect(result.currentScore, 75.5);
-      expect(result.improvedConditions, isEmpty);
-      expect(result.degradedConditions, isEmpty);
-      expect(result.unchangedConditions, hasLength(4));
-      expect(result.unchangedConditions, containsAll(['temperature', 'humidity', 'light', 'soil']));
-    });
-    
-    // ==================== TEST CASE 2: Score Increase ====================
-    
-    test('should return up trend when score increases significantly', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'pepper_1',
-        intelligenceScore: 60.0,
-        temperatureStatus: ConditionStatus.fair,
-        humidityStatus: ConditionStatus.poor,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.fair,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'pepper_1',
-        intelligenceScore: 75.0, // +15.0 (well above 1.0 threshold)
-        temperatureStatus: ConditionStatus.good, // improved
-        humidityStatus: ConditionStatus.good, // improved
-        lightStatus: ConditionStatus.excellent, // improved
-        soilStatus: ConditionStatus.fair, // unchanged
-        generatedAt: DateTime(2025, 10, 5),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'up');
-      expect(result.deltaScore, 15.0);
-      expect(result.improvedConditions, hasLength(3));
-      expect(result.improvedConditions, containsAll(['temperature', 'humidity', 'light']));
-      expect(result.degradedConditions, isEmpty);
-      expect(result.unchangedConditions, contains('soil'));
-      expect(result.hasImproved, isTrue);
-      expect(result.isStable, isFalse);
-      expect(result.hasDegraded, isFalse);
-    });
-    
-    // ==================== TEST CASE 3: Score Decrease ====================
-    
-    test('should return down trend when score decreases significantly', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'lettuce_1',
-        intelligenceScore: 85.0,
-        temperatureStatus: ConditionStatus.excellent,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'lettuce_1',
-        intelligenceScore: 55.0, // -30.0 (significant decrease)
-        temperatureStatus: ConditionStatus.fair, // degraded
-        humidityStatus: ConditionStatus.poor, // degraded
-        lightStatus: ConditionStatus.good, // unchanged
-        soilStatus: ConditionStatus.critical, // degraded
-        generatedAt: DateTime(2025, 10, 3),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'down');
-      expect(result.deltaScore, -30.0);
-      expect(result.improvedConditions, isEmpty);
-      expect(result.degradedConditions, hasLength(3));
-      expect(result.degradedConditions, containsAll(['temperature', 'humidity', 'soil']));
-      expect(result.unchangedConditions, contains('light'));
-      expect(result.hasDegraded, isTrue);
-      expect(result.isStable, isFalse);
-      expect(result.hasImproved, isFalse);
-    });
-    
-    // ==================== TEST CASE 4: Null Values Handled ====================
-    
-    test('should handle null analysis gracefully', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'basil_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'basil_1',
-        intelligenceScore: 72.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert - should not throw, should return valid result
-      expect(result.plantId, 'basil_1');
-      expect(result.trend, 'up'); // +2.0 is above threshold
-      expect(result.deltaScore, 2.0);
-    });
-    
-    // ==================== TEST CASE 5: Exact Boundary Threshold ====================
-    
-    test('should treat exact threshold boundary as stable', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'carrot_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'carrot_1',
-        intelligenceScore: 70.99, // +0.99 (just below 1.0 threshold)
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'stable');
-      expect(result.deltaScore, closeTo(0.99, 0.01));
-    });
-    
-    test('should treat exact negative threshold boundary as stable', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'spinach_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'spinach_1',
-        intelligenceScore: 69.01, // -0.99 (just above -1.0 threshold)
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'stable');
-      expect(result.deltaScore, closeTo(-0.99, 0.01));
-    });
-    
-    test('should treat score at exact +1.0 threshold as up', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'cucumber_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'cucumber_1',
-        intelligenceScore: 71.0, // +1.0 (exactly at threshold)
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'up');
-      expect(result.deltaScore, 1.0);
-    });
-    
-    // ==================== TEST CASE 6: Different Plants Error ====================
-    
-    test('should throw ArgumentError when comparing different plants', () {
-      // Arrange
-      final report1 = _createMockReport(
-        plantId: 'tomato_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final report2 = _createMockReport(
-        plantId: 'pepper_1',
-        intelligenceScore: 75.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act & Assert
-      expect(
-        () => tracker.compareReports(
-          previous: report1,
-          current: report2,
+
+    test('detects anomalies when score drops quickly', () {
+      final service = const PlantEvolutionTrackerService();
+      final plant = _createPlant();
+      final baseDate = DateTime(2025, 2, 1);
+
+      final previous = _report(
+        plantId: plant.id,
+        score: 90,
+        generatedAt: baseDate.subtract(const Duration(days: 1)),
+        analysis: _analysis(
+          plantId: plant.id,
+          analyzedAt: baseDate.subtract(const Duration(days: 1)),
+          temperature: ConditionStatus.excellent,
+          humidity: ConditionStatus.good,
+          light: ConditionStatus.excellent,
+          soil: ConditionStatus.good,
+          healthScore: 92,
         ),
-        throwsA(isA<ArgumentError>().having(
-          (e) => e.message,
-          'message',
-          contains('Cannot compare reports for different plants'),
-        )),
+      );
+
+      final current = _report(
+        plantId: plant.id,
+        score: 58,
+        generatedAt: baseDate,
+        analysis: _analysis(
+          plantId: plant.id,
+          analyzedAt: baseDate,
+          temperature: ConditionStatus.poor,
+          humidity: ConditionStatus.poor,
+          light: ConditionStatus.fair,
+          soil: ConditionStatus.poor,
+          healthScore: 55,
+        ),
+      );
+
+      final previousHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 90,
+        level: PlantHealthLevel.excellent,
+        lastUpdated: baseDate.subtract(const Duration(days: 1)),
+      );
+
+      final currentHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 58,
+        level: PlantHealthLevel.poor,
+        lastUpdated: baseDate,
+      );
+
+      final result = service.trackEvolution(
+        plant: plant,
+        currentReport: current,
+        currentHealthStatus: currentHealth,
+        intelligenceHistory: [previous],
+        healthHistory: [previousHealth],
+      );
+
+      expect(result, isNotNull);
+      expect(result!.evolution.trend, equals('down'));
+      expect(result.trend.hasAnomaly, isTrue);
+      expect(result.healthComparison.degradedFactors.isNotEmpty, isTrue);
+    });
+
+    test('returns null when history is missing', () {
+      final service = const PlantEvolutionTrackerService();
+      final plant = _createPlant();
+      final now = DateTime(2025, 3, 10);
+      final analysis = _analysis(
+        plantId: plant.id,
+        analyzedAt: now,
+        temperature: ConditionStatus.good,
+        humidity: ConditionStatus.good,
+        light: ConditionStatus.good,
+        soil: ConditionStatus.good,
+        healthScore: 82,
+      );
+
+      final report = _report(
+        plantId: plant.id,
+        score: 82,
+        generatedAt: now,
+        analysis: analysis,
+      );
+
+      final health = _healthStatus(
+        plantId: plant.id,
+        overallScore: 82,
+        level: PlantHealthLevel.good,
+        lastUpdated: now,
+      );
+
+      final result = service.trackEvolution(
+        plant: plant,
+        currentReport: report,
+        currentHealthStatus: health,
+      );
+
+      expect(result, isNull);
+    });
+
+    test('throws when report plant does not match provided plant', () {
+      final service = const PlantEvolutionTrackerService();
+      final plant = _createPlant();
+      final now = DateTime(2025, 4, 1);
+
+      final analysis = _analysis(
+        plantId: 'other_plant',
+        analyzedAt: now,
+        temperature: ConditionStatus.good,
+        humidity: ConditionStatus.good,
+        light: ConditionStatus.good,
+        soil: ConditionStatus.good,
+        healthScore: 70,
+      );
+
+      final report = _report(
+        plantId: 'other_plant',
+        score: 70,
+        generatedAt: now,
+        analysis: analysis,
+      );
+
+      final health = _healthStatus(
+        plantId: plant.id,
+        overallScore: 70,
+        level: PlantHealthLevel.good,
+        lastUpdated: now,
+      );
+
+      expect(
+        () => service.trackEvolution(
+          plant: plant,
+          currentReport: report,
+          currentHealthStatus: health,
+        ),
+        throwsA(isA<ArgumentError>()),
       );
     });
-    
-    // ==================== TEST CASE 7: All Conditions Improved ====================
-    
-    test('should detect when all conditions improved', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'kale_1',
-        intelligenceScore: 50.0,
-        temperatureStatus: ConditionStatus.poor,
-        humidityStatus: ConditionStatus.critical,
-        lightStatus: ConditionStatus.fair,
-        soilStatus: ConditionStatus.poor,
-        generatedAt: DateTime(2025, 10, 1),
+
+    test('prunes histories according to retention window', () {
+      final service = const PlantEvolutionTrackerService(
+        historyRetention: Duration(days: 30),
       );
-      
-      final currentReport = _createMockReport(
-        plantId: 'kale_1',
-        intelligenceScore: 85.0, // +35.0
-        temperatureStatus: ConditionStatus.excellent,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.excellent,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 7),
+      final plant = _createPlant();
+      final now = DateTime(2025, 5, 1);
+
+      final veryOldDate = now.subtract(const Duration(days: 90));
+      final recentDate = now.subtract(const Duration(days: 10));
+
+      final veryOldReport = _report(
+        plantId: plant.id,
+        score: 60,
+        generatedAt: veryOldDate,
+        analysis: _analysis(
+          plantId: plant.id,
+          analyzedAt: veryOldDate,
+          temperature: ConditionStatus.fair,
+          humidity: ConditionStatus.fair,
+          light: ConditionStatus.fair,
+          soil: ConditionStatus.fair,
+          healthScore: 60,
+        ),
       );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
+
+      final recentReport = _report(
+        plantId: plant.id,
+        score: 70,
+        generatedAt: recentDate,
+        analysis: _analysis(
+          plantId: plant.id,
+          analyzedAt: recentDate,
+          temperature: ConditionStatus.good,
+          humidity: ConditionStatus.good,
+          light: ConditionStatus.good,
+          soil: ConditionStatus.good,
+          healthScore: 70,
+        ),
       );
-      
-      // Assert
-      expect(result.trend, 'up');
-      expect(result.improvedConditions, hasLength(4));
-      expect(result.improvedConditions, containsAll(['temperature', 'humidity', 'light', 'soil']));
-      expect(result.degradedConditions, isEmpty);
-      expect(result.unchangedConditions, isEmpty);
-      expect(result.improvementRate, 100.0);
-      expect(result.degradationRate, 0.0);
-    });
-    
-    // ==================== TEST CASE 8: Mixed Condition Changes ====================
-    
-    test('should handle mixed condition changes correctly', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'bean_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.fair,
-        lightStatus: ConditionStatus.excellent,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
+
+      final currentReport = _report(
+        plantId: plant.id,
+        score: 75,
+        generatedAt: now,
+        analysis: _analysis(
+          plantId: plant.id,
+          analyzedAt: now,
+          temperature: ConditionStatus.good,
+          humidity: ConditionStatus.good,
+          light: ConditionStatus.good,
+          soil: ConditionStatus.good,
+          healthScore: 75,
+        ),
       );
-      
-      final currentReport = _createMockReport(
-        plantId: 'bean_1',
-        intelligenceScore: 71.5, // +1.5
-        temperatureStatus: ConditionStatus.excellent, // improved
-        humidityStatus: ConditionStatus.good, // improved
-        lightStatus: ConditionStatus.good, // degraded
-        soilStatus: ConditionStatus.good, // unchanged
-        generatedAt: DateTime(2025, 10, 3),
+
+      final veryOldHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 60,
+        level: PlantHealthLevel.fair,
+        lastUpdated: veryOldDate,
       );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
+
+      final recentHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 70,
+        level: PlantHealthLevel.good,
+        lastUpdated: recentDate,
       );
-      
-      // Assert
-      expect(result.trend, 'up');
-      expect(result.improvedConditions, hasLength(2));
-      expect(result.improvedConditions, containsAll(['temperature', 'humidity']));
-      expect(result.degradedConditions, hasLength(1));
-      expect(result.degradedConditions, contains('light'));
-      expect(result.unchangedConditions, hasLength(1));
-      expect(result.unchangedConditions, contains('soil'));
-      expect(result.totalConditions, 4);
-      expect(result.improvementRate, 50.0);
-      expect(result.degradationRate, 25.0);
-    });
-    
-    // ==================== TEST CASE 9: Custom Threshold ====================
-    
-    test('should respect custom stability threshold', () {
-      // Arrange
-      final customTracker = PlantEvolutionTrackerService(
-        stabilityThreshold: 5.0, // Higher threshold
-        enableLogging: false,
+
+      final currentHealth = _healthStatus(
+        plantId: plant.id,
+        overallScore: 75,
+        level: PlantHealthLevel.good,
+        lastUpdated: now,
       );
-      
-      final previousReport = _createMockReport(
-        plantId: 'zucchini_1',
-        intelligenceScore: 70.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
+
+      final result = service.trackEvolution(
+        plant: plant,
+        currentReport: currentReport,
+        currentHealthStatus: currentHealth,
+        intelligenceHistory: [veryOldReport, recentReport],
+        healthHistory: [veryOldHealth, recentHealth],
       );
-      
-      final currentReport = _createMockReport(
-        plantId: 'zucchini_1',
-        intelligenceScore: 73.0, // +3.0 (within 5.0 threshold)
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = customTracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'stable'); // Should be stable with 5.0 threshold
-      expect(result.deltaScore, 3.0);
-    });
-    
-    // ==================== TEST CASE 10: Extension Methods ====================
-    
-    test('extension methods should provide helpful utilities', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'parsley_1',
-        intelligenceScore: 60.0,
-        temperatureStatus: ConditionStatus.fair,
-        humidityStatus: ConditionStatus.poor,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.fair,
-        generatedAt: DateTime(2025, 10, 1, 12, 0),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'parsley_1',
-        intelligenceScore: 75.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.fair,
-        generatedAt: DateTime(2025, 10, 5, 12, 0), // 4 days later
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.hasImproved, isTrue);
-      expect(result.hasDegraded, isFalse);
-      expect(result.isStable, isFalse);
-      expect(result.description, contains('Amélioration'));
-      expect(result.description, contains('+15.0 points'));
-      expect(result.timeBetweenReports, const Duration(days: 4));
-      expect(result.hasConditionChanges, isTrue);
-      expect(result.totalConditions, 4);
-    });
-    
-    // ==================== TEST CASE 11: Zero Score Delta ====================
-    
-    test('should handle exact zero score delta', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'mint_1',
-        intelligenceScore: 80.0,
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'mint_1',
-        intelligenceScore: 80.0, // Exact same
-        temperatureStatus: ConditionStatus.good,
-        humidityStatus: ConditionStatus.good,
-        lightStatus: ConditionStatus.good,
-        soilStatus: ConditionStatus.good,
-        generatedAt: DateTime(2025, 10, 2),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'stable');
-      expect(result.deltaScore, 0.0);
-      expect(result.improvedConditions, isEmpty);
-      expect(result.degradedConditions, isEmpty);
-      expect(result.unchangedConditions, hasLength(4));
-    });
-    
-    // ==================== TEST CASE 12: All Conditions Degraded ====================
-    
-    test('should detect when all conditions degraded', () {
-      // Arrange
-      final previousReport = _createMockReport(
-        plantId: 'oregano_1',
-        intelligenceScore: 90.0,
-        temperatureStatus: ConditionStatus.excellent,
-        humidityStatus: ConditionStatus.excellent,
-        lightStatus: ConditionStatus.excellent,
-        soilStatus: ConditionStatus.excellent,
-        generatedAt: DateTime(2025, 10, 1),
-      );
-      
-      final currentReport = _createMockReport(
-        plantId: 'oregano_1',
-        intelligenceScore: 40.0, // -50.0
-        temperatureStatus: ConditionStatus.poor,
-        humidityStatus: ConditionStatus.critical,
-        lightStatus: ConditionStatus.fair,
-        soilStatus: ConditionStatus.poor,
-        generatedAt: DateTime(2025, 10, 10),
-      );
-      
-      // Act
-      final result = tracker.compareReports(
-        previous: previousReport,
-        current: currentReport,
-      );
-      
-      // Assert
-      expect(result.trend, 'down');
-      expect(result.improvedConditions, isEmpty);
-      expect(result.degradedConditions, hasLength(4));
-      expect(result.unchangedConditions, isEmpty);
-      expect(result.improvementRate, 0.0);
-      expect(result.degradationRate, 100.0);
+
+      expect(result, isNotNull);
+      expect(result!.intelligenceHistory.length, equals(2));
+      expect(result.intelligenceHistory.first.generatedAt, equals(recentDate));
+      expect(result.healthHistory.length, equals(2));
+      expect(result.healthHistory.first.lastUpdated, equals(recentDate));
     });
   });
-}
-
-// ==================== HELPER FUNCTIONS ====================
-
-/// Creates a mock PlantIntelligenceReport for testing
-PlantIntelligenceReport _createMockReport({
-  required String plantId,
-  required double intelligenceScore,
-  required ConditionStatus temperatureStatus,
-  required ConditionStatus humidityStatus,
-  required ConditionStatus lightStatus,
-  required ConditionStatus soilStatus,
-  required DateTime generatedAt,
-}) {
-  final analysis = _createMockAnalysis(
-    plantId: plantId,
-    temperatureStatus: temperatureStatus,
-    humidityStatus: humidityStatus,
-    lightStatus: lightStatus,
-    soilStatus: soilStatus,
-  );
-  
-  return PlantIntelligenceReport(
-    id: 'report_$plantId',
-    plantId: plantId,
-    plantName: 'Test Plant',
-    gardenId: 'test_garden',
-    analysis: analysis,
-    recommendations: [],
-    intelligenceScore: intelligenceScore,
-    confidence: 0.85,
-    generatedAt: generatedAt,
-    expiresAt: generatedAt.add(const Duration(hours: 6)),
-  );
-}
-
-/// Creates a mock PlantAnalysisResult for testing
-PlantAnalysisResult _createMockAnalysis({
-  required String plantId,
-  required ConditionStatus temperatureStatus,
-  required ConditionStatus humidityStatus,
-  required ConditionStatus lightStatus,
-  required ConditionStatus soilStatus,
-}) {
-  final now = DateTime.now();
-  
-  return PlantAnalysisResult(
-    id: const Uuid().v4(),
-    plantId: plantId,
-    temperature: PlantCondition(
-      id: const Uuid().v4(),
-      plantId: plantId,
-      type: ConditionType.temperature,
-      status: temperatureStatus,
-      value: 22.0,
-      optimalValue: 22.0,
-      minValue: 18.0,
-      maxValue: 28.0,
-      unit: '°C',
-      description: 'Temperature condition',
-      measuredAt: now,
-    ),
-    humidity: PlantCondition(
-      id: const Uuid().v4(),
-      plantId: plantId,
-      type: ConditionType.humidity,
-      status: humidityStatus,
-      value: 65.0,
-      optimalValue: 65.0,
-      minValue: 50.0,
-      maxValue: 80.0,
-      unit: '%',
-      description: 'Humidity condition',
-      measuredAt: now,
-    ),
-    light: PlantCondition(
-      id: const Uuid().v4(),
-      plantId: plantId,
-      type: ConditionType.light,
-      status: lightStatus,
-      value: 5000.0,
-      optimalValue: 5000.0,
-      minValue: 3000.0,
-      maxValue: 8000.0,
-      unit: 'lux',
-      description: 'Light condition',
-      measuredAt: now,
-    ),
-    soil: PlantCondition(
-      id: const Uuid().v4(),
-      plantId: plantId,
-      type: ConditionType.soil,
-      status: soilStatus,
-      value: 6.5,
-      optimalValue: 6.5,
-      minValue: 6.0,
-      maxValue: 7.0,
-      unit: 'pH',
-      description: 'Soil condition',
-      measuredAt: now,
-    ),
-    overallHealth: temperatureStatus,
-    healthScore: 75.0,
-    confidence: 0.9,
-    warnings: [],
-    strengths: [],
-    priorityActions: [],
-    analyzedAt: now,
-  );
 }
 

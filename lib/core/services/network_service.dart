@@ -1,34 +1,86 @@
+import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:permacalendar/core/services/environment_service.dart';
 
 /// Service réseau pour la communication avec le backend
-/// Préparé pour l'intégration future avec Hostinger
+///
+/// **Responsabilité :**
+/// - Gestion des requêtes HTTP (GET, POST, PUT, DELETE)
+/// - Upload de fichiers
+/// - Gestion des erreurs réseau avec retry automatique
+/// - Authentification (préparé pour le futur)
+/// - Logging en mode debug
+///
+/// **Architecture :**
+/// Utilise Dio comme client HTTP avec intercepteurs pour :
+/// - Logging (mode debug uniquement)
+/// - Authentification (Bearer token - préparé)
+/// - Retry automatique sur erreurs temporaires
+///
+/// **Usage avec Riverpod :**
+/// ```dart
+/// final networkService = ref.read(NetworkModule.networkServiceProvider);
+/// await networkService.initialize();
+/// final response = await networkService.get('/api/data');
+/// ```
+///
+/// **Gestion des erreurs :**
+/// Toutes les erreurs sont converties en `NetworkException` avec un type
+/// spécifique (timeout, connectionError, badRequest, etc.)
+///
+/// **Retry automatique :**
+/// Les requêtes échouant avec des erreurs temporaires (timeout, 5xx)
+/// sont automatiquement réessayées jusqu'à 3 fois avec backoff exponentiel.
 class NetworkService {
-  static NetworkService? _instance;
-  static NetworkService get instance => _instance ??= NetworkService._();
-
-  NetworkService._();
+  NetworkService();
 
   late Dio _dio;
+  bool _initialized = false;
 
   /// Initialise le service réseau
+  ///
+  /// **Doit être appelé avant toute utilisation du service.**
+  ///
+  /// Configure Dio avec :
+  /// - Base URL depuis EnvironmentService
+  /// - Timeouts (30 secondes par défaut)
+  /// - Intercepteurs (logging, auth, retry)
   Future<void> initialize() async {
+    if (_initialized) return;
+
     _dio = Dio();
 
     // Configuration de base
+    final timeout = Duration(
+      milliseconds: EnvironmentService.apiTimeout,
+    );
+
     _dio.options = BaseOptions(
       baseUrl: EnvironmentService.apiBaseUrl,
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
-      sendTimeout: const Duration(seconds: 30),
+      connectTimeout: timeout,
+      receiveTimeout: timeout,
+      sendTimeout: timeout,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     );
 
-    // Intercepteurs pour le debug et l'authentification
+    // Intercepteur de retry pour les erreurs temporaires
+    _dio.interceptors.add(
+      RetryInterceptor(
+        dio: _dio,
+        retries: 3,
+        retryDelays: const [
+          Duration(seconds: 1),
+          Duration(seconds: 2),
+          Duration(seconds: 4),
+        ],
+      ),
+    );
+
+    // Intercepteurs pour le debug
     if (EnvironmentService.isDebugMode) {
       _dio.interceptors.add(LogInterceptor(
         requestBody: true,
@@ -56,11 +108,33 @@ class NetworkService {
         handler.next(error);
       },
     ));
+
+    _initialized = true;
+  }
+
+  /// Vérifie si le service est initialisé
+  bool get isInitialized => _initialized;
+
+  /// Vérifie que le service est initialisé, sinon lance une exception
+  void _ensureInitialized() {
+    if (!_initialized) {
+      throw StateError(
+        'NetworkService must be initialized before use. '
+        'Call initialize() first.',
+      );
+    }
   }
 
   /// Vérifie si le backend est disponible
+  ///
+  /// Effectue une requête GET sur `/health` pour vérifier la disponibilité.
+  ///
+  /// **Retourne :**
+  /// - `true` si le backend répond avec un status 200
+  /// - `false` si le backend est désactivé, non disponible ou en erreur
   Future<bool> isBackendAvailable() async {
     if (!EnvironmentService.isBackendEnabled) return false;
+    _ensureInitialized();
 
     try {
       final response = await _dio.get('/health');
@@ -71,11 +145,21 @@ class NetworkService {
   }
 
   /// GET request générique
+  ///
+  /// **Paramètres :**
+  /// - `path` : Chemin de l'endpoint (relatif à la base URL)
+  /// - `queryParameters` : Paramètres de requête optionnels
+  /// - `options` : Options Dio supplémentaires
+  ///
+  /// **Retourne :** `Response<T>` avec les données typées
+  ///
+  /// **Lance :** `NetworkException` en cas d'erreur
   Future<Response<T>> get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
+    _ensureInitialized();
     try {
       return await _dio.get<T>(
         path,
@@ -88,12 +172,23 @@ class NetworkService {
   }
 
   /// POST request générique
+  ///
+  /// **Paramètres :**
+  /// - `path` : Chemin de l'endpoint (relatif à la base URL)
+  /// - `data` : Données à envoyer dans le body
+  /// - `queryParameters` : Paramètres de requête optionnels
+  /// - `options` : Options Dio supplémentaires
+  ///
+  /// **Retourne :** `Response<T>` avec les données typées
+  ///
+  /// **Lance :** `NetworkException` en cas d'erreur
   Future<Response<T>> post<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
+    _ensureInitialized();
     try {
       return await _dio.post<T>(
         path,
@@ -107,12 +202,23 @@ class NetworkService {
   }
 
   /// PUT request générique
+  ///
+  /// **Paramètres :**
+  /// - `path` : Chemin de l'endpoint (relatif à la base URL)
+  /// - `data` : Données à envoyer dans le body
+  /// - `queryParameters` : Paramètres de requête optionnels
+  /// - `options` : Options Dio supplémentaires
+  ///
+  /// **Retourne :** `Response<T>` avec les données typées
+  ///
+  /// **Lance :** `NetworkException` en cas d'erreur
   Future<Response<T>> put<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
+    _ensureInitialized();
     try {
       return await _dio.put<T>(
         path,
@@ -126,12 +232,23 @@ class NetworkService {
   }
 
   /// DELETE request générique
+  ///
+  /// **Paramètres :**
+  /// - `path` : Chemin de l'endpoint (relatif à la base URL)
+  /// - `data` : Données à envoyer dans le body (optionnel)
+  /// - `queryParameters` : Paramètres de requête optionnels
+  /// - `options` : Options Dio supplémentaires
+  ///
+  /// **Retourne :** `Response<T>` avec les données typées
+  ///
+  /// **Lance :** `NetworkException` en cas d'erreur
   Future<Response<T>> delete<T>(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
+    _ensureInitialized();
     try {
       return await _dio.delete<T>(
         path,
@@ -145,6 +262,17 @@ class NetworkService {
   }
 
   /// Upload de fichier
+  ///
+  /// **Paramètres :**
+  /// - `path` : Chemin de l'endpoint (relatif à la base URL)
+  /// - `filePath` : Chemin local du fichier à uploader
+  /// - `fieldName` : Nom du champ dans le FormData (défaut: 'file')
+  /// - `data` : Données supplémentaires à envoyer
+  /// - `onSendProgress` : Callback pour suivre la progression de l'upload
+  ///
+  /// **Retourne :** `Response<T>` avec les données typées
+  ///
+  /// **Lance :** `NetworkException` en cas d'erreur
   Future<Response<T>> uploadFile<T>(
     String path,
     String filePath, {
@@ -152,6 +280,7 @@ class NetworkService {
     Map<String, dynamic>? data,
     ProgressCallback? onSendProgress,
   }) async {
+    _ensureInitialized();
     try {
       final formData = FormData.fromMap({
         fieldName: await MultipartFile.fromFile(filePath),
@@ -182,7 +311,18 @@ class NetworkService {
 
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode ?? 0;
-        final message = e.response?.data?['message'] ?? 'Erreur serveur';
+        final responseData = e.response?.data;
+        
+        // Essayer d'extraire le message d'erreur depuis différentes structures
+        String message = 'Erreur serveur';
+        if (responseData is Map<String, dynamic>) {
+          message = responseData['message'] as String? ??
+              responseData['error'] as String? ??
+              responseData['detail'] as String? ??
+              message;
+        } else if (responseData is String) {
+          message = responseData;
+        }
 
         return NetworkException(
           message,
@@ -220,10 +360,91 @@ class NetworkService {
       case 404:
         return NetworkExceptionType.notFound;
       case 500:
+      case 502:
+      case 503:
+      case 504:
         return NetworkExceptionType.serverError;
       default:
         return NetworkExceptionType.unknown;
     }
+  }
+}
+
+/// Intercepteur Dio pour retry automatique sur erreurs temporaires
+///
+/// **Stratégie de retry :**
+/// - Retry uniquement sur erreurs temporaires (timeout, 5xx)
+/// - Backoff exponentiel entre les tentatives
+/// - Maximum 3 tentatives par défaut
+class RetryInterceptor extends Interceptor {
+  final int retries;
+  final List<Duration> retryDelays;
+  final Dio dio;
+
+  RetryInterceptor({
+    required this.dio,
+    this.retries = 3,
+    required this.retryDelays,
+  }) : assert(
+          retryDelays.length == retries,
+          'retryDelays must have the same length as retries',
+        );
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    final retryCount = err.requestOptions.extra['retryCount'] as int? ?? 0;
+
+    // Vérifier si on peut retry
+    if (retryCount < retries && _shouldRetry(err)) {
+      final delay = retryDelays[retryCount];
+
+      // Attendre avant de retry
+      await Future.delayed(delay);
+
+      // Mettre à jour le compteur de retry
+      err.requestOptions.extra['retryCount'] = retryCount + 1;
+
+      // Réessayer la requête
+      try {
+        final response = await dio.fetch(err.requestOptions);
+        handler.resolve(response);
+        return;
+      } catch (e) {
+        // Si le retry échoue, continuer avec l'erreur
+        if (e is DioException) {
+          handler.next(e);
+        } else {
+          handler.next(err);
+        }
+        return;
+      }
+    }
+
+    // Pas de retry possible, passer l'erreur
+    handler.next(err);
+  }
+
+  /// Vérifie si l'erreur justifie un retry
+  bool _shouldRetry(DioException err) {
+    // Retry sur timeouts
+    if (err.type == DioExceptionType.connectionTimeout ||
+        err.type == DioExceptionType.sendTimeout ||
+        err.type == DioExceptionType.receiveTimeout) {
+      return true;
+    }
+
+    // Retry sur erreurs serveur (5xx)
+    final statusCode = err.response?.statusCode;
+    if (statusCode != null && statusCode >= 500 && statusCode < 600) {
+      return true;
+    }
+
+    // Retry sur erreurs de connexion
+    if (err.type == DioExceptionType.connectionError) {
+      return true;
+    }
+
+    return false;
   }
 }
 

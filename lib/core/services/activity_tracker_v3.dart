@@ -1,34 +1,63 @@
 import 'dart:async';
 import 'dart:developer' as developer;
+
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
+
 import '../models/activity_v3.dart';
+import 'aggregation/garden_aggregation_hub.dart';
+
+/// ActivityTrackerV3
+/// ------------------
+/// Service central d’agrégation d’activités dans PermaCalendar.
+/// - Enregistre les activités jardin/plante.
+/// - Fournit un historique structuré pour les vues UI.
+/// - Compatible Riverpod 3 et auto-disposé.
+/// - Sécurisé (try/catch sur Hive et async).
+/// - Intégré au GardenAggregationHub.
+typedef ActivityTrackerErrorLogger = void Function(
+  String message, {
+  Object? error,
+  StackTrace? stackTrace,
+  Map<String, dynamic>? context,
+});
 
 /// Service de tracking des activités V3 - Version propre et optimisée
-///
-/// Caractéristiques :
-/// - Singleton strict pour éviter les doublons
-/// - Cache intelligent pour déduplication
-/// - Gestion des priorités
-/// - Performance optimisée
-/// - Aucune récursion
 class ActivityTrackerV3 {
-  // Singleton strict
-  static final ActivityTrackerV3 _instance = ActivityTrackerV3._internal();
-  factory ActivityTrackerV3() => _instance;
-  ActivityTrackerV3._internal();
+  ActivityTrackerV3({
+    GardenAggregationHub? hub,
+    HiveInterface? hive,
+    Uuid? uuid,
+    Duration? duplicateThreshold,
+    int? maxActivities,
+    int? cleanupThreshold,
+    ActivityTrackerErrorLogger? errorLogger,
+  })  : _hub = hub,
+        _hive = hive ?? Hive,
+        _uuid = uuid ?? const Uuid(),
+        _duplicateThreshold = duplicateThreshold ?? _defaultDuplicateThreshold,
+        _maxActivities = maxActivities ?? _defaultMaxActivities,
+        _cleanupThreshold = cleanupThreshold ?? _defaultCleanupThreshold,
+        _errorLogger = errorLogger;
 
   // Configuration
   static const String _boxName = 'activities_v3';
-  static const Duration _duplicateThreshold = Duration(minutes: 5);
-  static const int _maxActivities = 500; // Limite raisonnable
-  static const int _cleanupThreshold = 1000; // Seuil de nettoyage
+  static const Duration _defaultDuplicateThreshold = Duration(minutes: 5);
+  static const int _defaultMaxActivities = 500; // Limite raisonnable
+  static const int _defaultCleanupThreshold = 1000; // Seuil de nettoyage
+
+  final GardenAggregationHub? _hub;
+  final HiveInterface _hive;
+  final Uuid _uuid;
+  final Duration _duplicateThreshold;
+  final int _maxActivities;
+  final int _cleanupThreshold;
+  final ActivityTrackerErrorLogger? _errorLogger;
 
   // État interne
   Box<ActivityV3>? _box;
   bool _isInitialized = false;
   final Map<String, DateTime> _lastActivityCache = {};
-  final Uuid _uuid = const Uuid();
 
   // Getters
   bool get isInitialized => _isInitialized;
@@ -40,7 +69,7 @@ class ActivityTrackerV3 {
 
     try {
       print('ActivityTrackerV3: Ouverture de la box Hive...');
-      _box = await Hive.openBox<ActivityV3>(_boxName);
+      _box = await _hive.openBox<ActivityV3>(_boxName);
       _isInitialized = true;
       print('✅ ActivityTrackerV3 initialisé avec succès');
 
@@ -52,15 +81,20 @@ class ActivityTrackerV3 {
         name: 'ActivityTrackerV3',
         level: 800, // Info level
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('❌ Erreur initialisation ActivityTrackerV3: $e');
-      developer.log(
+      _logError(
         'Erreur lors de l\'initialisation d\'ActivityTrackerV3: $e',
-        name: 'ActivityTrackerV3',
-        level: 1000, // Error level
+        error: e,
+        stackTrace: stackTrace,
       );
       rethrow;
     }
+  }
+
+  /// S'assure que le service est initialisé avant utilisation.
+  Future<void> ensureInitialized() async {
+    await initialize();
   }
 
   /// Enregistre une activité avec déduplication intelligente
@@ -80,20 +114,6 @@ class ActivityTrackerV3 {
     }
 
     try {
-      // Générer une clé unique pour cette activité
-      final activityKey = _generateActivityKey(type, description, metadata);
-
-      // Vérifier si l'activité n'a pas déjà été enregistrée récemment
-      if (_isDuplicateActivity(activityKey)) {
-        developer.log(
-          'Activité dupliquée ignorée: $type - $description',
-          name: 'ActivityTrackerV3',
-          level: 700, // Debug level
-        );
-        return;
-      }
-
-      // Créer l'activité
       final activity = ActivityV3(
         id: _uuid.v4(),
         type: type,
@@ -103,27 +123,74 @@ class ActivityTrackerV3 {
         priority: priority.value,
       );
 
-      // Enregistrer l'activité
-      await _box!.put(activity.id, activity);
+      final activityKey = _generateActivityKey(type, description, metadata);
+      await recordActivity(activity, activityKeyOverride: activityKey);
+    } catch (e, stackTrace) {
+      _logError(
+        'Erreur lors de l\'enregistrement de l\'activité: $e',
+        error: e,
+        stackTrace: stackTrace,
+        context: {
+          'type': type,
+          'description': description,
+        },
+      );
+      // Ne pas rethrow pour éviter de casser l'application
+    }
+  }
 
-      // Mettre à jour le cache
+  /// Enregistre directement une activité existante
+  Future<void> recordActivity(
+    ActivityV3 activity, {
+    String? activityKeyOverride,
+  }) async {
+    if (!_isInitialized || _box == null) {
+      developer.log(
+        'ActivityTrackerV3 non initialisé, activité ignorée (recordActivity): ${activity.type}',
+        name: 'ActivityTrackerV3',
+        level: 900, // Warning level
+      );
+      return;
+    }
+
+    try {
+      final activityKey = activityKeyOverride ??
+          _generateActivityKey(
+            activity.type,
+            activity.description,
+            activity.metadata,
+          );
+
+      if (_isDuplicateActivity(activityKey)) {
+        developer.log(
+          'Activité dupliquée ignorée (recordActivity): ${activity.type} - ${activity.description}',
+          name: 'ActivityTrackerV3',
+          level: 700, // Debug level
+        );
+        return;
+      }
+
+      await _box!.put(activity.id, activity);
       _lastActivityCache[activityKey] = activity.timestamp;
 
-      // Nettoyage périodique
       await _performCleanupIfNeeded();
+      _notifyAggregationLayer(activity);
 
       developer.log(
-        'Activité enregistrée: $type - $description',
+        'Activité enregistrée via recordActivity: ${activity.type} - ${activity.description}',
         name: 'ActivityTrackerV3',
         level: 700, // Debug level
       );
-    } catch (e) {
-      developer.log(
-        'Erreur lors de l\'enregistrement de l\'activité: $e',
-        name: 'ActivityTrackerV3',
-        level: 1000, // Error level
+    } catch (e, stackTrace) {
+      _logError(
+        'Erreur lors de l\'enregistrement direct de l\'activité: $e',
+        error: e,
+        stackTrace: stackTrace,
+        context: {
+          'activityId': activity.id,
+          'type': activity.type,
+        },
       );
-      // Ne pas rethrow pour éviter de casser l'application
     }
   }
 
@@ -305,5 +372,69 @@ class ActivityTrackerV3 {
         level: 800, // Info level
       );
     }
+  }
+
+  void _notifyAggregationLayer(ActivityV3 activity) {
+    final hub = _hub;
+    if (hub == null) return;
+
+    try {
+      final metadata = activity.metadata ?? {};
+      final possibleGardenIds = <String?>[
+        metadata['gardenId'] as String?,
+        metadata['garden_id'] as String?,
+        metadata['gardenID'] as String?,
+        if (metadata['garden'] is Map<String, dynamic>)
+          (metadata['garden'] as Map<String, dynamic>)['id'] as String?,
+      ];
+
+      final gardenId = possibleGardenIds.firstWhere(
+        (value) => value != null && value.isNotEmpty,
+        orElse: () => null,
+      );
+
+      if (gardenId == null) {
+        return;
+      }
+
+      hub.invalidateCache(gardenId);
+      hub.invalidateGardenIntelligenceCache(gardenId);
+    } catch (e, stackTrace) {
+      _logError(
+        'Erreur lors de la notification du GardenAggregationHub: $e',
+        error: e,
+        stackTrace: stackTrace,
+        context: {
+          'activityId': activity.id,
+          'type': activity.type,
+        },
+      );
+    }
+  }
+
+  void _logError(
+    String message, {
+    required Object error,
+    required StackTrace stackTrace,
+    Map<String, dynamic>? context,
+  }) {
+    try {
+      _errorLogger?.call(
+        message,
+        error: error,
+        stackTrace: stackTrace,
+        context: context,
+      );
+    } catch (_) {
+      // Ignorer les erreurs provenant du logger externe
+    }
+
+    developer.log(
+      message,
+      name: 'ActivityTrackerV3',
+      level: 1000,
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 }

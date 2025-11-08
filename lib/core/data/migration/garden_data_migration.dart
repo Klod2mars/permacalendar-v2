@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import '../../adapters/garden_migration_adapters.dart';
@@ -11,6 +12,11 @@ import '../../models/garden_freezed.dart';
 /// Ce service orchestre la migration complète des données Garden depuis les anciennes
 /// versions (Legacy, V2, Hive) vers le modèle unifié GardenFreezed.
 ///
+/// **Architecture :**
+/// - Classe standalone (pas de dépendance Riverpod directe)
+/// - Fournie via `GardenModule.dataMigrationProvider` pour injection de dépendances
+/// - Utilise `GardenMigrationAdapters` pour les conversions de modèles
+///
 /// **Boxes Hive concernées :**
 /// - `gardens` (HiveType 0) - Legacy Garden
 /// - `gardens_v2` (HiveType 10) - Garden V2
@@ -18,23 +24,51 @@ import '../../models/garden_freezed.dart';
 /// - `gardens_freezed` (nouvelle box cible)
 ///
 /// **Workflow :**
-/// 1. Backup de toutes les données existantes
-/// 2. Lecture de toutes les boxes source
+/// 1. Backup de toutes les données existantes (optionnel)
+/// 2. Lecture de toutes les boxes source (avec gestion d'erreurs)
 /// 3. Conversion vers GardenFreezed via adaptateurs
 /// 4. Sauvegarde dans la box cible
 /// 5. Vérification d'intégrité
 /// 6. Cleanup optionnel des anciennes boxes
+/// 7. Fermeture propre de toutes les boxes ouvertes
+///
+/// **Sécurité :**
+/// - Toutes les opérations Hive sont protégées par try/catch
+/// - Fermeture automatique des boxes après utilisation
+/// - Gestion gracieuse des boxes manquantes ou corrompues
+/// - Mode dry-run pour tester sans écrire
+///
+/// **Compatibilité Riverpod 3 :**
+/// - Aucun accès direct aux providers (classe standalone)
+/// - Injection via `GardenModule.dataMigrationProvider` si nécessaire
+/// - Pas de dépendance circulaire
 ///
 /// **Usage :**
 /// ```dart
+/// // Via Riverpod
+/// final migration = ref.read(GardenModule.dataMigrationProvider);
+///
+/// // Ou directement
 /// final migration = GardenDataMigration();
-/// final result = await migration.migrateAllGardens(
-///   cleanupOldBoxes: false, // Conserver les anciennes boxes par sécurité
-///   dryRun: false,           // Exécuter la migration réelle
+///
+/// // Simulation
+/// final dryRunResult = await migration.migrateAllGardens(
+///   dryRun: true,
+///   backupBeforeMigration: false,
 /// );
 ///
-/// if (result.success) {
-///   print('Migration réussie : ${result.migratedCount} jardins');
+/// // Migration réelle
+/// if (dryRunResult.success) {
+///   final result = await migration.migrateAllGardens(
+///     cleanupOldBoxes: false, // Conserver les anciennes boxes par sécurité
+///     dryRun: false,
+///     backupBeforeMigration: true,
+///   );
+///
+///   if (result.success) {
+///     print('Migration réussie : ${result.migratedCount} jardins');
+///     migration.printMigrationStats();
+///   }
 /// }
 /// ```
 class GardenDataMigration {
@@ -149,6 +183,11 @@ class GardenDataMigration {
   }
 
   /// Ouvre ou crée la box cible pour GardenFreezed
+  ///
+  /// **Sécurité :**
+  /// - Gestion d'erreurs avec try/catch
+  /// - Tentative de récupération en cas d'échec (suppression et recréation)
+  /// - Ne ferme pas la box (doit rester ouverte pour la migration)
   Future<Box<GardenFreezed>> _openOrCreateTargetBox() async {
     try {
       if (Hive.isBoxOpen('gardens_freezed')) {
@@ -157,14 +196,26 @@ class GardenDataMigration {
       return await Hive.openBox<GardenFreezed>('gardens_freezed');
     } catch (e) {
       developer.log(
-        'Erreur ouverture box cible, tentative de suppression et recréation',
+        'Erreur ouverture box cible, tentative de suppression et recréation: $e',
         name: 'GardenDataMigration',
         level: 900,
       );
 
       // Si échec, supprimer et recréer
-      await Hive.deleteBoxFromDisk('gardens_freezed');
-      return await Hive.openBox<GardenFreezed>('gardens_freezed');
+      try {
+        if (Hive.isBoxOpen('gardens_freezed')) {
+          await Hive.box('gardens_freezed').close();
+        }
+        await Hive.deleteBoxFromDisk('gardens_freezed');
+        return await Hive.openBox<GardenFreezed>('gardens_freezed');
+      } catch (e2) {
+        developer.log(
+          'Erreur critique lors de la récupération de la box cible: $e2',
+          name: 'GardenDataMigration',
+          level: 1000,
+        );
+        rethrow;
+      }
     }
   }
 
@@ -174,16 +225,18 @@ class GardenDataMigration {
     bool dryRun,
   ) async {
     final migratedGardens = <GardenFreezed>[];
+    Box<legacy.Garden>? legacyBox;
+    bool wasBoxOpen = false;
 
     try {
       // Ouvrir la box legacy
-      Box<legacy.Garden>? legacyBox;
-
       if (Hive.isBoxOpen('gardens')) {
         legacyBox = Hive.box<legacy.Garden>('gardens');
+        wasBoxOpen = true;
       } else {
         try {
           legacyBox = await Hive.openBox<legacy.Garden>('gardens');
+          wasBoxOpen = false;
         } catch (e) {
           developer.log(
             'Box legacy "gardens" n\'existe pas ou ne peut pas être ouverte: $e',
@@ -209,11 +262,19 @@ class GardenDataMigration {
           migratedGardens.add(gardenFreezed);
 
           if (!dryRun && targetBox != null) {
-            await targetBox.put(gardenFreezed.id, gardenFreezed);
-            developer.log(
-              '✅ Legacy "${gardenFreezed.name}" migré (${gardenFreezed.id})',
-              name: 'GardenDataMigration',
-            );
+            try {
+              await targetBox.put(gardenFreezed.id, gardenFreezed);
+              developer.log(
+                '✅ Legacy "${gardenFreezed.name}" migré (${gardenFreezed.id})',
+                name: 'GardenDataMigration',
+              );
+            } catch (e) {
+              developer.log(
+                'Erreur sauvegarde jardin Legacy "${gardenFreezed.name}": $e',
+                name: 'GardenDataMigration',
+                level: 1000,
+              );
+            }
           }
         } catch (e) {
           developer.log(
@@ -229,6 +290,19 @@ class GardenDataMigration {
         name: 'GardenDataMigration',
         level: 1000,
       );
+    } finally {
+      // Fermer la box si nous l'avons ouverte
+      if (legacyBox != null && !wasBoxOpen) {
+        try {
+          await legacyBox.close();
+        } catch (e) {
+          developer.log(
+            'Erreur fermeture box legacy: $e',
+            name: 'GardenDataMigration',
+            level: 900,
+          );
+        }
+      }
     }
 
     return migratedGardens;
@@ -240,16 +314,18 @@ class GardenDataMigration {
     bool dryRun,
   ) async {
     final migratedGardens = <GardenFreezed>[];
+    Box<v2.Garden>? v2Box;
+    bool wasBoxOpen = false;
 
     try {
       // Ouvrir la box v2
-      Box<v2.Garden>? v2Box;
-
       if (Hive.isBoxOpen('gardens_v2')) {
         v2Box = Hive.box<v2.Garden>('gardens_v2');
+        wasBoxOpen = true;
       } else {
         try {
           v2Box = await Hive.openBox<v2.Garden>('gardens_v2');
+          wasBoxOpen = false;
         } catch (e) {
           developer.log(
             'Box v2 "gardens_v2" n\'existe pas ou ne peut pas être ouverte: $e',
@@ -274,11 +350,19 @@ class GardenDataMigration {
           migratedGardens.add(gardenFreezed);
 
           if (!dryRun && targetBox != null) {
-            await targetBox.put(gardenFreezed.id, gardenFreezed);
-            developer.log(
-              '✅ V2 "${gardenFreezed.name}" migré (${gardenFreezed.id})',
-              name: 'GardenDataMigration',
-            );
+            try {
+              await targetBox.put(gardenFreezed.id, gardenFreezed);
+              developer.log(
+                '✅ V2 "${gardenFreezed.name}" migré (${gardenFreezed.id})',
+                name: 'GardenDataMigration',
+              );
+            } catch (e) {
+              developer.log(
+                'Erreur sauvegarde jardin V2 "${gardenFreezed.name}": $e',
+                name: 'GardenDataMigration',
+                level: 1000,
+              );
+            }
           }
         } catch (e) {
           developer.log(
@@ -294,6 +378,19 @@ class GardenDataMigration {
         name: 'GardenDataMigration',
         level: 1000,
       );
+    } finally {
+      // Fermer la box si nous l'avons ouverte
+      if (v2Box != null && !wasBoxOpen) {
+        try {
+          await v2Box.close();
+        } catch (e) {
+          developer.log(
+            'Erreur fermeture box v2: $e',
+            name: 'GardenDataMigration',
+            level: 900,
+          );
+        }
+      }
     }
 
     return migratedGardens;
@@ -305,16 +402,18 @@ class GardenDataMigration {
     bool dryRun,
   ) async {
     final migratedGardens = <GardenFreezed>[];
+    Box<GardenHive>? hiveBox;
+    bool wasBoxOpen = false;
 
     try {
       // Ouvrir la box hive
-      Box<GardenHive>? hiveBox;
-
       if (Hive.isBoxOpen('gardens_hive')) {
         hiveBox = Hive.box<GardenHive>('gardens_hive');
+        wasBoxOpen = true;
       } else {
         try {
           hiveBox = await Hive.openBox<GardenHive>('gardens_hive');
+          wasBoxOpen = false;
         } catch (e) {
           developer.log(
             'Box "gardens_hive" n\'existe pas ou ne peut pas être ouverte: $e',
@@ -339,11 +438,19 @@ class GardenDataMigration {
           migratedGardens.add(gardenFreezed);
 
           if (!dryRun && targetBox != null) {
-            await targetBox.put(gardenFreezed.id, gardenFreezed);
-            developer.log(
-              '✅ Hive "${gardenFreezed.name}" migré (${gardenFreezed.id}) - Surface: ${gardenFreezed.totalAreaInSquareMeters.toStringAsFixed(2)} m²',
-              name: 'GardenDataMigration',
-            );
+            try {
+              await targetBox.put(gardenFreezed.id, gardenFreezed);
+              developer.log(
+                '✅ Hive "${gardenFreezed.name}" migré (${gardenFreezed.id}) - Surface: ${gardenFreezed.totalAreaInSquareMeters.toStringAsFixed(2)} m²',
+                name: 'GardenDataMigration',
+              );
+            } catch (e) {
+              developer.log(
+                'Erreur sauvegarde jardin Hive "${gardenFreezed.name}": $e',
+                name: 'GardenDataMigration',
+                level: 1000,
+              );
+            }
           }
         } catch (e) {
           developer.log(
@@ -359,6 +466,19 @@ class GardenDataMigration {
         name: 'GardenDataMigration',
         level: 1000,
       );
+    } finally {
+      // Fermer la box si nous l'avons ouverte
+      if (hiveBox != null && !wasBoxOpen) {
+        try {
+          await hiveBox.close();
+        } catch (e) {
+          developer.log(
+            'Erreur fermeture box hive: $e',
+            name: 'GardenDataMigration',
+            level: 900,
+          );
+        }
+      }
     }
 
     return migratedGardens;
@@ -449,51 +569,87 @@ class GardenDataMigration {
 
   /// Récupère les données d'une box (JSON-safe)
   Future<List<Map<String, dynamic>>> _getBoxData(String boxName) async {
+    Box? box;
+    bool wasBoxOpen = false;
+
     try {
-      Box? box;
       if (Hive.isBoxOpen(boxName)) {
         box = Hive.box(boxName);
+        wasBoxOpen = true;
       } else {
-        box = await Hive.openBox(boxName);
+        try {
+          box = await Hive.openBox(boxName);
+          wasBoxOpen = false;
+        } catch (e) {
+          developer.log(
+            'Box $boxName n\'existe pas ou ne peut pas être ouverte: $e',
+            name: 'GardenDataMigration',
+            level: 900,
+          );
+          return [];
+        }
       }
 
       return box.values.map<Map<String, dynamic>>((e) {
-        if (e is legacy.Garden) {
-          return <String, dynamic>{
-            'id': e.id,
-            'name': e.name,
-            'description': e.description,
-            'totalAreaInSquareMeters': e.totalAreaInSquareMeters,
-            'location': e.location,
-            'createdAt': e.createdAt.toIso8601String(),
-            'updatedAt': e.updatedAt.toIso8601String(),
-          };
-        } else if (e is v2.Garden) {
-          return <String, dynamic>{
-            'id': e.id,
-            'name': e.name,
-            'description': e.description,
-            'location': e.location,
-            'createdDate': e.createdDate.toIso8601String(),
-            'gardenBeds': e.gardenBeds,
-          };
-        } else if (e is GardenHive) {
-          return <String, dynamic>{
-            'id': e.id,
-            'name': e.name,
-            'description': e.description,
-            'createdDate': e.createdDate.toIso8601String(),
-            'gardenBedsCount': e.gardenBeds.length,
-          };
+        try {
+          if (e is legacy.Garden) {
+            return <String, dynamic>{
+              'id': e.id,
+              'name': e.name,
+              'description': e.description,
+              'totalAreaInSquareMeters': e.totalAreaInSquareMeters,
+              'location': e.location,
+              'createdAt': e.createdAt.toIso8601String(),
+              'updatedAt': e.updatedAt.toIso8601String(),
+            };
+          } else if (e is v2.Garden) {
+            return <String, dynamic>{
+              'id': e.id,
+              'name': e.name,
+              'description': e.description,
+              'location': e.location,
+              'createdDate': e.createdDate.toIso8601String(),
+              'gardenBeds': e.gardenBeds,
+            };
+          } else if (e is GardenHive) {
+            return <String, dynamic>{
+              'id': e.id,
+              'name': e.name,
+              'description': e.description,
+              'createdDate': e.createdDate.toIso8601String(),
+              'gardenBedsCount': e.gardenBeds.length,
+            };
+          }
+          return <String, dynamic>{};
+        } catch (e) {
+          developer.log(
+            'Erreur sérialisation élément de $boxName: $e',
+            name: 'GardenDataMigration',
+            level: 900,
+          );
+          return <String, dynamic>{};
         }
-        return <String, dynamic>{};
       }).toList();
     } catch (e) {
       developer.log(
-        'Box $boxName n\'existe pas ou ne peut pas être lue',
+        'Erreur lecture box $boxName: $e',
         name: 'GardenDataMigration',
+        level: 900,
       );
       return [];
+    } finally {
+      // Fermer la box si nous l'avons ouverte
+      if (box != null && !wasBoxOpen) {
+        try {
+          await box.close();
+        } catch (e) {
+          developer.log(
+            'Erreur fermeture box $boxName: $e',
+            name: 'GardenDataMigration',
+            level: 900,
+          );
+        }
+      }
     }
   }
 

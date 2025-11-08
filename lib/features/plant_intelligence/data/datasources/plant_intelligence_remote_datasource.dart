@@ -1,13 +1,52 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:permacalendar/core/services/environment_service.dart';
+import 'package:permacalendar/core/services/network_service.dart';
+
+import '../../domain/entities/garden_context.dart';
 import '../../domain/entities/plant_condition.dart';
 import '../../domain/entities/recommendation.dart';
 import '../../domain/entities/weather_condition.dart';
-import '../../domain/entities/garden_context.dart';
 
-/// Interface pour la source de données distante de l'intelligence des plantes
+/// Source de données distante pour l'Intelligence Végétale.
 ///
-/// Définit les contrats pour l'accès aux données distantes via APIs externes
-/// pour l'intelligence des plantes. Actuellement utilisé comme placeholder
-/// pour de futures intégrations.
+/// 🔌 **Rôle principal**
+/// - Fournir un accès réseau sécurisé (Dio via `NetworkService`) aux APIs
+///   d'intelligence végétale.
+/// - Synchroniser les données locales (Hive) avec le backend lorsque
+///   `EnvironmentService.isBackendEnabled` est actif.
+/// - Servir de passerelle unique vers l'IA distante consommée par
+///   `PlantIntelligenceRepositoryImpl`, `IntelligentRecommendationEngine`
+///   et les processeurs temps-réel (`RealTimeDataProcessor`).
+/// - Compléter les données issues de `plantDataSourceProvider` avant
+///   synchronisation afin de conserver les identifiants cohérents côté backend.
+///
+/// 🧩 **Intégration Riverpod 3**
+/// - Le provider `plantIntelligenceRemoteDataSourceProvider` (défini dans
+///   `IntelligenceModule`) injecte l'implémentation en lecture seule via
+///   `ref.read()` pour éviter tout état global.
+/// - Les opérations asynchrones critiques (ex: statut de synchronisation)
+///   sont exposées via un `FutureProvider.autoDispose` pour une intégration
+///   directe dans l'UI sans fuite mémoire.
+///
+/// 🔒 **Sécurisation**
+/// - Chaque appel réseau est encapsulé dans une stratégie résiliente
+///   (`timeout`, `SocketException`, `NetworkException`).
+/// - Retourne des valeurs sûres (listes vides, `null`, `false`) en cas
+///   d'indisponibilité afin de ne jamais bloquer l'orchestrateur.
+/// - Jette `PlantIntelligenceRemoteDataSourceException` pour les charges
+///   utiles corrompues afin de faciliter le diagnostic et la remontée aux
+///   tests.
+///
+/// 🧭 **Bonnes pratiques**
+/// - Préférer `ref.read(IntelligenceModule.remoteSyncStatusProvider)` dans
+///   les widgets pour obtenir l'état réseau actuel (`autoDispose`).
+/// - Les méthodes de synchronisation peuvent être appelées depuis des
+///   `AsyncNotifier` Riverpod pour profiter des mécanismes de retry.
+/// - S'assurer que `EnvironmentService.initialize()` est appelé au démarrage
+///   afin de charger la configuration (URL, timeouts, etc.).
 abstract class PlantIntelligenceRemoteDataSource {
   // ==================== GESTION DES CONDITIONS ====================
 
@@ -282,28 +321,86 @@ class SyncStatus {
     required this.pendingOperations,
     required this.metadata,
   });
+
+  factory SyncStatus.fromJson(Map<String, dynamic> json) {
+    return SyncStatus(
+      isConnected: json['isConnected'] as bool? ?? false,
+      isSyncing: json['isSyncing'] as bool? ?? false,
+      lastSyncTime: _tryParseDate(json['lastSyncTime']),
+      lastSyncError: json['lastSyncError'] as String?,
+      pendingOperations: json['pendingOperations'] as int? ?? 0,
+      metadata: json['metadata'] is Map
+          ? Map<String, dynamic>.from(json['metadata'] as Map)
+          : const <String, dynamic>{},
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'isConnected': isConnected,
+        'isSyncing': isSyncing,
+        'lastSyncTime': lastSyncTime?.toIso8601String(),
+        'lastSyncError': lastSyncError,
+        'pendingOperations': pendingOperations,
+        'metadata': metadata,
+      };
+
+  static DateTime? _tryParseDate(dynamic value) {
+    if (value is DateTime) return value;
+    if (value is String && value.isNotEmpty) {
+      return DateTime.tryParse(value);
+    }
+    if (value is int) {
+      return DateTime.fromMillisecondsSinceEpoch(value);
+    }
+    return null;
+  }
 }
 
-/// Implémentation concrète de la source de données distante (Placeholder)
-///
-/// Cette implémentation est actuellement vide et sert de placeholder
-/// pour de futures intégrations avec des APIs externes d'intelligence végétale.
 class PlantIntelligenceRemoteDataSourceImpl
     implements PlantIntelligenceRemoteDataSource {
+  PlantIntelligenceRemoteDataSourceImpl({
+    required NetworkService networkService,
+    Duration requestTimeout = const Duration(seconds: 12),
+    bool Function()? isBackendEnabled,
+  })  : _networkService = networkService,
+        _requestTimeout = requestTimeout,
+        _isBackendEnabled = isBackendEnabled ??
+            (() => EnvironmentService.isBackendEnabled);
+
+  final NetworkService _networkService;
+  final Duration _requestTimeout;
+  final bool Function() _isBackendEnabled;
+
   // ==================== GESTION DES CONDITIONS ====================
 
   @override
-  Future<bool> syncPlantCondition(PlantCondition condition) async {
-    // TODO: Implémenter la synchronisation avec l'API distante
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  Future<bool> syncPlantCondition(PlantCondition condition) {
+    return _executeMutation(
+      operation: 'syncPlantCondition',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.plantConditions(condition.plantId),
+        data: condition.toJson(),
+      ),
+    );
   }
 
   @override
-  Future<PlantCondition?> getRemotePlantCondition(String plantId) async {
-    // TODO: Implémenter la récupération depuis l'API distante
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return null;
+  Future<PlantCondition?> getRemotePlantCondition(String plantId) {
+    return _executeQuery<Map<String, dynamic>, PlantCondition?>(
+      operation: 'getRemotePlantCondition',
+      request: () => _networkService.get<Map<String, dynamic>>(
+        _ApiRoutes.currentCondition(plantId),
+      ),
+      parser: (data) {
+        if (data == null || data.isEmpty) {
+          return null;
+        }
+        return PlantCondition.fromJson(
+          Map<String, dynamic>.from(data),
+        );
+      },
+      fallback: null,
+    );
   }
 
   @override
@@ -311,26 +408,49 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String plantId,
     DateTime? startDate,
     DateTime? endDate,
-  }) async {
-    // TODO: Implémenter la récupération de l'historique depuis l'API distante
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  }) {
+    return _executeQuery<List<dynamic>, List<PlantCondition>>(
+      operation: 'getRemotePlantConditionHistory',
+      request: () => _networkService.get<List<dynamic>>(
+        _ApiRoutes.plantConditionHistory(plantId),
+        queryParameters: _dateRangeQuery(startDate, endDate),
+      ),
+      parser: (data) => _mapList<PlantCondition>(
+        data,
+        operation: 'getRemotePlantConditionHistory',
+        mapper: (json) => PlantCondition.fromJson(json),
+      ),
+      fallback: const <PlantCondition>[],
+    );
   }
 
   // ==================== GESTION DES RECOMMANDATIONS ====================
 
   @override
-  Future<bool> syncRecommendation(Recommendation recommendation) async {
-    // TODO: Implémenter la synchronisation des recommandations
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  Future<bool> syncRecommendation(Recommendation recommendation) {
+    return _executeMutation(
+      operation: 'syncRecommendation',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.recommendations(recommendation.plantId),
+        data: recommendation.toJson(),
+      ),
+    );
   }
 
   @override
-  Future<List<Recommendation>> getRemoteRecommendations(String plantId) async {
-    // TODO: Implémenter la récupération des recommandations distantes
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  Future<List<Recommendation>> getRemoteRecommendations(String plantId) {
+    return _executeQuery<List<dynamic>, List<Recommendation>>(
+      operation: 'getRemoteRecommendations',
+      request: () => _networkService.get<List<dynamic>>(
+        _ApiRoutes.recommendations(plantId),
+      ),
+      parser: (data) => _mapList<Recommendation>(
+        data,
+        operation: 'getRemoteRecommendations',
+        mapper: (json) => Recommendation.fromJson(json),
+      ),
+      fallback: const <Recommendation>[],
+    );
   }
 
   @override
@@ -338,19 +458,30 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String recommendationId,
     required String status,
     Map<String, dynamic>? metadata,
-  }) async {
-    // TODO: Implémenter la mise à jour du statut sur l'API distante
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  }) {
+    return _executeMutation(
+      operation: 'updateRemoteRecommendationStatus',
+      request: () => _networkService.put<dynamic>(
+        _ApiRoutes.recommendationStatus(recommendationId),
+        data: {
+          'status': status,
+          if (metadata != null) 'metadata': metadata,
+        },
+      ),
+    );
   }
 
   // ==================== GESTION DES DONNÉES MÉTÉOROLOGIQUES ====================
 
   @override
-  Future<bool> syncWeatherCondition(WeatherCondition weather) async {
-    // TODO: Implémenter la synchronisation des données météorologiques
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  Future<bool> syncWeatherCondition(WeatherCondition weather) {
+    return _executeMutation(
+      operation: 'syncWeatherCondition',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.weatherCollection(),
+        data: weather.toJson(),
+      ),
+    );
   }
 
   @override
@@ -358,33 +489,66 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String gardenId,
     DateTime? startDate,
     DateTime? endDate,
-  }) async {
-    // TODO: Implémenter la récupération des données météorologiques distantes
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  }) {
+    return _executeQuery<List<dynamic>, List<WeatherCondition>>(
+      operation: 'getRemoteWeatherData',
+      request: () => _networkService.get<List<dynamic>>(
+        _ApiRoutes.weather(gardenId),
+        queryParameters: _dateRangeQuery(startDate, endDate),
+      ),
+      parser: (data) => _mapList<WeatherCondition>(
+        data,
+        operation: 'getRemoteWeatherData',
+        mapper: (json) => WeatherCondition.fromJson(json),
+      ),
+      fallback: const <WeatherCondition>[],
+    );
   }
 
   // ==================== GESTION DU CONTEXTE JARDIN ====================
 
   @override
-  Future<bool> syncGardenContext(GardenContext garden) async {
-    // TODO: Implémenter la synchronisation du contexte jardin
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  Future<bool> syncGardenContext(GardenContext garden) {
+    return _executeMutation(
+      operation: 'syncGardenContext',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.garden(garden.gardenId),
+        data: garden.toJson(),
+      ),
+    );
   }
 
   @override
-  Future<GardenContext?> getRemoteGardenContext(String gardenId) async {
-    // TODO: Implémenter la récupération du contexte jardin distant
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return null;
+  Future<GardenContext?> getRemoteGardenContext(String gardenId) {
+    return _executeQuery<Map<String, dynamic>, GardenContext?>(
+      operation: 'getRemoteGardenContext',
+      request: () => _networkService.get<Map<String, dynamic>>(
+        _ApiRoutes.garden(gardenId),
+      ),
+      parser: (data) {
+        if (data == null || data.isEmpty) {
+          return null;
+        }
+        return GardenContext.fromJson(Map<String, dynamic>.from(data));
+      },
+      fallback: null,
+    );
   }
 
   @override
-  Future<List<GardenContext>> getRemoteUserGardens(String userId) async {
-    // TODO: Implémenter la récupération des jardins utilisateur distants
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  Future<List<GardenContext>> getRemoteUserGardens(String userId) {
+    return _executeQuery<List<dynamic>, List<GardenContext>>(
+      operation: 'getRemoteUserGardens',
+      request: () => _networkService.get<List<dynamic>>(
+        _ApiRoutes.userGardens(userId),
+      ),
+      parser: (data) => _mapList<GardenContext>(
+        data,
+        operation: 'getRemoteUserGardens',
+        mapper: (json) => GardenContext.fromJson(json),
+      ),
+      fallback: const <GardenContext>[],
+    );
   }
 
   // ==================== GESTION DES ANALYSES ====================
@@ -395,20 +559,40 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String analysisType,
     required Map<String, dynamic> result,
     required double confidence,
-  }) async {
-    // TODO: Implémenter la synchronisation des résultats d'analyse
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  }) {
+    return _executeMutation(
+      operation: 'syncAnalysisResult',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.analyses(plantId),
+        data: {
+          'analysisType': analysisType,
+          'result': result,
+          'confidence': confidence,
+        },
+      ),
+    );
   }
 
   @override
   Future<List<Map<String, dynamic>>> getRemoteAnalyses({
     required String plantId,
     String? analysisType,
-  }) async {
-    // TODO: Implémenter la récupération des analyses distantes
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  }) {
+    return _executeQuery<List<dynamic>, List<Map<String, dynamic>>>(
+      operation: 'getRemoteAnalyses',
+      request: () => _networkService.get<List<dynamic>>(
+        _ApiRoutes.analyses(plantId),
+        queryParameters: {
+          if (analysisType != null) 'analysisType': analysisType,
+        },
+      ),
+      parser: (data) => _mapList<Map<String, dynamic>>(
+        data,
+        operation: 'getRemoteAnalyses',
+        mapper: (json) => json,
+      ),
+      fallback: const <Map<String, dynamic>>[],
+    );
   }
 
   // ==================== GESTION DES ALERTES ====================
@@ -420,30 +604,57 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String severity,
     required String message,
     Map<String, dynamic>? data,
-  }) async {
-    // TODO: Implémenter la synchronisation des alertes
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  }) {
+    return _executeMutation(
+      operation: 'syncAlert',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.alerts(),
+        data: {
+          'plantId': plantId,
+          'alertType': alertType,
+          'severity': severity,
+          'message': message,
+          if (data != null) 'data': data,
+        },
+      ),
+    );
   }
 
   @override
   Future<List<Map<String, dynamic>>> getRemoteAlerts({
     String? plantId,
     String? gardenId,
-  }) async {
-    // TODO: Implémenter la récupération des alertes distantes
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  }) {
+    return _executeQuery<List<dynamic>, List<Map<String, dynamic>>>(
+      operation: 'getRemoteAlerts',
+      request: () => _networkService.get<List<dynamic>>(
+        _ApiRoutes.alerts(),
+        queryParameters: {
+          if (plantId != null) 'plantId': plantId,
+          if (gardenId != null) 'gardenId': gardenId,
+        },
+      ),
+      parser: (data) => _mapList<Map<String, dynamic>>(
+        data,
+        operation: 'getRemoteAlerts',
+        mapper: (json) => json,
+      ),
+      fallback: const <Map<String, dynamic>>[],
+    );
   }
 
   @override
   Future<bool> resolveRemoteAlert({
     required String alertId,
     required String resolution,
-  }) async {
-    // TODO: Implémenter la résolution d'alerte distante
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  }) {
+    return _executeMutation(
+      operation: 'resolveRemoteAlert',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.resolveAlert(alertId),
+        data: {'resolution': resolution},
+      ),
+    );
   }
 
   // ==================== GESTION DES PRÉFÉRENCES UTILISATEUR ====================
@@ -452,17 +663,31 @@ class PlantIntelligenceRemoteDataSourceImpl
   Future<bool> syncUserPreferences({
     required String userId,
     required Map<String, dynamic> preferences,
-  }) async {
-    // TODO: Implémenter la synchronisation des préférences utilisateur
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  }) {
+    return _executeMutation(
+      operation: 'syncUserPreferences',
+      request: () => _networkService.put<dynamic>(
+        _ApiRoutes.preferences(userId),
+        data: preferences,
+      ),
+    );
   }
 
   @override
-  Future<Map<String, dynamic>?> getRemoteUserPreferences(String userId) async {
-    // TODO: Implémenter la récupération des préférences utilisateur distantes
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return null;
+  Future<Map<String, dynamic>?> getRemoteUserPreferences(String userId) {
+    return _executeQuery<Map<String, dynamic>, Map<String, dynamic>?>(
+      operation: 'getRemoteUserPreferences',
+      request: () => _networkService.get<Map<String, dynamic>>(
+        _ApiRoutes.preferences(userId),
+      ),
+      parser: (data) {
+        if (data == null || data.isEmpty) {
+          return null;
+        }
+        return Map<String, dynamic>.from(data);
+      },
+      fallback: null,
+    );
   }
 
   // ==================== SERVICES D'INTELLIGENCE AVANCÉE ====================
@@ -472,20 +697,39 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String plantId,
     required String analysisType,
     required Map<String, dynamic> inputData,
-  }) async {
-    // TODO: Implémenter la demande d'analyse avancée
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return null;
+  }) {
+    return _executeQuery<Map<String, dynamic>, Map<String, dynamic>?>(
+      operation: 'requestAdvancedAnalysis',
+      request: () => _networkService.post<Map<String, dynamic>>(
+        _ApiRoutes.advancedAnalysis(plantId),
+        data: {
+          'analysisType': analysisType,
+          'inputData': inputData,
+        },
+      ),
+      parser: (data) => data == null ? null : Map<String, dynamic>.from(data),
+      fallback: null,
+    );
   }
 
   @override
   Future<List<Recommendation>> getPersonalizedRecommendations({
     required String plantId,
     required Map<String, dynamic> context,
-  }) async {
-    // TODO: Implémenter la récupération des recommandations personnalisées
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return [];
+  }) {
+    return _executeQuery<List<dynamic>, List<Recommendation>>(
+      operation: 'getPersonalizedRecommendations',
+      request: () => _networkService.post<List<dynamic>>(
+        _ApiRoutes.personalizedRecommendations(plantId),
+        data: context,
+      ),
+      parser: (data) => _mapList<Recommendation>(
+        data,
+        operation: 'getPersonalizedRecommendations',
+        mapper: (json) => Recommendation.fromJson(json),
+      ),
+      fallback: const <Recommendation>[],
+    );
   }
 
   @override
@@ -493,46 +737,225 @@ class PlantIntelligenceRemoteDataSourceImpl
     required String plantId,
     required String feedbackType,
     required Map<String, dynamic> feedbackData,
-  }) async {
-    // TODO: Implémenter l'envoi de feedback
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  }) {
+    return _executeMutation(
+      operation: 'sendFeedback',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.feedback(plantId),
+        data: {
+          'feedbackType': feedbackType,
+          'feedbackData': feedbackData,
+        },
+      ),
+    );
   }
 
   // ==================== SYNCHRONISATION ET ÉTAT ====================
 
   @override
   Future<bool> isConnected() async {
-    // TODO: Implémenter la vérification de connectivité
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return false; // Par défaut, pas de connexion
+    if (!_backendEnabled) {
+      return false;
+    }
+
+    try {
+      await _ensureNetworkReady();
+      return await _networkService.isBackendAvailable();
+    } on NetworkException catch (e) {
+      _log('isConnected network exception: ${e.message}');
+      return false;
+    } on SocketException {
+      return false;
+    }
   }
 
   @override
-  Future<SyncStatus> getSyncStatus() async {
-    // TODO: Implémenter la récupération du statut de synchronisation
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return const SyncStatus(
-      isConnected: false,
-      isSyncing: false,
-      pendingOperations: 0,
-      metadata: {},
+  Future<SyncStatus> getSyncStatus() {
+    return _executeQuery<Map<String, dynamic>, SyncStatus>(
+      operation: 'getSyncStatus',
+      request: () => _networkService.get<Map<String, dynamic>>(
+        _ApiRoutes.syncStatus(),
+      ),
+      parser: (data) {
+        if (data == null) {
+          return const SyncStatus(
+            isConnected: false,
+            isSyncing: false,
+            pendingOperations: 0,
+            metadata: <String, dynamic>{},
+          );
+        }
+        return SyncStatus.fromJson(Map<String, dynamic>.from(data));
+      },
+      fallback: const SyncStatus(
+        isConnected: false,
+        isSyncing: false,
+        pendingOperations: 0,
+        metadata: <String, dynamic>{},
+      ),
+      rethrowOnInvalidPayload: false,
     );
   }
 
   @override
-  Future<bool> forceFullSync(String userId) async {
-    // TODO: Implémenter la synchronisation complète forcée
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  Future<bool> forceFullSync(String userId) {
+    return _executeMutation(
+      operation: 'forceFullSync',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.forceSync(),
+        data: {'userId': userId},
+      ),
+    );
   }
 
   @override
-  Future<bool> cancelSync() async {
-    // TODO: Implémenter l'annulation de synchronisation
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulation
-    return true;
+  Future<bool> cancelSync() {
+    return _executeMutation(
+      operation: 'cancelSync',
+      request: () => _networkService.post<dynamic>(
+        _ApiRoutes.cancelSync(),
+      ),
+    );
   }
+
+  // ==================== HELPERS ====================
+
+  bool get _backendEnabled => _isBackendEnabled();
+
+  Future<void> _ensureNetworkReady() async {
+    if (!_networkService.isInitialized) {
+      await _networkService.initialize();
+    }
+  }
+
+  Map<String, dynamic> _dateRangeQuery(DateTime? startDate, DateTime? endDate) {
+    return {
+      if (startDate != null) 'startDate': startDate.toIso8601String(),
+      if (endDate != null) 'endDate': endDate.toIso8601String(),
+    };
+  }
+
+  void _log(String message) {
+    EnvironmentService.log('[PlantIntelligenceRemoteDataSource] $message');
+  }
+
+  List<T> _mapList<T>(
+    List<dynamic>? raw, {
+    required String operation,
+    required T Function(Map<String, dynamic> json) mapper,
+  }) {
+    if (raw == null) {
+      return List<T>.unmodifiable(<T>[]);
+    }
+
+    final results = <T>[];
+    for (final item in raw) {
+      if (item is! Map) {
+        throw PlantIntelligenceRemoteDataSourceException(
+          'Invalid payload format for $operation',
+          code: 'INVALID_PAYLOAD',
+          originalError: item,
+        );
+      }
+      results.add(mapper(Map<String, dynamic>.from(item as Map)));
+    }
+
+    return List<T>.unmodifiable(results);
+  }
+
+  Future<TResult> _executeQuery<TPayload, TResult>({
+    required String operation,
+    required Future<Response<TPayload>> Function() request,
+    required TResult Function(TPayload? data) parser,
+    required TResult fallback,
+    bool rethrowOnInvalidPayload = true,
+  }) async {
+    if (!_backendEnabled) {
+      return fallback;
+    }
+
+    try {
+      await _ensureNetworkReady();
+      final response = await request().timeout(_requestTimeout);
+      return parser(response.data);
+    } on TimeoutException catch (e, stackTrace) {
+      _log('Timeout during $operation: $e');
+      EnvironmentService.logError(
+        'Timeout during $operation',
+        e,
+      );
+      EnvironmentService.logError('StackTrace', stackTrace);
+      return fallback;
+    } on SocketException catch (e) {
+      _log('SocketException during $operation: $e');
+      return fallback;
+    } on NetworkException catch (e) {
+      _log('NetworkException during $operation: ${e.message}');
+      return fallback;
+    } on PlantIntelligenceRemoteDataSourceException {
+      rethrow;
+    } catch (e, stackTrace) {
+      if (rethrowOnInvalidPayload) {
+        throw PlantIntelligenceRemoteDataSourceException(
+          'Unexpected error during $operation',
+          code: 'UNEXPECTED_ERROR',
+          originalError: e,
+        );
+      }
+      EnvironmentService.logError(
+        'Unexpected payload error during $operation',
+        e,
+      );
+      EnvironmentService.logError('StackTrace', stackTrace);
+      return fallback;
+    }
+  }
+
+  Future<bool> _executeMutation({
+    required String operation,
+    required Future<Response<dynamic>> Function() request,
+  }) {
+    return _executeQuery<dynamic, bool>(
+      operation: operation,
+      request: request,
+      parser: (data) {
+        if (data is bool) {
+          return data;
+        }
+        if (data is Map<String, dynamic>) {
+          return data['success'] as bool? ?? data['ok'] as bool? ?? true;
+        }
+        return true;
+      },
+      fallback: false,
+      rethrowOnInvalidPayload: false,
+    );
+  }
+}
+
+class _ApiRoutes {
+  static const String base = '/plant-intelligence';
+
+  static String plant(String plantId) => '$base/plants/$plantId';
+  static String plantConditions(String plantId) => '${plant(plantId)}/conditions';
+  static String currentCondition(String plantId) => '${plantConditions(plantId)}/current';
+  static String plantConditionHistory(String plantId) => '${plantConditions(plantId)}/history';
+  static String recommendations(String plantId) => '${plant(plantId)}/recommendations';
+  static String recommendationStatus(String recommendationId) => '$base/recommendations/$recommendationId/status';
+  static String weatherCollection() => '$base/weather';
+  static String weather(String gardenId) => '$base/gardens/$gardenId/weather';
+  static String garden(String gardenId) => '$base/gardens/$gardenId';
+  static String userGardens(String userId) => '$base/users/$userId/gardens';
+  static String analyses(String plantId) => '${plant(plantId)}/analyses';
+  static String alerts() => '$base/alerts';
+  static String resolveAlert(String alertId) => '${alerts()}/$alertId/resolve';
+  static String preferences(String userId) => '$base/users/$userId/preferences';
+  static String advancedAnalysis(String plantId) => '${plant(plantId)}/analyses/advanced';
+  static String personalizedRecommendations(String plantId) => '${plant(plantId)}/recommendations/personalized';
+  static String feedback(String plantId) => '${plant(plantId)}/feedback';
+  static String syncStatus() => '$base/sync/status';
+  static String forceSync() => '$base/sync/force';
+  static String cancelSync() => '$base/sync/cancel';
 }
 
 /// Exception pour les erreurs de la source de données distante

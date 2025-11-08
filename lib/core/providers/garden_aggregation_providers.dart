@@ -1,4 +1,5 @@
 import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/legacy.dart';
 import '../services/aggregation/garden_aggregation_hub.dart';
 import '../services/aggregation/legacy_data_adapter.dart';
 import '../services/aggregation/modern_data_adapter.dart';
@@ -159,6 +160,33 @@ final gardenConsistencyCheckProvider =
     );
   },
 );
+
+// ==================== CALIBRATION ====================
+
+/// Provider pour suivre l'activation de la calibration des jardins.
+///
+/// Ce provider s'appuie sur `gardenAggregationHubProvider` et le mécanisme
+/// de cohérence du hub pour vérifier que tous les adaptateurs sont sains avant
+/// d'autoriser la calibration.
+///
+/// Utilisation :
+/// ```dart
+/// final enabled = ref.watch(gardenCalibrationEnabledProvider);
+/// if (enabled) {
+///   // ...
+/// }
+/// ```
+final gardenCalibrationEnabledProvider = StateProvider<bool>((ref) {
+  try {
+    final health = ref.watch(hubHealthCheckProvider);
+    return health.maybeWhen(
+      data: (value) => !(value['errors'] ?? false),
+      orElse: () => false,
+    );
+  } catch (_) {
+    return false;
+  }
+});
 
 // ==================== ACTIONS ====================
 

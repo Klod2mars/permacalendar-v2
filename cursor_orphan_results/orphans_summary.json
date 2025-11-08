@@ -1,0 +1,14 @@
+{
+  "total_files_analyzed": 334,
+  "counts": {
+    "files": 68,
+    "providers": 54,
+    "symbols": 958
+  },
+  "priorities": {
+    "high": 681,
+    "medium": 345,
+    "low": 54
+  },
+  "duplicates_merged": 0
+}

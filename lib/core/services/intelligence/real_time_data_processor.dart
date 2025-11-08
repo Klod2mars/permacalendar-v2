@@ -1,6 +1,61 @@
 // 🚀 Real-Time Data Processor - Stream Processing Engine
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Reactive Patterns
+//
+// **Rôle dans l'écosystème d'intelligence :**
+// Ce processeur gère le traitement de flux événementiels en temps réel pour :
+// - Traitement des événements de jardin (changements de conditions, nouvelles plantations)
+// - Mise à jour des recommandations intelligentes en temps réel
+// - Synchronisation des données entre différents composants du système
+// - Gestion de la backpressure pour éviter la surcharge du système
+//
+// **Interactions avec les autres composants :**
+// - Utilisé par `IntelligentRecommendationEngine` pour traiter les événements de jardin
+// - Intègre avec `MetricsCollectorService` pour collecter les métriques de traitement
+// - Peut être utilisé avec `AlertingService` pour déclencher des alertes basées sur les événements
+//
+// **Stratégies de résilience et sécurité :**
+// - Gestion d'erreurs silencieuse : Les erreurs dans le traitement d'événements ne font pas planter le système
+// - Fermeture automatique : Les StreamControllers sont fermés proprement lors de l'arrêt
+// - Backpressure management : Limite la taille de la queue pour éviter la surcharge mémoire
+// - Throttling : Limite la fréquence des rafraîchissements pour éviter les surcharges
+// - Timeout protection : Tous les traitements sont limités dans le temps
+//
+// **Exemple d'utilisation via Riverpod 3 :**
+// ```dart
+// // Dans un provider
+// final processor = ref.read(IntelligenceModule.realTimeDataProcessorProvider);
+// await processor.start();
+//
+// // Soumettre un événement
+// await processor.submitEvent(DataEvent(
+//   id: 'garden_update_123',
+//   data: gardenData,
+//   priority: ProcessingPriority.high,
+// ));
+//
+// // S'abonner aux événements critiques
+// processor.subscribe<String>(
+//   priority: ProcessingPriority.critical,
+//   onEvent: (event) async {
+//     // Traiter l'événement
+//     return ProcessingResult(
+//       eventId: event.id,
+//       success: true,
+//       processingTime: Duration.zero,
+//     );
+//   },
+//   onError: (error) {
+//     // Gérer l'erreur
+//   },
+// );
+//
+// // Utiliser avec StreamProvider pour un flux réactif
+// final eventStreamProvider = StreamProvider.autoDispose<DataEvent<String>>((ref) {
+//   final processor = ref.read(IntelligenceModule.realTimeDataProcessorProvider);
+//   return processor._eventStreams[ProcessingPriority.high]!.stream.cast<DataEvent<String>>();
+// });
+// ```
 
 import 'dart:async';
 import 'dart:developer' as developer;
@@ -110,6 +165,21 @@ class StreamStatistics {
 }
 
 /// Real-time data processor for stream processing
+///
+/// **Gestion de la mémoire :**
+/// - Limite la queue à `_maxQueueSize` événements
+/// - Nettoie automatiquement les subscriptions fermées
+/// - Limite l'historique de temps de traitement à 1000 entrées
+///
+/// **Gestion d'erreurs :**
+/// - Toutes les méthodes critiques sont protégées par try/catch
+/// - En cas d'erreur, les événements sont marqués comme échoués mais le système continue
+/// - Logs détaillés pour le debugging
+///
+/// **Sécurité des flux :**
+/// - Tous les StreamControllers sont fermés proprement lors de l'arrêt
+/// - Les subscriptions sont annulées avant la fermeture des streams
+/// - Protection contre les double-fermetures
 class RealTimeDataProcessor {
   // Event streams by priority
   final Map<ProcessingPriority, StreamController<DataEvent>> _eventStreams = {};
@@ -134,6 +204,7 @@ class RealTimeDataProcessor {
   final Duration _processingTimeout;
   final bool _enableBackpressure;
   bool _isRunning = false;
+  Timer? _queueProcessingTimer;
 
   RealTimeDataProcessor({
     int? maxQueueSize,
@@ -146,96 +217,202 @@ class RealTimeDataProcessor {
   }
 
   /// Initialize priority streams
+  ///
+  /// **Sécurité :**
+  /// - Crée des StreamControllers broadcast pour permettre plusieurs listeners
+  /// - Initialise les compteurs de statistiques pour chaque priorité
   void _initializeStreams() {
-    for (final priority in ProcessingPriority.values) {
-      _eventStreams[priority] = StreamController<DataEvent>.broadcast();
-      _eventsByPriority[priority] = 0;
+    try {
+      for (final priority in ProcessingPriority.values) {
+        _eventStreams[priority] = StreamController<DataEvent>.broadcast(
+          onCancel: () {
+            _log('Stream cancelled for priority: $priority');
+          },
+        );
+        _eventsByPriority[priority] = 0;
+      }
+    } catch (e, stackTrace) {
+      _logError('Error initializing streams', e, stackTrace);
+      rethrow;
     }
   }
 
   /// Start the processor
+  ///
+  /// **Sécurité :**
+  /// - Vérifie si déjà en cours d'exécution pour éviter les doubles démarrages
+  /// - Stocke le Timer pour pouvoir l'annuler proprement
+  /// - Gère les erreurs silencieusement pour éviter les plantages
   Future<void> start() async {
-    if (_isRunning) return;
-
-    _isRunning = true;
-    _firstEventTime = DateTime.now();
-    _log('Real-time processor started');
-
-    // Process queue periodically
-    Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      if (!_isRunning) {
-        timer.cancel();
-        return;
-      }
-      _processQueue();
-    });
-  }
-
-  /// Stop the processor
-  Future<void> stop() async {
-    if (!_isRunning) return;
-
-    _isRunning = false;
-
-    // Cancel all subscriptions
-    for (final subscription in _subscriptions.values) {
-      await subscription.cancel();
-    }
-    _subscriptions.clear();
-
-    // Close all streams
-    for (final stream in _eventStreams.values) {
-      await stream.close();
-    }
-    _eventStreams.clear();
-
-    _log('Real-time processor stopped');
-  }
-
-  /// Submit event for processing
-  Future<void> submitEvent<T>(DataEvent<T> event) async {
-    if (!_isRunning) {
-      _log('Processor not running, starting...');
-      await start();
-    }
-
-    _totalEvents++;
-    _eventsByPriority[event.priority] =
-        (_eventsByPriority[event.priority] ?? 0) + 1;
-
-    // Check queue size
-    if (_enableBackpressure && _eventQueue.length >= _maxQueueSize) {
-      _droppedEvents++;
-      _log('Event dropped due to backpressure: ${event.id}');
+    if (_isRunning) {
+      _log('Processor already running');
       return;
     }
 
-    // Add to queue
-    _eventQueue.add(event);
+    try {
+      _isRunning = true;
+      _firstEventTime = DateTime.now();
+      _log('Real-time processor started');
 
-    _log('Event submitted: ${event.id} (priority: ${event.priority})');
+      // Process queue periodically
+      _queueProcessingTimer = Timer.periodic(
+        const Duration(milliseconds: 100),
+        (timer) {
+          if (!_isRunning) {
+            timer.cancel();
+            _queueProcessingTimer = null;
+            return;
+          }
+          try {
+            _processQueue();
+          } catch (e, stackTrace) {
+            _logError('Error in queue processing timer', e, stackTrace);
+            // Continue processing despite errors
+          }
+        },
+      );
+    } catch (e, stackTrace) {
+      _isRunning = false;
+      _logError('Error starting processor', e, stackTrace);
+      rethrow;
+    }
+  }
+
+  /// Stop the processor
+  ///
+  /// **Sécurité :**
+  /// - Annule le timer de traitement de queue
+  /// - Ferme toutes les subscriptions proprement
+  /// - Ferme tous les StreamControllers avec gestion d'erreurs
+  /// - Protection contre les double-fermetures
+  Future<void> stop() async {
+    if (!_isRunning) {
+      _log('Processor already stopped');
+      return;
+    }
+
+    try {
+      _isRunning = false;
+
+      // Cancel queue processing timer
+      _queueProcessingTimer?.cancel();
+      _queueProcessingTimer = null;
+
+      // Cancel all subscriptions with error handling
+      final subscriptionsToCancel = List<StreamSubscription>.from(_subscriptions.values);
+      _subscriptions.clear();
+
+      for (final subscription in subscriptionsToCancel) {
+        try {
+          await subscription.cancel();
+        } catch (e, stackTrace) {
+          _logError('Error cancelling subscription', e, stackTrace);
+          // Continue cancelling other subscriptions
+        }
+      }
+
+      // Close all streams with error handling
+      final streamsToClose = List<StreamController<DataEvent>>.from(_eventStreams.values);
+      _eventStreams.clear();
+
+      for (final stream in streamsToClose) {
+        try {
+          if (!stream.isClosed) {
+            await stream.close();
+          }
+        } catch (e, stackTrace) {
+          _logError('Error closing stream', e, stackTrace);
+          // Continue closing other streams
+        }
+      }
+
+      _log('Real-time processor stopped');
+    } catch (e, stackTrace) {
+      _logError('Error stopping processor', e, stackTrace);
+      // Ensure _isRunning is false even on error
+      _isRunning = false;
+      rethrow;
+    }
+  }
+
+  /// Submit event for processing
+  ///
+  /// **Sécurité :**
+  /// - Démarre automatiquement le processeur si nécessaire
+  /// - Gère la backpressure en rejetant les événements si la queue est pleine
+  /// - Gère les erreurs silencieusement pour éviter les plantages
+  Future<void> submitEvent<T>(DataEvent<T> event) async {
+    try {
+      if (!_isRunning) {
+        _log('Processor not running, starting...');
+        await start();
+      }
+
+      _totalEvents++;
+      _eventsByPriority[event.priority] =
+          (_eventsByPriority[event.priority] ?? 0) + 1;
+
+      // Check queue size (backpressure management)
+      if (_enableBackpressure && _eventQueue.length >= _maxQueueSize) {
+        _droppedEvents++;
+        _log('Event dropped due to backpressure: ${event.id}');
+        return;
+      }
+
+      // Add to queue
+      _eventQueue.add(event);
+
+      _log('Event submitted: ${event.id} (priority: ${event.priority})');
+    } catch (e, stackTrace) {
+      _failedEvents++;
+      _logError('Error submitting event: ${event.id}', e, stackTrace);
+      // Don't rethrow - graceful degradation
+    }
   }
 
   /// Process queued events
+  ///
+  /// **Sécurité :**
+  /// - Trie les événements par priorité (critical first)
+  /// - Traite les événements par lots pour éviter la surcharge
+  /// - Gère les erreurs individuellement pour chaque événement
   void _processQueue() {
     if (_eventQueue.isEmpty) return;
 
-    // Sort queue by priority (critical first)
-    _eventQueue.sort((a, b) {
-      return b.priority.index.compareTo(a.priority.index);
-    });
+    try {
+      // Sort queue by priority (critical first)
+      _eventQueue.sort((a, b) {
+        return b.priority.index.compareTo(a.priority.index);
+      });
 
-    // Process events in batches
-    const batchSize = 10;
-    final batch = _eventQueue.take(batchSize).toList();
+      // Process events in batches
+      const batchSize = 10;
+      final batch = _eventQueue.take(batchSize).toList();
 
-    for (final event in batch) {
-      _processEvent(event);
-      _eventQueue.remove(event);
+      for (final event in batch) {
+        try {
+          _processEvent(event);
+          _eventQueue.remove(event);
+        } catch (e, stackTrace) {
+          _logError('Error processing event in queue: ${event.id}', e, stackTrace);
+          // Remove event even on error to prevent infinite loop
+          _eventQueue.remove(event);
+          _failedEvents++;
+        }
+      }
+    } catch (e, stackTrace) {
+      _logError('Error in queue processing', e, stackTrace);
+      // Clear queue on critical error to prevent infinite loop
+      _eventQueue.clear();
     }
   }
 
   /// Process a single event
+  ///
+  /// **Sécurité :**
+  /// - Vérifie que le stream n'est pas fermé avant d'ajouter l'événement
+  /// - Gère les erreurs silencieusement pour éviter les plantages
+  /// - Limite l'historique de temps de traitement pour éviter la surcharge mémoire
   Future<void> _processEvent(DataEvent event) async {
     final startTime = DateTime.now();
 
@@ -253,6 +430,9 @@ class RealTimeDataProcessor {
         if (_processingTimes.length > 1000) {
           _processingTimes.removeAt(0);
         }
+      } else {
+        _log('Stream for priority ${event.priority} is closed, dropping event');
+        _droppedEvents++;
       }
     } catch (e, stackTrace) {
       _failedEvents++;
@@ -261,28 +441,63 @@ class RealTimeDataProcessor {
   }
 
   /// Subscribe to events of a specific priority
+  ///
+  /// **Sécurité :**
+  /// - Vérifie que le stream est initialisé
+  /// - Applique un timeout sur le traitement des événements
+  /// - Gère les erreurs avec callback personnalisé
+  /// - Fermeture automatique gérée par Riverpod autoDispose
+  ///
+  /// **Retour :**
+  /// - StreamSubscription qui doit être annulée par l'appelant
   StreamSubscription<DataEvent<T>> subscribe<T>({
     required ProcessingPriority priority,
     required Future<ProcessingResult<T>> Function(DataEvent<T>) onEvent,
-    Function(Object error)? onError,
+    Function(Object error, StackTrace stackTrace)? onError,
+    void Function()? onDone,
   }) {
     final stream = _eventStreams[priority];
     if (stream == null) {
       throw StateError('Stream for priority $priority not initialized');
     }
 
+    if (stream.isClosed) {
+      throw StateError('Stream for priority $priority is closed');
+    }
+
     final subscription = stream.stream.cast<DataEvent<T>>().listen(
       (event) async {
         try {
           await onEvent(event).timeout(_processingTimeout);
-        } catch (e) {
-          if (onError != null) {
-            onError(e);
-          }
+        } on TimeoutException {
           _failedEvents++;
+          final error = TimeoutException(
+            'Event processing timeout after ${_processingTimeout.inSeconds}s',
+            _processingTimeout,
+          );
+          if (onError != null) {
+            onError(error, StackTrace.current);
+          } else {
+            _logError('Event processing timeout: ${event.id}', error, StackTrace.current);
+          }
+        } catch (e, stackTrace) {
+          _failedEvents++;
+          if (onError != null) {
+            onError(e, stackTrace);
+          } else {
+            _logError('Error in event handler: ${event.id}', e, stackTrace);
+          }
         }
       },
-      onError: onError,
+      onError: onError != null
+          ? (error, stackTrace) => onError(error, stackTrace)
+          : (error, stackTrace) {
+              _logError('Stream error for priority $priority', error, stackTrace);
+            },
+      onDone: onDone ?? () {
+        _log('Subscription done for priority $priority');
+      },
+      cancelOnError: false, // Continue processing even on error
     );
 
     final subscriptionId =
@@ -367,32 +582,53 @@ class RealTimeDataProcessor {
   }
 
   /// Debounce stream events
+  ///
+  /// **Sécurité :**
+  /// - Ferme le StreamController proprement lors de l'annulation
+  /// - Annule le timer lors de la fermeture pour éviter les fuites mémoire
+  /// - Gère les erreurs du stream source
   Stream<T> debounceStream<T>({
     required Stream<T> source,
     required Duration debounceDuration,
   }) {
     late StreamController<T> controller;
     Timer? debounceTimer;
+    StreamSubscription<T>? sourceSubscription;
 
     controller = StreamController<T>(
       onListen: () {
-        source.listen(
+        sourceSubscription = source.listen(
           (event) {
-            debounceTimer?.cancel();
-            debounceTimer = Timer(debounceDuration, () {
-              controller.add(event);
-            });
+            try {
+              debounceTimer?.cancel();
+              debounceTimer = Timer(debounceDuration, () {
+                if (!controller.isClosed) {
+                  controller.add(event);
+                }
+              });
+            } catch (e, stackTrace) {
+              if (!controller.isClosed) {
+                controller.addError(e, stackTrace);
+              }
+            }
           },
-          onError: (error, stackTrace) =>
-              controller.addError(error, stackTrace),
+          onError: (error, stackTrace) {
+            debounceTimer?.cancel();
+            if (!controller.isClosed) {
+              controller.addError(error, stackTrace);
+            }
+          },
           onDone: () {
             debounceTimer?.cancel();
-            controller.close();
+            if (!controller.isClosed) {
+              controller.close();
+            }
           },
         );
       },
       onCancel: () {
         debounceTimer?.cancel();
+        sourceSubscription?.cancel();
       },
     );
 
@@ -472,10 +708,24 @@ class RealTimeDataProcessor {
   }
 
   /// Dispose resources
+  ///
+  /// **Sécurité :**
+  /// - Arrête le processeur proprement
+  /// - Vide la queue d'événements
+  /// - Gère les erreurs silencieusement
   Future<void> dispose() async {
-    await stop();
-    _eventQueue.clear();
-    _log('Real-time processor disposed');
+    try {
+      await stop();
+      _eventQueue.clear();
+      _processingTimes.clear();
+      _log('Real-time processor disposed');
+    } catch (e, stackTrace) {
+      _logError('Error disposing processor', e, stackTrace);
+      // Ensure cleanup even on error
+      _isRunning = false;
+      _eventQueue.clear();
+      _processingTimes.clear();
+    }
   }
 }
 

@@ -1,6 +1,57 @@
 // 🚨 Alerting Service - Intelligent Alert Management
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Alert Management Patterns
+//
+// **Rôle du service :**
+// Le AlertingService est responsable de la gestion intelligente des alertes
+// système. Il évalue des règles d'alerte configurables, déclenche des alertes
+// basées sur des seuils et conditions, et gère leur cycle de vie (création,
+// acknowledgment, nettoyage).
+//
+// **Fonctionnalités principales :**
+// - Évaluation de règles d'alerte configurables avec conditions et seuils
+// - Déclenchement d'alertes avec 4 niveaux de sévérité (info, warning, error, critical)
+// - Gestion de cooldown pour éviter le spam d'alertes identiques
+// - Acknowledgment tracking pour suivre les alertes traitées
+// - Stream d'alertes en temps réel pour notifications
+// - Nettoyage automatique des alertes anciennes
+// - Statistiques complètes sur les alertes
+//
+// **Interactions avec les autres services de monitoring :**
+// - **HealthCheckService** : Le AlertingService peut être utilisé pour déclencher
+//   des alertes basées sur les résultats des health checks (ex: système dégradé)
+// - **MetricsCollectorService** : Les métriques collectées peuvent être évaluées
+//   via evaluateRules() pour déclencher des alertes (ex: taux d'erreur élevé)
+// - **PerformanceMonitoringService** : Les métriques de performance peuvent être
+//   évaluées pour déclencher des alertes (ex: performance lente)
+//
+// **Architecture :**
+// ```
+// AlertingService
+//   ├─→ AlertRules (règles configurables avec conditions et cooldown)
+//   ├─→ ActiveAlerts (liste des alertes actives)
+//   ├─→ AcknowledgedAlerts (liste des alertes traitées)
+//   ├─→ AlertStream (stream pour notifications en temps réel)
+//   └─→ CleanupTimer (nettoyage périodique des alertes anciennes)
+// ```
+//
+// **Sécurisation :**
+// Toutes les méthodes critiques sont encapsulées dans des try/catch pour
+// éviter que les erreurs ne fassent crasher l'application. Le service continue
+// de fonctionner même en cas d'erreur lors de l'évaluation de règles ou du
+// déclenchement d'alertes.
+//
+// **Gestion du spam :**
+// Le service utilise un système de cooldown au niveau des règles pour éviter
+// le spam d'alertes identiques. Chaque règle peut avoir un cooldown configuré
+// qui empêche le déclenchement répété de la même alerte pendant une période
+// donnée.
+//
+// **Points d'extension :**
+// - Ajout de règles personnalisées via `registerRule()`
+// - Personnalisation des seuils via modification des règles par défaut
+// - Intégration avec systèmes de notification externes via `alertStream`
+// - Persistance optionnelle des alertes (peut être ajoutée si nécessaire)
 
 import 'dart:async';
 import 'dart:developer' as developer;
@@ -121,10 +172,17 @@ class AlertingService {
   final StreamController<Alert> _alertController =
       StreamController<Alert>.broadcast();
 
+  // Cleanup timer
+  Timer? _cleanupTimer;
+
   // Statistics
   int _totalAlerts = 0;
   final Map<AlertSeverity, int> _alertsBySeverity = {};
   final Map<AlertType, int> _alertsByType = {};
+
+  // Debounce tracking for duplicate alerts (same title + severity)
+  final Map<String, DateTime> _lastAlertByKey = {};
+  static const Duration _defaultDebounceDuration = Duration(seconds: 30);
 
   AlertingService({
     int? maxActiveAlerts,
@@ -145,16 +203,23 @@ class AlertingService {
   }
 
   /// Initialize alerting service
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
   void initialize() {
-    // Register default alert rules
-    _registerDefaultRules();
+    try {
+      // Register default alert rules
+      _registerDefaultRules();
 
-    // Start cleanup timer
-    Timer.periodic(const Duration(hours: 1), (timer) {
-      _cleanupOldAlerts();
-    });
+      // Start cleanup timer
+      _cleanupTimer = Timer.periodic(const Duration(hours: 1), (timer) {
+        _cleanupOldAlerts();
+      });
 
-    _log('Alerting service initialized');
+      _log('Alerting service initialized');
+    } catch (e, stackTrace) {
+      _logError('Error initializing alerting service', e, stackTrace);
+    }
   }
 
   /// Register default alert rules
@@ -214,18 +279,49 @@ class AlertingService {
   }
 
   /// Register an alert rule
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
   void registerRule(AlertRule rule) {
-    _rules.add(rule);
-    _log('Alert rule registered: ${rule.name}');
+    try {
+      // Check if rule with same ID already exists
+      if (_rules.any((r) => r.id == rule.id)) {
+        _log('Warning: Rule with ID ${rule.id} already exists, replacing it');
+        _rules.removeWhere((r) => r.id == rule.id);
+      }
+
+      _rules.add(rule);
+      _log('Alert rule registered: ${rule.name}');
+    } catch (e, stackTrace) {
+      _logError('Error registering alert rule: ${rule.name}', e, stackTrace);
+    }
   }
 
   /// Unregister an alert rule
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
   void unregisterRule(String ruleId) {
-    _rules.removeWhere((rule) => rule.id == ruleId);
-    _log('Alert rule unregistered: $ruleId');
+    try {
+      final removed = _rules.removeWhere((rule) => rule.id == ruleId);
+      if (removed > 0) {
+        _log('Alert rule unregistered: $ruleId');
+      } else {
+        _log('Warning: Rule with ID $ruleId not found');
+      }
+    } catch (e, stackTrace) {
+      _logError('Error unregistering alert rule: $ruleId', e, stackTrace);
+    }
   }
 
   /// Trigger alert manually
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
+  ///
+  /// **Debounce :** Les alertes avec le même titre et sévérité sont debounced
+  /// pour éviter le spam. Par défaut, une alerte identique ne peut être
+  /// déclenchée qu'une fois toutes les 30 secondes.
   void triggerAlert({
     required String title,
     required String message,
@@ -233,103 +329,206 @@ class AlertingService {
     required AlertType type,
     String? source,
     Map<String, dynamic>? context,
+    Duration? debounceDuration,
   }) {
-    final alert = Alert(
-      id: 'alert_${DateTime.now().millisecondsSinceEpoch}',
-      title: title,
-      message: message,
-      severity: severity,
-      type: type,
-      source: source,
-      context: context ?? {},
-    );
+    try {
+      // Debounce check: prevent duplicate alerts with same title and severity
+      final alertKey = '${title}_${severity.toString()}';
+      final lastTriggered = _lastAlertByKey[alertKey];
+      final debounce = debounceDuration ?? _defaultDebounceDuration;
 
-    _addAlert(alert);
+      if (lastTriggered != null) {
+        final timeSinceLastAlert = DateTime.now().difference(lastTriggered);
+        if (timeSinceLastAlert < debounce) {
+          _log(
+            'Alert debounced: $title (severity: $severity) - '
+            'last triggered ${timeSinceLastAlert.inSeconds}s ago',
+          );
+          return;
+        }
+      }
+
+      final alert = Alert(
+        id: 'alert_${DateTime.now().millisecondsSinceEpoch}',
+        title: title,
+        message: message,
+        severity: severity,
+        type: type,
+        source: source,
+        context: context ?? {},
+      );
+
+      // Update debounce tracking
+      _lastAlertByKey[alertKey] = DateTime.now();
+
+      _addAlert(alert);
+    } catch (e, stackTrace) {
+      _logError('Error triggering alert: $title', e, stackTrace);
+    }
   }
 
   /// Evaluate rules against data
+  ///
+  /// **Sécurisation :** Cette méthode évalue toutes les règles de manière
+  /// sécurisée. Si une règle échoue, les autres règles continuent d'être
+  /// évaluées. Chaque règle est encapsulée dans un try/catch individuel.
+  ///
+  /// **Usage :**
+  /// ```dart
+  /// final alertingService = ref.read(MonitoringModule.alertingServiceProvider);
+  /// await alertingService.initialize();
+  ///
+  /// // Évaluer les règles avec des données de métriques
+  /// alertingService.evaluateRules({
+  ///   'errorRate': 0.08, // 8% d'erreur
+  ///   'avgResponseTime': 1200, // 1.2s
+  ///   'healthScore': 0.4, // 40%
+  /// }, source: 'MetricsCollectorService');
+  /// ```
   void evaluateRules(Map<String, dynamic> data, {String? source}) {
-    for (final rule in _rules) {
-      if (!rule.canTrigger()) continue;
+    try {
+      for (final rule in _rules) {
+        // Skip if rule is in cooldown
+        if (!rule.canTrigger()) continue;
 
-      try {
-        if (rule.condition(data)) {
-          final message = rule.messageGenerator(data);
+        try {
+          // Evaluate condition
+          if (rule.condition(data)) {
+            try {
+              // Generate message
+              final message = rule.messageGenerator(data);
 
-          triggerAlert(
-            title: rule.name,
-            message: message,
-            severity: rule.severity,
-            type: rule.type,
-            source: source,
-            context: data,
-          );
+              // Trigger alert (with debounce)
+              triggerAlert(
+                title: rule.name,
+                message: message,
+                severity: rule.severity,
+                type: rule.type,
+                source: source,
+                context: data,
+              );
 
-          rule.markTriggered();
+              // Mark rule as triggered (updates cooldown)
+              rule.markTriggered();
+            } catch (e, stackTrace) {
+              _logError(
+                'Error generating message for rule: ${rule.name}',
+                e,
+                stackTrace,
+              );
+            }
+          }
+        } catch (e, stackTrace) {
+          _logError('Error evaluating rule condition: ${rule.name}', e, stackTrace);
         }
-      } catch (e, stackTrace) {
-        _logError('Error evaluating rule: ${rule.name}', e, stackTrace);
       }
+    } catch (e, stackTrace) {
+      _logError('Error in evaluateRules', e, stackTrace);
     }
   }
 
   /// Add alert to active list
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application. Si l'émission
+  /// du stream échoue, l'alerte est quand même ajoutée à la liste.
   void _addAlert(Alert alert) {
-    _activeAlerts.add(alert);
-    _totalAlerts++;
+    try {
+      _activeAlerts.add(alert);
+      _totalAlerts++;
 
-    _alertsBySeverity[alert.severity] =
-        (_alertsBySeverity[alert.severity] ?? 0) + 1;
-    _alertsByType[alert.type] = (_alertsByType[alert.type] ?? 0) + 1;
+      _alertsBySeverity[alert.severity] =
+          (_alertsBySeverity[alert.severity] ?? 0) + 1;
+      _alertsByType[alert.type] = (_alertsByType[alert.type] ?? 0) + 1;
 
-    // Trim if exceeding max
-    if (_activeAlerts.length > _maxActiveAlerts) {
-      final removed = _activeAlerts.removeAt(0);
-      if (removed.acknowledged) {
-        _acknowledgedAlerts.add(removed);
+      // Trim if exceeding max
+      if (_activeAlerts.length > _maxActiveAlerts) {
+        try {
+          final removed = _activeAlerts.removeAt(0);
+          if (removed.acknowledged) {
+            _acknowledgedAlerts.add(removed);
+          }
+        } catch (e, stackTrace) {
+          _logError('Error trimming alerts', e, stackTrace);
+        }
       }
-    }
 
-    // Emit alert
-    _alertController.add(alert);
+      // Emit alert (with error handling)
+      try {
+        if (!_alertController.isClosed) {
+          _alertController.add(alert);
+        }
+      } catch (e, stackTrace) {
+        _logError('Error emitting alert to stream', e, stackTrace);
+        // Continue: alert is still added to the list
+      }
 
-    _log('Alert triggered: ${alert.title} (severity: ${alert.severity})');
+      _log('Alert triggered: ${alert.title} (severity: ${alert.severity})');
 
-    // Log critical alerts
-    if (alert.severity == AlertSeverity.critical) {
-      _logError(
-        'CRITICAL ALERT: ${alert.title}',
-        alert.message,
-        StackTrace.current,
-      );
+      // Log critical alerts with higher priority
+      if (alert.severity == AlertSeverity.critical) {
+        _logError(
+          'CRITICAL ALERT: ${alert.title}',
+          alert.message,
+          StackTrace.current,
+        );
+      }
+    } catch (e, stackTrace) {
+      _logError('Error adding alert: ${alert.title}', e, stackTrace);
     }
   }
 
   /// Acknowledge an alert
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
   void acknowledgeAlert(String alertId, {String? acknowledgedBy}) {
-    final alert = _activeAlerts.firstWhere(
-      (a) => a.id == alertId,
-      orElse: () => Alert(
-        id: '',
-        title: '',
-        message: '',
-        severity: AlertSeverity.info,
-        type: AlertType.system,
-      ),
-    );
+    try {
+      final alert = _activeAlerts.firstWhere(
+        (a) => a.id == alertId,
+        orElse: () => Alert(
+          id: '',
+          title: '',
+          message: '',
+          severity: AlertSeverity.info,
+          type: AlertType.system,
+        ),
+      );
 
-    if (alert.id.isNotEmpty) {
-      alert.acknowledge(acknowledgedBy: acknowledgedBy);
-      _log('Alert acknowledged: ${alert.title}');
+      if (alert.id.isNotEmpty) {
+        alert.acknowledge(acknowledgedBy: acknowledgedBy);
+        _log('Alert acknowledged: ${alert.title}');
+      } else {
+        _log('Warning: Alert with ID $alertId not found');
+      }
+    } catch (e, stackTrace) {
+      _logError('Error acknowledging alert: $alertId', e, stackTrace);
     }
   }
 
   /// Acknowledge all alerts
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
   void acknowledgeAll({String? acknowledgedBy}) {
-    for (final alert in _activeAlerts.where((a) => !a.acknowledged)) {
-      alert.acknowledge(acknowledgedBy: acknowledgedBy);
+    try {
+      int acknowledgedCount = 0;
+      for (final alert in _activeAlerts.where((a) => !a.acknowledged)) {
+        try {
+          alert.acknowledge(acknowledgedBy: acknowledgedBy);
+          acknowledgedCount++;
+        } catch (e, stackTrace) {
+          _logError(
+            'Error acknowledging alert: ${alert.id}',
+            e,
+            stackTrace,
+          );
+        }
+      }
+      _log('All alerts acknowledged ($acknowledgedCount alerts)');
+    } catch (e, stackTrace) {
+      _logError('Error acknowledging all alerts', e, stackTrace);
     }
-    _log('All alerts acknowledged');
   }
 
   /// Get active alerts
@@ -373,14 +572,25 @@ class AlertingService {
   Stream<Alert> get alertStream => _alertController.stream;
 
   /// Cleanup old alerts
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application.
   void _cleanupOldAlerts() {
-    final cutoffTime = DateTime.now().subtract(_alertRetention);
+    try {
+      final cutoffTime = DateTime.now().subtract(_alertRetention);
+      final initialCount = _acknowledgedAlerts.length;
 
-    _acknowledgedAlerts.removeWhere(
-      (alert) => alert.acknowledgedAt?.isBefore(cutoffTime) ?? false,
-    );
+      _acknowledgedAlerts.removeWhere(
+        (alert) => alert.acknowledgedAt?.isBefore(cutoffTime) ?? false,
+      );
 
-    _log('Old alerts cleaned up');
+      final removedCount = initialCount - _acknowledgedAlerts.length;
+      if (removedCount > 0) {
+        _log('Old alerts cleaned up ($removedCount alerts removed)');
+      }
+    } catch (e, stackTrace) {
+      _logError('Error cleaning up old alerts', e, stackTrace);
+    }
   }
 
   /// Get statistics
@@ -438,12 +648,29 @@ class AlertingService {
   }
 
   /// Dispose resources
+  ///
+  /// **Sécurisation :** Cette méthode est encapsulée dans un try/catch pour
+  /// éviter que les erreurs ne fassent crasher l'application lors du nettoyage.
   void dispose() {
-    _alertController.close();
-    _activeAlerts.clear();
-    _acknowledgedAlerts.clear();
-    _rules.clear();
+    try {
+      // Cancel cleanup timer
+      _cleanupTimer?.cancel();
+      _cleanupTimer = null;
 
-    _log('Alerting service disposed');
+      // Close stream controller
+      if (!_alertController.isClosed) {
+        _alertController.close();
+      }
+
+      // Clear all data
+      _activeAlerts.clear();
+      _acknowledgedAlerts.clear();
+      _rules.clear();
+      _lastAlertByKey.clear();
+
+      _log('Alerting service disposed');
+    } catch (e, stackTrace) {
+      _logError('Error disposing alerting service', e, stackTrace);
+    }
   }
 }

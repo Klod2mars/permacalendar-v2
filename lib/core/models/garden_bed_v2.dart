@@ -36,7 +36,7 @@ class GardenBed extends HiveObject {
     List<String>? plantings,
   }) {
     return GardenBed(
-      id: const Uuid().v4(),
+      id: Uuid().v4(),
       name: name,
       sizeInSquareMeters: sizeInSquareMeters,
       gardenId: gardenId,
@@ -51,7 +51,7 @@ class GardenBed extends HiveObject {
       name: json['name'] as String,
       sizeInSquareMeters: (json['sizeInSquareMeters'] as num).toDouble(),
       gardenId: json['gardenId'] as String,
-      plantings: List<String>.from(json['plantings'] as List),
+      plantings: List<String>.from(json['plantings'] as List? ?? []),
     );
   }
 

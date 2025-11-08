@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'package:riverpod/riverpod.dart';
 import 'package:hive/hive.dart';
 import '../services/aggregation/garden_aggregation_hub.dart';
 import '../repositories/garden_hive_repository.dart';
 import '../data/migration/garden_data_migration.dart';
+import '../services/migration/migration_orchestrator.dart';
+import 'package:permacalendar/features/plant_intelligence/data/migration/multi_garden_migration.dart';
 
 /// Module d'injection de dépendances pour le système Garden
 ///
@@ -127,7 +130,70 @@ class GardenModule {
     return GardenDataMigration();
   });
 
+  /// Provider pour le service de migration multi-garden (Prompt A15)
+  ///
+  /// **Responsabilité :** Orchestrer la migration des jardins depuis les
+  /// versions Legacy/V2/Hive et synchroniser les données du sanctuaire (conditions
+  /// & recommandations) via `MultiGardenMigration`.
+  ///
+  /// **Injection Riverpod 3 :** toutes les dépendances proviennent de
+  /// `ref.read(...)` (aucun état global).
+  static final multiGardenMigrationProvider = Provider<MultiGardenMigration>((ref) {
+    final dataMigration = ref.read(GardenModule.dataMigrationProvider);
+    final orchestrator = ref.read(migrationOrchestratorProvider);
+    return MultiGardenMigration(
+      dataMigration: dataMigration,
+      orchestrator: orchestrator,
+    );
+  });
+
   // ==================== HELPERS ====================
+
+  /// Helper pour ouvrir une box Hive de manière sécurisée
+  static Future<({Box? box, bool wasOpen})> _safeOpenBox(String boxName) async {
+    // Wrapper toute la fonction dans un try-catch pour garantir que toutes les exceptions sont interceptées
+    try {
+      // Vérifier si la box est déjà ouverte
+      bool isOpen = false;
+      try {
+        isOpen = Hive.isBoxOpen(boxName);
+      } catch (_) {
+        // Hive non initialisé ou erreur
+        return (box: null, wasOpen: false);
+      }
+
+      if (isOpen) {
+        try {
+          final box = Hive.box(boxName);
+          return (box: box, wasOpen: true);
+        } catch (_) {
+          return (box: null, wasOpen: false);
+        }
+      } else {
+        // Utiliser runZonedGuarded pour intercepter toutes les exceptions, y compris synchrones
+        Box? box;
+        await runZonedGuarded(() async {
+          try {
+            box = await Hive.openBox(boxName);
+          } catch (e) {
+            box = null;
+          }
+        }, (error, stack) {
+          // Intercepter toutes les erreurs non catchées
+          box = null;
+        });
+        
+        if (box == null) {
+          return (box: null, wasOpen: false);
+        }
+        return (box: box, wasOpen: false);
+      }
+    } catch (e, stackTrace) {
+      // Intercepter toutes les erreurs, y compris celles propagées de manière asynchrone
+      // Retourner une valeur par défaut au lieu de propager l'erreur
+      return (box: null, wasOpen: false);
+    }
+  }
 
   /// Provider pour vérifier si une migration est nécessaire
   ///
@@ -137,22 +203,81 @@ class GardenModule {
   /// - gardens_hive (Hive, HiveType 25)
   ///
   /// Retourne `true` si au moins une des anciennes boxes contient des données.
+  ///
+  /// **Note :** Ce provider ouvre temporairement les boxes pour vérifier leur contenu
+  /// et les ferme automatiquement pour éviter les fuites de ressources.
   static final isMigrationNeededProvider = FutureProvider<bool>((ref) async {
-    try {
-      // Ouvrir les anciennes boxes sans les créer
-      final legacyBox = await Hive.openBox('gardens').catchError((_) => null);
-      final v2Box = await Hive.openBox('gardens_v2').catchError((_) => null);
-      final hiveBox =
-          await Hive.openBox('gardens_hive').catchError((_) => null);
+    Box? legacyBox;
+    Box? v2Box;
+    Box? hiveBox;
+    bool legacyWasOpen = false;
+    bool v2WasOpen = false;
+    bool hiveWasOpen = false;
 
-      final hasLegacy = legacyBox.isNotEmpty;
-      final hasV2 = v2Box.isNotEmpty;
-      final hasHive = hiveBox.isNotEmpty;
+    try {
+      // Ouvrir les anciennes boxes sans les créer si elles n'existent pas
+      // Note: Toutes les opérations Hive sont protégées car Hive peut ne pas être initialisé
+      try {
+        final legacyResult = await _safeOpenBox('gardens');
+        legacyBox = legacyResult.box;
+        legacyWasOpen = legacyResult.wasOpen;
+      } catch (_) {
+        legacyBox = null;
+        legacyWasOpen = false;
+      }
+
+      try {
+        final v2Result = await _safeOpenBox('gardens_v2');
+        v2Box = v2Result.box;
+        v2WasOpen = v2Result.wasOpen;
+      } catch (_) {
+        v2Box = null;
+        v2WasOpen = false;
+      }
+
+      try {
+        final hiveResult = await _safeOpenBox('gardens_hive');
+        hiveBox = hiveResult.box;
+        hiveWasOpen = hiveResult.wasOpen;
+      } catch (_) {
+        hiveBox = null;
+        hiveWasOpen = false;
+      }
+
+      // Vérifier si les boxes contiennent des données
+      final hasLegacy = legacyBox?.isNotEmpty ?? false;
+      final hasV2 = v2Box?.isNotEmpty ?? false;
+      final hasHive = hiveBox?.isNotEmpty ?? false;
 
       return hasLegacy || hasV2 || hasHive;
     } catch (e) {
       // En cas d'erreur, considérer qu'aucune migration n'est nécessaire
       return false;
+    } finally {
+      // Fermer uniquement les boxes que nous avons ouvertes (pas celles déjà ouvertes)
+      try {
+        if (legacyBox != null && !legacyWasOpen) {
+          await legacyBox.close();
+        }
+      } catch (_) {
+        // Ignorer les erreurs de fermeture
+      }
+
+      try {
+        if (v2Box != null && !v2WasOpen) {
+          await v2Box.close();
+        }
+      } catch (_) {
+        // Ignorer les erreurs de fermeture
+      }
+
+      try {
+        if (hiveBox != null && !hiveWasOpen) {
+          await hiveBox.close();
+        }
+      } catch (_) {
+        // Ignorer les erreurs de fermeture
+      }
     }
   });
 
@@ -169,17 +294,39 @@ class GardenModule {
   static final migrationStatsProvider =
       FutureProvider<Map<String, int>>((ref) async {
     try {
-      final legacyBox = await Hive.openBox('gardens').catchError((_) => null);
-      final v2Box = await Hive.openBox('gardens_v2').catchError((_) => null);
-      final hiveBox =
-          await Hive.openBox('gardens_hive').catchError((_) => null);
-      final freezedBox =
-          await Hive.openBox('gardens_freezed').catchError((_) => null);
+      Box? legacyBox;
+      Box? v2Box;
+      Box? hiveBox;
+      Box? freezedBox;
 
-      final legacyCount = legacyBox.length ?? 0;
-      final v2Count = v2Box.length ?? 0;
-      final hiveCount = hiveBox.length ?? 0;
-      final freezedCount = freezedBox.length ?? 0;
+      try {
+        legacyBox = await Hive.openBox('gardens');
+      } catch (_) {
+        // Box n'existe pas ou erreur d'ouverture
+      }
+
+      try {
+        v2Box = await Hive.openBox('gardens_v2');
+      } catch (_) {
+        // Box n'existe pas ou erreur d'ouverture
+      }
+
+      try {
+        hiveBox = await Hive.openBox('gardens_hive');
+      } catch (_) {
+        // Box n'existe pas ou erreur d'ouverture
+      }
+
+      try {
+        freezedBox = await Hive.openBox('gardens_freezed');
+      } catch (_) {
+        // Box n'existe pas ou erreur d'ouverture
+      }
+
+      final legacyCount = legacyBox?.length ?? 0;
+      final v2Count = v2Box?.length ?? 0;
+      final hiveCount = hiveBox?.length ?? 0;
+      final freezedCount = freezedBox?.length ?? 0;
 
       return {
         'legacyCount': legacyCount,

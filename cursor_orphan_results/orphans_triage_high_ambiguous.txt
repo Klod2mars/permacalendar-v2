@@ -1,0 +1,390 @@
+Items nécessitant une revue manuelle (classification: needs_manual)
+================================================================================
+
+Type: provider
+Name: plantDataSourceProvider
+File: core/di/intelligence_module.dart
+Line: 81
+Source: orphan_providers
+Suggested Action: manual_review
+Notes: dynamic_usage_detected
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: CalibrationState
+File: lib/core/models/calibration_state.dart
+Line: 15
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected; referenced_in_generated
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: CurrentIntelligenceGardenIdNotifier
+File: lib/core/providers/intelligence_runtime_providers.dart
+Line: 13
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: IntelligentAlertsNotifier
+File: lib/core/providers/intelligence_runtime_providers.dart
+Line: 28
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: ContextualRecommendationsNotifier
+File: lib/core/providers/intelligence_runtime_providers.dart
+Line: 56
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: RealTimeAnalysisState
+File: lib/core/providers/intelligence_runtime_providers.dart
+Line: 81
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: RealTimeAnalysisNotifier
+File: lib/core/providers/intelligence_runtime_providers.dart
+Line: 90
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenHelpers
+File: lib/core/repositories/garden_helpers.dart
+Line: 6
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: gardensWithDensity
+File: lib/core/repositories/garden_helpers.dart
+Line: 198
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: totalBedArea
+File: lib/core/repositories/garden_helpers.dart
+Line: 225
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenStatistics
+File: lib/core/repositories/garden_helpers.dart
+Line: 253
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenRepository
+File: lib/core/repositories/garden_repository.dart
+Line: 8
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: getGardens
+File: lib/core/repositories/garden_repository.dart
+Line: 13
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: countValidation
+File: lib/core/repositories/garden_repository.dart
+Line: 53
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: getActiveGardens
+File: lib/core/repositories/garden_repository.dart
+Line: 136
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: getGardenCount
+File: lib/core/repositories/garden_repository.dart
+Line: 141
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: getActiveGardenCount
+File: lib/core/repositories/garden_repository.dart
+Line: 146
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: searchGardens
+File: lib/core/repositories/garden_repository.dart
+Line: 157
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenRepositoryException
+File: lib/core/repositories/garden_repository.dart
+Line: 170
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenRepositoryErrorType
+File: lib/core/repositories/garden_repository.dart
+Line: 179
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenValidationException
+File: lib/core/repositories/garden_repository.dart
+Line: 181
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenNotFoundException
+File: lib/core/repositories/garden_repository.dart
+Line: 186
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenLimitException
+File: lib/core/repositories/garden_repository.dart
+Line: 191
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: minGardens
+File: lib/core/repositories/garden_rules.dart
+Line: 24
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: remainingCount
+File: lib/core/repositories/garden_rules.dart
+Line: 54
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: validateGardenData
+File: lib/core/repositories/garden_rules.dart
+Line: 66
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: calculateValidationStats
+File: lib/core/repositories/garden_rules.dart
+Line: 158
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: canAddMore
+File: lib/core/repositories/garden_rules.dart
+Line: 166
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: canRemove
+File: lib/core/repositories/garden_rules.dart
+Line: 167
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: remainingSlots
+File: lib/core/repositories/garden_rules.dart
+Line: 168
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: ValidationResult
+File: lib/core/repositories/garden_rules.dart
+Line: 184
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: GardenValidationStats
+File: lib/core/repositories/garden_rules.dart
+Line: 204
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: bioControl
+File: lib/core/services/plant_condition_analyzer.dart
+Line: 529
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: recent
+File: lib/features/plant_intelligence/data/datasources/plant_intelligence_local_datasource.dart
+Line: 986
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: PlantConditionExtension
+File: lib/features/plant_intelligence/domain/entities/plant_condition.dart
+Line: 82
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: distanceFromRange
+File: lib/features/plant_intelligence/domain/entities/plant_condition.dart
+Line: 93
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: NotificationListNotifier
+File: lib/features/plant_intelligence/presentation/providers/notification_providers.dart
+Line: 104
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: allEvolutions
+File: lib/features/plant_intelligence/presentation/providers/plant_evolution_providers.dart
+Line: 45
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: SelectedTimePeriodNotifier
+File: lib/features/plant_intelligence/presentation/providers/plant_evolution_providers.dart
+Line: 65
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: DisplayPreferences
+File: lib/features/plant_intelligence/presentation/providers/plant_intelligence_ui_providers.dart
+Line: 62
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: isFirst
+File: lib/features/plant_intelligence/presentation/widgets/evolution/plant_evolution_timeline.dart
+Line: 114
+Source: unused_symbols
+Suggested Action: manual_review
+Notes: export missing; dynamic_usage_detected; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: daysText
+File: lib/features/plant_intelligence/presentation/widgets/evolution/plant_evolution_timeline.dart
+Line: 523
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+
+Type: symbol
+Name: ConditionChangeType
+File: lib/features/plant_intelligence/presentation/widgets/evolution/plant_evolution_timeline.dart
+Line: 586
+Source: unused_symbols
+Suggested Action: add_export
+Notes: export missing; exported_via_barrel(1)
+--------------------------------------------------------------------------------
+

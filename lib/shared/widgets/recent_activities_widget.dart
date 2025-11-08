@@ -30,9 +30,9 @@ class RecentActivitiesWidget extends ConsumerWidget {
     // Fonction de refresh
     void refreshActivities() {
       if (showOnlyImportant) {
-        ref.read(importantActivitiesProvider.notifier).refresh();
+        ref.invalidate(importantActivitiesProvider);
       } else {
-        ref.read(recentActivitiesProvider.notifier).refresh();
+        ref.invalidate(recentActivitiesProvider);
       }
     }
 

@@ -1,0 +1,75 @@
+================================================================================
+RÉSUMÉ DE FUSION - DONNÉES D'ANALYSE D'ORPHELINS
+================================================================================
+
+FICHIERS GÉNÉRÉS:
+-----------------
+1. cursor_orphan_results/orphans_summary.csv
+   - CSV complet avec toutes les entrées fusionnées (1080 entrées)
+   - Colonnes: type, name, file, line, citation, source, priority, note
+   - Format UTF-8
+
+2. cursor_orphan_results/orphans_summary.json
+   - Statistiques agrégées en JSON
+   - Contient: total_files_analyzed, counts, priorities, duplicates_merged
+
+3. cursor_orphan_results/FUSION_REPORT.txt
+   - Rapport détaillé de la fusion
+
+TOTAUX:
+-------
+Fichiers non référencés:     68
+Providers orphelins:          54
+Symboles non utilisés:        958
+Total entrées fusionnées:     1080
+
+RÉPARTITION PAR PRIORITÉ:
+-------------------------
+HIGH PRIORITY:   681 entrées
+MEDIUM PRIORITY: 345 entrées
+LOW PRIORITY:    54 entrées
+
+TOP 20 HIGH PRIORITY ITEMS (par ordre de priorité):
+----------------------------------------------------
+Consulter orphans_summary.csv et trier par colonne 'priority' = 'high'
+
+Catégories HIGH PRIORITY identifiées:
+- Services de migration (migration_orchestrator, etc.)
+- Services d'intelligence (intelligent_recommendation_engine, real_time_data_processor)
+- Modèles v2 (garden_bed_v2, garden_v2, planting_v2, plant_v2)
+- Services de monitoring (alerting_service, health_check_service, etc.)
+- Repositories et services de données
+- Services de performance (data_compression, intelligent_cache, etc.)
+
+NOTES IMPORTANTES:
+-------------------
+- Les chemins sont normalisés avec '/' comme séparateur
+- Les citations (marqueurs 【12†...】) sont préservées pour vérification
+- Les duplications entre sources sont fusionnées (source peut contenir plusieurs valeurs séparées par ';')
+- Aucun cas ambigu détecté (tous les providers ont un chemin de fichier)
+
+EXEMPLES D'ENTRÉES:
+-------------------
+Fichier non référencé (HIGH):
+  type=file, name=lib/core/services/migration/migration_orchestrator.dart
+
+Provider orphelin (HIGH):
+  type=provider, name=migrationOrchestratorProvider, file=core/services/migration/migration_orchestrator.dart, line=914
+
+Symbole non utilisé (HIGH):
+  type=symbol, name=currentStoredVersion, file=lib/core/data/hive/data_migration_service.dart, line=16
+
+PROCHAINES ÉTAPES:
+------------------
+1. Examiner les 681 entrées HIGH PRIORITY en priorité
+2. Vérifier les services de migration et d'intelligence
+3. Vérifier les modèles v2 (peut-être en cours de migration?)
+4. Examiner les providers orphelins pour déterminer s'ils sont réellement utilisés
+5. Pour les MEDIUM/LOW priority: examiner selon les besoins
+
+================================================================================
+FIN DU RÉSUMÉ
+================================================================================
+
+
+

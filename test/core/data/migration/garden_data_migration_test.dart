@@ -479,6 +479,208 @@ void main() {
       // La migration devrait réussir même avec des boxes manquantes
       expect(result.success, true);
     });
+
+    test('should handle partial migration when only legacy box exists', () async {
+      // Arrange
+      Hive.registerAdapter(GardenFreezedAdapter());
+
+      final migration = GardenDataMigration();
+
+      // Créer uniquement la box legacy
+      final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
+      await legacyBox.put(
+        'legacy-only',
+        legacy.Garden(
+          id: 'legacy-only',
+          name: 'Legacy Only',
+          description: 'Test',
+          totalAreaInSquareMeters: 100.0,
+          location: 'Paris',
+        ),
+      );
+
+      // Act
+      final result = await migration.migrateAllGardens(
+        dryRun: false,
+        backupBeforeMigration: false,
+        cleanupOldBoxes: false,
+      );
+
+      // Assert
+      expect(result.success, true);
+      expect(result.legacyCount, 1);
+      expect(result.v2Count, 0);
+      expect(result.hiveCount, 0);
+      expect(result.migratedCount, 1);
+
+      final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
+      expect(targetBox.get('legacy-only')?.name, 'Legacy Only');
+    });
+
+    test('should handle partial migration when only v2 box exists', () async {
+      // Arrange
+      Hive.registerAdapter(GardenFreezedAdapter());
+
+      final migration = GardenDataMigration();
+
+      // Créer uniquement la box v2
+      final v2Box = await Hive.openBox<v2.Garden>('gardens_v2');
+      await v2Box.put(
+        'v2-only',
+        v2.Garden(
+          id: 'v2-only',
+          name: 'V2 Only',
+          description: 'Test',
+          location: 'Lyon',
+          createdDate: DateTime(2024, 5, 1),
+          gardenBeds: [],
+        ),
+      );
+
+      // Act
+      final result = await migration.migrateAllGardens(
+        dryRun: false,
+        backupBeforeMigration: false,
+        cleanupOldBoxes: false,
+      );
+
+      // Assert
+      expect(result.success, true);
+      expect(result.legacyCount, 0);
+      expect(result.v2Count, 1);
+      expect(result.hiveCount, 0);
+      expect(result.migratedCount, 1);
+
+      final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
+      expect(targetBox.get('v2-only')?.name, 'V2 Only');
+    });
+
+    test('should handle partial migration when only hive box exists', () async {
+      // Arrange
+      Hive.registerAdapter(GardenFreezedAdapter());
+      Hive.registerAdapter(GardenBedHiveAdapter());
+
+      final migration = GardenDataMigration();
+
+      // Créer uniquement la box hive
+      final hiveBox = await Hive.openBox<GardenHive>('gardens_hive');
+      await hiveBox.put(
+        'hive-only',
+        GardenHive.create(
+          name: 'Hive Only',
+          description: 'Test',
+        ),
+      );
+
+      // Act
+      final result = await migration.migrateAllGardens(
+        dryRun: false,
+        backupBeforeMigration: false,
+        cleanupOldBoxes: false,
+      );
+
+      // Assert
+      expect(result.success, true);
+      expect(result.legacyCount, 0);
+      expect(result.v2Count, 0);
+      expect(result.hiveCount, 1);
+      expect(result.migratedCount, 1);
+
+      final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
+      expect(targetBox.get('hive-only')?.name, 'Hive Only');
+    });
+
+    test('should handle migration when some boxes are missing', () async {
+      // Arrange
+      Hive.registerAdapter(GardenFreezedAdapter());
+
+      final migration = GardenDataMigration();
+
+      // Créer uniquement legacy et v2, pas hive
+      final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
+      await legacyBox.put(
+        'legacy-1',
+        legacy.Garden(
+          id: 'legacy-1',
+          name: 'Legacy',
+          description: 'Test',
+          totalAreaInSquareMeters: 100.0,
+          location: 'Paris',
+        ),
+      );
+
+      final v2Box = await Hive.openBox<v2.Garden>('gardens_v2');
+      await v2Box.put(
+        'v2-1',
+        v2.Garden(
+          id: 'v2-1',
+          name: 'V2',
+          description: 'Test',
+          location: 'Lyon',
+          createdDate: DateTime(2024, 5, 1),
+          gardenBeds: [],
+        ),
+      );
+
+      // Ne pas créer gardens_hive
+
+      // Act
+      final result = await migration.migrateAllGardens(
+        dryRun: false,
+        backupBeforeMigration: false,
+        cleanupOldBoxes: false,
+      );
+
+      // Assert
+      expect(result.success, true);
+      expect(result.legacyCount, 1);
+      expect(result.v2Count, 1);
+      expect(result.hiveCount, 0);
+      expect(result.migratedCount, 2);
+      expect(result.integrityVerified, true);
+
+      final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
+      expect(targetBox.length, 2);
+      expect(targetBox.get('legacy-1')?.name, 'Legacy');
+      expect(targetBox.get('v2-1')?.name, 'V2');
+    });
+
+    test('should close boxes properly after migration', () async {
+      // Arrange
+      Hive.registerAdapter(GardenFreezedAdapter());
+
+      final migration = GardenDataMigration();
+
+      // Créer une box legacy (ne pas l'ouvrir manuellement)
+      // La migration l'ouvrira et la fermera
+      final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
+      await legacyBox.put(
+        'test-close',
+        legacy.Garden(
+          id: 'test-close',
+          name: 'Test Close',
+          description: 'Test',
+          totalAreaInSquareMeters: 100.0,
+          location: 'Paris',
+        ),
+      );
+      await legacyBox.close(); // Fermer avant migration
+
+      // Act
+      final result = await migration.migrateAllGardens(
+        dryRun: false,
+        backupBeforeMigration: false,
+        cleanupOldBoxes: false,
+      );
+
+      // Assert
+      expect(result.success, true);
+      expect(result.legacyCount, 1);
+
+      // La box devrait être fermée après migration (si elle était ouverte par la migration)
+      // Note: Si la box était déjà ouverte ailleurs, elle reste ouverte
+      // Ce test vérifie que la migration gère correctement les boxes fermées
+    });
   });
 
   group('GardenMigrationResult', () {

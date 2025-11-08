@@ -35,7 +35,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              ref.read(recentActivitiesProvider.notifier).refresh();
+              ref.invalidate(recentActivitiesProvider);
             },
             icon: const Icon(Icons.refresh),
             tooltip: 'Actualiser',
@@ -84,7 +84,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
 
                 return RefreshIndicator(
                   onRefresh: () async {
-                    await ref.read(recentActivitiesProvider.notifier).refresh();
+                    await ref.refresh(recentActivitiesProvider.future);
                   },
                   child: ListView.builder(
                     padding: const EdgeInsets.all(16),
@@ -278,7 +278,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              ref.read(recentActivitiesProvider.notifier).refresh();
+              ref.invalidate(recentActivitiesProvider);
             },
             child: const Text('Réessayer'),
           ),

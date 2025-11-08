@@ -12,6 +12,7 @@ import '../../features/plant_intelligence/domain/repositories/i_bio_control_reco
 import '../../features/plant_intelligence/data/repositories/plant_intelligence_repository_impl.dart';
 import '../../features/plant_intelligence/data/repositories/biological_control_repository_impl.dart';
 import '../../features/plant_intelligence/data/datasources/plant_intelligence_local_datasource.dart';
+import '../../features/plant_intelligence/data/datasources/plant_intelligence_remote_datasource.dart';
 import '../../features/plant_intelligence/data/datasources/biological_control_datasource.dart';
 import '../../features/plant_intelligence/data/datasources/plant_datasource_impl.dart';
 import '../../features/plant_intelligence/domain/repositories/i_plant_data_source.dart';
@@ -22,7 +23,13 @@ import '../../features/plant_intelligence/domain/usecases/analyze_pest_threats_u
 import '../../features/plant_intelligence/domain/usecases/generate_bio_control_recommendations_usecase.dart';
 import '../../features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart';
 import '../../features/plant_intelligence/domain/services/plant_intelligence_evolution_tracker.dart';
+import '../../features/plant_intelligence/domain/services/plant_evolution_tracker_service.dart';
 import '../../features/plant_catalog/data/repositories/plant_hive_repository.dart';
+import '../services/intelligence/intelligent_recommendation_engine.dart';
+import '../services/intelligence/predictive_analytics_service.dart';
+import '../services/intelligence/real_time_data_processor.dart';
+import '../services/intelligence/real_time_time_data_processor.dart';
+import 'network_module.dart';
 import 'garden_module.dart';
 
 /// Module d'injection de dépendances pour l'Intelligence Végétale
@@ -63,6 +70,40 @@ class IntelligenceModule {
     return PlantIntelligenceLocalDataSourceImpl(Hive);
   });
 
+  /// Provider pour la source de données distante
+  ///
+  /// **Responsabilité :**
+  /// - Communication avec les APIs d'intelligence végétale (REST)
+  /// - Synchronisation des conditions, recommandations et alertes
+  /// - Gestion résiliente des erreurs réseau (timeouts, retry via NetworkService)
+  ///
+  /// **Riverpod 3 :**
+  /// - Injecté via `ref.read()` pour éviter tout état global
+  /// - Les méthodes exposent des `Future` compatibles avec les `FutureProvider`
+  ///
+  /// **Usage recommandé :**
+  /// ```dart
+  /// final remote = ref.read(IntelligenceModule.remoteDataSourceProvider);
+  /// final conditions = await remote.getRemotePlantCondition('plant-42');
+  /// ```
+  static final remoteDataSourceProvider =
+      Provider<PlantIntelligenceRemoteDataSource>((ref) {
+    final networkService = ref.read(NetworkModule.networkServiceProvider);
+    return PlantIntelligenceRemoteDataSourceImpl(
+      networkService: networkService,
+    );
+  });
+
+  /// Provider `Future` pour récupérer le statut de synchronisation distant.
+  ///
+  /// À utiliser dans l'UI pour afficher l'état réseau courant sans
+  /// gérer manuellement les lifecycles (`autoDispose`).
+  static final remoteSyncStatusProvider =
+      FutureProvider.autoDispose<SyncStatus>((ref) async {
+    final dataSource = ref.read(remoteDataSourceProvider);
+    return dataSource.getSyncStatus();
+  });
+
   /// Provider pour la source de données de lutte biologique
   ///
   /// Gère :
@@ -76,10 +117,67 @@ class IntelligenceModule {
 
   /// Provider pour la source de données des plantes
   ///
-  /// Fournit accès au catalogue des plantes via PlantHiveRepository.
-  /// Utilisé par les UseCases de lutte biologique pour récupérer les infos plantes.
+  /// **Responsabilité:**
+  /// Fournit un accès découplé au catalogue des plantes via l'interface `IPlantDataSource`.
+  /// Cette source de données encapsule `PlantHiveRepository` pour isoler les UseCases
+  /// des détails d'implémentation Hive.
+  ///
+  /// **Type de données:**
+  /// - Retourne une instance de `IPlantDataSource` (interface)
+  /// - Implémentation: `PlantDataSourceImpl` qui encapsule `PlantHiveRepository`
+  /// - Données: Catalogue des plantes (lecture seule depuis Hive local)
+  ///
+  /// **Dépendances:**
+  /// - `PlantHiveRepository`: Repository Hive pour la persistance locale
+  ///   - Accès à la box `plants_box` (Hive)
+  ///   - Chargement depuis `assets/data/plants.json`
+  ///   - Pas de dépendance réseau (source locale uniquement)
+  ///
+  /// **Gestion d'erreurs:**
+  /// - Les erreurs d'initialisation sont capturées et loggées
+  /// - Les méthodes de l'interface retournent des valeurs par défaut (null, [])
+  ///   en cas d'erreur plutôt que de lever des exceptions
+  ///
+  /// **Interactions:**
+  /// - Utilisé par `analyzePestThreatsUsecaseProvider` pour récupérer les infos plantes
+  /// - Utilisé par `generateBioControlRecommendationsUsecaseProvider` pour le compagnonnage
+  /// - Peut être utilisé par `realTimeDataProcessor` pour les mises à jour en temps réel
+  /// - Peut être utilisé par `intelligentRecommendationEngine` pour les recommandations
+  ///
+  /// **Usage:**
+  /// ```dart
+  /// // Dans un widget ou un UseCase
+  /// final dataSource = ref.read(IntelligenceModule.plantDataSourceProvider);
+  ///
+  /// // Récupérer une plante spécifique
+  /// final plant = await dataSource.getPlant('plant-123');
+  ///
+  /// // Récupérer toutes les plantes
+  /// final allPlants = await dataSource.getAllPlants();
+  ///
+  /// // Rechercher des plantes
+  /// final results = await dataSource.searchPlants('tomate');
+  /// ```
+  ///
+  /// **Bonnes pratiques:**
+  /// - Utiliser `ref.watch()` dans les widgets pour la réactivité
+  /// - Utiliser `ref.read()` dans les UseCases et services
+  /// - Les erreurs sont gérées silencieusement (retour de valeurs par défaut)
+  /// - Pour un diagnostic, vérifier les logs avec `developer.log`
+  ///
+  /// **Note:**
+  /// Ce provider est conforme à Riverpod 3 :
+  /// - Pas de variable globale utilisée directement
+  /// - Toutes les dépendances sont injectées via le provider
+  /// - Pas d'état persistant entre recharges (nouvelle instance à chaque fois)
   static final plantDataSourceProvider = Provider<IPlantDataSource>((ref) {
-    return PlantDataSourceImpl(PlantHiveRepository());
+    // Création d'une nouvelle instance de PlantHiveRepository
+    // Note: PlantHiveRepository initialise la box Hive de manière lazy
+    // via _getBox(), donc pas besoin d'initialisation synchrone ici.
+    // Les erreurs d'accès aux données sont gérées par PlantDataSourceImpl
+    // qui retourne des valeurs par défaut (null, []) plutôt que de lever des exceptions.
+    final plantRepository = PlantHiveRepository();
+    return PlantDataSourceImpl(plantRepository);
   });
 
   // ==================== REPOSITORIES ====================
@@ -310,6 +408,211 @@ class IntelligenceModule {
     );
   });
 
+  // ==================== INTELLIGENCE SERVICES ====================
+
+  /// Provider pour le PredictiveAnalyticsService
+  ///
+  /// **Responsabilité:**
+  /// Service d'analytics prédictif pour les prédictions ML :
+  /// - Prédictions de séries temporelles
+  /// - Analyse de tendances
+  /// - Détection d'anomalies
+  /// - Prédiction de récoltes
+  ///
+  /// **Usage:**
+  /// Utilisé par `IntelligentRecommendationEngine` pour améliorer
+  /// la qualité des recommandations via des prédictions ML.
+  static final predictiveAnalyticsServiceProvider =
+      Provider<PredictiveAnalyticsService>((ref) {
+    return PredictiveAnalyticsService();
+  });
+
+  /// Provider pour le RealTimeDataProcessor
+  ///
+  /// **Responsabilité:**
+  /// Processeur de flux événementiels en temps réel pour :
+  /// - Traitement des événements de jardin (changements de conditions, nouvelles plantations)
+  /// - Mise à jour des recommandations intelligentes en temps réel
+  /// - Synchronisation des données entre différents composants du système
+  /// - Gestion de la backpressure pour éviter la surcharge du système
+  ///
+  /// **Dépendances:**
+  /// Aucune (service autonome)
+  ///
+  /// **Configuration:**
+  /// - maxQueueSize: 1000 (par défaut)
+  /// - processingTimeout: 30 secondes (par défaut)
+  /// - enableBackpressure: true (par défaut)
+  ///
+  /// **Usage:**
+  /// ```dart
+  /// final processor = ref.read(IntelligenceModule.realTimeDataProcessorProvider);
+  /// await processor.start();
+  ///
+  /// // Soumettre un événement
+  /// await processor.submitEvent(DataEvent(
+  ///   id: 'garden_update_123',
+  ///   data: gardenData,
+  ///   priority: ProcessingPriority.high,
+  /// ));
+  ///
+  /// // S'abonner aux événements critiques
+  /// processor.subscribe<String>(
+  ///   priority: ProcessingPriority.critical,
+  ///   onEvent: (event) async {
+  ///     // Traiter l'événement
+  ///     return ProcessingResult(
+  ///       eventId: event.id,
+  ///       success: true,
+  ///       processingTime: Duration.zero,
+  ///     );
+  ///   },
+  /// );
+  /// ```
+  ///
+  /// **Note:**
+  /// Ce provider utilise `autoDispose` pour s'assurer que le processeur
+  /// est arrêté et les ressources libérées lorsque plus aucun widget
+  /// ne l'utilise.
+  static final realTimeDataProcessorProvider =
+      Provider.autoDispose<RealTimeDataProcessor>((ref) {
+    final processor = RealTimeDataProcessor(
+      maxQueueSize: 1000,
+      processingTimeout: const Duration(seconds: 30),
+      enableBackpressure: true,
+    );
+
+    // Auto-dispose: arrêter le processeur quand le provider est supprimé
+    ref.onDispose(() async {
+      await processor.dispose();
+    });
+
+    return processor;
+  });
+
+  /// Provider pour le RealTimeTimeDataProcessor
+  ///
+  /// **Responsabilité:**
+  /// Processeur de flux événementiels avec conscience temporelle pour :
+  /// - Traitement d'événements horodatés avec validation de séquence
+  /// - Synchronisation temporelle avec l'horloge système
+  /// - Gestion des retards et événements hors séquence
+  /// - Détection des dérives de temps (horloges système décalées)
+  /// - Mise à jour de modèles temporels basés sur les événements
+  /// - Throttling intelligent basé sur le temps réel
+  ///
+  /// **Différences avec RealTimeDataProcessor:**
+  /// - `RealTimeDataProcessor` : Traite les événements par priorité, sans conscience temporelle
+  /// - `RealTimeTimeDataProcessor` : Traite les événements par ordre temporel, avec validation de séquence
+  ///
+  /// **Dépendances:**
+  /// - `realTimeDataProcessorProvider` : Processeur de base pour le traitement des événements
+  ///
+  /// **Configuration:**
+  /// - maxQueueSize: 1000 (par défaut)
+  /// - processingTimeout: 30 secondes (par défaut)
+  /// - maxLatency: 5 minutes (par défaut)
+  /// - temporalWindow: 10 secondes (par défaut)
+  /// - enableSequenceValidation: true (par défaut)
+  /// - enableTimeDriftDetection: true (par défaut)
+  /// - throttleInterval: 100ms (par défaut)
+  ///
+  /// **Usage:**
+  /// ```dart
+  /// final temporalProcessor = ref.read(
+  ///   IntelligenceModule.realTimeTimeDataProcessorProvider,
+  /// );
+  /// await temporalProcessor.startTemporalStream();
+  ///
+  /// // Soumettre un événement horodaté
+  /// await temporalProcessor.processTimedEvent(TimedEvent(
+  ///   id: 'garden_update_123',
+  ///   data: gardenData,
+  ///   timestamp: DateTime.now(),
+  ///   expectedSequence: 42,
+  /// ));
+  ///
+  /// // S'abonner aux événements temporels
+  /// temporalProcessor.subscribeToTemporalStream<String>(
+  ///   onEvent: (event) async {
+  ///     // Traiter l'événement avec conscience temporelle
+  ///     return TemporalProcessingResult(
+  ///       eventId: event.id,
+  ///       success: true,
+  ///       processingTime: Duration.zero,
+  ///       latency: event.latency,
+  ///       sequenceValid: event.sequenceValid,
+  ///     );
+  ///   },
+  /// );
+  /// ```
+  ///
+  /// **Utilisation avec StreamProvider:**
+  /// ```dart
+  /// final temporalStreamProvider = StreamProvider.autoDispose<TimedEvent<String>>((ref) {
+  ///   final processor = ref.read(
+  ///     IntelligenceModule.realTimeTimeDataProcessorProvider,
+  ///   );
+  ///   return processor.getTemporalStream<String>();
+  /// });
+  /// ```
+  ///
+  /// **Note:**
+  /// Ce provider utilise `autoDispose` pour s'assurer que le processeur
+  /// est arrêté et les ressources libérées lorsque plus aucun widget
+  /// ne l'utilise.
+  static final realTimeTimeDataProcessorProvider =
+      Provider.autoDispose<RealTimeTimeDataProcessor>((ref) {
+    final baseProcessor = ref.read(realTimeDataProcessorProvider);
+    final processor = RealTimeTimeDataProcessor(
+      baseProcessor: baseProcessor,
+      maxQueueSize: 1000,
+      processingTimeout: const Duration(seconds: 30),
+      maxLatency: const Duration(minutes: 5),
+      temporalWindow: const Duration(seconds: 10),
+      enableSequenceValidation: true,
+      enableTimeDriftDetection: true,
+    );
+
+    // Auto-dispose: arrêter le processeur quand le provider est supprimé
+    ref.onDispose(() async {
+      await processor.dispose();
+    });
+
+    return processor;
+  });
+
+  /// Provider pour le IntelligentRecommendationEngine
+  ///
+  /// **Responsabilité:**
+  /// Moteur de recommandations intelligentes basé sur :
+  /// - Conditions météorologiques (gel, canicule, sécheresse)
+  /// - Santé des plantes (scores de santé, détection de problèmes)
+  /// - Opportunités saisonnières (plantation printanière, automnale)
+  /// - Compagnonnage végétal (plantes compagnes bénéfiques)
+  /// - Préférences utilisateur et historique (personnalisation)
+  ///
+  /// **Dépendances:**
+  /// - `predictiveAnalyticsServiceProvider` : Service d'analytics ML (optionnel)
+  ///
+  /// **Usage:**
+  /// ```dart
+  /// final engine = ref.read(IntelligenceModule.intelligentRecommendationEngineProvider);
+  /// final batch = await engine.generateRecommendations(
+  ///   gardenId: 'garden-123',
+  ///   gardenData: garden.toJson(),
+  ///   weatherData: weatherData,
+  ///   plants: plants.map((p) => p.toJson()).toList(),
+  /// );
+  /// ```
+  static final intelligentRecommendationEngineProvider =
+      Provider<IntelligentRecommendationEngine>((ref) {
+    final analyticsService = ref.read(predictiveAnalyticsServiceProvider);
+    return IntelligentRecommendationEngine(
+      analyticsService: analyticsService,
+    );
+  });
+
   // ==================== EVOLUTION TRACKER ====================
 
   /// Provider pour le PlantIntelligenceEvolutionTracker
@@ -328,6 +631,20 @@ class IntelligenceModule {
     return PlantIntelligenceEvolutionTracker(
       enableLogging: false,
       toleranceThreshold: 0.01,
+    );
+  });
+
+  /// Provider pour le PlantEvolutionTrackerService (Riverpod 3)
+  ///
+  /// Utiliser `ref.watch(IntelligenceModule.plantEvolutionTrackerProvider)` pour
+  /// récupérer une instance auto-disposée compatible caches légers.
+  static final plantEvolutionTrackerProvider =
+      Provider.autoDispose<PlantEvolutionTrackerService>((ref) {
+    return const PlantEvolutionTrackerService(
+      enableLogging: false,
+      stabilityThreshold: 1.0,
+      historyRetention: Duration(days: 90),
+      trendWindowSize: 5,
     );
   });
 

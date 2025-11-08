@@ -1,0 +1,9 @@
+{
+  "total_processed": 681,
+  "counts_by_classification": {
+    "likely_used": 49,
+    "likely_orphan": 589,
+    "needs_manual": 43
+  },
+  "ambiguous_count": 43
+}

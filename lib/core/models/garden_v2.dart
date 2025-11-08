@@ -91,7 +91,7 @@ class Garden extends HiveObject {
       description: json['description'] as String,
       location: json['location'] as String,
       createdDate: DateTime.parse(json['createdDate'] as String),
-      gardenBeds: List<String>.from(json['gardenBeds'] as List),
+      gardenBeds: List<String>.from(json['gardenBeds'] as List? ?? []),
     );
   }
 
