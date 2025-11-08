@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:permacalendarv2/core/models/activity_v3.dart';
-import 'package:permacalendarv2/core/providers/activity_tracker_v3_provider.dart';
+import 'package:permacalendar/core/models/activity_v3.dart';
+import 'package:permacalendar/core/providers/activity_tracker_v3_provider.dart';
 
 void main() {
   test('ActivityTrackerV3Provider should instantiate correctly', () {
