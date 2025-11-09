@@ -1,270 +1,311 @@
-mission_id: "M008_fix_script_and_run_step4"
-title: "M008 — Remplacer apply_provider_patches.ps1 (fix Providers parsing) et relancer l'étape 4"
+mission_id: "M008_cursor_auto_1-4_always"
+title: "M008 (Cursor) — Automatisation steps 1→4 (détection, regen rapports, vérif définitions, preparation/scaffold)"
+created_by: "perma-assistant"
+created_at: !!timestamp "2025-11-09T00:00:00Z"
+# Demande explicite: exécuter tout le temps / always
+always: true
+
 description: |
-  Cette mission remplace .scripts/apply_provider_patches.ps1 par une version corrigée
-  (normalisation du paramètre -Providers pour accepter "a,b,c" ou un tableau),
-  vérifie la présence des providers ciblés, puis exécute l'étape 4 réelle :
-  appel du script pour préparer les 3 providers sûrs (scaffold + tests locaux).
+  Mission Cursor : automatise et enchaîne les étapes 1→4 :
+    1) détecter la présence des providers ciblés (ou extraire top candidates depuis provider_family_report.csv),
+    2) (si nécessaire) régénérer les rapports detect_provider_calls / analyze_provider_families,
+    3) vérifier les définitions exactes dans le code,
+    4) lancer .scripts/apply_provider_patches.ps1 pour les providers valides (préparation réelle, tests locaux, sans push).
+  Le flux est résilient : il essaie de poursuivre même si certaines sous-étapes échouent, et produit un rapport structuré final.
 preconditions:
   - Exécuter depuis la racine du dépôt git local.
-  - PowerShell (pwsh) disponible.
+  - PowerShell (pwsh) disponible dans l'environnement de Cursor.
   - flutter/dart disponibles si -RunTests déclenche build_runner/flutter test.
 variables:
-  providers: "filteredEvolutionHistoryProvider,plantEvolutionHistoryProvider,latestEvolutionProvider"
+  # Si providers est vide, on prendra les top N du provider_family_report.csv (ou .ai-doc/patches fallback)
+  providers: ""
+  top_n: 5
+
 steps:
-  - name: "1 — Remplacer .scripts/apply_provider_patches.ps1 par la version corrigée"
+  - name: "0. Préparation: variables & sanity checks"
     shell: "pwsh"
     run: |
-      $path = ".scripts\apply_provider_patches.ps1"
-      if (-not (Test-Path ".scripts")) { New-Item -ItemType Directory -Path ".scripts" | Out-Null }
-      Write-Host "Écriture du script corrigé → $path"
-      $content = @'
-#! PowerShell: generate/apply provider family scaffolds (M008) — fixed Providers parsing
-Param(
-  [int]$Max = 5,
-  [string[]]$Providers = @(),
-  [switch]$DryRun,
-  [switch]$RunTests,
-  [switch]$PushBranch
-)
-$ErrorActionPreference = "Stop"
-
-function Write-Log($msg) { Write-Host "$(Get-Date -Format u) - $msg" }
-
-# --- Normalize Providers param: accept "a,b,c" or an array of strings
-if ($Providers -and $Providers.Count -eq 1) {
-  $single = $Providers[0]
-  if ($single -match ',') {
-    # split and trim
-    $Providers = $single -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
-    Write-Log "Providers parameter split into: $($Providers -join ', ')"
-  }
-}
-
-# Repo root
-$root = (Get-Location).Path
-
-# Preconditions
-if (-not (Test-Path ".ai-doc/patches")) {
-  Write-Error ".ai-doc/patches not found. Run M006 scripts first."
-  exit 1
-}
-if (-not (git rev-parse --is-inside-work-tree 2>$null)) {
-  Write-Error "Not a git repository (run from repo root)."
-  exit 1
-}
-
-# Choose providers
-if ($Providers.Length -eq 0) {
-  if (Test-Path "provider_family_report.csv") {
-    $rows = Import-Csv "provider_family_report.csv" | Where-Object { $_.is_family -eq "False" -and $_.defined_in -ne "" } | Sort-Object -Property usages -Descending
-    $candidates = $rows | Select-Object -First $Max | ForEach-Object { $_.provider }
-  } else {
-    # fallback: list patches folder names
-    $candidates = Get-ChildItem -Path ".ai-doc/patches" -Filter "*.md" | Select-Object -First $Max -ExpandProperty BaseName
-  }
-} else {
-  $candidates = $Providers
-}
-
-Write-Log "Candidates to prepare:"
-$candidates | ForEach-Object { Write-Host " - $_" }
-
-# Ensure applied_patches dir
-$appliedDir = ".ai-doc/applied_patches"
-if (!(Test-Path $appliedDir)) { New-Item -ItemType Directory -Path $appliedDir | Out-Null }
-
-foreach ($prov in $candidates) {
-  Write-Log "Processing provider: $prov"
-
-  # Find definitions across repo
-  try {
-    $defs = Select-String -Path ".\**\*.dart" -Pattern "final\s+$prov\s*=" -List -ErrorAction SilentlyContinue
-  } catch {
-    $defs = @()
-  }
-
-  if (-not $defs) {
-    Write-Warning "No definition found for $prov — skipping."
-    Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: no_definition_found")
-    continue
-  }
-  if ($defs.Count -ne 1) {
-    Write-Warning "Multiple or zero definitions for $prov ($($defs.Count)) — SKIPPING to avoid collisions."
-    $defs | ForEach-Object { Write-Host "  - $($_.Path):$($_.LineNumber)" }
-    Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: collision_or_multiple_defs`nfound:" + ($defs | ForEach-Object { "`n - $($_.Path):$($_.LineNumber)" }))
-    continue
-  }
-
-  $def = $defs[0]
-  $defFile = $def.Path
-  $lineNo = $def.LineNumber
-  Write-Log "Found single definition in $defFile:$lineNo"
-
-  # Extract snippet
-  $content = Get-Content -Path $defFile -Raw -Encoding UTF8
-  $lines = $content -split "`r?`n"
-  $start = [Math]::Max(1, $lineNo - 4)
-  $end = [Math]::Min($lines.Length, $lineNo + 8)
-  $snippet = $lines[($start-1)..($end-1)]
-
-  # Backup original file
-  $bakFile = "$defFile.m008.bak"
-  Copy-Item -Path $defFile -Destination $bakFile -Force
-  Write-Log "Backup created: $bakFile"
-
-  # Create branch
-  $branch = "apply-provider/$prov-m008"
-  if ($DryRun) {
-    Write-Log "(DryRun) would create branch: $branch"
-  } else {
-    git checkout -b $branch
-    Write-Log "Created branch $branch"
-  }
-
-  # Prepare scaffold: comment original snippet and add TODO conversion block
-  $before = if ($start -gt 1) { $lines[0..($start-2)] } else { @() }
-  $after  = if ($end -lt $lines.Length) { $lines[$end..($lines.Length-1)] } else { @() }
-
-  $commentedOriginal = $snippet | ForEach-Object { "// $_" }
-  $conversionBlock = @(
-    "// BEGIN_M008_CONVERSION $prov",
-    "// TODO: Convert `$prov` to a `.family` provider (NotifierProvider.family / Provider.family / FutureProvider.family).",
-    "// Suggested outline (replace <ParamType> and adapt generics):",
-    "// final $prov = <ProviderType>.family<<ParamType>, <State>>((ref, param) {",
-    "//   // 1) move provider logic here, replacing implicit scope with param",
-    "//   // 2) thread `param` through downstream ref.watch/ref.read calls",
-    "//   // 3) update keys/repositories/state accordingly",
-    "// });",
-    "// The original definition is kept below (commented). Remove/comment out after conversion.",
-    ""
-  ) + $commentedOriginal + @(
-    "",
-    "// END_M008_CONVERSION $prov"
-  )
-
-  $newContentLines = @()
-  $newContentLines += $before
-  $newContentLines += $conversionBlock
-  $newContentLines += $after
-  $newContent = $newContentLines -join "`n"
-
-  if ($DryRun) {
-    Write-Log "(DryRun) Would write scaffold to $defFile (backup at $bakFile)."
-  } else {
-    Set-Content -Path $defFile -Value $newContent -Encoding UTF8
-    Write-Log "Scaffold written into $defFile"
-  }
-
-  # Commit prepared changes
-  if ($DryRun) {
-    Write-Log "(DryRun) Skipping git add/commit for $defFile"
-  } else {
-    git add $defFile $bakFile
-    git commit -m "M008: scaffold .family conversion for $prov (manual edits required)"
-    Write-Log "Committed scaffold for $prov on $branch"
-  }
-
-  # Optionally run build_runner & tests for quick validation
-  if ($RunTests) {
-    if ($DryRun) {
-      Write-Log "(DryRun) Would run build_runner and flutter test"
-    } else {
-      Write-Log "Running build_runner..."
-      & flutter pub run build_runner build --delete-conflicting-outputs
-      Write-Log "Running flutter test (full suite; consider running targeted tests)..."
-      & flutter test || Write-Warning "Some tests failed — check logs."
-    }
-  }
-
-  # Push branch and create backup tag if requested
-  if ($PushBranch -and -not $DryRun) {
-    # backup tag
-    $sha = (git rev-parse --short HEAD).Trim()
-    $backupTag = "backup-remote-main-$sha"
-    git tag -f $backupTag
-    git push origin $backupTag
-    Write-Log "Pushed backup tag $backupTag to origin"
-
-    # push branch
-    git push origin "HEAD:refs/heads/$branch"
-    Write-Log "Pushed branch $branch to origin"
-  } elseif ($PushBranch -and $DryRun) {
-    Write-Log "(DryRun) Would create backup tag and push branch $branch"
-  }
-
-  # Create a small applied_patches status file
-  $appliedFile = "$appliedDir/$prov.patch.md"
-  $statusContent = @"
----
-provider: $prov
-prepared_in_file: $defFile
-prepared_line: $lineNo
-backup_file: $bakFile
-branch: $branch
-status: prepared
-notes: "Scaffold inserted. Manual conversion to .family required. See TODO block in file."
----
-"@
-  Set-Content -Path $appliedFile -Value $statusContent -Encoding UTF8
-  Write-Log "Wrote applied patch status: $appliedFile"
-
-  # Return to main if not in dryrun and not staying in branch
-  if (-not $DryRun) {
-    git checkout main
-  }
-}
-
-Write-Log "M008 script finished."
-'@
-      # Write file as UTF8 without BOM
-      $bytes = [System.Text.Encoding]::UTF8.GetBytes($content)
-      [System.IO.File]::WriteAllBytes($path, $bytes)
-      Write-Host "Script écrit avec succès."
-  - name: "2 — Vérifier les définitions des providers ciblés"
-    shell: "pwsh"
-    run: |
-      Write-Host "Vérification rapide des définitions des providers ciblés..."
-      $pattern = "filteredEvolutionHistoryProvider|plantEvolutionHistoryProvider|latestEvolutionProvider"
-      $matches = Select-String -Path .\**\*.dart -Pattern $pattern -List -ErrorAction SilentlyContinue
-      if (-not $matches) {
-        Write-Warning "Aucune définition trouvée pour les providers ciblés. Le script pourra encore marquer 'no_definition_found'."
-      } else {
-        Write-Host "Définitions trouvées :"
-        $matches | ForEach-Object { Write-Host " - $($_.Path):$($_.LineNumber)" }
-      }
-  - name: "3 — Lancer la préparation réelle (Step 4) : exécution du script corrigé"
-    shell: "pwsh"
-    run: |
-      $script = ".scripts\apply_provider_patches.ps1"
-      if (-not (Test-Path $script)) {
-        Write-Error "$script introuvable. Abandon."
+      $ErrorActionPreference = "Continue"
+      Write-Host "=== M008_cursor_auto: initialisation ==="
+      if (-not (git rev-parse --is-inside-work-tree 2>$null)) {
+        Write-Error "Pas dans un dépôt git. Abandon."
         exit 1
       }
-      $provArg = "filteredEvolutionHistoryProvider,plantEvolutionHistoryProvider,latestEvolutionProvider"
-      Write-Host "Exécution du script: powershell -ExecutionPolicy Bypass -File $script -Providers $provArg -RunTests"
-      powershell -ExecutionPolicy Bypass -File $script -Providers $provArg -RunTests
-      if ($LASTEXITCODE -ne 0) {
-        Write-Warning "La commande a retourné un code non nul. Vérifier les logs ci-dessus."
+      if (-not (Test-Path ".scripts/apply_provider_patches.ps1")) {
+        Write-Warning ".scripts/apply_provider_patches.ps1 introuvable — la mission continuera mais échouera à l'étape d'application."
       } else {
-        Write-Host "Script exécuté (préparation réelle terminée)."
+        Write-Host "Found apply_provider_patches script."
       }
-  - name: "4 — Collecte et résumé"
+      if (-not (Test-Path ".ai-doc/patches")) {
+        Write-Warning ".ai-doc/patches absent — le script de patchs peut toujours utiliser provider_family_report.csv."
+      }
+      if (-not (Test-Path "provider_family_report.csv")) {
+        Write-Host "provider_family_report.csv absent (c'est acceptable); on tentera de régénérer si nécessaire."
+      }
+      # Ensure applied_patches dir exists
+      if (!(Test-Path ".ai-doc/applied_patches")) { New-Item -ItemType Directory -Path ".ai-doc/applied_patches" | Out-Null }
+      # Normalize input providers variable (Cursor may pass blank)
+      $env:TARGET_PROVIDERS = "${{ variables.providers }}"
+      $env:TOP_N = "${{ variables.top_n }}"
+      Write-Host "TARGET_PROVIDERS='$env:TARGET_PROVIDERS' TOP_N=$env:TOP_N"
+      Write-Host "Step 0 OK."
+
+  - name: "1. Détecter les providers cibles (entrée ou top N du rapport)"
     shell: "pwsh"
     run: |
-      Write-Host "Branches locales créées (apply-provider/*-m008) :"
+      $ErrorActionPreference = "Continue"
+      $provided = $env:TARGET_PROVIDERS.Trim()
+      $providers = @()
+      if ($provided -ne "") {
+        # accept comma-separated or array-like
+        if ($provided -match ',') {
+          $providers = $provided -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+        } else {
+          $providers = $provided -split '\s+' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+        }
+        Write-Host "Providers from variables: $($providers -join ', ')"
+      } else {
+        # Try to read top N from provider_family_report.csv
+        if (Test-Path "provider_family_report.csv") {
+          try {
+            $rows = Import-Csv "provider_family_report.csv" | Where-Object { $_.is_family -eq "False" -and $_.defined_in -ne "" } | Sort-Object -Property usages -Descending
+            if ($rows.Count -gt 0) {
+              $n = [int]$env:TOP_N
+              $candidates = $rows | Select-Object -First $n
+              $providers = $candidates | ForEach-Object { $_.provider }
+              Write-Host "Providers from provider_family_report.csv (top $n): $($providers -join ', ')"
+            } else {
+              Write-Host "provider_family_report.csv present but without candidates."
+            }
+          } catch {
+            Write-Warning "Erreur lecture provider_family_report.csv: $_"
+          }
+        }
+        # Fallback: list files under .ai-doc/patches
+        if ($providers.Count -eq 0 -and Test-Path ".ai-doc/patches") {
+          $providers = Get-ChildItem -Path ".ai-doc/patches" -Filter "*.md" -ErrorAction SilentlyContinue | Select-Object -First $env:TOP_N -ExpandProperty BaseName
+          if ($providers) { Write-Host "Providers fallback from .ai-doc/patches: $($providers -join ', ')" }
+        }
+      }
+      # final fallback: none provided
+      if (-not $providers -or $providers.Count -eq 0) {
+        Write-Warning "Aucun provider ciblé détecté automatiquement. La mission s'arrêtera proprement."
+      }
+      # export for next steps
+      $providers | ConvertTo-Json -Compress | Set-Content -Path ".ai-doc/applied_patches/selected_providers.json" -Encoding UTF8
+      Write-Host "Selected providers saved to .ai-doc/applied_patches/selected_providers.json"
+
+  - name: "2. Vérifier localement l'existence des définitions (search repo)"
+    shell: "pwsh"
+    run: |
+      $ErrorActionPreference = "Continue"
+      $selFile = ".ai-doc/applied_patches/selected_providers.json"
+      if (-not (Test-Path $selFile)) {
+        Write-Warning "Sélection providers manquante: aborting step 2."
+        exit 0
+      }
+      $providers = (Get-Content $selFile -Raw | ConvertFrom-Json)
+      if (-not $providers) {
+        Write-Warning "Aucun provider à traiter."
+        exit 0
+      }
+      $found = @{}
+      foreach ($prov in $providers) {
+        $found[$prov] = @{ definitions = @(); notes = "" }
+        # Search for exact final <prov> = pattern
+        try {
+          $defs = Select-String -Path .\**\*.dart -Pattern ("final\s+" + [regex]::Escape($prov) + "\s*=") -List -ErrorAction SilentlyContinue
+        } catch { $defs = @() }
+        if ($defs) {
+          foreach ($d in $defs) {
+            $found[$prov].definitions += "$($d.Path):$($d.LineNumber)"
+          }
+        } else {
+          # Try searching for the radical (without Provider) and @riverpod annotations
+          $radical = $prov -replace 'Provider$',''
+          try {
+            $alt = Select-String -Path .\**\*.dart -Pattern $radical -List -ErrorAction SilentlyContinue
+          } catch { $alt = @() }
+          if ($alt) {
+            foreach ($a in $alt) {
+              $found[$prov].definitions += "$($a.Path):$($a.LineNumber)"
+            }
+            $found[$prov].notes = "No exact 'final $prov =' found; matched radical occurrences."
+          }
+        }
+      }
+      # write a human readable report
+      $report = ".ai-doc/applied_patches/definition_report.txt"
+      "Definition report generated on $(Get-Date -Format o)" | Out-File $report -Encoding UTF8
+      foreach ($k in $found.Keys) {
+        Add-Content -Path $report -Value "" -Encoding UTF8
+        Add-Content -Path $report -Value "Provider: $k" -Encoding UTF8
+        if ($found[$k].definitions.Count -gt 0) {
+          Add-Content -Path $report -Value "  Definitions:" -Encoding UTF8
+          $found[$k].definitions | ForEach-Object { Add-Content -Path $report -Value "    - $_" -Encoding UTF8 }
+        } else {
+          Add-Content -Path $report -Value "  Definitions: NONE FOUND" -Encoding UTF8
+        }
+        if ($found[$k].notes) { Add-Content -Path $report -Value "  Notes: $($found[$k].notes)" -Encoding UTF8 }
+      }
+      Write-Host "Definition report written to $report"
+      # Save a JSON of found info for decision making
+      $found | ConvertTo-Json -Compress | Set-Content -Path ".ai-doc/applied_patches/definition_report.json" -Encoding UTF8
+
+  - name: "3. Si aucune définition trouvée, régénérer rapports detect & analyze"
+    shell: "pwsh"
+    run: |
+      $ErrorActionPreference = "Continue"
+      $defJson = ".ai-doc/applied_patches/definition_report.json"
+      if (-not (Test-Path $defJson)) {
+        Write-Warning "definition_report.json absent — skipping regen step."
+        exit 0
+      }
+      $info = (Get-Content $defJson -Raw | ConvertFrom-Json)
+      $noneCount = 0
+      foreach ($k in $info.PSObject.Properties.Name) {
+        if ($info.$k.definitions.Count -eq 0) { $noneCount += 1 }
+      }
+      if ($noneCount -eq 0) {
+        Write-Host "Des définitions ont été trouvées pour tous les providers sélectionnés; pas de régénération nécessaire."
+        exit 0
+      }
+      Write-Host "$noneCount providers sans définition exacte ; tenter de régénérer detect_provider_calls/analyze_provider_families si disponibles."
+
+      if (Test-Path ".scripts/detect_provider_calls.ps1") {
+        try {
+          Write-Host "Running .scripts/detect_provider_calls.ps1"
+          powershell -ExecutionPolicy Bypass -File .scripts/detect_provider_calls.ps1
+          Write-Host "detect_provider_calls completed."
+        } catch { Write-Warning "detect_provider_calls.ps1 failed: $_" }
+      } else {
+        Write-Warning ".scripts/detect_provider_calls.ps1 not found."
+      }
+
+      if (Test-Path ".scripts/analyze_provider_families.ps1") {
+        try {
+          Write-Host "Running .scripts/analyze_provider_families.ps1"
+          powershell -ExecutionPolicy Bypass -File .scripts/analyze_provider_families.ps1
+          Write-Host "analyze_provider_families completed."
+        } catch { Write-Warning "analyze_provider_families.ps1 failed: $_" }
+      } else {
+        Write-Warning ".scripts/analyze_provider_families.ps1 not found."
+      }
+      Write-Host "Step 3 finished: reports regenerated if scripts were present."
+
+  - name: "4. Re-vérifier définitions après regen (idempotent)"
+    shell: "pwsh"
+    run: |
+      $ErrorActionPreference = "Continue"
+      # Re-run step 2 logic to refresh definition_report
+      Write-Host "Re-running definition detection..."
+      $selFile = ".ai-doc/applied_patches/selected_providers.json"
+      if (-not (Test-Path $selFile)) { Write-Warning "selected_providers.json missing; aborting step 4."; exit 0 }
+      $providers = (Get-Content $selFile -Raw | ConvertFrom-Json)
+      $found = @{}
+      foreach ($prov in $providers) {
+        $found[$prov] = @{ definitions = @(); notes = "" }
+        $defs = @()
+        try { $defs = Select-String -Path .\**\*.dart -Pattern ("final\s+" + [regex]::Escape($prov) + "\s*=") -List -ErrorAction SilentlyContinue } catch { $defs = @() }
+        if ($defs) {
+          foreach ($d in $defs) { $found[$prov].definitions += "$($d.Path):$($d.LineNumber)" }
+        } else {
+          $radical = $prov -replace 'Provider$',''
+          try { $alt = Select-String -Path .\**\*.dart -Pattern $radical -List -ErrorAction SilentlyContinue } catch { $alt = @() }
+          if ($alt) {
+            foreach ($a in $alt) { $found[$prov].definitions += "$($a.Path):$($a.LineNumber)" }
+            $found[$prov].notes = "No exact 'final $prov =' found; matched radical occurrences."
+          }
+        }
+      }
+      $report = ".ai-doc/applied_patches/definition_report_after_regen.txt"
+      "Definition report (after regen) on $(Get-Date -Format o)" | Out-File $report -Encoding UTF8
+      foreach ($k in $found.Keys) {
+        Add-Content -Path $report -Value "" -Encoding UTF8
+        Add-Content -Path $report -Value "Provider: $k" -Encoding UTF8
+        if ($found[$k].definitions.Count -gt 0) {
+          Add-Content -Path $report -Value "  Definitions:" -Encoding UTF8
+          $found[$k].definitions | ForEach-Object { Add-Content -Path $report -Value "    - $_" -Encoding UTF8 }
+        } else {
+          Add-Content -Path $report -Value "  Definitions: NONE FOUND" -Encoding UTF8
+        }
+        if ($found[$k].notes) { Add-Content -Path $report -Value "  Notes: $($found[$k].notes)" -Encoding UTF8 }
+      }
+      Write-Host "Wrote re-check report to $report"
+      $found | ConvertTo-Json -Compress | Set-Content -Path ".ai-doc/applied_patches/definition_report_after_regen.json" -Encoding UTF8
+
+  - name: "5. Préparer la liste finale des providers à appliquer et lancer apply_provider_patches.ps1 -RunTests (sans push)"
+    shell: "pwsh"
+    run: |
+      $ErrorActionPreference = "Continue"
+      $defJson = ".ai-doc/applied_patches/definition_report_after_regen.json"
+      if (-not (Test-Path $defJson)) {
+        $defJson = ".ai-doc/applied_patches/definition_report.json"
+      }
+      if (-not (Test-Path $defJson)) {
+        Write-Warning "Aucun rapport de définition trouvé; aborting step 5."
+        exit 0
+      }
+      $info = (Get-Content $defJson -Raw | ConvertFrom-Json)
+      $toApply = @()
+      foreach ($k in $info.PSObject.Properties.Name) {
+        if ($info.$k.definitions.Count -gt 0) { $toApply += $k } else { Write-Host "Skipping $k (no definitions)"; }
+      }
+      if ($toApply.Count -eq 0) {
+        Write-Warning "Aucun provider valide à appliquer. Rien à faire."
+        exit 0
+      }
+      $provArg = $toApply -join ","
+      Write-Host "Final providers to apply: $provArg"
+
+      $script = ".scripts\apply_provider_patches.ps1"
+      if (-not (Test-Path $script)) { Write-Error "$script not found; cannot apply patches."; exit 1 }
+
+      # Run the apply script with -RunTests but without -PushBranch to keep changes local
+      try {
+        Write-Host "Running apply_provider_patches.ps1 -Providers $provArg -RunTests"
+        powershell -ExecutionPolicy Bypass -File $script -Providers $provArg -RunTests
+        Write-Host "apply_provider_patches.ps1 finished (see logs above)."
+      } catch {
+        Write-Warning "apply_provider_patches invocation failed: $_"
+      }
+
+  - name: "6. Collecte finale: branches / applied_patches / backups / logs"
+    shell: "pwsh"
+    run: |
+      $ErrorActionPreference = "Continue"
+      Write-Host "Collecte finale des artefacts..."
+      Write-Host "Branches locales apply-provider/*-m008 :"
       git for-each-ref --format='%(refname:short)' refs/heads | Where-Object { $_ -like 'apply-provider/*-m008' } | ForEach-Object { Write-Host " - $_" }
+
       Write-Host ""
       if (Test-Path ".ai-doc/applied_patches") {
-        Write-Host "Fichiers sous .ai-doc/applied_patches/:"
+        Write-Host ".ai-doc/applied_patches contents:"
         Get-ChildItem -Path ".ai-doc/applied_patches" -Force | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize
       } else {
-        Write-Host ".ai-doc/applied_patches/ absent."
+        Write-Host ".ai-doc/applied_patches absent."
       }
+
+      Write-Host ""
+      Write-Host "Local backup archives (Documents):"
+      Get-ChildItem -Path "${env:USERPROFILE}\Documents" -Filter "permacalendar_hive_backup_*" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object Name,FullName,LastWriteTime | Format-Table -AutoSize
+
       Write-Host ""
       Write-Host "Derniers commits (10) :"
       git --no-pager log -n 10 --pretty=format:"%h %ad %s" --date=iso
+
+      Write-Host ""
+      Write-Host "Definition reports (if any):"
+      Get-ChildItem -Path ".ai-doc/applied_patches" -Filter "*definition_report*.txt" -ErrorAction SilentlyContinue | ForEach-Object { Write-Host " - $($_.FullName)" }
+
 outputs:
-  - description: "Branches apply-provider/*-m008 créées localement"
-  - description: ".ai-doc/applied_patches/*.patch.md (status prepared/skipped)"
-  - description: "Logs d'exécution (build_runner / flutter test / messages du script)"
+  - description: "selected_providers.json (providers candidates)"
+  - description: "definition_report.txt / definition_report_after_regen.txt"
+  - description: ".ai-doc/applied_patches/*.patch.md (prepared/skipped)"
+  - description: "Branches locales apply-provider/*-m008 (si créées)"
+  - description: "Local Hive backup archives (if any) and backup marker"
+notes: |
+  - Cette mission est idempotente : elle peut être relancée autant de fois que nécessaire.
+  - Elle tente de régénérer les rapports si les définitions manquent, puis retente la détection et l'application.
+  - Elle n'inclut pas de push automatique des branches (tu gardes le contrôle pour revue / push).
+  - Si tu veux que Cursor pousse automatiquement après préparation, je peux fournir une variante avec -PushBranch activé.
