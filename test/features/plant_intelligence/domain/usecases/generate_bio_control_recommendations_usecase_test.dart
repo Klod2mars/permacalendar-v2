@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -54,23 +57,23 @@ void main() {
       scientificName: 'Aphis fabae',
       affectedPlants: ['tomato', 'pepper'],
       defaultSeverity: PestSeverity.moderate,
-      symptoms: ['Feuilles enroulées', 'Miellat collant'],
+      symptoms: ['Feuilles enroulÃ©es', 'Miellat collant'],
       naturalPredators: ['ladybug', 'lacewing'],
       repellentPlants: ['nasturtium', 'garlic'],
     );
 
     const testBeneficial = BeneficialInsect(
       id: 'ladybug',
-      name: 'Coccinelle à sept points',
+      name: 'Coccinelle Ã  sept points',
       scientificName: 'Coccinella septempunctata',
       preyPests: ['aphid_green', 'aphid_black'],
       attractiveFlowers: ['yarrow', 'fennel', 'dill'],
       habitat: HabitatRequirements(
         needsWater: true,
         needsShelter: true,
-        favorableConditions: ['Fleurs nectarifères', 'Pas de pesticides'],
+        favorableConditions: ['Fleurs nectarifÃ¨res', 'Pas de pesticides'],
       ),
-      lifeCycle: 'Pond 400 œufs. Larves très voraces.',
+      lifeCycle: 'Pond 400 Å“ufs. Larves trÃ¨s voraces.',
       effectiveness: 90,
     );
 
@@ -162,7 +165,7 @@ void main() {
       final rec = companionRecs.first;
       expect(rec.type, equals(BioControlType.plantCompanion));
       expect(rec.description.toLowerCase(), contains('planter'));
-      expect(rec.description, contains('répulsif'));
+      expect(rec.description, contains('rÃ©pulsif'));
       expect(rec.actions, isNotEmpty);
       expect(rec.priority, equals(3)); // Preventive
       expect(rec.effectivenessScore, equals(60.0));
@@ -265,7 +268,7 @@ void main() {
       expect(beneficialRec.priority, equals(1)); // Urgent
       
       final action = beneficialRec.actions.first;
-      expect(action.timing, equals('Immédiatement'));
+      expect(action.timing, equals('ImmÃ©diatement'));
     });
 
     test('should include neem oil for high severity', () async {
@@ -379,7 +382,7 @@ void main() {
           needsShelter: true,
           favorableConditions: ['Haies', 'Fleurs'],
         ),
-        lifeCycle: 'Larves très voraces',
+        lifeCycle: 'Larves trÃ¨s voraces',
         effectiveness: 95,
       );
 
@@ -435,4 +438,5 @@ void main() {
     });
   });
 }
+
 

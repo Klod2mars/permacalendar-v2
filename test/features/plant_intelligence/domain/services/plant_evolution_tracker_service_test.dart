@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:permacalendar/core/models/plant_v2.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
@@ -107,7 +110,7 @@ PlantIntelligenceReport _report({
     plantingTiming: PlantingTimingEvaluation(
       isOptimalTime: true,
       timingScore: 80,
-      reason: 'Fenêtre idéale',
+      reason: 'FenÃªtre idÃ©ale',
       optimalPlantingDate: generatedAt,
       favorableFactors: const [],
       unfavorableFactors: const [],
@@ -495,4 +498,5 @@ void main() {
     });
   });
 }
+
 

@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -114,12 +117,12 @@ void main() {
         gardenId: anyNamed('gardenId'),
       )).thenAnswer((_) async => mockReports);
       
-      // Act - Changement > 5°C (significatif)
+      // Act - Changement > 5Â°C (significatif)
       eventBus.emit(
         GardenEvent.weatherChanged(
           gardenId: 'garden_1',
           previousTemperature: 15.0,
-          currentTemperature: 22.0, // Δ 7°C
+          currentTemperature: 22.0, // Î” 7Â°C
           timestamp: DateTime.now(),
         ),
       );
@@ -133,19 +136,19 @@ void main() {
       
       final stats = service.getStats();
       expect(stats.weatherEventsCount, 1);
-      expect(stats.analysisTriggeredCount, 2); // 2 plantes analysées
+      expect(stats.analysisTriggeredCount, 2); // 2 plantes analysÃ©es
     });
     
     test('should NOT trigger analysis for minor weather change', () async {
       // Arrange
       service.initialize(orchestrator: mockOrchestrator);
       
-      // Act - Changement < 5°C (non significatif)
+      // Act - Changement < 5Â°C (non significatif)
       eventBus.emit(
         GardenEvent.weatherChanged(
           gardenId: 'garden_1',
           previousTemperature: 20.0,
-          currentTemperature: 23.0, // Δ 3°C
+          currentTemperature: 23.0, // Î” 3Â°C
           timestamp: DateTime.now(),
         ),
       );
@@ -197,7 +200,7 @@ void main() {
         gardenId: anyNamed('gardenId'),
       )).thenAnswer((_) async => mockReport);
       
-      // Act - Émettre plusieurs événements
+      // Act - Ã‰mettre plusieurs Ã©vÃ©nements
       eventBus.emit(
         GardenEvent.plantingAdded(
           gardenId: 'garden_1',
@@ -257,10 +260,11 @@ void main() {
       
       await Future.delayed(const Duration(milliseconds: 500));
       
-      // Assert - L'erreur est loggée mais ne crash pas
+      // Assert - L'erreur est loggÃ©e mais ne crash pas
       final stats = service.getStats();
       expect(stats.plantingEventsCount, 1);
       expect(stats.analysisErrorCount, 1);
     });
   });
 }
+

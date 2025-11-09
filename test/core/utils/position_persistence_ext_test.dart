@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -103,4 +106,5 @@ void main() {
     });
   });
 }
+
 

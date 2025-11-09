@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -8,19 +11,19 @@ import 'package:permacalendar/core/models/garden_bed_v2.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('GardenBed Model Tests (v2) - Instanciation et sérialisation', () {
+  group('GardenBed Model Tests (v2) - Instanciation et sÃ©rialisation', () {
     late Directory tempDir;
     late Box<GardenBed> gardenBedBox;
     const uuid = Uuid();
 
     setUpAll(() async {
-      // Créer un répertoire temporaire pour les tests Hive
+      // CrÃ©er un rÃ©pertoire temporaire pour les tests Hive
       tempDir = await Directory.systemTemp.createTemp('garden_bed_v2_test_');
 
-      // Initialiser Hive avec le répertoire temporaire
+      // Initialiser Hive avec le rÃ©pertoire temporaire
       Hive.init(tempDir.path);
 
-      // Enregistrer l'adaptateur GardenBed si pas déjà fait
+      // Enregistrer l'adaptateur GardenBed si pas dÃ©jÃ  fait
       if (!Hive.isAdapterRegistered(11)) {
         Hive.registerAdapter(GardenBedAdapter());
       }
@@ -33,25 +36,25 @@ void main() {
     });
 
     tearDown(() async {
-      // Fermer la box après chaque test
+      // Fermer la box aprÃ¨s chaque test
       if (gardenBedBox.isOpen) {
         await gardenBedBox.close();
       }
     });
 
     tearDownAll(() async {
-      // Nettoyer complètement après tous les tests
+      // Nettoyer complÃ¨tement aprÃ¨s tous les tests
       await Hive.deleteFromDisk();
       await Hive.close();
 
-      // Supprimer le répertoire temporaire
+      // Supprimer le rÃ©pertoire temporaire
       if (await tempDir.exists()) {
         await tempDir.delete(recursive: true);
       }
     });
 
-    group('Tests de création et instanciation', () {
-      test('Doit créer un GardenBed avec tous les champs requis', () {
+    group('Tests de crÃ©ation et instanciation', () {
+      test('Doit crÃ©er un GardenBed avec tous les champs requis', () {
         final gardenBed = GardenBed(
           id: 'test-bed-1',
           name: 'Parcelle Nord',
@@ -68,7 +71,7 @@ void main() {
         expect(gardenBed.plantings.length, equals(2));
       });
 
-      test('Doit créer un GardenBed avec une liste de plantings vide', () {
+      test('Doit crÃ©er un GardenBed avec une liste de plantings vide', () {
         final gardenBed = GardenBed(
           id: 'test-bed-2',
           name: 'Parcelle Sud',
@@ -81,7 +84,7 @@ void main() {
         expect(gardenBed.plantings.length, equals(0));
       });
 
-      test('Factory create doit générer un ID unique automatiquement', () {
+      test('Factory create doit gÃ©nÃ©rer un ID unique automatiquement', () {
         final gardenBed1 = GardenBed.create(
           name: 'Parcelle Est',
           sizeInSquareMeters: 10.0,
@@ -94,16 +97,16 @@ void main() {
           gardenId: 'garden-789',
         );
 
-        // Vérifier que les IDs sont générés et différents
+        // VÃ©rifier que les IDs sont gÃ©nÃ©rÃ©s et diffÃ©rents
         expect(gardenBed1.id, isNotEmpty);
         expect(gardenBed2.id, isNotEmpty);
         expect(gardenBed1.id, isNot(equals(gardenBed2.id)));
 
-        // Vérifier les autres propriétés
+        // VÃ©rifier les autres propriÃ©tÃ©s
         expect(gardenBed1.name, equals('Parcelle Est'));
         expect(gardenBed1.sizeInSquareMeters, equals(10.0));
         expect(gardenBed1.gardenId, equals('garden-789'));
-        expect(gardenBed1.plantings, isEmpty); // Par défaut, liste vide
+        expect(gardenBed1.plantings, isEmpty); // Par dÃ©faut, liste vide
 
         expect(gardenBed2.name, equals('Parcelle Ouest'));
         expect(gardenBed2.sizeInSquareMeters, equals(15.0));
@@ -124,8 +127,8 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation JSON', () {
-      test('Doit sérialiser correctement avec toJson', () {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation JSON', () {
+      test('Doit sÃ©rialiser correctement avec toJson', () {
         final gardenBed = GardenBed(
           id: 'test-bed-json-1',
           name: 'Parcelle JSON',
@@ -144,7 +147,7 @@ void main() {
         expect(json['plantings'], isA<List<String>>());
       });
 
-      test('Doit désérialiser correctement avec fromJson', () {
+      test('Doit dÃ©sÃ©rialiser correctement avec fromJson', () {
         final json = {
           'id': 'test-bed-json-2',
           'name': 'Parcelle depuis JSON',
@@ -162,7 +165,7 @@ void main() {
         expect(gardenBed.plantings, equals(['planting-x', 'planting-y']));
       });
 
-      test('fromJson doit gérer le cas où plantings est null ou absent', () {
+      test('fromJson doit gÃ©rer le cas oÃ¹ plantings est null ou absent', () {
         final json1 = {
           'id': 'test-bed-json-3',
           'name': 'Parcelle sans plantings',
@@ -205,8 +208,8 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation Hive', () {
-      test('Doit sauvegarder et récupérer un GardenBed dans Hive', () async {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation Hive', () {
+      test('Doit sauvegarder et rÃ©cupÃ©rer un GardenBed dans Hive', () async {
         final originalBed = GardenBed(
           id: 'test-hive-1',
           name: 'Parcelle Hive',
@@ -218,10 +221,10 @@ void main() {
         // Sauvegarder dans Hive
         await gardenBedBox.put(originalBed.id, originalBed);
 
-        // Récupérer depuis Hive
+        // RÃ©cupÃ©rer depuis Hive
         final retrievedBed = gardenBedBox.get('test-hive-1');
 
-        // Vérifications
+        // VÃ©rifications
         expect(retrievedBed, isNotNull);
         expect(retrievedBed!.id, equals(originalBed.id));
         expect(retrievedBed.name, equals(originalBed.name));
@@ -230,10 +233,10 @@ void main() {
         expect(retrievedBed.plantings, equals(originalBed.plantings));
       });
 
-      test('Doit persister plusieurs GardenBeds et les récupérer correctement', () async {
+      test('Doit persister plusieurs GardenBeds et les rÃ©cupÃ©rer correctement', () async {
         final beds = <GardenBed>[];
 
-        // Créer plusieurs parcelles
+        // CrÃ©er plusieurs parcelles
         for (int i = 0; i < 5; i++) {
           final bed = GardenBed(
             id: 'bed-hive-$i',
@@ -247,10 +250,10 @@ void main() {
           await gardenBedBox.put(bed.id, bed);
         }
 
-        // Vérifier que toutes les parcelles sont persistées
+        // VÃ©rifier que toutes les parcelles sont persistÃ©es
         expect(gardenBedBox.length, equals(5));
 
-        // Vérifier chaque parcelle individuellement
+        // VÃ©rifier chaque parcelle individuellement
         for (int i = 0; i < 5; i++) {
           final retrieved = gardenBedBox.get('bed-hive-$i');
           expect(retrieved, isNotNull);
@@ -260,7 +263,7 @@ void main() {
         }
       });
 
-      test('Doit gérer un GardenBed avec une liste de plantings vide dans Hive', () async {
+      test('Doit gÃ©rer un GardenBed avec une liste de plantings vide dans Hive', () async {
         final bed = GardenBed(
           id: 'bed-empty-plantings',
           name: 'Parcelle vide',
@@ -277,8 +280,8 @@ void main() {
       });
     });
 
-    group('Tests de la méthode copyWith', () {
-      test('Doit créer une copie avec des modifications', () {
+    group('Tests de la mÃ©thode copyWith', () {
+      test('Doit crÃ©er une copie avec des modifications', () {
         final original = GardenBed(
           id: 'test-copy-1',
           name: 'Parcelle Originale',
@@ -288,22 +291,22 @@ void main() {
         );
 
         final modified = original.copyWith(
-          name: 'Parcelle Modifiée',
+          name: 'Parcelle ModifiÃ©e',
           sizeInSquareMeters: 20.0,
           plantings: ['p1', 'p2', 'p3'],
         );
 
-        // Vérifier que les champs modifiés ont changé
-        expect(modified.name, equals('Parcelle Modifiée'));
+        // VÃ©rifier que les champs modifiÃ©s ont changÃ©
+        expect(modified.name, equals('Parcelle ModifiÃ©e'));
         expect(modified.sizeInSquareMeters, equals(20.0));
         expect(modified.plantings.length, equals(3));
 
-        // Vérifier que les autres champs sont inchangés
+        // VÃ©rifier que les autres champs sont inchangÃ©s
         expect(modified.id, equals(original.id));
         expect(modified.gardenId, equals(original.gardenId));
       });
 
-      test('Doit créer une copie sans modifications si aucun paramètre fourni', () {
+      test('Doit crÃ©er une copie sans modifications si aucun paramÃ¨tre fourni', () {
         final original = GardenBed(
           id: 'test-copy-2',
           name: 'Parcelle Test',
@@ -335,14 +338,14 @@ void main() {
         );
 
         expect(modified.name, equals('Parcelle B'));
-        expect(modified.sizeInSquareMeters, equals(10.0)); // Inchangé
-        expect(modified.gardenId, equals('garden-a')); // Inchangé
-        expect(modified.plantings, equals(['p1'])); // Inchangé
+        expect(modified.sizeInSquareMeters, equals(10.0)); // InchangÃ©
+        expect(modified.gardenId, equals('garden-a')); // InchangÃ©
+        expect(modified.plantings, equals(['p1'])); // InchangÃ©
       });
     });
 
-    group('Tests des méthodes utilitaires', () {
-      test('Doit implémenter toString correctement', () {
+    group('Tests des mÃ©thodes utilitaires', () {
+      test('Doit implÃ©menter toString correctement', () {
         final gardenBed = GardenBed(
           id: 'test-toString',
           name: 'Ma Parcelle',
@@ -355,11 +358,11 @@ void main() {
         expect(string, contains('GardenBed'));
         expect(string, contains('test-toString'));
         expect(string, contains('Ma Parcelle'));
-        expect(string, contains('15.5m²'));
+        expect(string, contains('15.5mÂ²'));
         expect(string, contains('3')); // Nombre de plantings
       });
 
-      test('Doit implémenter l\'égalité basée sur l\'ID', () {
+      test('Doit implÃ©menter l\'Ã©galitÃ© basÃ©e sur l\'ID', () {
         final bed1 = GardenBed(
           id: 'same-id',
           name: 'Parcelle 1',
@@ -370,27 +373,27 @@ void main() {
 
         final bed2 = GardenBed(
           id: 'same-id',
-          name: 'Parcelle 2', // Nom différent
-          sizeInSquareMeters: 20.0, // Taille différente
-          gardenId: 'garden-2', // Jardin différent
-          plantings: ['p2'], // Plantings différents
+          name: 'Parcelle 2', // Nom diffÃ©rent
+          sizeInSquareMeters: 20.0, // Taille diffÃ©rente
+          gardenId: 'garden-2', // Jardin diffÃ©rent
+          plantings: ['p2'], // Plantings diffÃ©rents
         );
 
         final bed3 = GardenBed(
           id: 'different-id',
-          name: 'Parcelle 1', // Même nom
-          sizeInSquareMeters: 10.0, // Même taille
-          gardenId: 'garden-1', // Même jardin
-          plantings: ['p1'], // Mêmes plantings
+          name: 'Parcelle 1', // MÃªme nom
+          sizeInSquareMeters: 10.0, // MÃªme taille
+          gardenId: 'garden-1', // MÃªme jardin
+          plantings: ['p1'], // MÃªmes plantings
         );
 
-        expect(bed1, equals(bed2)); // Même ID
-        expect(bed1, isNot(equals(bed3))); // ID différent
+        expect(bed1, equals(bed2)); // MÃªme ID
+        expect(bed1, isNot(equals(bed3))); // ID diffÃ©rent
         expect(bed1.hashCode, equals(bed2.hashCode));
         expect(bed1.hashCode, isNot(equals(bed3.hashCode)));
       });
 
-      test('Doit gérer correctement les valeurs numériques (double)', () {
+      test('Doit gÃ©rer correctement les valeurs numÃ©riques (double)', () {
         final bed1 = GardenBed(
           id: 'test-double-1',
           name: 'Parcelle',
@@ -412,4 +415,5 @@ void main() {
     });
   });
 }
+
 

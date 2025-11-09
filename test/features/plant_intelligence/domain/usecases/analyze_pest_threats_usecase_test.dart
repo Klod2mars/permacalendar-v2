@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -48,7 +51,7 @@ void main() {
       scientificName: 'Aphis fabae',
       affectedPlants: ['tomato', 'pepper'],
       defaultSeverity: PestSeverity.moderate,
-      symptoms: ['Feuilles enroulées', 'Miellat collant'],
+      symptoms: ['Feuilles enroulÃ©es', 'Miellat collant'],
       naturalPredators: ['ladybug', 'lacewing'],
       repellentPlants: ['nasturtium', 'garlic'],
     );
@@ -129,7 +132,7 @@ void main() {
         scientificName: 'Leptinotarsa decemlineata',
         affectedPlants: ['potato'],
         defaultSeverity: PestSeverity.critical,
-        symptoms: ['Défoliation rapide'],
+        symptoms: ['DÃ©foliation rapide'],
         naturalPredators: ['ground_beetle'],
         repellentPlants: ['nasturtium'],
       );
@@ -381,4 +384,5 @@ void main() {
     });
   });
 }
+
 

@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
@@ -9,13 +12,13 @@ import 'package:permacalendar/core/data/hive/garden_boxes.dart';
 import 'package:permacalendar/features/plant_catalog/data/repositories/plant_hive_repository.dart';
 import 'package:permacalendar/features/plant_catalog/data/models/plant_hive.dart';
 
-/// Tests pour ModernDataAdapter — Validation Philosophie du Sanctuaire
+/// Tests pour ModernDataAdapter â€” Validation Philosophie du Sanctuaire
 /// 
-/// Ces tests valident que Modern Adapter respecte le flux de vérité :
-/// Réel → Sanctuaire → Système Moderne → Intelligence Végétale
+/// Ces tests valident que Modern Adapter respecte le flux de vÃ©ritÃ© :
+/// RÃ©el â†’ Sanctuaire â†’ SystÃ¨me Moderne â†’ Intelligence VÃ©gÃ©tale
 /// 
-/// RÈGLE CRITIQUE : Modern Adapter DOIT filtrer par gardenId
-/// et retourner UNIQUEMENT les plantes ACTIVES du jardin spécifique
+/// RÃˆGLE CRITIQUE : Modern Adapter DOIT filtrer par gardenId
+/// et retourner UNIQUEMENT les plantes ACTIVES du jardin spÃ©cifique
 void main() {
   group('ModernDataAdapter - Sanctuary Philosophy Validation', () {
     late ModernDataAdapter adapter;
@@ -25,11 +28,11 @@ void main() {
       // Initialiser les bindings Flutter pour les tests
       TestWidgetsFlutterBinding.ensureInitialized();
       
-      // Créer un répertoire temporaire pour les tests
+      // CrÃ©er un rÃ©pertoire temporaire pour les tests
       tempDir = await Directory.systemTemp.createTemp('hive_test_');
       Hive.init(tempDir.path);
       
-      // Enregistrer les adaptateurs Hive (legacy models utilisés par GardenBoxes)
+      // Enregistrer les adaptateurs Hive (legacy models utilisÃ©s par GardenBoxes)
       if (!Hive.isAdapterRegistered(0)) {
         Hive.registerAdapter(legacy.GardenAdapter());
       }
@@ -53,26 +56,26 @@ void main() {
     });
 
     setUp(() async {
-      // Nettoyer les données avant chaque test
+      // Nettoyer les donnÃ©es avant chaque test
       await GardenBoxes.clearAllGardens();
       
-      // Créer l'adapter
+      // CrÃ©er l'adapter
       adapter = ModernDataAdapter();
     });
 
     tearDownAll(() async {
-      // Fermer Hive et nettoyer le répertoire temporaire
+      // Fermer Hive et nettoyer le rÃ©pertoire temporaire
       await Hive.close();
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
       }
     });
 
-    /// Scénario 1 : Jardin vide
+    /// ScÃ©nario 1 : Jardin vide
     /// Given: Jardin sans plantations
     /// When: getActivePlants('garden_empty')
     /// Then: Retourne []
-    test('Scénario 1: Jardin vide retourne liste vide', () async {
+    test('ScÃ©nario 1: Jardin vide retourne liste vide', () async {
       // Given: Jardin sans plantations
       final garden = legacy.Garden(
         name: 'Jardin Vide',
@@ -82,7 +85,7 @@ void main() {
       );
       await GardenBoxes.saveGarden(garden);
 
-      // When: Récupération des plantes actives
+      // When: RÃ©cupÃ©ration des plantes actives
       final plants = await adapter.getActivePlants(garden.id);
 
       // Then: Retourne liste vide
@@ -90,12 +93,12 @@ void main() {
       expect(plants.length, equals(0));
     });
 
-    /// Scénario 2 : 1 plante active
-    /// Given: Jardin avec 1 épinard planté
+    /// ScÃ©nario 2 : 1 plante active
+    /// Given: Jardin avec 1 Ã©pinard plantÃ©
     /// When: getActivePlants('garden_1plant')
-    /// Then: Retourne [épinard]
+    /// Then: Retourne [Ã©pinard]
     /// And: plants.length == 1
-    test('Scénario 2: Jardin avec 1 plante active', () async {
+    test('ScÃ©nario 2: Jardin avec 1 plante active', () async {
       // Given: Jardin avec 1 parcelle et 1 plante
       final garden = legacy.Garden(
         name: 'Jardin 1 Plante',
@@ -118,15 +121,15 @@ void main() {
       final planting = Planting(
         gardenBedId: bed.id,
         plantId: 'spinach',
-        plantName: 'Épinards',
+        plantName: 'Ã‰pinards',
         plantedDate: DateTime.now(),
         quantity: 10,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(planting);
 
-      // When: Récupération des plantes actives
+      // When: RÃ©cupÃ©ration des plantes actives
       final plants = await adapter.getActivePlants(garden.id);
 
       // Then: Retourne 1 plante
@@ -135,12 +138,12 @@ void main() {
       expect(plants.first.commonName, isNotEmpty);
     });
 
-    /// Scénario 3 : Multiple plantes actives
-    /// Given: Jardin avec 3 plantes plantées
+    /// ScÃ©nario 3 : Multiple plantes actives
+    /// Given: Jardin avec 3 plantes plantÃ©es
     /// When: getActivePlants('garden_3plants')
     /// Then: Retourne [plante1, plante2, plante3]
     /// And: plants.length == 3
-    test('Scénario 3: Jardin avec multiple plantes actives', () async {
+    test('ScÃ©nario 3: Jardin avec multiple plantes actives', () async {
       // Given: Jardin avec 2 parcelles et 3 plantes
       final garden = legacy.Garden(
         name: 'Jardin 3 Plantes',
@@ -153,7 +156,7 @@ void main() {
       final bed1 = legacy_bed.GardenBed(
         gardenId: garden.id,
         name: 'Parcelle 1',
-        description: 'Première parcelle',
+        description: 'PremiÃ¨re parcelle',
         sizeInSquareMeters: 10.0,
         soilType: 'Limoneux',
         exposure: 'Plein soleil',
@@ -163,7 +166,7 @@ void main() {
       final bed2 = legacy_bed.GardenBed(
         gardenId: garden.id,
         name: 'Parcelle 2',
-        description: 'Deuxième parcelle',
+        description: 'DeuxiÃ¨me parcelle',
         sizeInSquareMeters: 10.0,
         soilType: 'Limoneux',
         exposure: 'Mi-soleil',
@@ -177,7 +180,7 @@ void main() {
         plantName: 'Tomate',
         plantedDate: DateTime.now(),
         quantity: 5,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(planting1);
@@ -188,7 +191,7 @@ void main() {
         plantName: 'Carotte',
         plantedDate: DateTime.now(),
         quantity: 20,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(planting2);
@@ -200,12 +203,12 @@ void main() {
         plantName: 'Laitue',
         plantedDate: DateTime.now(),
         quantity: 10,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(planting3);
 
-      // When: Récupération des plantes actives
+      // When: RÃ©cupÃ©ration des plantes actives
       final plants = await adapter.getActivePlants(garden.id);
 
       // Then: Retourne 3 plantes
@@ -215,13 +218,13 @@ void main() {
       expect(plantIds, containsAll(['tomato', 'carrot', 'lettuce']));
     });
 
-    /// Scénario 4 : Plantes inactives ignorées
+    /// ScÃ©nario 4 : Plantes inactives ignorÃ©es
     /// Given: Jardin avec 2 plantes actives + 1 inactive
     /// When: getActivePlants('garden_mixed')
     /// Then: Retourne [active1, active2]
     /// And: plants.length == 2
     /// And: inactive plant NOT in results
-    test('Scénario 4: Plantes inactives sont ignorées', () async {
+    test('ScÃ©nario 4: Plantes inactives sont ignorÃ©es', () async {
       // Given: Jardin avec 2 plantes actives + 1 inactive
       final garden = legacy.Garden(
         name: 'Jardin Mixte',
@@ -248,7 +251,7 @@ void main() {
         plantName: 'Tomate',
         plantedDate: DateTime.now(),
         quantity: 5,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(activePlanting1);
@@ -259,25 +262,25 @@ void main() {
         plantName: 'Carotte',
         plantedDate: DateTime.now(),
         quantity: 20,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(activePlanting2);
 
-      // 1 plante inactive (récoltée)
+      // 1 plante inactive (rÃ©coltÃ©e)
       final inactivePlanting = Planting(
         gardenBedId: bed.id,
         plantId: 'lettuce',
         plantName: 'Laitue',
         plantedDate: DateTime.now().subtract(const Duration(days: 90)),
         quantity: 10,
-        status: 'Récolté',
+        status: 'RÃ©coltÃ©',
         isActive: false,
         actualHarvestDate: DateTime.now().subtract(const Duration(days: 1)),
       );
       await GardenBoxes.savePlanting(inactivePlanting);
 
-      // When: Récupération des plantes actives
+      // When: RÃ©cupÃ©ration des plantes actives
       final plants = await adapter.getActivePlants(garden.id);
 
       // Then: Retourne UNIQUEMENT les 2 plantes actives
@@ -288,13 +291,13 @@ void main() {
       expect(plantIds, isNot(contains('lettuce'))); // Laitue inactive NOT included
     });
 
-    /// Scénario 5 : Isolation entre jardins
-    /// Given: 2 jardins avec plantes différentes
+    /// ScÃ©nario 5 : Isolation entre jardins
+    /// Given: 2 jardins avec plantes diffÃ©rentes
     /// When: getActivePlants('garden1')
     /// Then: Retourne UNIQUEMENT plantes de garden1
     /// And: Plantes de garden2 NOT included
-    test('Scénario 5: Isolation entre jardins (respect du Sanctuaire)', () async {
-      // Given: 2 jardins séparés
+    test('ScÃ©nario 5: Isolation entre jardins (respect du Sanctuaire)', () async {
+      // Given: 2 jardins sÃ©parÃ©s
       final garden1 = legacy.Garden(
         name: 'Jardin 1',
         description: 'Premier jardin',
@@ -305,7 +308,7 @@ void main() {
 
       final garden2 = legacy.Garden(
         name: 'Jardin 2',
-        description: 'Deuxième jardin',
+        description: 'DeuxiÃ¨me jardin',
         location: 'Test',
         totalAreaInSquareMeters: 10.0,
       );
@@ -315,7 +318,7 @@ void main() {
       final bed1 = legacy_bed.GardenBed(
         gardenId: garden1.id,
         name: 'Parcelle Jardin 1',
-        description: 'Première parcelle',
+        description: 'PremiÃ¨re parcelle',
         sizeInSquareMeters: 10.0,
         soilType: 'Limoneux',
         exposure: 'Plein soleil',
@@ -328,7 +331,7 @@ void main() {
         plantName: 'Tomate',
         plantedDate: DateTime.now(),
         quantity: 5,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(planting1);
@@ -337,7 +340,7 @@ void main() {
       final bed2 = legacy_bed.GardenBed(
         gardenId: garden2.id,
         name: 'Parcelle Jardin 2',
-        description: 'Deuxième parcelle',
+        description: 'DeuxiÃ¨me parcelle',
         sizeInSquareMeters: 10.0,
         soilType: 'Limoneux',
         exposure: 'Plein soleil',
@@ -350,12 +353,12 @@ void main() {
         plantName: 'Carotte',
         plantedDate: DateTime.now(),
         quantity: 20,
-        status: 'Planté',
+        status: 'PlantÃ©',
         isActive: true,
       );
       await GardenBoxes.savePlanting(planting2);
 
-      // When: Récupération des plantes de garden1
+      // When: RÃ©cupÃ©ration des plantes de garden1
       final plantsGarden1 = await adapter.getActivePlants(garden1.id);
 
       // Then: UNIQUEMENT la tomate de garden1
@@ -367,4 +370,5 @@ void main() {
     });
   });
 }
+
 

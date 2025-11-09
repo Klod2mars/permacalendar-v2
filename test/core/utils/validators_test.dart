@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:permacalendar/core/utils/validators.dart';
@@ -48,7 +51,7 @@ void main() {
       test('should reject non-numeric values', () {
         expect(Validators.validateGardenArea('abc'), isNotNull);
         expect(Validators.validateGardenArea('12.5.3'), isNotNull);
-        expect(Validators.validateGardenArea('10m²'), isNotNull);
+        expect(Validators.validateGardenArea('10mÂ²'), isNotNull);
       });
 
       test('should reject negative or zero values', () {
@@ -126,7 +129,7 @@ void main() {
 
       test('should accept valid descriptions', () {
         expect(Validators.validateDescription('Une belle description'), isNull);
-        expect(Validators.validateDescription('Description avec des caractères spéciaux: éàç!'), isNull);
+        expect(Validators.validateDescription('Description avec des caractÃ¨res spÃ©ciaux: Ã©Ã Ã§!'), isNull);
         
         final maxLengthDescription = 'A' * 500;
         expect(Validators.validateDescription(maxLengthDescription), isNull);
@@ -305,7 +308,7 @@ void main() {
 
       test('should reject non-numeric values', () {
         expect(Validators.validateTemperature('abc'), isNotNull);
-        expect(Validators.validateTemperature('20°C'), isNotNull);
+        expect(Validators.validateTemperature('20Â°C'), isNotNull);
       });
 
       test('should reject extreme temperatures', () {
@@ -410,3 +413,4 @@ void main() {
     });
   });
 }
+

@@ -1,14 +1,17 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/repositories/index.dart';
 import 'package:riverpod/riverpod.dart';
 
-/// Test d'intégration pour vérifier que tous les exports du fichier index.dart
+/// Test d'intÃ©gration pour vÃ©rifier que tous les exports du fichier index.dart
 /// sont correctement accessibles depuis un module externe.
 ///
-/// Ce test vérifie :
-/// 1. Que toutes les classes repository sont exportées
+/// Ce test vÃ©rifie :
+/// 1. Que toutes les classes repository sont exportÃ©es
 /// 2. Que les chemins d'import sont valides
-/// 3. Que les classes peuvent être instanciées/utilisées
+/// 3. Que les classes peuvent Ãªtre instanciÃ©es/utilisÃ©es
 void main() {
   group('Core Repositories Index - Exports Validation', () {
     test('devrait exporter GardenRepository', () {
@@ -94,10 +97,11 @@ void main() {
 
   group('Core Repositories Index - Import Path Validation', () {
     test('devrait permettre l\'import depuis un module externe', () {
-      // Ce test vérifie que l'import fonctionne sans erreur
+      // Ce test vÃ©rifie que l'import fonctionne sans erreur
       // Si ce test passe, cela signifie que tous les chemins sont valides
       expect(true, isTrue);
     });
   });
 }
+
 

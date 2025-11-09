@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/services/monitoring/metrics_collector_service.dart';
 import 'package:hive/hive.dart';
@@ -11,9 +14,9 @@ void main() {
         maxBufferSize: 100,
         maxTotalBufferSize: 500,
         flushInterval: const Duration(seconds: 1),
-        enableAutoFlush: false, // Désactivé pour les tests
-        enablePersistence: false, // Désactivé pour les tests
-        enableNetworkUpload: false, // Désactivé pour les tests
+        enableAutoFlush: false, // DÃ©sactivÃ© pour les tests
+        enablePersistence: false, // DÃ©sactivÃ© pour les tests
+        enableNetworkUpload: false, // DÃ©sactivÃ© pour les tests
       );
     });
 
@@ -41,16 +44,16 @@ void main() {
         );
 
         // Act & Assert
-        // Même si Hive n'est pas initialisé, le service ne devrait pas crasher
-        // Le service gère l'erreur dans un try/catch dans _initializePersistence
-        // mais l'erreur peut être propagée si elle n'est pas bien gérée
-        // On teste que le service continue de fonctionner même si l'initialisation échoue partiellement
+        // MÃªme si Hive n'est pas initialisÃ©, le service ne devrait pas crasher
+        // Le service gÃ¨re l'erreur dans un try/catch dans _initializePersistence
+        // mais l'erreur peut Ãªtre propagÃ©e si elle n'est pas bien gÃ©rÃ©e
+        // On teste que le service continue de fonctionner mÃªme si l'initialisation Ã©choue partiellement
         await expectLater(
           serviceWithPersistence.initialize(),
           completes,
         );
         
-        // Le service devrait toujours être fonctionnel même si la persistance échoue
+        // Le service devrait toujours Ãªtre fonctionnel mÃªme si la persistance Ã©choue
         serviceWithPersistence.recordMetric(
           metricName: 'test',
           category: MetricCategory.business,
@@ -175,7 +178,7 @@ void main() {
         // Assert
         final aggregated = metricsCollector.getAggregatedMetric('test_metric');
         expect(aggregated, isNotNull);
-        // Le buffer devrait être limité à maxBufferSize (100 par défaut)
+        // Le buffer devrait Ãªtre limitÃ© Ã  maxBufferSize (100 par dÃ©faut)
         final stats = metricsCollector.getStatistics();
         expect(stats['currentBufferSize'], lessThanOrEqualTo(100));
       });
@@ -188,17 +191,17 @@ void main() {
           enableAutoFlush: false,
         );
 
-        // Act - Enregistrer plus de métriques que la limite totale
-        // Enregistrer plusieurs métriques avec le même nom pour déclencher la surcharge
+        // Act - Enregistrer plus de mÃ©triques que la limite totale
+        // Enregistrer plusieurs mÃ©triques avec le mÃªme nom pour dÃ©clencher la surcharge
         for (int i = 0; i < 15; i++) {
           service.recordMetric(
-            metricName: 'metric_0', // Même nom pour déclencher la surcharge
+            metricName: 'metric_0', // MÃªme nom pour dÃ©clencher la surcharge
             category: MetricCategory.business,
             value: i,
           );
         }
         
-        // Enregistrer d'autres métriques pour atteindre la limite totale
+        // Enregistrer d'autres mÃ©triques pour atteindre la limite totale
         for (int i = 1; i < 10; i++) {
           service.recordMetric(
             metricName: 'metric_$i',
@@ -209,12 +212,12 @@ void main() {
 
         // Assert
         final stats = service.getStatistics();
-        // La taille du buffer peut être supérieure à la limite si la gestion de surcharge
-        // n'a pas encore été déclenchée, mais elle devrait être limitée
+        // La taille du buffer peut Ãªtre supÃ©rieure Ã  la limite si la gestion de surcharge
+        // n'a pas encore Ã©tÃ© dÃ©clenchÃ©e, mais elle devrait Ãªtre limitÃ©e
         expect(stats['currentBufferSize'], greaterThanOrEqualTo(0));
         
-        // Si la surcharge a été gérée, il devrait y avoir des métriques supprimées
-        // Sinon, c'est que la logique n'a pas encore été déclenchée
+        // Si la surcharge a Ã©tÃ© gÃ©rÃ©e, il devrait y avoir des mÃ©triques supprimÃ©es
+        // Sinon, c'est que la logique n'a pas encore Ã©tÃ© dÃ©clenchÃ©e
         expect(stats['totalDroppedMetrics'], greaterThanOrEqualTo(0));
 
         service.dispose();
@@ -270,7 +273,7 @@ void main() {
         );
 
         // Assert
-        // Peut être null si le délai est trop court
+        // Peut Ãªtre null si le dÃ©lai est trop court
         expect(aggregated, anyOf(isNull, isNotNull));
       });
 
@@ -279,14 +282,14 @@ void main() {
         metricsCollector.recordMetric(
           metricName: 'test_metric',
           category: MetricCategory.business,
-          value: 'invalid', // Valeur non numérique
+          value: 'invalid', // Valeur non numÃ©rique
         );
 
         // Act
         final aggregated = metricsCollector.getAggregatedMetric('test_metric');
 
         // Assert
-        // Devrait retourner null ou gérer gracieusement
+        // Devrait retourner null ou gÃ©rer gracieusement
         expect(aggregated, anyOf(isNull, isNotNull));
       });
     });
@@ -326,7 +329,7 @@ void main() {
 
       test('should handle report generation errors gracefully', () {
         // Arrange
-        // Enregistrer des métriques avec des valeurs invalides
+        // Enregistrer des mÃ©triques avec des valeurs invalides
         metricsCollector.recordMetric(
           metricName: 'metric1',
           category: MetricCategory.business,
@@ -337,7 +340,7 @@ void main() {
         final report = metricsCollector.generateReport();
 
         // Assert
-        // Le rapport devrait être généré même avec des erreurs
+        // Le rapport devrait Ãªtre gÃ©nÃ©rÃ© mÃªme avec des erreurs
         expect(report, isNotNull);
       });
     });
@@ -387,11 +390,11 @@ void main() {
         );
 
         // Act
-        // Le flush devrait gérer les erreurs gracieusement
+        // Le flush devrait gÃ©rer les erreurs gracieusement
         await metricsCollector.flush();
 
         // Assert
-        // Le buffer devrait être vidé après un flush réussi
+        // Le buffer devrait Ãªtre vidÃ© aprÃ¨s un flush rÃ©ussi
         final stats = metricsCollector.getStatistics();
         expect(stats['currentBufferSize'], equals(0));
       });
@@ -403,7 +406,7 @@ void main() {
         metricsCollector.startAutoFlush();
 
         // Assert
-        // Le timer devrait être démarré
+        // Le timer devrait Ãªtre dÃ©marrÃ©
         expect(metricsCollector.metricsStream, isNotNull);
       });
 
@@ -415,7 +418,7 @@ void main() {
         metricsCollector.stopAutoFlush();
 
         // Assert
-        // Le timer devrait être arrêté
+        // Le timer devrait Ãªtre arrÃªtÃ©
         expect(metricsCollector.metricsStream, isNotNull); // Le stream peut encore exister
       });
 
@@ -425,7 +428,7 @@ void main() {
         metricsCollector.startAutoFlush();
 
         // Assert
-        // Ne devrait pas créer plusieurs timers
+        // Ne devrait pas crÃ©er plusieurs timers
         expect(metricsCollector.metricsStream, isNotNull);
       });
     });
@@ -500,7 +503,7 @@ void main() {
     group('Error Handling', () {
       test('should handle errors in recordMetric gracefully', () {
         // Act & Assert
-        // Même avec des paramètres invalides, le service ne devrait pas crasher
+        // MÃªme avec des paramÃ¨tres invalides, le service ne devrait pas crasher
         expect(() {
           metricsCollector.recordMetric(
             metricName: 'test',
@@ -522,13 +525,13 @@ void main() {
         final aggregated = metricsCollector.getAggregatedMetric('test_metric');
 
         // Assert
-        // Devrait retourner null ou gérer gracieusement
+        // Devrait retourner null ou gÃ©rer gracieusement
         expect(aggregated, anyOf(isNull, isNotNull));
       });
 
       test('should handle errors in report generation gracefully', () {
         // Arrange
-        // Enregistrer des métriques avec des valeurs problématiques
+        // Enregistrer des mÃ©triques avec des valeurs problÃ©matiques
         metricsCollector.recordMetric(
           metricName: 'test_metric',
           category: MetricCategory.business,
@@ -539,7 +542,7 @@ void main() {
         final report = metricsCollector.generateReport();
 
         // Assert
-        // Le rapport devrait être généré même avec des erreurs
+        // Le rapport devrait Ãªtre gÃ©nÃ©rÃ© mÃªme avec des erreurs
         expect(report, isNotNull);
       });
     });
@@ -602,4 +605,5 @@ void main() {
     });
   });
 }
+
 

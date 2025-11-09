@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -21,11 +24,11 @@ import 'analytics_repository_test.mocks.dart';
 /// 
 /// **Couverture :**
 /// - Sauvegarde d'un rapport
-/// - Récupération du dernier rapport
+/// - RÃ©cupÃ©ration du dernier rapport
 /// - Comportement avec ID plante inconnu
-/// - Comportement quand Hive est vide ou non initialisé
-/// - Sérialisation/désérialisation correcte
-/// - Programmation défensive (ne crash jamais)
+/// - Comportement quand Hive est vide ou non initialisÃ©
+/// - SÃ©rialisation/dÃ©sÃ©rialisation correcte
+/// - Programmation dÃ©fensive (ne crash jamais)
 
 void main() {
   late PlantIntelligenceRepositoryImpl repository;
@@ -515,4 +518,5 @@ PlantIntelligenceReport _createLargeTestReport(String plantId, String gardenId) 
     metadata: { for (var i in List.generate(100, (i) => i)) 'key_$i' : 'value_$i' },
   );
 }
+
 

@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/providers/app_settings_provider.dart';
@@ -6,17 +9,17 @@ import 'package:permacalendar/features/climate/presentation/providers/weather_pr
 void main() {
   group('Weather Providers Commune Sync', () {
     test('changing selected commune triggers weather refresh', () async {
-      // Arrange: Créer un container de providers
+      // Arrange: CrÃ©er un container de providers
       final container = ProviderContainer();
 
-      // Act 1: Lire la météo initiale (commune par défaut)
+      // Act 1: Lire la mÃ©tÃ©o initiale (commune par dÃ©faut)
       final initialWeatherAsync = container.read(currentWeatherProvider);
       await initialWeatherAsync.when(
         loading: () async {},
         error: (error, stack) =>
             fail('Erreur lors du chargement initial: $error'),
         data: (weather) {
-          // Assert: Météo initiale chargée pour commune par défaut
+          // Assert: MÃ©tÃ©o initiale chargÃ©e pour commune par dÃ©faut
           expect(weather, isNotNull);
           expect(weather.temperature, isNotNull);
         },
@@ -25,10 +28,10 @@ void main() {
       // Act 2: Changer la commune dans les settings
       await container.read(appSettingsProvider.notifier).setCommune('Lyon');
 
-      // Attendre que les settings soient persistés
+      // Attendre que les settings soient persistÃ©s
       await Future.delayed(const Duration(milliseconds: 100));
 
-      // Act 3: Relire le provider météo (doit se mettre à jour automatiquement)
+      // Act 3: Relire le provider mÃ©tÃ©o (doit se mettre Ã  jour automatiquement)
       container.invalidate(currentWeatherProvider);
       final updatedWeatherAsync = container.read(currentWeatherProvider);
 
@@ -36,11 +39,11 @@ void main() {
         loading: () async {},
         error: (error, stack) => fail('Erreur lors du rechargement: $error'),
         data: (weather) {
-          // Assert: Météo mise à jour (devrait être pour Lyon maintenant)
+          // Assert: MÃ©tÃ©o mise Ã  jour (devrait Ãªtre pour Lyon maintenant)
           expect(weather, isNotNull);
           expect(weather.temperature, isNotNull);
-          // Note: La comparaison exacte nécessiterait un mock d'OpenMeteoService
-          // Pour l'instant, on vérifie juste que le provider se met à jour
+          // Note: La comparaison exacte nÃ©cessiterait un mock d'OpenMeteoService
+          // Pour l'instant, on vÃ©rifie juste que le provider se met Ã  jour
         },
       );
 
@@ -53,7 +56,7 @@ void main() {
       // Arrange
       final container = ProviderContainer();
 
-      // Act 1: Vérifier avec commune par défaut
+      // Act 1: VÃ©rifier avec commune par dÃ©faut
       final initialCoordsAsync = container.read(resolvedCoordinatesProvider);
       await initialCoordsAsync.when(
         loading: () async {},
@@ -71,10 +74,10 @@ void main() {
           .read(appSettingsProvider.notifier)
           .setCommune('Marseille');
 
-      // Attendre que les settings soient persistés
+      // Attendre que les settings soient persistÃ©s
       await Future.delayed(const Duration(milliseconds: 100));
 
-      // Act 3: Invalider et relire (doit se mettre à jour)
+      // Act 3: Invalider et relire (doit se mettre Ã  jour)
       container.invalidate(resolvedCoordinatesProvider);
       final updatedCoordsAsync = container.read(resolvedCoordinatesProvider);
 
@@ -82,10 +85,10 @@ void main() {
         loading: () async {},
         error: (error, stack) => fail('Erreur lors du rechargement: $error'),
         data: (coords) {
-          // Assert: Coordonnées mises à jour
+          // Assert: CoordonnÃ©es mises Ã  jour
           expect(coords, isNotNull);
-          // Note: La comparaison exacte nécessiterait un mock d'OpenMeteoService
-          // Pour l'instant, on vérifie juste que le provider se met à jour
+          // Note: La comparaison exacte nÃ©cessiterait un mock d'OpenMeteoService
+          // Pour l'instant, on vÃ©rifie juste que le provider se met Ã  jour
         },
       );
 
@@ -104,7 +107,7 @@ void main() {
         loading: () async {},
         error: (error, stack) => fail('Erreur lors du chargement: $error'),
         data: (forecast) {
-          // Assert: Prévisions chargées
+          // Assert: PrÃ©visions chargÃ©es
           expect(forecast, isNotNull);
           expect(forecast, isA<List>());
         },
@@ -125,7 +128,7 @@ void main() {
         loading: () async {},
         error: (error, stack) => fail('Erreur lors du chargement: $error'),
         data: (history) {
-          // Assert: Historique chargé
+          // Assert: Historique chargÃ©
           expect(history, isNotNull);
           expect(history, isA<List>());
         },
@@ -139,10 +142,10 @@ void main() {
       // Arrange
       final container = ProviderContainer();
 
-      // Act: Réinitialiser la commune à null
+      // Act: RÃ©initialiser la commune Ã  null
       await container.read(appSettingsProvider.notifier).setCommune(null);
 
-      // Attendre que les settings soient persistés
+      // Attendre que les settings soient persistÃ©s
       await Future.delayed(const Duration(milliseconds: 100));
 
       // Act: Invalider et relire
@@ -153,10 +156,10 @@ void main() {
         loading: () async {},
         error: (error, stack) => fail('Erreur lors du chargement: $error'),
         data: (coords) {
-          // Assert: Coordonnées par défaut utilisées (fallback)
+          // Assert: CoordonnÃ©es par dÃ©faut utilisÃ©es (fallback)
           expect(coords, isNotNull);
           expect(coords.resolvedName, isNotNull);
-          // Doit utiliser la commune par défaut
+          // Doit utiliser la commune par dÃ©faut
         },
       );
 
@@ -165,3 +168,4 @@ void main() {
     });
   });
 }
+

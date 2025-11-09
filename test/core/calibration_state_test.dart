@@ -1,3 +1,6 @@
+﻿
+import '../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/models/calibration_state.dart';
 
@@ -9,7 +12,7 @@ void main() {
       final notifier = CalibrationStateNotifier();
       expect(notifier.state.activeType, CalibrationType.none);
 
-      // Simuler une modification préalable
+      // Simuler une modification prÃ©alable
       notifier.markAsModified();
       expect(notifier.state.hasUnsavedChanges, true);
 
@@ -32,3 +35,4 @@ void main() {
     });
   });
 }
+

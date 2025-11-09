@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
@@ -6,7 +9,7 @@ import 'package:permacalendar/features/plant_intelligence/domain/entities/recomm
 import 'package:permacalendar/features/plant_intelligence/domain/services/plant_intelligence_evolution_tracker.dart';
 import 'package:uuid/uuid.dart';
 
-/// 🧪 CURSOR PROMPT A3 - Intelligence Evolution Tracker Tests
+/// ðŸ§ª CURSOR PROMPT A3 - Intelligence Evolution Tracker Tests
 /// 
 /// Tests for the PlantIntelligenceEvolutionTracker service
 /// 
@@ -345,9 +348,9 @@ void main() {
       final summary = tracker.compareReports(oldReport, newReport);
       
       // Act & Assert
-      expect(summary.statusText, 'Amélioration');
-      expect(summary.statusEmoji, '📈');
-      expect(summary.description, contains('amélioration'));
+      expect(summary.statusText, 'AmÃ©lioration');
+      expect(summary.statusEmoji, 'ðŸ“ˆ');
+      expect(summary.description, contains('amÃ©lioration'));
       expect(summary.description, contains('Tomato'));
       expect(summary.hasSignificantChanges, isTrue);
       expect(summary.timeBetweenReports, const Duration(days: 2));
@@ -404,7 +407,7 @@ PlantAnalysisResult _createMockAnalysis() {
       optimalValue: 22.0,
       minValue: 18.0,
       maxValue: 28.0,
-      unit: '°C',
+      unit: 'Â°C',
       description: 'Temperature is good',
       measuredAt: now,
     ),
@@ -477,4 +480,5 @@ Recommendation _createMockRecommendation({
     status: status,
   );
 }
+
 

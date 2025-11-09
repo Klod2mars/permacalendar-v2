@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -19,7 +22,7 @@ import 'package:permacalendar/core/errors/plant_exceptions.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/services/plant_intelligence_evolution_tracker.dart';
 import '../usecases/test_helpers.dart';
 
-// Génère les mocks pour les 5 interfaces spécialisées + GardenAggregationHub + PlantHiveRepository + EvolutionTracker
+// GÃ©nÃ¨re les mocks pour les 5 interfaces spÃ©cialisÃ©es + GardenAggregationHub + PlantHiveRepository + EvolutionTracker
 @GenerateMocks([
   IPlantConditionRepository,
   IWeatherRepository,
@@ -85,7 +88,7 @@ void main() {
       when(mockPlantHiveRepo.getAllPlants())
           .thenAnswer((_) async => [plant]);
       
-      // Mock repository responses avec interfaces spécialisées
+      // Mock repository responses avec interfaces spÃ©cialisÃ©es
       when(mockGardenRepo.searchPlants({'id': 'tomato'}))
           .thenAnswer((_) async => [plant]);
       
@@ -133,7 +136,7 @@ void main() {
       expect(report.gardenId, 'garden_1');
       expect(report.plantName, 'Tomate');
       expect(report.analysis, isNotNull);
-      // Les recommandations peuvent être vides si toutes les conditions sont bonnes
+      // Les recommandations peuvent Ãªtre vides si toutes les conditions sont bonnes
       expect(report.recommendations, isNotNull);
       expect(report.plantingTiming, isNotNull);
       expect(report.intelligenceScore, greaterThan(0.0));
@@ -141,7 +144,7 @@ void main() {
       expect(report.confidence, greaterThan(0.0));
       expect(report.confidence, lessThanOrEqualTo(1.0));
       
-      // Vérifier que les méthodes du repository ont été appelées
+      // VÃ©rifier que les mÃ©thodes du repository ont Ã©tÃ© appelÃ©es
       verify(mockGardenRepo.getGardenContext('garden_1')).called(1);
       verify(mockWeatherRepo.getCurrentWeatherCondition('garden_1')).called(1);
       verify(mockConditionRepo.getPlantConditionHistory(
@@ -163,7 +166,7 @@ void main() {
       when(mockGardenRepo.getGardenContext('garden_1'))
           .thenAnswer((_) async => null);
       
-      // getCurrentWeatherCondition est appelé avant la vérification du gardenContext
+      // getCurrentWeatherCondition est appelÃ© avant la vÃ©rification du gardenContext
       when(mockWeatherRepo.getCurrentWeatherCondition('garden_1'))
           .thenAnswer((_) async => createMockWeather());
       
@@ -288,7 +291,7 @@ void main() {
       when(mockGardenRepo.getGardenPlants('garden_1'))
           .thenAnswer((_) async => plants);
       
-      // Premier plant réussit
+      // Premier plant rÃ©ussit
       when(mockGardenRepo.getGardenContext('garden_1'))
           .thenAnswer((_) async => createMockGarden());
       
@@ -327,7 +330,7 @@ void main() {
       );
       
       // Assert
-      // L'orchestrateur devrait continuer même si une plante échoue
+      // L'orchestrateur devrait continuer mÃªme si une plante Ã©choue
       expect(reports, isNotEmpty);
     });
 
@@ -363,7 +366,7 @@ void main() {
       expect(analysis.soil, isNotNull);
       expect(analysis.healthScore, greaterThan(0.0));
       
-      // Vérifier que les méthodes de sauvegarde ne sont PAS appelées
+      // VÃ©rifier que les mÃ©thodes de sauvegarde ne sont PAS appelÃ©es
       verifyNever(mockConditionRepo.savePlantCondition(
         plantId: anyNamed('plantId'),
         condition: anyNamed('condition'),
@@ -378,7 +381,7 @@ void main() {
       // Arrange
       final plant = createMockPlant();
       final garden = createMockGarden();
-      final weather = createMockWeather(temperature: 22.0); // Température optimale
+      final weather = createMockWeather(temperature: 22.0); // TempÃ©rature optimale
       
       when(mockPlantHiveRepo.getAllPlants())
           .thenAnswer((_) async => [plant]);
@@ -427,7 +430,7 @@ void main() {
       expect(report.intelligenceScore, greaterThan(0.0));
       expect(report.intelligenceScore, lessThanOrEqualTo(100.0));
       
-      // Avec des conditions optimales, le score devrait être élevé
+      // Avec des conditions optimales, le score devrait Ãªtre Ã©levÃ©
       expect(report.intelligenceScore, greaterThan(50.0));
     });
 
@@ -436,7 +439,7 @@ void main() {
       final plant = createMockPlant();
       final garden = createMockGarden();
       
-      // Données météo anciennes mais encore valides (18 heures)
+      // DonnÃ©es mÃ©tÃ©o anciennes mais encore valides (18 heures)
       final oldWeather = createMockWeather(
         temperature: 20.0,
         measuredAt: DateTime.now().subtract(const Duration(hours: 18)),
@@ -486,7 +489,7 @@ void main() {
       );
       
       // Assert
-      // Avec des données anciennes (18h), la confiance devrait être réduite
+      // Avec des donnÃ©es anciennes (18h), la confiance devrait Ãªtre rÃ©duite
       expect(report.confidence, lessThan(1.0));
       expect(report.metadata['weatherAge'], greaterThan(12));
       expect(report.metadata['weatherAge'], lessThan(25));
@@ -1452,3 +1455,4 @@ void main() {
     });
   });
 }
+

@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
@@ -129,7 +132,7 @@ void main() {
         timingScore: 85.0,
         reason: 'Conditions optimales pour la plantation',
         optimalPlantingDate: null,
-        favorableFactors: ['Température optimale', 'Période de semis'],
+        favorableFactors: ['TempÃ©rature optimale', 'PÃ©riode de semis'],
         unfavorableFactors: [],
         risks: [],
       );
@@ -146,10 +149,10 @@ void main() {
       final evaluation = PlantingTimingEvaluation(
         isOptimalTime: false,
         timingScore: 40.0,
-        reason: 'Hors période de semis',
+        reason: 'Hors pÃ©riode de semis',
         optimalPlantingDate: futureDate,
         favorableFactors: [],
-        unfavorableFactors: ['Hors période de semis', 'Température trop basse'],
+        unfavorableFactors: ['Hors pÃ©riode de semis', 'TempÃ©rature trop basse'],
         risks: ['Risque de gel'],
       );
       
@@ -178,9 +181,9 @@ PlantIntelligenceReport _createMockReport() {
     plantingTiming: const PlantingTimingEvaluation(
       isOptimalTime: true,
       timingScore: 85.0,
-      reason: 'Période de semis idéale',
+      reason: 'PÃ©riode de semis idÃ©ale',
       optimalPlantingDate: null,
-      favorableFactors: ['Température optimale', 'Période de semis'],
+      favorableFactors: ['TempÃ©rature optimale', 'PÃ©riode de semis'],
       unfavorableFactors: [],
       risks: [],
     ),
@@ -220,9 +223,9 @@ PlantAnalysisResult _createCriticalAnalysis() {
     soil: _createMockCondition(ConditionStatus.fair, ConditionType.soil),
     overallHealth: ConditionStatus.critical,
     healthScore: 30.0,
-    warnings: ['Température critique!'],
+    warnings: ['TempÃ©rature critique!'],
     strengths: [],
-    priorityActions: ['Protection immédiate requise'],
+    priorityActions: ['Protection immÃ©diate requise'],
     confidence: 0.9,
     analyzedAt: DateTime.now(),
   );
@@ -249,7 +252,7 @@ PlantCondition _createMockCondition(ConditionStatus status, ConditionType type) 
 String _getUnitForType(ConditionType type) {
   switch (type) {
     case ConditionType.temperature:
-      return '°C';
+      return 'Â°C';
     case ConditionType.humidity:
       return '%';
     case ConditionType.light:
@@ -267,8 +270,8 @@ Recommendation _createCriticalRecommendation() {
     plantId: 'tomato',
     type: RecommendationType.weatherProtection,
     priority: RecommendationPriority.critical,
-    title: 'Protéger du gel',
-    description: 'Température critique détectée',
+    title: 'ProtÃ©ger du gel',
+    description: 'TempÃ©rature critique dÃ©tectÃ©e',
     status: RecommendationStatus.pending,
     instructions: ['Installer voile d\'hivernage'],
     expectedImpact: 90,
@@ -289,7 +292,7 @@ Recommendation _createHighRecommendation() {
     type: RecommendationType.watering,
     priority: RecommendationPriority.high,
     title: 'Arroser',
-    description: 'Sol légèrement sec',
+    description: 'Sol lÃ©gÃ¨rement sec',
     status: RecommendationStatus.pending,
     instructions: ['Arroser 2L'],
     expectedImpact: 70,
@@ -310,7 +313,7 @@ Recommendation _createMediumRecommendation() {
     type: RecommendationType.fertilizing,
     priority: RecommendationPriority.medium,
     title: 'Fertiliser',
-    description: 'Apport de nutriments recommandé',
+    description: 'Apport de nutriments recommandÃ©',
     status: RecommendationStatus.pending,
     instructions: ['Ajouter compost'],
     expectedImpact: 50,
@@ -337,3 +340,4 @@ NotificationAlert _createCriticalAlert() {
     readAt: null,
   );
 }
+

@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -8,19 +11,19 @@ import 'package:permacalendar/core/models/garden_v2.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Garden Model Tests (v2) - Instanciation et sérialisation', () {
+  group('Garden Model Tests (v2) - Instanciation et sÃ©rialisation', () {
     late Directory tempDir;
     late Box<Garden> gardenBox;
     const uuid = Uuid();
 
     setUpAll(() async {
-      // Créer un répertoire temporaire pour les tests Hive
+      // CrÃ©er un rÃ©pertoire temporaire pour les tests Hive
       tempDir = await Directory.systemTemp.createTemp('garden_v2_test_');
 
-      // Initialiser Hive avec le répertoire temporaire
+      // Initialiser Hive avec le rÃ©pertoire temporaire
       Hive.init(tempDir.path);
 
-      // Enregistrer l'adaptateur Garden si pas déjà fait
+      // Enregistrer l'adaptateur Garden si pas dÃ©jÃ  fait
       if (!Hive.isAdapterRegistered(10)) {
         Hive.registerAdapter(GardenAdapter());
       }
@@ -33,25 +36,25 @@ void main() {
     });
 
     tearDown(() async {
-      // Fermer la box après chaque test
+      // Fermer la box aprÃ¨s chaque test
       if (gardenBox.isOpen) {
         await gardenBox.close();
       }
     });
 
     tearDownAll(() async {
-      // Nettoyer complètement après tous les tests
+      // Nettoyer complÃ¨tement aprÃ¨s tous les tests
       await Hive.deleteFromDisk();
       await Hive.close();
 
-      // Supprimer le répertoire temporaire
+      // Supprimer le rÃ©pertoire temporaire
       if (await tempDir.exists()) {
         await tempDir.delete(recursive: true);
       }
     });
 
-    group('Tests de création et instanciation', () {
-      test('Doit créer un Garden avec tous les champs requis', () {
+    group('Tests de crÃ©ation et instanciation', () {
+      test('Doit crÃ©er un Garden avec tous les champs requis', () {
         final garden = Garden(
           id: 'test-garden-1',
           name: 'Mon Jardin',
@@ -70,7 +73,7 @@ void main() {
         expect(garden.gardenBeds.length, equals(3));
       });
 
-      test('Doit créer un Garden avec une liste de gardenBeds vide', () {
+      test('Doit crÃ©er un Garden avec une liste de gardenBeds vide', () {
         final garden = Garden(
           id: 'test-garden-2',
           name: 'Jardin Vide',
@@ -84,7 +87,7 @@ void main() {
         expect(garden.gardenBeds.length, equals(0));
       });
 
-      test('Factory create doit générer un ID unique automatiquement', () {
+      test('Factory create doit gÃ©nÃ©rer un ID unique automatiquement', () {
         final garden1 = Garden.create(
           name: 'Jardin Est',
           description: 'Description 1',
@@ -97,16 +100,16 @@ void main() {
           location: 'Bordeaux, France',
         );
 
-        // Vérifier que les IDs sont générés et différents
+        // VÃ©rifier que les IDs sont gÃ©nÃ©rÃ©s et diffÃ©rents
         expect(garden1.id, isNotEmpty);
         expect(garden2.id, isNotEmpty);
         expect(garden1.id, isNot(equals(garden2.id)));
 
-        // Vérifier les autres propriétés
+        // VÃ©rifier les autres propriÃ©tÃ©s
         expect(garden1.name, equals('Jardin Est'));
         expect(garden1.description, equals('Description 1'));
         expect(garden1.location, equals('Marseille, France'));
-        expect(garden1.gardenBeds, isEmpty); // Par défaut, liste vide
+        expect(garden1.gardenBeds, isEmpty); // Par dÃ©faut, liste vide
         expect(garden1.createdDate, isA<DateTime>());
 
         expect(garden2.name, equals('Jardin Ouest'));
@@ -129,8 +132,8 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation JSON', () {
-      test('Doit sérialiser correctement avec toJson', () {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation JSON', () {
+      test('Doit sÃ©rialiser correctement avec toJson', () {
         final garden = Garden(
           id: 'test-garden-json-1',
           name: 'Jardin JSON',
@@ -151,7 +154,7 @@ void main() {
         expect(json['gardenBeds'], isA<List<String>>());
       });
 
-      test('Doit désérialiser correctement avec fromJson', () {
+      test('Doit dÃ©sÃ©rialiser correctement avec fromJson', () {
         final json = {
           'id': 'test-garden-json-2',
           'name': 'Jardin depuis JSON',
@@ -171,7 +174,7 @@ void main() {
         expect(garden.gardenBeds, equals(['bed-x', 'bed-y']));
       });
 
-      test('fromJson doit gérer le cas où gardenBeds est null ou absent', () {
+      test('fromJson doit gÃ©rer le cas oÃ¹ gardenBeds est null ou absent', () {
         final json1 = {
           'id': 'test-garden-json-3',
           'name': 'Jardin sans parcelles',
@@ -218,8 +221,8 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation Hive', () {
-      test('Doit sauvegarder et récupérer un Garden dans Hive', () async {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation Hive', () {
+      test('Doit sauvegarder et rÃ©cupÃ©rer un Garden dans Hive', () async {
         final originalGarden = Garden(
           id: 'test-hive-1',
           name: 'Jardin Hive',
@@ -232,10 +235,10 @@ void main() {
         // Sauvegarder dans Hive
         await gardenBox.put(originalGarden.id, originalGarden);
 
-        // Récupérer depuis Hive
+        // RÃ©cupÃ©rer depuis Hive
         final retrievedGarden = gardenBox.get('test-hive-1');
 
-        // Vérifications
+        // VÃ©rifications
         expect(retrievedGarden, isNotNull);
         expect(retrievedGarden!.id, equals(originalGarden.id));
         expect(retrievedGarden.name, equals(originalGarden.name));
@@ -245,10 +248,10 @@ void main() {
         expect(retrievedGarden.gardenBeds, equals(originalGarden.gardenBeds));
       });
 
-      test('Doit persister plusieurs Gardens et les récupérer correctement', () async {
+      test('Doit persister plusieurs Gardens et les rÃ©cupÃ©rer correctement', () async {
         final gardens = <Garden>[];
 
-        // Créer plusieurs jardins
+        // CrÃ©er plusieurs jardins
         for (int i = 0; i < 5; i++) {
           final garden = Garden(
             id: 'garden-hive-$i',
@@ -263,10 +266,10 @@ void main() {
           await gardenBox.put(garden.id, garden);
         }
 
-        // Vérifier que tous les jardins sont persistés
+        // VÃ©rifier que tous les jardins sont persistÃ©s
         expect(gardenBox.length, equals(5));
 
-        // Vérifier chaque jardin individuellement
+        // VÃ©rifier chaque jardin individuellement
         for (int i = 0; i < 5; i++) {
           final retrieved = gardenBox.get('garden-hive-$i');
           expect(retrieved, isNotNull);
@@ -277,7 +280,7 @@ void main() {
         }
       });
 
-      test('Doit gérer un Garden avec une liste de gardenBeds vide dans Hive', () async {
+      test('Doit gÃ©rer un Garden avec une liste de gardenBeds vide dans Hive', () async {
         final garden = Garden(
           id: 'garden-empty-beds',
           name: 'Jardin vide',
@@ -295,8 +298,8 @@ void main() {
       });
     });
 
-    group('Tests de la méthode copyWith', () {
-      test('Doit créer une copie avec des modifications', () {
+    group('Tests de la mÃ©thode copyWith', () {
+      test('Doit crÃ©er une copie avec des modifications', () {
         final original = Garden(
           id: 'test-copy-1',
           name: 'Jardin Original',
@@ -307,24 +310,24 @@ void main() {
         );
 
         final modified = original.copyWith(
-          name: 'Jardin Modifié',
-          description: 'Description Modifiée',
+          name: 'Jardin ModifiÃ©',
+          description: 'Description ModifiÃ©e',
           location: 'Caen, France',
           gardenBeds: ['bed-1', 'bed-2', 'bed-3'],
         );
 
-        // Vérifier que les champs modifiés ont changé
-        expect(modified.name, equals('Jardin Modifié'));
-        expect(modified.description, equals('Description Modifiée'));
+        // VÃ©rifier que les champs modifiÃ©s ont changÃ©
+        expect(modified.name, equals('Jardin ModifiÃ©'));
+        expect(modified.description, equals('Description ModifiÃ©e'));
         expect(modified.location, equals('Caen, France'));
         expect(modified.gardenBeds.length, equals(3));
 
-        // Vérifier que les autres champs sont inchangés
+        // VÃ©rifier que les autres champs sont inchangÃ©s
         expect(modified.id, equals(original.id));
         expect(modified.createdDate, equals(original.createdDate));
       });
 
-      test('Doit créer une copie sans modifications si aucun paramètre fourni', () {
+      test('Doit crÃ©er une copie sans modifications si aucun paramÃ¨tre fourni', () {
         final original = Garden(
           id: 'test-copy-2',
           name: 'Jardin Test',
@@ -349,7 +352,7 @@ void main() {
           id: 'test-copy-3',
           name: 'Jardin A',
           description: 'Description A',
-          location: 'Nîmes, France',
+          location: 'NÃ®mes, France',
           createdDate: DateTime(2024, 11, 1),
           gardenBeds: ['bed-1'],
         );
@@ -359,14 +362,14 @@ void main() {
         );
 
         expect(modified.name, equals('Jardin B'));
-        expect(modified.description, equals('Description A')); // Inchangé
-        expect(modified.location, equals('Nîmes, France')); // Inchangé
-        expect(modified.gardenBeds, equals(['bed-1'])); // Inchangé
+        expect(modified.description, equals('Description A')); // InchangÃ©
+        expect(modified.location, equals('NÃ®mes, France')); // InchangÃ©
+        expect(modified.gardenBeds, equals(['bed-1'])); // InchangÃ©
       });
     });
 
-    group('Tests des méthodes utilitaires', () {
-      test('Doit implémenter toString correctement', () {
+    group('Tests des mÃ©thodes utilitaires', () {
+      test('Doit implÃ©menter toString correctement', () {
         final garden = Garden(
           id: 'test-toString',
           name: 'Mon Jardin',
@@ -384,7 +387,7 @@ void main() {
         expect(string, contains('3')); // Nombre de gardenBeds
       });
 
-      test('Doit implémenter l\'égalité basée sur l\'ID', () {
+      test('Doit implÃ©menter l\'Ã©galitÃ© basÃ©e sur l\'ID', () {
         final garden1 = Garden(
           id: 'same-id',
           name: 'Jardin 1',
@@ -396,29 +399,29 @@ void main() {
 
         final garden2 = Garden(
           id: 'same-id',
-          name: 'Jardin 2', // Nom différent
-          description: 'Description 2', // Description différente
-          location: 'Location 2', // Location différente
-          createdDate: DateTime(2024, 2, 1), // Date différente
-          gardenBeds: ['bed-2'], // Beds différents
+          name: 'Jardin 2', // Nom diffÃ©rent
+          description: 'Description 2', // Description diffÃ©rente
+          location: 'Location 2', // Location diffÃ©rente
+          createdDate: DateTime(2024, 2, 1), // Date diffÃ©rente
+          gardenBeds: ['bed-2'], // Beds diffÃ©rents
         );
 
         final garden3 = Garden(
           id: 'different-id',
-          name: 'Jardin 1', // Même nom
-          description: 'Description 1', // Même description
-          location: 'Location 1', // Même location
-          createdDate: DateTime(2024, 1, 1), // Même date
-          gardenBeds: ['bed-1'], // Mêmes beds
+          name: 'Jardin 1', // MÃªme nom
+          description: 'Description 1', // MÃªme description
+          location: 'Location 1', // MÃªme location
+          createdDate: DateTime(2024, 1, 1), // MÃªme date
+          gardenBeds: ['bed-1'], // MÃªmes beds
         );
 
-        expect(garden1, equals(garden2)); // Même ID
-        expect(garden1, isNot(equals(garden3))); // ID différent
+        expect(garden1, equals(garden2)); // MÃªme ID
+        expect(garden1, isNot(equals(garden3))); // ID diffÃ©rent
         expect(garden1.hashCode, equals(garden2.hashCode));
         expect(garden1.hashCode, isNot(equals(garden3.hashCode)));
       });
 
-      test('Doit gérer correctement les dates DateTime', () {
+      test('Doit gÃ©rer correctement les dates DateTime', () {
         final date1 = DateTime(2024, 1, 15, 10, 30, 45);
         final date2 = DateTime(2024, 1, 15, 10, 30, 45);
 
@@ -445,4 +448,5 @@ void main() {
     });
   });
 }
+
 

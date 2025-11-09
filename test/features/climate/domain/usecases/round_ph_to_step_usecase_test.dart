@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/climate/domain/usecases/round_ph_to_step_usecase.dart';
 
@@ -146,16 +149,16 @@ void main() {
     group('pH categories', () {
       test('should categorize pH values correctly', () {
         // Act & Assert
-        expect(usecase.getCategory(4.0), equals('Très acide'));
-        expect(usecase.getCategory(5.0), equals('Très acide'));
+        expect(usecase.getCategory(4.0), equals('TrÃ¨s acide'));
+        expect(usecase.getCategory(5.0), equals('TrÃ¨s acide'));
         expect(usecase.getCategory(5.5), equals('Acide'));
         expect(usecase.getCategory(6.0), equals('Acide'));
         expect(usecase.getCategory(6.5), equals('Neutre'));
         expect(usecase.getCategory(7.0), equals('Neutre'));
         expect(usecase.getCategory(7.5), equals('Alcalin'));
         expect(usecase.getCategory(8.0), equals('Alcalin'));
-        expect(usecase.getCategory(8.5), equals('Très alcalin'));
-        expect(usecase.getCategory(9.0), equals('Très alcalin'));
+        expect(usecase.getCategory(8.5), equals('TrÃ¨s alcalin'));
+        expect(usecase.getCategory(9.0), equals('TrÃ¨s alcalin'));
       });
     });
 
@@ -212,3 +215,4 @@ void main() {
     });
   });
 }
+

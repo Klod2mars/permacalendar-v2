@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/plant_intelligence/presentation/providers/intelligence_state_providers.dart';
@@ -9,8 +12,8 @@ import 'package:permacalendar/core/services/aggregation/garden_aggregation_hub.d
 /// 
 /// Valide que le changement de jardin respecte les objectifs de performance :
 /// - Latence < 100ms pour le changement de jardin
-/// - Mémoire stable avec 5+ jardins
-/// - Pas de fuites mémoire
+/// - MÃ©moire stable avec 5+ jardins
+/// - Pas de fuites mÃ©moire
 void main() {
   group('Garden Switch Performance Benchmarks', () {
     late ProviderContainer container;
@@ -46,7 +49,7 @@ void main() {
       expect(stopwatch.elapsedMilliseconds, lessThan(100),
           reason: 'Garden switch should complete in < 100ms');
 
-      print('✅ Garden switch completed in ${stopwatch.elapsedMilliseconds}ms');
+      print('âœ… Garden switch completed in ${stopwatch.elapsedMilliseconds}ms');
     });
 
     test('Cache access is fast (< 10ms)', () {
@@ -64,7 +67,7 @@ void main() {
       expect(avgTime, lessThan(10),
           reason: 'Cache access should be < 10ms average');
 
-      print('✅ Average cache access: ${avgTime.toStringAsFixed(2)}ms');
+      print('âœ… Average cache access: ${avgTime.toStringAsFixed(2)}ms');
     });
 
     test('LRU eviction completes in < 50ms', () {
@@ -84,7 +87,7 @@ void main() {
       final stats = hub.getIntelligenceCacheStats();
       expect(stats['total_caches'], equals(5)); // Still at max
 
-      print('✅ LRU eviction completed in ${stopwatch.elapsedMilliseconds}ms');
+      print('âœ… LRU eviction completed in ${stopwatch.elapsedMilliseconds}ms');
     });
 
     test('Memory footprint is acceptable with multiple gardens', () {
@@ -112,7 +115,7 @@ void main() {
       expect(finalStats['total_caches'], equals(5));
       
       // Log memory usage (visual verification)
-      print('✅ Successfully cached 5 gardens with realistic data');
+      print('âœ… Successfully cached 5 gardens with realistic data');
       print('   Cache stats: ${finalStats['total_caches']} gardens cached');
     });
 
@@ -132,7 +135,7 @@ void main() {
       expect(identical(state2, state3), isFalse);
       expect(identical(state1, state3), isFalse);
 
-      print('✅ State isolation verified: 3 gardens with independent states');
+      print('âœ… State isolation verified: 3 gardens with independent states');
     });
 
     test('Rapid garden switching maintains stability', () async {
@@ -152,7 +155,7 @@ void main() {
       
       stopwatch.stop();
 
-      // 30 switches (10 rounds × 3 switches) should complete quickly
+      // 30 switches (10 rounds Ã— 3 switches) should complete quickly
       expect(stopwatch.elapsedMilliseconds, lessThan(500),
           reason: '30 rapid switches should complete in < 500ms');
 
@@ -160,7 +163,7 @@ void main() {
       expect(avgSwitch, lessThan(20),
           reason: 'Average switch time should be < 20ms');
 
-      print('✅ Rapid switching stable: 30 switches in ${stopwatch.elapsedMilliseconds}ms');
+      print('âœ… Rapid switching stable: 30 switches in ${stopwatch.elapsedMilliseconds}ms');
       print('   Average: ${avgSwitch.toStringAsFixed(2)}ms per switch');
     });
 
@@ -187,8 +190,9 @@ void main() {
       final lastAccessed = stats['last_accessed'] as Map<String, int>;
       expect(lastAccessed['garden_1'], lessThan(lastAccessed['garden_2']!));
 
-      print('✅ Cache statistics accurate and up-to-date');
+      print('âœ… Cache statistics accurate and up-to-date');
     });
   });
 }
+
 

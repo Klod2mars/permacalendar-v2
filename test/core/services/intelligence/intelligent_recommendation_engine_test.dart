@@ -1,5 +1,8 @@
-// Tests unitaires pour IntelligentRecommendationEngine
+﻿// Tests unitaires pour IntelligentRecommendationEngine
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
+
+
+import '../../../test_setup_stub.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/services/intelligence/intelligent_recommendation_engine.dart';
@@ -86,7 +89,7 @@ void main() {
         final gardenData = {'name': 'Mon Jardin'};
         final weatherData = {
           'temperature': 5.0,
-          'minTemperature': 2.0, // Below 5°C threshold
+          'minTemperature': 2.0, // Below 5Â°C threshold
           'maxTemperature': 10.0,
         };
         final plants = <Map<String, dynamic>>[];
@@ -116,7 +119,7 @@ void main() {
         final weatherData = {
           'temperature': 30.0,
           'minTemperature': 25.0,
-          'maxTemperature': 38.0, // Above 35°C threshold
+          'maxTemperature': 38.0, // Above 35Â°C threshold
         };
         final plants = <Map<String, dynamic>>[];
 
@@ -162,7 +165,7 @@ void main() {
         // Assert
         expect(batch.recommendations, isNotEmpty);
         final droughtRecommendation = batch.recommendations.firstWhere(
-          (r) => r.title.contains('Sèches'),
+          (r) => r.title.contains('SÃ¨ches'),
           orElse: () => throw Exception('Drought recommendation not found'),
         );
         expect(droughtRecommendation.urgency, equals(RecommendationUrgency.medium));
@@ -197,7 +200,7 @@ void main() {
         // Assert
         expect(batch.recommendations, isNotEmpty);
         final healthRecommendation = batch.recommendations.firstWhere(
-          (r) => r.title.contains('Santé'),
+          (r) => r.title.contains('SantÃ©'),
           orElse: () => throw Exception('Health recommendation not found'),
         );
         expect(healthRecommendation.urgency, equals(RecommendationUrgency.high));
@@ -504,4 +507,5 @@ void main() {
     });
   });
 }
+
 

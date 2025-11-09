@@ -1,17 +1,20 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/plant_intelligence/presentation/providers/intelligence_state_providers.dart';
 import 'package:permacalendar/core/services/aggregation/garden_aggregation_hub.dart';
 
-/// Tests d'intégration pour les flux multi-garden
+/// Tests d'intÃ©gration pour les flux multi-garden
 /// 
 /// **PROMPT A15 - Phase 4.2**
 /// 
-/// Valide les scénarios complets de gestion multi-garden :
+/// Valide les scÃ©narios complets de gestion multi-garden :
 /// - Changement de jardin pendant une analyse
 /// - Invalidation de cache par jardin
 /// - Analyses concurrentes
-/// - Isolation des états
+/// - Isolation des Ã©tats
 void main() {
   group('Multi-Garden Integration Tests', () {
     late ProviderContainer container;
@@ -177,7 +180,7 @@ void main() {
       final reportString = report.toString();
 
       expect(reportString, contains('RAPPORT DE MIGRATION'));
-      expect(reportString, contains('SUCCÈS'));
+      expect(reportString, contains('SUCCÃˆS'));
       expect(reportString, contains('45')); // conditions migrated
       expect(reportString, contains('32')); // recommendations migrated
       expect(reportString, contains('77')); // total migrated (45+32)
@@ -208,4 +211,5 @@ void main() {
     });
   });
 }
+
 

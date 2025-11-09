@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/usecases/evaluate_planting_timing_usecase.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
@@ -84,7 +87,7 @@ void main() {
       // Assert
       expect(result.unfavorableFactors, isNotEmpty);
       expect(
-        result.unfavorableFactors.any((f) => f.contains('période')),
+        result.unfavorableFactors.any((f) => f.contains('pÃ©riode')),
         isTrue,
       );
     });
@@ -251,7 +254,7 @@ void main() {
       // Assert
       expect(result.unfavorableFactors, isNotEmpty);
       expect(
-        result.unfavorableFactors.any((f) => f.toLowerCase().contains('température')),
+        result.unfavorableFactors.any((f) => f.toLowerCase().contains('tempÃ©rature')),
         isTrue,
       );
     });
@@ -284,3 +287,4 @@ String _getMonthAbbreviation(int month) {
   const abbr = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
   return abbr[month - 1];
 }
+

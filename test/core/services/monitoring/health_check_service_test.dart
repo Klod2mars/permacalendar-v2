@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -32,7 +35,7 @@ void main() {
         healthCheckService.initialize();
 
         // Assert
-        // Le service devrait être initialisé sans erreur
+        // Le service devrait Ãªtre initialisÃ© sans erreur
         expect(healthCheckService, isNotNull);
       });
 
@@ -41,9 +44,9 @@ void main() {
         healthCheckService.initialize();
 
         // Assert
-        // Vérifier que les health checks par défaut sont enregistrés
+        // VÃ©rifier que les health checks par dÃ©faut sont enregistrÃ©s
         final result = healthCheckService.getLastResult('hive_database');
-        // Le résultat peut être null avant le premier check, mais le check devrait être enregistré
+        // Le rÃ©sultat peut Ãªtre null avant le premier check, mais le check devrait Ãªtre enregistrÃ©
         expect(healthCheckService, isNotNull);
       });
     });
@@ -182,7 +185,7 @@ void main() {
         // Assert
         expect(result.componentName, equals('backend'));
         expect(result.status, equals(HealthStatus.unhealthy));
-        // Le timeout peut être géré soit comme "timed out" soit comme "failed"
+        // Le timeout peut Ãªtre gÃ©rÃ© soit comme "timed out" soit comme "failed"
         expect(
           result.message,
           anyOf(contains('timed out'), contains('failed')),
@@ -251,7 +254,7 @@ void main() {
         final report = await healthCheckService.checkAllComponents();
 
         // Assert
-        // Si le backend est unhealthy, le statut global devrait être unhealthy ou degraded
+        // Si le backend est unhealthy, le statut global devrait Ãªtre unhealthy ou degraded
         expect(report.overallStatus, isIn([HealthStatus.unhealthy, HealthStatus.degraded]));
         expect(report.unhealthyCount, greaterThanOrEqualTo(0));
       });
@@ -266,10 +269,10 @@ void main() {
         final report = await healthCheckService.checkAllComponents();
 
         // Assert
-        // Le rapport devrait toujours être retourné, même en cas d'erreur
+        // Le rapport devrait toujours Ãªtre retournÃ©, mÃªme en cas d'erreur
         expect(report, isNotNull);
         expect(report.componentResults, isA<List<HealthCheckResult>>());
-        // Au moins certains composants devraient être vérifiés
+        // Au moins certains composants devraient Ãªtre vÃ©rifiÃ©s
         expect(report.componentResults.length, greaterThan(0));
       });
 
@@ -454,7 +457,7 @@ void main() {
 
         // Assert
         final result = healthCheckService.getLastResult('custom_component');
-        // Le résultat peut être null avant le premier check
+        // Le rÃ©sultat peut Ãªtre null avant le premier check
         expect(healthCheckService, isNotNull);
       });
 
@@ -474,7 +477,7 @@ void main() {
         healthCheckService.unregisterHealthCheck('custom_component');
 
         // Assert
-        // Le health check devrait être supprimé
+        // Le health check devrait Ãªtre supprimÃ©
         expect(healthCheckService, isNotNull);
       });
     });
@@ -491,7 +494,7 @@ void main() {
         healthCheckService.initialize();
 
         // Assert
-        // Les auto checks devraient être démarrés
+        // Les auto checks devraient Ãªtre dÃ©marrÃ©s
         expect(healthCheckService.healthReportStream, isNotNull);
       });
 
@@ -507,7 +510,7 @@ void main() {
         healthCheckService.stopAutoHealthChecks();
 
         // Assert
-        // Les auto checks devraient être arrêtés
+        // Les auto checks devraient Ãªtre arrÃªtÃ©s
         expect(healthCheckService, isNotNull);
       });
     });
@@ -521,10 +524,11 @@ void main() {
         healthCheckService.dispose();
 
         // Assert
-        // Le service devrait être disposé sans erreur
+        // Le service devrait Ãªtre disposÃ© sans erreur
         expect(healthCheckService, isNotNull);
       });
     });
   });
 }
+
 

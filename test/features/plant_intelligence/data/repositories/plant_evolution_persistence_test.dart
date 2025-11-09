@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -14,14 +17,14 @@ import 'plant_evolution_persistence_test.mocks.dart';
 
 /// **CURSOR PROMPT A7 - Evolution History Persistence Tests**
 /// 
-/// Test suite complet pour la persistence de l'historique d'évolution.
+/// Test suite complet pour la persistence de l'historique d'Ã©volution.
 /// 
 /// **Couverture :**
-/// - Sauvegarde d'un rapport d'évolution
-/// - Récupération de l'historique complet
+/// - Sauvegarde d'un rapport d'Ã©volution
+/// - RÃ©cupÃ©ration de l'historique complet
 /// - Tri des rapports par timestamp
-/// - Gestion des données corrompues (skip gracefully)
-/// - Programmation défensive (ne crash jamais)
+/// - Gestion des donnÃ©es corrompues (skip gracefully)
+/// - Programmation dÃ©fensive (ne crash jamais)
 
 void main() {
   late PlantIntelligenceRepositoryImpl repository;
@@ -527,4 +530,5 @@ PlantEvolutionReport _createTestEvolutionReport(
     unchangedConditions: deltaScore == 0 ? ['light', 'soil'] : [],
   );
 }
+
 

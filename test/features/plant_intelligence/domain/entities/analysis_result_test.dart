@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
@@ -15,7 +18,7 @@ void main() {
         overallHealth: ConditionStatus.good,
         healthScore: 75.0,
         warnings: ['Surveiller l\'arrosage'],
-        strengths: ['Température optimale'],
+        strengths: ['TempÃ©rature optimale'],
         priorityActions: [],
         confidence: 0.85,
         analyzedAt: DateTime.now(),
@@ -38,9 +41,9 @@ void main() {
         soil: _createMockCondition(ConditionStatus.fair, ConditionType.soil),
         overallHealth: ConditionStatus.critical,
         healthScore: 30.0,
-        warnings: ['Température critique!'],
+        warnings: ['TempÃ©rature critique!'],
         strengths: [],
-        priorityActions: ['Protéger du gel immédiatement'],
+        priorityActions: ['ProtÃ©ger du gel immÃ©diatement'],
         confidence: 0.90,
         analyzedAt: DateTime.now(),
       );
@@ -61,9 +64,9 @@ void main() {
         soil: _createMockCondition(ConditionStatus.excellent, ConditionType.soil),
         overallHealth: ConditionStatus.critical,
         healthScore: 35.0,
-        warnings: ['Température critique!', 'Humidité critique!'],
+        warnings: ['TempÃ©rature critique!', 'HumiditÃ© critique!'],
         strengths: [],
-        priorityActions: ['Action immédiate requise'],
+        priorityActions: ['Action immÃ©diate requise'],
         confidence: 0.85,
         analyzedAt: DateTime.now(),
       );
@@ -87,9 +90,9 @@ void main() {
         soil: excellentSoil,
         overallHealth: ConditionStatus.critical,
         healthScore: 40.0,
-        warnings: ['Température critique!'],
+        warnings: ['TempÃ©rature critique!'],
         strengths: ['Sol excellent'],
-        priorityActions: ['Réguler température'],
+        priorityActions: ['RÃ©guler tempÃ©rature'],
         confidence: 0.80,
         analyzedAt: DateTime.now(),
       );
@@ -146,7 +149,7 @@ void main() {
   });
 }
 
-/// Helper pour créer une PlantCondition mock
+/// Helper pour crÃ©er une PlantCondition mock
 PlantCondition _createMockCondition(ConditionStatus status, ConditionType type) {
   return PlantCondition(
     id: 'mock_${type.name}',
@@ -165,11 +168,11 @@ PlantCondition _createMockCondition(ConditionStatus status, ConditionType type) 
   );
 }
 
-/// Helper pour obtenir l'unité selon le type
+/// Helper pour obtenir l'unitÃ© selon le type
 String _getUnitForType(ConditionType type) {
   switch (type) {
     case ConditionType.temperature:
-      return '°C';
+      return 'Â°C';
     case ConditionType.humidity:
     case ConditionType.light:
     case ConditionType.soil:
@@ -179,3 +182,4 @@ String _getUnitForType(ConditionType type) {
       return 'km/h';
   }
 }
+

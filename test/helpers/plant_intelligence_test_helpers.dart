@@ -1,8 +1,11 @@
-/// Helpers réutilisables pour les tests d'Intelligence Végétale
+﻿/// Helpers rÃ©utilisables pour les tests d'Intelligence VÃ©gÃ©tale
 /// 
-/// Ce fichier fournit des fonctions helper pour créer des objets mock
-/// utilisés dans les tests unitaires et d'intégration.
+/// Ce fichier fournit des fonctions helper pour crÃ©er des objets mock
+/// utilisÃ©s dans les tests unitaires et d'intÃ©gration.
+
 library plant_intelligence_test_helpers;
+
+import '../test_setup_stub.dart';
 
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
@@ -14,16 +17,16 @@ import 'package:permacalendar/features/plant_intelligence/domain/entities/intell
 
 // ==================== PLANTES ====================
 
-/// Crée une plante mock pour les tests
+/// CrÃ©e une plante mock pour les tests
 /// 
-/// Permet de personnaliser les paramètres principaux :
+/// Permet de personnaliser les paramÃ¨tres principaux :
 /// - [id] : Identifiant unique de la plante
 /// - [commonName] : Nom commun
-/// - [sowingMonths] : Mois de semis (abréviation)
-/// - [harvestMonths] : Mois de récolte
-/// - [waterNeeds] : Besoins en eau (Faible/Moyen/Élevé)
+/// - [sowingMonths] : Mois de semis (abrÃ©viation)
+/// - [harvestMonths] : Mois de rÃ©colte
+/// - [waterNeeds] : Besoins en eau (Faible/Moyen/Ã‰levÃ©)
 /// - [sunExposure] : Exposition solaire
-/// - [metadata] : Métadonnées personnalisées
+/// - [metadata] : MÃ©tadonnÃ©es personnalisÃ©es
 PlantFreezed createMockPlant({
   String id = 'tomato',
   String commonName = 'Tomate',
@@ -39,7 +42,7 @@ PlantFreezed createMockPlant({
     scientificName: 'Solanum lycopersicum',
     family: 'Solanaceae',
     plantingSeason: 'Printemps',
-    harvestSeason: 'Été',
+    harvestSeason: 'Ã‰tÃ©',
     daysToMaturity: 80,
     spacing: 60,
     depth: 0.5,
@@ -59,7 +62,7 @@ PlantFreezed createMockPlant({
   );
 }
 
-/// Crée une plante sensible au gel
+/// CrÃ©e une plante sensible au gel
 PlantFreezed createFrostSensitivePlant({
   String id = 'tomato_frost',
   String commonName = 'Tomate (sensible gel)',
@@ -76,13 +79,13 @@ PlantFreezed createFrostSensitivePlant({
   );
 }
 
-// ==================== MÉTÉO ====================
+// ==================== MÃ‰TÃ‰O ====================
 
-/// Crée des conditions météo mock
+/// CrÃ©e des conditions mÃ©tÃ©o mock
 /// 
-/// Paramètres :
-/// - [temperature] : Température en °C
-/// - [measuredAt] : Date de mesure (défaut: maintenant)
+/// ParamÃ¨tres :
+/// - [temperature] : TempÃ©rature en Â°C
+/// - [measuredAt] : Date de mesure (dÃ©faut: maintenant)
 WeatherCondition createMockWeather({
   double temperature = 20.0,
   DateTime? measuredAt,
@@ -91,21 +94,21 @@ WeatherCondition createMockWeather({
     id: 'weather_test_${DateTime.now().millisecondsSinceEpoch}',
     type: WeatherType.temperature,
     value: temperature,
-    unit: '°C',
-    description: 'Température de test: ${temperature.toStringAsFixed(1)}°C',
+    unit: 'Â°C',
+    description: 'TempÃ©rature de test: ${temperature.toStringAsFixed(1)}Â°C',
     measuredAt: measuredAt ?? DateTime.now(),
     createdAt: DateTime.now(),
   );
 }
 
-/// Crée des conditions météo avec risque de gel
+/// CrÃ©e des conditions mÃ©tÃ©o avec risque de gel
 WeatherCondition createFrostWeather({
   double temperature = 2.0,
 }) {
   return createMockWeather(temperature: temperature);
 }
 
-/// Crée des conditions météo de canicule
+/// CrÃ©e des conditions mÃ©tÃ©o de canicule
 WeatherCondition createHeatWaveWeather({
   double temperature = 35.0,
 }) {
@@ -114,11 +117,11 @@ WeatherCondition createHeatWaveWeather({
 
 // ==================== JARDIN ====================
 
-/// Crée un contexte jardin mock
+/// CrÃ©e un contexte jardin mock
 /// 
-/// Paramètres :
+/// ParamÃ¨tres :
 /// - [id] : Identifiant du jardin
-/// - [ph] : pH du sol (défaut: 6.5)
+/// - [ph] : pH du sol (dÃ©faut: 6.5)
 /// - [soilType] : Type de sol
 /// - [exposition] : Exposition solaire
 GardenContext createMockGarden({
@@ -205,15 +208,15 @@ GardenContext createMockGarden({
 
 // ==================== CONDITIONS ====================
 
-/// Crée une PlantCondition mock
+/// CrÃ©e une PlantCondition mock
 /// 
-/// Paramètres obligatoires :
+/// ParamÃ¨tres obligatoires :
 /// - [plantId] : ID de la plante
-/// - [type] : Type de condition (température, humidité, etc.)
+/// - [type] : Type de condition (tempÃ©rature, humiditÃ©, etc.)
 /// - [status] : Statut (excellent, good, fair, poor, critical)
 /// 
-/// Paramètres optionnels :
-/// - [value] : Valeur mesurée
+/// ParamÃ¨tres optionnels :
+/// - [value] : Valeur mesurÃ©e
 /// - [optimalValue] : Valeur optimale
 /// - [minValue] : Valeur minimale acceptable
 /// - [maxValue] : Valeur maximale acceptable
@@ -231,20 +234,20 @@ PlantCondition createMockCondition({
   
   switch (type) {
     case ConditionType.temperature:
-      unit = '°C';
-      description = 'Température: ${value.toStringAsFixed(1)}°C';
+      unit = 'Â°C';
+      description = 'TempÃ©rature: ${value.toStringAsFixed(1)}Â°C';
       break;
     case ConditionType.humidity:
       unit = '%';
-      description = 'Humidité: ${value.toStringAsFixed(1)}%';
+      description = 'HumiditÃ©: ${value.toStringAsFixed(1)}%';
       break;
     case ConditionType.light:
       unit = '%';
-      description = 'Luminosité: ${value.toStringAsFixed(1)}%';
+      description = 'LuminositÃ©: ${value.toStringAsFixed(1)}%';
       break;
     case ConditionType.soil:
       unit = '%';
-      description = 'Qualité du sol: ${value.toStringAsFixed(1)}%';
+      description = 'QualitÃ© du sol: ${value.toStringAsFixed(1)}%';
       break;
     case ConditionType.wind:
       unit = 'km/h';
@@ -268,8 +271,8 @@ PlantCondition createMockCondition({
     unit: unit,
     description: description,
     recommendations: status == ConditionStatus.critical 
-        ? ['Action immédiate requise'] 
-        : ['Surveillance recommandée'],
+        ? ['Action immÃ©diate requise'] 
+        : ['Surveillance recommandÃ©e'],
     measuredAt: DateTime.now(),
     createdAt: DateTime.now(),
   );
@@ -277,7 +280,7 @@ PlantCondition createMockCondition({
 
 // ==================== ANALYSES ====================
 
-/// Crée une analyse complète avec toutes les conditions
+/// CrÃ©e une analyse complÃ¨te avec toutes les conditions
 PlantAnalysisResult createMockAnalysis({
   String plantId = 'tomato',
   ConditionStatus overallHealth = ConditionStatus.good,
@@ -314,13 +317,13 @@ PlantAnalysisResult createMockAnalysis({
     healthScore: healthScore,
     warnings: overallHealth == ConditionStatus.critical ? ['Attention critique!'] : [],
     strengths: overallHealth == ConditionStatus.excellent ? ['Conditions optimales'] : [],
-    priorityActions: overallHealth == ConditionStatus.critical ? ['Action immédiate'] : [],
+    priorityActions: overallHealth == ConditionStatus.critical ? ['Action immÃ©diate'] : [],
     confidence: 0.85,
     analyzedAt: DateTime.now(),
   );
 }
 
-/// Crée une analyse avec état critique
+/// CrÃ©e une analyse avec Ã©tat critique
 PlantAnalysisResult createCriticalAnalysis({String plantId = 'tomato'}) {
   return createMockAnalysis(
     plantId: plantId,
@@ -329,7 +332,7 @@ PlantAnalysisResult createCriticalAnalysis({String plantId = 'tomato'}) {
   );
 }
 
-/// Crée une analyse avec état excellent
+/// CrÃ©e une analyse avec Ã©tat excellent
 PlantAnalysisResult createExcellentAnalysis({String plantId = 'tomato'}) {
   return createMockAnalysis(
     plantId: plantId,
@@ -340,7 +343,7 @@ PlantAnalysisResult createExcellentAnalysis({String plantId = 'tomato'}) {
 
 // ==================== RECOMMANDATIONS ====================
 
-/// Crée une recommandation mock
+/// CrÃ©e une recommandation mock
 Recommendation createMockRecommendation({
   String plantId = 'tomato',
   RecommendationType type = RecommendationType.watering,
@@ -355,7 +358,7 @@ Recommendation createMockRecommendation({
     title: 'Recommandation de test',
     description: 'Description de la recommandation',
     status: status,
-    instructions: ['Étape 1', 'Étape 2'],
+    instructions: ['Ã‰tape 1', 'Ã‰tape 2'],
     expectedImpact: 70,
     effortRequired: 50,
     estimatedCost: 20,
@@ -367,7 +370,7 @@ Recommendation createMockRecommendation({
   );
 }
 
-/// Crée une recommandation critique
+/// CrÃ©e une recommandation critique
 Recommendation createCriticalRecommendation({String plantId = 'tomato'}) {
   return createMockRecommendation(
     plantId: plantId,
@@ -378,7 +381,7 @@ Recommendation createCriticalRecommendation({String plantId = 'tomato'}) {
 
 // ==================== RAPPORTS ====================
 
-/// Crée un rapport d'intelligence complet
+/// CrÃ©e un rapport d'intelligence complet
 PlantIntelligenceReport createMockReport({
   String plantId = 'tomato',
   String gardenId = 'garden_1',
@@ -397,9 +400,9 @@ PlantIntelligenceReport createMockReport({
     plantingTiming: const PlantingTimingEvaluation(
       isOptimalTime: true,
       timingScore: 85.0,
-      reason: 'Période de semis idéale',
+      reason: 'PÃ©riode de semis idÃ©ale',
       optimalPlantingDate: null,
-      favorableFactors: ['Température optimale'],
+      favorableFactors: ['TempÃ©rature optimale'],
       unfavorableFactors: [],
       risks: [],
     ),
@@ -411,7 +414,7 @@ PlantIntelligenceReport createMockReport({
   );
 }
 
-/// Crée un rapport avec état critique
+/// CrÃ©e un rapport avec Ã©tat critique
 PlantIntelligenceReport createCriticalReport({
   String plantId = 'tomato',
   String gardenId = 'garden_1',
@@ -425,3 +428,4 @@ PlantIntelligenceReport createCriticalReport({
     ],
   );
 }
+

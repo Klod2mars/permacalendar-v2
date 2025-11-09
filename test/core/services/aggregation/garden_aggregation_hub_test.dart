@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/services/aggregation/garden_aggregation_hub.dart';
 import 'package:permacalendar/core/services/aggregation/modern_data_adapter.dart';
@@ -6,10 +9,10 @@ import 'package:permacalendar/core/models/unified_garden_context.dart';
 import 'package:permacalendar/core/repositories/garden_hive_repository.dart';
 import 'package:permacalendar/features/plant_catalog/data/repositories/plant_hive_repository.dart';
 
-/// Tests d'intégration pour le Garden Aggregation Hub
+/// Tests d'intÃ©gration pour le Garden Aggregation Hub
 /// 
-/// Ces tests vérifient le bon fonctionnement du hub central et
-/// de sa stratégie de résolution avec fallback.
+/// Ces tests vÃ©rifient le bon fonctionnement du hub central et
+/// de sa stratÃ©gie de rÃ©solution avec fallback.
 
 void main() {
   group('GardenAggregationHub - Integration Tests', () {
@@ -37,7 +40,7 @@ void main() {
         expect(context.name, 'Modern Garden');
         expect(context.primarySource, DataSource.modern);
         expect(mockModernAdapter.wasCalledCount, 1);
-        expect(mockLegacyAdapter.wasCalledCount, 0); // Ne devrait pas être appelé
+        expect(mockLegacyAdapter.wasCalledCount, 0); // Ne devrait pas Ãªtre appelÃ©
       });
       
       test('should fallback to Legacy if Modern fails', () async {
@@ -62,7 +65,7 @@ void main() {
         expect(context.name, 'Legacy Garden');
         expect(context.primarySource, DataSource.legacy);
         expect(mockModernAdapter.wasCalledCount, 1);
-        expect(mockLegacyAdapter.wasCalledCount, 1); // Devrait être appelé en fallback
+        expect(mockLegacyAdapter.wasCalledCount, 1); // Devrait Ãªtre appelÃ© en fallback
       });
       
       test('should return default context if all adapters fail', () async {
@@ -124,7 +127,7 @@ void main() {
         await hub.getUnifiedContext('test-garden-1');
         
         // Assert
-        expect(mockModernAdapter.wasCalledCount, 2); // Deux fois car cache invalidé
+        expect(mockModernAdapter.wasCalledCount, 2); // Deux fois car cache invalidÃ©
       });
     });
     
@@ -155,7 +158,7 @@ void main() {
 
 // ==================== MOCK ADAPTERS ====================
 
-/// Mock Modern Adapter qui hérite de ModernDataAdapter
+/// Mock Modern Adapter qui hÃ©rite de ModernDataAdapter
 class MockModernAdapter extends ModernDataAdapter {
   final bool shouldSucceed;
   final String gardenName;
@@ -183,7 +186,7 @@ class MockModernAdapter extends ModernDataAdapter {
     wasCalledCount++;
     
     if (!shouldSucceed) {
-      return null; // Retourner null au lieu de throw pour déclencher le fallback
+      return null; // Retourner null au lieu de throw pour dÃ©clencher le fallback
     }
     
     return UnifiedGardenContext(
@@ -271,7 +274,7 @@ class MockModernAdapter extends ModernDataAdapter {
   }) async => [];
 }
 
-/// Mock Legacy Adapter qui hérite de LegacyDataAdapter
+/// Mock Legacy Adapter qui hÃ©rite de LegacyDataAdapter
 class MockLegacyAdapter extends LegacyDataAdapter {
   final bool shouldSucceed;
   final String gardenName;
@@ -296,7 +299,7 @@ class MockLegacyAdapter extends LegacyDataAdapter {
     wasCalledCount++;
     
     if (!shouldSucceed) {
-      return null; // Retourner null au lieu de throw pour déclencher le fallback
+      return null; // Retourner null au lieu de throw pour dÃ©clencher le fallback
     }
     
     return UnifiedGardenContext(
@@ -383,4 +386,5 @@ class MockLegacyAdapter extends LegacyDataAdapter {
     int limit = 20,
   }) async => [];
 }
+
 

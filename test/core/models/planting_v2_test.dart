@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -8,19 +11,19 @@ import 'package:permacalendar/core/models/planting_v2.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Planting Model Tests (v2) - Instanciation et sérialisation', () {
+  group('Planting Model Tests (v2) - Instanciation et sÃ©rialisation', () {
     late Directory tempDir;
     late Box<Planting> plantingBox;
     const uuid = Uuid();
 
     setUpAll(() async {
-      // Créer un répertoire temporaire pour les tests Hive
+      // CrÃ©er un rÃ©pertoire temporaire pour les tests Hive
       tempDir = await Directory.systemTemp.createTemp('planting_v2_test_');
 
-      // Initialiser Hive avec le répertoire temporaire
+      // Initialiser Hive avec le rÃ©pertoire temporaire
       Hive.init(tempDir.path);
 
-      // Enregistrer l'adaptateur Planting si pas déjà fait
+      // Enregistrer l'adaptateur Planting si pas dÃ©jÃ  fait
       if (!Hive.isAdapterRegistered(14)) {
         Hive.registerAdapter(PlantingAdapter());
       }
@@ -33,70 +36,70 @@ void main() {
     });
 
     tearDown(() async {
-      // Fermer la box après chaque test
+      // Fermer la box aprÃ¨s chaque test
       if (plantingBox.isOpen) {
         await plantingBox.close();
       }
     });
 
     tearDownAll(() async {
-      // Nettoyer complètement après tous les tests
+      // Nettoyer complÃ¨tement aprÃ¨s tous les tests
       await Hive.deleteFromDisk();
       await Hive.close();
 
-      // Supprimer le répertoire temporaire
+      // Supprimer le rÃ©pertoire temporaire
       if (await tempDir.exists()) {
         await tempDir.delete(recursive: true);
       }
     });
 
-    group('Tests de création et instanciation', () {
-      test('Doit créer un Planting avec tous les champs requis', () {
+    group('Tests de crÃ©ation et instanciation', () {
+      test('Doit crÃ©er un Planting avec tous les champs requis', () {
         final planting = Planting(
           id: 'test-planting-1',
           plantId: 'plant-123',
           gardenBedId: 'bed-456',
           plantingDate: DateTime(2024, 3, 15),
-          status: 'Planté',
+          status: 'PlantÃ©',
         );
 
         expect(planting.id, equals('test-planting-1'));
         expect(planting.plantId, equals('plant-123'));
         expect(planting.gardenBedId, equals('bed-456'));
         expect(planting.plantingDate, equals(DateTime(2024, 3, 15)));
-        expect(planting.status, equals('Planté'));
+        expect(planting.status, equals('PlantÃ©'));
       });
 
-      test('Factory create doit générer un ID unique automatiquement', () {
+      test('Factory create doit gÃ©nÃ©rer un ID unique automatiquement', () {
         final planting1 = Planting.create(
           plantId: 'plant-1',
           gardenBedId: 'bed-1',
           plantingDate: DateTime(2024, 4, 1),
-          status: 'Planifié',
+          status: 'PlanifiÃ©',
         );
 
         final planting2 = Planting.create(
           plantId: 'plant-2',
           gardenBedId: 'bed-2',
           plantingDate: DateTime(2024, 4, 2),
-          status: 'Planté',
+          status: 'PlantÃ©',
         );
 
-        // Vérifier que les IDs sont générés et différents
+        // VÃ©rifier que les IDs sont gÃ©nÃ©rÃ©s et diffÃ©rents
         expect(planting1.id, isNotEmpty);
         expect(planting2.id, isNotEmpty);
         expect(planting1.id, isNot(equals(planting2.id)));
 
-        // Vérifier les autres propriétés
+        // VÃ©rifier les autres propriÃ©tÃ©s
         expect(planting1.plantId, equals('plant-1'));
         expect(planting1.gardenBedId, equals('bed-1'));
         expect(planting1.plantingDate, equals(DateTime(2024, 4, 1)));
-        expect(planting1.status, equals('Planifié'));
+        expect(planting1.status, equals('PlanifiÃ©'));
 
         expect(planting2.plantId, equals('plant-2'));
         expect(planting2.gardenBedId, equals('bed-2'));
         expect(planting2.plantingDate, equals(DateTime(2024, 4, 2)));
-        expect(planting2.status, equals('Planté'));
+        expect(planting2.status, equals('PlantÃ©'));
       });
 
       test('Doit accepter tous les statuts disponibles', () {
@@ -114,8 +117,8 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation JSON', () {
-      test('Doit sérialiser correctement avec toJson', () {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation JSON', () {
+      test('Doit sÃ©rialiser correctement avec toJson', () {
         final planting = Planting(
           id: 'test-planting-json-1',
           plantId: 'plant-json-1',
@@ -134,13 +137,13 @@ void main() {
         expect(json['status'], isA<String>());
       });
 
-      test('Doit désérialiser correctement avec fromJson', () {
+      test('Doit dÃ©sÃ©rialiser correctement avec fromJson', () {
         final json = {
           'id': 'test-planting-json-2',
           'plantId': 'plant-json-2',
           'gardenBedId': 'bed-json-2',
           'plantingDate': '2024-06-15T10:00:00.000',
-          'status': 'Prêt à récolter',
+          'status': 'PrÃªt Ã  rÃ©colter',
         };
 
         final planting = Planting.fromJson(json);
@@ -149,7 +152,7 @@ void main() {
         expect(planting.plantId, equals('plant-json-2'));
         expect(planting.gardenBedId, equals('bed-json-2'));
         expect(planting.plantingDate, equals(DateTime(2024, 6, 15, 10, 0)));
-        expect(planting.status, equals('Prêt à récolter'));
+        expect(planting.status, equals('PrÃªt Ã  rÃ©colter'));
       });
 
       test('Doit faire un round-trip JSON (toJson -> fromJson)', () {
@@ -158,7 +161,7 @@ void main() {
           plantId: 'plant-roundtrip',
           gardenBedId: 'bed-roundtrip',
           plantingDate: DateTime(2024, 7, 20, 15, 45),
-          status: 'Récolté',
+          status: 'RÃ©coltÃ©',
         );
 
         final json = original.toJson();
@@ -172,23 +175,23 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation Hive', () {
-      test('Doit sauvegarder et récupérer un Planting dans Hive', () async {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation Hive', () {
+      test('Doit sauvegarder et rÃ©cupÃ©rer un Planting dans Hive', () async {
         final originalPlanting = Planting(
           id: 'test-hive-1',
           plantId: 'plant-hive-1',
           gardenBedId: 'bed-hive-1',
           plantingDate: DateTime(2024, 8, 1),
-          status: 'Planté',
+          status: 'PlantÃ©',
         );
 
         // Sauvegarder dans Hive
         await plantingBox.put(originalPlanting.id, originalPlanting);
 
-        // Récupérer depuis Hive
+        // RÃ©cupÃ©rer depuis Hive
         final retrievedPlanting = plantingBox.get('test-hive-1');
 
-        // Vérifications
+        // VÃ©rifications
         expect(retrievedPlanting, isNotNull);
         expect(retrievedPlanting!.id, equals(originalPlanting.id));
         expect(retrievedPlanting.plantId, equals(originalPlanting.plantId));
@@ -197,10 +200,10 @@ void main() {
         expect(retrievedPlanting.status, equals(originalPlanting.status));
       });
 
-      test('Doit persister plusieurs Plantings et les récupérer correctement', () async {
+      test('Doit persister plusieurs Plantings et les rÃ©cupÃ©rer correctement', () async {
         final plantings = <Planting>[];
 
-        // Créer plusieurs plantations
+        // CrÃ©er plusieurs plantations
         for (int i = 0; i < 5; i++) {
           final planting = Planting(
             id: 'planting-hive-$i',
@@ -214,10 +217,10 @@ void main() {
           await plantingBox.put(planting.id, planting);
         }
 
-        // Vérifier que toutes les plantations sont persistées
+        // VÃ©rifier que toutes les plantations sont persistÃ©es
         expect(plantingBox.length, equals(5));
 
-        // Vérifier chaque plantation individuellement
+        // VÃ©rifier chaque plantation individuellement
         for (int i = 0; i < 5; i++) {
           final retrieved = plantingBox.get('planting-hive-$i');
           expect(retrieved, isNotNull);
@@ -228,32 +231,32 @@ void main() {
       });
     });
 
-    group('Tests de la méthode copyWith', () {
-      test('Doit créer une copie avec des modifications', () {
+    group('Tests de la mÃ©thode copyWith', () {
+      test('Doit crÃ©er une copie avec des modifications', () {
         final original = Planting(
           id: 'test-copy-1',
           plantId: 'plant-original',
           gardenBedId: 'bed-original',
           plantingDate: DateTime(2024, 9, 1),
-          status: 'Planifié',
+          status: 'PlanifiÃ©',
         );
 
         final modified = original.copyWith(
-          status: 'Planté',
+          status: 'PlantÃ©',
           plantingDate: DateTime(2024, 9, 5),
         );
 
-        // Vérifier que les champs modifiés ont changé
-        expect(modified.status, equals('Planté'));
+        // VÃ©rifier que les champs modifiÃ©s ont changÃ©
+        expect(modified.status, equals('PlantÃ©'));
         expect(modified.plantingDate, equals(DateTime(2024, 9, 5)));
 
-        // Vérifier que les autres champs sont inchangés
+        // VÃ©rifier que les autres champs sont inchangÃ©s
         expect(modified.id, equals(original.id));
         expect(modified.plantId, equals(original.plantId));
         expect(modified.gardenBedId, equals(original.gardenBedId));
       });
 
-      test('Doit créer une copie sans modifications si aucun paramètre fourni', () {
+      test('Doit crÃ©er une copie sans modifications si aucun paramÃ¨tre fourni', () {
         final original = Planting(
           id: 'test-copy-2',
           plantId: 'plant-test',
@@ -277,22 +280,22 @@ void main() {
           plantId: 'plant-a',
           gardenBedId: 'bed-a',
           plantingDate: DateTime(2024, 11, 1),
-          status: 'Planifié',
+          status: 'PlanifiÃ©',
         );
 
         final modified = original.copyWith(
-          status: 'Planté',
+          status: 'PlantÃ©',
         );
 
-        expect(modified.status, equals('Planté'));
-        expect(modified.plantId, equals('plant-a')); // Inchangé
-        expect(modified.gardenBedId, equals('bed-a')); // Inchangé
-        expect(modified.plantingDate, equals(DateTime(2024, 11, 1))); // Inchangé
+        expect(modified.status, equals('PlantÃ©'));
+        expect(modified.plantId, equals('plant-a')); // InchangÃ©
+        expect(modified.gardenBedId, equals('bed-a')); // InchangÃ©
+        expect(modified.plantingDate, equals(DateTime(2024, 11, 1))); // InchangÃ©
       });
     });
 
-    group('Tests des méthodes utilitaires', () {
-      test('Doit implémenter toString correctement', () {
+    group('Tests des mÃ©thodes utilitaires', () {
+      test('Doit implÃ©menter toString correctement', () {
         final planting = Planting(
           id: 'test-toString',
           plantId: 'plant-tomato',
@@ -309,38 +312,38 @@ void main() {
         expect(string, contains('En croissance'));
       });
 
-      test('Doit implémenter l\'égalité basée sur l\'ID', () {
+      test('Doit implÃ©menter l\'Ã©galitÃ© basÃ©e sur l\'ID', () {
         final planting1 = Planting(
           id: 'same-id',
           plantId: 'plant-1',
           gardenBedId: 'bed-1',
           plantingDate: DateTime(2024, 1, 1),
-          status: 'Planifié',
+          status: 'PlanifiÃ©',
         );
 
         final planting2 = Planting(
           id: 'same-id',
-          plantId: 'plant-2', // Plant différent
-          gardenBedId: 'bed-2', // Bed différent
-          plantingDate: DateTime(2024, 2, 1), // Date différente
-          status: 'Planté', // Status différent
+          plantId: 'plant-2', // Plant diffÃ©rent
+          gardenBedId: 'bed-2', // Bed diffÃ©rent
+          plantingDate: DateTime(2024, 2, 1), // Date diffÃ©rente
+          status: 'PlantÃ©', // Status diffÃ©rent
         );
 
         final planting3 = Planting(
           id: 'different-id',
-          plantId: 'plant-1', // Même plant
-          gardenBedId: 'bed-1', // Même bed
-          plantingDate: DateTime(2024, 1, 1), // Même date
-          status: 'Planifié', // Même status
+          plantId: 'plant-1', // MÃªme plant
+          gardenBedId: 'bed-1', // MÃªme bed
+          plantingDate: DateTime(2024, 1, 1), // MÃªme date
+          status: 'PlanifiÃ©', // MÃªme status
         );
 
-        expect(planting1, equals(planting2)); // Même ID
-        expect(planting1, isNot(equals(planting3))); // ID différent
+        expect(planting1, equals(planting2)); // MÃªme ID
+        expect(planting1, isNot(equals(planting3))); // ID diffÃ©rent
         expect(planting1.hashCode, equals(planting2.hashCode));
         expect(planting1.hashCode, isNot(equals(planting3.hashCode)));
       });
 
-      test('Doit gérer correctement les dates DateTime', () {
+      test('Doit gÃ©rer correctement les dates DateTime', () {
         final date1 = DateTime(2024, 1, 15, 10, 30, 45);
         final date2 = DateTime(2024, 1, 15, 10, 30, 45);
 
@@ -349,7 +352,7 @@ void main() {
           plantId: 'plant-1',
           gardenBedId: 'bed-1',
           plantingDate: date1,
-          status: 'Planté',
+          status: 'PlantÃ©',
         );
 
         final planting2 = Planting(
@@ -357,7 +360,7 @@ void main() {
           plantId: 'plant-2',
           gardenBedId: 'bed-2',
           plantingDate: date2,
-          status: 'Planté',
+          status: 'PlantÃ©',
         );
 
         expect(planting1.plantingDate, equals(planting2.plantingDate));
@@ -366,14 +369,15 @@ void main() {
       test('Doit avoir une liste de statuts disponibles', () {
         expect(Planting.availableStatuses, isNotEmpty);
         expect(Planting.availableStatuses.length, greaterThan(0));
-        expect(Planting.availableStatuses, contains('Planifié'));
-        expect(Planting.availableStatuses, contains('Planté'));
+        expect(Planting.availableStatuses, contains('PlanifiÃ©'));
+        expect(Planting.availableStatuses, contains('PlantÃ©'));
         expect(Planting.availableStatuses, contains('En croissance'));
-        expect(Planting.availableStatuses, contains('Prêt à récolter'));
-        expect(Planting.availableStatuses, contains('Récolté'));
-        expect(Planting.availableStatuses, contains('Échoué'));
+        expect(Planting.availableStatuses, contains('PrÃªt Ã  rÃ©colter'));
+        expect(Planting.availableStatuses, contains('RÃ©coltÃ©'));
+        expect(Planting.availableStatuses, contains('Ã‰chouÃ©'));
       });
     });
   });
 }
+
 

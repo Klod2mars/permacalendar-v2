@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_test/hive_test.dart';
@@ -93,7 +96,7 @@ void main() {
       // Arrange
       final migration = GardenDataMigration();
 
-      // Créer une box legacy avec des données
+      // CrÃ©er une box legacy avec des donnÃ©es
       final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
       final legacyGarden = legacy.Garden(
         id: 'test-garden-1',
@@ -117,7 +120,7 @@ void main() {
       expect(result.migratedGardens, hasLength(1));
       expect(result.migratedGardens.first.name, 'Test Garden');
 
-      // Vérifier que la box cible n'a pas été créée
+      // VÃ©rifier que la box cible n'a pas Ã©tÃ© crÃ©Ã©e
       expect(Hive.isBoxOpen('gardens_freezed'), false);
     });
 
@@ -127,7 +130,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer une box legacy avec des données
+      // CrÃ©er une box legacy avec des donnÃ©es
       final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
       await legacyBox.put(
         'garden-1',
@@ -144,7 +147,7 @@ void main() {
         legacy.Garden(
           id: 'garden-2',
           name: 'Jardin Legacy 2',
-          description: 'Deuxième jardin',
+          description: 'DeuxiÃ¨me jardin',
           totalAreaInSquareMeters: 200.0,
           location: 'Lyon',
         ),
@@ -163,7 +166,7 @@ void main() {
       expect(result.migratedCount, 2);
       expect(result.integrityVerified, true);
 
-      // Vérifier que les données sont dans la box cible
+      // VÃ©rifier que les donnÃ©es sont dans la box cible
       final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
       expect(targetBox.length, 2);
       expect(targetBox.get('garden-1')?.name, 'Jardin Legacy 1');
@@ -176,7 +179,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer une box v2 avec des données
+      // CrÃ©er une box v2 avec des donnÃ©es
       final v2Box = await Hive.openBox<v2.Garden>('gardens_v2');
       await v2Box.put(
         'garden-v2-1',
@@ -203,7 +206,7 @@ void main() {
       expect(result.migratedCount, 1);
       expect(result.integrityVerified, true);
 
-      // Vérifier les données
+      // VÃ©rifier les donnÃ©es
       final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
       final migrated = targetBox.get('garden-v2-1');
       expect(migrated?.name, 'Jardin V2');
@@ -219,7 +222,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer une box hive avec des données
+      // CrÃ©er une box hive avec des donnÃ©es
       final hiveBox = await Hive.openBox<GardenHive>('gardens_hive');
       await hiveBox.put(
         'garden-hive-1',
@@ -260,7 +263,7 @@ void main() {
       expect(result.migratedCount, 1);
       expect(result.integrityVerified, true);
 
-      // Vérifier les données
+      // VÃ©rifier les donnÃ©es
       final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
       final migrated = targetBox.get('garden-hive-1');
       expect(migrated?.name, 'Jardin Hive');
@@ -277,7 +280,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer des données dans les 3 sources
+      // CrÃ©er des donnÃ©es dans les 3 sources
       final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
       await legacyBox.put(
         'legacy-1',
@@ -327,7 +330,7 @@ void main() {
       expect(result.migratedCount, 3);
       expect(result.integrityVerified, true);
 
-      // Vérifier la box cible
+      // VÃ©rifier la box cible
       final targetBox = Hive.box<GardenFreezed>('gardens_freezed');
       expect(targetBox.length, 3);
       expect(targetBox.get('legacy-1')?.name, 'Legacy');
@@ -341,7 +344,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer des boxes vides
+      // CrÃ©er des boxes vides
       await Hive.openBox<legacy.Garden>('gardens');
       await Hive.openBox<v2.Garden>('gardens_v2');
       await Hive.openBox<GardenHive>('gardens_hive');
@@ -365,7 +368,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Ne pas créer les boxes sources
+      // Ne pas crÃ©er les boxes sources
 
       // Act
       final result = await migration.migrateAllGardens(
@@ -407,7 +410,7 @@ void main() {
       // Act & Assert (ne devrait pas crasher)
       expect(() => migration.printMigrationStats(), returnsNormally);
 
-      // Vérifier que lastResult est disponible
+      // VÃ©rifier que lastResult est disponible
       expect(migration.lastResult, isNotNull);
       expect(migration.lastResult?.success, true);
       expect(migration.lastResult?.migratedCount, 1);
@@ -465,7 +468,7 @@ void main() {
       // Arrange
       final migration = GardenDataMigration();
 
-      // Créer une box legacy avec des données invalides simulées
+      // CrÃ©er une box legacy avec des donnÃ©es invalides simulÃ©es
       // (Hive peut lancer des exceptions lors de l'ouverture de boxes corrompues)
 
       // Act
@@ -476,7 +479,7 @@ void main() {
       );
 
       // Assert
-      // La migration devrait réussir même avec des boxes manquantes
+      // La migration devrait rÃ©ussir mÃªme avec des boxes manquantes
       expect(result.success, true);
     });
 
@@ -486,7 +489,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer uniquement la box legacy
+      // CrÃ©er uniquement la box legacy
       final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
       await legacyBox.put(
         'legacy-only',
@@ -523,7 +526,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer uniquement la box v2
+      // CrÃ©er uniquement la box v2
       final v2Box = await Hive.openBox<v2.Garden>('gardens_v2');
       await v2Box.put(
         'v2-only',
@@ -562,7 +565,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer uniquement la box hive
+      // CrÃ©er uniquement la box hive
       final hiveBox = await Hive.openBox<GardenHive>('gardens_hive');
       await hiveBox.put(
         'hive-only',
@@ -596,7 +599,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer uniquement legacy et v2, pas hive
+      // CrÃ©er uniquement legacy et v2, pas hive
       final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
       await legacyBox.put(
         'legacy-1',
@@ -622,7 +625,7 @@ void main() {
         ),
       );
 
-      // Ne pas créer gardens_hive
+      // Ne pas crÃ©er gardens_hive
 
       // Act
       final result = await migration.migrateAllGardens(
@@ -651,7 +654,7 @@ void main() {
 
       final migration = GardenDataMigration();
 
-      // Créer une box legacy (ne pas l'ouvrir manuellement)
+      // CrÃ©er une box legacy (ne pas l'ouvrir manuellement)
       // La migration l'ouvrira et la fermera
       final legacyBox = await Hive.openBox<legacy.Garden>('gardens');
       await legacyBox.put(
@@ -677,9 +680,9 @@ void main() {
       expect(result.success, true);
       expect(result.legacyCount, 1);
 
-      // La box devrait être fermée après migration (si elle était ouverte par la migration)
-      // Note: Si la box était déjà ouverte ailleurs, elle reste ouverte
-      // Ce test vérifie que la migration gère correctement les boxes fermées
+      // La box devrait Ãªtre fermÃ©e aprÃ¨s migration (si elle Ã©tait ouverte par la migration)
+      // Note: Si la box Ã©tait dÃ©jÃ  ouverte ailleurs, elle reste ouverte
+      // Ce test vÃ©rifie que la migration gÃ¨re correctement les boxes fermÃ©es
     });
   });
 
@@ -753,3 +756,4 @@ void main() {
     });
   });
 }
+

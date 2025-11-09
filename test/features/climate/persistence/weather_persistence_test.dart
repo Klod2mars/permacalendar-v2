@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'dart:io';
@@ -9,7 +12,7 @@ void main() {
   late Directory testDir;
 
   setUpAll(() async {
-    // Créer un répertoire temporaire pour les tests
+    // CrÃ©er un rÃ©pertoire temporaire pour les tests
     testDir = await Directory.systemTemp.createTemp('hive_test_commune_');
     Hive.init(testDir.path);
   });
@@ -23,7 +26,7 @@ void main() {
   });
 
   test('commune persistence works across sessions', () async {
-    // Test avec coordonnées
+    // Test avec coordonnÃ©es
     await CommuneStorage.saveCommune('Paris', 48.8566, 2.3522);
     final (commune, lat, lon) = await CommuneStorage.loadCommune();
     expect(commune, 'Paris');
@@ -39,3 +42,4 @@ void main() {
     expect(clearedLon, isNull);
   });
 }
+

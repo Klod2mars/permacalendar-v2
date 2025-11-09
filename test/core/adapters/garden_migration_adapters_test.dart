@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/adapters/garden_migration_adapters.dart';
 import 'package:permacalendar/core/models/garden.dart' as legacy;
@@ -265,7 +268,7 @@ void main() {
         ),
         legacy.Garden(
           name: 'Jardin 2',
-          description: 'Deuxième jardin',
+          description: 'DeuxiÃ¨me jardin',
           totalAreaInSquareMeters: 200.0,
           location: 'Lyon',
         ),
@@ -555,3 +558,4 @@ void main() {
     });
   });
 }
+

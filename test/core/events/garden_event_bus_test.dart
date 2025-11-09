@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/events/garden_event_bus.dart';
 import 'package:permacalendar/core/events/garden_events.dart';
@@ -228,3 +231,4 @@ void main() {
     });
   });
 }
+

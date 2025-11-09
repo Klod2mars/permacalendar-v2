@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/climate/presentation/providers/soil_temp_provider.dart';
@@ -121,3 +124,4 @@ void main() {
     });
   });
 }
+

@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,7 +41,7 @@ void main() {
           gardenBedId: 'bed-2',
           plantedDate: DateTime(2025, 9, 1),
           quantity: 20,
-          status: 'Récolté',
+          status: 'RÃ©coltÃ©',
           expectedHarvestStartDate: DateTime(2025, 10, 15),
           actualHarvestDate: DateTime(2025, 10, 16),
         ),
@@ -106,7 +109,7 @@ void main() {
 
       // Check for legend items
       expect(find.text('Plantation'), findsOneWidget);
-      expect(find.text('Récolte'), findsOneWidget);
+      expect(find.text('RÃ©colte'), findsOneWidget);
       expect(find.text('En retard'), findsOneWidget);
 
       // Check for legend icons
@@ -199,4 +202,5 @@ void main() {
     });
   });
 }
+
 

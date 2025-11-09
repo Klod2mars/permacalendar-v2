@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:permacalendar/core/models/plant.dart' as plant_model;
 
 /// Helper function to create simple Plant objects for testing
@@ -41,4 +44,5 @@ plant_model.Plant createTestPlant({
     isActive: true,
   );
 }
+
 

@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,20 +8,20 @@ import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_
 import 'package:permacalendar/features/plant_intelligence/presentation/providers/plant_evolution_providers.dart';
 import 'package:permacalendar/features/plant_intelligence/presentation/widgets/evolution/plant_evolution_timeline.dart';
 
-/// 🧪 CURSOR PROMPT A8 - PlantEvolutionTimeline Widget Tests
+/// ðŸ§ª CURSOR PROMPT A8 - PlantEvolutionTimeline Widget Tests
 /// 
 /// Tests pour le widget PlantEvolutionTimeline
 /// 
-/// **Scénarios testés :**
-/// - État vide (pas d'évolutions)
-/// - État de chargement
-/// - État d'erreur
-/// - Affichage d'évolutions multiples
+/// **ScÃ©narios testÃ©s :**
+/// - Ã‰tat vide (pas d'Ã©volutions)
+/// - Ã‰tat de chargement
+/// - Ã‰tat d'erreur
+/// - Affichage d'Ã©volutions multiples
 /// - Filtres temporels
 void main() {
   group('PlantEvolutionTimeline Widget Tests', () {
     
-    // Helper pour créer un PlantEvolutionReport de test
+    // Helper pour crÃ©er un PlantEvolutionReport de test
     PlantEvolutionReport createTestEvolution({
       required String plantId,
       required DateTime previousDate,
@@ -43,7 +46,7 @@ void main() {
       );
     }
 
-    testWidgets('Affiche l\'état vide quand aucune évolution n\'existe', (tester) async {
+    testWidgets('Affiche l\'Ã©tat vide quand aucune Ã©volution n\'existe', (tester) async {
       // Arrange
       final container = ProviderContainer(
         overrides: [
@@ -67,12 +70,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('Aucune évolution enregistrée'), findsOneWidget);
+      expect(find.text('Aucune Ã©volution enregistrÃ©e'), findsOneWidget);
       expect(find.byIcon(Icons.timeline), findsOneWidget);
-      expect(find.text('Les évolutions de santé apparaîtront ici après votre première analyse d\'intelligence végétale.'), findsOneWidget);
+      expect(find.text('Les Ã©volutions de santÃ© apparaÃ®tront ici aprÃ¨s votre premiÃ¨re analyse d\'intelligence vÃ©gÃ©tale.'), findsOneWidget);
     });
 
-    testWidgets('Affiche l\'indicateur de chargement pendant la récupération', (tester) async {
+    testWidgets('Affiche l\'indicateur de chargement pendant la rÃ©cupÃ©ration', (tester) async {
       // Arrange
       final container = ProviderContainer(
         overrides: [
@@ -105,7 +108,7 @@ void main() {
       expect(find.text('Chargement de l\'historique...'), findsOneWidget);
     });
 
-    testWidgets('Affiche l\'état d\'erreur en cas d\'échec', (tester) async {
+    testWidgets('Affiche l\'Ã©tat d\'erreur en cas d\'Ã©chec', (tester) async {
       // Arrange
       const errorMessage = 'Erreur de connexion';
       final container = ProviderContainer(
@@ -132,10 +135,10 @@ void main() {
       // Assert
       expect(find.text('Erreur de chargement'), findsOneWidget);
       expect(find.byIcon(Icons.error_outline), findsOneWidget);
-      expect(find.textContaining('Impossible de récupérer l\'historique'), findsOneWidget);
+      expect(find.textContaining('Impossible de rÃ©cupÃ©rer l\'historique'), findsOneWidget);
     });
 
-    testWidgets('Affiche correctement une liste d\'évolutions', (tester) async {
+    testWidgets('Affiche correctement une liste d\'Ã©volutions', (tester) async {
       // Arrange
       final now = DateTime.now();
       final evolutions = [
@@ -180,12 +183,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Assert - vérifie que les évolutions sont affichées
+      // Assert - vÃ©rifie que les Ã©volutions sont affichÃ©es
       expect(find.byType(Card), findsAtLeastNWidgets(2));
       expect(find.byIcon(Icons.trending_up), findsAtLeastNWidgets(2));
     });
 
-    testWidgets('Affiche les icônes de tendance correctes', (tester) async {
+    testWidgets('Affiche les icÃ´nes de tendance correctes', (tester) async {
       // Arrange
       final now = DateTime.now();
       final evolutions = [
@@ -220,9 +223,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Assert - vérifie l'icône de tendance à la hausse
+      // Assert - vÃ©rifie l'icÃ´ne de tendance Ã  la hausse
       expect(find.byIcon(Icons.trending_up), findsWidgets);
-      expect(find.text('📈'), findsOneWidget);
+      expect(find.text('ðŸ“ˆ'), findsOneWidget);
     });
 
     testWidgets('Affiche les filtres temporels quand showTimeFilter est true', (tester) async {
@@ -258,7 +261,7 @@ void main() {
       expect(find.text('1 an'), findsOneWidget);
     });
 
-    testWidgets('Le filtre temporel change l\'état sélectionné', (tester) async {
+    testWidgets('Le filtre temporel change l\'Ã©tat sÃ©lectionnÃ©', (tester) async {
       // Arrange
       final container = ProviderContainer(
         overrides: [
@@ -288,12 +291,12 @@ void main() {
       await tester.tap(find.text('30 jours'));
       await tester.pumpAndSettle();
 
-      // Assert - le provider devrait être mis à jour
+      // Assert - le provider devrait Ãªtre mis Ã  jour
       final selectedPeriod = container.read(selectedTimePeriodProvider);
       expect(selectedPeriod, 30);
     });
 
-    testWidgets('Affiche les conditions améliorées et dégradées', (tester) async {
+    testWidgets('Affiche les conditions amÃ©liorÃ©es et dÃ©gradÃ©es', (tester) async {
       // Arrange
       final now = DateTime.now();
       final evolutions = [
@@ -331,11 +334,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('Conditions améliorées'), findsOneWidget);
-      expect(find.text('Conditions dégradées'), findsOneWidget);
+      expect(find.text('Conditions amÃ©liorÃ©es'), findsOneWidget);
+      expect(find.text('Conditions dÃ©gradÃ©es'), findsOneWidget);
       
-      // Vérifie que les chips de conditions sont affichés
-      expect(find.byType(Chip), findsAtLeastNWidgets(3)); // 2 améliorées + 1 dégradée
+      // VÃ©rifie que les chips de conditions sont affichÃ©s
+      expect(find.byType(Chip), findsAtLeastNWidgets(3)); // 2 amÃ©liorÃ©es + 1 dÃ©gradÃ©e
     });
 
     testWidgets('Cache les filtres temporels quand showTimeFilter est false', (tester) async {
@@ -410,4 +413,5 @@ void main() {
     });
   });
 }
+
 

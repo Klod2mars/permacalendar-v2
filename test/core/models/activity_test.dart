@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -8,19 +11,19 @@ import 'package:permacalendar/core/models/activity.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   
-  group('Activity Model Tests - Sérialisation et validation complète', () {
+  group('Activity Model Tests - SÃ©rialisation et validation complÃ¨te', () {
     late Directory tempDir;
     late Box<Activity> activityBox;
     const uuid = Uuid();
 
     setUpAll(() async {
-      // Créer un répertoire temporaire pour les tests Hive
+      // CrÃ©er un rÃ©pertoire temporaire pour les tests Hive
       tempDir = await Directory.systemTemp.createTemp('activity_test_');
       
-      // Initialiser Hive avec le répertoire temporaire
+      // Initialiser Hive avec le rÃ©pertoire temporaire
       Hive.init(tempDir.path);
       
-      // Enregistrer les adaptateurs Activity si pas déjà fait
+      // Enregistrer les adaptateurs Activity si pas dÃ©jÃ  fait
       if (!Hive.isAdapterRegistered(16)) {
         Hive.registerAdapter(ActivityAdapter());
       }
@@ -39,31 +42,31 @@ void main() {
     });
 
     tearDown(() async {
-      // Fermer la box après chaque test
+      // Fermer la box aprÃ¨s chaque test
       if (activityBox.isOpen) {
         await activityBox.close();
       }
     });
 
     tearDownAll(() async {
-      // Nettoyer complètement après tous les tests
+      // Nettoyer complÃ¨tement aprÃ¨s tous les tests
       await Hive.deleteFromDisk();
       await Hive.close();
       
-      // Supprimer le répertoire temporaire
+      // Supprimer le rÃ©pertoire temporaire
       if (await tempDir.exists()) {
         await tempDir.delete(recursive: true);
       }
     });
 
-    group('Tests de création et validation', () {
-      test('Doit créer une activité avec tous les champs requis', () {
+    group('Tests de crÃ©ation et validation', () {
+      test('Doit crÃ©er une activitÃ© avec tous les champs requis', () {
         final now = DateTime.now();
         final activity = Activity(
           id: uuid.v4(),
           type: ActivityType.gardenCreated,
-          title: 'Nouveau jardin créé',
-          description: 'Un nouveau jardin a été créé avec succès',
+          title: 'Nouveau jardin crÃ©Ã©',
+          description: 'Un nouveau jardin a Ã©tÃ© crÃ©Ã© avec succÃ¨s',
           entityId: 'garden-123',
           entityType: EntityType.garden,
           timestamp: now,
@@ -75,8 +78,8 @@ void main() {
 
         expect(activity.id, isNotEmpty);
         expect(activity.type, equals(ActivityType.gardenCreated));
-        expect(activity.title, equals('Nouveau jardin créé'));
-        expect(activity.description, equals('Un nouveau jardin a été créé avec succès'));
+        expect(activity.title, equals('Nouveau jardin crÃ©Ã©'));
+        expect(activity.description, equals('Un nouveau jardin a Ã©tÃ© crÃ©Ã© avec succÃ¨s'));
         expect(activity.entityId, equals('garden-123'));
         expect(activity.entityType, equals(EntityType.garden));
         expect(activity.timestamp, equals(now));
@@ -87,13 +90,13 @@ void main() {
         expect(activity.isActive, isTrue);
       });
 
-      test('Doit créer une activité avec des champs optionnels null', () {
+      test('Doit crÃ©er une activitÃ© avec des champs optionnels null', () {
         final now = DateTime.now();
         final activity = Activity(
           id: uuid.v4(),
           type: ActivityType.weatherDataFetched,
-          title: 'Données météo récupérées',
-          description: 'Mise à jour des données météorologiques',
+          title: 'DonnÃ©es mÃ©tÃ©o rÃ©cupÃ©rÃ©es',
+          description: 'Mise Ã  jour des donnÃ©es mÃ©tÃ©orologiques',
           entityId: null,
           entityType: null,
           timestamp: now,
@@ -108,7 +111,7 @@ void main() {
         expect(activity.metadata, isEmpty);
       });
 
-      test('Doit valider les types d\'activité disponibles', () {
+      test('Doit valider les types d\'activitÃ© disponibles', () {
         final validTypes = [
           ActivityType.gardenCreated,
           ActivityType.gardenUpdated,
@@ -146,7 +149,7 @@ void main() {
         }
       });
 
-      test('Doit valider les types d\'entité disponibles', () {
+      test('Doit valider les types d\'entitÃ© disponibles', () {
         final validEntityTypes = [
           EntityType.garden,
           EntityType.gardenBed,
@@ -174,8 +177,8 @@ void main() {
       });
     });
 
-    group('Tests de sérialisation/désérialisation Hive', () {
-      test('Doit sauvegarder et récupérer une activité complète dans Hive', () async {
+    group('Tests de sÃ©rialisation/dÃ©sÃ©rialisation Hive', () {
+      test('Doit sauvegarder et rÃ©cupÃ©rer une activitÃ© complÃ¨te dans Hive', () async {
         final now = DateTime.now();
         final originalActivity = Activity(
           id: 'test-activity-1',
@@ -188,7 +191,7 @@ void main() {
           metadata: {
             'plantName': 'Tomate cerise',
             'quantity': 5,
-            'location': 'Carré A1',
+            'location': 'CarrÃ© A1',
             'expectedHarvest': '2024-07-15',
           },
           createdAt: now,
@@ -199,10 +202,10 @@ void main() {
         // Sauvegarder dans Hive
         await activityBox.put(originalActivity.id, originalActivity);
 
-        // Récupérer depuis Hive
+        // RÃ©cupÃ©rer depuis Hive
         final retrievedActivity = activityBox.get('test-activity-1');
 
-        // Vérifications
+        // VÃ©rifications
         expect(retrievedActivity, isNotNull);
         expect(retrievedActivity!.id, equals(originalActivity.id));
         expect(retrievedActivity.type, equals(originalActivity.type));
@@ -217,7 +220,7 @@ void main() {
         expect(retrievedActivity.isActive, equals(originalActivity.isActive));
       });
 
-      test('Doit gérer la sérialisation avec des métadonnées complexes', () async {
+      test('Doit gÃ©rer la sÃ©rialisation avec des mÃ©tadonnÃ©es complexes', () async {
         final complexMetadata = {
           'stringValue': 'test string',
           'intValue': 42,
@@ -235,7 +238,7 @@ void main() {
           id: 'complex-metadata-test',
           type: ActivityType.careActionAdded,
           title: 'Action de soin complexe',
-          description: 'Test avec métadonnées complexes',
+          description: 'Test avec mÃ©tadonnÃ©es complexes',
           timestamp: DateTime.now(),
           metadata: complexMetadata,
           createdAt: DateTime.now(),
@@ -243,11 +246,11 @@ void main() {
           isActive: true,
         );
 
-        // Sauvegarder et récupérer
+        // Sauvegarder et rÃ©cupÃ©rer
         await activityBox.put(activity.id, activity);
         final retrieved = activityBox.get(activity.id);
 
-        // Vérifications des métadonnées complexes
+        // VÃ©rifications des mÃ©tadonnÃ©es complexes
         expect(retrieved!.metadata['stringValue'], equals('test string'));
         expect(retrieved.metadata['intValue'], equals(42));
         expect(retrieved.metadata['doubleValue'], equals(3.14));
@@ -258,16 +261,16 @@ void main() {
         expect(retrieved.metadata['nullValue'], isNull);
       });
 
-      test('Doit persister plusieurs activités et les récupérer correctement', () async {
+      test('Doit persister plusieurs activitÃ©s et les rÃ©cupÃ©rer correctement', () async {
         final activities = <Activity>[];
         
-        // Créer plusieurs activités de types différents
+        // CrÃ©er plusieurs activitÃ©s de types diffÃ©rents
         for (int i = 0; i < 5; i++) {
           final activity = Activity(
             id: 'activity-$i',
             type: ActivityType.values[i % ActivityType.values.length],
-            title: 'Activité $i',
-            description: 'Description de l\'activité $i',
+            title: 'ActivitÃ© $i',
+            description: 'Description de l\'activitÃ© $i',
             entityId: 'entity-$i',
             entityType: EntityType.values[i % EntityType.values.length],
             timestamp: DateTime.now().subtract(Duration(hours: i)),
@@ -281,14 +284,14 @@ void main() {
           await activityBox.put(activity.id, activity);
         }
 
-        // Vérifier que toutes les activités sont persistées
+        // VÃ©rifier que toutes les activitÃ©s sont persistÃ©es
         expect(activityBox.length, equals(5));
 
-        // Vérifier chaque activité individuellement
+        // VÃ©rifier chaque activitÃ© individuellement
         for (int i = 0; i < 5; i++) {
           final retrieved = activityBox.get('activity-$i');
           expect(retrieved, isNotNull);
-          expect(retrieved!.title, equals('Activité $i'));
+          expect(retrieved!.title, equals('ActivitÃ© $i'));
           expect(retrieved.metadata['index'], equals(i));
           expect(retrieved.isActive, equals(i % 2 == 0));
         }
@@ -304,7 +307,7 @@ void main() {
         );
 
         expect(activity.type, equals(ActivityType.gardenCreated));
-        expect(activity.title, equals('Jardin créé'));
+        expect(activity.title, equals('Jardin crÃ©Ã©'));
         expect(activity.description, contains('Mon Jardin'));
         expect(activity.entityId, equals('garden-123'));
         expect(activity.entityType, equals(EntityType.garden));
@@ -322,7 +325,7 @@ void main() {
         );
 
         expect(activity.type, equals(ActivityType.plantingCreated));
-        expect(activity.title, equals('Plantation créée'));
+        expect(activity.title, equals('Plantation crÃ©Ã©e'));
         expect(activity.description, contains('5 Tomate'));
         expect(activity.description, contains('Parcelle A'));
         expect(activity.entityId, equals('planting-123'));
@@ -342,7 +345,7 @@ void main() {
         );
 
         expect(activity.type, equals(ActivityType.plantingHarvested));
-        expect(activity.title, equals('Récolte effectuée'));
+        expect(activity.title, equals('RÃ©colte effectuÃ©e'));
         expect(activity.description, contains('10 Tomate'));
         expect(activity.entityId, equals('planting-123'));
         expect(activity.entityType, equals(EntityType.planting));
@@ -361,7 +364,7 @@ void main() {
         );
 
         expect(activity.type, equals(ActivityType.germinationConfirmed));
-        expect(activity.title, equals('Germination confirmée'));
+        expect(activity.title, equals('Germination confirmÃ©e'));
         expect(activity.description, contains('Radis'));
         expect(activity.description, contains('15/3/2024'));
         expect(activity.entityId, equals('planting-123'));
@@ -385,7 +388,7 @@ void main() {
         );
 
         expect(activity.type, equals(ActivityType.weatherDataFetched));
-        expect(activity.title, equals('Données météo récupérées'));
+        expect(activity.title, equals('DonnÃ©es mÃ©tÃ©o rÃ©cupÃ©rÃ©es'));
         expect(activity.description, contains('Paris'));
         expect(activity.entityId, isNull);
         expect(activity.entityType, isNull);
@@ -395,8 +398,8 @@ void main() {
       });
     });
 
-    group('Tests des méthodes utilitaires', () {
-      test('Doit implémenter copyWith correctement', () {
+    group('Tests des mÃ©thodes utilitaires', () {
+      test('Doit implÃ©menter copyWith correctement', () {
         final originalActivity = Activity(
           id: 'original-id',
           type: ActivityType.gardenCreated,
@@ -412,19 +415,19 @@ void main() {
         );
 
         final updatedActivity = originalActivity.copyWith(
-          title: 'Titre modifié',
-          description: 'Description modifiée',
+          title: 'Titre modifiÃ©',
+          description: 'Description modifiÃ©e',
           isActive: false,
           updatedAt: DateTime(2024, 1, 2),
         );
 
-        // Vérifier que les champs modifiés ont changé
-        expect(updatedActivity.title, equals('Titre modifié'));
-        expect(updatedActivity.description, equals('Description modifiée'));
+        // VÃ©rifier que les champs modifiÃ©s ont changÃ©
+        expect(updatedActivity.title, equals('Titre modifiÃ©'));
+        expect(updatedActivity.description, equals('Description modifiÃ©e'));
         expect(updatedActivity.isActive, isFalse);
         expect(updatedActivity.updatedAt, equals(DateTime(2024, 1, 2)));
 
-        // Vérifier que les autres champs sont inchangés
+        // VÃ©rifier que les autres champs sont inchangÃ©s
         expect(updatedActivity.id, equals(originalActivity.id));
         expect(updatedActivity.type, equals(originalActivity.type));
         expect(updatedActivity.entityId, equals(originalActivity.entityId));
@@ -434,7 +437,7 @@ void main() {
         expect(updatedActivity.createdAt, equals(originalActivity.createdAt));
       });
 
-      test('Doit sérialiser correctement avec toJson', () {
+      test('Doit sÃ©rialiser correctement avec toJson', () {
         final activity = Activity(
           id: 'test-id',
           type: ActivityType.gardenCreated,
@@ -461,7 +464,7 @@ void main() {
         expect(json['isActive'], isTrue);
       });
 
-      test('Doit désérialiser correctement avec fromJson', () {
+      test('Doit dÃ©sÃ©rialiser correctement avec fromJson', () {
         final json = {
           'id': 'test-id',
           'type': 'gardenCreated',
@@ -488,7 +491,7 @@ void main() {
         expect(activity.isActive, isTrue);
       });
 
-      test('Doit implémenter toString correctement', () {
+      test('Doit implÃ©menter toString correctement', () {
         final activity = Activity(
           id: 'test-id',
           type: ActivityType.gardenCreated,
@@ -508,7 +511,7 @@ void main() {
         expect(string, contains('title: Test Activity'));
       });
 
-      test('Doit implémenter l\'égalité correctement', () {
+      test('Doit implÃ©menter l\'Ã©galitÃ© correctement', () {
         final activity1 = Activity(
           id: 'same-id',
           type: ActivityType.gardenCreated,
@@ -545,8 +548,8 @@ void main() {
           isActive: true,
         );
 
-        expect(activity1, equals(activity2)); // Même ID
-        expect(activity1, isNot(equals(activity3))); // ID différent
+        expect(activity1, equals(activity2)); // MÃªme ID
+        expect(activity1, isNot(equals(activity3))); // ID diffÃ©rent
         expect(activity1.hashCode, equals(activity2.hashCode));
         expect(activity1.hashCode, isNot(equals(activity3.hashCode)));
       });
@@ -626,3 +629,4 @@ void main() {
     });
   });
 }
+

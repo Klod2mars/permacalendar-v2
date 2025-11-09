@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -56,7 +59,7 @@ void main() {
 
     expect(stored, isNotNull);
     final metrics = stored!['metrics'] as Map<dynamic, dynamic>;
-    expect((metrics['temp'] as Map)['unit'], equals('°C'));
+    expect((metrics['temp'] as Map)['unit'], equals('Â°C'));
     expect((metrics['light'] as Map)['value'], equals(1200));
     expect(stored['isActive'], isTrue);
   });
@@ -136,7 +139,7 @@ void main() {
         'temp': <String, dynamic>{
           'sensorId': 'temp',
           'value': 22,
-          'unit': '°C',
+          'unit': 'Â°C',
           'updatedAt': '2024-03-01T00:00:00Z',
         },
       },
@@ -157,3 +160,4 @@ void main() {
     expect((metrics['temp'] as Map)['value'], equals(22));
   });
 }
+

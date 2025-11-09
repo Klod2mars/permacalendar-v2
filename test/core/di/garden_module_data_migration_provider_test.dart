@@ -1,16 +1,19 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/di/garden_module.dart';
 import 'package:permacalendar/core/data/migration/garden_data_migration.dart';
 
-/// Test d'intégration Riverpod pour le provider `dataMigrationProvider`
+/// Test d'intÃ©gration Riverpod pour le provider `dataMigrationProvider`
 ///
-/// Ce test vérifie :
-/// 1. Que le provider est correctement défini et accessible
+/// Ce test vÃ©rifie :
+/// 1. Que le provider est correctement dÃ©fini et accessible
 /// 2. Que le provider retourne une instance valide de `GardenDataMigration`
-/// 3. Que l'instance retournée est fonctionnelle (non null, pas d'exception)
-/// 4. Que le provider peut être lu plusieurs fois (singleton behavior)
-/// 5. Que les dépendances sont correctement résolues
+/// 3. Que l'instance retournÃ©e est fonctionnelle (non null, pas d'exception)
+/// 4. Que le provider peut Ãªtre lu plusieurs fois (singleton behavior)
+/// 5. Que les dÃ©pendances sont correctement rÃ©solues
 void main() {
   group('GardenModule.dataMigrationProvider', () {
     late ProviderContainer container;
@@ -55,7 +58,7 @@ void main() {
       final migration = container.read(GardenModule.dataMigrationProvider);
 
       // Assert
-      expect(migration.lastResult, isNull); // Pas de résultat initial
+      expect(migration.lastResult, isNull); // Pas de rÃ©sultat initial
     });
 
     test('should not throw when reading the provider', () {
@@ -78,12 +81,12 @@ void main() {
     test('should be independent from other providers', () {
       // Act
       final migration = container.read(GardenModule.dataMigrationProvider);
-      // Note: Le provider n'utilise pas ref, donc pas de dépendances
-      // On vérifie juste qu'il fonctionne indépendamment
+      // Note: Le provider n'utilise pas ref, donc pas de dÃ©pendances
+      // On vÃ©rifie juste qu'il fonctionne indÃ©pendamment
 
       // Assert
       expect(migration, isNotNull);
-      // Si on arrive ici sans exception, c'est que le provider est indépendant
+      // Si on arrive ici sans exception, c'est que le provider est indÃ©pendant
     });
 
     test('should work with ProviderContainer lifecycle', () {
@@ -98,7 +101,7 @@ void main() {
       // Assert
       expect(migration1, isNotNull);
       expect(migration2, isNotNull);
-      // Les instances sont différentes car les containers sont différents
+      // Les instances sont diffÃ©rentes car les containers sont diffÃ©rents
       expect(migration1, isNot(same(migration2)));
 
       // Cleanup
@@ -124,7 +127,7 @@ void main() {
 
       // Act & Assert
       expect(migration.migrateAllGardens, isA<Function>());
-      // Vérifier que la méthode existe et est callable
+      // VÃ©rifier que la mÃ©thode existe et est callable
       expect(
         () => migration.migrateAllGardens,
         returnsNormally,
@@ -144,4 +147,5 @@ void main() {
     });
   });
 }
+
 

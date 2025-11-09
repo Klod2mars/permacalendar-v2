@@ -1,6 +1,9 @@
-// 🧪 Tests unitaires pour IntelligentSuggestion
+﻿// ðŸ§ª Tests unitaires pour IntelligentSuggestion
 // PermaCalendar v2.8.0 - Migration Riverpod 3
-// Tests complets du modèle de suggestion intelligente
+// Tests complets du modÃ¨le de suggestion intelligente
+
+
+import '../../../../test_setup_stub.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligent_suggestion.dart';
@@ -10,12 +13,12 @@ void main() {
     // ==================== INSTANCIATION ====================
 
     group('Instanciation', () {
-      test('devrait créer une suggestion avec tous les champs requis', () {
+      test('devrait crÃ©er une suggestion avec tous les champs requis', () {
         // Arrange & Act
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-001',
           gardenId: 'garden-123',
-          message: 'C\'est le moment idéal pour semer vos tomates',
+          message: 'C\'est le moment idÃ©al pour semer vos tomates',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.seasonal,
           createdAt: DateTime(2024, 1, 15, 10, 30),
@@ -25,13 +28,13 @@ void main() {
         expect(suggestion.id, equals('suggestion-001'));
         expect(suggestion.gardenId, equals('garden-123'));
         expect(suggestion.message,
-            equals('C\'est le moment idéal pour semer vos tomates'));
+            equals('C\'est le moment idÃ©al pour semer vos tomates'));
         expect(suggestion.priority, equals(SuggestionPriority.high));
         expect(suggestion.category, equals(SuggestionCategory.seasonal));
         expect(suggestion.createdAt, equals(DateTime(2024, 1, 15, 10, 30)));
       });
 
-      test('devrait créer une suggestion avec valeurs par défaut', () {
+      test('devrait crÃ©er une suggestion avec valeurs par dÃ©faut', () {
         // Arrange & Act
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-002',
@@ -42,13 +45,13 @@ void main() {
           createdAt: DateTime.now(),
         );
 
-        // Assert - Vérifier les valeurs par défaut
+        // Assert - VÃ©rifier les valeurs par dÃ©faut
         expect(suggestion.isRead, isFalse);
         expect(suggestion.isActioned, isFalse);
         expect(suggestion.expiresAt, isNull);
       });
 
-      test('devrait créer une suggestion avec expiration', () {
+      test('devrait crÃ©er une suggestion avec expiration', () {
         // Arrange
         final expiresAt = DateTime.now().add(const Duration(days: 7));
 
@@ -67,7 +70,7 @@ void main() {
         expect(suggestion.expiresAt, equals(expiresAt));
       });
 
-      test('devrait créer une suggestion avec tous les champs optionnels', () {
+      test('devrait crÃ©er une suggestion avec tous les champs optionnels', () {
         // Arrange
         final createdAt = DateTime(2024, 1, 1);
         final expiresAt = DateTime(2024, 1, 8);
@@ -76,7 +79,7 @@ void main() {
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-004',
           gardenId: 'garden-999',
-          message: 'Suggestion complète',
+          message: 'Suggestion complÃ¨te',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.pest,
           expiresAt: expiresAt,
@@ -88,7 +91,7 @@ void main() {
         // Assert
         expect(suggestion.id, equals('suggestion-004'));
         expect(suggestion.gardenId, equals('garden-999'));
-        expect(suggestion.message, equals('Suggestion complète'));
+        expect(suggestion.message, equals('Suggestion complÃ¨te'));
         expect(suggestion.priority, equals(SuggestionPriority.high));
         expect(suggestion.category, equals(SuggestionCategory.pest));
         expect(suggestion.expiresAt, equals(expiresAt));
@@ -98,15 +101,15 @@ void main() {
       });
     });
 
-    // ==================== SÉRIALISATION JSON ====================
+    // ==================== SÃ‰RIALISATION JSON ====================
 
-    group('Sérialisation JSON', () {
-      test('devrait sérialiser une suggestion en JSON', () {
+    group('SÃ©rialisation JSON', () {
+      test('devrait sÃ©rialiser une suggestion en JSON', () {
         // Arrange
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-json-001',
           gardenId: 'garden-json-123',
-          message: 'Test sérialisation',
+          message: 'Test sÃ©rialisation',
           priority: SuggestionPriority.medium,
           category: SuggestionCategory.harvest,
           expiresAt: DateTime(2024, 1, 20, 12, 0),
@@ -122,7 +125,7 @@ void main() {
         expect(json, isA<Map<String, dynamic>>());
         expect(json['id'], equals('suggestion-json-001'));
         expect(json['gardenId'], equals('garden-json-123'));
-        expect(json['message'], equals('Test sérialisation'));
+        expect(json['message'], equals('Test sÃ©rialisation'));
         expect(json['priority'], equals('medium'));
         expect(json['category'], equals('harvest'));
         expect(json['expiresAt'], equals('2024-01-20T12:00:00.000'));
@@ -131,7 +134,7 @@ void main() {
         expect(json['createdAt'], equals('2024-01-15T10:00:00.000'));
       });
 
-      test('devrait sérialiser une suggestion sans expiration', () {
+      test('devrait sÃ©rialiser une suggestion sans expiration', () {
         // Arrange
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-json-002',
@@ -150,12 +153,12 @@ void main() {
         expect(json['expiresAt'], isNull);
       });
 
-      test('devrait désérialiser une suggestion depuis JSON', () {
+      test('devrait dÃ©sÃ©rialiser une suggestion depuis JSON', () {
         // Arrange
         final json = {
           'id': 'suggestion-from-json-001',
           'gardenId': 'garden-from-json-123',
-          'message': 'Test désérialisation',
+          'message': 'Test dÃ©sÃ©rialisation',
           'priority': 'high',
           'category': 'lunar',
           'expiresAt': '2024-01-25T14:30:00.000',
@@ -170,7 +173,7 @@ void main() {
         // Assert
         expect(suggestion.id, equals('suggestion-from-json-001'));
         expect(suggestion.gardenId, equals('garden-from-json-123'));
-        expect(suggestion.message, equals('Test désérialisation'));
+        expect(suggestion.message, equals('Test dÃ©sÃ©rialisation'));
         expect(suggestion.priority, equals(SuggestionPriority.high));
         expect(suggestion.category, equals(SuggestionCategory.lunar));
         expect(suggestion.expiresAt, equals(DateTime(2024, 1, 25, 14, 30)));
@@ -179,7 +182,7 @@ void main() {
         expect(suggestion.createdAt, equals(DateTime(2024, 1, 15, 10, 0)));
       });
 
-      test('devrait désérialiser une suggestion sans expiration depuis JSON',
+      test('devrait dÃ©sÃ©rialiser une suggestion sans expiration depuis JSON',
           () {
         // Arrange
         final json = {
@@ -231,13 +234,13 @@ void main() {
         expect(restored.createdAt, equals(original.createdAt));
       });
 
-      test('devrait gérer les valeurs par défaut lors de la désérialisation',
+      test('devrait gÃ©rer les valeurs par dÃ©faut lors de la dÃ©sÃ©rialisation',
           () {
-        // Arrange - JSON sans isRead et isActioned (devraient être false par défaut)
+        // Arrange - JSON sans isRead et isActioned (devraient Ãªtre false par dÃ©faut)
         final json = {
           'id': 'suggestion-defaults-001',
           'gardenId': 'garden-defaults-123',
-          'message': 'Test valeurs par défaut',
+          'message': 'Test valeurs par dÃ©faut',
           'priority': 'medium',
           'category': 'maintenance',
           'createdAt': '2024-01-15T10:00:00.000',
@@ -261,7 +264,7 @@ void main() {
         final suggestion1 = IntelligentSuggestion(
           id: 'suggestion-eq-001',
           gardenId: 'garden-eq-123',
-          message: 'Test égalité',
+          message: 'Test Ã©galitÃ©',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.seasonal,
           expiresAt: date.add(const Duration(days: 7)),
@@ -273,7 +276,7 @@ void main() {
         final suggestion2 = IntelligentSuggestion(
           id: 'suggestion-eq-001',
           gardenId: 'garden-eq-123',
-          message: 'Test égalité',
+          message: 'Test Ã©galitÃ©',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.seasonal,
           expiresAt: date.add(const Duration(days: 7)),
@@ -287,22 +290,22 @@ void main() {
         expect(suggestion1.hashCode, equals(suggestion2.hashCode));
       });
 
-      test('devrait différencier deux suggestions différentes avec ==', () {
+      test('devrait diffÃ©rencier deux suggestions diffÃ©rentes avec ==', () {
         // Arrange
         final date = DateTime(2024, 1, 15, 10, 0);
         final suggestion1 = IntelligentSuggestion(
           id: 'suggestion-diff-001',
           gardenId: 'garden-diff-123',
-          message: 'Test différence',
+          message: 'Test diffÃ©rence',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.seasonal,
           createdAt: date,
         );
 
         final suggestion2 = IntelligentSuggestion(
-          id: 'suggestion-diff-002', // ID différent
+          id: 'suggestion-diff-002', // ID diffÃ©rent
           gardenId: 'garden-diff-123',
-          message: 'Test différence',
+          message: 'Test diffÃ©rence',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.seasonal,
           createdAt: date,
@@ -312,7 +315,7 @@ void main() {
         expect(suggestion1, isNot(equals(suggestion2)));
       });
 
-      test('devrait utiliser copyWith pour créer une copie modifiée', () {
+      test('devrait utiliser copyWith pour crÃ©er une copie modifiÃ©e', () {
         // Arrange
         final original = IntelligentSuggestion(
           id: 'suggestion-copy-001',
@@ -327,7 +330,7 @@ void main() {
 
         // Act
         final modified = original.copyWith(
-          message: 'Message modifié',
+          message: 'Message modifiÃ©',
           priority: SuggestionPriority.high,
           isRead: true,
         );
@@ -335,7 +338,7 @@ void main() {
         // Assert
         expect(modified.id, equals(original.id));
         expect(modified.gardenId, equals(original.gardenId));
-        expect(modified.message, equals('Message modifié'));
+        expect(modified.message, equals('Message modifiÃ©'));
         expect(modified.priority, equals(SuggestionPriority.high));
         expect(modified.category, equals(original.category));
         expect(modified.isRead, isTrue);
@@ -361,15 +364,15 @@ void main() {
 
         // Assert
         expect(markedAsRead.isRead, isTrue);
-        expect(original.isRead, isFalse); // Original inchangé (immuable)
+        expect(original.isRead, isFalse); // Original inchangÃ© (immuable)
       });
 
-      test('devrait utiliser copyWith pour marquer comme actionnée', () {
+      test('devrait utiliser copyWith pour marquer comme actionnÃ©e', () {
         // Arrange
         final original = IntelligentSuggestion(
           id: 'suggestion-action-001',
           gardenId: 'garden-action-123',
-          message: 'Suggestion non actionnée',
+          message: 'Suggestion non actionnÃ©e',
           priority: SuggestionPriority.high,
           category: SuggestionCategory.harvest,
           isRead: true,
@@ -382,7 +385,7 @@ void main() {
 
         // Assert
         expect(markedAsActioned.isActioned, isTrue);
-        expect(original.isActioned, isFalse); // Original inchangé
+        expect(original.isActioned, isFalse); // Original inchangÃ©
       });
 
       test('devrait utiliser copyWith pour modifier l\'expiration', () {
@@ -404,7 +407,7 @@ void main() {
 
         // Assert
         expect(modified.expiresAt, equals(newExpiration));
-        expect(original.expiresAt, equals(DateTime(2024, 1, 20))); // Original inchangé
+        expect(original.expiresAt, equals(DateTime(2024, 1, 20))); // Original inchangÃ©
       });
 
       test('devrait utiliser copyWith pour supprimer l\'expiration', () {
@@ -424,7 +427,7 @@ void main() {
 
         // Assert
         expect(withoutExpiration.expiresAt, isNull);
-        expect(original.expiresAt, isNotNull); // Original inchangé
+        expect(original.expiresAt, isNotNull); // Original inchangÃ©
       });
     });
 
@@ -451,7 +454,7 @@ void main() {
             SuggestionCategory.values, contains(SuggestionCategory.maintenance));
       });
 
-      test('devrait sérialiser/désérialiser correctement les enums', () {
+      test('devrait sÃ©rialiser/dÃ©sÃ©rialiser correctement les enums', () {
         // Arrange
         final priorities = SuggestionPriority.values;
         final categories = SuggestionCategory.values;
@@ -482,7 +485,7 @@ void main() {
     // ==================== CAS LIMITES ====================
 
     group('Cas limites', () {
-      test('devrait gérer une suggestion avec message vide', () {
+      test('devrait gÃ©rer une suggestion avec message vide', () {
         // Arrange & Act
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-empty-msg',
@@ -498,7 +501,7 @@ void main() {
         expect(suggestion.toJson()['message'], equals(''));
       });
 
-      test('devrait gérer une suggestion avec message très long', () {
+      test('devrait gÃ©rer une suggestion avec message trÃ¨s long', () {
         // Arrange
         final longMessage = 'A' * 1000;
 
@@ -517,7 +520,7 @@ void main() {
         expect(suggestion.toJson()['message'], equals(longMessage));
       });
 
-      test('devrait gérer une expiration dans le passé', () {
+      test('devrait gÃ©rer une expiration dans le passÃ©', () {
         // Arrange
         final pastDate = DateTime(2020, 1, 1);
 
@@ -525,7 +528,7 @@ void main() {
         final suggestion = IntelligentSuggestion(
           id: 'suggestion-past-expire',
           gardenId: 'garden-past-123',
-          message: 'Suggestion expirée',
+          message: 'Suggestion expirÃ©e',
           priority: SuggestionPriority.low,
           category: SuggestionCategory.seasonal,
           expiresAt: pastDate,
@@ -537,7 +540,7 @@ void main() {
         expect(suggestion.expiresAt!.isBefore(DateTime.now()), isTrue);
       });
 
-      test('devrait gérer une expiration très lointaine', () {
+      test('devrait gÃ©rer une expiration trÃ¨s lointaine', () {
         // Arrange
         final farFuture = DateTime(2100, 12, 31);
 
@@ -559,4 +562,5 @@ void main() {
     });
   });
 }
+
 

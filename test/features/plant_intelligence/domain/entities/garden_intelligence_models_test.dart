@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_intelligence_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_intelligence_memory.dart';
@@ -73,10 +76,10 @@ void main() {
     });
 
     test('GardenIntelligenceMemory toJson/fromJson', () {
-      // Arrange - Test simplifié sans objets complexes dans les Maps
+      // Arrange - Test simplifiÃ© sans objets complexes dans les Maps
       final memory = GardenIntelligenceMemory(
         gardenId: 'test-garden-123',
-        currentReports: {}, // Maps vides pour éviter les problèmes de sérialisation
+        currentReports: {}, // Maps vides pour Ã©viter les problÃ¨mes de sÃ©rialisation
         reportHistory: {},
         recentAnalyses: [],
         activeAlerts: [],
@@ -148,7 +151,7 @@ void main() {
       final suggestion = IntelligentSuggestion(
         id: 'suggestion-123',
         gardenId: 'test-garden-123',
-        message: 'C\'est le moment idéal pour semer vos tomates',
+        message: 'C\'est le moment idÃ©al pour semer vos tomates',
         priority: SuggestionPriority.high,
         category: SuggestionCategory.seasonal,
         expiresAt: DateTime.now().add(const Duration(days: 7)),
@@ -165,7 +168,7 @@ void main() {
       expect(restoredSuggestion.id, equals('suggestion-123'));
       expect(restoredSuggestion.gardenId, equals('test-garden-123'));
       expect(restoredSuggestion.message,
-          equals('C\'est le moment idéal pour semer vos tomates'));
+          equals('C\'est le moment idÃ©al pour semer vos tomates'));
       expect(restoredSuggestion.priority, equals(SuggestionPriority.high));
       expect(restoredSuggestion.category, equals(SuggestionCategory.seasonal));
       expect(restoredSuggestion.isRead, isFalse);
@@ -198,3 +201,4 @@ void main() {
     });
   });
 }
+

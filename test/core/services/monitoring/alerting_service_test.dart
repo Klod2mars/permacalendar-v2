@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/services/monitoring/alerting_service.dart';
 import 'dart:async';
@@ -34,7 +37,7 @@ void main() {
 
         // Assert
         final stats = alertingService.getStatistics();
-        expect(stats['registeredRules'], equals(3)); // 3 règles par défaut
+        expect(stats['registeredRules'], equals(3)); // 3 rÃ¨gles par dÃ©faut
       });
     });
 
@@ -682,4 +685,5 @@ void main() {
     });
   });
 }
+
 

@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/usecases/analyze_plant_conditions_usecase.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
@@ -42,8 +45,8 @@ void main() {
     test('should calculate excellent overall health when all conditions are optimal', () async {
       // Arrange
       final plant = createMockPlant();
-      // Utiliser une température optimale et ajuster l'humidité via metadata du jardin
-      final weather = createMockWeather(temperature: 22.0); // Optimal température
+      // Utiliser une tempÃ©rature optimale et ajuster l'humiditÃ© via metadata du jardin
+      final weather = createMockWeather(temperature: 22.0); // Optimal tempÃ©rature
       final garden = createMockGarden();
       
       // Act
@@ -55,9 +58,9 @@ void main() {
       
       // Assert
       expect(result.isHealthy, isTrue);
-      expect(result.healthScore, greaterThan(70.0)); // Ajusté : accepter scores > 70%
-      // Note : Il peut y avoir des warnings d'humidité si weather.value est utilisé pour humidité
-      // expect(result.warnings, isEmpty); // Commenté car dépend des valeurs météo
+      expect(result.healthScore, greaterThan(70.0)); // AjustÃ© : accepter scores > 70%
+      // Note : Il peut y avoir des warnings d'humiditÃ© si weather.value est utilisÃ© pour humiditÃ©
+      // expect(result.warnings, isEmpty); // CommentÃ© car dÃ©pend des valeurs mÃ©tÃ©o
       expect(result.strengths, isNotEmpty);
     });
     
@@ -75,11 +78,11 @@ void main() {
       );
       
       // Assert
-      // Note : Selon la logique métier, temp < min = poor, temp > max = critical
-      expect(result.overallHealth, ConditionStatus.poor); // Ajusté : poor au lieu de critical
+      // Note : Selon la logique mÃ©tier, temp < min = poor, temp > max = critical
+      expect(result.overallHealth, ConditionStatus.poor); // AjustÃ© : poor au lieu de critical
       expect(result.warnings, isNotEmpty);
-      // priorityActions sont générés seulement pour status == critical
-      // Pour status == poor, warnings sont générés mais pas priorityActions
+      // priorityActions sont gÃ©nÃ©rÃ©s seulement pour status == critical
+      // Pour status == poor, warnings sont gÃ©nÃ©rÃ©s mais pas priorityActions
     });
     
     test('should generate warnings for poor conditions', () async {
@@ -97,7 +100,7 @@ void main() {
       
       // Assert
       expect(result.warnings, isNotEmpty);
-      expect(result.warnings.first, contains('Température'));
+      expect(result.warnings.first, contains('TempÃ©rature'));
     });
     
     test('should throw exception when weather data is too old', () async {
@@ -174,7 +177,7 @@ void main() {
       );
       
       // Assert
-      // Avec température excessive (>max), status devrait être critical
+      // Avec tempÃ©rature excessive (>max), status devrait Ãªtre critical
       expect(result.criticalConditionsCount, greaterThan(0));
     });
     
@@ -217,3 +220,4 @@ void main() {
     });
   });
 }
+

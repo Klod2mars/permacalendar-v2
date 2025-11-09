@@ -1,6 +1,9 @@
-// 🧪 Tests unitaires pour PlantHealthStatus
+﻿// ðŸ§ª Tests unitaires pour PlantHealthStatus
 // PermaCalendar v2.8.0 - Migration Riverpod 3
-// Vérifie l'instanciation, la sérialisation JSON/Hive et les helpers de statut
+// VÃ©rifie l'instanciation, la sÃ©rialisation JSON/Hive et les helpers de statut
+
+
+import '../../../../test_setup_stub.dart';
 
 import 'dart:io';
 
@@ -48,7 +51,7 @@ void main() {
         optimalValue: 24,
         minValue: 18,
         maxValue: 28,
-        unit: '°C',
+        unit: 'Â°C',
         trend: 'down',
       );
       nutrients = PlantHealthComponent(
@@ -64,7 +67,7 @@ void main() {
       );
     });
 
-    test('devrait créer un statut complet avec valeurs personnalisées', () {
+    test('devrait crÃ©er un statut complet avec valeurs personnalisÃ©es', () {
       // Arrange
       final pestPressure = PlantHealthComponent(
         factor: PlantHealthFactor.pestPressure,
@@ -120,7 +123,7 @@ void main() {
       expect(status.factorTrends['humidity'], closeTo(0.12, 1e-6));
     });
 
-    test('factory initial devrait créer un statut neutre', () {
+    test('factory initial devrait crÃ©er un statut neutre', () {
       // Act
       final status = PlantHealthStatus.initial(
         plantId: 'plant-init',
@@ -140,7 +143,7 @@ void main() {
       expect(status.lastSyncedAt, equals(referenceDate));
     });
 
-    group('Sérialisation JSON', () {
+    group('SÃ©rialisation JSON', () {
       late PlantHealthStatus status;
 
       setUp(() {
@@ -154,8 +157,8 @@ void main() {
           temperature: temperature,
           nutrients: nutrients,
           lastUpdated: referenceDate,
-          activeAlerts: const ['Surveiller la température'],
-          recommendedActions: const ['Installer un voile d’ombrage'],
+          activeAlerts: const ['Surveiller la tempÃ©rature'],
+          recommendedActions: const ['Installer un voile dâ€™ombrage'],
           healthTrend: 'improving',
           factorTrends: const {
             'temperature': -0.05,
@@ -164,7 +167,7 @@ void main() {
         );
       });
 
-      test('devrait sérialiser en JSON', () {
+      test('devrait sÃ©rialiser en JSON', () {
         // Act
         final json = status.toJson();
 
@@ -174,10 +177,10 @@ void main() {
         expect(json['level'], equals('good'));
         expect(json['humidity']['factor'], equals('humidity'));
         expect(json['lastUpdated'], isA<String>());
-        expect(json['activeAlerts'], equals(<String>['Surveiller la température']));
+        expect(json['activeAlerts'], equals(<String>['Surveiller la tempÃ©rature']));
       });
 
-      test('devrait désérialiser depuis JSON', () {
+      test('devrait dÃ©sÃ©rialiser depuis JSON', () {
         // Arrange
         final json = status.toJson();
 
@@ -265,7 +268,7 @@ void main() {
       expect(PlantHealthLevel.critical.displayName, equals('Critique'));
     });
 
-    test('scoreThreshold respecte les seuils définis', () {
+    test('scoreThreshold respecte les seuils dÃ©finis', () {
       expect(PlantHealthLevel.excellent.scoreThreshold, equals(0.9));
       expect(PlantHealthLevel.good.scoreThreshold, equals(0.75));
       expect(PlantHealthLevel.fair.scoreThreshold, equals(0.6));
@@ -274,4 +277,5 @@ void main() {
     });
   });
 }
+
 

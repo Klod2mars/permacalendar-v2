@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
@@ -5,7 +8,7 @@ import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
 
-/// Crée une plante mock pour les tests
+/// CrÃ©e une plante mock pour les tests
 PlantFreezed createMockPlant({
   String id = 'tomato',
   String commonName = 'Tomate',
@@ -21,7 +24,7 @@ PlantFreezed createMockPlant({
     scientificName: 'Solanum lycopersicum',
     family: 'Solanaceae',
     plantingSeason: 'Printemps',
-    harvestSeason: 'Été',
+    harvestSeason: 'Ã‰tÃ©',
     daysToMaturity: 80,
     spacing: 60,
     depth: 0.5,
@@ -41,7 +44,7 @@ PlantFreezed createMockPlant({
   );
 }
 
-/// Crée des conditions météo mock
+/// CrÃ©e des conditions mÃ©tÃ©o mock
 WeatherCondition createMockWeather({
   double temperature = 20.0,
   DateTime? measuredAt,
@@ -50,14 +53,14 @@ WeatherCondition createMockWeather({
     id: 'weather_test',
     type: WeatherType.temperature,
     value: temperature,
-    unit: '°C',
+    unit: 'Â°C',
     description: 'Test weather',
     measuredAt: measuredAt ?? DateTime.now(),
     createdAt: DateTime.now(),
   );
 }
 
-/// Crée un contexte jardin mock
+/// CrÃ©e un contexte jardin mock
 GardenContext createMockGarden({
   String id = 'garden_1',
   double ph = 6.5,
@@ -140,7 +143,7 @@ GardenContext createMockGarden({
   );
 }
 
-/// Crée une PlantCondition mock
+/// CrÃ©e une PlantCondition mock
 PlantCondition createMockCondition({
   required String plantId,
   required ConditionType type,
@@ -155,20 +158,20 @@ PlantCondition createMockCondition({
   
   switch (type) {
     case ConditionType.temperature:
-      unit = '°C';
-      description = 'Température: ${value.toStringAsFixed(1)}°C';
+      unit = 'Â°C';
+      description = 'TempÃ©rature: ${value.toStringAsFixed(1)}Â°C';
       break;
     case ConditionType.humidity:
       unit = '%';
-      description = 'Humidité: ${value.toStringAsFixed(1)}%';
+      description = 'HumiditÃ©: ${value.toStringAsFixed(1)}%';
       break;
     case ConditionType.light:
       unit = '%';
-      description = 'Luminosité: ${value.toStringAsFixed(1)}%';
+      description = 'LuminositÃ©: ${value.toStringAsFixed(1)}%';
       break;
     case ConditionType.soil:
       unit = '%';
-      description = 'Qualité du sol: ${value.toStringAsFixed(1)}%';
+      description = 'QualitÃ© du sol: ${value.toStringAsFixed(1)}%';
       break;
     case ConditionType.wind:
       unit = 'km/h';
@@ -197,7 +200,7 @@ PlantCondition createMockCondition({
   );
 }
 
-/// Crée un PlantIntelligenceReport mock pour les tests
+/// CrÃ©e un PlantIntelligenceReport mock pour les tests
 PlantIntelligenceReport createMockReport({
   required String plantId,
   required String gardenId,
@@ -242,8 +245,8 @@ PlantIntelligenceReport createMockReport({
   const timing = PlantingTimingEvaluation(
     isOptimalTime: true,
     timingScore: 85.0,
-    reason: 'Bonne période de plantation',
-    favorableFactors: ['Température optimale', 'Saison appropriée'],
+    reason: 'Bonne pÃ©riode de plantation',
+    favorableFactors: ['TempÃ©rature optimale', 'Saison appropriÃ©e'],
   );
 
   return PlantIntelligenceReport(
@@ -262,3 +265,4 @@ PlantIntelligenceReport createMockReport({
     metadata: {},
   );
 }
+

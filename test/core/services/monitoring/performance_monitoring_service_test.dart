@@ -1,3 +1,6 @@
+﻿
+import '../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/services/monitoring/performance_monitoring_service.dart';
 
@@ -8,7 +11,7 @@ void main() {
     setUp(() {
       service = PerformanceMonitoringService(
         maxMeasurements: 100,
-        enableLogging: false, // Désactiver les logs pour les tests
+        enableLogging: false, // DÃ©sactiver les logs pour les tests
         reportInterval: const Duration(seconds: 1),
       );
     });
@@ -195,7 +198,7 @@ void main() {
           expect(e, isA<Exception>());
         }
 
-        // Vérifier que l'erreur a été enregistrée
+        // VÃ©rifier que l'erreur a Ã©tÃ© enregistrÃ©e
         final metrics = service.getCurrentMetrics();
         expect(metrics['totalMeasurements'], greaterThan(0));
       });
@@ -216,7 +219,7 @@ void main() {
           throwsException,
         );
 
-        // Vérifier que l'erreur a été enregistrée
+        // VÃ©rifier que l'erreur a Ã©tÃ© enregistrÃ©e
         final metrics = service.getCurrentMetrics();
         expect(metrics['totalMeasurements'], greaterThan(0));
       });
@@ -323,7 +326,7 @@ void main() {
       test('should calculate stats correctly', () {
         // Arrange
         service.initialize();
-        // Enregistrer plusieurs mesures du même type
+        // Enregistrer plusieurs mesures du mÃªme type
         for (int i = 0; i < 5; i++) {
           service.recordOperationDuration(
             type: MetricType.dataFetch,
@@ -367,7 +370,7 @@ void main() {
         // Arrange
         service.initialize();
 
-        // Act - Ajouter un petit délai pour éviter le rate limiting
+        // Act - Ajouter un petit dÃ©lai pour Ã©viter le rate limiting
         final id1 = service.startMeasurement(
           type: MetricType.dataFetch,
           name: 'test1',
@@ -380,8 +383,8 @@ void main() {
 
         final metrics = service.getCurrentMetrics();
 
-        // Assert - Vérifier qu'au moins une mesure est active
-        // (le rate limiting peut empêcher la deuxième)
+        // Assert - VÃ©rifier qu'au moins une mesure est active
+        // (le rate limiting peut empÃªcher la deuxiÃ¨me)
         expect(metrics['activeMeasurements'], greaterThanOrEqualTo(1));
 
         // Cleanup
@@ -456,7 +459,7 @@ void main() {
         // Arrange
         service.initialize();
 
-        // Act & Assert - Ne devrait pas crasher même avec des valeurs invalides
+        // Act & Assert - Ne devrait pas crasher mÃªme avec des valeurs invalides
         expect(
           () => service.recordScreenLoad('', const Duration(seconds: -1)),
           returnsNormally,
@@ -470,7 +473,7 @@ void main() {
         // Act
         final report = service.generateReport(period: const Duration(seconds: -1));
 
-        // Assert - Devrait retourner un rapport valide même en cas d'erreur
+        // Assert - Devrait retourner un rapport valide mÃªme en cas d'erreur
         expect(report, isNotNull);
         expect(report.statsByType, isA<Map<MetricType, PerformanceStats>>());
       });
@@ -668,4 +671,5 @@ void main() {
     });
   });
 }
+
 

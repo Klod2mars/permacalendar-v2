@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -61,7 +64,7 @@ void main() {
       await tester.pumpWidget(createTestWidget(mockReadyPlantings));
       await tester.pumpAndSettle();
 
-      expect(find.text('Récolte rapide'), findsOneWidget);
+      expect(find.text('RÃ©colte rapide'), findsOneWidget);
     });
 
     testWidgets('displays close button', (WidgetTester tester) async {
@@ -80,7 +83,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Widget should be dismissed
-      expect(find.text('Récolte rapide'), findsNothing);
+      expect(find.text('RÃ©colte rapide'), findsNothing);
     });
 
     testWidgets('displays search field', (WidgetTester tester) async {
@@ -145,7 +148,7 @@ void main() {
       expect(find.text('Carotte'), findsOneWidget);
 
       // Should show quantity and days info
-      expect(find.textContaining('Quantité:'), findsWidgets);
+      expect(find.textContaining('QuantitÃ©:'), findsWidgets);
       expect(find.textContaining('j'), findsWidgets); // Days indicator
     });
 
@@ -172,14 +175,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // Selection counter should appear
-      expect(find.textContaining('1 plante(s) sélectionnée(s)'), findsOneWidget);
+      expect(find.textContaining('1 plante(s) sÃ©lectionnÃ©e(s)'), findsOneWidget);
     });
 
     testWidgets('displays select all button', (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(mockReadyPlantings));
       await tester.pumpAndSettle();
 
-      expect(find.text('Tout sélectionner'), findsOneWidget);
+      expect(find.text('Tout sÃ©lectionner'), findsOneWidget);
     });
 
     testWidgets('select all button selects all plantings',
@@ -188,15 +191,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap select all
-      await tester.tap(find.text('Tout sélectionner'));
+      await tester.tap(find.text('Tout sÃ©lectionner'));
       await tester.pumpAndSettle();
 
       // Should show selection counter
-      expect(find.textContaining('3 plante(s) sélectionnée(s)'), findsOneWidget);
+      expect(find.textContaining('3 plante(s) sÃ©lectionnÃ©e(s)'), findsOneWidget);
       
       // Button text should change
-      expect(find.text('Tout désélectionner'), findsOneWidget);
-      expect(find.text('Tout sélectionner'), findsNothing);
+      expect(find.text('Tout dÃ©sÃ©lectionner'), findsOneWidget);
+      expect(find.text('Tout sÃ©lectionner'), findsNothing);
     });
 
     testWidgets('displays harvest button', (WidgetTester tester) async {
@@ -204,7 +207,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Harvest button with count
-      expect(find.textContaining('Récolter'), findsWidgets);
+      expect(find.textContaining('RÃ©colter'), findsWidgets);
     });
 
     testWidgets('harvest button is disabled when nothing selected',
@@ -212,9 +215,9 @@ void main() {
       await tester.pumpWidget(createTestWidget(mockReadyPlantings));
       await tester.pumpAndSettle();
 
-      // Find the FilledButton with "Récolter"
+      // Find the FilledButton with "RÃ©colter"
       final harvestButtons = find.ancestor(
-        of: find.textContaining('Récolter'),
+        of: find.textContaining('RÃ©colter'),
         matching: find.byType(FilledButton),
       );
       
@@ -231,9 +234,9 @@ void main() {
       await tester.tap(find.byType(Checkbox).first);
       await tester.pumpAndSettle();
 
-      // Find the FilledButton with "Récolter"
+      // Find the FilledButton with "RÃ©colter"
       final harvestButtons = find.ancestor(
-        of: find.textContaining('Récolter (1)'),
+        of: find.textContaining('RÃ©colter (1)'),
         matching: find.byType(FilledButton),
       );
       
@@ -248,7 +251,7 @@ void main() {
 
       // Should show warning icons for overdue plantings
       expect(find.byIcon(Icons.warning), findsWidgets);
-      expect(find.text('En retard de récolte!'), findsWidgets);
+      expect(find.text('En retard de rÃ©colte!'), findsWidgets);
     });
 
     testWidgets('displays empty state when no plantings ready',
@@ -256,9 +259,9 @@ void main() {
       await tester.pumpWidget(createTestWidget([]));
       await tester.pumpAndSettle();
 
-      expect(find.text('Aucune plante prête à récolter'), findsOneWidget);
+      expect(find.text('Aucune plante prÃªte Ã  rÃ©colter'), findsOneWidget);
       expect(
-        find.text('Les plantes prêtes à être récoltées\napparaîtront ici'),
+        find.text('Les plantes prÃªtes Ã  Ãªtre rÃ©coltÃ©es\napparaÃ®tront ici'),
         findsOneWidget,
       );
       expect(find.byIcon(Icons.agriculture), findsWidgets);
@@ -288,7 +291,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Should show selection counter
-      expect(find.textContaining('1 plante(s) sélectionnée(s)'), findsOneWidget);
+      expect(find.textContaining('1 plante(s) sÃ©lectionnÃ©e(s)'), findsOneWidget);
     });
 
     testWidgets('deselect all works', (WidgetTester tester) async {
@@ -296,17 +299,17 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select all
-      await tester.tap(find.text('Tout sélectionner'));
+      await tester.tap(find.text('Tout sÃ©lectionner'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Tout désélectionner'), findsOneWidget);
+      expect(find.text('Tout dÃ©sÃ©lectionner'), findsOneWidget);
 
       // Deselect all
-      await tester.tap(find.text('Tout désélectionner'));
+      await tester.tap(find.text('Tout dÃ©sÃ©lectionner'));
       await tester.pumpAndSettle();
 
       // Selection counter should disappear
-      expect(find.textContaining('plante(s) sélectionnée(s)'), findsNothing);
+      expect(find.textContaining('plante(s) sÃ©lectionnÃ©e(s)'), findsNothing);
     });
   });
 
@@ -323,7 +326,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(FloatingActionButton), findsOneWidget);
-      expect(find.text('Récolte rapide'), findsOneWidget);
+      expect(find.text('RÃ©colte rapide'), findsOneWidget);
       expect(find.byIcon(Icons.agriculture), findsOneWidget);
     });
 
@@ -352,4 +355,5 @@ void main() {
     });
   });
 }
+
 

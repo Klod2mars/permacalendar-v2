@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,7 +35,7 @@ void main() {
 
       // Assert
       expect(find.byType(PlantHealthDegradationBanner), findsOneWidget);
-      expect(find.text('⚠️'),
+      expect(find.text('âš ï¸'),
           findsNothing); // Banner content should not be visible
     });
 
@@ -73,8 +76,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('⚠️'), findsNothing);
-      expect(find.text('Santé en baisse'), findsNothing);
+      expect(find.text('âš ï¸'), findsNothing);
+      expect(find.text('SantÃ© en baisse'), findsNothing);
     });
 
     testWidgets('should display banner when deltaScore < -1.0',
@@ -114,10 +117,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('⚠️'), findsOneWidget);
-      expect(find.text('Santé en baisse'), findsOneWidget);
+      expect(find.text('âš ï¸'), findsOneWidget);
+      expect(find.text('SantÃ© en baisse'), findsOneWidget);
       expect(
-          find.text('Score baissé de 5.0 points en 7 jours'), findsOneWidget);
+          find.text('Score baissÃ© de 5.0 points en 7 jours'), findsOneWidget);
     });
 
     testWidgets('should display banner when trend is down',
@@ -157,8 +160,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert
-      expect(find.text('⚠️'), findsOneWidget);
-      expect(find.text('Santé en baisse'), findsOneWidget);
+      expect(find.text('âš ï¸'), findsOneWidget);
+      expect(find.text('SantÃ© en baisse'), findsOneWidget);
     });
 
     testWidgets('should show expanded content when banner is tapped',
@@ -203,10 +206,10 @@ void main() {
       expect(find.text('Variation'), findsOneWidget);
       expect(find.text('72.0'), findsOneWidget);
       expect(find.text('-8.0 pts'), findsOneWidget);
-      expect(find.text('Conditions affectées:'), findsOneWidget);
+      expect(find.text('Conditions affectÃ©es:'), findsOneWidget);
       expect(find.text('Eau'), findsOneWidget);
       expect(find.text('Nutriments'), findsOneWidget);
-      expect(find.text('Lumière'), findsOneWidget);
+      expect(find.text('LumiÃ¨re'), findsOneWidget);
 
       // Act - Tap to collapse
       await tester.tap(find.byType(InkWell).first);
@@ -214,7 +217,7 @@ void main() {
 
       // Assert - Content should be collapsed
       expect(find.text('Score actuel'), findsNothing);
-      expect(find.text('Conditions affectées:'), findsNothing);
+      expect(find.text('Conditions affectÃ©es:'), findsNothing);
     });
 
     testWidgets('should display CTA button with correct text',
@@ -296,8 +299,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert - Check French translations
-      expect(find.text('Température'), findsOneWidget);
-      expect(find.text('Humidité'), findsOneWidget);
+      expect(find.text('TempÃ©rature'), findsOneWidget);
+      expect(find.text('HumiditÃ©'), findsOneWidget);
       expect(find.text('Sol'), findsOneWidget);
     });
 
@@ -343,7 +346,7 @@ void main() {
 
       // Should not show expanded content
       expect(find.text('Score actuel'), findsNothing);
-      expect(find.text('Conditions affectées:'), findsNothing);
+      expect(find.text('Conditions affectÃ©es:'), findsNothing);
     });
 
     testWidgets('should display correct color scheme for degradation',
@@ -391,3 +394,4 @@ void main() {
     });
   });
 }
+

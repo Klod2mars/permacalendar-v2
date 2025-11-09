@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/usecases/generate_recommendations_usecase.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
@@ -305,9 +308,9 @@ PlantAnalysisResult _createAnalysisWithCriticalTemp(String plantId) {
     soil: soil,
     overallHealth: ConditionStatus.critical,
     healthScore: 30.0,
-    warnings: ['Température critique'],
+    warnings: ['TempÃ©rature critique'],
     strengths: [],
-    priorityActions: ['Protéger du froid'],
+    priorityActions: ['ProtÃ©ger du froid'],
     confidence: 0.9,
     analyzedAt: DateTime.now(),
   );
@@ -345,22 +348,22 @@ PlantAnalysisResult _createAnalysisWithCriticalHumidity(String plantId) {
     soil: soil,
     overallHealth: ConditionStatus.critical,
     healthScore: 35.0,
-    warnings: ['Humidité critique'],
+    warnings: ['HumiditÃ© critique'],
     strengths: [],
-    priorityActions: ['Arroser immédiatement'],
+    priorityActions: ['Arroser immÃ©diatement'],
     confidence: 0.9,
     analyzedAt: DateTime.now(),
   );
 }
 
 List<PlantCondition> _createDecreasingHumidityHistory(String plantId) {
-  // Créer historique avec des dates différentes pour détecter tendance à la baisse
-  // Logique UseCase (ligne 312) : trie par date décroissante (b.compareTo(a))
-  // puis vérifie si [0].value < [1].value < [2].value
+  // CrÃ©er historique avec des dates diffÃ©rentes pour dÃ©tecter tendance Ã  la baisse
+  // Logique UseCase (ligne 312) : trie par date dÃ©croissante (b.compareTo(a))
+  // puis vÃ©rifie si [0].value < [1].value < [2].value
   final now = DateTime.now();
   
   return [
-    // Condition la plus ancienne (il y a 2 jours) - valeur la plus élevée
+    // Condition la plus ancienne (il y a 2 jours) - valeur la plus Ã©levÃ©e
     PlantCondition(
       id: 'humidity_oldest',
       plantId: plantId,
@@ -371,12 +374,12 @@ List<PlantCondition> _createDecreasingHumidityHistory(String plantId) {
       minValue: 50.0,
       maxValue: 85.0,
       unit: '%',
-      description: 'Humidité: 70.0%',
+      description: 'HumiditÃ©: 70.0%',
       recommendations: [],
       measuredAt: now.subtract(const Duration(days: 2)),
       createdAt: now.subtract(const Duration(days: 2)),
     ),
-    // Condition intermédiaire (il y a 1 jour) - valeur moyenne
+    // Condition intermÃ©diaire (il y a 1 jour) - valeur moyenne
     PlantCondition(
       id: 'humidity_middle',
       plantId: plantId,
@@ -387,12 +390,12 @@ List<PlantCondition> _createDecreasingHumidityHistory(String plantId) {
       minValue: 50.0,
       maxValue: 85.0,
       unit: '%',
-      description: 'Humidité: 60.0%',
+      description: 'HumiditÃ©: 60.0%',
       recommendations: [],
       measuredAt: now.subtract(const Duration(days: 1)),
       createdAt: now.subtract(const Duration(days: 1)),
     ),
-    // Condition la plus récente (maintenant) - valeur la plus basse
+    // Condition la plus rÃ©cente (maintenant) - valeur la plus basse
     PlantCondition(
       id: 'humidity_recent',
       plantId: plantId,
@@ -403,7 +406,7 @@ List<PlantCondition> _createDecreasingHumidityHistory(String plantId) {
       minValue: 50.0,
       maxValue: 85.0,
       unit: '%',
-      description: 'Humidité: 50.0%',
+      description: 'HumiditÃ©: 50.0%',
       recommendations: [],
       measuredAt: now,
       createdAt: now,
@@ -415,3 +418,4 @@ String _getMonthAbbreviation(int month) {
   const abbr = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
   return abbr[month - 1];
 }
+

@@ -1,15 +1,18 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// 🌱 Test de validation du format plants.json v2.1.0
+/// ðŸŒ± Test de validation du format plants.json v2.1.0
 /// 
 /// Ce test valide que :
 /// 1. Le fichier plants.json existe et est chargeable
-/// 2. Le format v2.1.0 est détecté (schema_version)
-/// 3. Les métadonnées sont présentes et cohérentes
-/// 4. Au moins une plante est chargée
-/// 5. La cohérence metadata.total_plants == plants.length
+/// 2. Le format v2.1.0 est dÃ©tectÃ© (schema_version)
+/// 3. Les mÃ©tadonnÃ©es sont prÃ©sentes et cohÃ©rentes
+/// 4. Au moins une plante est chargÃ©e
+/// 5. La cohÃ©rence metadata.total_plants == plants.length
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -27,72 +30,72 @@ void main() {
       }
     });
 
-    test('Le fichier plants.json doit être chargeable', () {
+    test('Le fichier plants.json doit Ãªtre chargeable', () {
       expect(jsonString, isNotEmpty);
       expect(jsonData, isNotNull);
     });
 
-    test('Le format doit être un Map (format v2.1.0)', () {
+    test('Le format doit Ãªtre un Map (format v2.1.0)', () {
       expect(jsonData, isA<Map<String, dynamic>>(),
-          reason: 'Le format doit être un objet structuré, pas un array');
+          reason: 'Le format doit Ãªtre un objet structurÃ©, pas un array');
     });
 
-    test('schema_version doit être présent et égal à "2.1.0"', () {
+    test('schema_version doit Ãªtre prÃ©sent et Ã©gal Ã  "2.1.0"', () {
       final map = jsonData as Map<String, dynamic>;
       
       expect(map, contains('schema_version'),
-          reason: 'Le champ schema_version doit être présent');
+          reason: 'Le champ schema_version doit Ãªtre prÃ©sent');
       
       final schemaVersion = map['schema_version'];
       expect(schemaVersion, equals('2.1.0'),
-          reason: 'La version du schéma doit être 2.1.0');
+          reason: 'La version du schÃ©ma doit Ãªtre 2.1.0');
     });
 
-    test('metadata doit être présent et valide', () {
+    test('metadata doit Ãªtre prÃ©sent et valide', () {
       final map = jsonData as Map<String, dynamic>;
       
       expect(map, contains('metadata'),
-          reason: 'Le champ metadata doit être présent');
+          reason: 'Le champ metadata doit Ãªtre prÃ©sent');
       
       final metadata = map['metadata'];
       expect(metadata, isA<Map<String, dynamic>>(),
-          reason: 'metadata doit être un objet');
+          reason: 'metadata doit Ãªtre un objet');
       
       final metadataMap = metadata as Map<String, dynamic>;
       
-      // Vérifier les champs obligatoires
+      // VÃ©rifier les champs obligatoires
       expect(metadataMap, contains('version'),
-          reason: 'metadata.version doit être présent');
+          reason: 'metadata.version doit Ãªtre prÃ©sent');
       expect(metadataMap, contains('total_plants'),
-          reason: 'metadata.total_plants doit être présent');
+          reason: 'metadata.total_plants doit Ãªtre prÃ©sent');
       expect(metadataMap, contains('source'),
-          reason: 'metadata.source doit être présent');
+          reason: 'metadata.source doit Ãªtre prÃ©sent');
       expect(metadataMap, contains('updated_at'),
-          reason: 'metadata.updated_at doit être présent');
+          reason: 'metadata.updated_at doit Ãªtre prÃ©sent');
       
-      // Vérifier les types
+      // VÃ©rifier les types
       expect(metadataMap['version'], isA<String>());
       expect(metadataMap['total_plants'], isA<int>());
       expect(metadataMap['source'], isA<String>());
       expect(metadataMap['updated_at'], isA<String>());
     });
 
-    test('plants doit être présent et non vide', () {
+    test('plants doit Ãªtre prÃ©sent et non vide', () {
       final map = jsonData as Map<String, dynamic>;
       
       expect(map, contains('plants'),
-          reason: 'Le champ plants doit être présent');
+          reason: 'Le champ plants doit Ãªtre prÃ©sent');
       
       final plants = map['plants'];
       expect(plants, isA<List>(),
-          reason: 'plants doit être une liste');
+          reason: 'plants doit Ãªtre une liste');
       
       final plantsList = plants as List;
       expect(plantsList, isNotEmpty,
-          reason: 'Au moins une plante doit être présente');
+          reason: 'Au moins une plante doit Ãªtre prÃ©sente');
     });
 
-    test('metadata.total_plants doit correspondre à la longueur de plants', () {
+    test('metadata.total_plants doit correspondre Ã  la longueur de plants', () {
       final map = jsonData as Map<String, dynamic>;
       final metadata = map['metadata'] as Map<String, dynamic>;
       final plants = map['plants'] as List;
@@ -101,11 +104,11 @@ void main() {
       final actualTotal = plants.length;
       
       expect(actualTotal, equals(expectedTotal),
-          reason: 'Le nombre de plantes réelles doit correspondre à metadata.total_plants. '
-              'Attendu: $expectedTotal, Trouvé: $actualTotal');
+          reason: 'Le nombre de plantes rÃ©elles doit correspondre Ã  metadata.total_plants. '
+              'Attendu: $expectedTotal, TrouvÃ©: $actualTotal');
     });
 
-    test('Les plantes ne doivent pas contenir de champs obsolètes', () {
+    test('Les plantes ne doivent pas contenir de champs obsolÃ¨tes', () {
       final map = jsonData as Map<String, dynamic>;
       final plants = map['plants'] as List;
       
@@ -113,11 +116,11 @@ void main() {
         final firstPlant = plants.first as Map<String, dynamic>;
         
         expect(firstPlant.containsKey('plantingSeason'), isFalse,
-            reason: 'plantingSeason est un champ obsolète et ne doit pas être présent');
+            reason: 'plantingSeason est un champ obsolÃ¨te et ne doit pas Ãªtre prÃ©sent');
         expect(firstPlant.containsKey('harvestSeason'), isFalse,
-            reason: 'harvestSeason est un champ obsolète et ne doit pas être présent');
+            reason: 'harvestSeason est un champ obsolÃ¨te et ne doit pas Ãªtre prÃ©sent');
         expect(firstPlant.containsKey('notificationSettings'), isFalse,
-            reason: 'notificationSettings est un champ obsolète et ne doit pas être présent');
+            reason: 'notificationSettings est un champ obsolÃ¨te et ne doit pas Ãªtre prÃ©sent');
       }
     });
 
@@ -138,7 +141,7 @@ void main() {
         expect(firstPlant, contains('sunExposure'));
         expect(firstPlant, contains('waterNeeds'));
         
-        // Vérifier les types
+        // VÃ©rifier les types
         expect(firstPlant['id'], isA<String>());
         expect(firstPlant['commonName'], isA<String>());
         expect(firstPlant['scientificName'], isA<String>());
@@ -148,42 +151,43 @@ void main() {
       }
     });
 
-    test('Afficher un résumé des données chargées', () {
+    test('Afficher un rÃ©sumÃ© des donnÃ©es chargÃ©es', () {
       final map = jsonData as Map<String, dynamic>;
       final metadata = map['metadata'] as Map<String, dynamic>;
       final plants = map['plants'] as List;
       
       print('');
-      print('📊 Résumé de la validation plants.json v2.1.0');
-      print('═══════════════════════════════════════════════');
-      print('✅ Format détecté       : v${map['schema_version']}');
-      print('📋 Version              : ${metadata['version']}');
-      print('🌱 Total plantes        : ${metadata['total_plants']}');
-      print('📦 Plantes chargées     : ${plants.length}');
-      print('🏢 Source               : ${metadata['source']}');
-      print('📅 Dernière mise à jour : ${metadata['updated_at']}');
+      print('ðŸ“Š RÃ©sumÃ© de la validation plants.json v2.1.0');
+      print('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+      print('âœ… Format dÃ©tectÃ©       : v${map['schema_version']}');
+      print('ðŸ“‹ Version              : ${metadata['version']}');
+      print('ðŸŒ± Total plantes        : ${metadata['total_plants']}');
+      print('ðŸ“¦ Plantes chargÃ©es     : ${plants.length}');
+      print('ðŸ¢ Source               : ${metadata['source']}');
+      print('ðŸ“… DerniÃ¨re mise Ã  jour : ${metadata['updated_at']}');
       
       if (metadata.containsKey('migration_date')) {
-        print('🔄 Date de migration    : ${metadata['migration_date']}');
-        print('📜 Migré depuis         : ${metadata['migrated_from']}');
+        print('ðŸ”„ Date de migration    : ${metadata['migration_date']}');
+        print('ðŸ“œ MigrÃ© depuis         : ${metadata['migrated_from']}');
       }
       
       if (plants.isNotEmpty) {
         final firstPlant = plants.first as Map<String, dynamic>;
         print('');
-        print('🌱 Exemple (première plante):');
+        print('ðŸŒ± Exemple (premiÃ¨re plante):');
         print('   - ID                 : ${firstPlant['id']}');
         print('   - Nom commun         : ${firstPlant['commonName']}');
         print('   - Nom scientifique   : ${firstPlant['scientificName']}');
         print('   - Famille            : ${firstPlant['family']}');
       }
       
-      print('═══════════════════════════════════════════════');
+      print('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
       print('');
       
-      // Ce test réussit toujours, il sert juste à afficher les infos
+      // Ce test rÃ©ussit toujours, il sert juste Ã  afficher les infos
       expect(true, isTrue);
     });
   });
 }
+
 

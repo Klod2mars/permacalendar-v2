@@ -1,17 +1,20 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:permacalendar/core/di/garden_module.dart';
 
-/// Test d'intégration Riverpod pour le provider `isMigrationNeededProvider`
+/// Test d'intÃ©gration Riverpod pour le provider `isMigrationNeededProvider`
 ///
-/// Ce test vérifie :
-/// 1. Que le provider est correctement défini et accessible
+/// Ce test vÃ©rifie :
+/// 1. Que le provider est correctement dÃ©fini et accessible
 /// 2. Que le provider retourne un `FutureProvider<bool>` valide
-/// 3. Que le provider retourne `false` quand aucune migration n'est nécessaire
-/// 4. Que le provider retourne `true` quand une migration est nécessaire
-/// 5. Que le type de retour est cohérent avec `AsyncValue<bool>`
-/// 6. Que le provider gère correctement les erreurs
+/// 3. Que le provider retourne `false` quand aucune migration n'est nÃ©cessaire
+/// 4. Que le provider retourne `true` quand une migration est nÃ©cessaire
+/// 5. Que le type de retour est cohÃ©rent avec `AsyncValue<bool>`
+/// 6. Que le provider gÃ¨re correctement les erreurs
 void main() {
   group('GardenModule.isMigrationNeededProvider', () {
     late ProviderContainer container;
@@ -43,17 +46,17 @@ void main() {
 
     test('should return false when no migration is needed (no boxes exist)', () async {
       // Arrange
-      // Aucune box n'existe ou Hive n'est pas initialisé, donc aucune migration nécessaire
-      // Le provider gère les erreurs et retourne false
+      // Aucune box n'existe ou Hive n'est pas initialisÃ©, donc aucune migration nÃ©cessaire
+      // Le provider gÃ¨re les erreurs et retourne false
 
       // Act
       final asyncValue = container.read(GardenModule.isMigrationNeededProvider);
 
       // Assert
-      // Attendre que la valeur soit disponible (peut être false en cas d'erreur Hive)
+      // Attendre que la valeur soit disponible (peut Ãªtre false en cas d'erreur Hive)
       final value = await asyncValue.when(
         data: (value) => value,
-        loading: () => false, // Valeur par défaut si en chargement
+        loading: () => false, // Valeur par dÃ©faut si en chargement
         error: (error, stack) => false, // Le provider retourne false en cas d'erreur
       );
       
@@ -65,17 +68,17 @@ void main() {
       final asyncValue = container.read(GardenModule.isMigrationNeededProvider);
 
       // Assert
-      // Le provider peut être en état de chargement initialement
+      // Le provider peut Ãªtre en Ã©tat de chargement initialement
       expect(asyncValue.isLoading || asyncValue.hasValue || asyncValue.hasError, isTrue);
       
-      // Attendre que la valeur soit disponible et vérifier le type
+      // Attendre que la valeur soit disponible et vÃ©rifier le type
       final value = await asyncValue.when(
         data: (value) => value,
-        loading: () => false, // Valeur par défaut si en chargement
+        loading: () => false, // Valeur par dÃ©faut si en chargement
         error: (error, stack) => false, // Le provider retourne false en cas d'erreur
       );
       
-      // Vérifier que la valeur est un booléen
+      // VÃ©rifier que la valeur est un boolÃ©en
       expect(value, isA<bool>());
     });
 
@@ -89,7 +92,7 @@ void main() {
       // Attendre la valeur finale
       final value = await asyncValue.when(
         data: (value) => value,
-        loading: () => false, // Valeur par défaut si en chargement
+        loading: () => false, // Valeur par dÃ©faut si en chargement
         error: (error, stack) => throw error,
       );
       
@@ -106,13 +109,13 @@ void main() {
 
     test('should handle errors gracefully', () async {
       // Arrange
-      // Le provider doit gérer les erreurs et retourner false en cas d'erreur
+      // Le provider doit gÃ©rer les erreurs et retourner false en cas d'erreur
       
       // Act
       final asyncValue = container.read(GardenModule.isMigrationNeededProvider);
 
       // Assert
-      // Même en cas d'erreur, le provider doit retourner une valeur (false)
+      // MÃªme en cas d'erreur, le provider doit retourner une valeur (false)
       final value = await asyncValue.when(
         data: (value) => value,
         loading: () => false,
@@ -146,7 +149,7 @@ void main() {
       final asyncValue2 = container.read(GardenModule.isMigrationNeededProvider);
 
       // Assert
-      // Les deux lectures doivent retourner la même AsyncValue (même instance)
+      // Les deux lectures doivent retourner la mÃªme AsyncValue (mÃªme instance)
       expect(asyncValue1, same(asyncValue2));
     });
   });
@@ -156,7 +159,7 @@ void main() {
 
     setUp(() async {
       // Initialiser Hive pour les tests
-      // Note: Dans un vrai test d'intégration, on devrait initialiser Hive
+      // Note: Dans un vrai test d'intÃ©gration, on devrait initialiser Hive
       // mais ici on teste principalement le provider Riverpod
       container = ProviderContainer();
     });
@@ -167,18 +170,18 @@ void main() {
 
     test('should check all three legacy boxes (gardens, gardens_v2, gardens_hive)', () async {
       // Arrange
-      // Le provider doit vérifier les trois boxes : gardens, gardens_v2, gardens_hive
-      // Note: Si Hive n'est pas initialisé, le provider retourne false (gestion d'erreur)
+      // Le provider doit vÃ©rifier les trois boxes : gardens, gardens_v2, gardens_hive
+      // Note: Si Hive n'est pas initialisÃ©, le provider retourne false (gestion d'erreur)
 
       // Act
       final asyncValue = container.read(GardenModule.isMigrationNeededProvider);
 
       // Assert
-      // Le provider doit compléter avec une valeur booléenne (même en cas d'erreur)
+      // Le provider doit complÃ©ter avec une valeur boolÃ©enne (mÃªme en cas d'erreur)
       final value = await asyncValue.when(
         data: (value) => value,
         loading: () => false,
-        error: (error, stack) => false, // Le provider gère les erreurs et retourne false
+        error: (error, stack) => false, // Le provider gÃ¨re les erreurs et retourne false
       );
       
       expect(value, isA<bool>());
@@ -186,8 +189,8 @@ void main() {
 
     test('should return false when all boxes are empty or non-existent', () async {
       // Arrange
-      // Aucune box avec des données ou Hive non initialisé
-      // Le provider doit gérer ces cas et retourner false
+      // Aucune box avec des donnÃ©es ou Hive non initialisÃ©
+      // Le provider doit gÃ©rer ces cas et retourner false
 
       // Act
       final asyncValue = container.read(GardenModule.isMigrationNeededProvider);
@@ -199,8 +202,8 @@ void main() {
         error: (error, stack) => false, // Le provider retourne false en cas d'erreur (Hive non init)
       );
       
-      // Si aucune box n'existe, toutes sont vides, ou Hive n'est pas initialisé,
-      // le provider retourne false (pas de migration nécessaire)
+      // Si aucune box n'existe, toutes sont vides, ou Hive n'est pas initialisÃ©,
+      // le provider retourne false (pas de migration nÃ©cessaire)
       expect(value, isFalse);
     });
   });
@@ -218,7 +221,7 @@ void main() {
 
     test('should handle concurrent reads', () async {
       // Arrange
-      // Lire le provider plusieurs fois simultanément
+      // Lire le provider plusieurs fois simultanÃ©ment
 
       // Act
       final futures = List.generate(
@@ -235,24 +238,25 @@ void main() {
         )),
       );
 
-      // Toutes les valeurs doivent être cohérentes (toutes false dans ce cas)
+      // Toutes les valeurs doivent Ãªtre cohÃ©rentes (toutes false dans ce cas)
       expect(values.every((v) => v == values.first), isTrue);
     });
 
     test('should be independent from dataMigrationProvider', () {
       // Arrange
-      // Le provider isMigrationNeededProvider ne doit pas dépendre de dataMigrationProvider
-      // (il fait sa propre vérification directement avec Hive)
+      // Le provider isMigrationNeededProvider ne doit pas dÃ©pendre de dataMigrationProvider
+      // (il fait sa propre vÃ©rification directement avec Hive)
 
       // Act
       final migrationNeeded = container.read(GardenModule.isMigrationNeededProvider);
       final dataMigration = container.read(GardenModule.dataMigrationProvider);
 
       // Assert
-      // Les deux providers doivent être accessibles indépendamment
+      // Les deux providers doivent Ãªtre accessibles indÃ©pendamment
       expect(migrationNeeded, isA<AsyncValue<bool>>());
       expect(dataMigration, isNotNull);
     });
   });
 }
+
 

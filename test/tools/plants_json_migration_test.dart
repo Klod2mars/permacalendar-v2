@@ -1,43 +1,46 @@
+﻿
+import '../test_setup_stub.dart';
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
-/// 🌱 Tests de migration et validation de plants.json
+/// ðŸŒ± Tests de migration et validation de plants.json
 /// 
 /// **Tests :**
-/// 1. ✅ Migration transforme correctement la structure
-/// 2. ✅ Champs dépréciés sont supprimés
-/// 3. ✅ Métadonnées sont ajoutées
-/// 4. ✅ Toutes les plantes sont préservées
-/// 5. ✅ Validation détecte les erreurs de format
+/// 1. âœ… Migration transforme correctement la structure
+/// 2. âœ… Champs dÃ©prÃ©ciÃ©s sont supprimÃ©s
+/// 3. âœ… MÃ©tadonnÃ©es sont ajoutÃ©es
+/// 4. âœ… Toutes les plantes sont prÃ©servÃ©es
+/// 5. âœ… Validation dÃ©tecte les erreurs de format
 void main() {
   group('Plants JSON Migration', () {
     late Directory tempDir;
     late File testFile;
     
     setUp(() async {
-      // Créer un répertoire temporaire pour les tests
+      // CrÃ©er un rÃ©pertoire temporaire pour les tests
       tempDir = await Directory.systemTemp.createTemp('plants_test_');
       testFile = File('${tempDir.path}/test_plants.json');
     });
     
     tearDown(() async {
-      // Nettoyer après les tests
+      // Nettoyer aprÃ¨s les tests
       if (await tempDir.exists()) {
         await tempDir.delete(recursive: true);
       }
     });
     
     test('should handle legacy format (array-only)', () async {
-      // Arrange - Créer un fichier legacy
+      // Arrange - CrÃ©er un fichier legacy
       final legacyData = [
         {
           'id': 'tomato',
           'commonName': 'Tomate',
           'scientificName': 'Solanum lycopersicum',
           'family': 'Solanaceae',
-          'plantingSeason': 'Printemps',  // ❌ Déprécié
-          'harvestSeason': 'Été',         // ❌ Déprécié
+          'plantingSeason': 'Printemps',  // âŒ DÃ©prÃ©ciÃ©
+          'harvestSeason': 'Ã‰tÃ©',         // âŒ DÃ©prÃ©ciÃ©
           'sowingMonths': ['M', 'A', 'M'],
           'harvestMonths': ['J', 'J', 'A'],
         },
@@ -60,11 +63,11 @@ void main() {
       // Assert
       expect(data, isA<List>());
       expect(data.length, 2);
-      expect(data[0]['plantingSeason'], 'Printemps'); // Présent dans legacy
+      expect(data[0]['plantingSeason'], 'Printemps'); // PrÃ©sent dans legacy
     });
     
     test('should handle v2.1.0 format (structured)', () async {
-      // Arrange - Créer un fichier v2.1.0
+      // Arrange - CrÃ©er un fichier v2.1.0
       final v2Data = {
         'schema_version': '2.1.0',
         'metadata': {
@@ -79,7 +82,7 @@ void main() {
             'commonName': 'Tomate',
             'scientificName': 'Solanum lycopersicum',
             'family': 'Solanaceae',
-            // ✅ Pas de plantingSeason/harvestSeason
+            // âœ… Pas de plantingSeason/harvestSeason
             'sowingMonths': ['M', 'A', 'M'],
             'harvestMonths': ['J', 'J', 'A'],
           },
@@ -107,14 +110,14 @@ void main() {
       expect(data['plants'], isA<List>());
       expect((data['plants'] as List).length, 2);
       
-      // Vérifier absence de champs dépréciés
+      // VÃ©rifier absence de champs dÃ©prÃ©ciÃ©s
       final firstPlant = (data['plants'] as List)[0] as Map<String, dynamic>;
       expect(firstPlant.containsKey('plantingSeason'), false);
       expect(firstPlant.containsKey('harvestSeason'), false);
     });
     
     test('should preserve all plant data during migration', () async {
-      // Arrange - Plante avec données complètes
+      // Arrange - Plante avec donnÃ©es complÃ¨tes
       final legacyData = [
         {
           'id': 'tomato',
@@ -122,7 +125,7 @@ void main() {
           'scientificName': 'Solanum lycopersicum',
           'family': 'Solanaceae',
           'plantingSeason': 'Printemps',
-          'harvestSeason': 'Été',
+          'harvestSeason': 'Ã‰tÃ©',
           'sowingMonths': ['M', 'A', 'M'],
           'harvestMonths': ['J', 'J', 'A'],
           'daysToMaturity': 80,
@@ -154,7 +157,7 @@ void main() {
       transformedPlant.remove('plantingSeason');
       transformedPlant.remove('harvestSeason');
       
-      // Assert - Vérifier que les données importantes sont préservées
+      // Assert - VÃ©rifier que les donnÃ©es importantes sont prÃ©servÃ©es
       expect(transformedPlant['id'], 'tomato');
       expect(transformedPlant['commonName'], 'Tomate');
       expect(transformedPlant['scientificName'], 'Solanum lycopersicum');
@@ -171,7 +174,7 @@ void main() {
       expect(transformedPlant['germination'], isNotNull);
       expect(transformedPlant['companionPlanting'], isNotNull);
       
-      // Vérifier suppression des champs dépréciés
+      // VÃ©rifier suppression des champs dÃ©prÃ©ciÃ©s
       expect(transformedPlant.containsKey('plantingSeason'), false);
       expect(transformedPlant.containsKey('harvestSeason'), false);
     });
@@ -183,10 +186,10 @@ void main() {
         'updated_at': '2025-10-08',
         'total_plants': 44,
         'source': 'PermaCalendar Team',
-        'description': 'Base de données des plantes pour permaculture',
+        'description': 'Base de donnÃ©es des plantes pour permaculture',
       };
       
-      // Assert - Vérifier structure des métadonnées
+      // Assert - VÃ©rifier structure des mÃ©tadonnÃ©es
       expect(metadata['version'], matches(RegExp(r'^\d+\.\d+\.\d+$')));
       expect(metadata['updated_at'], matches(RegExp(r'^\d{4}-\d{2}-\d{2}$')));
       expect(metadata['total_plants'], isA<int>());
@@ -227,7 +230,7 @@ void main() {
         {
           'id': 'plant1',
           'plantingSeason': 'Printemps',
-          'harvestSeason': 'Été',
+          'harvestSeason': 'Ã‰tÃ©',
           'notificationSettings': {'enabled': true},
         },
         {
@@ -296,7 +299,7 @@ void main() {
       expect(3.5, greaterThanOrEqualTo(0)); // marketPricePerKg
       
       // Invalid values
-      expect(-10, lessThan(0)); // Négatif invalide
+      expect(-10, lessThan(0)); // NÃ©gatif invalide
       expect(1000, greaterThan(365)); // Trop grand (sauf vivaces)
     });
     
@@ -317,12 +320,12 @@ void main() {
       final validWaterNeeds = [
         'Faible',
         'Moyen',
-        'Élevé',
-        'Très élevé',
+        'Ã‰levÃ©',
+        'TrÃ¨s Ã©levÃ©',
       ];
       
       expect(validWaterNeeds.contains('Moyen'), true);
-      expect(validWaterNeeds.contains('Élevé'), true);
+      expect(validWaterNeeds.contains('Ã‰levÃ©'), true);
       expect(validWaterNeeds.contains('Invalid'), false);
     });
   });
@@ -339,24 +342,24 @@ void main() {
         final content = await file.readAsString();
         final data = json.decode(content);
         
-        // Vérifier structure v2.1.0
+        // VÃ©rifier structure v2.1.0
         expect(data, isA<Map<String, dynamic>>());
         expect(data['schema_version'], isNotNull);
         expect(data['metadata'], isNotNull);
         expect(data['plants'], isA<List>());
         
-        // Vérifier métadonnées
+        // VÃ©rifier mÃ©tadonnÃ©es
         final metadata = data['metadata'] as Map<String, dynamic>;
         expect(metadata['version'], isNotNull);
         expect(metadata['total_plants'], isA<int>());
         expect(metadata['source'], isNotNull);
         
-        // Vérifier cohérence
+        // VÃ©rifier cohÃ©rence
         final plants = data['plants'] as List;
         expect(plants.length, metadata['total_plants']);
         expect(plants.length, greaterThan(0));
         
-        print('✅ plants_v2.json validé : ${plants.length} plantes, version ${data['schema_version']}');
+        print('âœ… plants_v2.json validÃ© : ${plants.length} plantes, version ${data['schema_version']}');
       }
     });
     
@@ -364,14 +367,15 @@ void main() {
       // Assert
       final backupFile = File('assets/data/plants.json.backup');
       
-      // Le backup devrait exister après la migration
+      // Le backup devrait exister aprÃ¨s la migration
       if (await backupFile.exists()) {
         final content = await backupFile.readAsString();
         final data = json.decode(content);
         
         expect(data, isA<List>(), reason: 'Backup should be in legacy format');
-        print('✅ Backup validé : ${data.length} plantes');
+        print('âœ… Backup validÃ© : ${data.length} plantes');
       }
     });
   });
 }
+

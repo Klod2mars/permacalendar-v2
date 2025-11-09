@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/climate/presentation/utils/halo_color_maps.dart';
@@ -213,3 +216,4 @@ void main() {
     });
   });
 }
+

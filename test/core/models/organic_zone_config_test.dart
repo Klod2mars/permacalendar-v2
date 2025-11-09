@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/core/models/organic_zone_config.dart';
 
@@ -25,3 +28,4 @@ void main() {
     expect(updated.enabled, false);
   });
 }
+

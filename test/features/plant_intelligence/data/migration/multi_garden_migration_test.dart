@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_test/hive_test.dart';
@@ -56,7 +59,7 @@ void main() {
           v2.Garden(
             id: v2GardenId,
             name: 'Jardin V2',
-            description: 'Jardin modernisé',
+            description: 'Jardin modernisÃ©',
             location: 'Lyon',
             createdDate: DateTime(2024, 1, 1),
             gardenBeds: const ['v2-bed-1'],
@@ -74,7 +77,7 @@ void main() {
             name: 'Parcelle Sud',
             description: 'Parcelle du jardin legacy',
             sizeInSquareMeters: 40,
-            soilType: 'Humifère',
+            soilType: 'HumifÃ¨re',
             exposure: 'Plein soleil',
           ),
         );
@@ -107,7 +110,7 @@ void main() {
             optimalValue: 20,
             minValue: 15,
             maxValue: 24,
-            unit: '°C',
+            unit: 'Â°C',
             measuredAt: DateTime(2024, 2, 15),
           ),
         );
@@ -119,8 +122,8 @@ void main() {
             id: 'rec-1',
             plantId: plantId,
             gardenId: '',
-            title: 'Arroser modérément',
-            description: 'Maintenir le sol humide sans excès',
+            title: 'Arroser modÃ©rÃ©ment',
+            description: 'Maintenir le sol humide sans excÃ¨s',
             priorityIndex: 1,
             statusIndex: 0,
             createdAt: DateTime(2024, 2, 16),
@@ -164,7 +167,7 @@ void main() {
             optimalValue: 0,
             minValue: 0,
             maxValue: 0,
-            unit: '°C',
+            unit: 'Â°C',
             measuredAt: DateTime.now(),
           ),
         );
@@ -309,7 +312,7 @@ void main() {
 
         // Assert
         expect(report.success, isFalse);
-        expect(report.error, contains('Forcé'));
+        expect(report.error, contains('ForcÃ©'));
         expect(report.sanctuaryMergeReport, isNull);
         expect(conditionsBox.get('cond-safe')?.gardenId, isEmpty);
       });
@@ -396,7 +399,8 @@ class _FailingGardenDataMigration extends GardenDataMigration {
     bool dryRun = false,
     bool backupBeforeMigration = true,
   }) async {
-    throw Exception('Forcé: échec migration jardins');
+    throw Exception('ForcÃ©: Ã©chec migration jardins');
   }
 }
+
 

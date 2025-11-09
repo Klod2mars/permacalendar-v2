@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permacalendar/features/climate/domain/usecases/compute_soil_temp_next_day_usecase.dart';
 
@@ -273,3 +276,4 @@ void main() {
     });
   });
 }
+

@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/di/intelligence_module.dart';
@@ -6,12 +9,12 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 
 /// Tests unitaires pour le provider `plantDataSourceProvider`
 ///
-/// Ce test vérifie :
-/// 1. Que le provider est correctement défini et accessible
+/// Ce test vÃ©rifie :
+/// 1. Que le provider est correctement dÃ©fini et accessible
 /// 2. Que le provider retourne une instance valide de `IPlantDataSource`
-/// 3. Que les méthodes de l'interface fonctionnent correctement
-/// 4. Que la gestion d'erreurs est correcte (retour de valeurs par défaut)
-/// 5. Que le provider est conforme à Riverpod 3
+/// 3. Que les mÃ©thodes de l'interface fonctionnent correctement
+/// 4. Que la gestion d'erreurs est correcte (retour de valeurs par dÃ©faut)
+/// 5. Que le provider est conforme Ã  Riverpod 3
 /// 6. Que le nettoyage/dispose fonctionne correctement
 void main() {
   group('IntelligenceModule.plantDataSourceProvider', () {
@@ -49,7 +52,7 @@ void main() {
       final dataSource2 = container.read(IntelligenceModule.plantDataSourceProvider);
 
       // Assert
-      // En Riverpod, un Provider retourne la même instance à chaque lecture
+      // En Riverpod, un Provider retourne la mÃªme instance Ã  chaque lecture
       expect(dataSource1, same(dataSource2));
     });
 
@@ -70,28 +73,28 @@ void main() {
 
       test('should have getPlant method', () {
         // Act & Assert
-        // Vérifie que la méthode existe et est accessible
+        // VÃ©rifie que la mÃ©thode existe et est accessible
         expect(dataSource.getPlant, isNotNull);
         expect(dataSource.getPlant, isA<Function>());
       });
 
       test('should have getAllPlants method', () {
         // Act & Assert
-        // Vérifie que la méthode existe et est accessible
+        // VÃ©rifie que la mÃ©thode existe et est accessible
         expect(dataSource.getAllPlants, isNotNull);
         expect(dataSource.getAllPlants, isA<Function>());
       });
 
       test('should have searchPlants method', () {
         // Act & Assert
-        // Vérifie que la méthode existe et est accessible
+        // VÃ©rifie que la mÃ©thode existe et est accessible
         expect(dataSource.searchPlants, isNotNull);
         expect(dataSource.searchPlants, isA<Function>());
       });
 
-      // Note: Les tests d'exécution des méthodes nécessitent Hive initialisé
-      // Ces tests sont couverts par les tests d'intégration ou les tests avec Hive initialisé
-    }, skip: 'Tests d\'exécution nécessitent Hive initialisé - couverts par tests d\'intégration');
+      // Note: Les tests d'exÃ©cution des mÃ©thodes nÃ©cessitent Hive initialisÃ©
+      // Ces tests sont couverts par les tests d'intÃ©gration ou les tests avec Hive initialisÃ©
+    }, skip: 'Tests d\'exÃ©cution nÃ©cessitent Hive initialisÃ© - couverts par tests d\'intÃ©gration');
 
     group('Error handling', () {
       late IPlantDataSource dataSource;
@@ -102,17 +105,17 @@ void main() {
 
       test('should have error handling methods defined', () {
         // Act & Assert
-        // Vérifie que les méthodes de gestion d'erreurs existent
-        // La gestion d'erreurs est implémentée dans PlantDataSourceImpl
-        // qui retourne null ou [] plutôt que de lever des exceptions
+        // VÃ©rifie que les mÃ©thodes de gestion d'erreurs existent
+        // La gestion d'erreurs est implÃ©mentÃ©e dans PlantDataSourceImpl
+        // qui retourne null ou [] plutÃ´t que de lever des exceptions
         expect(dataSource.getPlant, isNotNull);
         expect(dataSource.getAllPlants, isNotNull);
         expect(dataSource.searchPlants, isNotNull);
       });
 
-      // Note: Les tests d'exécution avec gestion d'erreurs nécessitent Hive initialisé
-      // ou des mocks. Ces tests sont couverts par les tests d'intégration.
-    }, skip: 'Tests d\'exécution nécessitent Hive initialisé ou mocks - couverts par tests d\'intégration');
+      // Note: Les tests d'exÃ©cution avec gestion d'erreurs nÃ©cessitent Hive initialisÃ©
+      // ou des mocks. Ces tests sont couverts par les tests d'intÃ©gration.
+    }, skip: 'Tests d\'exÃ©cution nÃ©cessitent Hive initialisÃ© ou mocks - couverts par tests d\'intÃ©gration');
 
     group('ProviderContainer lifecycle', () {
       test('should create independent instances for different containers', () {
@@ -127,8 +130,8 @@ void main() {
         // Assert
         expect(dataSource1, isA<IPlantDataSource>());
         expect(dataSource2, isA<IPlantDataSource>());
-        // Les instances peuvent être différentes entre containers
-        // (dépend de l'implémentation, mais les deux doivent être valides)
+        // Les instances peuvent Ãªtre diffÃ©rentes entre containers
+        // (dÃ©pend de l'implÃ©mentation, mais les deux doivent Ãªtre valides)
 
         // Cleanup
         container1.dispose();
@@ -144,9 +147,9 @@ void main() {
         container.dispose();
 
         // Assert
-        // Après dispose, on ne peut plus lire le provider
-        // Riverpod lève une exception (généralement StateError) quand on lit un provider
-        // depuis un container disposé
+        // AprÃ¨s dispose, on ne peut plus lire le provider
+        // Riverpod lÃ¨ve une exception (gÃ©nÃ©ralement StateError) quand on lit un provider
+        // depuis un container disposÃ©
         expect(
           () => container.read(IntelligenceModule.plantDataSourceProvider),
           throwsA(anything),
@@ -160,8 +163,8 @@ void main() {
         final dataSource = container.read(IntelligenceModule.plantDataSourceProvider);
 
         // Assert
-        // Le provider doit créer une nouvelle instance via le constructeur
-        // et ne pas dépendre de variables globales
+        // Le provider doit crÃ©er une nouvelle instance via le constructeur
+        // et ne pas dÃ©pendre de variables globales
         expect(dataSource, isNotNull);
         expect(dataSource, isA<IPlantDataSource>());
       });
@@ -190,7 +193,7 @@ void main() {
         final provider = IntelligenceModule.plantDataSourceProvider;
 
         // Assert
-        // Le provider doit être un Provider (pas un Provider.family ou autre)
+        // Le provider doit Ãªtre un Provider (pas un Provider.family ou autre)
         expect(provider, isA<Provider<IPlantDataSource>>());
       });
     });
@@ -202,9 +205,9 @@ void main() {
         final useCase = container.read(IntelligenceModule.analyzePestThreatsUsecaseProvider);
 
         // Act & Assert
-        // Le UseCase doit avoir été créé avec succès
+        // Le UseCase doit avoir Ã©tÃ© crÃ©Ã© avec succÃ¨s
         expect(useCase, isNotNull);
-        // Cela signifie que plantDataSourceProvider a été lu avec succès
+        // Cela signifie que plantDataSourceProvider a Ã©tÃ© lu avec succÃ¨s
       });
 
       test('should be usable by generateBioControlRecommendationsUsecaseProvider', () {
@@ -215,11 +218,12 @@ void main() {
         );
 
         // Act & Assert
-        // Le UseCase doit avoir été créé avec succès
+        // Le UseCase doit avoir Ã©tÃ© crÃ©Ã© avec succÃ¨s
         expect(useCase, isNotNull);
-        // Cela signifie que plantDataSourceProvider a été lu avec succès
+        // Cela signifie que plantDataSourceProvider a Ã©tÃ© lu avec succÃ¨s
       });
     });
   });
 }
+
 

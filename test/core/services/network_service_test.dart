@@ -1,3 +1,6 @@
+﻿
+import '../../test_setup_stub.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -22,7 +25,7 @@ void main() {
       test('should initialize successfully', () async {
         // Arrange
         // Note: Dans un vrai test, on devrait mocker Dio mais ici on teste
-        // l'initialisation réelle car elle configure les intercepteurs
+        // l'initialisation rÃ©elle car elle configure les intercepteurs
         
         // Act
         await networkService.initialize();
@@ -60,14 +63,14 @@ void main() {
         // Arrange
         await networkService.initialize();
         // Note: On ne peut pas facilement mocker EnvironmentService.isBackendEnabled
-        // sans modifier le service. Ce test vérifie le comportement par défaut.
+        // sans modifier le service. Ce test vÃ©rifie le comportement par dÃ©faut.
 
         // Act
         final result = await networkService.isBackendAvailable();
 
         // Assert
-        // Si le backend est désactivé, devrait retourner false
-        // Si activé mais non disponible, retournera aussi false
+        // Si le backend est dÃ©sactivÃ©, devrait retourner false
+        // Si activÃ© mais non disponible, retournera aussi false
         expect(result, isA<bool>());
       });
     });
@@ -76,11 +79,11 @@ void main() {
       test('should throw NetworkException on error', () async {
         // Arrange
         await networkService.initialize();
-        // Note: Ce test nécessiterait un serveur mock ou http_mock_adapter
+        // Note: Ce test nÃ©cessiterait un serveur mock ou http_mock_adapter
         // Pour l'instant, on teste la structure de base
 
         // Act & Assert
-        // On s'attend à une NetworkException si le serveur n'est pas disponible
+        // On s'attend Ã  une NetworkException si le serveur n'est pas disponible
         expectLater(
           networkService.get('/test'),
           throwsA(isA<NetworkException>()),
@@ -182,4 +185,5 @@ void main() {
     });
   });
 }
+
 

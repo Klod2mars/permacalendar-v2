@@ -1,5 +1,8 @@
-// Tests unitaires pour RealTimeTimeDataProcessor
+﻿// Tests unitaires pour RealTimeTimeDataProcessor
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
+
+
+import '../../../test_setup_stub.dart';
 
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
@@ -592,4 +595,5 @@ void main() {
     });
   });
 }
+
 

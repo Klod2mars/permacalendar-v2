@@ -1,3 +1,6 @@
+﻿
+import '../../../../test_setup_stub.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,12 +14,12 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import 'package:permacalendar/core/models/garden.dart';
 
-/// ✅ CURSOR PROMPT A9 - Evolution Timeline Integration Tests
+/// âœ… CURSOR PROMPT A9 - Evolution Timeline Integration Tests
 ///
-/// Tests de navigation et d'intégration UI pour:
-/// 1. Dashboard → Plant Selection → Evolution Timeline
-/// 2. PlantingDetail → Degradation Banner → Evolution Timeline
-/// 3. Workflow complet avec données réalistes
+/// Tests de navigation et d'intÃ©gration UI pour:
+/// 1. Dashboard â†’ Plant Selection â†’ Evolution Timeline
+/// 2. PlantingDetail â†’ Degradation Banner â†’ Evolution Timeline
+/// 3. Workflow complet avec donnÃ©es rÃ©alistes
 
 void main() {
   group('Evolution Timeline Integration Tests', () {
@@ -32,9 +35,9 @@ void main() {
           commonName: 'Tomate Cerise',
           scientificName: 'Solanum lycopersicum',
           family: 'Solanaceae',
-          description: 'Tomate cerise délicieuse',
+          description: 'Tomate cerise dÃ©licieuse',
           plantingSeason: 'Printemps',
-          harvestSeason: 'Été',
+          harvestSeason: 'Ã‰tÃ©',
           daysToMaturity: 60,
           spacing: 50,
           depth: 1.5,
@@ -114,16 +117,16 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert - Evolution history button should be visible
-      expect(find.text('📊 Historique d\'évolution'), findsOneWidget);
+      expect(find.text('ðŸ“Š Historique d\'Ã©volution'), findsOneWidget);
       expect(find.byIcon(Icons.timeline), findsWidgets);
 
       // Act - Tap the evolution history button
-      await tester.tap(find.text('📊 Historique d\'évolution'));
+      await tester.tap(find.text('ðŸ“Š Historique d\'Ã©volution'));
       await tester.pumpAndSettle();
 
       // Assert - Plant selection bottom sheet should appear
-      expect(find.text('Historique d\'évolution'), findsOneWidget);
-      expect(find.text('Sélectionnez une plante'), findsOneWidget);
+      expect(find.text('Historique d\'Ã©volution'), findsOneWidget);
+      expect(find.text('SÃ©lectionnez une plante'), findsOneWidget);
       expect(find.text('Tomate Cerise'), findsOneWidget);
       expect(find.text('Carotte'), findsOneWidget);
     });
@@ -176,7 +179,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Act - Tap evolution history button
-      await tester.tap(find.text('📊 Historique d\'évolution'));
+      await tester.tap(find.text('ðŸ“Š Historique d\'Ã©volution'));
       await tester.pumpAndSettle();
 
       // Act - Select a plant
@@ -185,7 +188,7 @@ void main() {
 
       // Assert - Should navigate to PlantEvolutionHistoryScreen
       expect(find.byType(PlantEvolutionHistoryScreen), findsOneWidget);
-      expect(find.text('Historique d\'évolution'), findsOneWidget);
+      expect(find.text('Historique d\'Ã©volution'), findsOneWidget);
       expect(find.text('Tomate Cerise'), findsOneWidget);
     });
 
@@ -228,11 +231,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // Act - Tap evolution history button
-      await tester.tap(find.text('📊 Historique d\'évolution'));
+      await tester.tap(find.text('ðŸ“Š Historique d\'Ã©volution'));
       await tester.pumpAndSettle();
 
       // Assert - Should show snackbar with warning
-      expect(find.text('Aucune plante active trouvée pour l\'analyse'),
+      expect(find.text('Aucune plante active trouvÃ©e pour l\'analyse'),
           findsOneWidget);
     });
 
@@ -421,11 +424,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // Assert - Should show stats summary
-      expect(find.text('Évolutions'), findsOneWidget);
+      expect(find.text('Ã‰volutions'), findsOneWidget);
       expect(find.text('3'), findsOneWidget); // Total evolutions
-      expect(find.text('Améliorations'), findsOneWidget);
+      expect(find.text('AmÃ©liorations'), findsOneWidget);
       expect(find.text('1'), findsOneWidget); // 1 improvement
-      expect(find.text('Dégradations'), findsOneWidget);
+      expect(find.text('DÃ©gradations'), findsOneWidget);
       // Note: There might be multiple '1's for different stats
       expect(find.text('Stables'), findsOneWidget);
     });
@@ -479,3 +482,4 @@ class GardenState {
     this.error,
   });
 }
+
