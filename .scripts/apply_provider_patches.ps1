@@ -1,4 +1,4 @@
-# PowerShell script — prepare/apply provider family scaffolds (M008)
+#! PowerShell: generate/apply provider family scaffolds (M008) — fixed Providers parsing
 Param(
   [int]$Max = 5,
   [string[]]$Providers = @(),
@@ -9,6 +9,16 @@ Param(
 $ErrorActionPreference = "Stop"
 
 function Write-Log($msg) { Write-Host "$(Get-Date -Format u) - $msg" }
+
+# --- Normalize Providers param: accept "a,b,c" or an array of strings
+if ($Providers -and $Providers.Count -eq 1) {
+  $single = $Providers[0]
+  if ($single -match ',') {
+    # split and trim
+    $Providers = $single -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+    Write-Log "Providers parameter split into: $($Providers -join ', ')"
+  }
+}
 
 # Repo root
 $root = (Get-Location).Path
@@ -47,31 +57,28 @@ foreach ($prov in $candidates) {
   Write-Log "Processing provider: $prov"
 
   # Find definitions across repo
-  $defs = Get-ChildItem -Path . -Filter *.dart -Recurse | Select-String -Pattern "final\s+$prov\s*=" -List -ErrorAction SilentlyContinue
+  try {
+    $defs = Select-String -Path ".\**\*.dart" -Pattern "final\s+$prov\s*=" -List -ErrorAction SilentlyContinue
+  } catch {
+    $defs = @()
+  }
+
   if (-not $defs) {
-    Write-Warning "No definition found for $prov - skipping."
+    Write-Warning "No definition found for $prov — skipping."
+    Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: no_definition_found")
     continue
   }
   if ($defs.Count -ne 1) {
-    Write-Warning "Multiple or zero definitions for $prov ($($defs.Count)) - SKIPPING to avoid collisions."
-    $defs | ForEach-Object { Write-Host ("  - {0}:{1}" -f $_.Path, $_.LineNumber) }
-    if (-not $DryRun) {
-      $collisionContent = @()
-      $collisionContent += "status: skipped"
-      $collisionContent += "reason: collision_or_multiple_defs"
-      $collisionContent += "found:"
-      $defs | ForEach-Object { $collisionContent += (" - {0}:{1}" -f $_.Path, $_.LineNumber) }
-      Add-Content -Path "$appliedDir/$prov.patch.md" -Value ($collisionContent -join "`n")
-    } else {
-      Write-Log "(DryRun) Would record collision details for $prov"
-    }
+    Write-Warning "Multiple or zero definitions for $prov ($($defs.Count)) — SKIPPING to avoid collisions."
+    $defs | ForEach-Object { Write-Host "  - $($_.Path):$($_.LineNumber)" }
+    Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: collision_or_multiple_defs`nfound:" + ($defs | ForEach-Object { "`n - $($_.Path):$($_.LineNumber)" }))
     continue
   }
 
   $def = $defs[0]
   $defFile = $def.Path
   $lineNo = $def.LineNumber
-  Write-Log ("Found single definition in {0}:{1}" -f $defFile, $lineNo)
+  Write-Log "Found single definition in $defFile:$lineNo"
 
   # Extract snippet
   $content = Get-Content -Path $defFile -Raw -Encoding UTF8
@@ -82,12 +89,8 @@ foreach ($prov in $candidates) {
 
   # Backup original file
   $bakFile = "$defFile.m008.bak"
-  if ($DryRun) {
-    Write-Log "(DryRun) Would create backup: $bakFile"
-  } else {
-    Copy-Item -Path $defFile -Destination $bakFile -Force
-    Write-Log "Backup created: $bakFile"
-  }
+  Copy-Item -Path $defFile -Destination $bakFile -Force
+  Write-Log "Backup created: $bakFile"
 
   # Create branch
   $branch = "apply-provider/$prov-m008"
@@ -149,10 +152,7 @@ foreach ($prov in $candidates) {
       Write-Log "Running build_runner..."
       & flutter pub run build_runner build --delete-conflicting-outputs
       Write-Log "Running flutter test (full suite; consider running targeted tests)..."
-      & flutter test
-      if ($LASTEXITCODE -ne 0) {
-        Write-Warning "Some tests failed - check logs."
-      }
+      & flutter test || Write-Warning "Some tests failed — check logs."
     }
   }
 
@@ -174,23 +174,19 @@ foreach ($prov in $candidates) {
 
   # Create a small applied_patches status file
   $appliedFile = "$appliedDir/$prov.patch.md"
-  if ($DryRun) {
-    Write-Log "(DryRun) Would write applied patch status: $appliedFile"
-  } else {
-    $statusContent = @(
-      '---',
-      "provider: $prov",
-      "prepared_in_file: $defFile",
-      "prepared_line: $lineNo",
-      "backup_file: $bakFile",
-      "branch: $branch",
-      'status: prepared',
-      'notes: "Scaffold inserted. Manual conversion to .family required. See TODO block in file."',
-      '---'
-    ) -join "`n"
-    Set-Content -Path $appliedFile -Value $statusContent -Encoding UTF8
-    Write-Log "Wrote applied patch status: $appliedFile"
-  }
+  $statusContent = @"
+---
+provider: $prov
+prepared_in_file: $defFile
+prepared_line: $lineNo
+backup_file: $bakFile
+branch: $branch
+status: prepared
+notes: "Scaffold inserted. Manual conversion to .family required. See TODO block in file."
+---
+"@
+  Set-Content -Path $appliedFile -Value $statusContent -Encoding UTF8
+  Write-Log "Wrote applied patch status: $appliedFile"
 
   # Return to main if not in dryrun and not staying in branch
   if (-not $DryRun) {
