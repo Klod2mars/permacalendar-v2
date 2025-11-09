@@ -20,9 +20,11 @@ class OrganicDashboardWidget extends StatelessWidget {
   const OrganicDashboardWidget({
     super.key,
     this.assetPath = 'assets/images/backgrounds/dashboard_organic_final.png',
+    this.showDiagnostics = true,
   });
 
   final String assetPath;
+  final bool showDiagnostics;
 
   static const List<_Hotspot> _hotspots = <_Hotspot>[
     _Hotspot(
@@ -51,6 +53,15 @@ class OrganicDashboardWidget extends StatelessWidget {
       heightFrac: 0.20,
       route: AppRoutes.activities,
       label: 'Activities',
+    ),
+    _Hotspot(
+      id: 'weather',
+      centerX: 0.50,
+      centerY: 0.18,
+      widthFrac: 0.18,
+      heightFrac: 0.18,
+      route: AppRoutes.weather,
+      label: 'Weather',
     ),
     _Hotspot(
       id: 'gardens',
@@ -157,22 +168,21 @@ class OrganicDashboardWidget extends StatelessWidget {
                     }
                     context.push(hs.route);
                   },
-                  showDebugOutline: kDebugMode,
+                  showDebugOutline: kDebugMode && showDiagnostics,
                   semanticLabel: hs.label,
                 ),
               );
             }).toList(),
 
             // Debug overlay (visible only in debug mode)
-            if (kDebugMode)
+            if (kDebugMode && showDiagnostics)
               Positioned(
                 top: 8,
                 right: 8,
                 child: FutureBuilder<_AssetDiagnostic>(
                   future: _diagnoseAsset(assetPath),
                   builder: (context, snap) {
-                    String title = 'Dashboard asset';
-                    Color bg = Colors.black54;
+                    Color bg = Colors.black.withValues(alpha: 0.18);
                     Widget body;
 
                     if (snap.connectionState != ConnectionState.done) {
@@ -230,14 +240,16 @@ class OrganicDashboardWidget extends StatelessWidget {
                         ],
                       );
                       // set bg color small hint
-                      bg = d.declared && d.loadOk ? Colors.black54.withOpacity(0.6) : Colors.black87.withOpacity(0.9);
+                      bg = d.declared && d.loadOk
+                          ? Colors.black.withValues(alpha: 0.24)
+                          : Colors.black.withValues(alpha: 0.38);
                     }
 
                     return Material(
                       color: Colors.transparent,
                       child: Container(
                         padding: const EdgeInsets.all(8),
-                        constraints: const BoxConstraints(maxWidth: 260),
+                        constraints: const BoxConstraints(maxWidth: 160),
                         decoration: BoxDecoration(
                           color: bg,
                           borderRadius: BorderRadius.circular(8),
@@ -315,7 +327,10 @@ class _HotspotButton extends StatelessWidget {
                 ? BoxDecoration(
                     color: Colors.black26,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.orangeAccent.withOpacity(0.95), width: 1.5),
+                    border: Border.all(
+                      color: Colors.orangeAccent.withValues(alpha: 0.95),
+                      width: 1.5,
+                    ),
                   )
                 : const BoxDecoration(color: Colors.transparent),
             child: showDebugOutline
@@ -326,7 +341,7 @@ class _HotspotButton extends StatelessWidget {
                         semanticLabel ?? 'hotspot',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.98),
+                          color: Colors.white.withValues(alpha: 0.98),
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
