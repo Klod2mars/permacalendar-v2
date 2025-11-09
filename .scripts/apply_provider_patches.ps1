@@ -1,4 +1,4 @@
-#! PowerShell: generate/apply provider family scaffolds (M008) — fixed Providers parsing
+#! PowerShell: generate/apply provider family scaffolds (M008) - fixed Providers parsing
 Param(
   [int]$Max = 5,
   [string[]]$Providers = @(),
@@ -64,12 +64,12 @@ foreach ($prov in $candidates) {
   }
 
   if (-not $defs) {
-    Write-Warning "No definition found for $prov — skipping."
+    Write-Warning "No definition found for $prov - skipping."
     Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: no_definition_found")
     continue
   }
   if ($defs.Count -ne 1) {
-    Write-Warning "Multiple or zero definitions for $prov ($($defs.Count)) — SKIPPING to avoid collisions."
+    Write-Warning "Multiple or zero definitions for $prov ($($defs.Count)) - SKIPPING to avoid collisions."
     $defs | ForEach-Object { Write-Host "  - $($_.Path):$($_.LineNumber)" }
     Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: collision_or_multiple_defs`nfound:" + ($defs | ForEach-Object { "`n - $($_.Path):$($_.LineNumber)" }))
     continue
@@ -78,7 +78,7 @@ foreach ($prov in $candidates) {
   $def = $defs[0]
   $defFile = $def.Path
   $lineNo = $def.LineNumber
-  Write-Log "Found single definition in $defFile:$lineNo"
+  Write-Log ("Found single definition in {0}:{1}" -f $defFile, $lineNo)
 
   # Extract snippet
   $content = Get-Content -Path $defFile -Raw -Encoding UTF8
@@ -152,7 +152,10 @@ foreach ($prov in $candidates) {
       Write-Log "Running build_runner..."
       & flutter pub run build_runner build --delete-conflicting-outputs
       Write-Log "Running flutter test (full suite; consider running targeted tests)..."
-      & flutter test || Write-Warning "Some tests failed — check logs."
+      & flutter test
+      if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Some tests failed - check logs."
+      }
     }
   }
 
@@ -174,17 +177,18 @@ foreach ($prov in $candidates) {
 
   # Create a small applied_patches status file
   $appliedFile = "$appliedDir/$prov.patch.md"
-  $statusContent = @"
----
-provider: $prov
-prepared_in_file: $defFile
-prepared_line: $lineNo
-backup_file: $bakFile
-branch: $branch
-status: prepared
-notes: "Scaffold inserted. Manual conversion to .family required. See TODO block in file."
----
-"@
+  $statusContentLines = @(
+    '---',
+    "provider: $prov",
+    "prepared_in_file: $defFile",
+    "prepared_line: $lineNo",
+    "backup_file: $bakFile",
+    "branch: $branch",
+    'status: prepared',
+    'notes: "Scaffold inserted. Manual conversion to .family required. See TODO block in file."',
+    '---'
+  )
+  $statusContent = $statusContentLines -join "`n"
   Set-Content -Path $appliedFile -Value $statusContent -Encoding UTF8
   Write-Log "Wrote applied patch status: $appliedFile"
 
@@ -195,3 +199,4 @@ notes: "Scaffold inserted. Manual conversion to .family required. See TODO block
 }
 
 Write-Log "M008 script finished."
+
