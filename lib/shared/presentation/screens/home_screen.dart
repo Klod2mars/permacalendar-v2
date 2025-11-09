@@ -12,6 +12,7 @@ import '../../../shared/widgets/loading_widgets.dart';
 import '../../../features/weather/providers/weather_provider.dart';
 import '../../../features/weather/providers/commune_provider.dart';
 import '../../../core/providers/activity_tracker_v3_provider.dart' as v3;
+import '../../widgets/organic_dashboard.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -347,82 +348,30 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Widget _buildIntelligenceSection(BuildContext context, ThemeData theme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Intelligence Végétale',
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Intelligence Végétale',
+        style: theme.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      const SizedBox(height: 16),
+
+      // Card contenant le dashboard organique (PNG) avec hotspots
+      CustomCard(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: OrganicDashboardWidget(
+            // Si tu renommes l'image, ajuste ce chemin.
+            assetPath: 'assets/images/backgrounds/organic_dashboard.png',
           ),
         ),
-        const SizedBox(height: 16),
-        CustomCard(
-          child: InkWell(
-            onTap: () {
-              print(
-                  '🔴🔴🔴 [DIAGNOSTIC CRITIQUE] HomeScreen - Clic sur Intelligence Végétale 🔴🔴🔴');
-              print(
-                  '🔴🔴🔴 [DIAGNOSTIC CRITIQUE] Navigation vers: ${AppRoutes.intelligence} 🔴🔴🔴');
-              context.push(AppRoutes.intelligence);
-              print(
-                  '🔴🔴🔴 [DIAGNOSTIC CRITIQUE] context.push() exécuté 🔴🔴🔴');
-            },
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          theme.colorScheme.primary.withOpacity(0.1),
-                          theme.colorScheme.secondary.withOpacity(0.1),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      Icons.psychology,
-                      color: theme.colorScheme.primary,
-                      size: 32,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Analysez vos plantes avec l\'IA',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Obtenez des recommandations personnalisées pour optimiser la santé de vos plantes',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: theme.colorScheme.onSurfaceVariant,
-                    size: 16,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      ),
+    ],
+  );
+}
         const SizedBox(height: 12),
         // Boutons d'accès rapide (optimisés pour mobile)
         Column(
