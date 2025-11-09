@@ -1,4 +1,4 @@
-// lib/shared/presentation/screens/home_screen.dart
+﻿// lib/shared/presentation/screens/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +16,7 @@ import '../../../features/weather/providers/commune_provider.dart';
 import '../../../core/providers/activity_tracker_v3_provider.dart' as v3;
 import '../../widgets/organic_dashboard.dart';
 
-/// HomeScreen - écran d'accueil principal
+/// HomeScreen - Ã©cran d'accueil principal
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -76,13 +76,13 @@ class HomeScreen extends ConsumerWidget {
         child: weatherAsync.when(
           loading: () => const LoadingWidget(),
           error: (e, st) => ErrorStateWidget(
-            title: 'Météo indisponible',
+            title: 'MÃ©tÃ©o indisponible',
             subtitle: e.toString(),
-            retryText: 'Réessayer',
+            retryText: 'RÃ©essayer',
             onRetry: () {},
           ),
           data: (data) {
-            // On s'attend à ce que splitByToday() retourne un record (past, forecast).
+            // On s'attend Ã  ce que splitByToday() retourne un record (past, forecast).
             // On utilise la destructuration de record disponible en Dart 3.
             List<DailyWeatherPoint> past = <DailyWeatherPoint>[];
             List<DailyWeatherPoint> forecast = <DailyWeatherPoint>[];
@@ -97,7 +97,7 @@ class HomeScreen extends ConsumerWidget {
                 forecast = List<DailyWeatherPoint>.from(f);
               }
             } catch (_) {
-              // Fallback silencieux : si la structure diffère, on laisse les listes vides.
+              // Fallback silencieux : si la structure diffÃ¨re, on laisse les listes vides.
             }
 
             final todayPrecip = forecast.isNotEmpty ? forecast.first.precipMm : 0.0;
@@ -112,7 +112,7 @@ class HomeScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Météo — ${data.locationLabel}',
+                        'MÃ©tÃ©o â€” ${data.locationLabel}',
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -133,11 +133,11 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(height: 12),
                 _buildPrecipChips(theme, 'Historique (7 jours)', past.take(7).toList()),
                 const SizedBox(height: 12),
-                _buildPrecipChips(theme, 'Prévisions (7 jours)', forecast.take(7).toList()),
+                _buildPrecipChips(theme, 'PrÃ©visions (7 jours)', forecast.take(7).toList()),
                 const SizedBox(height: 12),
                 _buildPrecipDetails(theme, 'Historique complet', past),
                 const SizedBox(height: 12),
-                _buildPrecipDetails(theme, 'Prévisions détaillées', forecast),
+                _buildPrecipDetails(theme, 'PrÃ©visions dÃ©taillÃ©es', forecast),
                 const SizedBox(height: 16),
                 Align(
                   alignment: Alignment.centerRight,
@@ -167,7 +167,7 @@ class HomeScreen extends ConsumerWidget {
           children: points.cast<DailyWeatherPoint>().map<Widget>((p) {
             final d = '${p.date.day.toString().padLeft(2, '0')}/${p.date.month.toString().padLeft(2, '0')}';
             return Chip(
-              label: Text('$d • ${p.precipMm.toStringAsFixed(1)} mm'),
+              label: Text('$d â€¢ ${p.precipMm.toStringAsFixed(1)} mm'),
               avatar: const Icon(Icons.grain, size: 16),
             );
           }).toList(),
@@ -185,7 +185,7 @@ class HomeScreen extends ConsumerWidget {
         Column(
           children: points.cast<DailyWeatherPoint>().map<Widget>((p) {
             final d = '${p.date.day.toString().padLeft(2, '0')}/${p.date.month.toString().padLeft(2, '0')}/${p.date.year}';
-            final tRange = (p.tMinC != null && p.tMaxC != null) ? ' • ${p.tMinC!.toStringAsFixed(0)}–${p.tMaxC!.toStringAsFixed(0)}°C' : '';
+            final tRange = (p.tMinC != null && p.tMaxC != null) ? ' â€¢ ${p.tMinC!.toStringAsFixed(0)}â€“${p.tMaxC!.toStringAsFixed(0)}Â°C' : '';
             return Row(
               children: [
                 Expanded(child: Text(d, style: theme.textTheme.bodyMedium)),
@@ -213,7 +213,7 @@ class HomeScreen extends ConsumerWidget {
           ErrorStateWidget(
             title: 'Erreur lors du chargement des jardins',
             subtitle: gardenState.error,
-            retryText: 'Réessayer',
+            retryText: 'RÃ©essayer',
             onRetry: () => ref.read(gardenProvider.notifier).loadGardens(),
           )
         else if (gardenState.gardens.isEmpty)
@@ -229,11 +229,11 @@ class HomeScreen extends ConsumerWidget {
                     Text('Aucun jardin', style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.outline, fontWeight: FontWeight.w600)),
                   ]),
                   const SizedBox(height: 12),
-                  Text('Créez votre premier jardin pour commencer.', style: theme.textTheme.bodyMedium),
+                  Text('CrÃ©ez votre premier jardin pour commencer.', style: theme.textTheme.bodyMedium),
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      ElevatedButton.icon(onPressed: () => context.push(AppRoutes.gardenCreate), icon: const Icon(Icons.add), label: const Text('Créer un jardin')),
+                      ElevatedButton.icon(onPressed: () => context.push(AppRoutes.gardenCreate), icon: const Icon(Icons.add), label: const Text('CrÃ©er un jardin')),
                       const SizedBox(width: 12),
                       OutlinedButton.icon(onPressed: () => context.push(AppRoutes.gardens), icon: const Icon(Icons.list), label: const Text('Voir tous les jardins')),
                     ],
@@ -273,7 +273,7 @@ class HomeScreen extends ConsumerWidget {
                 );
               }),
               const SizedBox(height: 12),
-              Align(alignment: Alignment.centerRight, child: TextButton.icon(onPressed: () => context.push(AppRoutes.gardenCreate), icon: const Icon(Icons.add), label: const Text('Créer un jardin'))),
+              Align(alignment: Alignment.centerRight, child: TextButton.icon(onPressed: () => context.push(AppRoutes.gardenCreate), icon: const Icon(Icons.add), label: const Text('CrÃ©er un jardin'))),
             ],
           ),
       ],
@@ -287,12 +287,12 @@ class HomeScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Intelligence Végétale', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+        Text('Intelligence VÃ©gÃ©tale', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 16),
         CustomCard(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: OrganicDashboardWidget(assetPath: 'assets/images/backgrounds/dashboard_organic_final.png'),
+            child: OrganicDashboardWidget()
           ),
         ),
         const SizedBox(height: 12),
@@ -303,7 +303,7 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 12),
             OutlinedButton.icon(onPressed: () => context.push(AppRoutes.notifications), icon: const Icon(Icons.notifications, size: 20), label: const Text('Notifications'), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20), alignment: Alignment.centerLeft)),
             const SizedBox(height: 12),
-            OutlinedButton.icon(onPressed: () => context.push(AppRoutes.intelligenceSettings), icon: const Icon(Icons.settings, size: 20), label: const Text('Paramètres intelligence'), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20), alignment: Alignment.centerLeft)),
+            OutlinedButton.icon(onPressed: () => context.push(AppRoutes.intelligenceSettings), icon: const Icon(Icons.settings, size: 20), label: const Text('ParamÃ¨tres intelligence'), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20), alignment: Alignment.centerLeft)),
             const SizedBox(height: 12),
             OutlinedButton.icon(onPressed: () => context.push(AppRoutes.pestObservation), icon: const Icon(Icons.bug_report, size: 20), label: const Text('Observation nuisibles'), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20), alignment: Alignment.centerLeft)),
           ],
@@ -324,9 +324,9 @@ class HomeScreen extends ConsumerWidget {
         child: activitiesAsync.when(
           loading: () => const LoadingWidget(),
           error: (e, st) => ErrorStateWidget(
-            title: 'Activités indisponibles',
+            title: 'ActivitÃ©s indisponibles',
             subtitle: e.toString(),
-            retryText: 'Réessayer',
+            retryText: 'RÃ©essayer',
             onRetry: () => ref.read(v3.recentActivitiesProvider.notifier).refresh(),
           ),
           data: (data) {
@@ -336,9 +336,9 @@ class HomeScreen extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Activité récente', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                  Text('ActivitÃ© rÃ©cente', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 8),
-                  const Text('Aucune activité récente.'),
+                  const Text('Aucune activitÃ© rÃ©cente.'),
                 ],
               );
             }
@@ -346,10 +346,10 @@ class HomeScreen extends ConsumerWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Activité récente', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                Text('ActivitÃ© rÃ©cente', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 8),
                 ...items.map<Widget>((it) {
-                  final title = (it?.toString() ?? 'Activité');
+                  final title = (it?.toString() ?? 'ActivitÃ©');
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(children: [const Icon(Icons.history, size: 18), const SizedBox(width: 8), Expanded(child: Text(title))]),
