@@ -1,0 +1,139 @@
+mission_id: "M005"
+title: "Analyse providers→family + test bootstrap: initializeDateFormatting"
+description: |
+  1) Add initializeDateFormatting('en_US') call to test/test_setup_stub.dart to reduce locale-related failures.
+  2) Analyze provider_calls_report.csv and source to produce provider_family_report.csv:
+     - For each provider used as function (XxxProvider(...)), find its definition
+       and detect if defined as NotifierProvider/Provider/FutureProvider and whether it uses .family.
+     - Emit usage counts and suggestions.
+  3) Generate provider_family_suggestions.md with example patch snippets for NotifierProvider -> NotifierProvider.family.
+  4) Commit changes and produce artifacts for review.
+priority: high
+max_files: 4
+files:
+  - path: "test/test_setup_stub.dart"
+    action: modify
+    encoding: text
+    content: |
+      // Global test bootstrap - ensure bindings, adapters and locale
+      import 'package:flutter_test/flutter_test.dart';
+      import 'package:intl/intl.dart';
+      import 'package:intl/date_symbol_data_local.dart';
+      import 'helpers/register_hive_adapters.dart';
+      
+      Future<void> _ensureTestBootstrap() async {
+        // Ensure binding for widgets tests
+        TestWidgetsFlutterBinding.ensureInitialized();
+      
+        // Register Hive adapters (created by generator)
+        try {
+          registerAllHiveAdapters();
+        } catch (_) {
+          // swallow errors during registration in bootstrap
+        }
+      
+        // Default locale for intl-related tests
+        try {
+          Intl.defaultLocale = 'en_US';
+          // initialize date formatting for en_US (non-blocking: we await to be safer)
+          await initializeDateFormatting('en_US');
+        } catch (_) {}
+      }
+      
+      // Execute on import (synchronously schedule)
+      // We run the async bootstrap but don't block import; tests will usually wait on framework init.
+      // Using a top-level future so analyzer is happy.
+      final Future<void> _testBootstrapFuture = _ensureTestBootstrap();
+      // ignore: unused_element
+      Future<void> _ensureTestBootstrapDone() async => await _testBootstrapFuture;
+  - path: ".scripts/analyze_provider_families.ps1"
+    action: create
+    encoding: text
+    content: |
+      # PowerShell: build provider_family_report.csv by cross-referencing provider_calls_report.csv and source definitions
+      $root = (Get-Location).Path
+      $callsCsv = Join-Path $root "provider_calls_report.csv"
+      if (!(Test-Path $callsCsv)) {
+        Write-Host "provider_calls_report.csv not found. Run detect_provider_calls first."
+        exit 1
+      }
+      $calls = Import-Csv $callsCsv
+      $grouped = $calls | Group-Object -Property match | ForEach-Object {
+        [PSCustomObject]@{
+          provider = ($_.Name -replace '\($','')
+          usages = $_.Count
+        }
+      }
+      $out = @()
+      foreach ($g in $grouped) {
+        $prov = $g.provider
+        # find definition: search for NotifierProvider / Provider / FutureProvider / StreamProvider
+        $def = Get-ChildItem -Recurse -Filter *.dart | Select-String -Pattern "final\s+$prov\s*=\s*([A-Za-z0-9_\.]+Provider)" -List -AllMatches | Select-Object -First 1
+        if ($def -ne $null) {
+          $file = $def.Path
+          $line = $def.LineNumber
+          $type = ($def.Matches[0].Groups[1].Value)
+          $content = Get-Content -Path $file -Raw
+          $isFamily = $content -match "$prov\s*=\s*.*\.family<" -or ($content -match "$prov\s*=\s*NotifierProvider\.family")
+        } else {
+          $file = ""
+          $line = ""
+          $type = ""
+          $isFamily = $false
+        }
+        $out += [PSCustomObject]@{
+          provider = $prov
+          usages = $g.usages
+          defined_in = $file
+          defined_line = $line
+          defined_type = $type
+          is_family = $isFamily
+        }
+      }
+      $out | Sort-Object -Property usages -Descending | Export-Csv -Path provider_family_report.csv -NoTypeInformation
+      Write-Host "Wrote provider_family_report.csv with $($out.Count) entries."
+      
+      # Generate suggestions file
+      $md = "provider_family_suggestions.md"
+      Set-Content -Path $md -Value "# Provider family suggestions`n`n"
+      foreach ($r in $out | Sort-Object usages -Descending | Select-Object -First 40) {
+        if ($r.is_family -eq $false) {
+          Add-Content -Path $md -Value "## $($r.provider)`n"
+          Add-Content -Path $md -Value "- usages: $($r.usages)`n- defined_in: $($r.defined_in):$($r.defined_line)`n"
+          Add-Content -Path $md -Value "### Suggested transformation (example for NotifierProvider):`n"
+          Add-Content -Path $md -Value "\`\`\`dart"
+          Add-Content -Path $md -Value "// Before:`n// final $($r.provider) = NotifierProvider<SomeController, SomeState>((ref) => SomeController());"
+          Add-Content -Path $md -Value "// After:`n// final $($r.provider) = NotifierProvider.family<SomeController, SomeState, String?>((ref, param) => SomeController());"
+          Add-Content -Path $md -Value "\`\`\`"
+          Add-Content -Path $md -Value "`n"
+        }
+      }
+      Write-Host "Wrote provider_family_suggestions.md (top 40 suggestions)."
+  - path: ".ai-doc/M005.yaml"
+    action: create
+    encoding: text
+    content: |
+      mission_id: "M005"
+      title: "Analyse providers -> family + add initializeDateFormatting in test bootstrap"
+      description: Short analysis to support Riverpod family migration and improve test bootstrap to address locale issues.
+commands:
+  - "powershell -ExecutionPolicy Bypass -File .scripts/analyze_provider_families.ps1"
+  - "git add test/test_setup_stub.dart .scripts/analyze_provider_families.ps1 provider_family_report.csv provider_family_suggestions.md .ai-doc/M005.yaml || true"
+  - "git commit -m \"chore(test): add intl date initialization in bootstrap; analyze providers for .family migration\" || echo 'no changes to commit'"
+  - "echo 'Done. Artifacts: provider_family_report.csv, provider_family_suggestions.md'"
+tests:
+  - command: "powershell -ExecutionPolicy Bypass -File .scripts/analyze_provider_families.ps1"
+    expect: "provider_family_report.csv"
+commit:
+  message: "chore(test): analyze providers for .family migration; improve test bootstrap (intl init)"
+  files:
+    - "test/test_setup_stub.dart"
+    - ".scripts/analyze_provider_families.ps1"
+    - "provider_family_report.csv"
+    - "provider_family_suggestions.md"
+artifacts_to_return:
+  - "provider_family_report.csv"
+  - "provider_family_suggestions.md"
+  - "git_rev"
+notes: |
+  - After M005 we will review provider_family_report.csv and provider_family_suggestions.md together and design M006 to convert small safe batches (10-20 providers) with tests for each batch.
