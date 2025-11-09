@@ -66,6 +66,7 @@ class OrganicDashboardWidget extends StatelessWidget {
     // Diagnostic en debug : vérifier le AssetManifest pour savoir si l'asset
     // est effectivement packagé dans l'APK / bundle.
     if (kDebugMode) {
+      debugPrint('OrganicDashboard: build called -> $assetPath');
       // Lecture asynchrone du manifest ; on n'attend pas le résultat ici, on loggue.
       rootBundle.loadString('AssetManifest.json').then((manifest) {
         if (manifest.contains('"$assetPath"')) {
