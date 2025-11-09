@@ -1,0 +1,375 @@
+mission_id: "M002"
+title: "Riverpod v3 — détecter provider(...) et convertir soilTemp/soilPH en .family"
+description: |
+  Objectifs :
+  1) Détecter tous les appels "XxxProvider(...)" dans les fichiers Dart et produire provider_calls_report.csv.
+  2) Convertir 2 providers critiques en family pour supporter l'usage par scope :
+     - lib/features/climate/presentation/providers/soil_temp_provider.dart
+     - lib/features/climate/presentation/providers/soil_ph_provider.dart
+     Les controllers sont adaptés : build(String? scopeKey) et les Provider.family(...) créés.
+  3) Lancer flutter pub get, tenter build_runner, puis flutter test et livrer les logs.
+priority: high
+max_files: 4
+max_lines: 1800
+files:
+  - path: ".scripts/detect_provider_calls.ps1"
+    action: create
+    encoding: text
+    content: |
+      # PowerShell script: detect provider(...) calls in Dart files and write CSV report
+      $outCsv = "provider_calls_report.csv"
+      if (Test-Path $outCsv) { Remove-Item $outCsv -Force }
+      $pattern = '\b([A-Za-z0-9_]+Provider)\s*\('
+      Write-Host "Scanning .dart files for provider(...) calls..."
+      $results = @()
+      Get-ChildItem -Recurse -Filter *.dart | ForEach-Object {
+        $path = $_.FullName
+        Select-String -Path $path -Pattern $pattern -AllMatches | ForEach-Object {
+          foreach ($m in $_.Matches) {
+            $results += [PSCustomObject]@{
+              file = $path
+              line = $_.LineNumber
+              match = $m.Value.Trim()
+            }
+          }
+        }
+      }
+      if ($results.Count -eq 0) {
+        Write-Host "No provider(...) calls found."
+        "" | Out-File $outCsv
+      } else {
+        $results | Sort-Object file,line | Export-Csv -Path $outCsv -NoTypeInformation
+        Write-Host "Wrote $($results.Count) matches to $outCsv"
+      }
+
+  - path: "lib/features/climate/presentation/providers/soil_temp_provider.dart"
+    action: modify
+    encoding: text
+    content: |
+      // lib/features/climate/presentation/providers/soil_temp_provider.dart
+      // Converted to Riverpod family for scopeKey (Mission M002)
+      import 'package:flutter_riverpod/flutter_riverpod.dart';
+      import '../../domain/repositories/soil_metrics_repository.dart';
+      import '../../domain/usecases/compute_soil_temp_next_day_usecase.dart';
+      import 'soil_metrics_repository_provider.dart';
+      
+      /// State for soil temperature by scope
+      class SoilTempState {
+        final Map<String, AsyncValue<double?>> temperatures;
+      
+        const SoilTempState({
+          required this.temperatures,
+        });
+      
+        SoilTempState copyWith({
+          Map<String, AsyncValue<double?>>? temperatures,
+        }) {
+          return SoilTempState(
+            temperatures: temperatures ?? this.temperatures,
+          );
+        }
+      
+        AsyncValue<double?> getTemp(String scopeKey) {
+          return temperatures[scopeKey] ?? const AsyncValue.loading();
+        }
+      }
+      
+      /// Controller for managing soil temperature state
+      class SoilTempController extends Notifier<SoilTempState> {
+        SoilMetricsRepository get _repo => ref.watch(soilMetricsRepositoryProvider);
+        final _compute = ComputeSoilTempNextDayUsecase();
+      
+        @override
+        SoilTempState build(String? scopeKey) {
+          // build receives the family parameter (scopeKey) when created via .family
+          return const SoilTempState(temperatures: {});
+        }
+      
+        /// Load soil temperature from repository
+        Future<void> load(String scopeKey) async {
+          try {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = const AsyncValue.loading();
+            state = state.copyWith(temperatures: updated);
+      
+            final temp = await _repo.getSoilTempC(scopeKey);
+      
+            updated[scopeKey] = AsyncValue.data(temp);
+            state = state.copyWith(temperatures: updated);
+          } catch (e, st) {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = AsyncValue.error(e, st);
+            state = state.copyWith(temperatures: updated);
+          }
+        }
+      
+        /// Set manual soil temperature
+        Future<void> setManual(String scopeKey, double tempC) async {
+          try {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = const AsyncValue.loading();
+            state = state.copyWith(temperatures: updated);
+      
+            await _repo.setSoilTempC(scopeKey, tempC);
+            await _repo.setLastUpdated(scopeKey, DateTime.now());
+      
+            updated[scopeKey] = AsyncValue.data(tempC);
+            state = state.copyWith(temperatures: updated);
+          } catch (e, st) {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = AsyncValue.error(e, st);
+            state = state.copyWith(temperatures: updated);
+          }
+        }
+      
+        /// Update soil temperature from air temperature
+        Future<void> updateFromAirTemp(String scopeKey, double airTempC,
+            {double alpha = 0.15}) async {
+          try {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = const AsyncValue.loading();
+            state = state.copyWith(temperatures: updated);
+      
+            final currentSoilTemp = state.temperatures[scopeKey]?.value ??
+                (await _repo.getSoilTempC(scopeKey)) ??
+                airTempC;
+      
+            final nextTemp = _compute(
+              soilTempC: currentSoilTemp,
+              airTempC: airTempC,
+              alpha: alpha,
+            );
+      
+            await _repo.setSoilTempC(scopeKey, nextTemp);
+            await _repo.setLastUpdated(scopeKey, DateTime.now());
+      
+            updated[scopeKey] = AsyncValue.data(nextTemp);
+            state = state.copyWith(temperatures: updated);
+          } catch (e, st) {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = AsyncValue.error(e, st);
+            state = state.copyWith(temperatures: updated);
+          }
+        }
+      
+        /// Check if soil temperature was updated today
+        Future<bool> isUpdatedToday(String scopeKey) async {
+          try {
+            final lastUpdated = await _repo.getLastUpdated(scopeKey);
+            if (lastUpdated == null) return false;
+      
+            final now = DateTime.now();
+            final today = DateTime(now.year, now.month, now.day);
+            final lastUpdate = DateTime(
+              lastUpdated.year,
+              lastUpdated.month,
+              lastUpdated.day,
+            );
+      
+            return today.isAtSameMomentAs(lastUpdate);
+          } catch (e) {
+            return false;
+          }
+        }
+      
+        /// Get thermal equilibrium information
+        Future<Map<String, dynamic>> getThermalEquilibriumInfo(
+            String scopeKey, double airTempC,
+            {double alpha = 0.15}) async {
+          try {
+            final currentTemp = state.temperatures[scopeKey]?.value ??
+                (await _repo.getSoilTempC(scopeKey)) ??
+                airTempC;
+            final daysToEquilibrium = _compute.daysToEquilibrium(
+              soilTempC: currentTemp,
+              airTempC: airTempC,
+              alpha: alpha,
+            );
+      
+            return {
+              'currentTemp': currentTemp,
+              'airTemp': airTempC,
+              'daysToEquilibrium': daysToEquilibrium,
+              'temperatureDifference': (airTempC - currentTemp).abs(),
+            };
+          } catch (e) {
+            return {
+              'error': e.toString(),
+            };
+          }
+        }
+      
+        /// Refresh soil temperature from repository
+        Future<void> refresh(String scopeKey) async {
+          await load(scopeKey);
+        }
+      
+        /// Reset soil temperature to null
+        Future<void> reset(String scopeKey) async {
+          try {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = const AsyncValue.loading();
+            state = state.copyWith(temperatures: updated);
+      
+            await _repo.deleteMetrics(scopeKey);
+      
+            updated[scopeKey] = const AsyncValue.data(null);
+            state = state.copyWith(temperatures: updated);
+          } catch (e, st) {
+            final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+            updated[scopeKey] = AsyncValue.error(e, st);
+            state = state.copyWith(temperatures: updated);
+          }
+        }
+      }
+      
+      /// Provider for soil temperature controller (family per scopeKey)
+      final soilTempProvider =
+          NotifierProvider.family<SoilTempController, SoilTempState, String?>(
+        (ref, scopeKey) => SoilTempController(),
+      );
+      
+      /// Provider that exposes the temperature for a specific scope
+      final soilTempProviderByScope =
+          Provider.family<AsyncValue<double?>, String>((ref, scopeKey) {
+        final controller = ref.watch(soilTempProvider(scopeKey));
+        final temp = controller.getTemp(scopeKey);
+      
+        // Load data if not already loaded
+        if (temp.isLoading) {
+          Future.microtask(() {
+            ref.read(soilTempProvider(scopeKey).notifier).load(scopeKey);
+          });
+        }
+      
+        return temp;
+      });
+
+  - path: "lib/features/climate/presentation/providers/soil_ph_provider.dart"
+    action: modify
+    encoding: text
+    content: |
+      // lib/features/climate/presentation/providers/soil_ph_provider.dart
+      // Converted to Riverpod family for scopeKey (Mission M002)
+      import 'package:flutter_riverpod/flutter_riverpod.dart';
+      import '../../domain/repositories/soil_metrics_repository.dart';
+      import '../../domain/usecases/round_ph_to_step_usecase.dart';
+      import 'soil_metrics_repository_provider.dart';
+      
+      /// State for soil pH by scope
+      class SoilPHState {
+        final Map<String, AsyncValue<double?>> phValues;
+      
+        const SoilPHState({
+          required this.phValues,
+        });
+      
+        SoilPHState copyWith({
+          Map<String, AsyncValue<double?>>? phValues,
+        }) {
+          return SoilPHState(
+            phValues: phValues ?? this.phValues,
+          );
+        }
+      
+        AsyncValue<double?> getPH(String scopeKey) {
+          return phValues[scopeKey] ?? const AsyncValue.loading();
+        }
+      }
+      
+      /// Controller for managing soil pH state
+      class SoilPHController extends Notifier<SoilPHState> {
+        SoilMetricsRepository get _repo => ref.watch(soilMetricsRepositoryProvider);
+        final _round = RoundPhToStepUsecase();
+      
+        @override
+        SoilPHState build(String? scopeKey) {
+          return const SoilPHState(phValues: {});
+        }
+      
+        /// Load soil pH from repository
+        Future<void> load(String scopeKey) async {
+          try {
+            final updated = Map<String, AsyncValue<double?>>.from(state.phValues);
+            updated[scopeKey] = const AsyncValue.loading();
+            state = state.copyWith(phValues: updated);
+      
+            final ph = await _repo.getSoilPH(scopeKey);
+      
+            updated[scopeKey] = AsyncValue.data(ph);
+            state = state.copyWith(phValues: updated);
+          } catch (e, st) {
+            final updated = Map<String, AsyncValue<double?>>.from(state.phValues);
+            updated[scopeKey] = AsyncValue.error(e, st);
+            state = state.copyWith(phValues: updated);
+          }
+        }
+      
+        /// Set soil pH value
+        Future<void> setPH(String scopeKey, double value) async {
+          try {
+            final updated = Map<String, AsyncValue<double?>>.from(state.phValues);
+            updated[scopeKey] = const AsyncValue.loading();
+            state = state.copyWith(phValues: updated);
+      
+            final rounded = _round(value);
+            await _repo.setSoilPH(scopeKey, rounded);
+      
+            updated[scopeKey] = AsyncValue.data(rounded);
+            state = state.copyWith(phValues: updated);
+          } catch (e, st) {
+            final updated = Map<String, AsyncValue<double?>>.from(state.phValues);
+            updated[scopeKey] = AsyncValue.error(e, st);
+            state = state.copyWith(phValues: updated);
+          }
+        }
+      
+        /// Other helpers unchanged...
+      
+      }
+      
+      /// Provider for soil pH controller (family per scopeKey)
+      final soilPHProvider =
+          NotifierProvider.family<SoilPHController, SoilPHState, String?>(
+        (ref, scopeKey) => SoilPHController(),
+      );
+      
+      /// Provider that exposes the pH for a specific scope
+      final soilPHProviderByScope =
+          Provider.family<AsyncValue<double?>, String>((ref, scopeKey) {
+        final controller = ref.watch(soilPHProvider(scopeKey));
+        final ph = controller.getPH(scopeKey);
+      
+        // Load data if not already loaded
+        if (ph.isLoading) {
+          Future.microtask(() {
+            ref.read(soilPHProvider(scopeKey).notifier).load(scopeKey);
+          });
+        }
+      
+        return ph;
+      });
+commands:
+  - "powershell -ExecutionPolicy Bypass -File .scripts/detect_provider_calls.ps1"
+  - "git add .scripts/detect_provider_calls.ps1 lib/features/climate/presentation/providers/soil_temp_provider.dart lib/features/climate/presentation/providers/soil_ph_provider.dart || true"
+  - "git commit -m \"fix(climate): convert soilTemp/soilPH providers to NotifierProvider.family; add detection script\" || echo 'no changes to commit'"
+  - "flutter pub get"
+  - "flutter pub run build_runner build --delete-conflicting-outputs || true"
+  - "flutter test 2>&1 | tee output_flutter_test_m002.log || true"
+tests:
+  - command: "flutter test"
+    expect: "compiles"
+commit:
+  message: "fix(climate): soilTemp/soilPH -> family; add provider detector"
+  files:
+    - ".scripts/detect_provider_calls.ps1"
+    - "lib/features/climate/presentation/providers/soil_temp_provider.dart"
+    - "lib/features/climate/presentation/providers/soil_ph_provider.dart"
+artifacts_to_return:
+  - "provider_calls_report.csv"
+  - "output_flutter_test_m002.log"
+  - "git_rev"
+notes: |
+  - Après exécution, consulte provider_calls_report.csv pour repérer les autres providers à convertir (.family).
+  - Si build_runner échoue, conserver le log ; nous traiterons la génération d'adapters (Hive/Freezed) dans M003.
+  - Cette mission corrige deux providers critiques et doit réduire fortement les erreurs Riverpod v3 du type "The method 'call' isn't defined for the type 'NotifierProvider<...>'".
