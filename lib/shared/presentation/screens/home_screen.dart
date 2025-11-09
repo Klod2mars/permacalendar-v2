@@ -369,9 +369,58 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
       ),
+
+      const SizedBox(height: 12),
+
+      // Boutons d'accès rapide (optimisés pour mobile)
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          OutlinedButton.icon(
+            onPressed: () => context.push(AppRoutes.recommendations),
+            icon: const Icon(Icons.lightbulb, size: 20),
+            label: const Text('Recommandations'),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () => context.push(AppRoutes.notifications),
+            icon: const Icon(Icons.notifications, size: 20),
+            label: const Text('Notifications'),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () => context.push(AppRoutes.intelligenceSettings),
+            icon: const Icon(Icons.settings, size: 20),
+            label: const Text('Paramètres intelligence'),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () => context.push(AppRoutes.pestObservation),
+            icon: const Icon(Icons.bug_report, size: 20),
+            label: const Text('Observation nuisibles'),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+        ],
+      ),
     ],
   );
 }
+
         const SizedBox(height: 12),
         // Boutons d'accès rapide (optimisés pour mobile)
         Column(
