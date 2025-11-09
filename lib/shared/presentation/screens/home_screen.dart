@@ -409,24 +409,22 @@ class HomeScreen extends ConsumerWidget {
   // Recent Activity (placeholder)
   // ============================
   Widget _buildRecentActivity(BuildContext context, ThemeData theme, WidgetRef ref) {
-    // Use ActivityTrackerV3 provider if available; otherwise placeholder
-    final trackerProvider = v3.activityTrackerV3Provider;
-    final activityAsync = ref.watch(trackerProvider);
+    // Utilise le notifier async recentActivitiesProvider (défini dans activity_tracker_v3_provider.dart)
+    final activitiesAsync = ref.watch(v3.recentActivitiesProvider);
 
     return CustomCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: activityAsync.when(
+        child: activitiesAsync.when(
           loading: () => const LoadingWidget(),
           error: (e, st) => ErrorStateWidget(
             title: 'Activités indisponibles',
             subtitle: e.toString(),
             retryText: 'Réessayer',
-            onRetry: () {},
+            onRetry: () => ref.read(v3.recentActivitiesProvider.notifier).refresh(),
           ),
           data: (data) {
-            // data is expected to be a list or view model; show simplified view
-            final items = (data is List) ? data.cast<dynamic>().take(5).toList() : <dynamic>[];
+            final items = data ?? <dynamic>[];
 
             if (items.isEmpty) {
               return Column(
@@ -451,8 +449,8 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 ...items.map<Widget>((it) {
-                  // Render a minimal row per activity; the exact fields depend on your model
-                  final title = (it?.toString() ?? 'Activité');
+                  // Si ActivityV3 a des champs (par ex. title, subtitle, date), remplace ces toString par les vrais champs.
+                  final title = (it is Map || it is String) ? it.toString() : (it?.toString() ?? 'Activité');
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(
@@ -464,6 +462,14 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   );
                 }).toList(),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => ref.read(v3.recentActivitiesProvider.notifier).refresh(),
+                    child: const Text('Actualiser'),
+                  ),
+                ),
               ],
             );
           },
@@ -471,4 +477,3 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
-}
