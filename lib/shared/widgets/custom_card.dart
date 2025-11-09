@@ -124,7 +124,12 @@ class HeaderCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (actions != null) ...actions!,
+                if (actions != null)
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: actions!,
+                  ),
               ],
             ),
           ),
