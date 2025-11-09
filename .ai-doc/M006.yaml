@@ -1,0 +1,48 @@
+mission_id: "M006"
+title: "Provider family — generate non-destructive patch suggestions for top candidates"
+description: |
+  Generate reviewable, manual patch suggestions (Markdown) for converting providers to `.family`.
+  - Only propose patches for providers with a single source definition (no name collisions).
+  - Do NOT apply code changes; produce .md suggestion files for review.
+priority: high
+max_files: 5
+files:
+  - path: ".scripts/generate_provider_patches.ps1"
+    action: create
+    encoding: text
+    content: |
+      # PowerShell: generate provider patch suggestions (non-destructive)
+      $root = (Get-Location).Path
+      $csv = Join-Path $root "provider_family_report.csv"
+      if (!(Test-Path $csv)) { Write-Error "provider_family_report.csv missing"; exit 1 }
+      $rows = Import-Csv $csv | Where-Object { $_.is_family -eq "False" -and $_.defined_in -ne "" } | Sort-Object -Property usages -Descending
+      $outDir = Join-Path $root ".ai-doc/patches"
+      if (!(Test-Path $outDir)) { New-Item -ItemType Directory -Path $outDir | Out-Null }
+      $summary = Join-Path $root ".ai-doc/provider_family_patches.md"
+      Set-Content -Path $summary -Value "# Provider family patch suggestions`n`n"
+      $count = 0
+      foreach ($r in $rows) {
+        if ($count -ge 10) { break } # top 10 candidates
+        $prov = $r.provider
+        $defFile = $r.defined_in
+        if (!(Test-Path $defFile)) { Add-Content -Path $summary -Value "## $prov - definition file not found: $defFile`n"; continue }
+        $defs = Select-String -Path $defFile -Pattern "final\s+$prov\s*=" -List
+        if ($defs.Count -ne 1) {
+          Add-Content -Path $summary -Value "## $prov - skipped (multiple or zero definitions found).`n"
+          continue
+        }
+        # Extract a small snippet around the definition
+        $lineNo = $defs.LineNumber
+        $content = Get-Content -Path $defFile
+        $start = [Math]::Max(1, $lineNo - 4)
+        $end = [Math]::Min($content.Length, $lineNo + 8)
+        $snippet = $content[$start-1..$end-1] -join "`n"
+        $suggestFile = Join-Path $outDir "$prov.md"
+        $suggestion = @"
+## $prov
+defined_in: $defFile:$lineNo
+usages: $($r.usages)
+
+### Before (excerpt)
+```dart
+$snippet
