@@ -1,6 +1,7 @@
 // lib/shared/widgets/organic_dashboard.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // <-- nécessaire pour rootBundle
 import 'package:go_router/go_router.dart';
 
 import '../../app_router.dart';
@@ -11,9 +12,9 @@ import '../../app_router.dart';
 /// - Superpose des hotspots (définis en fractions) qui déclenchent des routes.
 /// - En mode debug, affiche un outline semi-transparent + label pour caler les zones.
 /// - Si l'asset manque, affiche un fallback visuel et écrit un debugPrint.
+/// - En mode debug, effectue un contrôle sur AssetManifest.json pour dire si
+///   l'asset est déclaré et donc packagé dans le bundle.
 class OrganicDashboardWidget extends StatelessWidget {
-  /// Chemin vers l'asset par défaut.
-  /// Par défaut on pointe vers le nom présent dans le repo : dashboard_organic_final.png
   const OrganicDashboardWidget({
     super.key,
     this.assetPath = 'assets/images/backgrounds/dashboard_organic_final.png',
@@ -21,11 +22,7 @@ class OrganicDashboardWidget extends StatelessWidget {
 
   final String assetPath;
 
-  // Définition des hotspots par défaut (centerX, centerY, widthFrac, heightFrac)
-  // Les valeurs sont exprimées en fraction (0.0..1.0) de la largeur/hauteur du conteneur.
-  // Ajuste ±0.02 pour peaufiner sur l'appareil.
   static const List<_Hotspot> _hotspots = <_Hotspot>[
-    // Top-left icon (intelligence)
     _Hotspot(
       id: 'intelligence',
       centerX: 0.18,
@@ -35,8 +32,6 @@ class OrganicDashboardWidget extends StatelessWidget {
       route: AppRoutes.intelligence,
       label: 'Intelligence',
     ),
-
-    // Middle-left (calendar)
     _Hotspot(
       id: 'calendar',
       centerX: 0.18,
@@ -46,8 +41,6 @@ class OrganicDashboardWidget extends StatelessWidget {
       route: AppRoutes.calendar,
       label: 'Calendar',
     ),
-
-    // Bottom-left (activities)
     _Hotspot(
       id: 'activities',
       centerX: 0.18,
@@ -57,8 +50,6 @@ class OrganicDashboardWidget extends StatelessWidget {
       route: AppRoutes.activities,
       label: 'Activities',
     ),
-
-    // Large central leaf (gardens overview)
     _Hotspot(
       id: 'gardens',
       centerX: 0.65,
@@ -72,10 +63,24 @@ class OrganicDashboardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Diagnostic en debug : vérifier le AssetManifest pour savoir si l'asset
+    // est effectivement packagé dans l'APK / bundle.
+    if (kDebugMode) {
+      // Lecture asynchrone du manifest ; on n'attend pas le résultat ici, on loggue.
+      rootBundle.loadString('AssetManifest.json').then((manifest) {
+        if (manifest.contains('"$assetPath"')) {
+          debugPrint('OrganicDashboard: AssetManifest DECLARES asset -> $assetPath');
+        } else {
+          debugPrint('OrganicDashboard: AssetManifest DOES NOT DECLARE asset -> $assetPath');
+        }
+      }).catchError((e) {
+        debugPrint('OrganicDashboard: failed to load AssetManifest.json -> $e');
+      });
+    }
+
     return LayoutBuilder(builder: (context, constraints) {
       final double width =
           constraints.maxWidth.isFinite ? constraints.maxWidth : MediaQuery.of(context).size.width;
-      // Aspect ratio choisi pour l'œuvre ; clamp pour éviter une hauteur extrême.
       final double height = (width * (9.0 / 5.0)).clamp(300.0, 1400.0);
 
       return SizedBox(
@@ -83,7 +88,6 @@ class OrganicDashboardWidget extends StatelessWidget {
         height: height,
         child: Stack(
           children: [
-            // Image de fond (cover). errorBuilder fournit un fallback visible si absent.
             Positioned.fill(
               child: Image.asset(
                 assetPath,
@@ -93,6 +97,13 @@ class OrganicDashboardWidget extends StatelessWidget {
                 errorBuilder: (context, error, stack) {
                   if (kDebugMode) {
                     debugPrint('OrganicDashboard: asset not found -> $assetPath : $error');
+                    // En complément, tenter d'afficher l'état de manifest (utile si la
+                    // lecture asynchrone précédente n'a pas encore retourné).
+                    rootBundle.loadString('AssetManifest.json').then((m) {
+                      debugPrint('OrganicDashboard: manifest contains asset? -> ${m.contains('"$assetPath"')}');
+                    }).catchError((e) {
+                      debugPrint('OrganicDashboard: cannot read AssetManifest in errorBuilder -> $e');
+                    });
                   }
                   return Container(
                     color: Theme.of(context).colorScheme.surfaceVariant,
@@ -103,6 +114,10 @@ class OrganicDashboardWidget extends StatelessWidget {
                           Icon(Icons.image_not_supported, size: 48, color: Colors.grey.shade300),
                           const SizedBox(height: 8),
                           Text('Visuel absent', style: Theme.of(context).textTheme.bodyMedium),
+                          if (kDebugMode) ...[
+                            const SizedBox(height: 8),
+                            Text(assetPath, style: Theme.of(context).textTheme.labelSmall),
+                          ],
                         ],
                       ),
                     ),
@@ -110,8 +125,6 @@ class OrganicDashboardWidget extends StatelessWidget {
                 },
               ),
             ),
-
-            // Hotspot overlays
             ..._hotspots.map((hs) {
               final double left = (hs.centerX - hs.widthFrac / 2) * width;
               final double top = (hs.centerY - hs.heightFrac / 2) * height;
@@ -128,7 +141,6 @@ class OrganicDashboardWidget extends StatelessWidget {
                     if (kDebugMode) {
                       debugPrint('OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
                     }
-                    // Navigation via GoRouter
                     context.push(hs.route);
                   },
                   showDebugOutline: kDebugMode,
@@ -176,7 +188,6 @@ class _HotspotButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Transparent Material + InkWell pour ripple + accessibilité.
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -187,7 +198,6 @@ class _HotspotButton extends StatelessWidget {
           button: true,
           label: semanticLabel ?? 'Dashboard hotspot',
           child: Container(
-            // Zone de hit transparente ; si debug => outline + label centré.
             decoration: showDebugOutline
                 ? BoxDecoration(
                     color: Colors.black26,
