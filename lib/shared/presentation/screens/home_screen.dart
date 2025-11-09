@@ -292,7 +292,7 @@ class HomeScreen extends ConsumerWidget {
         CustomCard(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: OrganicDashboardWidget(assetPath: 'assets/images/backgrounds/organic_dashboard_final.png'),
+            child: OrganicDashboardWidget(assetPath: 'assets/images/backgrounds/dashboard_organic_final.png'),
           ),
         ),
         const SizedBox(height: 12),
