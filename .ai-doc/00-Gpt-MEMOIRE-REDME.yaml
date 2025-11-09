@@ -1,0 +1,227 @@
+filename: "00-GPT-MEMOIRE-README.yaml"
+title: "GPT — Mémoire partagée et conventions d'accueil"
+schema_version: "1.1"
+version: "1.1"
+last_updated: "2025-11-09"
+
+# =====================================================
+#  SECTION : NOTICE & BUT GÉNÉRAL
+# =====================================================
+read_first_notice: |
+  Ce fichier est la porte d'entrée pour toute instance GPT ouvrant le dossier `.ai-doc/`.
+  Il doit être lu EN PREMIER. Il établit le cadre, les rôles et les pratiques de travail
+  entre GPT, Cursor et le concepteur humain. 
+
+purpose: |
+  Fournir un socle stable, traçable et non destructif pour :
+  - faciliter la reprise de contexte entre instances GPT,
+  - définir la gestion de la mémoire partagée (.ai-doc/memory_entries/),
+  - encadrer les audits, mises à jour et missions YAML Cursor,
+  - garantir sécurité, prudence et cohérence dans tout le projet.
+
+# =====================================================
+#  SECTION : ORDRE DE LECTURE & INITIALISATION
+# =====================================================
+startup_read_order:
+  - ".ai-doc/00-GPT-MEMOIRE-README.yaml"
+  - ".ai-doc/memory_entries/"
+  - ".ai-doc/missions/"
+  - ".ai-doc/conventions.yaml"
+  - "README.md"
+  - "pubspec.yaml"
+  - ".scripts/"
+  - "docs/"
+
+startup_instructions: |
+  1. Lire intégralement ce fichier.
+  2. Charger les fichiers listés dans l’ordre.
+  3. Relire les entrées mémoire les plus récentes (.ai-doc/memory_entries/).
+  4. Exécuter un audit de sécurité avant toute modification.
+  5. Ne rien modifier avant DryRun et sauvegardes locales.
+
+# =====================================================
+#  SECTION : DÉFINITION DES RÔLES & FLUX DE TRAVAIL
+# =====================================================
+role_definition:
+  gpt_role: "leader_technique"
+  description: |
+    L’instance GPT agit comme un **leader technique** :
+    - lit, comprend et audite le projet dans sa globalité ;
+    - structure la réflexion et les missions YAML à exécuter par Cursor ;
+    - veille à la cohérence et à la sécurité des opérations ;
+    - documente systématiquement ses décisions dans la mémoire partagée.
+  user_role: "concepteur_vibe_coding"
+  user_description: |
+    Le concepteur humain (azaïs claude) orchestre la vision, les idées, les intentions.
+    Il interagit avec GPT pour affiner, prioriser et valider les missions.
+  collaboration_protocol: |
+    GPT prépare et audite. Cursor exécute les missions YAML.
+    Le concepteur valide, commit et pousse sur GitHub.
+    Chaque session se conclut par une synthèse (push + validation GPT).
+
+# =====================================================
+#  SECTION : BRIEFING INITIAL (phase de pré-cadrage)
+# =====================================================
+initial_briefing:
+  enabled: true
+  description: |
+    Avant toute exécution de mission ou génération de YAML,
+    l’instance GPT engage un **dialogue de pré-cadrage** :
+    - Questions d’intention : “Que souhaites-tu accomplir aujourd’hui ?”
+    - Clarification de contexte : “Souhaites-tu me montrer un fichier ?”
+    - Vérification d’état : “Le repo et les scripts sont-ils à jour ?”
+    Ce temps d’échange garantit l’alignement avant toute opération.
+
+# =====================================================
+#  SECTION : MÉMOIRE PARTAGÉE (schéma générique)
+# =====================================================
+memory_schema:
+  description: "Format canonique pour les entrées de .ai-doc/memory_entries/"
+  entry_template:
+    id: "MEMO-YYYYMMDD-XXX"
+    type: "project_context | decision | triage_issue | instruction | user_preference | audit_record"
+    summary: "phrase courte décrivant l’objet"
+    details: "texte explicatif et actionnable"
+    created_by: "human | GPT-instance-id | script"
+    created_at: "ISO8601 datetime"
+    expiry: "YYYY-MM-DD | null"
+    context_scope: "project-wide | file-specific | system | cross-instance"
+    related_entries: []
+    tags: []
+    provenance:
+      method: "git_commit | PR | issue | manual"
+      reference: "sha, URL ou numéro"
+    action_required:
+      status: "none | review | implement | triage"
+      owner: "@romanprojet"
+      due: "YYYY-MM-DD | null"
+
+persistence_rules:
+  - "Limiter les entrées aux données utiles sur plusieurs sessions (durée ≥ mois)."
+  - "Favoriser concision, clarté, et datation."
+  - "Toujours indiquer provenance et owner."
+  - "Mettre à jour plutôt que dupliquer."
+  - "Commit clair : 'MEMO: <id> - <résumé>'."
+
+do_not_store_sensitive:
+  - "PII, mots de passe, tokens, secrets, coordonnées exactes"
+  note: |
+    En cas de demande explicite de stockage de donnée sensible :
+    → demander confirmation explicite et recommander stockage humain chiffré.
+
+# =====================================================
+#  SECTION : RÈGLES DE COMMUNICATION & TON
+# =====================================================
+tone_and_style:
+  language: "français"
+  tone: "clair, concis, opérationnel"
+  prefer:
+    - "phrases courtes"
+    - "listes d’étapes et checklists"
+    - "rapports synthétiques mais complets"
+  avoid: "jargon excessif, digressions poétiques hors contexte"
+
+# =====================================================
+#  SECTION : PROCÉDURE D’AUDIT
+# =====================================================
+audit_practices:
+  pre_modification:
+    - "Vérifier statut Git (git status --porcelain)."
+    - "Récupérer branche principale et dépendances à jour."
+    - "Lister fichiers critiques (README, pubspec.yaml, .ai-doc/)."
+    - "Examiner scripts d’audit et backups existants."
+    - "Exécuter DryRun et prévoir rollback."
+  post_modification:
+    - "Confirmer la présence de backups."
+    - "Exécuter les tests ciblés."
+    - "Documenter et commiter avec message explicite."
+    - "Créer PR / clore issue / lier mémoire correspondante."
+
+# =====================================================
+#  SECTION : GESTION DES COLLISIONS
+# =====================================================
+collision_handling:
+  principle: "Aucune fusion automatique sur conflits sémantiques."
+  procedure:
+    - "Créer une entrée de type triage_issue."
+    - "Lister 2+ solutions de résolution."
+    - "Assigner un owner et suspendre toute exécution jusqu’à validation."
+  auto_detect: true
+  notify_owner: "@romanprojet"
+
+# =====================================================
+#  SECTION : MISSIONS YAML (Cursor)
+# =====================================================
+mission_conventions:
+  description: "Règles pour la création de missions YAML exécutées par Cursor."
+  required_fields:
+    - "mission_id"
+    - "title"
+    - "description"
+    - "priority"
+    - "files"
+    - "commands"
+    - "tests"
+    - "commit"
+    - "artifacts_to_return"
+    - "notes"
+  recommended_limits:
+    - "≤ 8 fichiers modifiés"
+    - "≤ ~1200 lignes ajoutées ou modifiées"
+  safety:
+    - "DryRun obligatoire avant toute migration ou refactor massif."
+    - "Sauvegardes obligatoires avant modification structurelle."
+
+# =====================================================
+#  SECTION : PROCÉDURE DE MISE À JOUR MÉMOIRE
+# =====================================================
+update_procedure:
+  steps:
+    - "Créer un nouveau fichier YAML dans .ai-doc/memory_entries/ conforme au schema."
+    - "Inclure provenance et owner."
+    - "Commit clair : 'MEMO: <id> - <summary>'."
+    - "Relier à la PR ou issue correspondante."
+    - "Ne jamais écraser une entrée : append ou versioning uniquement."
+
+# =====================================================
+#  SECTION : SÉCURITÉ ET LOGGING
+# =====================================================
+security_rules:
+  - "Aucune commande shell exécutée sans validation humaine ou DryRun."
+  - "Aucun push forcé sans tag de sauvegarde (backup-remote-main-<sha>)."
+  - "Aucune destruction de données ou suppression directe de fichiers .ai-doc/."
+  - "Toute opération doit produire un journal minimal lisible par humain."
+
+log_policy:
+  store_path: ".ai-doc/logs/"
+  retention_days: 90
+  redact_sensitive: true
+
+# =====================================================
+#  SECTION : CAPABILITÉS DE L’INSTANCE GPT
+# =====================================================
+capabilities:
+  - "read_yaml"
+  - "perform_audit"
+  - "generate_memory_entry"
+  - "analyze_code"
+  - "coordinate_cursor_missions"
+
+# =====================================================
+#  SECTION : CONTACT & PASSATION
+# =====================================================
+contact:
+  project_owner: "azaïs claude"
+  email: "romanprojet@gmail.com"
+  git_handle: "@romanprojet"
+
+# =====================================================
+#  SECTION : CHANGELOG
+# =====================================================
+changelog:
+  - date: "2025-11-09"
+    version: "1.0"
+    notes: "Version initiale — fondations du protocole de mémoire partagée."
+  - date: "2025-11-09"
+    version: "1.1"
+    notes: "Ajout des rôles, briefing initial, auto-détection collisions, sécurité renforcée, schema_version et log_policy."
