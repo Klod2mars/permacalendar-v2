@@ -1,0 +1,183 @@
+mission_id: "M004"
+title: "Hive adapters auto-register + test bootstrap (generate register_all + inject test bootstrap)"
+description: |
+  1) Scanner tous les fichiers lib/**/*.g.dart pour détecter les classes <Xxx>Adapter et leur typeId.
+  2) Générer test/helpers/register_hive_adapters.dart qui importe les sources correspondantes
+     et expose `void registerAllHiveAdapters()` qui enregistre tous les adapters non enregistrés.
+  3) Générer test/test_setup_stub.dart : TestWidgetsFlutterBinding.ensureInitialized(); registerAllHiveAdapters(); Intl.defaultLocale='en_US';
+  4) Injecter (prépend) `import 'test/test_setup_stub.dart';` dans chaque fichier test/**/*.dart s'il n'existe pas déjà.
+  5) Commit des fichiers générés, puis `flutter pub get`, `build_runner` et `flutter test`. Capturer les logs.
+priority: high
+max_files: 6
+files:
+  - path: ".scripts/generate_register_adapters.ps1"
+    action: create
+    encoding: text
+    content: |
+      # PowerShell script: scan *.g.dart to find Adapter classes and generate register file for tests
+      set -e
+      $root = (Get-Location).Path
+
+      Write-Host "Scanning for *.g.dart files..."
+      $gFiles = Get-ChildItem -Path $root -Recurse -Filter '*.g.dart' | Where-Object { $_.FullName -notmatch '\\.dart_tool\\' }
+
+      $adapters = @()
+      foreach ($gf in $gFiles) {
+        $content = Get-Content -Raw -Path $gf.FullName
+        if ($content -match 'class\s+([A-Za-z0-9_]+Adapter)\s+extends\s+TypeAdapter') {
+          $adapterName = $Matches[1]
+          if ($content -match 'final\s+int\s+typeId\s+=\s+(\d+);') {
+            $typeId = $Matches[1]
+          } else {
+            $typeId = ''
+          }
+          # source file: replace .g.dart with .dart (same directory)
+          $src = $gf.FullName -replace '\.g\.dart$','.dart'
+          # compute package import path if under lib/
+          if ($src -match [regex]::Escape((Join-Path $root 'lib') + [IO.Path]::DirectorySeparatorChar)) {
+            $relative = $src.Substring(($root.Length + 1))
+            # convert backslashes to slashes
+            $relative = $relative -replace '\\','/'
+            $pkgImport = "package:permacalendar/$relative"
+          } else {
+            $pkgImport = $src -replace [regex]::Escape($root + [IO.Path]::DirectorySeparatorChar), ''
+            $pkgImport = $pkgImport -replace '\\','/'
+          }
+          $adapters += [PSCustomObject]@{
+            adapter = $adapterName
+            typeId  = $typeId
+            srcFile = $src
+            import  = $pkgImport
+          }
+        }
+      }
+
+      if ($adapters.Count -eq 0) {
+        Write-Host "No adapters found. Exiting."
+        exit 0
+      }
+
+      # Deduplicate imports
+      $imports = $adapters | Select-Object -Property import -Unique
+
+      $registerPath = Join-Path $root "test/helpers/register_hive_adapters.dart"
+      $dir = Split-Path $registerPath -Parent
+      if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+
+      $sb = New-Object System.Text.StringBuilder
+      $sb.AppendLine("/// GENERATED FILE - DO NOT EDIT") | Out-Null
+      $sb.AppendLine("import 'package:hive/hive.dart';") | Out-Null
+      foreach ($imp in $imports) {
+        $sb.AppendLine(\"import '$imp';\") | Out-Null
+      }
+      $sb.AppendLine("") | Out-Null
+      $sb.AppendLine("void registerAllHiveAdapters() {") | Out-Null
+      $sb.AppendLine("  try {") | Out-Null
+
+      # For each adapter, write registration guarded by typeId
+      foreach ($entry in $adapters) {
+        $adapterName = $entry.adapter
+        $typeId = $entry.typeId
+        if ($typeId -ne '') {
+          $sb.AppendLine(\"    if (!Hive.isAdapterRegistered($typeId)) { Hive.registerAdapter($adapterName()); }\") | Out-Null
+        } else {
+          $sb.AppendLine(\"    try { Hive.registerAdapter($adapterName()); } catch(_){}\") | Out-Null
+        }
+      }
+
+      $sb.AppendLine("  } catch (e) {") | Out-Null
+      $sb.AppendLine("    // ignore errors during adapter registration in test bootstrap") | Out-Null
+      $sb.AppendLine("  }") | Out-Null
+      $sb.AppendLine("}") | Out-Null
+
+      $sb.ToString() | Out-File -Encoding UTF8 $registerPath
+      Write-Host \"Wrote $registerPath with $($adapters.Count) adapters.\"
+
+  - path: "test/helpers/register_hive_adapters.dart"
+    action: create
+    encoding: text
+    content: |
+      // This file will be overwritten by .scripts/generate_register_adapters.ps1
+      // Run the generator to populate adapters.
+      // Placeholder: the generator will create a proper implementation.
+      void registerAllHiveAdapters() {
+        // no-op placeholder; run generator to create real content
+      }
+
+  - path: "test/test_setup_stub.dart"
+    action: create
+    encoding: text
+    content: |
+      // Global test bootstrap - ensure bindings, adapters and locale
+      import 'package:flutter_test/flutter_test.dart';
+      import 'package:intl/intl.dart';
+      import 'helpers/register_hive_adapters.dart';
+
+      void _ensureTestBootstrap() {
+        // Ensure binding for widgets tests
+        TestWidgetsFlutterBinding.ensureInitialized();
+
+        // Register Hive adapters (created by generator)
+        try {
+          registerAllHiveAdapters();
+        } catch (_) {
+          // swallow errors during registration in bootstrap
+        }
+
+        // Default locale for intl-related tests
+        try {
+          Intl.defaultLocale = 'en_US';
+        } catch (_) {}
+      }
+
+      // Execute on import
+      _ensureTestBootstrap();
+
+  - path: ".scripts/prepend_global_test_imports.ps1"
+    action: create
+    encoding: text
+    content: |
+      # Prepend import to all test files if not present
+      $root = (Get-Location).Path
+      Write-Host "Prepending test/test_setup_stub import to test files..."
+      Get-ChildItem -Path "$root\test" -Recurse -Filter "*.dart" | ForEach-Object {
+        $file = $_.FullName
+        $content = Get-Content -Raw $file
+        if ($content -notmatch "test/test_setup_stub.dart") {
+          # Prepend import line after any license header or at top
+          $import = "import 'test/test_setup_stub.dart';`n"
+          Set-Content -Path $file -Value ($import + $content) -Encoding UTF8
+          Write-Host "Prepended to $file"
+        } else {
+          Write-Host "Already contains bootstrap import: $file"
+        }
+      }
+
+commands:
+  - "powershell -ExecutionPolicy Bypass -File .scripts/generate_register_adapters.ps1"
+  - "powershell -ExecutionPolicy Bypass -File .scripts/prepend_global_test_imports.ps1"
+  - "git add test/helpers/register_hive_adapters.dart test/test_setup_stub.dart .scripts/generate_register_adapters.ps1 .scripts/prepend_global_test_imports.ps1"
+  - "git commit -m \"test(hive): generate register_hive_adapters + global test bootstrap; inject imports\" || echo 'no changes to commit'"
+  - "flutter pub get"
+  - "flutter pub run build_runner build --delete-conflicting-outputs 2>&1 | tee output_build_runner_m004.log || true"
+  - "flutter test 2>&1 | tee output_flutter_test_m004.log || true"
+tests:
+  - command: "flutter test"
+    expect: "compiles"
+commit:
+  message: "chore(test): auto-generate hive adapters registration and global test bootstrap"
+  files:
+    - "test/helpers/register_hive_adapters.dart"
+    - "test/test_setup_stub.dart"
+    - ".scripts/generate_register_adapters.ps1"
+    - ".scripts/prepend_global_test_imports.ps1"
+artifacts_to_return:
+  - "output_build_runner_m004.log"
+  - "output_flutter_test_m004.log"
+  - "test/helpers/register_hive_adapters.dart"
+  - "git_rev"
+notes: |
+  - Après cette mission, inspecte test/helpers/register_hive_adapters.dart pour vérifier la liste d'adapters générée.
+  - Si certains adaptateurs n'apparaissent pas (fichiers générés hors /lib/ ou noms non-conformes), on ajuste le script.
+  - L'approche d'injection d'un import dans tous les tests est volontaire pour assurer un bootstrap global rapide — elle est réversible : on pourra retirer l'import après stabilisation.
+  - Cette mission n'adresse pas encore les invalid Riverpod overrides (M005). Elle vise d'abord à faire passer l'infrastructure tests/build pour voir les erreurs de business/tests restants.
