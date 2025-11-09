@@ -21,7 +21,6 @@ import 'features/plant_intelligence/presentation/screens/bio_control_recommendat
 import 'features/plant_intelligence/presentation/screens/notifications_screen.dart';
 import 'features/home/screens/calendar_view_screen.dart';
 import 'shared/presentation/screens/home_screen.dart';
-import 'shared/presentation/screens/home_screen_optimized.dart';
 import 'shared/presentation/screens/settings_screen.dart';
 import 'core/feature_flags.dart';
 
@@ -65,10 +64,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.home,
         name: 'home',
         builder: (context, state) {
-          // Feature flag: basculer entre HomeScreen et HomeScreenOptimized
-          return flags.homeV2
-              ? const HomeScreenOptimized()
-              : const HomeScreen();
+          // Force l'utilisation du Home classique (Organic dashboard) :
+        // on supprime HomeScreenOptimized de la route d'accueil.
+        return const HomeScreen();
         },
       ),
 

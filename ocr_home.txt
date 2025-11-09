@@ -1,0 +1,4 @@
+android.widget.TextView | [243,271][470,451] | 17
+android.widget.TextView | [470,271][550,451] | :
+android.widget.TextView | [550,271][837,451] | 38
+android.widget.TextView | [344,474][736,542] | dim. 9 novembre

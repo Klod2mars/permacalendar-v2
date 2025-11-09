@@ -1,0 +1,44 @@
+--- Audit Home UI Report --- 
+Branch: assistant/fix/use-default-dashboard-asset
+Working tree: untracked cursor_audit_home_ui.yaml
+
+Build & install:
+- flutter build apk --debug (success)
+- adb install -r build/app/outputs/flutter-apk/app-debug.apk (success)
+- App activity reported as resumed (dumpsys)
+
+Screenshot status:
+- Captured file: home_screen_screenshot.png (15495 bytes)
+- Screenshot shows Samsung AOD/lock screen clock, not the app Home UI.
+- Attempts: keyevent 26/82/menu, swipe unlock, wm dismiss-keyguard, svc power stayon usb; result unchanged (likely needs manual unlock).
+
+Extracted UI text via uiautomator dump (OCR fallback):
+android.widget.TextView | [243,271][470,451] | 17
+android.widget.TextView | [470,271][550,451] | :
+android.widget.TextView | [550,271][837,451] | 38
+android.widget.TextView | [344,474][736,542] | dim. 9 novembre
+Key code findings:
+- lib/shared/widgets/organic_dashboard.dart defaults to assets/images/backgrounds/dashboard_organic_final.png with diagnostics and fallback.
+- HomeScreen uses Image.asset('assets/images/backgrounds/dashboard_organic_final.png') inside Intelligence section debug card after rootBundle.load check.
+
+Assets check:
+- assets/images/backgrounds/dashboard_organic_final.png exists (size 1,727,344 bytes).
+- assets/images/backgrounds/organic_dashboard_final.png missing.
+
+AssetManifest verification:
+- build/flutter_assets/AssetManifest.json not present after debug build.
+- Found manifests: build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/AssetManifest.json and build/app/intermediates/flutter/debug/flutter_assets/AssetManifest.json.
+  * dashboard_organic_final.png listed; organic_dashboard_final.png absent.
+
+Outstanding issues / recommendations:
+1. Provide unlock instructions or manual capture to confirm the dashboard renders; remote screenshot remains locked view.
+2. Keep using dashboard_organic_final.png (packaged) or remove stale organic_dashboard_final.png references.
+3. Consider automated smoke test to detect asset fallback vs expected background early.
+
+Artifacts generated:
+- home_screen_screenshot.png
+- ocr_home.txt (uiautomator text fallback)
+- code_snippets.txt
+- assets_check.txt
+- asset_manifest_check.txt
+--- End of report --- 

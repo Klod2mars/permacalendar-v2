@@ -1,0 +1,140 @@
+# cursor_audit_home_ui.yaml
+mission:
+  id: audit-home-ui-visual-and-code
+  title: "Audit visuel & code — Écran Home (Organic Dashboard)"
+  description: |
+    Objectif : lorsqu'on ouvre l'application et qu'on arrive sur la page principale (Home),
+    identifier précisément **ce qui est affiché**, vérifier la présence/absence du fond
+    organique (dashboard_organic_final.png), et auditer le code et les assets liés.
+    Fournir un rapport clair, des captures, et des recommandations correctives.
+  timeout_seconds: 1800
+  run_as: cursor-agent
+
+inputs:
+  device_id: "SM A356B"                  # facultatif : device attendu ; Cursor peut ignorer si absent
+  repo_root: "."                         # chemin relatif racine dépôt
+  files_to_read:
+    - "pubspec.yaml"
+    - "assets/images/backgrounds/dashboard_organic_final.png"
+    - "assets/images/backgrounds/organic_dashboard_final.png"
+    - "lib/shared/presentation/screens/home_screen.dart"
+    - "lib/shared/widgets/organic_dashboard.dart"
+    - "lib/shared/widgets/custom_card.dart"
+    - "lib/app_router.dart"
+    - "AssetManifest.json"               # si disponible après build
+  expected_dashboard_asset_paths:
+    - "assets/images/backgrounds/dashboard_organic_final.png"
+    - "assets/images/backgrounds/organic_dashboard_final.png"
+
+steps:
+  - id: ensure-code
+    name: "Vérifier state du dépôt"
+    run:
+      - cmd: "git rev-parse --abbrev-ref HEAD || true"
+      - cmd: "git status --porcelain || true"
+    note: "Ne rien modifier. Rapport sur la branche courante et les fichiers modifiés."
+
+  - id: build-or-attach
+    name: "S'assurer que l'application est installée & prendre screenshot"
+    run:
+      - cmd: "flutter clean || true"
+      - cmd: "flutter pub get || true"
+      - cmd: "flutter build apk --debug -v || true"
+      - cmd: "adb install -r build/app/outputs/flutter-apk/app-debug.apk || true"
+      - cmd: "adb shell am start -n com.example.permacalendar/.MainActivity || true"
+      - cmd: "sleep 1"
+      - cmd: "adb exec-out screencap -p > home_screen_screenshot.png"
+    outputs:
+      - path: "home_screen_screenshot.png"
+    note: |
+      Si la build est trop lourde, Cursor peut sauter la rebuild si l'app est déjà lancée.
+      L'important : produire un screenshot du Home (ou indiquer si l'app n'est pas sur Home).
+
+  - id: visual_analysis
+    name: "Analyse visuelle du screenshot"
+    run:
+      - cmd: "python - <<'PY'\nfrom PIL import Image\nimport pytesseract\nimg='home_screen_screenshot.png'\nim=Image.open(img)\ntext=pytesseract.image_to_string(im, lang='fra')\nprint('---OCR_TEXT---')\nprint(text)\nprint('---END_OCR---')\nPY"
+    outputs:
+      - text_capture: "ocr_home.txt"
+    note: |
+      1) Retourner l'OCR (texte détecté). 2) Fournir une liste structurée : titres (ex. 'Actions rapides'), sous-titres, boutons ('Créer').
+
+  - id: ui-elements
+    name: "Relever éléments UI visibles & positions"
+    run:
+      - cmd: "python - <<'PY'\nfrom PIL import Image, ImageStat\nim=Image.open('home_screen_screenshot.png')\nw,h=im.size\nprint('screenshot size:',w,h)\n# Heuristique: search for large dark rectangles, title text positions etc.\nprint('Please attach the screenshot (home_screen_screenshot.png).')\nPY"
+    outputs:
+      - artifact: "home_screen_screenshot.png"
+    note: "Lister manuellement (ou semi-automatique) : position approx du bloc 'Intelligence Végétale'."
+
+  - id: check-code
+    name: "Audit code & assets dans le dépôt"
+    run:
+      - cmd: "python - <<'PY'\nimport os,sys\nfiles=[\n 'pubspec.yaml',\n 'lib/shared/presentation/screens/home_screen.dart',\n 'lib/shared/widgets/organic_dashboard.dart',\n 'lib/shared/widgets/custom_card.dart'\n]\nfor f in files:\n  print('\\n--- FILE:',f,'---')\n  if os.path.exists(f):\n    with open(f,'r',encoding='utf-8',errors='replace') as fh:\n      lines=fh.read().splitlines()\n    for i,l in enumerate(lines[:200],1):\n      print(f'{i:04d}: {l}')\n  else:\n    print('MISSING:',f)\nPY"
+    outputs:
+      - path: "code_snippets.txt"
+    note: "Chercher : appel OrganicDashboardWidget, assetPath passé explicitement, valeur par défaut dans organic_dashboard.dart, diagnostic code présent (AssetManifest check)."
+
+  - id: check-assets
+    name: "Vérifier l'existence & intégrité des assets"
+    run:
+      - cmd: "python - <<'PY'\nimport os\ncandidates=['assets/images/backgrounds/dashboard_organic_final.png','assets/images/backgrounds/organic_dashboard_final.png']\nfor p in candidates:\n  print(p, 'exists=', os.path.exists(p))\n  if os.path.exists(p):\n    print('size=', os.path.getsize(p))\nPY"
+    outputs:
+      - path: "assets_check.txt"
+
+  - id: manifest-check
+    name: "Vérifier AssetManifest.json si présent"
+    run:
+      - cmd: "python - <<'PY'\nimport json,os\nm='build/flutter_assets/AssetManifest.json'\nif os.path.exists(m):\n  with open(m,'r',encoding='utf-8') as fh:\n    manifest=json.load(fh)\n  keys=list(manifest.keys())\n  print('MANIFEST_KEYS_COUNT:',len(keys))\n  for p in ['assets/images/backgrounds/dashboard_organic_final.png','assets/images/backgrounds/organic_dashboard_final.png']:\n    print(p,'in_manifest=', p in manifest)\nelse:\n  print('no_asset_manifest_at',m)\nPY"
+    outputs:
+      - path: "asset_manifest_check.txt"
+    note: "Si AssetManifest.json n'est pas dans build/flutter_assets, essayer build/app/outputs..."
+
+  - id: runtime-checks
+    name: "Checks runtime (optionnel si l'app accepte instrumentation)"
+    run:
+      - cmd: "adb shell \"run-as com.example.permacalendar cat /data/data/com.example.permacalendar/files/whatever || true\" || true"
+    note: "Si l'app permet, exécuter rootBundle tests. Sinon ignorer."
+
+  - id: summary
+    name: "Générer le rapport final"
+    run:
+      - cmd: "python - <<'PY'\n# Collect results and print a concise report\nimport sys,os\nprint('--- Audit Home UI Report ---')\nfor f in ['home_screen_screenshot.png','ocr_home.txt','code_snippets.txt','assets_check.txt','asset_manifest_check.txt']:\n  if os.path.exists(f):\n    print('ATTACHED:',f)\n  else:\n    print('MISSING:',f)\nprint('\\n--- End of report ---')\nPY"
+    outputs:
+      - path: "audit_home_report.txt"
+    note: "Le rapport doit inclure : (1) screenshot, (2) OCR text, (3) code excerpts, (4) assets existence & sizes, (5) AssetManifest presence, (6) conclusion 'image visible? yes/no' et recommandations."
+
+outputs:
+  required_artifacts:
+    - "home_screen_screenshot.png"
+    - "ocr_home.txt"
+    - "code_snippets.txt"
+    - "assets_check.txt"
+    - "asset_manifest_check.txt"
+    - "audit_home_report.txt"
+
+constraints:
+  read_only: true
+  do_not_modify_files: true
+
+deliverables:
+  - name: audit_home_report.txt
+    type: text
+    description: "Résumé diagnostic + recommandations (1-page)."
+  - name: home_screen_screenshot.png
+    type: image
+    description: "Screenshot de la page Home (plein écran)"
+  - name: code_snippets.txt
+    type: text
+    description: "Extraits de code des fichiers lus (début du fichier)."
+  - name: assets_check.txt
+    type: text
+    description: "Existence et taille des assets candidates."
+  - name: asset_manifest_check.txt
+    type: text
+    description: "Résultat recherche des assets dans AssetManifest.json."
+
+notes:
+  - "Cursor: giữ (hold) la mission tant qu'il manque une capture ou les résultats. Faire un seul rapport final."
+  - "Priorité: dire si l'asset dashboard_organic_final.png est réellement packagé ET si l'image est visible à l'écran Home."
+
