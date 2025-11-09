@@ -1,287 +1,194 @@
 mission_id: "M008"
-title: "Apply lot 1 — Préparer et appliquer 3–10 patchs provider.family (scaffold non-destructif)"
+title: "M008 — Backup Hive (Windows) + Préparation lot 1 (.family scaffolds) — Cursor"
+created_by: "perma-assistant"
+created_at: !!timestamp "2025-11-09T00:00:00Z"
 description: |
-  Objectif :
-    Préparer et appliquer un premier lot sûr de conversions de providers vers `.family`
-    en mode assisté et non-destructif. Le script principal créée :
-     - une branche par provider (apply-provider/<provider>-m008),
-     - un backup du fichier modifié (.m008.bak),
-     - un scaffold/commentaire au-dessus de la définition du provider pour guider
-       la conversion manuelle,
-     - un fichier de statut sous .ai-doc/applied_patches/<provider>.patch.md
-     - la push de la branche (optionnelle) après creation d'un tag backup-remote-main-<sha>.
-  Règles / sécurité :
-    - Ne jamais appliquer automatiquement sur des providers en collision (définitions multiples) :
-      le script détecte ces collisions et les saute.
-    - Toujours faire un backup Hive avant tests/migrations destructives.
-    - Chaque provider est préparé (scaffold) — la conversion finale est manuelle pour éviter erreurs.
-  Entrée :
-    - .ai-doc/patches/*.md (généré pendant M006),
-    - provider_family_report.csv, provider_calls_report.csv
-  Sortie :
-    - .ai-doc/applied_patches/<provider>.patch.md (statut + checklist)
-    - branches git apply-provider/<provider>-m008 (option push)
-  Mode d'emploi résumé :
-    1. Vérifier que working tree est propre (git status).
-    2. Lancer PowerShell :
-       .scripts/apply_provider_patches.ps1 -Max 5 -DryRun (tester d'abord)
-       .scripts/apply_provider_patches.ps1 -Max 5 -RunTests -PushBranch (exécution)
-  Priorité: high
-  Max_files: 10
-files:
-  - path: ".scripts/apply_provider_patches.ps1"
-    action: create
-    encoding: text
-    content: |
-      # PowerShell script — prepare/apply provider family scaffolds (M008)
-      Param(
-        [int]$Max = 5,
-        [string[]]$Providers = @(),
-        [switch]$DryRun,
-        [switch]$RunTests,
-        [switch]$PushBranch
-      )
-      $ErrorActionPreference = "Stop"
+  Mission Cursor : sauvegarde locale des boxes Hive (Windows uniquement — le téléphone a été désinstallé),
+  puis préparation non-destructive et commit de 3 providers sûrs en branches locales pour révision :
+  - filteredEvolutionHistoryProvider
+  - plantEvolutionHistoryProvider
+  - latestEvolutionProvider
 
-      function Write-Log($msg) { Write-Host "$(Get-Date -Format u) - $msg" }
-
-      # Repo root
-      $root = (Get-Location).Path
-
-      # Preconditions
-      if (-not (Test-Path ".ai-doc/patches")) {
-        Write-Error ".ai-doc/patches not found. Run M006 scripts first."
-        exit 1
-      }
+  Contraintes / conventions :
+  - Aucune extraction Android (le téléphone est désinstallé). Pas d'accès adb.
+  - Ne PAS pousser sur l'origine ; l'opérateur (tu) fera le push / revue PR après la mission.
+  - Les providers en collision (ex. gardenBedProvider) sont SKIPPÉS automatiquement.
+  - Le script `.scripts/apply_provider_patches.ps1` doit être présent (créé lors du M008 draft). La mission exécute la préparation réelle (scaffold + commit + branches) et lance les tests locaux (`-RunTests`) mais **ne pousse pas** les branches.
+preconditions:
+  - Exécuter depuis la racine du dépôt git local.
+  - PowerShell (pwsh) disponible.
+  - `flutter` et `dart` disponibles si `-RunTests` déclenche `build_runner` / `flutter test`.
+  - `.scripts/apply_provider_patches.ps1` et `.ai-doc/M008.yaml` présents (créés précédemment).
+variables:
+  providers: "filteredEvolutionHistoryProvider,plantEvolutionHistoryProvider,latestEvolutionProvider"
+  backup_dest_base: "${env:USERPROFILE}\\Documents\\permacalendar_hive_backup"
+steps:
+  - name: "1 — Vérification repo & commit des assets M008 si non commités"
+    shell: "pwsh"
+    run: |
+      Write-Host "=== Step 1: vérification git et commit des assets M008 ==="
       if (-not (git rev-parse --is-inside-work-tree 2>$null)) {
-        Write-Error "Not a git repository (run from repo root)."
+        Write-Error "Pas dans un dépôt git. Abandon."
         exit 1
       }
 
-      # Choose providers
-      if ($Providers.Length -eq 0) {
-        if (Test-Path "provider_family_report.csv") {
-          $rows = Import-Csv "provider_family_report.csv" | Where-Object { $_.is_family -eq "False" -and $_.defined_in -ne "" } | Sort-Object -Property usages -Descending
-          $candidates = $rows | Select-Object -First $Max | ForEach-Object { $_.provider }
+      # Vérifier l'état ; autoriser uniquement les fichiers .ai-doc/ et .scripts/ non commités
+      $status = git status --porcelain
+      $dirty = $status -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+      $unsafe = @()
+      foreach ($line in $dirty) {
+        $path = $line -replace '^[ MADRCU?!]*\s*',''
+        if ($path -notmatch '^(?:\.ai-doc/|\.ai-doc\\|\.scripts/|\.scripts\\)') {
+          $unsafe += $path
+        }
+      }
+      if ($unsafe.Count -gt 0) {
+        Write-Error "Working tree dirty avec fichiers hors .ai-doc/ ou .scripts/:"
+        $unsafe | ForEach-Object { Write-Host " - $_" }
+        Write-Error "Nettoyez ou commitez ces fichiers avant de poursuivre."
+        exit 2
+      }
+
+      # Commit des assets M008 si présents et non commités
+      $toAdd = @(".ai-doc/M008.yaml", ".scripts/apply_provider_patches.ps1", ".ai-doc/applied_patches", ".ai-doc/applied_patches/README.md", ".ai-doc/applied_patches/index.yaml")
+      $present = @()
+      foreach ($p in $toAdd) { if (Test-Path $p) { $present += $p } }
+      if ($present.Count -gt 0) {
+        git add $present 2>$null
+        if ((git diff --cached --name-only) -ne "") {
+          git commit -m "M008: add apply_provider_patches script and applied_patches scaffolding (Cursor run)"
+          Write-Host "Committed M008 assets."
         } else {
-          # fallback: list patches folder names
-          $candidates = Get-ChildItem -Path ".ai-doc/patches" -Filter "*.md" | Select-Object -First $Max -ExpandProperty BaseName
+          Write-Host "M008 assets déjà staged/committés."
         }
       } else {
-        $candidates = $Providers
+        Write-Host "Aucun asset M008 trouvé à committer."
       }
+      Write-Host "Step 1 OK."
 
-      Write-Log "Candidates to prepare:"
-      $candidates | ForEach-Object { Write-Host " - $_" }
+  - name: "2 — Sauvegarde Hive (Windows uniquement)"
+    shell: "pwsh"
+    run: |
+      Write-Host "=== Step 2: backup Hive local (Windows) ==="
+      $patterns = @('germination_events','plantings','gardens','plants','activities','garden_beds','plant_varieties','growth_cycles','plant_conditions','weather_conditions','recommendations','notification_alerts','plant_analyses','active_alerts','pest_observations','bio_control_recommendations')
+      $ts = (Get-Date).ToString('yyyyMMdd_HHmmss')
+      $backupDir = Join-Path "${env:USERPROFILE}\Documents" "permacalendar_hive_backup_$ts"
+      New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
+      Write-Host "Backup directory: $backupDir"
 
-      # Ensure applied_patches dir
-      $appliedDir = ".ai-doc/applied_patches"
-      if (!(Test-Path $appliedDir)) { New-Item -ItemType Directory -Path $appliedDir | Out-Null }
+      $roots = @()
+      if ($env:APPDATA) { $roots += $env:APPDATA }
+      if ($env:LOCALAPPDATA) { $roots += $env:LOCALAPPDATA }
+      $roots += (Get-Location).Path  # in case dev used repo-local hive files
 
-      foreach ($prov in $candidates) {
-        Write-Log "Processing provider: $prov"
-
-        # Find definitions across repo
-        $defs = Select-String -Path ".\**\*.dart" -Pattern "final\s+$prov\s*=" -List -ErrorAction SilentlyContinue
-        if (-not $defs) {
-          Write-Warning "No definition found for $prov — skipping."
-          continue
+      $foundAny = $false
+      foreach ($r in $roots | Select-Object -Unique) {
+        if (-not (Test-Path $r)) { continue }
+        Write-Host "Searching .hive files in $r ..."
+        try {
+          $matches = Get-ChildItem -Path $r -Recurse -Filter '*.hive' -ErrorAction SilentlyContinue
+        } catch {
+          $matches = @()
         }
-        if ($defs.Count -ne 1) {
-          Write-Warning "Multiple or zero definitions for $prov ($($defs.Count)) — SKIPPING to avoid collisions."
-          $defs | ForEach-Object { Write-Host "  - $($_.Path):$($_.LineNumber)" }
-          Add-Content -Path "$appliedDir/$prov.patch.md" -Value ("status: skipped`nreason: collision_or_multiple_defs`nfound:" + ($defs | ForEach-Object { "`n - $($_.Path):$($_.LineNumber)" }))
-          continue
-        }
-
-        $def = $defs[0]
-        $defFile = $def.Path
-        $lineNo = $def.LineNumber
-        Write-Log "Found single definition in $defFile:$lineNo"
-
-        # Extract snippet
-        $content = Get-Content -Path $defFile -Raw -Encoding UTF8
-        $lines = $content -split "`r?`n"
-        $start = [Math]::Max(1, $lineNo - 4)
-        $end = [Math]::Min($lines.Length, $lineNo + 8)
-        $snippet = $lines[($start-1)..($end-1)]
-
-        # Backup original file
-        $bakFile = "$defFile.m008.bak"
-        Copy-Item -Path $defFile -Destination $bakFile -Force
-        Write-Log "Backup created: $bakFile"
-
-        # Create branch
-        $branch = "apply-provider/$prov-m008"
-        if ($DryRun) {
-          Write-Log "(DryRun) would create branch: $branch"
-        } else {
-          git checkout -b $branch
-          Write-Log "Created branch $branch"
-        }
-
-        # Prepare scaffold: comment original snippet and add TODO conversion block
-        $before = if ($start -gt 1) { $lines[0..($start-2)] } else { @() }
-        $after  = if ($end -lt $lines.Length) { $lines[$end..($lines.Length-1)] } else { @() }
-
-        $commentedOriginal = $snippet | ForEach-Object { "// $_" }
-        $conversionBlock = @(
-          "// BEGIN_M008_CONVERSION $prov",
-          "// TODO: Convert `$prov` to a `.family` provider (NotifierProvider.family / Provider.family / FutureProvider.family).",
-          "// Suggested outline (replace <ParamType> and adapt generics):",
-          "// final $prov = <ProviderType>.family<<ParamType>, <State>>((ref, param) {",
-          "//   // 1) move provider logic here, replacing implicit scope with param",
-          "//   // 2) thread `param` through downstream ref.watch/ref.read calls",
-          "//   // 3) update keys/repositories/state accordingly",
-          "// });",
-          "// The original definition is kept below (commented). Remove/comment out after conversion.",
-          ""
-        ) + $commentedOriginal + @(
-          "",
-          "// END_M008_CONVERSION $prov"
-        )
-
-        $newContentLines = @()
-        $newContentLines += $before
-        $newContentLines += $conversionBlock
-        $newContentLines += $after
-        $newContent = $newContentLines -join "`n"
-
-        if ($DryRun) {
-          Write-Log "(DryRun) Would write scaffold to $defFile (backup at $bakFile)."
-        } else {
-          Set-Content -Path $defFile -Value $newContent -Encoding UTF8
-          Write-Log "Scaffold written into $defFile"
-        }
-
-        # Commit prepared changes
-        if ($DryRun) {
-          Write-Log "(DryRun) Skipping git add/commit for $defFile"
-        } else {
-          git add $defFile $bakFile
-          git commit -m "M008: scaffold .family conversion for $prov (manual edits required)"
-          Write-Log "Committed scaffold for $prov on $branch"
-        }
-
-        # Optionally run build_runner & tests for quick validation
-        if ($RunTests) {
-          if ($DryRun) {
-            Write-Log "(DryRun) Would run build_runner and flutter test"
-          } else {
-            Write-Log "Running build_runner..."
-            & flutter pub run build_runner build --delete-conflicting-outputs
-            Write-Log "Running flutter test (full suite; consider running targeted tests)..."
-            & flutter test || Write-Warning "Some tests failed — check logs."
+        foreach ($m in $matches) {
+          if ($patterns -contains $m.BaseName) {
+            $foundAny = $true
+            Write-Host "Copying $($m.FullName) to $backupDir"
+            Copy-Item -Path $m.FullName -Destination $backupDir -Force
           }
         }
-
-        # Push branch and create backup tag if requested
-        if ($PushBranch -and -not $DryRun) {
-          # backup tag
-          $sha = (git rev-parse --short HEAD).Trim()
-          $backupTag = "backup-remote-main-$sha"
-          git tag -f $backupTag
-          git push origin $backupTag
-          Write-Log "Pushed backup tag $backupTag to origin"
-
-          # push branch
-          git push origin "HEAD:refs/heads/$branch"
-          Write-Log "Pushed branch $branch to origin"
-        } elseif ($PushBranch -and $DryRun) {
-          Write-Log "(DryRun) Would create backup tag and push branch $branch"
-        }
-
-        # Create a small applied_patches status file
-        $appliedFile = "$appliedDir/$prov.patch.md"
-        $statusContent = @"
-        ---
-        provider: $prov
-        prepared_in_file: $defFile
-        prepared_line: $lineNo
-        backup_file: $bakFile
-        branch: $branch
-        status: prepared
-        notes: "Scaffold inserted. Manual conversion to .family required. See TODO block in file."
-        ---
-        "@
-        Set-Content -Path $appliedFile -Value $statusContent -Encoding UTF8
-        Write-Log "Wrote applied patch status: $appliedFile"
-
-        # Return to main if not in dryrun and not staying in branch
-        if (-not $DryRun) {
-          git checkout main
-        }
       }
 
-      Write-Log "M008 script finished."
+      if (-not $foundAny) {
+        Write-Warning "Aucun fichier .hive correspondant trouvé localement. Continuera sans backup local des boxes (ok si l'app était désinstallée)."
+        # still create empty marker for traceability
+        New-Item -Path (Join-Path $backupDir "NO_HIVE_FILES_FOUND.txt") -ItemType File -Force | Out-Null
+      } else {
+        $zipPath = "$backupDir.zip"
+        Write-Host "Compression du backup -> $zipPath"
+        Compress-Archive -Path (Join-Path $backupDir '*') -DestinationPath $zipPath -Force
+        Write-Host "Backup complet : $zipPath"
+      }
 
-  - path: ".ai-doc/applied_patches/README.md"
-    action: create
-    encoding: text
-    content: |
-      # Applied patches (M008)
-      Ce répertoire contient les fichiers de statut pour chaque provider préparé avec M008.
-      Chaque fichier `<provider>.patch.md` contient :
-        - provider
-        - prepared_in_file
-        - prepared_line
-        - backup_file
-        - branch
-        - status (prepared / skipped / applied)
-        - notes
+      # Output path for mission summary
+      Set-Content -Path (Join-Path $backupDir "backup_meta.txt") -Value ("backup_base=$backupDir`nzip=" + (if (Test-Path $zipPath) { $zipPath } else { "" }))
+      Write-Host "Step 2 OK."
 
-      Workflow recommandé après le scaffold :
-        1. Ouvrir la branche `apply-provider/<provider>-m008`.
-        2. Éditer le fichier où le scaffold a été inséré : remplacer le bloc TODO par
-           la conversion `.family` appropriée, ajuster les generics `<ParamType>`, mettre
-           à jour les appels `ref.watch(...)` pour passer le param.
-        3. Exécuter `flutter pub run build_runner build --delete-conflicting-outputs`.
-        4. Lancer `flutter test` ciblé (tests unit + widget + integration affectés).
-        5. Mettre à jour `.ai-doc/applied_patches/<provider>.patch.md` : status -> applied,
-           ajouter notes sur changements / collisions manuelles, et commit/push.
-        6. Respecter la procédure "safe push" (tag backup puis push branch / merge).
+  - name: "3 — Vérification backup"
+    shell: "pwsh"
+    run: |
+      Write-Host "=== Step 3: vérification du backup ==="
+      $zips = Get-ChildItem -Path "${env:USERPROFILE}\Documents" -Filter "permacalendar_hive_backup_*.zip" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending
+      if ($zips.Count -gt 0) {
+        Write-Host "Backups trouvés (plus récent en tête) :"
+        $zips | Select-Object Name,FullName,LastWriteTime | Format-Table -AutoSize
+      } else {
+        Write-Warning "Aucun archive .zip trouvé dans Documents. (Ceci est acceptable si l'app a été désinstallée et aucune .hive locale n'existe.)"
+      }
+      Write-Host "Step 3 OK."
 
-  - path: ".ai-doc/applied_patches/index.yaml"
-    action: create
-    encoding: text
-    content: |
-      # Index des applied_patches (M008)
-      # Ce fichier est mis à jour par l'opérateur après revue / application.
-      applied_patches: []
-  - path: ".ai-doc/M008.yaml"
-    action: create
-    encoding: text
-    content: |
-      mission_id: "M008"
-      title: "Apply lot 1 — Préparer et appliquer 3–10 patchs (scaffold non-destructif)"
-      created_by: "perma-assistant"
-      created_at: !!timestamp "2025-11-09T00:00:00Z"
-      notes: |
-        Utilisez .scripts/apply_provider_patches.ps1 en DryRun pour valider la sélection.
-        Exemples d'utilisation :
-          powershell -ExecutionPolicy Bypass -File .scripts/apply_provider_patches.ps1 -Max 5 -DryRun
-          powershell -ExecutionPolicy Bypass -File .scripts/apply_provider_patches.ps1 -Max 5 -RunTests -PushBranch
-        Après préparation, éditez manuellement les fichiers en branche et suivez la checklist.
-      checklist:
-        - Backup Hive sanctuaire (local copy / snapshot)
-        - git status clean
-        - flutter pub get
-        - flutter pub run build_runner build --delete-conflicting-outputs
-        - Run apply script in DryRun for review
-        - Run apply script without DryRun for real
-        - Manual edit & tests
-        - Commit, Push (safe push/tag backup)
-      success_criteria:
-        - 3–10 providers scaffoldés and prepared in .ai-doc/applied_patches/
-        - Tests unit/widget targeted pass after conversion (per provider)
-        - No changes to Hive sanctuaire
-      references:
-        - ".ai-doc/provider_family_patches.md"
-        - ".ai-doc/patches/*"
-        - ".scripts/generate_provider_patches.ps1"
+  - name: "4 — Préparer les providers (scaffold .family) — exécution réelle (sans push)"
+    shell: "pwsh"
+    run: |
+      Write-Host "=== Step 4: exécution apply_provider_patches.ps1 pour providers sûrs ==="
+      $script = ".scripts\apply_provider_patches.ps1"
+      if (-not (Test-Path $script)) {
+        Write-Error "$script introuvable. Assure-toi qu'il existe sous .scripts/ (créé lors du M008 draft)."
+        exit 1
+      }
+
+      $provArg = "filteredEvolutionHistoryProvider,plantEvolutionHistoryProvider,latestEvolutionProvider"
+      Write-Host "Providers ciblés: $provArg"
+      Write-Host "Note: gardenBedProvider sera automatiquement ignoré (collision)."
+
+      # Exécuter le script sans -PushBranch car tu feras le push toi-même après revue
+      Write-Host "Lancement du script (préparation réelle + tests locaux) :"
+      Write-Host "powershell -ExecutionPolicy Bypass -File $script -Providers $provArg -RunTests"
+      powershell -ExecutionPolicy Bypass -File $script -Providers $provArg -RunTests
+      if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Le script apply_provider_patches.ps1 a retourné un code non nul. Vérifier les logs ci-dessus."
+      } else {
+        Write-Host "apply_provider_patches.ps1 terminé (scaffolds committés sur branches locales)."
+      }
+      Write-Host "Step 4 OK."
+
+  - name: "5 — Collecte artefacts & résumé final (prêt pour push manuel)"
+    shell: "pwsh"
+    run: |
+      Write-Host "=== Step 5: collecte des artefacts ==="
+      Write-Host "Branches locales créées (pattern apply-provider/*-m008):"
+      git for-each-ref --format='%(refname:short)' refs/heads | Where-Object { $_ -like 'apply-provider/*-m008' } | ForEach-Object { Write-Host " - $_" }
+
+      Write-Host ""
+      if (Test-Path ".ai-doc/applied_patches") {
+        Write-Host "Fichiers sous .ai-doc/applied_patches/:"
+        Get-ChildItem -Path ".ai-doc/applied_patches" -Force | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize
+      } else {
+        Write-Host " - .ai-doc/applied_patches/ absent."
+      }
+
+      Write-Host ""
+      Write-Host "Derniers commits (10):"
+      git --no-pager log -n 10 --pretty=format:"%h %ad %s" --date=iso
+
+      Write-Host ""
+      Write-Host "Local backups in Documents (latest):"
+      Get-ChildItem -Path "${env:USERPROFILE}\Documents" -Filter "permacalendar_hive_backup_*" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object Name,FullName,LastWriteTime | Format-Table -AutoSize
+
+      Write-Host ""
+      Write-Host "IMPORTANT: Aucune branche n'a été poussée par cette mission. Tu peux maintenant :"
+      Write-Host "  1) inspecter les branches apply-provider/*-m008, éditer les fichiers scaffoldés (remplacer TODO par conversion .family),"
+      Write-Host "  2) exécuter build_runner + tests localement pour chaque branche (ou utiliser la branche locale créée),"
+      Write-Host "  3) faire un 'safe push' / créer PRs vers origin/main quand tu es prêt."
+      Write-Host "Mission M008 complète."
+
+outputs:
+  - description: "Liste des branches locales apply-provider/*-m008 créées"
+  - description: "Fichiers .ai-doc/applied_patches/*.patch.md (status: prepared) créés"
+  - description: "Chemin(s) des archives backup Hive (si trouvées) dans Documents"
+  - description: "Logs d'exécution (build_runner / flutter test) imprimés dans la sortie de la mission"
 notes: |
-  Remarques opérationnelles :
-    - Préférez d'abord -DryRun pour voir la liste et les changements sans commit.
-    - Le script fait un commit de scaffold ; la conversion finale reste manuelle.
-    - Évitez d'appliquer les providers listés comme collisions; résoudre ces cas à la main.
-    - Après conversion manuelle, mettez à jour .ai-doc/applied_patches/<provider>.patch.md -> status: applied
+  - Cette mission n'effectue **pas** de push remote. Tu es responsable du push / PR après revue.
+  - Les providers en collision (gardenBedProvider) sont SKIPPÉS et listés dans les logs pour revue manuelle.
+  - Si des erreurs apparaissent pendant `build_runner` ou `flutter test`, consulte la sortie complète ; corrige localement sur les branches créées puis commit/push.
+  - Si tu veux que Cursor pousse automatiquement les branches (backup tag + push), je peux générer une variante qui inclut -PushBranch — dis-le et j'adapte le YAML.
