@@ -1,0 +1,186 @@
+# cursor/mission_dashboard_audit.yaml
+mission:
+  id: "cursor-travaux-dashboard-001"
+  title: "Appliquer correctifs UI — Dashboard (Permacalendar v2) — basé sur audit assistant"
+  owner: "@romanprojet"
+  repo: "Klod2mars/permacalendar-v2"
+  target_branch_template: "assistant/cursor-audit-dashboard-{{YYYYMMDD}}-{{HHMM}}"
+  description: |
+    **Rappel** : l'audit a été réalisé par l'assistant (GPT). Cursor NE DOIT PAS refaire l'audit.
+    Cursor doit appliquer les corrections UI ciblées (overlay, overflows, hotspots/bulles, diagnostic),
+    produire un patch (`cursor/assistant_patch.diff`) et un rapport markdown (`cursor/mission_dashboard_audit_report.md`).
+    Ne pas toucher aux migrations Hive ni aux données sanctuarisées.
+
+initial_diagnostic: |
+  Ci-dessous le diagnostic réalisé par l'assistant (résumé + preuves) :
+  1) Asset présent et déclaré
+     - `assets/images/backgrounds/dashboard_organic_final.png` existe (size ~1 727 344 bytes). (voir assets_check.txt) :contentReference[oaicite:0]{index=0}
+     - L'asset figure dans le manifest de build (AssetManifest). :contentReference[oaicite:1]{index=1}
+
+  2) Image masquée par overlays opaques
+     - `ImageCard` applique un overlay sombre (gradient `Colors.black.withOpacity(0.7)`) qui noircit l'image : `lib/shared/widgets/custom_card.dart`. :contentReference[oaicite:2]{index=2}
+     - `home_screen.dart` met un `Container` diagnostic (couleur `Colors.black54`) en `topRight` sur l'image (empêche la visibilité). :contentReference[oaicite:3]{index=3}
+     - `organic_dashboard.dart` affiche un panneau diagnostic en debug (`kDebugMode`) avec fond opaque ; cela correspond au panneau "asset: ... load OK: 1727344 bytes" visible sur capture. :contentReference[oaicite:4]{index=4}
+
+  3) Overflows (Right overflowed / Bottom overflowed)
+     - Plusieurs `Row` contiennent des boutons/actions sans `Wrap`/`Flexible`, provoquant des overflows sur petits écrans :
+       * "Aucun jardin" : `Row` avec deux boutons dans `home_screen.dart`. :contentReference[oaicite:5]{index=5}
+       * `HeaderCard` injecte `actions` directement dans un `Row` (risque d'overflow). `lib/shared/widgets/custom_card.dart`. :contentReference[oaicite:6]{index=6}
+
+  4) Bulles / Hotspots
+     - `lib/shared/widgets/organic_dashboard.dart` contient la logique de hotspots (fractional hotspots + _HotspotButton). Les hotspots existent et sont correctement construits (par ex. gardens, calendar, intelligence) mais :
+       - **HomeScreen** n'utilise pas `OrganicDashboardWidget` : la section "Intelligence Végétale" reconstruit manuellement un `Image.asset` (stack) sans hotspots actifs => la zone bulles n'est pas tappable. :contentReference[oaicite:7]{index=7} :contentReference[oaicite:8]{index=8}
+     - Diagnostic : ajouter hotspot météo (weather) et réintégrer `OrganicDashboardWidget` dans `home_screen.dart`.
+
+prerequisites:
+  - Cursor must NOT perform a repo audit; use `initial_diagnostic` above.
+  - Cursor must not modify Hive migrations or user sanctuarized data.
+  - Remote access read/write recommended; do not force-push main.
+  - Human will review before any push to remote if repository policy requires it.
+
+outputs_expected:
+  - path: "cursor/assistant_patch.diff"
+    type: "text/patch"
+    description: "Diff complet des modifications réalisées (git diff origin/main...HEAD)."
+  - path: "cursor/mission_dashboard_audit_report.md"
+    type: "markdown"
+    description: "Résumé des actions, fichiers modifiés, extraits avant/après, commandes QA, risques restants."
+  - path: "cursor/logs/steps_log.txt"
+    type: "text"
+    description: "Journal opérationnel des étapes exécutées (horodaté)."
+
+patch_spec:
+  summary: "Modifications atomiques (≤ 6 fichiers). Implémenter exactement ce qui suit."
+  files:
+    - path: "lib/shared/widgets/custom_card.dart"
+      changes:
+        - purpose: "Rendre l'overlay paramétrable et réduire l'opacité par défaut"
+        - details: |
+            * ImageCard: ajouter nouveaux paramètres facultatifs au constructeur :
+              - double overlayOpacity (default: 0.12)
+              - Color? overlayColor (default: Colors.black)
+            * Remplacer le bloc d'overlay actuel (gradient avec opacity 0.7) par :
+              LinearGradient(colors: [Colors.transparent, overlayColor.withOpacity(overlayOpacity)])
+            * Mettre à jour usages existants (si aucun changement nécessaire, conserver valeurs par défaut).
+        - reason: "Permet à l'image d'être visible tout en conservant contraste texte."
+        - commit_hint: "fix(ui): make image overlay parametric & reduce opacity"
+
+    - path: "lib/shared/widgets/custom_card.dart"
+      changes:
+        - purpose: "Prévenir overflows dans HeaderCard"
+        - details: |
+            * Dans HeaderCard, remplacer l'injection directe de `actions` dans le Row par un Wrap :
+              Avant: if (actions != null) ...actions!
+              Après: if (actions != null) Wrap(spacing:8, runSpacing:8, children: actions!)
+            * Garantir que les actions suivent le flux et passent sur plusieurs lignes si besoin.
+        - reason: "Élimine Right overflowed sur petits écrans."
+        - commit_hint: "fix(ui): use Wrap for header actions to avoid overflow"
+
+    - path: "lib/shared/presentation/screens/home_screen.dart"
+      changes:
+        - purpose: "Réactiver hotspots / bulles et atténuer diagnostic"
+        - details: |
+            * Remplacer la construction manuelle de l'image/stack dans `_buildIntelligenceSection` par l'utilisation de `OrganicDashboardWidget`
+              (importer `lib/shared/widgets/organic_dashboard.dart` si pas déjà importé).
+            * Supprimer / atténuer le Container diagnostic mis en topRight (couleur `Colors.black54`) : 
+              - rendre affichage conditionnel via `kDebugMode && showDiagnostics` et réduire opacité (ex: 0.5 -> 0.18) ou limiter la taille (maxWidth: 160).
+            * Dans la section "Aucun jardin", remplacer la `Row` des boutons par un `Wrap(spacing:12, children:[...])`.
+        - reason: "Réactive les hotspots occasions de tappables et évite overflows."
+        - commit_hint: "feat(ui): reintegrate OrganicDashboardWidget and prevent button overflow"
+
+    - path: "lib/shared/widgets/organic_dashboard.dart"
+      changes:
+        - purpose: "Rendre diagnostic non intrusif et ajouter hotspot météo"
+        - details: |
+            * Ajouter hotspot 'weather' dans la liste `_hotspots` si absent. Exemple :
+              _Hotspot(
+                id: 'weather',
+                centerX: 0.50,
+                centerY: 0.18,
+                widthFrac: 0.18,
+                heightFrac: 0.18,
+                route: AppRoutes.weather,
+                label: 'Weather',
+              )
+            * Modifier le panneau diagnostic debug:
+              - rendre closable ou réduire maxWidth (ex: maxWidth: 160) + baisser opacité.
+              - n'afficher que si `kDebugMode && showDiagnostics == true`.
+        - reason: "Permet bulle météo tappable & réduit intrusion visuelle en debug."
+        - commit_hint: "fix(ui): add weather hotspot & reduce debug panel intrusiveness"
+
+    - path: "pubspec.yaml"
+      changes:
+        - purpose: "Vérifier & préserver assets declaration"
+        - details: |
+            * S'assurer que `assets/images/backgrounds/` est listé (il l'est déjà).
+            * Ne pas modifier sans raison.
+        - reason: "Confirmation d'asset déclaré."
+        - commit_hint: "chore: confirm assets declaration"
+
+operations:
+  - id: "op1_create_branch"
+    instructions: |
+      git fetch origin main
+      git checkout -b "{{target_branch_template}}"
+
+  - id: "op2_apply_changes"
+    instructions: |
+      Appliquer modifications atomiques conformément au `patch_spec`.
+      Commits suggérés :
+        1) fix(ui): make image overlay parametric & reduce opacity
+        2) fix(ui): use Wrap for header actions to avoid overflow
+        3) feat(ui): reintegrate OrganicDashboardWidget and add weather hotspot
+        4) docs: add cursor/mission_dashboard_audit_report.md (placeholder)
+      Ne pas pousser automatiquement la branche sans validation humaine si politique l'interdit.
+
+  - id: "op3_tests_and_checks"
+    instructions: |
+      Exécuter:
+        - flutter pub get
+        - flutter analyze
+        - flutter test
+      Si l'environnement permet un run UI:
+        - flutter run -d <emulator_or_device> (mode debug)
+      Enregistrer tous les logs dans cursor/logs/steps_log.txt.
+
+  - id: "op4_generate_patch"
+    instructions: |
+      Après commits, produire patch :
+        git diff origin/main...HEAD > cursor/assistant_patch.diff
+      Ajouter file `cursor/assistant_patch.diff` au repo (git add / commit, ou leave as artifact).
+      Produire `cursor/mission_dashboard_audit_report.md` (voir template ci-dessous).
+
+  - id: "op5_report_and_finalize"
+    instructions: |
+      Rédiger `cursor/mission_dashboard_audit_report.md` contenant :
+        - Contexte + rappel du diagnostic (reprendre initial_diagnostic)
+        - Liste fichiers modifiés + description courte + commits
+        - Extraits "avant / après" (8–12 lignes max par fichier)
+        - Commandes QA (flutter pub get, flutter analyze, flutter test, run)
+        - Étapes pour appliquer le patch manuellement:
+            git apply cursor/assistant_patch.diff
+            git add -A && git commit -m "apply cursor patch"
+        - Checklist de validation manuelle:
+            * Image dashboard visible (overlay atténué)
+            * Aucun overflow visible
+            * Boutons "Créer/ Voir tous" se placent correctement sur petits écrans
+            * Hotspots tappables (gardens, calendar, intelligence, weather)
+            * Debug panel discret / closable
+        - Risques restants (calage pixel-perfect des bulles, tests manuels)
+        - SHA(s) et nom de la branche de travail
+      Sauvegarder logs et rapport, et mettre à jour cursor/logs/steps_log.txt.
+
+quality_gate:
+  - "flutter analyze => no new lint errors"
+  - "flutter test => all tests pass (or list failures)"
+  - "Modifications ≤ 6 fichiers et ≤ ~1200 lignes ajoutées/modifiées"
+  - "Aucun changement sur migrations Hive ou données utilisateur"
+
+notes:
+  - "L'assistant a déjà identifié les causes et les fichiers (voir `initial_diagnostic`). Cursor doit appliquer les changements, pas redécouvrir l'audit."
+  - "Le calibrage exact (dx/dy) des bulles doit être affiné par l'humain via hot-reload après application du patch."
+  - "Ne pas introduire de secrets/PII."
+
+contact:
+  human: "@romanprojet"
+  preferred_language: "fr"
