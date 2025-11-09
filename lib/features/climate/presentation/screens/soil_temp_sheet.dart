@@ -222,7 +222,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         onPressed: () {
                           // Phase 2: Save to provider
                           ref
-                              .read(soilTempProvider.notifier)
+                              .read(soilTempProvider(_scopeKey).notifier)
                               .setManual(_scopeKey, _temperature);
                           Navigator.pop(context);
                         },

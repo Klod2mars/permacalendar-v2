@@ -251,7 +251,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                         onPressed: () {
                           // Phase 2: Save to provider
                           ref
-                              .read(soilPHProvider.notifier)
+                              .read(soilPHProvider(_scopeKey).notifier)
                               .setPH(_scopeKey, _phValue);
                           Navigator.pop(context);
                         },

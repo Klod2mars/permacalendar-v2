@@ -28,7 +28,8 @@ class DailyUpdateController {
   Future<bool> checkAndUpdateSoilTemp(String scopeKey,
       {bool forceUpdate = false}) async {
     try {
-      final soilTempController = _ref.read(soilTempProvider.notifier);
+      final soilTempController =
+          _ref.read(soilTempProvider(scopeKey).notifier);
 
       // Check if already updated today
       if (!forceUpdate) {
@@ -82,7 +83,8 @@ class DailyUpdateController {
   /// Returns update status information
   Future<Map<String, dynamic>> getUpdateStatus(String scopeKey) async {
     try {
-      final soilTempController = _ref.read(soilTempProvider.notifier);
+      final soilTempController =
+          _ref.read(soilTempProvider(scopeKey).notifier);
       final isUpdatedToday = await soilTempController.isUpdatedToday(scopeKey);
       final airTemp = _ref.read(currentAirTempProvider);
 
@@ -118,7 +120,8 @@ class DailyUpdateController {
   Future<Map<String, dynamic>> getThermalEquilibriumInfo(
       String scopeKey) async {
     try {
-      final soilTempController = _ref.read(soilTempProvider.notifier);
+      final soilTempController =
+          _ref.read(soilTempProvider(scopeKey).notifier);
       final airTemp = _ref.read(currentAirTempProvider);
 
       if (airTemp == null) {
