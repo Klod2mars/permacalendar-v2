@@ -320,6 +320,8 @@ class ImageCard extends StatelessWidget {
   final VoidCallback? onTap;
   final EdgeInsetsGeometry? margin;
   final BorderRadius? borderRadius;
+  final double overlayOpacity;
+  final Color overlayColor;
 
   const ImageCard({
     super.key,
@@ -332,7 +334,13 @@ class ImageCard extends StatelessWidget {
     this.onTap,
     this.margin,
     this.borderRadius,
-  });
+    this.overlayOpacity = 0.12,
+    Color? overlayColor,
+  })  : assert(
+          overlayOpacity >= 0 && overlayOpacity <= 1,
+          'overlayOpacity must be between 0 and 1',
+        ),
+        overlayColor = overlayColor ?? Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +391,7 @@ class ImageCard extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.7),
+                        overlayColor.withValues(alpha: overlayOpacity),
                       ],
                     ),
                   ),
