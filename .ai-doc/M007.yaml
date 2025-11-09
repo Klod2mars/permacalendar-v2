@@ -1,0 +1,55 @@
+mission_id: "M007"
+title: "Provider family — generate reviewable patch files (non-destructive)"
+description: |
+  Generate concrete, reviewable .patch/.md suggestion files for converting top provider candidates to .family.
+  This mission DOES NOT change source files; it produces .ai-doc/applied_patches/<provider>.patch and
+  an index .ai-doc/applied_patches_index.md for easy review and manual application.
+priority: high
+max_files: 20
+files:
+  - path: ".scripts/generate_provider_patch_files.ps1"
+    action: create
+    encoding: text
+    content: |
+      # PowerShell: create concrete patch suggestions (non-destructive) from .ai-doc/patches
+      $root = (Get-Location).Path
+      $patchesDir = Join-Path $root ".ai-doc/patches"
+      $outDir = Join-Path $root ".ai-doc/applied_patches"
+      if (!(Test-Path $patchesDir)) {
+        Write-Error ".ai-doc/patches does not exist. Run M006 first."
+        exit 1
+      }
+      if (!(Test-Path $outDir)) { New-Item -ItemType Directory -Path $outDir | Out-Null }
+
+      # Read patch summary for top candidates
+      $patchFiles = Get-ChildItem -Path $patchesDir -Filter "*.md"
+
+      $indexPath = Join-Path $outDir "applied_patches_index.md"
+      Set-Content -Path $indexPath -Value "# Applied Patch Suggestions`n`n"
+
+      foreach ($pf in $patchFiles) {
+        $name = $pf.BaseName
+        Write-Host "Processing suggestion: $name"
+        $content = Get-Content -Raw -Path $pf.FullName -Encoding UTF8
+
+        # Try to extract Before excerpt and provider_type
+        $providerType = ""
+        if ($content -match 'provider_type:\s*([A-Za-z0-9_]+)') { $providerType = $Matches[1] }
+        $before = "// Couldn't find before excerpt in suggestion."
+        $beforeMatch = Select-String -InputObject $content -Pattern "### Before \(excerpt\)([\s\S]*?)### Suggested" -AllMatches
+        if ($beforeMatch.Count -gt 0) {
+          $before = $beforeMatch.Matches[0].Groups[1].Value.Trim()
+        } else {
+          if ($content -match '```dart([\s\S]*?)```') { $before = $Matches[1].Trim() }
+        }
+
+        # Build After snippet template based on provider_type
+        $after = ""
+        switch ($providerType) {
+          "NotifierProvider" {
+            $after = @"
+```dart
+// After (example)
+final $name = NotifierProvider.family<YourController, YourState, String?>(
+  (ref, scopeKey) => YourController(),
+);
