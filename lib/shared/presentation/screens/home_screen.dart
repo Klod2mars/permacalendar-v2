@@ -291,84 +291,87 @@ class HomeScreen extends ConsumerWidget {
         Text('Intelligence VÃ©gÃ©tale', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
         const SizedBox(height: 16),
         CustomCard(
-          child: Padding(
-  padding: const EdgeInsets.all(8.0),
-  child: FutureBuilder(
-    future: rootBundle.load('assets/images/backgrounds/dashboard_organic_final.png'),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState != ConnectionState.done) {
-        return SizedBox(
-          height: 320,
-          child: Center(child: CircularProgressIndicator()),
-        );
-      }
-      if (snapshot.hasError) {
-        return Container(
-          height: 320,
-          padding: const EdgeInsets.all(16),
-          color: Theme.of(context).colorScheme.surfaceVariant,
-          child: Center(
-            child: Text(
-              'Échec lecture asset : ${snapshot.error}',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-      }
-      final data = snapshot.data as ByteData;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            height: 220,
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: FutureBuilder(
+      future: rootBundle.load('assets/images/backgrounds/dashboard_organic_final.png'),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return SizedBox(
+            height: 320,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (snapshot.hasError) {
+          return Container(
+            height: 320,
+            padding: const EdgeInsets.all(16),
             color: Theme.of(context).colorScheme.surfaceVariant,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    'assets/images/backgrounds/dashboard_organic_final.png',
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                  ),
-                ),
-                // mini overlay info
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('asset:', style: TextStyle(color: Colors.white70, fontSize: 12)),
-                        SizedBox(
-                          width: 200,
-                          child: Text(
-                            'assets/images/backgrounds/dashboard_organic_final.png',
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text('load OK: ${data.lengthInBytes} bytes', style: TextStyle(color: Colors.greenAccent, fontSize: 12)),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            child: Center(
+              child: Text(
+                'Échec lecture asset : ${snapshot.error}',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Text('Si l\'image ne s\'affiche pas ci-dessus, le fichier est corrompu ou le chemin est incorrect.', style: Theme.of(context).textTheme.bodySmall),
-        ],
-      );
-    },
+          );
+        }
+        final data = snapshot.data as ByteData;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 220,
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Image.asset(
+                      'assets/images/backgrounds/dashboard_organic_final.png',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('asset:', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                          SizedBox(
+                            width: 200,
+                            child: Text(
+                              'assets/images/backgrounds/dashboard_organic_final.png',
+                              style: TextStyle(color: Colors.white, fontSize: 12),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text('load OK: ${data.lengthInBytes} bytes', style: TextStyle(color: Colors.greenAccent, fontSize: 12)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Si l\'image ne s\'affiche pas ci-dessus, le fichier est corrompu ou le chemin est incorrect.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        );
+      },
+    ),
   ),
 ),
         const SizedBox(height: 12),
