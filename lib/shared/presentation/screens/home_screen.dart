@@ -82,23 +82,22 @@ class HomeScreen extends ConsumerWidget {
             onRetry: () {},
           ),
           data: (data) {
-            // Défenses autour d'éventuelles formes de result
+            // On s'attend à ce que splitByToday() retourne un record (past, forecast).
+            // On utilise la destructuration de record disponible en Dart 3.
             List<DailyWeatherPoint> past = <DailyWeatherPoint>[];
             List<DailyWeatherPoint> forecast = <DailyWeatherPoint>[];
+
             try {
-              // Si splitByToday() existe et retourne une paire, on essaie de l'utiliser
-              final split = data.result.splitByToday();
-              if (split != null) {
-                // Essayer d'extraire deux listes
-                if (split is List && split.length >= 2) {
-                  past = List<DailyWeatherPoint>.from(split[0] ?? <DailyWeatherPoint>[]);
-                  forecast = List<DailyWeatherPoint>.from(split[1] ?? <DailyWeatherPoint>[]);
-                } else {
-                  // fallback: si la structure est différente, on ignore
-                }
+              // Si splitByToday renvoie un record (List, List), utiliser la destructuration.
+              final (p, f) = data.result.splitByToday();
+              if (p is List<DailyWeatherPoint>) {
+                past = List<DailyWeatherPoint>.from(p);
+              }
+              if (f is List<DailyWeatherPoint>) {
+                forecast = List<DailyWeatherPoint>.from(f);
               }
             } catch (_) {
-              // ignore and keep empties
+              // Fallback silencieux : si la structure diffère, on laisse les listes vides.
             }
 
             final todayPrecip = forecast.isNotEmpty ? forecast.first.precipMm : 0.0;
@@ -114,12 +113,16 @@ class HomeScreen extends ConsumerWidget {
                     children: [
                       Text(
                         'Météo — ${data.locationLabel}',
-                        style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         'Pluie aujourd\'hui: ${todayPrecip.toStringAsFixed(1)} mm',
-                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.outline),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.outline,
+                        ),
                       ),
                     ],
                   ),
