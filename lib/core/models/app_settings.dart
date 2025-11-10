@@ -42,7 +42,7 @@ class AppSettings {
         notificationsEnabled: true,
         alertThreshold: 0.7,
         temperatureUnit: 'celsius',
-        weatherRadius: null,
+        weatherRadius: weatherRadius ?? this.weatherRadius,
         isRuralMode: false,
         lastLatitude: null,
         lastLongitude: null,
@@ -74,7 +74,7 @@ class AppSettings {
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       alertThreshold: alertThreshold ?? this.alertThreshold,
       temperatureUnit: temperatureUnit ?? this.temperatureUnit,
-      weatherRadius: null,
+      weatherRadius: weatherRadius ?? this.weatherRadius,
       isRuralMode: isRuralMode ?? this.isRuralMode,
       lastLatitude: lastLatitude ?? this.lastLatitude,
       lastLongitude: lastLongitude ?? this.lastLongitude,
@@ -114,9 +114,10 @@ class AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: null, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
+    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: weatherRadius ?? this.weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
   }
 }
+
 
 
 
