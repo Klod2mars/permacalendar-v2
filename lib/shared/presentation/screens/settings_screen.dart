@@ -10,6 +10,8 @@ import '../../../shared/widgets/dialogs.dart';
 import '../../../app_router.dart';
 import '../../../features/weather/providers/commune_provider.dart';
 import '../../../core/services/open_meteo_service.dart';
+import '../widgets/settings/calibration_settings_section.dart';
+
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -48,7 +50,11 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // About
-            _buildAboutSection(context, theme),
+            
+            // Calibration (nouveau)
+            const CalibrationSettingsSection(),
+            const SizedBox(height: 24),
+_buildAboutSection(context, theme),
           ],
         ),
       ),
