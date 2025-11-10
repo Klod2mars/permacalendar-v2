@@ -1,114 +1,38 @@
-*** Begin Patch
-*** Update File: lib/core/models/calibration_state.dart
+diff --git a/lib/app_router.dart b/lib/app_router.dart
+index 0000000..0000000 100644
+--- a/lib/app_router.dart
++++ b/lib/app_router.dart
 @@
--final class CalibrationStateNotifier extends Notifier<CalibrationState> {
--  @override
--  CalibrationState build() => const CalibrationState();
--
--  /// Activer calibration organique
--  void enableOrganicCalibration() {
--    state = const CalibrationState(
--      activeType: CalibrationType.organic,
--      hasUnsavedChanges: false,
--    );
--  }
--
--  /// Activer calibration TAP/ZONES
--  void enableTapZonesCalibration() {
--    state = const CalibrationState(
--      activeType: CalibrationType.tapZones,
--      hasUnsavedChanges: false,
--    );
--  }
--
--  /// DÃ©sactiver toute calibration
--  void disableCalibration() {
--    if (kDebugMode) {
--      debugPrint('ðŸ”§ disableCalibration() - ${state.activeType} â†’ none');
--    }
--    state = state.copyWith(
--      activeType: CalibrationType.none,
--      hasUnsavedChanges: false,
--    );
--  }
--
--  /// Marquer comme modifiÃ©
--  void markAsModified() {
--    state = state.copyWith(hasUnsavedChanges: true);
--  }
--
--  /// VÃ©rifier si calibration active
--  bool get isCalibrating => state.activeType != CalibrationType.none;
--
--  /// VÃ©rifier si calibration organique active
--  bool get isOrganicCalibrating => state.activeType == CalibrationType.organic;
--}
-+class CalibrationStateNotifier extends Notifier<CalibrationState> {
-+  // Fallback internal state used when the notifier is instantiated
-+  // manually (outside Riverpod lifecycle), e.g. by unit tests.
-+  CalibrationState? _manualState;
+ import 'package:go_router/go_router.dart';
+ 
++import 'features/climate/presentation/screens/weather_detail_screen.dart';
 +
-+  /// Read the current state, using the provider-managed `state` when
-+  /// available, otherwise the manual fallback.
-+  CalibrationState _readState() {
-+    try {
-+      return state;
-+    } catch (_) {
-+      return _manualState ?? const CalibrationState();
-+    }
-+  }
+ import 'features/garden_management/presentation/screens/garden_list_screen.dart';
+ import 'features/garden_management/presentation/screens/garden_detail_screen.dart';
+@@
+ class AppRoutes {
+   static const String home = '/';
+   static const String gardens = '/gardens';
+@@
+   static const String calendar = '/calendar';
++  // Route météo (dashboard hotspot -> détail météo)
++  static const String weather = '/weather';
+ 
+   // Routes d'intelligence végétale
+   static const String intelligence = '/intelligence';
+   static const String intelligenceDetail = '/intelligence/plant/:id';
+@@
+     // Route calendrier (feature flag)
+     if (flags.calendarView)
+       GoRoute(
+         path: AppRoutes.calendar,
+         name: 'calendar',
+         builder: (context, state) => const CalendarViewScreen(),
+       ),
 +
-+  /// Write the state either to provider-managed `state` (when available)
-+  /// or to the manual fallback for tests.
-+  void _writeState(CalibrationState s) {
-+    try {
-+      state = s;
-+    } catch (_) {
-+      _manualState = s;
-+    }
-+  }
-+
-+  @override
-+  CalibrationState build() => const CalibrationState();
-+
-+  /// Activer calibration organique
-+  void enableOrganicCalibration() {
-+    _writeState(const CalibrationState(
-+      activeType: CalibrationType.organic,
-+      hasUnsavedChanges: false,
-+    ));
-+  }
-+
-+  /// Activer calibration TAP/ZONES
-+  void enableTapZonesCalibration() {
-+    _writeState(const CalibrationState(
-+      activeType: CalibrationType.tapZones,
-+      hasUnsavedChanges: false,
-+    ));
-+  }
-+
-+  /// Désactiver toute calibration
-+  void disableCalibration() {
-+    final prev = _readState();
-+    if (kDebugMode) {
-+      debugPrint('⚠ disableCalibration() - ${prev.activeType} → none');
-+    }
-+    _writeState(prev.copyWith(
-+      activeType: CalibrationType.none,
-+      hasUnsavedChanges: false,
-+    ));
-+  }
-+
-+  /// Marquer comme modifié
-+  void markAsModified() {
-+    _writeState(_readState().copyWith(hasUnsavedChanges: true));
-+  }
-+
-+  /// Vérifier si calibration active
-+  bool get isCalibrating => _readState().activeType != CalibrationType.none;
-+
-+  /// Vérifier si calibration organique active
-+  bool get isOrganicCalibrating =>
-+      _readState().activeType == CalibrationType.organic;
-+}
-*** End Patch
++      // Route météo : écran de détail pour le hotspot météo du dashboard
++      GoRoute(
++        path: AppRoutes.weather,
++        name: 'weather',
++        builder: (context, state) => const WeatherDetailScreen(),
++      ),

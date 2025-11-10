@@ -1,7 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'features/climate/presentation/screens/weather_detail_screen.dart';
 
 import 'features/garden_management/presentation/screens/garden_list_screen.dart';
 import 'features/garden_management/presentation/screens/garden_detail_screen.dart';
@@ -39,7 +38,6 @@ class AppRoutes {
   static const String activities = '/activities';
   static const String settings = '/settings';
   static const String calendar = '/calendar';
-  static const String weather = '/weather';
 
   // Routes d'intelligence végétale
   static const String intelligence = '/intelligence';
@@ -186,12 +184,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           builder: (context, state) => const CalendarViewScreen(),
         ),
 
-      // Route météo : écran de détail pour le hotspot météo du dashboard
-      GoRoute(
-        path: AppRoutes.weather,
-        name: 'weather',
-        builder: (context, state) => const WeatherDetailScreen(),
-      ),
       // ✅ Route pour toutes les activités
       GoRoute(
         path: AppRoutes.activities,
@@ -316,4 +308,3 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     ),
   );
 });
-
