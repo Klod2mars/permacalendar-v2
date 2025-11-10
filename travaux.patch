@@ -1,45 +1,34 @@
 *** Begin Patch
 *** Update File: lib/shared/widgets/organic_dashboard.dart
 @@
--                    Color bg = Colors.black.withValues(alpha: 0.18);
-+                    Color bg = Colors.black.withOpacity(0.18);
+-  static const List<_Hotspot> _hotspots = <_Hotspot>[
++  // Use final instead of const because some route values are not compile-time constants
++  static final List<_Hotspot> _hotspots = <_Hotspot>[
+
+*** Update File: lib/app_router.dart
 @@
--                      // set bg color small hint
--                      bg = d.declared && d.loadOk
--                          ? Colors.black.withValues(alpha: 0.24)
--                          : Colors.black.withValues(alpha: 0.38);
-+                      // set bg color small hint
-+                      bg = d.declared && d.loadOk
-+                          ? Colors.black.withOpacity(0.24)
-+                          : Colors.black.withOpacity(0.38);
+ import 'features/plant_catalog/presentation/screens/plant_catalog_screen.dart';
+ import 'features/plant_catalog/presentation/screens/plant_detail_screen.dart';
++import 'features/climate/presentation/screens/climate_forecast_history_screen.dart';
 @@
--                    border: Border.all(
--                      color: Colors.orangeAccent.withValues(alpha: 0.95),
--                      width: 1.5,
--                    ),
-+                    border: Border.all(
-+                      color: Colors.orangeAccent.withOpacity(0.95),
-+                      width: 1.5,
-+                    ),
+   static const String intelligence = '/intelligence';
+   static const String intelligenceDetail = '/intelligence/plant/:id';
+   static const String recommendations = '/intelligence/recommendations';
+   static const String intelligenceSettings = '/intelligence/settings';
++  // Weather / Climate
++  static const String weather = '/weather';
 @@
--                          child: Text(
--                        semanticLabel ?? 'hotspot',
--                        textAlign: TextAlign.center,
--                        style: TextStyle(
--                          color: Colors.white.withValues(alpha: 0.98),
--                          fontSize: 12,
--                          fontWeight: FontWeight.w600,
--                          shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
--                        ),
--                      ),
-+                          child: Text(
-+                        semanticLabel ?? 'hotspot',
-+                        textAlign: TextAlign.center,
-+                        style: TextStyle(
-+                          color: Colors.white.withOpacity(0.98),
-+                          fontSize: 12,
-+                          fontWeight: FontWeight.w600,
-+                          shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
-+                        ),
-+                      ),
+       // ✅ Route pour toutes les activités
+       GoRoute(
+         path: AppRoutes.activities,
+         name: 'activities',
+         builder: (context, state) => const ActivitiesScreen(),
+       ),
++
++      // Route météo (prévisions / historique)
++      GoRoute(
++        path: AppRoutes.weather,
++        name: 'weather',
++        builder: (context, state) => const ClimateForecastHistoryScreen(),
++      ),
 *** End Patch
