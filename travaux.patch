@@ -1,7 +1,7 @@
 *** Begin Patch
 *** Update File: lib/core/models/calibration_state.dart
 @@
--class CalibrationStateNotifier extends Notifier<CalibrationState> {
+-final class CalibrationStateNotifier extends Notifier<CalibrationState> {
 -  @override
 -  CalibrationState build() => const CalibrationState();
 -
