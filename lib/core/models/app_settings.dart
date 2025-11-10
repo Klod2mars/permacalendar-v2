@@ -52,6 +52,7 @@ class AppSettings {
       );
 
   /// CopyWith (immutable-style)
+    /// CopyWith (immutable-style)
   AppSettings copyWith({
     String? themeMode,
     bool? showAnimations,
@@ -83,6 +84,7 @@ class AppSettings {
       gardenCalibrationEnabled: gardenCalibrationEnabled ?? this.gardenCalibrationEnabled,
     );
   }
+
 
   /// Convertir string -> ThemeMode
   ThemeMode get themeModeEnum {
@@ -117,6 +119,7 @@ class AppSettings {
     return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: weatherRadius ?? this.weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
   }
 }
+
 
 
 
