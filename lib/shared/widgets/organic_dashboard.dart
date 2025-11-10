@@ -365,8 +365,10 @@ class _HotspotButton extends StatelessWidget {
 }
 
 /// Hotspot widget that supports calibration (pan + pinch-to-scale)
-class _CalibratableHotspot extends StatelessWidget {
+/// Hotspot widget that supports calibration (pan + pinch-to-scale)
+class _CalibratableHotspot extends StatefulWidget {
   const _CalibratableHotspot({
+    Key? key,
     required this.id,
     required this.cfg,
     required this.isCalibrating,
@@ -374,8 +376,7 @@ class _CalibratableHotspot extends StatelessWidget {
     required this.containerKey,
     required this.ref,
     this.showDebugOutline = false,
-    super.key,
-  });
+  }) : super(key: key);
 
   final String id;
   final OrganicZoneConfig cfg;
@@ -385,31 +386,46 @@ class _CalibratableHotspot extends StatelessWidget {
   final WidgetRef ref;
   final bool showDebugOutline;
 
+  @override
+  State<_CalibratableHotspot> createState() => _CalibratableHotspotState();
+}
+
+class _CalibratableHotspotState extends State<_CalibratableHotspot> {
+  double? _startSize;
+
   void _handlePanUpdate(DragUpdateDetails details) {
-    final box = containerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) return;
+    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) {
+      debugPrint('DBG: CalibratableHotspot.panUpdate id=${widget.id} - no renderbox');
+      return;
+    }
     final local = box.globalToLocal(details.globalPosition);
     final size = box.size;
-    final normalized = Offset((local.dx / size.width).clamp(0.0, 1.0), (local.dy / size.height).clamp(0.0, 1.0));
-    ref.read(organicZonesProvider.notifier).setPosition(id, normalized);
-    ref.read(calibrationStateProvider.notifier).markAsModified();
+    final normalized = Offset(
+      (local.dx / size.width).clamp(0.0, 1.0),
+      (local.dy / size.height).clamp(0.0, 1.0),
+    );
+    debugPrint('DBG: CalibratableHotspot.panUpdate id=${widget.id} global=${details.globalPosition} local=$local size=$size normalized=$normalized');
+    widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, normalized);
+    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
   }
 
-  double? _startSize;
   void _handleScaleStart(ScaleStartDetails details) {
-    _startSize = cfg.size;
+    _startSize = widget.cfg.size;
+    debugPrint('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
   }
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     if (_startSize == null) return;
     final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-    ref.read(organicZonesProvider.notifier).setSize(id, newSize);
-    ref.read(calibrationStateProvider.notifier).markAsModified();
+    debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize');
+    widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
+    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isCalibrating) {
+    if (widget.isCalibrating) {
       return GestureDetector(
         onPanUpdate: _handlePanUpdate,
         onScaleStart: _handleScaleStart,
@@ -422,7 +438,7 @@ class _CalibratableHotspot extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              cfg.id,
+              widget.cfg.id,
               style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
@@ -433,11 +449,11 @@ class _CalibratableHotspot extends StatelessWidget {
     // Normal behaviour: tap to navigate
     return _HotspotButton(
       onTap: () {
-        if (kDebugMode) debugPrint('OrganicDashboard: tapped calibrated hotspot ($id) -> $onTapRoute');
-        if (onTapRoute != null) context.push(onTapRoute!);
+        if (kDebugMode) debugPrint('OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
+        if (widget.onTapRoute != null) context.push(widget.onTapRoute!);
       },
-      semanticLabel: cfg.id,
-      showDebugOutline: showDebugOutline,
+      semanticLabel: widget.cfg.id,
+      showDebugOutline: widget.showDebugOutline,
     );
   }
 }
