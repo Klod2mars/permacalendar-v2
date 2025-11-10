@@ -1,0 +1,45 @@
+*** Begin Patch
+*** Update File: lib/shared/widgets/organic_dashboard.dart
+@@
+-                    Color bg = Colors.black.withValues(alpha: 0.18);
++                    Color bg = Colors.black.withOpacity(0.18);
+@@
+-                      // set bg color small hint
+-                      bg = d.declared && d.loadOk
+-                          ? Colors.black.withValues(alpha: 0.24)
+-                          : Colors.black.withValues(alpha: 0.38);
++                      // set bg color small hint
++                      bg = d.declared && d.loadOk
++                          ? Colors.black.withOpacity(0.24)
++                          : Colors.black.withOpacity(0.38);
+@@
+-                    border: Border.all(
+-                      color: Colors.orangeAccent.withValues(alpha: 0.95),
+-                      width: 1.5,
+-                    ),
++                    border: Border.all(
++                      color: Colors.orangeAccent.withOpacity(0.95),
++                      width: 1.5,
++                    ),
+@@
+-                          child: Text(
+-                        semanticLabel ?? 'hotspot',
+-                        textAlign: TextAlign.center,
+-                        style: TextStyle(
+-                          color: Colors.white.withValues(alpha: 0.98),
+-                          fontSize: 12,
+-                          fontWeight: FontWeight.w600,
+-                          shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
+-                        ),
+-                      ),
++                          child: Text(
++                        semanticLabel ?? 'hotspot',
++                        textAlign: TextAlign.center,
++                        style: TextStyle(
++                          color: Colors.white.withOpacity(0.98),
++                          fontSize: 12,
++                          fontWeight: FontWeight.w600,
++                          shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
++                        ),
++                      ),
+*** End Patch
