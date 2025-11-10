@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Bannière d'alerte intelligente
+/// BanniÃ¨re d'alerte intelligente
 class AlertBanner extends StatelessWidget {
   final String title;
   final String message;
@@ -40,7 +40,7 @@ class AlertBanner extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: BorderSide(
-              color: alertStyle.color.withValues(alpha: 0.3),
+              color: alertStyle.color.withOpacity(0.3),
               width: 1,
             ),
           ),
@@ -54,8 +54,8 @@ class AlertBanner extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    alertStyle.color.withValues(alpha: 0.1),
-                    alertStyle.color.withValues(alpha: 0.05),
+                    alertStyle.color.withOpacity(0.1),
+                    alertStyle.color.withOpacity(0.05),
                   ],
                 ),
               ),
@@ -88,7 +88,7 @@ class AlertBanner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: alertStyle.color.withValues(alpha: 0.2),
+              color: alertStyle.color.withOpacity(0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -142,7 +142,7 @@ class AlertBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: alertStyle.color.withValues(alpha: 0.2),
+        color: alertStyle.color.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
@@ -216,7 +216,7 @@ class AlertBanner extends StatelessWidget {
       case AlertSeverity.critical:
         return 'CRITIQUE';
       case AlertSeverity.high:
-        return 'ÉLEVÉE';
+        return 'Ã‰LEVÃ‰E';
       case AlertSeverity.medium:
         return 'MOYENNE';
       case AlertSeverity.low:
@@ -240,7 +240,7 @@ class AlertBanner extends StatelessWidget {
   }
 }
 
-/// Bannière d'alerte compacte pour les notifications
+/// BanniÃ¨re d'alerte compacte pour les notifications
 class CompactAlertBanner extends StatelessWidget {
   final String title;
   final String message;
@@ -270,7 +270,7 @@ class CompactAlertBanner extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color: alertStyle.color.withValues(alpha: 0.3),
+          color: alertStyle.color.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -280,7 +280,7 @@ class CompactAlertBanner extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: alertStyle.color.withValues(alpha: 0.1),
+            color: alertStyle.color.withOpacity(0.1),
           ),
           child: Padding(
             padding: const EdgeInsets.all(12),
@@ -434,7 +434,7 @@ class _AlertBannerListState extends State<AlertBannerList>
     if (widget.showAnimation) {
       _startAnimations();
     } else {
-      // Si pas d'animation, mettre directement à 1.0
+      // Si pas d'animation, mettre directement Ã  1.0
       for (final controller in _animationControllers) {
         controller.value = 1.0;
       }
@@ -442,7 +442,7 @@ class _AlertBannerListState extends State<AlertBannerList>
   }
 
   void _startAnimations() {
-    // Utiliser addPostFrameCallback pour éviter les lags
+    // Utiliser addPostFrameCallback pour Ã©viter les lags
     WidgetsBinding.instance.addPostFrameCallback((_) {
       for (int i = 0; i < _animationControllers.length; i++) {
         Future.delayed(Duration(milliseconds: i * 80), () {
@@ -490,7 +490,7 @@ class _AlertBannerListState extends State<AlertBannerList>
   }
 }
 
-/// Énumération des niveaux de sévérité des alertes
+/// Ã‰numÃ©ration des niveaux de sÃ©vÃ©ritÃ© des alertes
 enum AlertSeverity {
   critical,
   high,
@@ -510,7 +510,7 @@ class AlertStyle {
   });
 }
 
-/// Données d'une alerte
+/// DonnÃ©es d'une alerte
 class AlertData {
   final String title;
   final String message;
@@ -526,3 +526,4 @@ class AlertData {
     this.timestamp,
   });
 }
+

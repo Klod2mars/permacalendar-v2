@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/providers/performance/performance_comparison_provider.dart';
 import '../../../domain/models/seasonal_performance.dart';
 
-/// Placeholder pour le KPI Performance Saisonnière
+/// Placeholder pour le KPI Performance SaisonniÃ¨re
 ///
 /// Affiche soit :
-/// - Un graphique de comparaison si des données de saisons précédentes existent
-/// - Un panneau pédagogique si c'est la première saison
+/// - Un graphique de comparaison si des donnÃ©es de saisons prÃ©cÃ©dentes existent
+/// - Un panneau pÃ©dagogique si c'est la premiÃ¨re saison
 class PerformanceSeasonalPlaceholder extends ConsumerWidget {
   const PerformanceSeasonalPlaceholder({super.key});
 
@@ -35,7 +35,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 
-  /// Construit le placeholder pour la première saison
+  /// Construit le placeholder pour la premiÃ¨re saison
   Widget _buildFirstSeasonPlaceholder(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
@@ -50,16 +50,16 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
             Theme.of(context)
                 .colorScheme
                 .primaryContainer
-                .withValues(alpha: 0.3),
+                .withOpacity(0.3),
             Theme.of(context)
                 .colorScheme
                 .secondaryContainer
-                .withValues(alpha: 0.3),
+                .withOpacity(0.3),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -76,7 +76,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Première saison active',
+                'PremiÃ¨re saison active',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -85,7 +85,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Continue à cultiver ! Tes statistiques de performance saisonnière apparaîtront bientôt.',
+                'Continue Ã  cultiver ! Tes statistiques de performance saisonniÃ¨re apparaÃ®tront bientÃ´t.',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -103,9 +103,9 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
   /// Construit la liste des futurs indicateurs
   Widget _buildFutureIndicators(BuildContext context) {
     final indicators = [
-      'Taux de complétion des cultures',
-      'Durée moyenne de maturation',
-      'Valeur totale des récoltes',
+      'Taux de complÃ©tion des cultures',
+      'DurÃ©e moyenne de maturation',
+      'Valeur totale des rÃ©coltes',
       'Rendement moyen par culture',
     ];
 
@@ -147,7 +147,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -157,7 +157,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Comparaison saisonnière',
+              'Comparaison saisonniÃ¨re',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -179,14 +179,14 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
       BuildContext context, SeasonalComparison comparison) {
     final metrics = [
       {
-        'label': 'Complétion',
+        'label': 'ComplÃ©tion',
         'current': comparison.currentSeason.completionRate,
         'previous': comparison.previousSeason?.completionRate ?? 0.0,
         'improvement': comparison.completionRateImprovement,
         'color': Theme.of(context).colorScheme.primary,
       },
       {
-        'label': 'Valeur (€)',
+        'label': 'Valeur (â‚¬)',
         'current': comparison.currentSeason.totalHarvestValue /
             100, // Normaliser pour l'affichage
         'previous': (comparison.previousSeason?.totalHarvestValue ?? 0.0) / 100,
@@ -213,13 +213,13 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          // Barre saison précédente
+                          // Barre saison prÃ©cÃ©dente
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.only(right: 2),
                               decoration: BoxDecoration(
                                 color: (metric['color'] as Color?)
-                                    ?.withValues(alpha: 0.3),
+                                    ?.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               height: (metric['previous'] as double) * 100,
@@ -255,14 +255,14 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 
-  /// Construit la légende
+  /// Construit la lÃ©gende
   Widget _buildLegend(BuildContext context, SeasonalComparison comparison) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildLegendItem(
           context,
-          'Saison précédente',
+          'Saison prÃ©cÃ©dente',
           Theme.of(context).colorScheme.outline,
         ),
         const SizedBox(width: 16),
@@ -275,7 +275,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 
-  /// Construit un élément de légende
+  /// Construit un Ã©lÃ©ment de lÃ©gende
   Widget _buildLegendItem(BuildContext context, String label, Color color) {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -307,7 +307,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -323,10 +323,10 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
       height: 200,
       decoration: BoxDecoration(
         color:
-            Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.1),
+            Theme.of(context).colorScheme.errorContainer.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.error.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.error.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -366,3 +366,4 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 }
+

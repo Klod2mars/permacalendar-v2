@@ -1,7 +1,7 @@
-// lib/shared/widgets/calibration_debug_overlay.dart
+﻿// lib/shared/widgets/calibration_debug_overlay.dart
 import 'package:flutter/material.dart';
 
-/// Overlay debug pour afficher une zone normalisée (Offset + size en 0..1).
+/// Overlay debug pour afficher une zone normalisÃ©e (Offset + size en 0..1).
 /// Permet de visualiser les zones de calibration pendant les tests.
 class CalibrationDebugOverlay extends StatelessWidget {
   final Offset position; // normalized (0..1)
@@ -37,7 +37,7 @@ class CalibrationDebugOverlay extends StatelessWidget {
           child: IgnorePointer(
             child: Container(
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.06),
+                color: color.withOpacity(0.06),
                 border: Border.all(color: color, width: strokeWidth),
                 shape: circular ? BoxShape.circle : BoxShape.rectangle,
               ),
@@ -48,3 +48,4 @@ class CalibrationDebugOverlay extends StatelessWidget {
     });
   }
 }
+

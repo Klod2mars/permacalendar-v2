@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Scale Halo Tap Animation
 ///
@@ -85,7 +85,7 @@ class _ScaleHaloTapState extends State<ScaleHaloTap>
                     ? [
                         BoxShadow(
                           color: Colors.white
-                              .withValues(alpha: 0.1 * _haloAnimation.value),
+                              .withOpacity(0.1 * _haloAnimation.value),
                           blurRadius: 8 * _haloAnimation.value,
                           spreadRadius: 2 * _haloAnimation.value,
                         ),
@@ -100,3 +100,4 @@ class _ScaleHaloTapState extends State<ScaleHaloTap>
     );
   }
 }
+

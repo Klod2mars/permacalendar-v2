@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Climate Day Detail Screen
@@ -23,7 +23,7 @@ class ClimateDayDetailScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: Text(
-          'Détail météo',
+          'DÃ©tail mÃ©tÃ©o',
           style: theme.textTheme.titleLarge?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -39,15 +39,15 @@ class ClimateDayDetailScreen extends ConsumerWidget {
           ),
         ),
         child: Container(
-          color: Colors.black.withValues(alpha: 0.3),
+          color: Colors.black.withOpacity(0.3),
           child: Center(
             child: Container(
               margin: const EdgeInsets.all(24),
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.6),
+                color: Colors.black.withOpacity(0.6),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                border: Border.all(color: Colors.white.withOpacity(0.1)),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -59,7 +59,7 @@ class ClimateDayDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Détail météo du jour',
+                    'DÃ©tail mÃ©tÃ©o du jour',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -68,7 +68,7 @@ class ClimateDayDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Cette fonctionnalité sera disponible dans la Phase 2.\nIntégration complète des données météo OpenMeteo.',
+                    'Cette fonctionnalitÃ© sera disponible dans la Phase 2.\nIntÃ©gration complÃ¨te des donnÃ©es mÃ©tÃ©o OpenMeteo.',
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: Colors.white70,
                     ),
@@ -104,3 +104,4 @@ class ClimateDayDetailScreen extends ConsumerWidget {
     );
   }
 }
+

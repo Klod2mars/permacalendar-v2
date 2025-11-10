@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-/// Placeholder visuel pour le pilier Santé
+/// Placeholder visuel pour le pilier SantÃ©
 ///
 /// Affiche un donut chart vide avec un seul secteur gris neutre
-/// Prêt pour l'intégration de données de santé en Phase 4
+/// PrÃªt pour l'intÃ©gration de donnÃ©es de santÃ© en Phase 4
 class HealthDonutPlaceholder extends StatelessWidget {
   const HealthDonutPlaceholder({super.key});
 
@@ -18,7 +18,7 @@ class HealthDonutPlaceholder extends StatelessWidget {
           centerSpaceRadius: 40,
           sections: [
             PieChartSectionData(
-              color: Colors.grey.withValues(alpha: 0.3),
+              color: Colors.grey.withOpacity(0.3),
               value: 100,
               title: '',
               radius: 50,
@@ -34,3 +34,4 @@ class HealthDonutPlaceholder extends StatelessWidget {
     );
   }
 }
+

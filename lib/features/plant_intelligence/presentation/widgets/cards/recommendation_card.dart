@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
 
-/// Widget optimisé pour afficher une carte de recommandation
+/// Widget optimisÃ© pour afficher une carte de recommandation
 ///
 /// Utilise const constructors et optimisations pour minimiser les rebuilds
 class RecommendationCard extends StatelessWidget {
@@ -38,7 +38,7 @@ class RecommendationCard extends StatelessWidget {
   Widget _buildFullCard(ThemeData theme) {
     return Semantics(
       label:
-          'Recommandation: ${recommendation.title}. ${recommendation.description}. Priorité: ${recommendation.priority}',
+          'Recommandation: ${recommendation.title}. ${recommendation.description}. PrioritÃ©: ${recommendation.priority}',
       button: onTap != null,
       child: AnimatedOpacity(
         opacity: isApplied ? 0.6 : 1.0,
@@ -75,7 +75,7 @@ class RecommendationCard extends StatelessWidget {
   Widget _buildCompactCard(ThemeData theme) {
     return Semantics(
       label:
-          'Recommandation: ${recommendation.title}. Priorité: ${recommendation.priority}',
+          'Recommandation: ${recommendation.title}. PrioritÃ©: ${recommendation.priority}',
       button: onTap != null,
       child: Card(
         margin: const EdgeInsets.only(bottom: 8),
@@ -134,7 +134,7 @@ class RecommendationCard extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: _getPriorityColor(theme, recommendation.priority.name)
-                .withValues(alpha: 0.1),
+                .withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
@@ -181,7 +181,7 @@ class RecommendationCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+        color: theme.colorScheme.primaryContainer.withOpacity(0.3),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -214,11 +214,11 @@ class RecommendationCard extends StatelessWidget {
             Icons.check_circle,
             color: Colors.green,
             size: 24,
-            semanticLabel: 'Recommandation appliquée',
+            semanticLabel: 'Recommandation appliquÃ©e',
           ),
           const SizedBox(width: 8),
           Text(
-            'Terminé',
+            'TerminÃ©',
             style: theme.textTheme.labelLarge?.copyWith(
               color: Colors.green,
               fontWeight: FontWeight.bold,
@@ -261,10 +261,10 @@ class RecommendationCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withValues(alpha: 0.3),
+          color: color.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -501,7 +501,7 @@ class _RecommendationsListState extends State<RecommendationsList>
             Icon(
               Icons.check_circle_outline,
               size: 64,
-              color: Colors.green.withValues(alpha: 0.7),
+              color: Colors.green.withOpacity(0.7),
             ),
             const SizedBox(height: 16),
             Text(
@@ -513,7 +513,7 @@ class _RecommendationsListState extends State<RecommendationsList>
             ),
             const SizedBox(height: 8),
             Text(
-              'Vos plantes sont en excellente santé !',
+              'Vos plantes sont en excellente santÃ© !',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -525,3 +525,4 @@ class _RecommendationsListState extends State<RecommendationsList>
     );
   }
 }
+

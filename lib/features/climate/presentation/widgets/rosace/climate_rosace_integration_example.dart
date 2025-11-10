@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'climate_rosace_panel.dart';
@@ -32,7 +32,7 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
           ),
         ),
         child: Container(
-          color: Colors.black.withValues(alpha: 0.3),
+          color: Colors.black.withOpacity(0.3),
           child: SingleChildScrollView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             child: Column(
@@ -49,7 +49,7 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
                 // Mock other content
                 _buildMockContentCard('Mes Jardins'),
                 const SizedBox(height: 10),
-                _buildMockContentCard('Activité Récente'),
+                _buildMockContentCard('ActivitÃ© RÃ©cente'),
 
                 const SizedBox(height: 60),
               ],
@@ -65,9 +65,9 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.4),
+        color: Colors.black.withOpacity(0.4),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
       ),
       child: const Row(
         children: [
@@ -86,7 +86,7 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  'Recommandations personnalisées',
+                  'Recommandations personnalisÃ©es',
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
@@ -103,9 +103,9 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.3),
+        color: Colors.black.withOpacity(0.3),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
       ),
       child: Text(
         title,
@@ -118,3 +118,4 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
     );
   }
 }
+

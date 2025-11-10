@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Version simplifiée de l'écran des recommandations
+/// Version simplifiÃ©e de l'Ã©cran des recommandations
 class RecommendationsSimple extends StatelessWidget {
   const RecommendationsSimple({super.key});
 
@@ -20,7 +20,7 @@ class RecommendationsSimple extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // En-tête
+            // En-tÃªte
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -29,13 +29,13 @@ class RecommendationsSimple extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    theme.colorScheme.secondary.withValues(alpha: 0.1),
-                    theme.colorScheme.tertiary.withValues(alpha: 0.1),
+                    theme.colorScheme.secondary.withOpacity(0.1),
+                    theme.colorScheme.tertiary.withOpacity(0.1),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: theme.colorScheme.outline.withValues(alpha: 0.2),
+                  color: theme.colorScheme.outline.withOpacity(0.2),
                 ),
               ),
               child: Column(
@@ -62,7 +62,7 @@ class RecommendationsSimple extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Conseils personnalisés pour vos plantes',
+                              'Conseils personnalisÃ©s pour vos plantes',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
@@ -136,7 +136,7 @@ class RecommendationsSimple extends StatelessWidget {
             _buildRecommendationCard(
               context,
               'Fertilisation des salades',
-              'Ajoutez de l\'engrais organique pour améliorer la croissance.',
+              'Ajoutez de l\'engrais organique pour amÃ©liorer la croissance.',
               Icons.eco,
               'Moyen',
               Colors.orange,
@@ -157,7 +157,7 @@ class RecommendationsSimple extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // Section en développement
+            // Section en dÃ©veloppement
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -165,7 +165,7 @@ class RecommendationsSimple extends StatelessWidget {
                 color: theme.colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: theme.colorScheme.outline.withValues(alpha: 0.2),
+                  color: theme.colorScheme.outline.withOpacity(0.2),
                 ),
               ),
               child: Column(
@@ -177,15 +177,15 @@ class RecommendationsSimple extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'IA en développement',
+                    'IA en dÃ©veloppement',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Les recommandations intelligentes sont générées par notre IA '
-                    'qui analyse les conditions de vos plantes. Cette fonctionnalité '
+                    'Les recommandations intelligentes sont gÃ©nÃ©rÃ©es par notre IA '
+                    'qui analyse les conditions de vos plantes. Cette fonctionnalitÃ© '
                     'est en cours de perfectionnement.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
@@ -240,7 +240,7 @@ class RecommendationsSimple extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: priorityColor.withValues(alpha: 0.1),
+                    color: priorityColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -269,7 +269,7 @@ class RecommendationsSimple extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: priorityColor.withValues(alpha: 0.2),
+                              color: priorityColor.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
@@ -318,7 +318,7 @@ class RecommendationsSimple extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () => _showDetails(context, title, description),
                     icon: const Icon(Icons.visibility),
-                    label: const Text('Détails'),
+                    label: const Text('DÃ©tails'),
                   ),
                 ),
               ],
@@ -348,7 +348,7 @@ class RecommendationsSimple extends StatelessWidget {
   void _markAsDone(BuildContext context, String title) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('$title marqué comme terminé'),
+        content: Text('$title marquÃ© comme terminÃ©'),
         action: SnackBarAction(
           label: 'Annuler',
           onPressed: () {},
@@ -357,3 +357,4 @@ class RecommendationsSimple extends StatelessWidget {
     );
   }
 }
+

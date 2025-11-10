@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,10 +13,10 @@ import '../../../../core/theme/app_icons.dart';
 
 /// Widget autonome pour l'affichage du climat du jardin
 ///
-/// Ce widget extrait la fonctionnalité météo de home_screen.dart
-/// et la rend disponible comme composant réutilisable.
+/// Ce widget extrait la fonctionnalitÃ© mÃ©tÃ©o de home_screen.dart
+/// et la rend disponible comme composant rÃ©utilisable.
 ///
-/// Phase P2: Grille de mini-cartes météo (J0, J+1, J+2) avec responsive
+/// Phase P2: Grille de mini-cartes mÃ©tÃ©o (J0, J+1, J+2) avec responsive
 class GardenClimatePanel extends ConsumerWidget {
   const GardenClimatePanel({super.key});
 
@@ -39,7 +39,7 @@ class GardenClimatePanel extends ConsumerWidget {
             leading: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
+                color: Colors.white.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(Icons.wb_sunny, color: Colors.white, size: 28),
@@ -52,7 +52,7 @@ class GardenClimatePanel extends ConsumerWidget {
                   fontSize: 18),
             ),
             subtitle: const Text(
-              'Conditions météorologiques actuelles',
+              'Conditions mÃ©tÃ©orologiques actuelles',
               style: TextStyle(color: Colors.white70),
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.white),
@@ -64,7 +64,7 @@ class GardenClimatePanel extends ConsumerWidget {
 
           const Divider(color: Colors.white24, height: 0.5),
 
-          // Grille de mini-cartes météo
+          // Grille de mini-cartes mÃ©tÃ©o
           currentAsync.when(
             loading: () => const Padding(
               padding: EdgeInsets.all(16),
@@ -73,7 +73,7 @@ class GardenClimatePanel extends ConsumerWidget {
             error: (e, st) => const Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                'Météo indisponible',
+                'MÃ©tÃ©o indisponible',
                 style: TextStyle(color: Colors.white70),
               ),
             ),
@@ -91,8 +91,8 @@ class GardenClimatePanel extends ConsumerWidget {
     WeatherViewData data,
     List<DailyWeatherPoint>? forecast,
   ) {
-    // Pour l'instant, créer des cartes basées sur les données actuelles
-    // TODO: Intégrer avec les prévisions complètes quand disponible
+    // Pour l'instant, crÃ©er des cartes basÃ©es sur les donnÃ©es actuelles
+    // TODO: IntÃ©grer avec les prÃ©visions complÃ¨tes quand disponible
     final weatherCards = <DailyWeatherPoint>[];
 
     return Padding(
@@ -105,7 +105,7 @@ class GardenClimatePanel extends ConsumerWidget {
               const Icon(Icons.location_on, color: Colors.white70, size: 16),
               const SizedBox(width: 4),
               Text(
-                'Météo actuelle',
+                'MÃ©tÃ©o actuelle',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: Colors.white70,
                   fontWeight: FontWeight.w500,
@@ -116,15 +116,15 @@ class GardenClimatePanel extends ConsumerWidget {
 
           const SizedBox(height: 16),
 
-          // Carte météo actuelle (temporaire)
+          // Carte mÃ©tÃ©o actuelle (temporaire)
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.2),
+                color: Colors.white.withOpacity(0.2),
                 width: 1,
               ),
             ),
@@ -133,7 +133,7 @@ class GardenClimatePanel extends ConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      '${(data.temperature ?? data.currentTemperatureC ?? 0.0).toStringAsFixed(1)}°C',
+                      '${(data.temperature ?? data.currentTemperatureC ?? 0.0).toStringAsFixed(1)}Â°C',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -142,7 +142,7 @@ class GardenClimatePanel extends ConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      data.description ?? 'Données indisponibles',
+                      data.description ?? 'DonnÃ©es indisponibles',
                       style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 16,
@@ -153,7 +153,7 @@ class GardenClimatePanel extends ConsumerWidget {
                 const SizedBox(height: 8),
                 if ((forecast ?? const []).isNotEmpty)
                   const Text(
-                    'Prévisions disponibles',
+                    'PrÃ©visions disponibles',
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: 14,
@@ -179,14 +179,14 @@ class GardenClimatePanel extends ConsumerWidget {
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white.withValues(alpha: 0.1),
+                backgroundColor: Colors.white.withOpacity(0.1),
                 foregroundColor: Colors.white,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: Colors.white.withOpacity(0.2),
                     width: 1,
                   ),
                 ),
@@ -235,9 +235,9 @@ class _FrostCard extends StatelessWidget {
         child: Container(
           padding: padding,
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: opacity),
+            color: Colors.black.withOpacity(opacity),
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
           ),
           child: child,
         ),
@@ -245,3 +245,4 @@ class _FrostCard extends StatelessWidget {
     );
   }
 }
+

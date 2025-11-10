@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../enums/pillar_type.dart';
 import '../../application/providers/statistics_kpi_providers.dart';
@@ -8,20 +8,20 @@ import '../../application/providers/performance/performance_comparison_provider.
 import '../../application/providers/alignment/alignment_insight_provider.dart';
 import 'placeholders/performance_seasonal_placeholder.dart';
 import 'top_economy_bubble_chart.dart';
-// ✅ V4_UNIFIED_MEMBRANE: Import V4 unified membrane system
+// âœ… V4_UNIFIED_MEMBRANE: Import V4 unified membrane system
 import '../../../climate/presentation/experimental/cellular_rosace_v4/unified_membrane_widget.dart';
 import 'charts/vitamin_pie_chart.dart';
 import 'vitamin_suggestion_row.dart';
 import 'kpi/alignment_kpi_card.dart';
 
-/// Carte individuelle pour chaque pilier métier
+/// Carte individuelle pour chaque pilier mÃ©tier
 ///
-/// Responsabilité : Afficher la structure complète d'un pilier avec zone graphique placeholder
+/// ResponsabilitÃ© : Afficher la structure complÃ¨te d'un pilier avec zone graphique placeholder
 ///
 /// Design :
-/// - Header avec icône et titre du pilier
-/// - Zone graphique placeholder pour l'intégration future des charts
-/// - Valeur KPI centrale (réelle pour Économie Vivante, placeholder pour les autres)
+/// - Header avec icÃ´ne et titre du pilier
+/// - Zone graphique placeholder pour l'intÃ©gration future des charts
+/// - Valeur KPI centrale (rÃ©elle pour Ã‰conomie Vivante, placeholder pour les autres)
 /// - Sous-titre descriptif
 class StatisticsPillarCard extends ConsumerWidget {
   final PillarType type;
@@ -31,10 +31,10 @@ class StatisticsPillarCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final iconAndTitle = switch (type) {
-      PillarType.economieVivante => {'icon': '🌾', 'title': 'Économie Vivante'},
-      PillarType.sante => {'icon': '🩺', 'title': 'Santé'},
-      PillarType.performance => {'icon': '📅', 'title': 'Performance'},
-      PillarType.alignement => {'icon': '⏳', 'title': 'Alignement'},
+      PillarType.economieVivante => {'icon': 'ðŸŒ¾', 'title': 'Ã‰conomie Vivante'},
+      PillarType.sante => {'icon': 'ðŸ©º', 'title': 'SantÃ©'},
+      PillarType.performance => {'icon': 'ðŸ“…', 'title': 'Performance'},
+      PillarType.alignement => {'icon': 'â³', 'title': 'Alignement'},
     };
 
     return Padding(
@@ -46,7 +46,7 @@ class StatisticsPillarCard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: Colors.black.withOpacity(0.05),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -64,7 +64,7 @@ class StatisticsPillarCard extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
 
-            // 📊 PLACEHOLDER VISUEL
+            // ðŸ“Š PLACEHOLDER VISUEL
             _buildPlaceholder(type),
 
             const SizedBox(height: 20),
@@ -86,13 +86,13 @@ class StatisticsPillarCard extends ConsumerWidget {
               ),
             ),
 
-            // TOP 3 DES PLANTES LES PLUS RENTABLES (uniquement pour Économie Vivante)
+            // TOP 3 DES PLANTES LES PLUS RENTABLES (uniquement pour Ã‰conomie Vivante)
             if (type == PillarType.economieVivante) ...[
               const SizedBox(height: 16),
               _buildTop3PlantsBubbles(context, ref),
             ],
 
-            // SUGGESTIONS VITAMINIQUES (uniquement pour Santé)
+            // SUGGESTIONS VITAMINIQUES (uniquement pour SantÃ©)
             if (type == PillarType.sante) ...[
               const SizedBox(height: 16),
               _buildVitaminSuggestions(context, ref),
@@ -115,7 +115,7 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 
-  /// Construit le placeholder visuel approprié selon le type de pilier
+  /// Construit le placeholder visuel appropriÃ© selon le type de pilier
   Widget _buildPlaceholder(PillarType type) {
     switch (type) {
       case PillarType.economieVivante:
@@ -135,7 +135,7 @@ class StatisticsPillarCard extends ConsumerWidget {
       final totalValue = ref.watch(totalEconomyKpiProvider);
 
       return Text(
-        totalValue > 0 ? '${totalValue.toStringAsFixed(2)} €' : '--',
+        totalValue > 0 ? '${totalValue.toStringAsFixed(2)} â‚¬' : '--',
         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -161,17 +161,17 @@ class StatisticsPillarCard extends ConsumerWidget {
   String _getKpiLabel() {
     switch (type) {
       case PillarType.economieVivante:
-        return 'Valeur totale des récoltes';
+        return 'Valeur totale des rÃ©coltes';
       case PillarType.sante:
-        return 'Répartition vitaminique';
+        return 'RÃ©partition vitaminique';
       case PillarType.performance:
-        return 'Performance saisonnière';
+        return 'Performance saisonniÃ¨re';
       case PillarType.alignement:
         return 'Alignement au vivant';
     }
   }
 
-  /// Construit le V4 Unified Membrane System pour l'économie vivante
+  /// Construit le V4 Unified Membrane System pour l'Ã©conomie vivante
   Widget _buildV4UnifiedMembrane() {
     // V4 hierarchy: weather_current dominant, pH subtle nucleus
     final v4Hierarchy = {
@@ -193,7 +193,7 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 
-  /// Construit l'affichage du Top 3 des plantes les plus rentables avec bulles colorées
+  /// Construit l'affichage du Top 3 des plantes les plus rentables avec bulles colorÃ©es
   Widget _buildTop3PlantsBubbles(BuildContext context, WidgetRef ref) {
     final top3Plants = ref.watch(top3PlantsValueRankingProvider);
 
@@ -216,7 +216,7 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 
-  /// Construit le graphique de santé (camembert vitaminique)
+  /// Construit le graphique de santÃ© (camembert vitaminique)
   Widget _buildHealthChart() {
     return Consumer(
       builder: (context, ref, child) {
@@ -242,7 +242,7 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 
-  /// Construit la valeur KPI pour le pilier Santé
+  /// Construit la valeur KPI pour le pilier SantÃ©
   Widget _buildHealthKpiValue(BuildContext context, WidgetRef ref) {
     final vitaminDistributionAsync = ref.watch(vitaminDistributionProvider);
 
@@ -261,7 +261,7 @@ class StatisticsPillarCard extends ConsumerWidget {
           );
         }
 
-        // Afficher le nombre de vitamines détectées
+        // Afficher le nombre de vitamines dÃ©tectÃ©es
         final detectedVitamins =
             distribution.values.where((value) => value > 0).length;
         return Text(
@@ -373,10 +373,10 @@ class StatisticsPillarCard extends ConsumerWidget {
           color: Theme.of(context)
               .colorScheme
               .primaryContainer
-              .withValues(alpha: 0.3),
+              .withOpacity(0.3),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -456,10 +456,10 @@ class StatisticsPillarCard extends ConsumerWidget {
           color: Theme.of(context)
               .colorScheme
               .primaryContainer
-              .withValues(alpha: 0.3),
+              .withOpacity(0.3),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -488,3 +488,4 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 }
+

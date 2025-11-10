@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,7 +41,7 @@ class GardenDetailScreen extends ConsumerWidget {
           title: 'Erreur de chargement',
           subtitle: 'Impossible de charger le jardin: $error',
           onRetry: () => ref.refresh(gardenDetailProvider(gardenId)),
-          retryText: 'Réessayer',
+          retryText: 'RÃ©essayer',
         ),
       ),
       data: (garden) {
@@ -52,7 +52,7 @@ class GardenDetailScreen extends ConsumerWidget {
             ),
             body: ErrorStateWidget(
               title: 'Jardin introuvable',
-              subtitle: 'Le jardin demandé n\'existe pas ou a été supprimé.',
+              subtitle: 'Le jardin demandÃ© n\'existe pas ou a Ã©tÃ© supprimÃ©.',
               onRetry: () => context.pop(),
               retryText: 'Retour',
             ),
@@ -71,7 +71,7 @@ class GardenDetailScreen extends ConsumerWidget {
               title: 'Erreur de chargement des planches',
               subtitle: 'Impossible de charger les planches: $error',
               onRetry: () => ref.refresh(gardenBedProvider(gardenId)),
-              retryText: 'Réessayer',
+              retryText: 'RÃ©essayer',
             ),
           ),
           data: (gardenBeds) {
@@ -104,7 +104,7 @@ class GardenDetailScreen extends ConsumerWidget {
                                 ? Icons.archive
                                 : Icons.unarchive),
                             const SizedBox(width: 8),
-                            Text(garden.isActive ? 'Archiver' : 'Désarchiver'),
+                            Text(garden.isActive ? 'Archiver' : 'DÃ©sarchiver'),
                           ],
                         ),
                       ),
@@ -144,7 +144,7 @@ class GardenDetailScreen extends ConsumerWidget {
                             Icon(Icons.archive, size: 16, color: Colors.orange),
                             SizedBox(width: 4),
                             Text(
-                              'Jardin archivé',
+                              'Jardin archivÃ©',
                               style: TextStyle(
                                   color: Colors.orange,
                                   fontWeight: FontWeight.w500),
@@ -180,7 +180,7 @@ class GardenDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 16),
                     ],
 
-                    // Garden Information (superficie calculée depuis les parcelles)
+                    // Garden Information (superficie calculÃ©e depuis les parcelles)
                     _buildGardenInfo(
                         garden, theme, totalBedsArea, gardenBeds.length),
                     const SizedBox(height: 24),
@@ -202,14 +202,14 @@ class GardenDetailScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Description si elle existe (affichée au-dessus de l'encadré principal)
+        // Description si elle existe (affichÃ©e au-dessus de l'encadrÃ© principal)
         if (garden.description?.isNotEmpty == true) ...[
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: theme.colorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.5),
+                  .withOpacity(0.5),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -222,15 +222,15 @@ class GardenDetailScreen extends ConsumerWidget {
           const SizedBox(height: 16),
         ],
 
-        // Encadré principal avec les métriques essentielles (design vert pomme)
+        // EncadrÃ© principal avec les mÃ©triques essentielles (design vert pomme)
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+            color: theme.colorScheme.primaryContainer.withOpacity(0.3),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: theme.colorScheme.primary.withValues(alpha: 0.2),
+              color: theme.colorScheme.primary.withOpacity(0.2),
             ),
           ),
           child: Row(
@@ -244,7 +244,7 @@ class GardenDetailScreen extends ConsumerWidget {
               ),
               _buildStatItem(
                 'Surface totale',
-                '${totalBedsArea.toStringAsFixed(1)} m²',
+                '${totalBedsArea.toStringAsFixed(1)} mÂ²',
                 Icons.straighten,
                 theme,
               ),
@@ -252,12 +252,12 @@ class GardenDetailScreen extends ConsumerWidget {
           ),
         ),
 
-        // Date de création en position secondaire (texte gris discret)
+        // Date de crÃ©ation en position secondaire (texte gris discret)
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
-            'Créé le ${AppDateUtils.formatDate(garden.createdAt)}',
+            'CrÃ©Ã© le ${AppDateUtils.formatDate(garden.createdAt)}',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.outline,
             ),
@@ -323,8 +323,8 @@ class GardenDetailScreen extends ConsumerWidget {
   Widget _buildGardenBedsSection(BuildContext context, WidgetRef ref,
       ThemeData theme, GardenFreezed garden) {
     // Invalider le provider pour forcer le rechargement des parcelles
-    // Ceci corrige le problème de cache qui empêchait l'affichage immédiat des parcelles
-    // lors de la navigation entre différents jardins
+    // Ceci corrige le problÃ¨me de cache qui empÃªchait l'affichage immÃ©diat des parcelles
+    // lors de la navigation entre diffÃ©rents jardins
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.invalidate(gardenBedProvider(garden.id));
     });
@@ -349,7 +349,7 @@ class GardenDetailScreen extends ConsumerWidget {
                 ),
               ),
               CustomButton(
-                text: 'Gérer',
+                text: 'GÃ©rer',
                 icon: const Icon(Icons.settings),
                 onPressed: () {
                   context.push('/garden/${garden.id}/beds', extra: garden.name);
@@ -359,7 +359,7 @@ class GardenDetailScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // Affichage conditionnel selon l'état des parcelles
+          // Affichage conditionnel selon l'Ã©tat des parcelles
           if (gardenBeds.isEmpty)
             CustomCard(
               child: Padding(
@@ -380,7 +380,7 @@ class GardenDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Créez des parcelles pour organiser vos plantations',
+                      'CrÃ©ez des parcelles pour organiser vos plantations',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.outline,
                       ),
@@ -394,7 +394,7 @@ class GardenDetailScreen extends ConsumerWidget {
             // Affichage des parcelles existantes
             Column(
               children: [
-                // Résumé des parcelles
+                // RÃ©sumÃ© des parcelles
                 CustomCard(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -417,8 +417,8 @@ class GardenDetailScreen extends ConsumerWidget {
                                 ),
                               ),
                               const SizedBox(height: 4),
-                              // Le total des surfaces est désormais affiché dans la carte d'informations du jardin
-                              // pour éviter la duplication au milieu de la page.
+                              // Le total des surfaces est dÃ©sormais affichÃ© dans la carte d'informations du jardin
+                              // pour Ã©viter la duplication au milieu de la page.
                             ],
                           ),
                         ),
@@ -428,7 +428,7 @@ class GardenDetailScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 12),
 
-                // Liste des parcelles (limitée à 3 pour l'aperçu)
+                // Liste des parcelles (limitÃ©e Ã  3 pour l'aperÃ§u)
                 ...gardenBeds.take(3).map((bed) => Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: CustomCard(
@@ -466,7 +466,7 @@ class GardenDetailScreen extends ConsumerWidget {
                                     children: [
                                       Flexible(
                                         child: Text(
-                                          '${bed.sizeInSquareMeters.toStringAsFixed(1)} m²',
+                                          '${bed.sizeInSquareMeters.toStringAsFixed(1)} mÂ²',
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                             color: theme.colorScheme.primary,
@@ -480,7 +480,7 @@ class GardenDetailScreen extends ConsumerWidget {
                                       const SizedBox(width: 8),
                                       Flexible(
                                         child: Text(
-                                          '• ${bed.exposure}',
+                                          'â€¢ ${bed.exposure}',
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                             color: theme
@@ -547,13 +547,13 @@ class GardenDetailScreen extends ConsumerWidget {
       case 'edit':
         // TODO: Navigate to edit screen
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Édition à implémenter')),
+          const SnackBar(content: Text('Ã‰dition Ã  implÃ©menter')),
         );
         break;
       case 'toggle_status':
         // TODO: Implement toggle status with new provider
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Toggle status à implémenter')),
+          const SnackBar(content: Text('Toggle status Ã  implÃ©menter')),
         );
         break;
       case 'delete':
@@ -569,9 +569,9 @@ class GardenDetailScreen extends ConsumerWidget {
       builder: (context) => AlertDialog(
         title: const Text('Supprimer le jardin'),
         content: const Text(
-          'Êtes-vous sûr de vouloir supprimer ce jardin ? '
-          'Cette action supprimera également toutes les parcelles et plantations associées. '
-          'Cette action est irréversible.',
+          'ÃŠtes-vous sÃ»r de vouloir supprimer ce jardin ? '
+          'Cette action supprimera Ã©galement toutes les parcelles et plantations associÃ©es. '
+          'Cette action est irrÃ©versible.',
         ),
         actions: [
           TextButton(
@@ -590,7 +590,7 @@ class GardenDetailScreen extends ConsumerWidget {
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Jardin supprimé avec succès'),
+                      content: Text('Jardin supprimÃ© avec succÃ¨s'),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -620,3 +620,4 @@ class GardenDetailScreen extends ConsumerWidget {
     );
   }
 }
+

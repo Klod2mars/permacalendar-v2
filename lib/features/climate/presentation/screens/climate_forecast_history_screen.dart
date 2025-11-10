@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/weather_providers.dart';
 
@@ -24,7 +24,7 @@ class ClimateForecastHistoryScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: Text(
-          'Prévisions & Historique',
+          'PrÃ©visions & Historique',
           style: theme.textTheme.titleLarge?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -40,7 +40,7 @@ class ClimateForecastHistoryScreen extends ConsumerWidget {
           ),
         ),
         child: Container(
-          color: Colors.black.withValues(alpha: 0.3),
+          color: Colors.black.withOpacity(0.3),
           child: _TimelineContent(theme: theme),
         ),
       ),
@@ -60,9 +60,9 @@ class _TimelineContent extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.6),
+          color: Colors.black.withOpacity(0.6),
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+          border: Border.all(color: Colors.white.withOpacity(0.1)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -70,14 +70,14 @@ class _TimelineContent extends ConsumerWidget {
             loading: () => const Center(
                 child: CircularProgressIndicator(color: Colors.amber)),
             error: (e, _) => Center(
-              child: Text('Météo indisponible',
+              child: Text('MÃ©tÃ©o indisponible',
                   style: theme.textTheme.bodyLarge
                       ?.copyWith(color: Colors.white70)),
             ),
             data: (items) {
               if (items.isEmpty) {
                 return Center(
-                  child: Text('Aucune donnée',
+                  child: Text('Aucune donnÃ©e',
                       style: theme.textTheme.bodyLarge
                           ?.copyWith(color: Colors.white70)),
                 );
@@ -85,7 +85,7 @@ class _TimelineContent extends ConsumerWidget {
               return ListView.separated(
                 itemCount: items.length,
                 separatorBuilder: (_, __) =>
-                    Divider(color: Colors.white.withValues(alpha: 0.08)),
+                    Divider(color: Colors.white.withOpacity(0.08)),
                 itemBuilder: (_, i) {
                   final d = items[i];
                   final isPast = d.isPast;
@@ -93,7 +93,7 @@ class _TimelineContent extends ConsumerWidget {
                   final tempLabel = _formatTemp(d.minTemp, d.maxTemp);
                   final precip = d.precipitation != null
                       ? '${d.precipitation!.toStringAsFixed(1)} mm'
-                      : '—';
+                      : 'â€”';
                   return Row(
                     children: [
                       Container(
@@ -102,7 +102,7 @@ class _TimelineContent extends ConsumerWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: (isPast ? Colors.cyan : Colors.amber)
-                              .withValues(alpha: 0.15),
+                              .withOpacity(0.15),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child:
@@ -115,8 +115,8 @@ class _TimelineContent extends ConsumerWidget {
                           children: [
                             Text(
                               isPast
-                                  ? 'J- ${_daysAgo(d.date)} · $dateLabel'
-                                  : 'J+ ${_daysAhead(d.date)} · $dateLabel',
+                                  ? 'J- ${_daysAgo(d.date)} Â· $dateLabel'
+                                  : 'J+ ${_daysAhead(d.date)} Â· $dateLabel',
                               style: theme.textTheme.bodySmall
                                   ?.copyWith(color: Colors.white60),
                             ),
@@ -156,11 +156,11 @@ class _TimelineContent extends ConsumerWidget {
 
   String _formatTemp(double? min, double? max) {
     if (min != null && max != null) {
-      return '${max.toStringAsFixed(0)}°/${min.toStringAsFixed(0)}°';
+      return '${max.toStringAsFixed(0)}Â°/${min.toStringAsFixed(0)}Â°';
     }
-    if (max != null) return '${max.toStringAsFixed(0)}°';
-    if (min != null) return '${min.toStringAsFixed(0)}°';
-    return '—';
+    if (max != null) return '${max.toStringAsFixed(0)}Â°';
+    if (min != null) return '${min.toStringAsFixed(0)}Â°';
+    return 'â€”';
   }
 
   String _formatDate(DateTime d) {
@@ -178,3 +178,4 @@ class _TimelineContent extends ConsumerWidget {
     return DateTime(d.year, d.month, d.day).difference(today).inDays;
   }
 }
+

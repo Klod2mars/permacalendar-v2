@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Widget pour afficher le timing optimal pour les actions de jardinage
 class OptimalTimingWidget extends StatelessWidget {
@@ -47,7 +47,7 @@ class OptimalTimingWidget extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: _getTimingColor(timing.status).withValues(alpha: 0.1),
+            color: _getTimingColor(timing.status).withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
@@ -88,7 +88,7 @@ class OptimalTimingWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
@@ -126,9 +126,9 @@ class OptimalTimingWidget extends StatelessWidget {
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
       children: [
-        _buildTimingItem(theme, 'Début', timing.startDate),
+        _buildTimingItem(theme, 'DÃ©but', timing.startDate),
         _buildTimingItem(theme, 'Fin', timing.endDate),
-        _buildTimingItem(theme, 'Moment idéal', timing.optimalDate),
+        _buildTimingItem(theme, 'Moment idÃ©al', timing.optimalDate),
         _buildTimingItem(theme, 'Urgence', _getUrgencyText(timing.urgency)),
       ],
     );
@@ -138,7 +138,7 @@ class OptimalTimingWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Column(
@@ -167,7 +167,7 @@ class OptimalTimingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Détails',
+          'DÃ©tails',
           style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -178,7 +178,7 @@ class OptimalTimingWidget extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: theme.colorScheme.surfaceContainerHighest
-                .withValues(alpha: 0.3),
+                .withOpacity(0.3),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -268,9 +268,9 @@ class OptimalTimingWidget extends StatelessWidget {
       case TimingStatus.acceptable:
         return 'Timing acceptable';
       case TimingStatus.poor:
-        return 'Timing défavorable';
+        return 'Timing dÃ©favorable';
       case TimingStatus.expired:
-        return 'Timing expiré';
+        return 'Timing expirÃ©';
     }
   }
 
@@ -283,9 +283,9 @@ class OptimalTimingWidget extends StatelessWidget {
       case TimingStatus.acceptable:
         return 'ACCEPTABLE';
       case TimingStatus.poor:
-        return 'DÉFAVORABLE';
+        return 'DÃ‰FAVORABLE';
       case TimingStatus.expired:
-        return 'EXPIRÉ';
+        return 'EXPIRÃ‰';
     }
   }
 
@@ -296,7 +296,7 @@ class OptimalTimingWidget extends StatelessWidget {
       case TimingUrgency.medium:
         return 'Moyenne';
       case TimingUrgency.high:
-        return 'Élevée';
+        return 'Ã‰levÃ©e';
       case TimingUrgency.critical:
         return 'Critique';
     }
@@ -330,7 +330,7 @@ class CompactOptimalTimingWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: _getTimingColor(timing.status).withValues(alpha: 0.1),
+                  color: _getTimingColor(timing.status).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -366,7 +366,7 @@ class CompactOptimalTimingWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: _getTimingColor(timing.status).withValues(alpha: 0.1),
+                  color: _getTimingColor(timing.status).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -423,9 +423,9 @@ class CompactOptimalTimingWidget extends StatelessWidget {
       case TimingStatus.acceptable:
         return 'ACCEPTABLE';
       case TimingStatus.poor:
-        return 'DÉFAVORABLE';
+        return 'DÃ‰FAVORABLE';
       case TimingStatus.expired:
-        return 'EXPIRÉ';
+        return 'EXPIRÃ‰';
     }
   }
 }
@@ -484,7 +484,7 @@ class OptimalTimingList extends StatelessWidget {
   }
 }
 
-/// Énumération des statuts de timing
+/// Ã‰numÃ©ration des statuts de timing
 enum TimingStatus {
   optimal,
   good,
@@ -493,7 +493,7 @@ enum TimingStatus {
   expired,
 }
 
-/// Énumération des niveaux d'urgence
+/// Ã‰numÃ©ration des niveaux d'urgence
 enum TimingUrgency {
   low,
   medium,
@@ -501,7 +501,7 @@ enum TimingUrgency {
   critical,
 }
 
-/// Classe pour représenter un timing optimal
+/// Classe pour reprÃ©senter un timing optimal
 class OptimalTiming {
   final String action;
   final DateTime startDate;
@@ -555,3 +555,4 @@ class OptimalTiming {
     };
   }
 }
+

@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 /// Placeholder visuel pour le pilier Performance
 ///
-/// Affiche un bar chart avec 3 barres grisées de très faible valeur
-/// Prêt pour l'intégration de données de performance en Phase 4
+/// Affiche un bar chart avec 3 barres grisÃ©es de trÃ¨s faible valeur
+/// PrÃªt pour l'intÃ©gration de donnÃ©es de performance en Phase 4
 class PerformanceBarPlaceholder extends StatelessWidget {
   const PerformanceBarPlaceholder({super.key});
 
@@ -43,7 +43,7 @@ class PerformanceBarPlaceholder extends StatelessWidget {
               barRods: [
                 BarChartRodData(
                   toY: 15,
-                  color: Colors.grey.withValues(alpha: 0.3),
+                  color: Colors.grey.withOpacity(0.3),
                   width: 20,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(4),
@@ -57,7 +57,7 @@ class PerformanceBarPlaceholder extends StatelessWidget {
               barRods: [
                 BarChartRodData(
                   toY: 10,
-                  color: Colors.grey.withValues(alpha: 0.3),
+                  color: Colors.grey.withOpacity(0.3),
                   width: 20,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(4),
@@ -71,7 +71,7 @@ class PerformanceBarPlaceholder extends StatelessWidget {
               barRods: [
                 BarChartRodData(
                   toY: 8,
-                  color: Colors.grey.withValues(alpha: 0.3),
+                  color: Colors.grey.withOpacity(0.3),
                   width: 20,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(4),
@@ -86,3 +86,4 @@ class PerformanceBarPlaceholder extends StatelessWidget {
     );
   }
 }
+

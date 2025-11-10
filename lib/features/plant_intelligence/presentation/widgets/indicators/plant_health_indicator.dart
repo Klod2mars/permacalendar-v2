@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Indicateur de santé visuel pour une plante
+/// Indicateur de santÃ© visuel pour une plante
 class PlantHealthIndicator extends StatefulWidget {
   final double healthScore;
   final String? label;
@@ -43,7 +43,7 @@ class _PlantHealthIndicatorState extends State<PlantHealthIndicator>
     );
 
     if (widget.showAnimation) {
-      // Délai minimal pour éviter le lag à l'ouverture
+      // DÃ©lai minimal pour Ã©viter le lag Ã  l'ouverture
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           _animationController.forward();
@@ -79,8 +79,8 @@ class _PlantHealthIndicatorState extends State<PlantHealthIndicator>
 
     return Semantics(
       label: widget.label != null
-          ? '${widget.label}, Score de santé: ${widget.healthScore.toStringAsFixed(1)} sur 10, État: $healthText'
-          : 'Score de santé: ${widget.healthScore.toStringAsFixed(1)} sur 10, État: $healthText',
+          ? '${widget.label}, Score de santÃ©: ${widget.healthScore.toStringAsFixed(1)} sur 10, Ã‰tat: $healthText'
+          : 'Score de santÃ©: ${widget.healthScore.toStringAsFixed(1)} sur 10, Ã‰tat: $healthText',
       button: widget.onTap != null,
       child: GestureDetector(
         onTap: widget.onTap,
@@ -139,7 +139,7 @@ class _PlantHealthIndicatorState extends State<PlantHealthIndicator>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: theme.colorScheme.outline.withValues(alpha: 0.3),
+                  color: theme.colorScheme.outline.withOpacity(0.3),
                   width: 2,
                 ),
               ),
@@ -152,11 +152,11 @@ class _PlantHealthIndicatorState extends State<PlantHealthIndicator>
                 value: animatedScore / 10.0,
                 strokeWidth: 8,
                 backgroundColor:
-                    theme.colorScheme.outline.withValues(alpha: 0.2),
+                    theme.colorScheme.outline.withOpacity(0.2),
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
             ),
-            // Score et icône au centre
+            // Score et icÃ´ne au centre
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -226,7 +226,7 @@ class _PlantHealthIndicatorState extends State<PlantHealthIndicator>
   }
 }
 
-/// Indicateur de santé linéaire (barre de progression)
+/// Indicateur de santÃ© linÃ©aire (barre de progression)
 class LinearPlantHealthIndicator extends StatelessWidget {
   final double healthScore;
   final String? label;
@@ -252,8 +252,8 @@ class LinearPlantHealthIndicator extends StatelessWidget {
 
     return Semantics(
       label: label != null
-          ? '$label: ${healthScore.toStringAsFixed(1)} sur 10, État: $healthText'
-          : 'Score de santé: ${healthScore.toStringAsFixed(1)} sur 10, État: $healthText',
+          ? '$label: ${healthScore.toStringAsFixed(1)} sur 10, Ã‰tat: $healthText'
+          : 'Score de santÃ©: ${healthScore.toStringAsFixed(1)} sur 10, Ã‰tat: $healthText',
       button: onTap != null,
       value: '${(healthScore * 10).toInt()}%',
       child: GestureDetector(
@@ -285,7 +285,7 @@ class LinearPlantHealthIndicator extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(height / 2),
                 border: Border.all(
-                  color: theme.colorScheme.outline.withValues(alpha: 0.3),
+                  color: theme.colorScheme.outline.withOpacity(0.3),
                 ),
               ),
               child: ClipRRect(
@@ -293,7 +293,7 @@ class LinearPlantHealthIndicator extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: healthScore / 10.0,
                   backgroundColor:
-                      theme.colorScheme.outline.withValues(alpha: 0.2),
+                      theme.colorScheme.outline.withOpacity(0.2),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
               ),
@@ -343,7 +343,7 @@ class LinearPlantHealthIndicator extends StatelessWidget {
   }
 }
 
-/// Indicateur de santé compact (icône avec score)
+/// Indicateur de santÃ© compact (icÃ´ne avec score)
 class CompactPlantHealthIndicator extends StatelessWidget {
   final double healthScore;
   final double size;
@@ -368,10 +368,10 @@ class CompactPlantHealthIndicator extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
+          color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(size / 4),
           border: Border.all(
-            color: color.withValues(alpha: 0.3),
+            color: color.withOpacity(0.3),
             width: 1,
           ),
         ),
@@ -439,7 +439,7 @@ class CompactPlantHealthIndicator extends StatelessWidget {
   }
 }
 
-/// Widget pour afficher plusieurs indicateurs de santé côte à côte
+/// Widget pour afficher plusieurs indicateurs de santÃ© cÃ´te Ã  cÃ´te
 class PlantHealthIndicatorsRow extends StatelessWidget {
   final Map<String, double> indicators;
   final double height;
@@ -470,7 +470,7 @@ class PlantHealthIndicatorsRow extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(right: 4),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
+                  color: color.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Stack(
@@ -513,7 +513,7 @@ class PlantHealthIndicatorsRow extends StatelessWidget {
   }
 }
 
-/// Niveaux de santé d'une plante
+/// Niveaux de santÃ© d'une plante
 enum HealthLevel {
   excellent,
   good,
@@ -521,3 +521,4 @@ enum HealthLevel {
   poor,
   critical,
 }
+

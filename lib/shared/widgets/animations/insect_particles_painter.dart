@@ -1,9 +1,9 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'insect_animation_config.dart';
 
 /// Custom painter pour dessiner les particules lumineuses en spirale
-/// Mission A39-2 : Rendu optimisé des 12 particules avec effet de cascade
+/// Mission A39-2 : Rendu optimisÃ© des 12 particules avec effet de cascade
 class InsectParticlesPainter extends CustomPainter {
   final Animation<double> animation;
   final Color particleColor;
@@ -39,19 +39,19 @@ class InsectParticlesPainter extends CustomPainter {
       final radius = _calculateRadius(progress, phase);
       final offset = _calculateOffset(center, angle, radius);
 
-      // Calculer les propriétés visuelles
+      // Calculer les propriÃ©tÃ©s visuelles
       final opacity = _calculateOpacity(progress, particleProgress, phase);
       final particleSize = _calculateSize(progress, phase);
 
-      // Appliquer les propriétés au paint
-      paint.color = particleColor.withValues(alpha: opacity);
+      // Appliquer les propriÃ©tÃ©s au paint
+      paint.color = particleColor.withOpacity(opacity);
 
       // Dessiner la particule
       canvas.drawCircle(offset, particleSize, paint);
     }
   }
 
-  /// Détermine la phase actuelle de l'animation selon le progrès
+  /// DÃ©termine la phase actuelle de l'animation selon le progrÃ¨s
   InsectAnimationPhase _getCurrentPhase(double progress) {
     if (progress < InsectAnimationPhase.eveil.endProgress) {
       return InsectAnimationPhase.eveil;
@@ -64,9 +64,9 @@ class InsectParticlesPainter extends CustomPainter {
     }
   }
 
-  /// Calcule le progrès individuel de chaque particule avec effet de cascade
+  /// Calcule le progrÃ¨s individuel de chaque particule avec effet de cascade
   double _getParticleProgress(double globalProgress, int particleIndex) {
-    // Délai progressif pour effet cascade (0.2 = 20% de l'animation)
+    // DÃ©lai progressif pour effet cascade (0.2 = 20% de l'animation)
     final delay = (particleIndex / InsectAwakeningConfig.particleCount) *
         InsectAwakeningConfig.particleDelayFactor;
     return math.max(0.0, globalProgress - delay);
@@ -78,26 +78,26 @@ class InsectParticlesPainter extends CustomPainter {
     final baseAngle =
         (particleIndex / InsectAwakeningConfig.particleCount) * 2 * math.pi;
 
-    // Rotation supplémentaire selon le progrès de l'animation
+    // Rotation supplÃ©mentaire selon le progrÃ¨s de l'animation
     final rotationAngle =
         progress * InsectAwakeningConfig.spiralTurns * 2 * math.pi;
 
     return baseAngle + rotationAngle;
   }
 
-  /// Calcule le rayon de position selon la phase et le progrès
+  /// Calcule le rayon de position selon la phase et le progrÃ¨s
   double _calculateRadius(double progress, InsectAnimationPhase phase) {
     final phaseProgress = phase.getPhaseProgress(progress);
 
     switch (phase) {
       case InsectAnimationPhase.eveil:
-        // Expansion de 0 à 20% du rayon maximum
+        // Expansion de 0 Ã  20% du rayon maximum
         return InsectAwakeningConfig.expansionRadius *
             0.2 *
             InsectAwakeningConfig.eveilCurve.transform(phaseProgress);
 
       case InsectAnimationPhase.expansion:
-        // Expansion de 20% à 100% du rayon maximum
+        // Expansion de 20% Ã  100% du rayon maximum
         return InsectAwakeningConfig.expansionRadius *
             (0.2 +
                 0.8 *
@@ -105,7 +105,7 @@ class InsectParticlesPainter extends CustomPainter {
                         .transform(phaseProgress));
 
       case InsectAnimationPhase.pollinisation:
-        // Maintien du rayon maximum avec légère oscillation
+        // Maintien du rayon maximum avec lÃ©gÃ¨re oscillation
         return InsectAwakeningConfig.expansionRadius *
             (1.0 + 0.1 * math.sin(phaseProgress * math.pi * 4));
 
@@ -126,7 +126,7 @@ class InsectParticlesPainter extends CustomPainter {
     );
   }
 
-  /// Calcule l'opacité de la particule selon la phase
+  /// Calcule l'opacitÃ© de la particule selon la phase
   double _calculateOpacity(
       double progress, double particleProgress, InsectAnimationPhase phase) {
     if (phase == InsectAnimationPhase.dissipation) {
@@ -137,14 +137,14 @@ class InsectParticlesPainter extends CustomPainter {
               InsectAwakeningConfig.dissipationCurve.transform(phaseProgress));
     }
 
-    // Opacité basée sur le progrès de la particule individuelle
+    // OpacitÃ© basÃ©e sur le progrÃ¨s de la particule individuelle
     return InsectAwakeningConfig.particleOpacity * particleProgress;
   }
 
   /// Calcule la taille de la particule selon la phase
   double _calculateSize(double progress, InsectAnimationPhase phase) {
     if (phase == InsectAnimationPhase.pollinisation) {
-      // Pulsation légère pendant la pollinisation
+      // Pulsation lÃ©gÃ¨re pendant la pollinisation
       final phaseProgress = phase.getPhaseProgress(progress);
       final pulsation = math.sin(phaseProgress *
               math.pi *
@@ -164,3 +164,4 @@ class InsectParticlesPainter extends CustomPainter {
         oldDelegate.bubbleSize != bubbleSize;
   }
 }
+

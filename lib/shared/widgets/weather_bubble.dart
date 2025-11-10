@@ -1,4 +1,4 @@
-// lib/shared/widgets/weather_bubble.dart
+﻿// lib/shared/widgets/weather_bubble.dart
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -36,15 +36,15 @@ class WeatherBubble extends StatelessWidget {
           shape: BoxShape.circle,
           gradient: RadialGradient(
             colors: [
-              (backgroundColor ?? Colors.greenAccent).withValues(alpha: 0.18),
-              (backgroundColor ?? Colors.greenAccent).withValues(alpha: 0.06),
+              (backgroundColor ?? Colors.greenAccent).withOpacity(0.18),
+              (backgroundColor ?? Colors.greenAccent).withOpacity(0.06),
             ],
             center: const Alignment(-0.2, -0.3),
             radius: 0.9,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.18),
+              color: Colors.black.withOpacity(0.18),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -61,14 +61,14 @@ class WeatherBubble extends StatelessWidget {
                 minFontSize: minFont,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: Colors.white.withValues(alpha: 0.95),
+                  color: Colors.white.withOpacity(0.95),
                   fontSize: maxFont,
                 ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: diameter * 0.02),
               Icon(weatherIcon,
-                  size: iconSize, color: Colors.white.withValues(alpha: 0.98)),
+                  size: iconSize, color: Colors.white.withOpacity(0.98)),
               SizedBox(height: diameter * 0.03),
               AutoSizeText(
                 conditionLabel,
@@ -76,7 +76,7 @@ class WeatherBubble extends StatelessWidget {
                 minFontSize: minFont,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  color: Colors.white.withValues(alpha: 0.95),
+                  color: Colors.white.withOpacity(0.95),
                   fontSize: maxFont * 0.95,
                 ),
                 textAlign: TextAlign.center,
@@ -86,7 +86,7 @@ class WeatherBubble extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
-                    '${tMin.toStringAsFixed(0)}°',
+                    '${tMin.toStringAsFixed(0)}Â°',
                     maxLines: 1,
                     minFontSize: minFont,
                     style: TextStyle(
@@ -103,7 +103,7 @@ class WeatherBubble extends StatelessWidget {
                   ),
                   SizedBox(width: diameter * 0.05),
                   AutoSizeText(
-                    '${tMax.toStringAsFixed(0)}°',
+                    '${tMax.toStringAsFixed(0)}Â°',
                     maxLines: 1,
                     minFontSize: minFont,
                     style: TextStyle(
@@ -121,3 +121,4 @@ class WeatherBubble extends StatelessWidget {
     });
   }
 }
+

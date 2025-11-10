@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 /// Widget pour afficher un camembert de distribution vitaminique
 ///
-/// Affiche la répartition des 5 vitamines (A, B, C, E, K) avec des couleurs distinctes
+/// Affiche la rÃ©partition des 5 vitamines (A, B, C, E, K) avec des couleurs distinctes
 /// et des pourcentages pour chaque secteur
 class VitaminPieChart extends StatelessWidget {
   final Map<String, double> vitaminPercentages;
@@ -17,16 +17,16 @@ class VitaminPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Couleurs recommandées pour chaque vitamine
+    // Couleurs recommandÃ©es pour chaque vitamine
     const vitaminColors = {
       'vitaminA': Color(0xFFFF8C42), // Orange
       'vitaminB9': Color(0xFF4A90E2), // Bleu
       'vitaminC': Color(0xFF7ED321), // Vert clair
       'vitaminE': Color(0xFF9013FE), // Mauve
-      'vitaminK': Color(0xFFFFD700), // Jaune pâle
+      'vitaminK': Color(0xFFFFD700), // Jaune pÃ¢le
     };
 
-    // Créer les sections du camembert
+    // CrÃ©er les sections du camembert
     final sections = <PieChartSectionData>[];
 
     for (final entry in vitaminPercentages.entries) {
@@ -54,11 +54,11 @@ class VitaminPieChart extends StatelessWidget {
       );
     }
 
-    // Si aucune donnée, afficher un secteur gris
+    // Si aucune donnÃ©e, afficher un secteur gris
     if (sections.isEmpty) {
       sections.add(
         PieChartSectionData(
-          color: Colors.grey.withValues(alpha: 0.3),
+          color: Colors.grey.withOpacity(0.3),
           value: 100,
           title: '',
           radius: size * 0.4,
@@ -85,7 +85,7 @@ class VitaminPieChart extends StatelessWidget {
   }
 }
 
-/// Widget pour afficher la légende des vitamines
+/// Widget pour afficher la lÃ©gende des vitamines
 class VitaminLegend extends StatelessWidget {
   final Map<String, double> vitaminPercentages;
 
@@ -101,7 +101,7 @@ class VitaminLegend extends StatelessWidget {
       'vitaminB9': Color(0xFF4A90E2), // Bleu
       'vitaminC': Color(0xFF7ED321), // Vert clair
       'vitaminE': Color(0xFF9013FE), // Mauve
-      'vitaminK': Color(0xFFFFD700), // Jaune pâle
+      'vitaminK': Color(0xFFFFD700), // Jaune pÃ¢le
     };
 
     const vitaminLabels = {
@@ -147,3 +147,4 @@ class VitaminLegend extends StatelessWidget {
     );
   }
 }
+

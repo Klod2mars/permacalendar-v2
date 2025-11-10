@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/soil_ph_provider.dart';
@@ -63,7 +63,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.8),
+        color: Colors.black.withOpacity(0.8),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: ClipRRect(
@@ -81,7 +81,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: Colors.white.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
@@ -103,7 +103,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                             ),
                           ),
                           Text(
-                            'Ajustez le niveau d\'acidité',
+                            'Ajustez le niveau d\'aciditÃ©',
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white70,
                             ),
@@ -196,16 +196,16 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                     labelStyle: const TextStyle(color: Colors.white70),
                     hintText: '6.8',
                     hintStyle:
-                        TextStyle(color: Colors.white.withValues(alpha: 0.5)),
+                        TextStyle(color: Colors.white.withOpacity(0.5)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.3)),
+                          color: Colors.white.withOpacity(0.3)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.3)),
+                          color: Colors.white.withOpacity(0.3)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -213,7 +213,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                           const BorderSide(color: Colors.amber, width: 2),
                     ),
                     filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.1),
+                    fillColor: Colors.white.withOpacity(0.1),
                   ),
                   onChanged: (value) {
                     final parsed = double.tryParse(value);
@@ -236,7 +236,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
                           side: BorderSide(
-                              color: Colors.white.withValues(alpha: 0.3)),
+                              color: Colors.white.withOpacity(0.3)),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -280,9 +280,9 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
     return ElevatedButton(
       onPressed: () => _adjustPH(adjustment),
       style: ElevatedButton.styleFrom(
-        backgroundColor: color.withValues(alpha: 0.2),
+        backgroundColor: color.withOpacity(0.2),
         foregroundColor: color,
-        side: BorderSide(color: color.withValues(alpha: 0.5)),
+        side: BorderSide(color: color.withOpacity(0.5)),
         padding: const EdgeInsets.symmetric(vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -299,10 +299,11 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
   }
 
   String _getPHDescription(double ph) {
-    if (ph < 5.5) return 'Très acide';
+    if (ph < 5.5) return 'TrÃ¨s acide';
     if (ph < 6.5) return 'Acide';
     if (ph < 7.5) return 'Neutre';
     if (ph < 8.5) return 'Alcalin';
-    return 'Très alcalin';
+    return 'TrÃ¨s alcalin';
   }
 }
+

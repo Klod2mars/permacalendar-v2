@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'climate_rosace_petal.dart';
@@ -28,7 +28,7 @@ import '../../anim/weather_halo_controller.dart';
 /// - West: Soil Temperature
 /// - Center: pH value (tappable)
 ///
-/// Height constraint: ≤240dp on mobile 360×800
+/// Height constraint: â‰¤240dp on mobile 360Ã—800
 /// Performance: 60fps on Samsung A35
 class ClimateRosacePanel extends ConsumerWidget {
   const ClimateRosacePanel({super.key});
@@ -72,7 +72,7 @@ class ClimateRosacePanel extends ConsumerWidget {
     final maxTemp =
         currentWeather.hasValue ? currentWeather.value!.maxTemp : null;
     final weatherIcon =
-        currentWeather.hasValue ? (currentWeather.value!.icon ?? '☀️') : '☀️';
+        currentWeather.hasValue ? (currentWeather.value!.icon ?? 'â˜€ï¸') : 'â˜€ï¸';
     final weatherCondition = currentWeather.hasValue
         ? parseCondition(currentWeather.value!.condition)
         : null;
@@ -128,7 +128,7 @@ class ClimateRosacePanel extends ConsumerWidget {
                 context: context,
                 position: RosacePosition.south,
                 icon: Icons.timeline,
-                label: 'Prévisions',
+                label: 'PrÃ©visions',
                 value: _formatForecastValue(tomorrowForecast),
                 onTap: () => _navigateToForecast(context),
               ),
@@ -138,7 +138,7 @@ class ClimateRosacePanel extends ConsumerWidget {
                 position: RosacePosition.west,
                 icon: Icons.thermostat,
                 label: 'Sol',
-                value: '${soilTemp.toStringAsFixed(1)}°',
+                value: '${soilTemp.toStringAsFixed(1)}Â°',
                 onTap: () => _showSoilTempSheet(context),
               ),
 
@@ -239,11 +239,11 @@ class ClimateRosacePanel extends ConsumerWidget {
   /// Format weather value for EAST petal (min/max temp)
   String? _formatWeatherValue(double? minTemp, double? maxTemp) {
     if (minTemp != null && maxTemp != null) {
-      return '${maxTemp.toStringAsFixed(0)}° / ${minTemp.toStringAsFixed(0)}°';
+      return '${maxTemp.toStringAsFixed(0)}Â° / ${minTemp.toStringAsFixed(0)}Â°';
     } else if (maxTemp != null) {
-      return '${maxTemp.toStringAsFixed(0)}°';
+      return '${maxTemp.toStringAsFixed(0)}Â°';
     } else if (minTemp != null) {
-      return '${minTemp.toStringAsFixed(0)}°';
+      return '${minTemp.toStringAsFixed(0)}Â°';
     }
     return null;
   }
@@ -252,14 +252,14 @@ class ClimateRosacePanel extends ConsumerWidget {
   String? _formatForecastValue(DailyWeatherPoint? forecast) {
     if (forecast == null) return 'J+1';
 
-    // Utiliser tMinC/tMaxC (bruts) ou minTemp/maxTemp (enrichis) selon disponibilité
+    // Utiliser tMinC/tMaxC (bruts) ou minTemp/maxTemp (enrichis) selon disponibilitÃ©
     final maxTemp = forecast.maxTemp ?? forecast.tMaxC;
     final minTemp = forecast.minTemp ?? forecast.tMinC;
 
     if (minTemp != null && maxTemp != null) {
-      return 'J+1\n${maxTemp.toStringAsFixed(0)}°/${minTemp.toStringAsFixed(0)}°';
+      return 'J+1\n${maxTemp.toStringAsFixed(0)}Â°/${minTemp.toStringAsFixed(0)}Â°';
     } else if (maxTemp != null) {
-      return 'J+1\n${maxTemp.toStringAsFixed(0)}°';
+      return 'J+1\n${maxTemp.toStringAsFixed(0)}Â°';
     }
     return 'J+1';
   }
@@ -362,9 +362,9 @@ class _FrostCard extends StatelessWidget {
           curve: Curves.easeInOut,
           padding: padding,
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: opacity),
+            color: Colors.black.withOpacity(opacity),
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
             // Add weather-reactive halo as a subtle overlay
             boxShadow: effectiveHaloColor != null &&
                     effectiveHaloColor != Colors.transparent
@@ -389,19 +389,20 @@ class _FrostCard extends StatelessWidget {
 
     switch (condition) {
       case WeatherConditionType.sunny:
-        return Colors.amber.withValues(alpha: 0.15);
+        return Colors.amber.withOpacity(0.15);
       case WeatherConditionType.rainy:
-        return Colors.blueAccent.withValues(alpha: 0.15);
+        return Colors.blueAccent.withOpacity(0.15);
       case WeatherConditionType.hot:
-        return Colors.orange.withValues(alpha: 0.15);
+        return Colors.orange.withOpacity(0.15);
       case WeatherConditionType.snowOrFrost:
-        return const Color(0xFFB3E5FC).withValues(alpha: 0.15);
+        return const Color(0xFFB3E5FC).withOpacity(0.15);
       case WeatherConditionType.cloudy:
-        return Colors.grey.withValues(alpha: 0.10);
+        return Colors.grey.withOpacity(0.10);
       case WeatherConditionType.stormy:
-        return Colors.purple.withValues(alpha: 0.15);
+        return Colors.purple.withOpacity(0.15);
       case WeatherConditionType.other:
         return null; // No halo for other conditions
     }
   }
 }
+

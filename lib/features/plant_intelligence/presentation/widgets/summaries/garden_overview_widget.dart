@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import '../cards/alert_banner.dart';
@@ -83,7 +83,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Text(
                 gardenContext.location.city ??
                     gardenContext.location.address ??
-                    'Location non spécifiée',
+                    'Location non spÃ©cifiÃ©e',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -103,7 +103,7 @@ class GardenOverviewWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -173,10 +173,10 @@ class GardenOverviewWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: color.withValues(alpha: 0.3),
+          color: color.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -221,7 +221,7 @@ class GardenOverviewWidget extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'Conditions météorologiques',
+              'Conditions mÃ©tÃ©orologiques',
               style: theme.textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -233,7 +233,7 @@ class GardenOverviewWidget extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: theme.colorScheme.surfaceContainerHighest
-                .withValues(alpha: 0.3),
+                .withOpacity(0.3),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
@@ -241,7 +241,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Expanded(
                 child: _buildWeatherItem(
                   theme,
-                  'Température',
+                  'TempÃ©rature',
                   weather.type == WeatherType.temperature
                       ? '${weather.value.toStringAsFixed(1)}${weather.unit}'
                       : 'N/A',
@@ -254,7 +254,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Expanded(
                 child: _buildWeatherItem(
                   theme,
-                  'Humidité',
+                  'HumiditÃ©',
                   weather.type == WeatherType.humidity
                       ? '${weather.value.toStringAsFixed(0)}${weather.unit}'
                       : 'N/A',
@@ -265,7 +265,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Expanded(
                 child: _buildWeatherItem(
                   theme,
-                  'Précipitations',
+                  'PrÃ©cipitations',
                   weather.type == WeatherType.precipitation
                       ? '${weather.value.toStringAsFixed(1)}${weather.unit}'
                       : 'N/A',
@@ -336,7 +336,7 @@ class GardenOverviewWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: Colors.orange.withValues(alpha: 0.1),
+                color: Colors.orange.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -373,8 +373,8 @@ class GardenOverviewWidget extends StatelessWidget {
   }
 
   double _calculateOverallHealth() {
-    // Calculer la santé globale basée sur les plantes du jardin
-    // Pour l'instant, on utilise une valeur par défaut
+    // Calculer la santÃ© globale basÃ©e sur les plantes du jardin
+    // Pour l'instant, on utilise une valeur par dÃ©faut
     return 7.5;
   }
 
@@ -401,7 +401,7 @@ class GardenOverviewWidget extends StatelessWidget {
   }
 }
 
-/// Widget compact pour afficher un aperçu du jardin
+/// Widget compact pour afficher un aperÃ§u du jardin
 class CompactGardenOverviewWidget extends StatelessWidget {
   final GardenContext gardenContext;
   final WeatherCondition? currentWeather;
@@ -455,7 +455,7 @@ class CompactGardenOverviewWidget extends StatelessWidget {
                     Text(
                       gardenContext.location.city ??
                           gardenContext.location.address ??
-                          'Location non spécifiée',
+                          'Location non spÃ©cifiÃ©e',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -469,7 +469,7 @@ class CompactGardenOverviewWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withValues(alpha: 0.1),
+                    color: Colors.blue.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -497,7 +497,7 @@ class CompactGardenOverviewWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: Colors.orange.withValues(alpha: 0.1),
+                    color: Colors.orange.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Icon(
@@ -575,3 +575,4 @@ class GardenOverviewList extends StatelessWidget {
     );
   }
 }
+

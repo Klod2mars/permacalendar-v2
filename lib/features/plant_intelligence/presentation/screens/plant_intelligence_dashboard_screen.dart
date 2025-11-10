@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,14 +25,14 @@ import '../widgets/charts/condition_radar_chart_simple.dart';
 import '../widgets/garden_selector_widget.dart';
 import 'plant_evolution_history_screen.dart';
 
-/// Écran principal du tableau de bord d'intelligence des plantes
+/// Ã‰cran principal du tableau de bord d'intelligence des plantes
 class PlantIntelligenceDashboardScreen extends ConsumerStatefulWidget {
   const PlantIntelligenceDashboardScreen({super.key});
 
   @override
   ConsumerState<PlantIntelligenceDashboardScreen> createState() {
     print(
-        '🔴🔴🔴 [DIAGNOSTIC CRITIQUE] PlantIntelligenceDashboardScreen.createState() APPELÉ 🔴🔴🔴');
+        'ðŸ”´ðŸ”´ðŸ”´ [DIAGNOSTIC CRITIQUE] PlantIntelligenceDashboardScreen.createState() APPELÃ‰ ðŸ”´ðŸ”´ðŸ”´');
     return _PlantIntelligenceDashboardScreenState();
   }
 }
@@ -43,97 +43,97 @@ class _PlantIntelligenceDashboardScreenState
 
   _PlantIntelligenceDashboardScreenState() {
     print(
-        '🔴🔴🔴 [DIAGNOSTIC CRITIQUE] _PlantIntelligenceDashboardScreenState CONSTRUCTEUR APPELÉ 🔴🔴🔴');
+        'ðŸ”´ðŸ”´ðŸ”´ [DIAGNOSTIC CRITIQUE] _PlantIntelligenceDashboardScreenState CONSTRUCTEUR APPELÃ‰ ðŸ”´ðŸ”´ðŸ”´');
   }
 
   @override
   void initState() {
     super.initState();
-    print('🔴 [DIAGNOSTIC] PlantIntelligenceDashboard.initState() APPELÉ');
-    // Initialiser l'intelligence pour le jardin par défaut
+    print('ðŸ”´ [DIAGNOSTIC] PlantIntelligenceDashboard.initState() APPELÃ‰');
+    // Initialiser l'intelligence pour le jardin par dÃ©faut
     WidgetsBinding.instance.addPostFrameCallback((_) {
       print(
-          '🔴 [DIAGNOSTIC] postFrameCallback APPELÉ - va appeler _initializeIntelligence');
+          'ðŸ”´ [DIAGNOSTIC] postFrameCallback APPELÃ‰ - va appeler _initializeIntelligence');
       _initializeIntelligence();
     });
   }
 
   Future<void> _initializeIntelligence() async {
-    print('🔴 [DIAGNOSTIC] _initializeIntelligence() DÉBUT');
-    developer.log('🔍 DIAGNOSTIC - Début _initializeIntelligence',
+    print('ðŸ”´ [DIAGNOSTIC] _initializeIntelligence() DÃ‰BUT');
+    developer.log('ðŸ” DIAGNOSTIC - DÃ©but _initializeIntelligence',
         name: 'PlantIntelligenceDashboard');
 
-    // Récupérer l'ID du premier jardin disponible
-    print('🔴 [DIAGNOSTIC] Lecture gardenProvider...');
+    // RÃ©cupÃ©rer l'ID du premier jardin disponible
+    print('ðŸ”´ [DIAGNOSTIC] Lecture gardenProvider...');
     final gardenState = ref.read(gardenProvider);
     print(
-        '🔴 [DIAGNOSTIC] gardenState récupéré: ${gardenState.gardens.length} jardins');
+        'ðŸ”´ [DIAGNOSTIC] gardenState rÃ©cupÃ©rÃ©: ${gardenState.gardens.length} jardins');
     developer.log(
-        '🔍 DIAGNOSTIC - GardenState récupéré: ${gardenState.gardens.length} jardins',
+        'ðŸ” DIAGNOSTIC - GardenState rÃ©cupÃ©rÃ©: ${gardenState.gardens.length} jardins',
         name: 'PlantIntelligenceDashboard');
 
     final gardens = gardenState.gardens;
     if (gardens.isNotEmpty) {
       final gardenId = gardens.first.id;
       print(
-          '🔴 [DIAGNOSTIC] Premier jardin trouvé: $gardenId (${gardens.first.name})');
+          'ðŸ”´ [DIAGNOSTIC] Premier jardin trouvÃ©: $gardenId (${gardens.first.name})');
       developer.log(
-          '🔍 DIAGNOSTIC - Utilisation du jardin: $gardenId (${gardens.first.name})',
+          'ðŸ” DIAGNOSTIC - Utilisation du jardin: $gardenId (${gardens.first.name})',
           name: 'PlantIntelligenceDashboard');
 
-      // Définir le jardin actuel pour l'intelligence
+      // DÃ©finir le jardin actuel pour l'intelligence
       ref.read(core_intel.currentIntelligenceGardenIdProvider.notifier).state = gardenId;
 
       print(
-          '🔴 [DIAGNOSTIC] Appel intelligenceStateProvider($gardenId).notifier.initializeForGarden()...');
-      developer.log('🔍 DIAGNOSTIC - Appel initializeForGarden...',
+          'ðŸ”´ [DIAGNOSTIC] Appel intelligenceStateProvider($gardenId).notifier.initializeForGarden()...');
+      developer.log('ðŸ” DIAGNOSTIC - Appel initializeForGarden...',
           name: 'PlantIntelligenceDashboard');
       await ref
           .read(intelligenceStateProvider(gardenId).notifier)
           .initializeForGarden();
 
-      print('🔴 [DIAGNOSTIC] initializeForGarden terminé');
-      developer.log('✅ DIAGNOSTIC - initializeForGarden terminé',
+      print('ðŸ”´ [DIAGNOSTIC] initializeForGarden terminÃ©');
+      developer.log('âœ… DIAGNOSTIC - initializeForGarden terminÃ©',
           name: 'PlantIntelligenceDashboard');
 
-      // Vérifier l'état après initialisation
+      // VÃ©rifier l'Ã©tat aprÃ¨s initialisation
       final intelligenceState = ref.read(intelligenceStateProvider(gardenId));
       print(
-          '🔴 [DIAGNOSTIC] État après init: isInitialized=${intelligenceState.isInitialized}');
+          'ðŸ”´ [DIAGNOSTIC] Ã‰tat aprÃ¨s init: isInitialized=${intelligenceState.isInitialized}');
       print(
-          '🔴 [DIAGNOSTIC] activePlantIds.length=${intelligenceState.activePlantIds.length}');
+          'ðŸ”´ [DIAGNOSTIC] activePlantIds.length=${intelligenceState.activePlantIds.length}');
       print(
-          '🔴 [DIAGNOSTIC] activePlantIds=${intelligenceState.activePlantIds}');
+          'ðŸ”´ [DIAGNOSTIC] activePlantIds=${intelligenceState.activePlantIds}');
       developer.log(
-          '🔍 DIAGNOSTIC - État après init: isInitialized=${intelligenceState.isInitialized}, activePlantIds=${intelligenceState.activePlantIds.length}',
+          'ðŸ” DIAGNOSTIC - Ã‰tat aprÃ¨s init: isInitialized=${intelligenceState.isInitialized}, activePlantIds=${intelligenceState.activePlantIds.length}',
           name: 'PlantIntelligenceDashboard');
       developer.log(
-          '🔍 DIAGNOSTIC - Plantes actives: ${intelligenceState.activePlantIds}',
+          'ðŸ” DIAGNOSTIC - Plantes actives: ${intelligenceState.activePlantIds}',
           name: 'PlantIntelligenceDashboard');
     } else {
-      print('🔴 [DIAGNOSTIC] ❌ AUCUN JARDIN TROUVÉ !');
-      developer.log('❌ DIAGNOSTIC - Aucun jardin trouvé',
+      print('ðŸ”´ [DIAGNOSTIC] âŒ AUCUN JARDIN TROUVÃ‰ !');
+      developer.log('âŒ DIAGNOSTIC - Aucun jardin trouvÃ©',
           name: 'PlantIntelligenceDashboard');
     }
-    print('🔴 [DIAGNOSTIC] _initializeIntelligence() FIN');
+    print('ðŸ”´ [DIAGNOSTIC] _initializeIntelligence() FIN');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('🔴 [DIAGNOSTIC] PlantIntelligenceDashboard.build() APPELÉ');
+    print('ðŸ”´ [DIAGNOSTIC] PlantIntelligenceDashboard.build() APPELÃ‰');
     final theme = Theme.of(context);
 
-    // Récupérer le jardin actuel
+    // RÃ©cupÃ©rer le jardin actuel
     final currentGardenId = ref.watch(core_intel.currentIntelligenceGardenIdProvider);
 
-    // Si aucun jardin n'est sélectionné, afficher un message
+    // Si aucun jardin n'est sÃ©lectionnÃ©, afficher un message
     if (currentGardenId == null) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Intelligence Végétale'),
+          title: const Text('Intelligence VÃ©gÃ©tale'),
         ),
         body: const Center(
-          child: Text('Aucun jardin sélectionné. Veuillez créer un jardin.'),
+          child: Text('Aucun jardin sÃ©lectionnÃ©. Veuillez crÃ©er un jardin.'),
         ),
       );
     }
@@ -142,26 +142,26 @@ class _PlantIntelligenceDashboardScreenState
         ref.watch(intelligenceStateProvider(currentGardenId));
     final alertsState = ref.watch(core_intel.intelligentAlertsProvider);
     print(
-        '🔴 [DIAGNOSTIC] intelligenceState: isInitialized=${intelligenceState.isInitialized}, isAnalyzing=${intelligenceState.isAnalyzing}');
+        'ðŸ”´ [DIAGNOSTIC] intelligenceState: isInitialized=${intelligenceState.isInitialized}, isAnalyzing=${intelligenceState.isAnalyzing}');
     print(
-        '🔴 [DIAGNOSTIC] intelligenceState.plantConditions.length=${intelligenceState.plantConditions.length}');
+        'ðŸ”´ [DIAGNOSTIC] intelligenceState.plantConditions.length=${intelligenceState.plantConditions.length}');
     print(
-        '🔴 [DIAGNOSTIC] intelligenceState.plantRecommendations.length=${intelligenceState.plantRecommendations.length}');
+        'ðŸ”´ [DIAGNOSTIC] intelligenceState.plantRecommendations.length=${intelligenceState.plantRecommendations.length}');
     print(
-        '🔴 [DIAGNOSTIC] intelligenceState.activePlantIds=${intelligenceState.activePlantIds}');
+        'ðŸ”´ [DIAGNOSTIC] intelligenceState.activePlantIds=${intelligenceState.activePlantIds}');
     developer.log(
-      '🔴 BUILD STATE - plantConditions.length=${intelligenceState.plantConditions.length}, activePlantIds=${intelligenceState.activePlantIds.length}',
+      'ðŸ”´ BUILD STATE - plantConditions.length=${intelligenceState.plantConditions.length}, activePlantIds=${intelligenceState.activePlantIds.length}',
       name: 'PlantIntelligenceDashboard',
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Intelligence Végétale'),
+        title: const Text('Intelligence VÃ©gÃ©tale'),
         backgroundColor: theme.colorScheme.surface,
         foregroundColor: theme.colorScheme.onSurface,
         elevation: 0,
         actions: [
-          // 🔥 NOUVEAU - Bouton Rafraîchir pour forcer la synchronisation
+          // ðŸ”¥ NOUVEAU - Bouton RafraÃ®chir pour forcer la synchronisation
           IconButton(
             icon: Icon(
               Icons.refresh,
@@ -169,53 +169,53 @@ class _PlantIntelligenceDashboardScreenState
                   ? theme.colorScheme.primary
                   : theme.colorScheme.onSurface,
             ),
-            tooltip: 'Rafraîchir l\'analyse',
+            tooltip: 'RafraÃ®chir l\'analyse',
             onPressed: _isRefreshing
                 ? null
                 : () async {
                     setState(() => _isRefreshing = true);
 
-                    developer.log('🔄 UI - Rafraîchissement manuel demandé',
+                    developer.log('ðŸ”„ UI - RafraÃ®chissement manuel demandÃ©',
                         name: 'PlantIntelligenceDashboard');
-                    print('🔴 [DIAGNOSTIC] Rafraîchissement manuel déclenché');
+                    print('ðŸ”´ [DIAGNOSTIC] RafraÃ®chissement manuel dÃ©clenchÃ©');
 
-                    // Récupérer le jardin actuel
+                    // RÃ©cupÃ©rer le jardin actuel
                     final gardenState = ref.read(gardenProvider);
                     if (gardenState.gardens.isNotEmpty) {
                       final gardenId = gardenState.gardens.first.id;
 
                       developer.log(
-                          '🔄 UI - Invalidation des caches pour gardenId=$gardenId',
+                          'ðŸ”„ UI - Invalidation des caches pour gardenId=$gardenId',
                           name: 'PlantIntelligenceDashboard');
 
-                      // Invalider les providers dépendants
+                      // Invalider les providers dÃ©pendants
                       ref.invalidate(unifiedGardenContextProvider(gardenId));
                       ref.invalidate(gardenActivePlantsProvider(gardenId));
                       ref.invalidate(gardenStatsProvider(gardenId));
                       ref.invalidate(gardenActivitiesProvider(gardenId));
 
-                      // Ré-initialiser l'intelligence (force la synchronisation)
+                      // RÃ©-initialiser l'intelligence (force la synchronisation)
                       developer.log(
-                          '🔄 UI - Ré-initialisation de l\'intelligence',
+                          'ðŸ”„ UI - RÃ©-initialisation de l\'intelligence',
                           name: 'PlantIntelligenceDashboard');
                       await ref
                           .read(intelligenceStateProvider(gardenId).notifier)
                           .initializeForGarden();
 
-                      developer.log('✅ UI - Rafraîchissement terminé',
+                      developer.log('âœ… UI - RafraÃ®chissement terminÃ©',
                           name: 'PlantIntelligenceDashboard');
                       print(
-                          '🔴 [DIAGNOSTIC] Rafraîchissement terminé avec succès');
+                          'ðŸ”´ [DIAGNOSTIC] RafraÃ®chissement terminÃ© avec succÃ¨s');
                     } else {
                       developer.log(
-                          '⚠️ UI - Aucun jardin trouvé pour rafraîchir',
+                          'âš ï¸ UI - Aucun jardin trouvÃ© pour rafraÃ®chir',
                           name: 'PlantIntelligenceDashboard');
                     }
 
                     setState(() => _isRefreshing = false);
                   },
           ),
-          // ✅ NOUVEAU - Phase 3 : Sélecteur de mode de vue
+          // âœ… NOUVEAU - Phase 3 : SÃ©lecteur de mode de vue
           Consumer(
             builder: (context, ref, _) {
               final viewMode = ref.watch(ui_intel.viewModeProvider);
@@ -344,7 +344,7 @@ class _PlantIntelligenceDashboardScreenState
               );
             },
           ),
-          // Indicateur de rafraîchissement avec animation
+          // Indicateur de rafraÃ®chissement avec animation
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: _isRefreshing
@@ -363,7 +363,7 @@ class _PlantIntelligenceDashboardScreenState
                     key: const ValueKey('refresh_button'),
                     onPressed: _refreshData,
                     icon: const Icon(Icons.refresh),
-                    tooltip: 'Actualiser les données',
+                    tooltip: 'Actualiser les donnÃ©es',
                   ),
           ),
           IconButton(
@@ -371,7 +371,7 @@ class _PlantIntelligenceDashboardScreenState
               Navigator.of(context).pushNamed('/intelligence-settings');
             },
             icon: const Icon(Icons.settings),
-            tooltip: 'Paramètres',
+            tooltip: 'ParamÃ¨tres',
           ),
         ],
       ),
@@ -387,17 +387,17 @@ class _PlantIntelligenceDashboardScreenState
     IntelligentAlertsState alertsState,
     ui_intel.ViewMode viewMode,
   ) {
-    // État d'erreur
+    // Ã‰tat d'erreur
     if (intelligenceState.error != null) {
       return _buildErrorState(theme, intelligenceState.error!);
     }
 
-    // État de chargement initial
+    // Ã‰tat de chargement initial
     if (!intelligenceState.isInitialized) {
       return _buildLoadingState(theme);
     }
 
-    // ✅ NOUVEAU - Phase 3 : Affichage selon le mode de vue sélectionné
+    // âœ… NOUVEAU - Phase 3 : Affichage selon le mode de vue sÃ©lectionnÃ©
     switch (viewMode) {
       case ui_intel.ViewMode.list:
         return _buildListView(theme, intelligenceState, alertsState);
@@ -409,13 +409,13 @@ class _PlantIntelligenceDashboardScreenState
     }
   }
 
-  /// Vue Dashboard (par défaut)
+  /// Vue Dashboard (par dÃ©faut)
   Widget _buildDashboardView(
     ThemeData theme,
     IntelligenceState intelligenceState,
     IntelligentAlertsState alertsState,
   ) {
-    // État principal avec RefreshIndicator
+    // Ã‰tat principal avec RefreshIndicator
     return RefreshIndicator(
       onRefresh: _refreshData,
       child: SingleChildScrollView(
@@ -424,11 +424,11 @@ class _PlantIntelligenceDashboardScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // En-tête
+            // En-tÃªte
             _buildHeader(theme, intelligenceState),
             const SizedBox(height: 24),
 
-            // Message si aucune plante analysée
+            // Message si aucune plante analysÃ©e
             if (intelligenceState.plantConditions.isEmpty) ...[
               _buildEmptyConditionsCard(theme),
               const SizedBox(height: 24),
@@ -438,13 +438,13 @@ class _PlantIntelligenceDashboardScreenState
             _buildQuickStats(theme, intelligenceState),
             const SizedBox(height: 24),
 
-            // ✅ NOUVEAU - Phase 3 : Graphiques radar des conditions
+            // âœ… NOUVEAU - Phase 3 : Graphiques radar des conditions
             if (intelligenceState.plantConditions.isNotEmpty) ...[
               _buildConditionRadarSection(theme, intelligenceState),
               const SizedBox(height: 24),
             ],
 
-            // ✅ NOUVEAU - Phase 3 : Statistiques avancées
+            // âœ… NOUVEAU - Phase 3 : Statistiques avancÃ©es
             if (intelligenceState.plantConditions.isNotEmpty) ...[
               _buildAdvancedStatsSection(theme, intelligenceState),
               const SizedBox(height: 24),
@@ -464,11 +464,11 @@ class _PlantIntelligenceDashboardScreenState
             _buildRecommendationsSection(theme, intelligenceState),
             const SizedBox(height: 24),
 
-            // ✅ NOUVEAU - Phase 1 : Timing de Plantation
+            // âœ… NOUVEAU - Phase 1 : Timing de Plantation
             _buildPlantingTimingSection(theme, intelligenceState),
             const SizedBox(height: 24),
 
-            // ✅ NOUVEAU - Phase 1 : Détails des Analyses
+            // âœ… NOUVEAU - Phase 1 : DÃ©tails des Analyses
             _buildAnalysisDetailsSection(theme, intelligenceState),
           ],
         ),
@@ -476,7 +476,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// ✅ NOUVEAU - Phase 3 : Vue Liste
+  /// âœ… NOUVEAU - Phase 3 : Vue Liste
   Widget _buildListView(
     ThemeData theme,
     IntelligenceState intelligenceState,
@@ -485,7 +485,7 @@ class _PlantIntelligenceDashboardScreenState
     return RefreshIndicator(
       onRefresh: _refreshData,
       child: intelligenceState.plantConditions.isEmpty
-          ? _buildEmptyStateWithAction(theme, 'Aucune condition analysée',
+          ? _buildEmptyStateWithAction(theme, 'Aucune condition analysÃ©e',
               'Cliquez sur le bouton "Analyser" pour commencer')
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -506,7 +506,7 @@ class _PlantIntelligenceDashboardScreenState
                       height: 56,
                       decoration: BoxDecoration(
                         color: _getHealthColor(condition.healthScore)
-                            .withValues(alpha: 0.1),
+                            .withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -573,7 +573,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// ✅ NOUVEAU - Phase 3 : Vue Grille
+  /// âœ… NOUVEAU - Phase 3 : Vue Grille
   Widget _buildGridView(
     ThemeData theme,
     IntelligenceState intelligenceState,
@@ -582,7 +582,7 @@ class _PlantIntelligenceDashboardScreenState
     return RefreshIndicator(
       onRefresh: _refreshData,
       child: intelligenceState.plantConditions.isEmpty
-          ? _buildEmptyStateWithAction(theme, 'Aucune condition analysée',
+          ? _buildEmptyStateWithAction(theme, 'Aucune condition analysÃ©e',
               'Cliquez sur le bouton "Analyser" pour commencer')
           : GridView.builder(
               padding: const EdgeInsets.all(16),
@@ -600,7 +600,7 @@ class _PlantIntelligenceDashboardScreenState
                 return Card(
                   child: InkWell(
                     onTap: () {
-                      // Navigation vers détails (à implémenter)
+                      // Navigation vers dÃ©tails (Ã  implÃ©menter)
                     },
                     borderRadius: BorderRadius.circular(12),
                     child: Padding(
@@ -633,7 +633,7 @@ class _PlantIntelligenceDashboardScreenState
                                 horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
                               color: _getHealthColor(condition.healthScore)
-                                  .withValues(alpha: 0.1),
+                                  .withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -654,7 +654,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// Message d'état vide avec action
+  /// Message d'Ã©tat vide avec action
   Widget _buildEmptyStateWithAction(
       ThemeData theme, String title, String subtitle) {
     return Center(
@@ -666,7 +666,7 @@ class _PlantIntelligenceDashboardScreenState
             Icon(
               Icons.analytics_outlined,
               size: 80,
-              color: theme.colorScheme.primary.withValues(alpha: 0.3),
+              color: theme.colorScheme.primary.withOpacity(0.3),
             ),
             const SizedBox(height: 24),
             Text(
@@ -701,10 +701,10 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// Carte pour inciter à l'analyse
+  /// Carte pour inciter Ã  l'analyse
   Widget _buildEmptyConditionsCard(ThemeData theme) {
     return Card(
-      color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+      color: theme.colorScheme.primaryContainer.withOpacity(0.3),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(
@@ -728,7 +728,7 @@ class _PlantIntelligenceDashboardScreenState
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Cliquez sur le bouton "Analyser" en bas à droite pour commencer l\'analyse de vos plantes.',
+                    'Cliquez sur le bouton "Analyser" en bas Ã  droite pour commencer l\'analyse de vos plantes.',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -745,7 +745,7 @@ class _PlantIntelligenceDashboardScreenState
   Widget _buildLoadingState(ThemeData theme) {
     return Center(
       child: Semantics(
-        label: 'Chargement des données d\'intelligence végétale',
+        label: 'Chargement des donnÃ©es d\'intelligence vÃ©gÃ©tale',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -754,7 +754,7 @@ class _PlantIntelligenceDashboardScreenState
             ),
             const SizedBox(height: 16),
             Text(
-              'Initialisation de l\'intelligence végétale...',
+              'Initialisation de l\'intelligence vÃ©gÃ©tale...',
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -804,7 +804,7 @@ class _PlantIntelligenceDashboardScreenState
                 _initializeIntelligence();
               },
               icon: const Icon(Icons.refresh),
-              label: const Text('Réessayer'),
+              label: const Text('RÃ©essayer'),
             ),
           ],
         ),
@@ -814,18 +814,18 @@ class _PlantIntelligenceDashboardScreenState
 
   Widget? _buildFAB(IntelligenceState intelligenceState) {
     print(
-        '🔴 [DIAGNOSTIC] _buildFAB appelé: isInitialized=${intelligenceState.isInitialized}');
+        'ðŸ”´ [DIAGNOSTIC] _buildFAB appelÃ©: isInitialized=${intelligenceState.isInitialized}');
     if (!intelligenceState.isInitialized) {
-      print('🔴 [DIAGNOSTIC] FAB NON AFFICHÉ car isInitialized=false');
+      print('ðŸ”´ [DIAGNOSTIC] FAB NON AFFICHÃ‰ car isInitialized=false');
       return null;
     }
 
-    print('🔴 [DIAGNOSTIC] FAB AFFICHÉ');
+    print('ðŸ”´ [DIAGNOSTIC] FAB AFFICHÃ‰');
     return FloatingActionButton.extended(
       onPressed: intelligenceState.isAnalyzing
           ? null
           : () {
-              print('🔴 [DIAGNOSTIC] FAB CLIQUÉ - Appel _analyzeAllPlants');
+              print('ðŸ”´ [DIAGNOSTIC] FAB CLIQUÃ‰ - Appel _analyzeAllPlants');
               _analyzeAllPlants();
             },
       icon: intelligenceState.isAnalyzing
@@ -841,12 +841,12 @@ class _PlantIntelligenceDashboardScreenState
 
   Widget _buildHeader(ThemeData theme, IntelligenceState intelligenceState) {
     final lastAnalysisText = intelligenceState.lastAnalysis != null
-        ? 'Dernière analyse: ${_formatRelativeTime(intelligenceState.lastAnalysis!)}'
-        : 'Aucune analyse récente';
+        ? 'DerniÃ¨re analyse: ${_formatRelativeTime(intelligenceState.lastAnalysis!)}'
+        : 'Aucune analyse rÃ©cente';
 
     return Semantics(
       header: true,
-      label: 'En-tête Intelligence Végétale',
+      label: 'En-tÃªte Intelligence VÃ©gÃ©tale',
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
@@ -855,13 +855,13 @@ class _PlantIntelligenceDashboardScreenState
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              theme.colorScheme.primary.withValues(alpha: 0.1),
-              theme.colorScheme.tertiary.withValues(alpha: 0.1),
+              theme.colorScheme.primary.withOpacity(0.1),
+              theme.colorScheme.tertiary.withOpacity(0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: theme.colorScheme.outline.withValues(alpha: 0.2),
+            color: theme.colorScheme.outline.withOpacity(0.2),
           ),
         ),
         child: Column(
@@ -880,7 +880,7 @@ class _PlantIntelligenceDashboardScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Intelligence Végétale',
+                        'Intelligence VÃ©gÃ©tale',
                         style: theme.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.onSurface,
@@ -901,7 +901,7 @@ class _PlantIntelligenceDashboardScreenState
             ),
             if (intelligenceState.lastAnalysis != null) ...[
               const SizedBox(height: 12),
-              Divider(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+              Divider(color: theme.colorScheme.outline.withOpacity(0.2)),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -930,7 +930,7 @@ class _PlantIntelligenceDashboardScreenState
     final difference = DateTime.now().difference(dateTime);
 
     if (difference.inMinutes < 1) {
-      return 'À l\'instant';
+      return 'Ã€ l\'instant';
     } else if (difference.inMinutes < 60) {
       return 'Il y a ${difference.inMinutes} min';
     } else if (difference.inHours < 24) {
@@ -951,23 +951,23 @@ class _PlantIntelligenceDashboardScreenState
         ref.watch(core_intel.intelligentAlertsProvider).activeAlerts.length;
     final averageScore = _calculateAverageHealthScore(intelligenceState);
 
-    // 🔴 DIAGNOSTIC UI - Vérifier les valeurs affichées
-    print('🔴 [DIAGNOSTIC UI] _buildQuickStats appelé:');
+    // ðŸ”´ DIAGNOSTIC UI - VÃ©rifier les valeurs affichÃ©es
+    print('ðŸ”´ [DIAGNOSTIC UI] _buildQuickStats appelÃ©:');
     print(
-        '🔴 [DIAGNOSTIC UI]   plantsCount = $plantsCount (depuis intelligenceState.plantConditions.length)');
-    print('🔴 [DIAGNOSTIC UI]   recommendationsCount = $recommendationsCount');
-    print('🔴 [DIAGNOSTIC UI]   averageScore = $averageScore');
+        'ðŸ”´ [DIAGNOSTIC UI]   plantsCount = $plantsCount (depuis intelligenceState.plantConditions.length)');
+    print('ðŸ”´ [DIAGNOSTIC UI]   recommendationsCount = $recommendationsCount');
+    print('ðŸ”´ [DIAGNOSTIC UI]   averageScore = $averageScore');
     print(
-        '🔴 [DIAGNOSTIC UI]   plantConditions.keys = ${intelligenceState.plantConditions.keys.toList()}');
+        'ðŸ”´ [DIAGNOSTIC UI]   plantConditions.keys = ${intelligenceState.plantConditions.keys.toList()}');
     print('[UI] score=$averageScore, plants=$plantsCount');
     developer.log(
-      '🔴 UI STATS - plantsCount=$plantsCount, recommendationsCount=$recommendationsCount, averageScore=$averageScore',
+      'ðŸ”´ UI STATS - plantsCount=$plantsCount, recommendationsCount=$recommendationsCount, averageScore=$averageScore',
       name: 'PlantIntelligenceDashboard',
     );
 
     return Semantics(
       label:
-          'Statistiques rapides: $plantsCount plantes analysées, $recommendationsCount recommandations, $alertsCount alertes actives, Score moyen de $averageScore pourcent',
+          'Statistiques rapides: $plantsCount plantes analysÃ©es, $recommendationsCount recommandations, $alertsCount alertes actives, Score moyen de $averageScore pourcent',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -989,7 +989,7 @@ class _PlantIntelligenceDashboardScreenState
                     Expanded(
                         child: _buildStatCard(
                             theme,
-                            'Plantes analysées',
+                            'Plantes analysÃ©es',
                             '$plantsCount',
                             Icons.local_florist,
                             theme.colorScheme.primary)),
@@ -1028,7 +1028,7 @@ class _PlantIntelligenceDashboardScreenState
                       Expanded(
                           child: _buildStatCard(
                               theme,
-                              'Plantes analysées',
+                              'Plantes analysÃ©es',
                               '$plantsCount',
                               Icons.local_florist,
                               theme.colorScheme.primary)),
@@ -1262,7 +1262,7 @@ class _PlantIntelligenceDashboardScreenState
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                tooltip: 'Voir les détails',
+                tooltip: 'Voir les dÃ©tails',
               ),
           ],
         ),
@@ -1270,19 +1270,19 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// ✅ NOUVEAU - Phase 3 : Section graphiques radar des conditions
+  /// âœ… NOUVEAU - Phase 3 : Section graphiques radar des conditions
   ///
-  /// Affiche visuellement les 4 conditions principales (température, humidité, lumière, sol)
+  /// Affiche visuellement les 4 conditions principales (tempÃ©rature, humiditÃ©, lumiÃ¨re, sol)
   /// sous forme de graphiques radar compacts et mobile-friendly.
   Widget _buildConditionRadarSection(
       ThemeData theme, IntelligenceState intelligenceState) {
-    // Obtenir les conditions groupées par type
+    // Obtenir les conditions groupÃ©es par type
     final conditionsByType = <ConditionType, List<PlantCondition>>{};
     for (final condition in intelligenceState.plantConditions.values) {
       conditionsByType.putIfAbsent(condition.type, () => []).add(condition);
     }
 
-    // Types de conditions à afficher dans l'ordre
+    // Types de conditions Ã  afficher dans l'ordre
     final conditionTypes = [
       ConditionType.temperature,
       ConditionType.humidity,
@@ -1290,7 +1290,7 @@ class _PlantIntelligenceDashboardScreenState
       ConditionType.soil,
     ];
 
-    // Filtrer seulement les types qui ont des données
+    // Filtrer seulement les types qui ont des donnÃ©es
     final availableTypes = conditionTypes
         .where((type) => conditionsByType.containsKey(type))
         .toList();
@@ -1394,7 +1394,7 @@ class _PlantIntelligenceDashboardScreenState
                     runSpacing: 12,
                     children: availableTypes.map((type) {
                       final conditions = conditionsByType[type]!;
-                      // Prendre la condition la plus récente de ce type
+                      // Prendre la condition la plus rÃ©cente de ce type
                       final mostRecent = conditions.reduce(
                           (a, b) => a.measuredAt.isAfter(b.measuredAt) ? a : b);
 
@@ -1444,7 +1444,7 @@ class _PlantIntelligenceDashboardScreenState
       case ConditionType.humidity:
         return 'Humid.';
       case ConditionType.light:
-        return 'Lumière';
+        return 'LumiÃ¨re';
       case ConditionType.soil:
         return 'Sol';
       case ConditionType.wind:
@@ -1454,12 +1454,12 @@ class _PlantIntelligenceDashboardScreenState
     }
   }
 
-  /// ✅ NOUVEAU - Phase 3 : Section statistiques avancées
+  /// âœ… NOUVEAU - Phase 3 : Section statistiques avancÃ©es
   ///
-  /// Affiche des statistiques détaillées et tendances sur la santé du jardin.
+  /// Affiche des statistiques dÃ©taillÃ©es et tendances sur la santÃ© du jardin.
   Widget _buildAdvancedStatsSection(
       ThemeData theme, IntelligenceState intelligenceState) {
-    // Calculer statistiques avancées
+    // Calculer statistiques avancÃ©es
     final totalConditions = intelligenceState.plantConditions.length;
     final excellentCount = intelligenceState.plantConditions.values
         .where((c) => c.status == ConditionStatus.excellent)
@@ -1478,7 +1478,7 @@ class _PlantIntelligenceDashboardScreenState
         .length;
 
     return Semantics(
-      label: 'Section statistiques avancées',
+      label: 'Section statistiques avancÃ©es',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1486,7 +1486,7 @@ class _PlantIntelligenceDashboardScreenState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Statistiques Détaillées',
+                'Statistiques DÃ©taillÃ©es',
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -1497,16 +1497,16 @@ class _PlantIntelligenceDashboardScreenState
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('📊 Statistiques'),
+                      title: const Text('ðŸ“Š Statistiques'),
                       content: const SingleChildScrollView(
                         child: Text(
-                          'Les statistiques vous donnent une vue d\'ensemble de l\'état '
-                          'de santé de toutes les conditions de vos plantes.\n\n'
-                          '• Excellent : Conditions optimales\n'
-                          '• Bon : Conditions favorables\n'
-                          '• Moyen : Conditions acceptables\n'
-                          '• Faible : Conditions à surveiller\n'
-                          '• Critique : Action immédiate requise\n\n'
+                          'Les statistiques vous donnent une vue d\'ensemble de l\'Ã©tat '
+                          'de santÃ© de toutes les conditions de vos plantes.\n\n'
+                          'â€¢ Excellent : Conditions optimales\n'
+                          'â€¢ Bon : Conditions favorables\n'
+                          'â€¢ Moyen : Conditions acceptables\n'
+                          'â€¢ Faible : Conditions Ã  surveiller\n'
+                          'â€¢ Critique : Action immÃ©diate requise\n\n'
                           'Utilisez ces informations pour prioriser vos actions.',
                         ),
                       ),
@@ -1532,13 +1532,13 @@ class _PlantIntelligenceDashboardScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Répartition de la santé',
+                    'RÃ©partition de la santÃ©',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Barre de progression empilée
+                  // Barre de progression empilÃ©e
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: SizedBox(
@@ -1625,7 +1625,7 @@ class _PlantIntelligenceDashboardScreenState
                     ),
                   ),
                   const SizedBox(height: 12),
-                  // Légende
+                  // LÃ©gende
                   Wrap(
                     spacing: 12,
                     runSpacing: 8,
@@ -1649,7 +1649,7 @@ class _PlantIntelligenceDashboardScreenState
                   ),
                   const SizedBox(height: 12),
                   Divider(
-                      color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+                      color: theme.colorScheme.outline.withOpacity(0.2)),
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1756,7 +1756,7 @@ class _PlantIntelligenceDashboardScreenState
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Vos plantes sont en bonne santé !',
+                        'Vos plantes sont en bonne santÃ© !',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -1858,7 +1858,7 @@ class _PlantIntelligenceDashboardScreenState
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: priorityColor.withValues(alpha: 0.1),
+                            color: priorityColor.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -1909,7 +1909,7 @@ class _PlantIntelligenceDashboardScreenState
     }
   }
 
-  /// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
+  /// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
   /// Section affichant le timing de plantation pour les plantes du jardin
   ///
   /// Affiche le PlantingTimingEvaluation de chaque plante si disponible
@@ -1964,7 +1964,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// Récupère les rapports avec timing de plantation
+  /// RÃ©cupÃ¨re les rapports avec timing de plantation
   Future<List<PlantIntelligenceReport>> _getReportsWithTiming(
       IntelligenceState state) async {
     if (state.currentGardenId == null || state.activePlantIds.isEmpty) {
@@ -1974,7 +1974,7 @@ class _PlantIntelligenceDashboardScreenState
     try {
       final reports = <PlantIntelligenceReport>[];
 
-      // Récupérer le rapport pour chaque plante active (max 5 pour éviter surcharge)
+      // RÃ©cupÃ©rer le rapport pour chaque plante active (max 5 pour Ã©viter surcharge)
       for (final plantId in state.activePlantIds.take(5)) {
         try {
           final report = await ref.read(
@@ -1988,7 +1988,7 @@ class _PlantIntelligenceDashboardScreenState
             reports.add(report);
           }
         } catch (e) {
-          developer.log('Erreur récupération rapport $plantId: $e',
+          developer.log('Erreur rÃ©cupÃ©ration rapport $plantId: $e',
               name: 'Dashboard');
           // Continue avec les autres plantes
         }
@@ -1996,7 +1996,7 @@ class _PlantIntelligenceDashboardScreenState
 
       return reports;
     } catch (e) {
-      developer.log('Erreur récupération rapports timing: $e',
+      developer.log('Erreur rÃ©cupÃ©ration rapports timing: $e',
           name: 'Dashboard');
       return [];
     }
@@ -2014,14 +2014,14 @@ class _PlantIntelligenceDashboardScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // En-tête avec plante et score
+            // En-tÃªte avec plante et score
             Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: _getTimingScoreColor(timing.timingScore)
-                        .withValues(alpha: 0.1),
+                        .withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -2059,7 +2059,7 @@ class _PlantIntelligenceDashboardScreenState
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: _getTimingScoreColor(timing.timingScore)
-                        .withValues(alpha: 0.1),
+                        .withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -2081,7 +2081,7 @@ class _PlantIntelligenceDashboardScreenState
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: theme.colorScheme.surfaceContainerHighest
-                    .withValues(alpha: 0.3),
+                    .withOpacity(0.3),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -2090,7 +2090,7 @@ class _PlantIntelligenceDashboardScreenState
               ),
             ),
 
-            // Facteurs favorables et défavorables
+            // Facteurs favorables et dÃ©favorables
             if (timing.favorableFactors.isNotEmpty ||
                 timing.unfavorableFactors.isNotEmpty) ...[
               const SizedBox(height: 12),
@@ -2122,7 +2122,7 @@ class _PlantIntelligenceDashboardScreenState
                                   padding: const EdgeInsets.only(
                                       left: 20, bottom: 2),
                                   child: Text(
-                                    '• ${factor.length > 30 ? '${factor.substring(0, 30)}...' : factor}',
+                                    'â€¢ ${factor.length > 30 ? '${factor.substring(0, 30)}...' : factor}',
                                     style: theme.textTheme.bodySmall,
                                   ),
                                 ),
@@ -2144,7 +2144,7 @@ class _PlantIntelligenceDashboardScreenState
                                   color: Colors.orange, size: 16),
                               const SizedBox(width: 4),
                               Text(
-                                'Défavorable',
+                                'DÃ©favorable',
                                 style: theme.textTheme.labelSmall?.copyWith(
                                   color: Colors.orange,
                                   fontWeight: FontWeight.bold,
@@ -2158,7 +2158,7 @@ class _PlantIntelligenceDashboardScreenState
                                   padding: const EdgeInsets.only(
                                       left: 20, bottom: 2),
                                   child: Text(
-                                    '• ${factor.length > 30 ? '${factor.substring(0, 30)}...' : factor}',
+                                    'â€¢ ${factor.length > 30 ? '${factor.substring(0, 30)}...' : factor}',
                                     style: theme.textTheme.bodySmall,
                                   ),
                                 ),
@@ -2170,14 +2170,14 @@ class _PlantIntelligenceDashboardScreenState
               ),
             ],
 
-            // Date optimale si différée
+            // Date optimale si diffÃ©rÃ©e
             if (!timing.isOptimalTime &&
                 timing.optimalPlantingDate != null) ...[
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withValues(alpha: 0.1),
+                  color: Colors.blue.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -2196,13 +2196,13 @@ class _PlantIntelligenceDashboardScreenState
               ),
             ],
 
-            // Risques si présents
+            // Risques si prÃ©sents
             if (timing.risks.isNotEmpty) ...[
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.red.withValues(alpha: 0.1),
+                  color: Colors.red.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -2224,7 +2224,7 @@ class _PlantIntelligenceDashboardScreenState
                           const SizedBox(height: 4),
                           ...timing.risks.take(2).map(
                                 (risk) => Text(
-                                  '• $risk',
+                                  'â€¢ $risk',
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: Colors.red.shade700,
                                   ),
@@ -2256,10 +2256,10 @@ class _PlantIntelligenceDashboardScreenState
     return '${date.day}/${date.month}/${date.year}';
   }
 
-  /// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
-  /// Section affichant les détails des analyses (warnings, strengths, actions prioritaires)
+  /// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
+  /// Section affichant les dÃ©tails des analyses (warnings, strengths, actions prioritaires)
   ///
-  /// Expose les données détaillées de PlantAnalysisResult qui étaient cachées
+  /// Expose les donnÃ©es dÃ©taillÃ©es de PlantAnalysisResult qui Ã©taient cachÃ©es
   Widget _buildAnalysisDetailsSection(
       ThemeData theme, IntelligenceState intelligenceState) {
     return FutureBuilder<List<PlantIntelligenceReport>>(
@@ -2279,7 +2279,7 @@ class _PlantIntelligenceDashboardScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Détails des Analyses',
+              'DÃ©tails des Analyses',
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -2294,7 +2294,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// Récupère les rapports avec détails d'analyse
+  /// RÃ©cupÃ¨re les rapports avec dÃ©tails d'analyse
   Future<List<PlantIntelligenceReport>> _getReportsWithDetails(
       IntelligenceState state) async {
     if (state.currentGardenId == null || state.activePlantIds.isEmpty) {
@@ -2304,7 +2304,7 @@ class _PlantIntelligenceDashboardScreenState
     try {
       final reports = <PlantIntelligenceReport>[];
 
-      // Récupérer le rapport pour chaque plante active (max 3 pour UI)
+      // RÃ©cupÃ©rer le rapport pour chaque plante active (max 3 pour UI)
       for (final plantId in state.activePlantIds.take(3)) {
         try {
           final report = await ref.read(
@@ -2314,27 +2314,27 @@ class _PlantIntelligenceDashboardScreenState
             )).future,
           );
 
-          // Inclure seulement si des détails existent
+          // Inclure seulement si des dÃ©tails existent
           if (report.analysis.warnings.isNotEmpty ||
               report.analysis.strengths.isNotEmpty ||
               report.analysis.priorityActions.isNotEmpty) {
             reports.add(report);
           }
         } catch (e) {
-          developer.log('Erreur récupération détails $plantId: $e',
+          developer.log('Erreur rÃ©cupÃ©ration dÃ©tails $plantId: $e',
               name: 'Dashboard');
         }
       }
 
       return reports;
     } catch (e) {
-      developer.log('Erreur récupération détails analyses: $e',
+      developer.log('Erreur rÃ©cupÃ©ration dÃ©tails analyses: $e',
           name: 'Dashboard');
       return [];
     }
   }
 
-  /// Carte affichant les détails d'une analyse
+  /// Carte affichant les dÃ©tails d'une analyse
   Widget _buildAnalysisDetailCard(
       ThemeData theme, PlantIntelligenceReport report) {
     final analysis = report.analysis;
@@ -2441,7 +2441,7 @@ class _PlantIntelligenceDashboardScreenState
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('• ',
+                      const Text('â€¢ ',
                           style: TextStyle(color: Colors.orange, fontSize: 16)),
                       Expanded(
                         child: Text(
@@ -2478,7 +2478,7 @@ class _PlantIntelligenceDashboardScreenState
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('• ',
+                      const Text('â€¢ ',
                           style: TextStyle(color: Colors.green, fontSize: 16)),
                       Expanded(
                         child: Text(
@@ -2546,12 +2546,12 @@ class _PlantIntelligenceDashboardScreenState
 
   /// Helper : Explication du niveau de confiance
   String _getConfidenceExplanation(double confidence) {
-    if (confidence >= 0.85) return 'Données très récentes et fiables';
-    if (confidence >= 0.65) return 'Données récentes';
+    if (confidence >= 0.85) return 'DonnÃ©es trÃ¨s rÃ©centes et fiables';
+    if (confidence >= 0.65) return 'DonnÃ©es rÃ©centes';
     if (confidence >= 0.50) {
-      return 'Données un peu anciennes, actualiser recommandé';
+      return 'DonnÃ©es un peu anciennes, actualiser recommandÃ©';
     }
-    return 'Données obsolètes, actualisation nécessaire';
+    return 'DonnÃ©es obsolÃ¨tes, actualisation nÃ©cessaire';
   }
 
   /// Section d'actions rapides pour la lutte biologique (Mobile First)
@@ -2585,7 +2585,7 @@ class _PlantIntelligenceDashboardScreenState
           ),
         ),
 
-        // Message si aucun jardin sélectionné
+        // Message si aucun jardin sÃ©lectionnÃ©
         if (!hasGarden)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -2603,7 +2603,7 @@ class _PlantIntelligenceDashboardScreenState
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Sélectionnez un jardin pour accéder aux actions rapides',
+                        'SÃ©lectionnez un jardin pour accÃ©der aux actions rapides',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -2632,7 +2632,7 @@ class _PlantIntelligenceDashboardScreenState
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  // Icône avec fond coloré
+                  // IcÃ´ne avec fond colorÃ©
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -2672,7 +2672,7 @@ class _PlantIntelligenceDashboardScreenState
                       ],
                     ),
                   ),
-                  // Flèche
+                  // FlÃ¨che
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 16,
@@ -2703,7 +2703,7 @@ class _PlantIntelligenceDashboardScreenState
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  // Icône avec fond coloré
+                  // IcÃ´ne avec fond colorÃ©
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -2735,7 +2735,7 @@ class _PlantIntelligenceDashboardScreenState
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Consultez les auxiliaires et méthodes naturelles pour votre jardin',
+                          'Consultez les auxiliaires et mÃ©thodes naturelles pour votre jardin',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -2743,7 +2743,7 @@ class _PlantIntelligenceDashboardScreenState
                       ],
                     ),
                   ),
-                  // Flèche
+                  // FlÃ¨che
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 16,
@@ -2757,7 +2757,7 @@ class _PlantIntelligenceDashboardScreenState
           ),
         ),
 
-        // Action 3 : Historique d'évolution
+        // Action 3 : Historique d'Ã©volution
         Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           elevation: hasGarden ? 2 : 0,
@@ -2776,7 +2776,7 @@ class _PlantIntelligenceDashboardScreenState
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  // Icône avec fond coloré
+                  // IcÃ´ne avec fond colorÃ©
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -2798,7 +2798,7 @@ class _PlantIntelligenceDashboardScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '📊 Historique d\'évolution',
+                          'ðŸ“Š Historique d\'Ã©volution',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: hasGarden
@@ -2808,7 +2808,7 @@ class _PlantIntelligenceDashboardScreenState
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Consultez l\'évolution de santé de vos plantes au fil du temps',
+                          'Consultez l\'Ã©volution de santÃ© de vos plantes au fil du temps',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -2816,7 +2816,7 @@ class _PlantIntelligenceDashboardScreenState
                       ],
                     ),
                   ),
-                  // Flèche
+                  // FlÃ¨che
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 16,
@@ -2916,7 +2916,7 @@ class _PlantIntelligenceDashboardScreenState
             .read(intelligenceStateProvider(currentGardenId).notifier)
             .initializeForGarden();
 
-        // Rafraîchir les analyses de toutes les plantes actives
+        // RafraÃ®chir les analyses de toutes les plantes actives
         for (final plantId in intelligenceState.activePlantIds) {
           await ref
               .read(intelligenceStateProvider(currentGardenId).notifier)
@@ -2927,7 +2927,7 @@ class _PlantIntelligenceDashboardScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Données actualisées'),
+            content: Text('DonnÃ©es actualisÃ©es'),
             backgroundColor: Colors.green,
           ),
         );
@@ -2948,84 +2948,84 @@ class _PlantIntelligenceDashboardScreenState
     }
   }
 
-  /// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
-  /// Analyse COMPLÈTE du jardin incluant lutte biologique
+  /// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
+  /// Analyse COMPLÃˆTE du jardin incluant lutte biologique
   ///
-  /// Remplace l'analyse simple plante-par-plante par une analyse complète
+  /// Remplace l'analyse simple plante-par-plante par une analyse complÃ¨te
   /// utilisant `analyzeGardenWithBioControl()` de l'orchestrator.
   Future<void> _analyzeAllPlants() async {
-    print('🔴 [DIAGNOSTIC] _analyzeAllPlants() DÉBUT');
-    developer.log('🌱 Début analyse COMPLÈTE du jardin', name: 'Dashboard');
+    print('ðŸ”´ [DIAGNOSTIC] _analyzeAllPlants() DÃ‰BUT');
+    developer.log('ðŸŒ± DÃ©but analyse COMPLÃˆTE du jardin', name: 'Dashboard');
 
     final gardenId = ref.read(core_intel.currentIntelligenceGardenIdProvider);
-    print('🔴 [DIAGNOSTIC] gardenId=$gardenId');
+    print('ðŸ”´ [DIAGNOSTIC] gardenId=$gardenId');
 
     if (gardenId == null) {
-      print('🔴 [DIAGNOSTIC] ❌ gardenId est NULL - Arrêt');
-      developer.log('❌ Aucun jardin sélectionné', name: 'Dashboard');
+      print('ðŸ”´ [DIAGNOSTIC] âŒ gardenId est NULL - ArrÃªt');
+      developer.log('âŒ Aucun jardin sÃ©lectionnÃ©', name: 'Dashboard');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('❌ Aucun jardin sélectionné'),
+            content: Text('âŒ Aucun jardin sÃ©lectionnÃ©'),
             backgroundColor: Colors.red,
           ),
         );
       }
       return;
     }
-    print('🔴 [DIAGNOSTIC] gardenId OK, lancement analyse...');
+    print('ðŸ”´ [DIAGNOSTIC] gardenId OK, lancement analyse...');
 
     try {
-      // ✅ CORRECTION : Initialiser et invalider les providers AVANT l'analyse
+      // âœ… CORRECTION : Initialiser et invalider les providers AVANT l'analyse
       developer.log(
-          '🔍 DIAGNOSTIC - Lancement analyse manuelle pour gardenId=$gardenId',
+          'ðŸ” DIAGNOSTIC - Lancement analyse manuelle pour gardenId=$gardenId',
           name: 'Dashboard');
       developer.log(
-          '🔄 Appel initializeForGarden pour invalider les providers...',
+          'ðŸ”„ Appel initializeForGarden pour invalider les providers...',
           name: 'Dashboard');
 
       await ref
           .read(intelligenceStateProvider(gardenId).notifier)
           .initializeForGarden();
 
-      developer.log('✅ Providers invalidés, lancement analyse complète...',
+      developer.log('âœ… Providers invalidÃ©s, lancement analyse complÃ¨te...',
           name: 'Dashboard');
-      developer.log('🔄 Appel generateComprehensiveGardenAnalysisProvider...',
+      developer.log('ðŸ”„ Appel generateComprehensiveGardenAnalysisProvider...',
           name: 'Dashboard');
 
-      // ✅ NOUVEAU : Analyse complète incluant lutte biologique
+      // âœ… NOUVEAU : Analyse complÃ¨te incluant lutte biologique
       final comprehensiveAnalysis = await ref.read(
         generateComprehensiveGardenAnalysisProvider(gardenId).future,
       );
 
-      developer.log('✅ Analyse complète terminée', name: 'Dashboard');
+      developer.log('âœ… Analyse complÃ¨te terminÃ©e', name: 'Dashboard');
       developer.log(
-          '  - ${comprehensiveAnalysis.plantReports.length} plantes analysées',
+          '  - ${comprehensiveAnalysis.plantReports.length} plantes analysÃ©es',
           name: 'Dashboard');
       developer.log(
-          '  - ${comprehensiveAnalysis.pestThreats?.totalThreats ?? 0} menaces détectées',
+          '  - ${comprehensiveAnalysis.pestThreats?.totalThreats ?? 0} menaces dÃ©tectÃ©es',
           name: 'Dashboard');
       developer.log(
           '  - ${comprehensiveAnalysis.bioControlRecommendations.length} recommandations bio',
           name: 'Dashboard');
       developer.log(
-          '  - Score santé global: ${comprehensiveAnalysis.overallHealthScore.toStringAsFixed(1)}%',
+          '  - Score santÃ© global: ${comprehensiveAnalysis.overallHealthScore.toStringAsFixed(1)}%',
           name: 'Dashboard');
 
       if (mounted) {
-        // Afficher résultats dans un dialog/modal
+        // Afficher rÃ©sultats dans un dialog/modal
         _showComprehensiveAnalysisResults(comprehensiveAnalysis);
 
         // Toast de confirmation
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '✅ Analyse complète : ${comprehensiveAnalysis.plantReports.length} plantes, '
+              'âœ… Analyse complÃ¨te : ${comprehensiveAnalysis.plantReports.length} plantes, '
               '${comprehensiveAnalysis.pestThreats?.totalThreats ?? 0} menaces',
             ),
             backgroundColor: Colors.green,
             action: SnackBarAction(
-              label: 'Détails',
+              label: 'DÃ©tails',
               textColor: Colors.white,
               onPressed: () =>
                   _showComprehensiveAnalysisResults(comprehensiveAnalysis),
@@ -3034,7 +3034,7 @@ class _PlantIntelligenceDashboardScreenState
         );
       }
     } catch (e, stackTrace) {
-      developer.log('❌ Erreur analyse complète: $e',
+      developer.log('âŒ Erreur analyse complÃ¨te: $e',
           name: 'Dashboard', error: e, stackTrace: stackTrace);
 
       if (mounted) {
@@ -3048,13 +3048,13 @@ class _PlantIntelligenceDashboardScreenState
     }
   }
 
-  /// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
-  /// Affiche les résultats de l'analyse complète dans un bottom sheet modal
+  /// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
+  /// Affiche les rÃ©sultats de l'analyse complÃ¨te dans un bottom sheet modal
   ///
-  /// Présente de manière visuelle et accessible:
-  /// - Score de santé global du jardin
+  /// PrÃ©sente de maniÃ¨re visuelle et accessible:
+  /// - Score de santÃ© global du jardin
   /// - Statistiques (plantes, menaces, recommandations bio)
-  /// - Liste des menaces détectées
+  /// - Liste des menaces dÃ©tectÃ©es
   /// - Liste des recommandations de lutte biologique
   void _showComprehensiveAnalysisResults(ComprehensiveGardenAnalysis analysis) {
     showModalBottomSheet(
@@ -3073,16 +3073,16 @@ class _PlantIntelligenceDashboardScreenState
             child: ListView(
               controller: scrollController,
               children: [
-                // En-tête
+                // En-tÃªte
                 Text(
-                  '🌿 Analyse Complète du Jardin',
+                  'ðŸŒ¿ Analyse ComplÃ¨te du Jardin',
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Généré le ${_formatDateTime(analysis.analyzedAt)}',
+                  'GÃ©nÃ©rÃ© le ${_formatDateTime(analysis.analyzedAt)}',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -3096,7 +3096,7 @@ class _PlantIntelligenceDashboardScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Score de Santé Global',
+                        Text('Score de SantÃ© Global',
                             style: theme.textTheme.titleMedium),
                         const SizedBox(height: 12),
                         LinearProgressIndicator(
@@ -3170,9 +3170,9 @@ class _PlantIntelligenceDashboardScreenState
                 ),
                 const SizedBox(height: 24),
 
-                // Résumé
+                // RÃ©sumÃ©
                 if (analysis.summary.isNotEmpty) ...[
-                  Text('📋 Résumé', style: theme.textTheme.titleLarge),
+                  Text('ðŸ“‹ RÃ©sumÃ©', style: theme.textTheme.titleLarge),
                   const SizedBox(height: 12),
                   Card(
                     child: Padding(
@@ -3186,10 +3186,10 @@ class _PlantIntelligenceDashboardScreenState
                   const SizedBox(height: 16),
                 ],
 
-                // Menaces détectées
+                // Menaces dÃ©tectÃ©es
                 if (analysis.pestThreats != null &&
                     analysis.pestThreats!.threats.isNotEmpty) ...[
-                  Text('🐛 Menaces Détectées',
+                  Text('ðŸ› Menaces DÃ©tectÃ©es',
                       style: theme.textTheme.titleLarge),
                   const SizedBox(height: 12),
                   ...analysis.pestThreats!.threats.take(5).map((threat) => Card(
@@ -3216,7 +3216,7 @@ class _PlantIntelligenceDashboardScreenState
 
                 // Recommandations bio
                 if (analysis.bioControlRecommendations.isNotEmpty) ...[
-                  Text('🌿 Recommandations Bio',
+                  Text('ðŸŒ¿ Recommandations Bio',
                       style: theme.textTheme.titleLarge),
                   const SizedBox(height: 12),
                   ...analysis.bioControlRecommendations
@@ -3269,7 +3269,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// Helpers pour l'affichage des résultats
+  /// Helpers pour l'affichage des rÃ©sultats
   Color _getHealthColor(double score) {
     if (score >= 80) return Colors.green;
     if (score >= 60) return Colors.lightGreen;
@@ -3295,9 +3295,9 @@ class _PlantIntelligenceDashboardScreenState
       case ThreatLevel.critical:
         return 'CRITIQUE';
       case ThreatLevel.high:
-        return 'Élevé';
+        return 'Ã‰levÃ©';
       case ThreatLevel.moderate:
-        return 'Modéré';
+        return 'ModÃ©rÃ©';
       case ThreatLevel.low:
         return 'Faible';
     }
@@ -3317,11 +3317,11 @@ class _PlantIntelligenceDashboardScreenState
   }
 
   String _formatDateTime(DateTime dt) {
-    return '${dt.day}/${dt.month}/${dt.year} à ${dt.hour}:${dt.minute.toString().padLeft(2, '0')}';
+    return '${dt.day}/${dt.month}/${dt.year} Ã  ${dt.hour}:${dt.minute.toString().padLeft(2, '0')}';
   }
 
-  /// Helper : Créer une petite carte de statistique pour le modal
-  /// (Version pour le modal, différente de celle du dashboard)
+  /// Helper : CrÃ©er une petite carte de statistique pour le modal
+  /// (Version pour le modal, diffÃ©rente de celle du dashboard)
   Widget _buildModalStatCard(
       ThemeData theme, String label, String value, IconData icon, Color color) {
     return Card(
@@ -3350,16 +3350,16 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// ✅ CURSOR PROMPT A9 - Sélection de plante pour l'historique d'évolution
+  /// âœ… CURSOR PROMPT A9 - SÃ©lection de plante pour l'historique d'Ã©volution
   ///
-  /// Affiche un bottom sheet permettant de sélectionner une plante active
-  /// pour consulter son historique d'évolution
+  /// Affiche un bottom sheet permettant de sÃ©lectionner une plante active
+  /// pour consulter son historique d'Ã©volution
   void _showPlantSelectionForEvolution(
       BuildContext context, IntelligenceState intelligenceState) {
     final theme = Theme.of(context);
     final plantCatalogState = ref.read(plantCatalogProvider);
 
-    // Récupérer les informations des plantes actives
+    // RÃ©cupÃ©rer les informations des plantes actives
     final activePlants = intelligenceState.activePlantIds
         .map((plantId) {
           try {
@@ -3377,7 +3377,7 @@ class _PlantIntelligenceDashboardScreenState
     if (activePlants.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Aucune plante active trouvée pour l\'analyse'),
+          content: Text('Aucune plante active trouvÃ©e pour l\'analyse'),
           backgroundColor: Colors.orange,
         ),
       );
@@ -3398,7 +3398,7 @@ class _PlantIntelligenceDashboardScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // En-tête
+                // En-tÃªte
                 Row(
                   children: [
                     Icon(Icons.timeline,
@@ -3409,13 +3409,13 @@ class _PlantIntelligenceDashboardScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Historique d\'évolution',
+                            'Historique d\'Ã©volution',
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Sélectionnez une plante',
+                            'SÃ©lectionnez une plante',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                             ),
@@ -3453,7 +3453,7 @@ class _PlantIntelligenceDashboardScreenState
                             padding: const EdgeInsets.all(16),
                             child: Row(
                               children: [
-                                // Icône de la plante
+                                // IcÃ´ne de la plante
                                 Container(
                                   width: 56,
                                   height: 56,
@@ -3499,7 +3499,7 @@ class _PlantIntelligenceDashboardScreenState
                                   ),
                                 ),
 
-                                // Flèche de navigation
+                                // FlÃ¨che de navigation
                                 Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16,
@@ -3521,7 +3521,7 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 
-  /// Navigation vers l'écran d'historique d'évolution
+  /// Navigation vers l'Ã©cran d'historique d'Ã©volution
   void _navigateToEvolutionHistory(
       BuildContext context, String plantId, String plantName) {
     Navigator.of(context).push(
@@ -3534,3 +3534,4 @@ class _PlantIntelligenceDashboardScreenState
     );
   }
 }
+

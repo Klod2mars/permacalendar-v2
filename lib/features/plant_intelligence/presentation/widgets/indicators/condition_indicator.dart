@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Indicateur pour une condition spécifique (température, humidité, etc.)
+/// Indicateur pour une condition spÃ©cifique (tempÃ©rature, humiditÃ©, etc.)
 class ConditionIndicator extends StatelessWidget {
   final String label;
   final double value;
@@ -39,7 +39,7 @@ class ConditionIndicator extends StatelessWidget {
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: indicatorColor.withValues(alpha: 0.3),
+            color: indicatorColor.withOpacity(0.3),
             width: 1,
           ),
         ),
@@ -67,7 +67,7 @@ class ConditionIndicator extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: indicatorColor.withValues(alpha: 0.1),
+            color: indicatorColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(6),
           ),
           child: Icon(
@@ -94,7 +94,7 @@ class ConditionIndicator extends StatelessWidget {
     return Container(
       height: 6,
       decoration: BoxDecoration(
-        color: theme.colorScheme.outline.withValues(alpha: 0.2),
+        color: theme.colorScheme.outline.withOpacity(0.2),
         borderRadius: BorderRadius.circular(3),
       ),
       child: FractionallySizedBox(
@@ -174,10 +174,10 @@ class CompactConditionIndicator extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          color: indicatorColor.withValues(alpha: 0.1),
+          color: indicatorColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
-            color: indicatorColor.withValues(alpha: 0.3),
+            color: indicatorColor.withOpacity(0.3),
             width: 1,
           ),
         ),
@@ -333,7 +333,7 @@ class BarConditionIndicator extends StatelessWidget {
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: indicatorColor.withValues(alpha: 0.3),
+            color: indicatorColor.withOpacity(0.3),
             width: 1,
           ),
         ),
@@ -370,7 +370,7 @@ class BarConditionIndicator extends StatelessWidget {
             Container(
               height: 20,
               decoration: BoxDecoration(
-                color: theme.colorScheme.outline.withValues(alpha: 0.1),
+                color: theme.colorScheme.outline.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: FractionallySizedBox(
@@ -380,7 +380,7 @@ class BarConditionIndicator extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        indicatorColor.withValues(alpha: 0.8),
+                        indicatorColor.withOpacity(0.8),
                         indicatorColor,
                       ],
                     ),
@@ -406,7 +406,7 @@ class BarConditionIndicator extends StatelessWidget {
   }
 }
 
-/// Données d'une condition
+/// DonnÃ©es d'une condition
 class ConditionData {
   final String label;
   final double value;
@@ -424,3 +424,4 @@ class ConditionData {
     this.color,
   });
 }
+

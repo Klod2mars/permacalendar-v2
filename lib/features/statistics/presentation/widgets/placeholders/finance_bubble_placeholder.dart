@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Placeholder visuel pour le pilier Finance
 ///
-/// Affiche des bulles de différentes tailles pour représenter les flux financiers
-/// Design neutre avec des cercles gris de tailles variées
+/// Affiche des bulles de diffÃ©rentes tailles pour reprÃ©senter les flux financiers
+/// Design neutre avec des cercles gris de tailles variÃ©es
 class FinanceBubblePlaceholder extends StatelessWidget {
   const FinanceBubblePlaceholder({super.key});
 
@@ -19,7 +19,7 @@ class FinanceBubblePlaceholder extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.grey.withValues(alpha: 0.25),
+              color: Colors.grey.withOpacity(0.25),
               shape: BoxShape.circle,
             ),
           ),
@@ -30,7 +30,7 @@ class FinanceBubblePlaceholder extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.2),
+                color: Colors.grey.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
             ),
@@ -43,7 +43,7 @@ class FinanceBubblePlaceholder extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.3),
+                color: Colors.grey.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
             ),
@@ -53,3 +53,4 @@ class FinanceBubblePlaceholder extends StatelessWidget {
     );
   }
 }
+

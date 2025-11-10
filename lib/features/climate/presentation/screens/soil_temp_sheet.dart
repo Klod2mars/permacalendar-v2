@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/soil_temp_provider.dart';
@@ -10,7 +10,7 @@ import '../providers/soil_temp_provider.dart';
 ///
 /// Design specs:
 /// - Frost glass bottom sheet
-/// - Temperature slider (0-40°C)
+/// - Temperature slider (0-40Â°C)
 /// - Manual input field
 /// - Save/Cancel actions
 class SoilTempSheet extends ConsumerStatefulWidget {
@@ -56,7 +56,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.4,
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.8),
+        color: Colors.black.withOpacity(0.8),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: ClipRRect(
@@ -74,7 +74,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: Colors.white.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
@@ -89,14 +89,14 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Température du sol',
+                            'TempÃ©rature du sol',
                             style: theme.textTheme.titleLarge?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
-                            'Ajustez la température mesurée',
+                            'Ajustez la tempÃ©rature mesurÃ©e',
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white70,
                             ),
@@ -116,7 +116,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                 // Temperature display
                 Center(
                   child: Text(
-                    '${_temperature.toStringAsFixed(1)}°C',
+                    '${_temperature.toStringAsFixed(1)}Â°C',
                     style: theme.textTheme.displayMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
@@ -130,9 +130,9 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                 SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: Colors.amber,
-                    inactiveTrackColor: Colors.white.withValues(alpha: 0.3),
+                    inactiveTrackColor: Colors.white.withOpacity(0.3),
                     thumbColor: Colors.amber,
-                    overlayColor: Colors.amber.withValues(alpha: 0.2),
+                    overlayColor: Colors.amber.withOpacity(0.2),
                     valueIndicatorColor: Colors.amber,
                     valueIndicatorTextStyle: const TextStyle(
                       color: Colors.black,
@@ -144,7 +144,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                     min: 0.0,
                     max: 40.0,
                     divisions: 80,
-                    label: '${_temperature.toStringAsFixed(1)}°C',
+                    label: '${_temperature.toStringAsFixed(1)}Â°C',
                     onChanged: (value) {
                       setState(() {
                         _temperature = value;
@@ -163,20 +163,20 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                       const TextInputType.numberWithOptions(decimal: true),
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: 'Température (°C)',
+                    labelText: 'TempÃ©rature (Â°C)',
                     labelStyle: const TextStyle(color: Colors.white70),
                     hintText: '20.0',
                     hintStyle:
-                        TextStyle(color: Colors.white.withValues(alpha: 0.5)),
+                        TextStyle(color: Colors.white.withOpacity(0.5)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.3)),
+                          color: Colors.white.withOpacity(0.3)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.3)),
+                          color: Colors.white.withOpacity(0.3)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -184,7 +184,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                           const BorderSide(color: Colors.amber, width: 2),
                     ),
                     filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.1),
+                    fillColor: Colors.white.withOpacity(0.1),
                   ),
                   onChanged: (value) {
                     final parsed = double.tryParse(value);
@@ -207,7 +207,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
                           side: BorderSide(
-                              color: Colors.white.withValues(alpha: 0.3)),
+                              color: Colors.white.withOpacity(0.3)),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -247,3 +247,4 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
     );
   }
 }
+

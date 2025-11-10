@@ -1,11 +1,11 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../../core/models/daily_weather_point.dart';
 
-/// Widget réutilisable pour afficher une mini-carte météo
+/// Widget rÃ©utilisable pour afficher une mini-carte mÃ©tÃ©o
 ///
-/// Phase P2: Mini-carte simple avec icône, températures, précipitations et date
-/// Utilisé dans la grille du GardenClimatePanel
+/// Phase P2: Mini-carte simple avec icÃ´ne, tempÃ©ratures, prÃ©cipitations et date
+/// UtilisÃ© dans la grille du GardenClimatePanel
 class ClimateMiniCard extends StatelessWidget {
   const ClimateMiniCard({
     super.key,
@@ -47,10 +47,10 @@ class ClimateMiniCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.amber.withValues(alpha: 0.3),
+                      color: Colors.amber.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: Colors.amber.withValues(alpha: 0.5),
+                        color: Colors.amber.withOpacity(0.5),
                         width: 1,
                       ),
                     ),
@@ -69,18 +69,18 @@ class ClimateMiniCard extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            // Icône météo
+            // IcÃ´ne mÃ©tÃ©o
             Center(
               child: _getWeatherIcon(),
             ),
 
             const SizedBox(height: 8),
 
-            // Températures
+            // TempÃ©ratures
             if (weatherPoint.tMaxC != null && weatherPoint.tMinC != null)
               Center(
                 child: Text(
-                  '${weatherPoint.tMaxC!.toStringAsFixed(0)}° / ${weatherPoint.tMinC!.toStringAsFixed(0)}°',
+                  '${weatherPoint.tMaxC!.toStringAsFixed(0)}Â° / ${weatherPoint.tMinC!.toStringAsFixed(0)}Â°',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -90,7 +90,7 @@ class ClimateMiniCard extends StatelessWidget {
 
             const SizedBox(height: 4),
 
-            // Précipitations
+            // PrÃ©cipitations
             Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -128,14 +128,14 @@ class ClimateMiniCard extends StatelessWidget {
     if (daysDiff == 1) {
       return 'Demain';
     } else if (daysDiff == 2) {
-      return 'Après-demain';
+      return 'AprÃ¨s-demain';
     } else {
       return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}';
     }
   }
 
   Widget _getWeatherIcon() {
-    // Logique simple basée sur les précipitations et températures
+    // Logique simple basÃ©e sur les prÃ©cipitations et tempÃ©ratures
     if (weatherPoint.precipMm > 5.0) {
       return const Icon(
         Icons.grain,
@@ -207,14 +207,14 @@ class _FrostCard extends StatelessWidget {
         child: Container(
           padding: padding,
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: opacity),
+            color: Colors.black.withOpacity(opacity),
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
             // Accent visuel pour la carte d'aujourd'hui
             boxShadow: emphasis == FrostEmphasis.high
                 ? [
                     BoxShadow(
-                      color: Colors.amber.withValues(alpha: 0.1),
+                      color: Colors.amber.withOpacity(0.1),
                       blurRadius: 8,
                       spreadRadius: 1,
                     ),
@@ -227,3 +227,4 @@ class _FrostCard extends StatelessWidget {
     );
   }
 }
+

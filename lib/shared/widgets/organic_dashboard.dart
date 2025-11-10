@@ -341,7 +341,7 @@ class _HotspotButton extends StatelessWidget {
                         semanticLabel ?? 'hotspot',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.98),
+                          color: Colors.white.withOpacity(0.98),
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
@@ -356,4 +356,5 @@ class _HotspotButton extends StatelessWidget {
     );
   }
 }
+
 

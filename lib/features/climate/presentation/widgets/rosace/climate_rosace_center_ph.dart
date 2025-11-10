@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Climate Rosace Center PH - V2 Geometric Rounded Design
 ///
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 /// - Circular shape with frost glass effect
 /// - pH value display (X.X format)
 /// - Alert mode support (pulse effect handled by parent)
-/// - Touch target ≥44dp
+/// - Touch target â‰¥44dp
 class ClimateRosaceCenterPH extends StatelessWidget {
   const ClimateRosaceCenterPH({
     super.key,
@@ -32,18 +32,18 @@ class ClimateRosaceCenterPH extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: alertMode
-                ? Colors.red.withValues(alpha: 0.2)
-                : Colors.white.withValues(alpha: 0.15),
+                ? Colors.red.withOpacity(0.2)
+                : Colors.white.withOpacity(0.15),
             borderRadius: BorderRadius.circular(40),
             border: Border.all(
               color: alertMode
-                  ? Colors.red.withValues(alpha: 0.4)
-                  : Colors.white.withValues(alpha: 0.3),
+                  ? Colors.red.withOpacity(0.4)
+                  : Colors.white.withOpacity(0.3),
               width: 2,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: Colors.black.withOpacity(0.1),
                 blurRadius: 8,
                 spreadRadius: 1,
                 offset: const Offset(0, 2),
@@ -90,3 +90,4 @@ class ClimateRosaceCenterPH extends StatelessWidget {
     );
   }
 }
+

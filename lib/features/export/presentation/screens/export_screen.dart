@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
@@ -24,7 +24,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Exporter les données',
+        title: 'Exporter les donnÃ©es',
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
@@ -74,7 +74,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Période d\'export',
+              'PÃ©riode d\'export',
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -107,14 +107,14 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Types de données',
+              'Types de donnÃ©es',
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Sélectionnez les données à inclure dans l\'export',
+              'SÃ©lectionnez les donnÃ©es Ã  inclure dans l\'export',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.outline,
               ),
@@ -130,21 +130,21 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             _buildDataTypeCheckbox(
               'plantings',
               'Plantations',
-              'Historique des plantations et récoltes',
+              'Historique des plantations et rÃ©coltes',
               Icons.eco,
               theme,
             ),
             _buildDataTypeCheckbox(
               'activities',
-              'Activités',
-              'Journal des activités de jardinage',
+              'ActivitÃ©s',
+              'Journal des activitÃ©s de jardinage',
               Icons.assignment,
               theme,
             ),
             _buildDataTypeCheckbox(
               'weather',
-              'Données météo',
-              'Historique des conditions météorologiques',
+              'DonnÃ©es mÃ©tÃ©o',
+              'Historique des conditions mÃ©tÃ©orologiques',
               Icons.wb_sunny,
               theme,
             ),
@@ -211,7 +211,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
               },
             ),
             CheckboxListTile(
-              title: const Text('Données anonymisées'),
+              title: const Text('DonnÃ©es anonymisÃ©es'),
               subtitle: const Text('Supprimer les informations personnelles'),
               value: false,
               onChanged: (value) {
@@ -245,7 +245,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Aperçu de l\'export',
+                  'AperÃ§u de l\'export',
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -258,21 +258,21 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
               ],
             ),
             const SizedBox(height: 16),
-            _buildPreviewItem('Période', _selectedPeriod.displayName, theme),
+            _buildPreviewItem('PÃ©riode', _selectedPeriod.displayName, theme),
             _buildPreviewItem('Format', _selectedFormat.displayName, theme),
             _buildPreviewItem(
-                'Types de données', _selectedDataTypes.join(', '), theme),
-            _buildPreviewItem('Taille estimée', '~2.5 MB', theme),
+                'Types de donnÃ©es', _selectedDataTypes.join(', '), theme),
+            _buildPreviewItem('Taille estimÃ©e', '~2.5 MB', theme),
             _buildPreviewItem('Nombre d\'enregistrements', '~150', theme),
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color:
-                    theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                    theme.colorScheme.primaryContainer.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                  color: theme.colorScheme.primary.withOpacity(0.3),
                 ),
               ),
               child: Row(
@@ -285,7 +285,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'L\'export sera sauvegardé dans le dossier Téléchargements',
+                      'L\'export sera sauvegardÃ© dans le dossier TÃ©lÃ©chargements',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.primary,
                       ),
@@ -304,7 +304,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     return SizedBox(
       width: double.infinity,
       child: CustomButton(
-        text: 'Exporter les données',
+        text: 'Exporter les donnÃ©es',
         icon: const Icon(Icons.download),
         isLoading: _isExporting,
         onPressed:
@@ -373,15 +373,15 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   String _getPeriodDescription(ExportPeriod period) {
     switch (period) {
       case ExportPeriod.week:
-        return 'Données des 7 derniers jours';
+        return 'DonnÃ©es des 7 derniers jours';
       case ExportPeriod.month:
-        return 'Données des 30 derniers jours';
+        return 'DonnÃ©es des 30 derniers jours';
       case ExportPeriod.quarter:
-        return 'Données des 3 derniers mois';
+        return 'DonnÃ©es des 3 derniers mois';
       case ExportPeriod.year:
-        return 'Données des 12 derniers mois';
+        return 'DonnÃ©es des 12 derniers mois';
       case ExportPeriod.all:
-        return 'Toutes les données disponibles';
+        return 'Toutes les donnÃ©es disponibles';
     }
   }
 
@@ -390,9 +390,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
       case ExportFormat.csv:
         return 'Format tableur, compatible Excel';
       case ExportFormat.json:
-        return 'Format structuré pour développeurs';
+        return 'Format structurÃ© pour dÃ©veloppeurs';
       case ExportFormat.pdf:
-        return 'Rapport formaté pour impression';
+        return 'Rapport formatÃ© pour impression';
       case ExportFormat.excel:
         return 'Format Excel natif';
     }
@@ -401,7 +401,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   void _generatePreview() {
     // TODO: Generate actual preview data
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Aperçu actualisé')),
+      const SnackBar(content: Text('AperÃ§u actualisÃ©')),
     );
   }
 
@@ -417,7 +417,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Export terminé avec succès!'),
+            content: const Text('Export terminÃ© avec succÃ¨s!'),
             action: SnackBarAction(
               label: 'Ouvrir',
               onPressed: () {
@@ -449,7 +449,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Aide - Export de données'),
+        title: const Text('Aide - Export de donnÃ©es'),
         content: const SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,19 +460,19 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
-              Text('• CSV: Idéal pour Excel et autres tableurs'),
-              Text('• JSON: Format structuré pour les développeurs'),
-              Text('• PDF: Rapport formaté pour l\'impression'),
+              Text('â€¢ CSV: IdÃ©al pour Excel et autres tableurs'),
+              Text('â€¢ JSON: Format structurÃ© pour les dÃ©veloppeurs'),
+              Text('â€¢ PDF: Rapport formatÃ© pour l\'impression'),
               SizedBox(height: 16),
               Text(
-                'Types de données:',
+                'Types de donnÃ©es:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
-              Text('• Jardins: Informations de base sur vos jardins'),
-              Text('• Plantations: Historique des plantations et récoltes'),
-              Text('• Activités: Journal de vos activités de jardinage'),
-              Text('• Météo: Données météorologiques collectées'),
+              Text('â€¢ Jardins: Informations de base sur vos jardins'),
+              Text('â€¢ Plantations: Historique des plantations et rÃ©coltes'),
+              Text('â€¢ ActivitÃ©s: Journal de vos activitÃ©s de jardinage'),
+              Text('â€¢ MÃ©tÃ©o: DonnÃ©es mÃ©tÃ©orologiques collectÃ©es'),
             ],
           ),
         ),
@@ -486,3 +486,4 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     );
   }
 }
+
