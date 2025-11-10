@@ -37,6 +37,7 @@ dependencies:
   uuid: ^4.2.1
   path_provider: ^2.1.1
   shared_preferences: ^2.0.15
+  device_info_plus: ^8.1.0
   
   # Weather & Location
   geolocator: ^14.0.2
