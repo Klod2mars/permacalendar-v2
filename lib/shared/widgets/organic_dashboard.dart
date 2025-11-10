@@ -1,4 +1,4 @@
-// lib/shared/widgets/organic_dashboard.dart
+﻿// lib/shared/widgets/organic_dashboard.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,13 +9,13 @@ import '../../app_router.dart';
 /// OrganicDashboardWidget
 ///
 /// - Affiche une grande image organique (background PNG).
-/// - Superpose des hotspots (définis en fractions) qui déclenchent des routes.
+/// - Superpose des hotspots (dÃ©finis en fractions) qui dÃ©clenchent des routes.
 /// - En mode debug, affiche un outline semi-transparent + label pour caler les zones.
 /// - Si l'asset manque, affiche un fallback visuel.
 /// - En mode debug, affiche un panneau visuel contenant :
 ///    * build called
 ///    * si AssetManifest contient l'asset
-///    * si rootBundle.load réussit et la taille (bytes) ou l'erreur.
+///    * si rootBundle.load rÃ©ussit et la taille (bytes) ou l'erreur.
 class OrganicDashboardWidget extends StatelessWidget {
   const OrganicDashboardWidget({
     super.key,
@@ -182,7 +182,7 @@ class OrganicDashboardWidget extends StatelessWidget {
                 child: FutureBuilder<_AssetDiagnostic>(
                   future: _diagnoseAsset(assetPath),
                   builder: (context, snap) {
-                    Color bg = Colors.black.withValues(alpha: 0.18);
+                    Color bg = Colors.black.withOpacity(0.18);
                     Widget body;
 
                     if (snap.connectionState != ConnectionState.done) {
@@ -241,8 +241,8 @@ class OrganicDashboardWidget extends StatelessWidget {
                       );
                       // set bg color small hint
                       bg = d.declared && d.loadOk
-                          ? Colors.black.withValues(alpha: 0.24)
-                          : Colors.black.withValues(alpha: 0.38);
+                          ? Colors.black.withOpacity(0.24)
+                          : Colors.black.withOpacity(0.38);
                     }
 
                     return Material(
@@ -312,7 +312,7 @@ class _HotspotButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Transparent Material + InkWell pour ripple + accessibilité.
+    // Transparent Material + InkWell pour ripple + accessibilitÃ©.
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -328,7 +328,7 @@ class _HotspotButton extends StatelessWidget {
                     color: Colors.black26,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: Colors.orangeAccent.withValues(alpha: 0.95),
+                      color: Colors.orangeAccent.withOpacity(0.95),
                       width: 1.5,
                     ),
                   )
@@ -356,3 +356,4 @@ class _HotspotButton extends StatelessWidget {
     );
   }
 }
+
