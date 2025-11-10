@@ -7,7 +7,8 @@ part 'calibration_state.freezed.dart';
 /// Type d'Ã©lÃ©ment en calibration (unifiÃ©)
 enum CalibrationType {
   none, // Pas de calibration active
-  organic, // Calibration organique unifiÃ©e
+  organic, // Calibration organique unifiée
+  tapZones, // Calibration par zones tactiles (nouveau)
 }
 
 /// Ã‰tat de calibration unifiÃ©
@@ -74,6 +75,7 @@ final gardenCalibrationEnabledProvider = Provider<bool>((ref) {
   return ref.watch(calibrationStateProvider).activeType ==
       CalibrationType.organic;
 });
+
 
 
 
