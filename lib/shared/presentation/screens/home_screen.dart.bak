@@ -21,12 +21,13 @@ class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Affiche uniquement le dashboard organique en pleine hauteur disponible
+    final gardenState = ref.watch(gardenProvider);
     final theme = Theme.of(context);
-    final appBarHeight = kToolbarHeight + MediaQuery.of(context).padding.top;
-    final availableHeight = MediaQuery.of(context).size.height - appBarHeight;
+    final selectedCommune = ref.watch(selectedCommuneProvider);
+    final fallbackCommune = gardenState.gardens.isNotEmpty ? gardenState.gardens.first.location : null;
+
+    final weatherAsync = ref.watch(weatherByCommuneProvider(selectedCommune ?? fallbackCommune));
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -38,13 +39,23 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Center(
-        child: SizedBox(
-          width: double.infinity,
-          height: availableHeight,
-          child: OrganicDashboardWidget(
-            // en prod / écran d'accueil, masquer le panneau de diagnostic
-            showDiagnostics: false,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await ref.read(gardenProvider.notifier).loadGardens();
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildWeatherHome(context, theme, weatherAsync),
+              const SizedBox(height: 24),
+              _buildQuickActions(context, theme, gardenState, ref),
+              const SizedBox(height: 24),
+              _buildIntelligenceSection(context, theme),
+              const SizedBox(height: 24),
+              _buildRecentActivity(context, theme, ref),
+            ],
           ),
         ),
       ),
