@@ -1,26 +1,50 @@
 *** Begin Patch
 *** Update File: lib/core/models/calibration_state.dart
 @@
- enum CalibrationType {
-   none, // Pas de calibration active
-   organic, // Calibration organique unifiée
+-enum CalibrationType {
+-  none, // Pas de calibration active
+-  organic, // Calibration organique unifiÃ©e
+-}
++enum CalibrationType {
++  none, // Pas de calibration active
++  organic, // Calibration organique unifiée
 +  tapZones, // Calibration par zones tactiles (nouveau)
- }
++}
+
+*** Update File: lib/core/models/app_settings.dart
 @@
-   /// Activer calibration organique
-   void enableOrganicCalibration() {
-     state = const CalibrationState(
-       activeType: CalibrationType.organic,
-       hasUnsavedChanges: false,
-     );
+-  factory AppSettings.defaults() => AppSettings(
+-        themeMode: 'system',
+-        showAnimations: true,
+-        selectedCommune: null,
+-        notificationsEnabled: true,
+-        alertThreshold: 0.7,
+-        temperatureUnit: 'celsius',
+-        weatherRadius: weatherRadius ?? this.weatherRadius,
+-        isRuralMode: false,
+-        lastLatitude: null,
+-        lastLongitude: null,
+-        analysisIntervalMinutes: 60,
+-        backupEnabled: false,
+-        gardenCalibrationEnabled: false,
+-      );
++  factory AppSettings.defaults() => AppSettings(
++        themeMode: 'system',
++        showAnimations: true,
++        selectedCommune: null,
++        notificationsEnabled: true,
++        alertThreshold: 0.7,
++        temperatureUnit: 'celsius',
++        weatherRadius: null,
++        isRuralMode: false,
++        lastLatitude: null,
++        lastLongitude: null,
++        analysisIntervalMinutes: 60,
++        backupEnabled: false,
++        gardenCalibrationEnabled: false,
++      );
+@@
+-    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: weatherRadius ?? this.weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
++    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: $weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
    }
-+
-+  /// Activer calibration TAP/ZONES
-+  /// (utilisé par les tests unitaires : enableTapZonesCalibration)
-+  void enableTapZonesCalibration() {
-+    state = const CalibrationState(
-+      activeType: CalibrationType.tapZones,
-+      hasUnsavedChanges: false,
-+    );
-+  }
 *** End Patch
