@@ -1,50 +1,114 @@
 *** Begin Patch
 *** Update File: lib/core/models/calibration_state.dart
 @@
--enum CalibrationType {
--  none, // Pas de calibration active
--  organic, // Calibration organique unifiÃ©e
+-class CalibrationStateNotifier extends Notifier<CalibrationState> {
+-  @override
+-  CalibrationState build() => const CalibrationState();
+-
+-  /// Activer calibration organique
+-  void enableOrganicCalibration() {
+-    state = const CalibrationState(
+-      activeType: CalibrationType.organic,
+-      hasUnsavedChanges: false,
+-    );
+-  }
+-
+-  /// Activer calibration TAP/ZONES
+-  void enableTapZonesCalibration() {
+-    state = const CalibrationState(
+-      activeType: CalibrationType.tapZones,
+-      hasUnsavedChanges: false,
+-    );
+-  }
+-
+-  /// DÃ©sactiver toute calibration
+-  void disableCalibration() {
+-    if (kDebugMode) {
+-      debugPrint('ðŸ”§ disableCalibration() - ${state.activeType} â†’ none');
+-    }
+-    state = state.copyWith(
+-      activeType: CalibrationType.none,
+-      hasUnsavedChanges: false,
+-    );
+-  }
+-
+-  /// Marquer comme modifiÃ©
+-  void markAsModified() {
+-    state = state.copyWith(hasUnsavedChanges: true);
+-  }
+-
+-  /// VÃ©rifier si calibration active
+-  bool get isCalibrating => state.activeType != CalibrationType.none;
+-
+-  /// VÃ©rifier si calibration organique active
+-  bool get isOrganicCalibrating => state.activeType == CalibrationType.organic;
 -}
-+enum CalibrationType {
-+  none, // Pas de calibration active
-+  organic, // Calibration organique unifiée
-+  tapZones, // Calibration par zones tactiles (nouveau)
++class CalibrationStateNotifier extends Notifier<CalibrationState> {
++  // Fallback internal state used when the notifier is instantiated
++  // manually (outside Riverpod lifecycle), e.g. by unit tests.
++  CalibrationState? _manualState;
++
++  /// Read the current state, using the provider-managed `state` when
++  /// available, otherwise the manual fallback.
++  CalibrationState _readState() {
++    try {
++      return state;
++    } catch (_) {
++      return _manualState ?? const CalibrationState();
++    }
++  }
++
++  /// Write the state either to provider-managed `state` (when available)
++  /// or to the manual fallback for tests.
++  void _writeState(CalibrationState s) {
++    try {
++      state = s;
++    } catch (_) {
++      _manualState = s;
++    }
++  }
++
++  @override
++  CalibrationState build() => const CalibrationState();
++
++  /// Activer calibration organique
++  void enableOrganicCalibration() {
++    _writeState(const CalibrationState(
++      activeType: CalibrationType.organic,
++      hasUnsavedChanges: false,
++    ));
++  }
++
++  /// Activer calibration TAP/ZONES
++  void enableTapZonesCalibration() {
++    _writeState(const CalibrationState(
++      activeType: CalibrationType.tapZones,
++      hasUnsavedChanges: false,
++    ));
++  }
++
++  /// Désactiver toute calibration
++  void disableCalibration() {
++    final prev = _readState();
++    if (kDebugMode) {
++      debugPrint('⚠ disableCalibration() - ${prev.activeType} → none');
++    }
++    _writeState(prev.copyWith(
++      activeType: CalibrationType.none,
++      hasUnsavedChanges: false,
++    ));
++  }
++
++  /// Marquer comme modifié
++  void markAsModified() {
++    _writeState(_readState().copyWith(hasUnsavedChanges: true));
++  }
++
++  /// Vérifier si calibration active
++  bool get isCalibrating => _readState().activeType != CalibrationType.none;
++
++  /// Vérifier si calibration organique active
++  bool get isOrganicCalibrating =>
++      _readState().activeType == CalibrationType.organic;
 +}
-
-*** Update File: lib/core/models/app_settings.dart
-@@
--  factory AppSettings.defaults() => AppSettings(
--        themeMode: 'system',
--        showAnimations: true,
--        selectedCommune: null,
--        notificationsEnabled: true,
--        alertThreshold: 0.7,
--        temperatureUnit: 'celsius',
--        weatherRadius: weatherRadius ?? this.weatherRadius,
--        isRuralMode: false,
--        lastLatitude: null,
--        lastLongitude: null,
--        analysisIntervalMinutes: 60,
--        backupEnabled: false,
--        gardenCalibrationEnabled: false,
--      );
-+  factory AppSettings.defaults() => AppSettings(
-+        themeMode: 'system',
-+        showAnimations: true,
-+        selectedCommune: null,
-+        notificationsEnabled: true,
-+        alertThreshold: 0.7,
-+        temperatureUnit: 'celsius',
-+        weatherRadius: null,
-+        isRuralMode: false,
-+        lastLatitude: null,
-+        lastLongitude: null,
-+        analysisIntervalMinutes: 60,
-+        backupEnabled: false,
-+        gardenCalibrationEnabled: false,
-+      );
-@@
--    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: weatherRadius ?? this.weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
-+    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: $weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled)';
-   }
 *** End Patch
