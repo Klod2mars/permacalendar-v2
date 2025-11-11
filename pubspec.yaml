@@ -1,4 +1,4 @@
-name: permacalendar
+﻿name: permacalendar
 description: "Application professionnelle de gestion de jardinage en permaculture"
 publish_to: 'none'
 version: 2.0.0+1
@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.1.0 <4.0.0'
 
 dependencies:
+  audioplayers: ^1.1.1
   auto_size_text: ^3.0.0
   flutter:
     sdk: flutter
@@ -104,3 +105,4 @@ flutter:
         - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
+
