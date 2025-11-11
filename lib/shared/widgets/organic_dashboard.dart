@@ -411,16 +411,16 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     _activePointers[e.pointer] = e.position;
   }
   void _onPointerUp(PointerEvent e) {
-    _activePointers.Remove(e.pointer);
+    _activePointers.remove(e.pointer);
   }
   void _onPointerCancel(PointerCancelEvent e) {
-    _activePointers.Remove(e.pointer);
+    _activePointers.remove(e.pointer);
   }
 
   bool _areAllActivePointersInsideBox(RenderBox box) {
-    if (_activePointers.Count < 2) return false;
+    if (_activePointers.length < 2) return false;
     final size = box.size;
-    foreach (var pos in _activePointers.Values) {
+    for (final pos in _activePointers.values) {
       final local = box.globalToLocal(pos);
       if (local.dx < 0 || local.dx > size.width || local.dy < 0 || local.dy > size.height) {
         return false;
@@ -510,7 +510,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     _resizeStartSize = null;
     _isResizing = false;
     _isPinchingInside = false;
-    _activePointers.Clear();
+    _activePointers.clear();
     print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
   }
 
@@ -558,6 +558,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
   }
 }
+
 
 
 
