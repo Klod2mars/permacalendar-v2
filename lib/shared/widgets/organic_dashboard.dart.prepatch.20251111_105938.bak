@@ -1,4 +1,4 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -366,7 +366,6 @@ class _HotspotButton extends StatelessWidget {
 
 /// Hotspot widget that supports calibration (pan + pinch-to-scale)
 /// Hotspot widget that supports calibration (pan + pinch-to-scale)
-/// Hotspot widget that supports calibration (pan + pinch-to-scale)
 class _CalibratableHotspot extends StatefulWidget {
   const _CalibratableHotspot({
     Key? key,
@@ -389,86 +388,6 @@ class _CalibratableHotspot extends StatefulWidget {
 
   @override
   State<_CalibratableHotspot> createState() => _CalibratableHotspotState();
-}
-
-class _CalibratableHotspotState extends State<_CalibratableHotspot> {
-  double? _startSize;
-  Offset? _startFocalLocal;
-  Offset? _startNormalizedPos;
-
-  void _handleScaleStart(ScaleStartDetails details) {
-    _startSize = widget.cfg.size;
-    debugPrint('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null) {
-      _startFocalLocal = box.globalToLocal(details.focalPoint);
-      _startNormalizedPos = widget.cfg.position;
-    }
-  }
-
-  void _handleScaleUpdate(ScaleUpdateDetails details) {
-    if (_startSize == null) return;
-    final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-    debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize focal=${details.focalPoint}');
-    widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
-
-    // Pan via focalPointDelta : déplacement relatif depuis le démarrage du geste
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null && _startFocalLocal != null && _startNormalizedPos != null) {
-      final newLocal = _startFocalLocal! + details.focalPointDelta;
-      final size = box.size;
-      final normalized = Offset(
-        (newLocal.dx / size.width).clamp(0.0, 1.0),
-        (newLocal.dy / size.height).clamp(0.0, 1.0),
-      );
-      debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} focalLocal=$newLocal normalized=$normalized');
-      widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, normalized);
-    }
-
-    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
-  }
-
-  void _handleScaleEnd(ScaleEndDetails details) {
-    _startSize = null;
-    _startFocalLocal = null;
-    _startNormalizedPos = null;
-    debugPrint('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.isCalibrating) {
-      return GestureDetector(
-        // On utilise uniquement le ScaleGestureRecognizer (pinch + pan via focalPointDelta)
-        onScaleStart: _handleScaleStart,
-        onScaleUpdate: _handleScaleUpdate,
-        onScaleEnd: _handleScaleEnd,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.cyan.withOpacity(0.08),
-            border: Border.all(color: Colors.cyan.withOpacity(0.7), width: 2),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Center(
-            child: Text(
-              widget.cfg.id,
-              style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Normal behaviour: tap to navigate
-    return _HotspotButton(
-      onTap: () {
-        if (kDebugMode) debugPrint('OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
-        if (widget.onTapRoute != null) context.push(widget.onTapRoute!);
-      },
-      semanticLabel: widget.cfg.id,
-      showDebugOutline: widget.showDebugOutline,
-    );
-  }
 }
 
 class _CalibratableHotspotState extends State<_CalibratableHotspot> {
