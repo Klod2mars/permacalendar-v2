@@ -398,7 +398,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
   void _handleScaleStart(ScaleStartDetails details) {
     _startSize = widget.cfg.size;
-    debugPrint('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
+    print('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
     final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box != null) {
       _startFocalLocal = box.globalToLocal(details.focalPoint);
@@ -409,7 +409,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     if (_startSize == null) return;
     final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-    debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize focal=${details.focalPoint}');
+    print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize focal=${details.focalPoint}');
     widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
 
     // Pan via focalPointDelta : déplacement relatif depuis le démarrage du geste
@@ -421,7 +421,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
         (newLocal.dx / size.width).clamp(0.0, 1.0),
         (newLocal.dy / size.height).clamp(0.0, 1.0),
       );
-      debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} focalLocal=$newLocal normalized=$normalized');
+      print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} focalLocal=$newLocal normalized=$normalized');
       widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, normalized);
     }
 
@@ -432,7 +432,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     _startSize = null;
     _startFocalLocal = null;
     _startNormalizedPos = null;
-    debugPrint('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
+    print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
   }
 
   @override
@@ -471,70 +471,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   }
 }
 
-class _CalibratableHotspotState extends State<_CalibratableHotspot> {
-  double? _startSize;
 
-  void _handlePanUpdate(DragUpdateDetails details) {
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) {
-      debugPrint('DBG: CalibratableHotspot.panUpdate id=${widget.id} - no renderbox');
-      return;
-    }
-    final local = box.globalToLocal(details.globalPosition);
-    final size = box.size;
-    final normalized = Offset(
-      (local.dx / size.width).clamp(0.0, 1.0),
-      (local.dy / size.height).clamp(0.0, 1.0),
-    );
-    debugPrint('DBG: CalibratableHotspot.panUpdate id=${widget.id} global=${details.globalPosition} local=$local size=$size normalized=$normalized');
-    widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, normalized);
-    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
-  }
 
-  void _handleScaleStart(ScaleStartDetails details) {
-    _startSize = widget.cfg.size;
-    debugPrint('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
-  }
 
-  void _handleScaleUpdate(ScaleUpdateDetails details) {
-    if (_startSize == null) return;
-    final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-    debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize');
-    widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
-    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    if (widget.isCalibrating) {
-      return GestureDetector(
-        onPanUpdate: _handlePanUpdate,
-        onScaleStart: _handleScaleStart,
-        onScaleUpdate: _handleScaleUpdate,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.cyan.withOpacity(0.08),
-            border: Border.all(color: Colors.cyan.withOpacity(0.7), width: 2),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Center(
-            child: Text(
-              widget.cfg.id,
-              style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Normal behaviour: tap to navigate
-    return _HotspotButton(
-      onTap: () {
-        if (kDebugMode) debugPrint('OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
-        if (widget.onTapRoute != null) context.push(widget.onTapRoute!);
-      },
-      semanticLabel: widget.cfg.id,
-      showDebugOutline: widget.showDebugOutline,
-    );
-  }
-}
