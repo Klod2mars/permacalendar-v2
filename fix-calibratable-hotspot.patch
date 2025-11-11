@@ -1,0 +1,98 @@
+﻿*** Begin Patch
+*** Update File: lib/shared/widgets/organic_dashboard.dart
+@@
+   double? _startSize;
+-
+-  void _handlePanUpdate(DragUpdateDetails details) {
+-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+-    if (box == null) {
+-      debugPrint('DBG: CalibratableHotspot.panUpdate id=${widget.id} - no renderbox');
+-      return;
+-    }
+-    final local = box.globalToLocal(details.globalPosition);
+-    final size = box.size;
+-    final normalized = Offset(
+-      (local.dx / size.width).clamp(0.0, 1.0),
+-      (local.dy / size.height).clamp(0.0, 1.0),
+-    );
+-    debugPrint('DBG: CalibratableHotspot.panUpdate id=${widget.id} global=${details.globalPosition} local=$local size=$size normalized=$normalized');
+-    widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, normalized);
+-    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
+-  }
+-
+-  void _handleScaleStart(ScaleStartDetails details) {
+-    _startSize = widget.cfg.size;
+-    debugPrint('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
+-  }
+-
+-  void _handleScaleUpdate(ScaleUpdateDetails details) {
+-    if (_startSize == null) return;
+-    final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
+-    debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize');
+-    widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
+-    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
+-  }
++  void _handleScaleStart(ScaleStartDetails details) {
++    _startSize = widget.cfg.size;
++    debugPrint('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
++  }
++
++  void _handleScaleUpdate(ScaleUpdateDetails details) {
++    if (_startSize == null) return;
++
++    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
++    if (box == null) {
++      debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
++      return;
++    }
++
++    final size = box.size;
++
++    // Update size (pinch-to-scale)
++    final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
++    debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize');
++    widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
++
++    // Update position using focalPointDelta (global pixels). Convert to normalized (0..1).
++    // focalPointDelta is the delta since last update in global coordinates.
++    if (details.focalPointDelta != Offset.zero) {
++      final deltaGlobal = details.focalPointDelta;
++      final deltaNormalized = Offset(deltaGlobal.dx / size.width, deltaGlobal.dy / size.height);
++      final currentPos = widget.cfg.position;
++      final newPos = Offset(
++        (currentPos.dx + deltaNormalized.dx).clamp(0.0, 1.0),
++        (currentPos.dy + deltaNormalized.dy).clamp(0.0, 1.0),
++      );
++      debugPrint('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
++      widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, newPos);
++    }
++
++    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
++  }
+@@
+-    if (widget.isCalibrating) {
+-      return GestureDetector(
+-        onPanUpdate: _handlePanUpdate,
+-        onScaleStart: _handleScaleStart,
+-        onScaleUpdate: _handleScaleUpdate,
+-        child: Container(
++    if (widget.isCalibrating) {
++      return GestureDetector(
++        onScaleStart: _handleScaleStart,
++        onScaleUpdate: _handleScaleUpdate,
++        child: Container(
+           decoration: BoxDecoration(
+             color: Colors.cyan.withOpacity(0.08),
+             border: Border.all(color: Colors.cyan.withOpacity(0.7), width: 2),
+             borderRadius: BorderRadius.circular(8),
+           ),
+           child: Center(
+             child: Text(
+               widget.cfg.id,
+               style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+             ),
+           ),
+         ),
+       );
+     }
+*** End Patch
