@@ -396,18 +396,71 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   Offset? _startFocalLocal;
   Offset? _startNormalizedPos;
 
+  // Resize mode (activated by long press)
+  bool _isResizing = false;
+  double? _resizeStartSize;
+
+  // Pointer tracking to detect two-finger pinch completely inside the hotspot
+  final Map<int, Offset> _activePointers = {};
+  bool _isPinchingInside = false;
+
+  void _onPointerDown(PointerDownEvent e) {
+    _activePointers[e.pointer] = e.position;
+  }
+  void _onPointerMove(PointerMoveEvent e) {
+    _activePointers[e.pointer] = e.position;
+  }
+  void _onPointerUp(PointerEvent e) {
+    _activePointers.Remove(e.pointer);
+  }
+  void _onPointerCancel(PointerCancelEvent e) {
+    _activePointers.Remove(e.pointer);
+  }
+
+  bool _areAllActivePointersInsideBox(RenderBox box) {
+    if (_activePointers.Count < 2) return false;
+    final size = box.size;
+    foreach (var pos in _activePointers.Values) {
+      final local = box.globalToLocal(pos);
+      if (local.dx < 0 || local.dx > size.width || local.dy < 0 || local.dy > size.height) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void _handleLongPressStart(LongPressStartDetails details) {
+    _isResizing = true;
+    _resizeStartSize = widget.cfg.size;
+    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box != null) {
+      _startFocalLocal = box.globalToLocal(details.globalPosition);
+      _startNormalizedPos = widget.cfg.position;
+    }
+    print('DBG: CalibratableHotspot.longPressStart id=${widget.id} resizeStartSize=$_resizeStartSize');
+  }
+
+  void _handleLongPressEnd(LongPressEndDetails details) {
+    _isResizing = false;
+    _resizeStartSize = null;
+    print('DBG: CalibratableHotspot.longPressEnd id=${widget.id}');
+  }
+
   void _handleScaleStart(ScaleStartDetails details) {
     _startSize = widget.cfg.size;
-    print('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize');
     final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box != null) {
       _startFocalLocal = box.globalToLocal(details.focalPoint);
       _startNormalizedPos = widget.cfg.position;
+      // determine if all active pointers are inside the widget (for thumb pinch)
+      _isPinchingInside = _areAllActivePointersInsideBox(box);
+    } else {
+      _isPinchingInside = false;
     }
-  }  void _handleScaleUpdate(ScaleUpdateDetails details) {
-    if (_startSize == null) return;
+    print('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize isPinchingInside=$_isPinchingInside');
+  }
 
-    // Récupérer le RenderBox courant
+  void _handleScaleUpdate(ScaleUpdateDetails details) {
     final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {
       print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
@@ -415,13 +468,27 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     }
     final size = box.size;
 
-    // 1) Update size (pinch-to-scale)
-    final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-    print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize');
-    widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
+    // If pinch-inside detected AND a real pinch (scale != 1.0), resize by pinch
+    if (_isPinchingInside && _startSize != null && (details.scale - 1.0).abs() > 0.0001) {
+      final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
+      widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
+      print('DBG: CalibratableHotspot.pinchResize id=${widget.id} scale=${details.scale} newSize=$newSize');
+      widget.ref.read(calibrationStateProvider.notifier).markAsModified();
+      return;
+    }
 
-    // 2) Update position using focalPointDelta (delta since last update)
-    // focalPointDelta is the delta in global pixels since last update.
+    // If in long-press resize mode -> vertical drag adjusts size
+    if (_isResizing && _resizeStartSize != null) {
+      final delta = details.focalPointDelta.dy;
+      final deltaNormalizedSize = -(delta / size.shortestSide);
+      final newSize = (_resizeStartSize! + deltaNormalizedSize).clamp(0.05, 1.0);
+      widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
+      print('DBG: CalibratableHotspot.resize id=${widget.id} delta=$delta deltaNorm=$deltaNormalizedSize newSize=$newSize');
+      widget.ref.read(calibrationStateProvider.notifier).markAsModified();
+      return;
+    }
+
+    // Default: pan using focalPointDelta
     if (details.focalPointDelta != Offset.zero) {
       final deltaGlobal = details.focalPointDelta;
       final deltaNormalized = Offset(deltaGlobal.dx / size.width, deltaGlobal.dy / size.height);
@@ -430,38 +497,50 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
         (currentPos.dx + deltaNormalized.dx).clamp(0.0, 1.0),
         (currentPos.dy + deltaNormalized.dy).clamp(0.0, 1.0),
       );
-      print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
       widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, newPos);
+      print('DBG: CalibratableHotspot.pan id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
+      widget.ref.read(calibrationStateProvider.notifier).markAsModified();
     }
-
-    widget.ref.read(calibrationStateProvider.notifier).markAsModified();
   }
 
   void _handleScaleEnd(ScaleEndDetails details) {
     _startSize = null;
     _startFocalLocal = null;
     _startNormalizedPos = null;
+    _resizeStartSize = null;
+    _isResizing = false;
+    _isPinchingInside = false;
+    _activePointers.Clear();
     print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.isCalibrating) {
-      return GestureDetector(
-        // On utilise uniquement le ScaleGestureRecognizer (pinch + pan via focalPointDelta)
-        onScaleStart: _handleScaleStart,
-        onScaleUpdate: _handleScaleUpdate,
-        onScaleEnd: _handleScaleEnd,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.cyan.withOpacity(0.08),
-            border: Border.all(color: Colors.cyan.withOpacity(0.7), width: 2),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Center(
-            child: Text(
-              widget.cfg.id,
-              style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+      return Listener(
+        behavior: HitTestBehavior.opaque,
+        onPointerDown: _onPointerDown,
+        onPointerMove: _onPointerMove,
+        onPointerUp: _onPointerUp,
+        onPointerCancel: _onPointerCancel,
+        child: GestureDetector(
+          onLongPressStart: _handleLongPressStart,
+          onLongPressEnd: _handleLongPressEnd,
+          onScaleStart: _handleScaleStart,
+          onScaleUpdate: _handleScaleUpdate,
+          onScaleEnd: _handleScaleEnd,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.cyan.withOpacity(0.08),
+              border: Border.all(color: Colors.cyan.withOpacity(0.7), width: 2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                widget.cfg.id,
+                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
@@ -479,6 +558,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
   }
 }
+
 
 
 
