@@ -404,25 +404,34 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       _startFocalLocal = box.globalToLocal(details.focalPoint);
       _startNormalizedPos = widget.cfg.position;
     }
-  }
-
-  void _handleScaleUpdate(ScaleUpdateDetails details) {
+  }  void _handleScaleUpdate(ScaleUpdateDetails details) {
     if (_startSize == null) return;
+
+    // Récupérer le RenderBox courant
+    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) {
+      print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
+      return;
+    }
+    final size = box.size;
+
+    // 1) Update size (pinch-to-scale)
     final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-    print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize focal=${details.focalPoint}');
+    print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} scale=${details.scale} newSize=$newSize');
     widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
 
-    // Pan via focalPointDelta : déplacement relatif depuis le démarrage du geste
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null && _startFocalLocal != null && _startNormalizedPos != null) {
-      final newLocal = _startFocalLocal! + details.focalPointDelta;
-      final size = box.size;
-      final normalized = Offset(
-        (newLocal.dx / size.width).clamp(0.0, 1.0),
-        (newLocal.dy / size.height).clamp(0.0, 1.0),
+    // 2) Update position using focalPointDelta (delta since last update)
+    // focalPointDelta is the delta in global pixels since last update.
+    if (details.focalPointDelta != Offset.zero) {
+      final deltaGlobal = details.focalPointDelta;
+      final deltaNormalized = Offset(deltaGlobal.dx / size.width, deltaGlobal.dy / size.height);
+      final currentPos = widget.cfg.position;
+      final newPos = Offset(
+        (currentPos.dx + deltaNormalized.dx).clamp(0.0, 1.0),
+        (currentPos.dy + deltaNormalized.dy).clamp(0.0, 1.0),
       );
-      print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} focalLocal=$newLocal normalized=$normalized');
-      widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, normalized);
+      print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
+      widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, newPos);
     }
 
     widget.ref.read(calibrationStateProvider.notifier).markAsModified();
@@ -470,6 +479,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
   }
 }
+
 
 
 
