@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,7 +38,7 @@ class _GardenListScreenState extends ConsumerState<GardenListScreen> {
       appBar: const CustomAppBar(title: 'Mes jardins'),
       body: _buildBody(gardenState, Theme.of(context)),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/garden-create'),
+        onPressed:\ \(\)\ =>\ context\.push\(AppRoutes\.gardenCreate\),
         child: const Icon(Icons.add),
       ),
     );
@@ -151,3 +151,4 @@ class _GardenListScreenState extends ConsumerState<GardenListScreen> {
     ref.read(gardenProvider.notifier).toggleGardenStatus(gardenId);
   }
 }
+

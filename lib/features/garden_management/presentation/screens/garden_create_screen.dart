@@ -10,8 +10,7 @@ import '../../../../shared/widgets/custom_button.dart';
 import '../../../../shared/widgets/custom_input.dart';
 import '../../../../shared/widgets/loading_widgets.dart';
 
-class GardenCreateScreen extends ConsumerStatefulWidget {
-  const GardenCreateScreen({super.key});
+class\ GardenCreateScreen\ extends\ ConsumerStatefulWidget\ \{\n\ \ final\ String\?\ slot;\n\ \ const\ GardenCreateScreen\(\{super\.key,\ this\.slot}\);
 
   @override
   ConsumerState<GardenCreateScreen> createState() => _GardenCreateScreenState();
@@ -292,8 +291,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
             : _imageUrlController.text.trim(),
       );
 
-      final success =
-          await ref.read(gardenProvider.notifier).createGarden(garden);
+      \ \ \ \ \ \ //\ Si\ l'écran\ a\ été\ ouvert\ avec\ un\ paramètre\ ""slot"",\ tenter\ la\ création\ atomique\ pour\ le\ slot\n\ \ \ \ \ \ final\ String\?\ slotParam\ =\ widget\.slot;\n\ \ \ \ \ \ bool\ success;\n\ \ \ \ \ \ if\ \(slotParam\ !=\ null\ &&\ slotParam\.isNotEmpty\)\ \{\n\ \ \ \ \ \ \ \ final\ slotNumber\ =\ int\.tryParse\(slotParam\);\n\ \ \ \ \ \ \ \ if\ \(slotNumber\ !=\ null\ &&\ slotNumber\ >=\ 0\)\ \{\n\ \ \ \ \ \ \ \ \ \ success\ =\ await\ ref\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \.read\(gardenProvider\.notifier\)\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \.createGardenForSlot\(slotNumber,\ garden\);\n\ \ \ \ \ \ \ \ }\ else\ \{\n\ \ \ \ \ \ \ \ \ \ //\ slot\ invalide\ ->\ fallback\ sur\ création\ normale\n\ \ \ \ \ \ \ \ \ \ success\ =\ await\ ref\.read\(gardenProvider\.notifier\)\.createGarden\(garden\);\n\ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ }\ else\ \{\n\ \ \ \ \ \ \ \ success\ =\ await\ ref\.read\(gardenProvider\.notifier\)\.createGarden\(garden\);\n\ \ \ \ \ \ }
 
       if (mounted) {
         if (success) {
@@ -331,4 +329,5 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
     }
   }
 }
+
 

@@ -82,7 +82,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.gardenCreate,
         name: 'garden-create',
-        builder: (context, state) => const GardenCreateScreen(),
+        builder:\ \(context,\ state\)\ \{\n\ \ \ \ \ \ \ \ \ \ final\ slot\ =\ state\.uri\.queryParameters\['slot'];\n\ \ \ \ \ \ \ \ \ \ return\ GardenCreateScreen\(slot:\ slot\);\n\ \ \ \ \ \ \ \ },
       ),
       GoRoute(
         path: AppRoutes.gardenDetail,
@@ -316,4 +316,5 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     ),
   );
 });
+
 
