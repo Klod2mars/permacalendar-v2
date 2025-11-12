@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/organic_dashboard.dart';
 import '../../../app_router.dart';
+
 /// HomeScreen - écran d'accueil principal
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -33,16 +34,6 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'validateCalibration',
-        icon: const Icon(Icons.check),
-        label: const Text('Valider'),
-        onPressed: () {
-          // TODO: connecter à la logique de validation (provider/cubit)
-          debugPrint('Validation calibration demandée');
-        },
-      ),
     );
   }
 }
-
