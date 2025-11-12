@@ -39,11 +39,12 @@ Downloading packages...
 Got dependencies!
 35 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
+PS C:\Users\roman\Documents\apppklod\permacalendarv2> # régénère les builders
 PS C:\Users\roman\Documents\apppklod\permacalendarv2> flutter pub run build_runner build --delete-conflicting-outputs
 Deprecated. Use `dart run` instead.
-[INFO] Generating build script completed, took 179ms
-[INFO] Reading cached asset graph completed, took 100ms
-[INFO] Checking for updates since last build completed, took 822ms
+[INFO] Generating build script completed, took 183ms
+[INFO] Reading cached asset graph completed, took 188ms
+[INFO] Checking for updates since last build completed, took 873ms
 [SEVERE] riverpod_generator on lib/app_router.dart:
 
 This builder requires Dart inputs without syntax errors.
@@ -77,17 +78,6 @@ And 5 more...
 
 Try fixing the errors and re-running the build.
 
-[SEVERE] freezed on lib/app_router.dart:
-
-This builder requires Dart inputs without syntax errors.
-However, package:permacalendar/app_router.dart (or an existing part) contains the following errors.
-app_router.dart:308:43: Expected to find ','.
-app_router.dart:308:50: Expected to find ','.
-app_router.dart:308:54: Expected an identifier.
-And 6 more...
-
-Try fixing the errors and re-running the build.
-
 [SEVERE] freezed on lib/features/garden_management/presentation/screens/garden_create_screen.dart:
 
 This builder requires Dart inputs without syntax errors.
@@ -96,6 +86,17 @@ garden_create_screen.dart:95:40: Expected to find ','.
 garden_create_screen.dart:95:45: Expected to find ','.
 garden_create_screen.dart:96:21: Expected to find ','.
 And 5 more...
+
+Try fixing the errors and re-running the build.
+
+[SEVERE] freezed on lib/app_router.dart:
+
+This builder requires Dart inputs without syntax errors.
+However, package:permacalendar/app_router.dart (or an existing part) contains the following errors.
+app_router.dart:308:43: Expected to find ','.
+app_router.dart:308:50: Expected to find ','.
+app_router.dart:308:54: Expected an identifier.
+And 6 more...
 
 Try fixing the errors and re-running the build.
 
@@ -110,7 +111,7 @@ And 8 more...
 
 Try fixing the errors and re-running the build.
 
-[WARNING] riverpod_generator on lib/app_router.dart:
+[WARNING] riverpod_generator on lib/features/garden_management/presentation/screens/garden_create_screen.dart:
 Your current `analyzer` version may not fully support your current SDK version.
 
 Analyzer language version: 3.4.0
@@ -137,17 +138,6 @@ And 6 more...
 
 Try fixing the errors and re-running the build.
 
-[SEVERE] json_serializable on lib/features/garden_management/presentation/screens/garden_list_screen.dart:
-
-This builder requires Dart inputs without syntax errors.
-However, package:permacalendar/features/garden_management/presentation/screens/garden_list_screen.dart (or an existing part) contains the following errors.
-garden_list_screen.dart:119:58: Expected to find ','.
-garden_list_screen.dart:119:68: Expected to find ','.
-garden_list_screen.dart:119:72: Expected to find ','.
-And 8 more...
-
-Try fixing the errors and re-running the build.
-
 [SEVERE] json_serializable on lib/features/garden_management/presentation/screens/garden_create_screen.dart:
 
 This builder requires Dart inputs without syntax errors.
@@ -156,6 +146,17 @@ garden_create_screen.dart:95:40: Expected to find ','.
 garden_create_screen.dart:95:45: Expected to find ','.
 garden_create_screen.dart:96:21: Expected to find ','.
 And 5 more...
+
+Try fixing the errors and re-running the build.
+
+[SEVERE] json_serializable on lib/features/garden_management/presentation/screens/garden_list_screen.dart:
+
+This builder requires Dart inputs without syntax errors.
+However, package:permacalendar/features/garden_management/presentation/screens/garden_list_screen.dart (or an existing part) contains the following errors.
+garden_list_screen.dart:119:58: Expected to find ','.
+garden_list_screen.dart:119:68: Expected to find ','.
+garden_list_screen.dart:119:72: Expected to find ','.
+And 8 more...
 
 Try fixing the errors and re-running the build.
 
@@ -192,10 +193,11 @@ And 8 more...
 
 Try fixing the errors and re-running the build.
 
-[INFO] Running build completed, took 16.0s
-[INFO] Caching finalized dependency graph completed, took 105ms
-[SEVERE] Failed after 16.1s
+[INFO] Running build completed, took 11.5s
+[INFO] Caching finalized dependency graph completed, took 130ms
+[SEVERE] Failed after 11.6s
 Failed to update packages.
+PS C:\Users\roman\Documents\apppklod\permacalendarv2> # vérifie l'analyse statique
 PS C:\Users\roman\Documents\apppklod\permacalendarv2> flutter analyze
 Analyzing permacalendarv2...
 
@@ -4112,5 +4114,5 @@ warning - The value of the field '_ref' isn't used -
    info - Don't invoke 'print' in production code - tools\validate_plants_json.dart:262:5 - avoid_print
    info - Don't invoke 'print' in production code - tools\validate_plants_json.dart:263:5 - avoid_print
 
-1677 issues found. (ran in 2.8s)
+1677 issues found. (ran in 1.9s)
 PS C:\Users\roman\Documents\apppklod\permacalendarv2>
