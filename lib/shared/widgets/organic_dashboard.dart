@@ -30,7 +30,6 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
     _Hotspot(id: 'calendar', centerX: 0.18, centerY: 0.50, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.calendar, label: 'Calendar'),
     _Hotspot(id: 'activities', centerX: 0.18, centerY: 0.78, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.activities, label: 'Activities'),
     _Hotspot(id: 'weather', centerX: 0.50, centerY: 0.18, widthFrac: 0.18, heightFrac: 0.18, route: AppRoutes.weather, label: 'Weather'),
-    _Hotspot(id: 'gardens', centerX: 0.65, centerY: 0.28, widthFrac: 0.42, heightFrac: 0.36, route: AppRoutes.gardens, label: 'Gardens'),
     // 5 petits slots jardin (définis comme hotspots calibrables, indépendants et facilement tappables)
     _Hotspot(id: 'garden_1', centerX: 0.60, centerY: 0.52, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 1'),
     _Hotspot(id: 'garden_2', centerX: 0.68, centerY: 0.50, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 2'),
@@ -581,12 +580,5 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
   }
 }
-
-
-
-
-
-
-
 
 
