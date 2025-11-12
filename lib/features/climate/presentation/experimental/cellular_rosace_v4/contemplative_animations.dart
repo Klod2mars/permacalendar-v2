@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 /// V4 Contemplative Animations System
@@ -517,3 +517,4 @@ class ContemplativeAnimationUtils {
     return math.sin(time * 8) * (1.0 - normalizedRadius); // Ripple effect
   }
 }
+

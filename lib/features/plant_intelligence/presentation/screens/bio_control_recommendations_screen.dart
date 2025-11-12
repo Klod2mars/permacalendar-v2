@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/bio_control_recommendation.dart';
 import '../../domain/entities/pest_threat_analysis.dart';
@@ -461,3 +461,4 @@ class _BioControlRecommendationsScreenState
     }
   }
 }
+

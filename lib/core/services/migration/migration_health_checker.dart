@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../data/hive/garden_boxes.dart';
 import '../../repositories/garden_hive_repository.dart';
 import 'migration_models.dart';
@@ -448,3 +448,4 @@ class HealthCheckException implements Exception {
   @override
   String toString() => 'HealthCheckException: $message';
 }
+

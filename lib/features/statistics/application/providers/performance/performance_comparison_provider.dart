@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../domain/models/seasonal_performance.dart';
 import 'performance_raw_data_provider.dart';
 
@@ -148,3 +148,4 @@ final performanceEncouragementMessageProvider =
     return "Performance stable ! C'est déjà un bon signe de constance ! ⚖️";
   }
 });
+

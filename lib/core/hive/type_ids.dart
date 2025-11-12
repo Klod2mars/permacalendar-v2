@@ -1,4 +1,4 @@
-/// Centralized TypeIds for Hive adapters
+﻿/// Centralized TypeIds for Hive adapters
 ///
 /// This file centralizes all TypeIds to avoid conflicts and ensure
 /// proper management of the modern range (25-30) for new adapters.
@@ -74,3 +74,4 @@ const int kTypeIdAppSettings = 60;
 
 /// SoilMetricsDto - Soil temperature and pH storage
 const int kTypeIdSoilMetrics = 28; // Using 28 as it's available in the range
+

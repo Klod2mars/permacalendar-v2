@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../providers/weather_providers.dart';
 import '../providers/hourly_weather_provider.dart';
 
@@ -160,3 +160,4 @@ class HaloColorMaps {
     return blendWeatherWithDayPhase(weatherHue, 0.6);
   }
 }
+

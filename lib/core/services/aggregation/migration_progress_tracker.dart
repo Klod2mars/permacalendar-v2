@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 
 /// Migration Progress Tracker
 ///
@@ -243,3 +243,4 @@ class MigrationReport {
         ),
       };
 }
+

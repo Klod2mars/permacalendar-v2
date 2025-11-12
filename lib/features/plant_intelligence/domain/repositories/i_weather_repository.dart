@@ -1,4 +1,4 @@
-import '../entities/weather_condition.dart';
+﻿import '../entities/weather_condition.dart';
 
 /// Interface spécialisée pour la gestion des conditions météorologiques
 ///
@@ -42,3 +42,4 @@ abstract class IWeatherRepository {
     int limit = 100,
   });
 }
+

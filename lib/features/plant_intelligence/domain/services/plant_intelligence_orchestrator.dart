@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../entities/analysis_result.dart';
 import '../entities/intelligence_report.dart';
 import '../entities/recommendation.dart';
@@ -1569,3 +1569,4 @@ class PlantIntelligenceOrchestratorException implements Exception {
   @override
   String toString() => 'PlantIntelligenceOrchestratorException: $message';
 }
+

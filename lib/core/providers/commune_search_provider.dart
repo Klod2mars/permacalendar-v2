@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
 import '../services/open_meteo_service.dart';
@@ -57,3 +57,4 @@ final selectedCommuneProvider =
     NotifierProvider<SelectedCommuneNotifier, PlaceSuggestion?>(
   SelectedCommuneNotifier.new,
 );
+

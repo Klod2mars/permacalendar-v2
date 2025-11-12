@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'dart:async';
 import 'package:permacalendar/features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/notification_alert.dart';
@@ -434,3 +434,4 @@ class EventObserverStats {
         'rate: ${successRate.toStringAsFixed(1)}%)';
   }
 }
+

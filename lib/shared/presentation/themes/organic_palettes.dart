@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Palette de base abstraite pour les jardins organiques
 abstract class OrganicPalette {
@@ -128,3 +128,4 @@ class OrganicBreathAnimation {
   static const double maxSpreadRadius = 13.0; // Expansion maximale
   static const double spreadAmplitude = 5.0; // Variation: 5px
 }
+

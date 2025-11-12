@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../repositories/garden_hive_repository.dart';
 import '../../../features/plant_catalog/data/repositories/plant_hive_repository.dart';
 import '../../models/unified_garden_context.dart';
@@ -382,3 +382,4 @@ class ModernDataAdapter implements DataAdapter {
     );
   }
 }
+

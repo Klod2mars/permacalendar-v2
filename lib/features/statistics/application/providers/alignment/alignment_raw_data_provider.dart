@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../harvest/application/harvest_records_provider.dart';
 import '../../../../harvest/domain/models/harvest_record.dart';
@@ -318,3 +318,4 @@ String _getMonthAbbreviation(DateTime date) {
   const abbr = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
   return abbr[date.month - 1];
 }
+

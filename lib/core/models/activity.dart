@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'activity.g.dart';
@@ -547,3 +547,4 @@ class Activity extends HiveObject {
   @override
   int get hashCode => id.hashCode;
 }
+

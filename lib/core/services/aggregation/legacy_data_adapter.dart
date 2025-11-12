@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../data/hive/garden_boxes.dart';
 import '../../data/hive/plant_boxes.dart';
 import '../../models/unified_garden_context.dart';
@@ -540,3 +540,4 @@ class LegacyDataAdapter implements DataAdapter {
     );
   }
 }
+

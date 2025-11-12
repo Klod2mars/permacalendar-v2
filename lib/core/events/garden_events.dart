@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'garden_events.freezed.dart';
 
@@ -75,3 +75,4 @@ class GardenEvent with _$GardenEvent {
     Map<String, dynamic>? metadata,
   }) = GardenContextUpdatedEvent;
 }
+

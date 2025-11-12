@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import 'activity_tracker_v3.dart';
@@ -352,3 +352,4 @@ final activityObserverServiceProvider =
   ref.onDispose(() => service.close());
   return service;
 });
+

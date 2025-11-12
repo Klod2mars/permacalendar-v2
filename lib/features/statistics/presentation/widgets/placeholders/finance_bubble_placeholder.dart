@@ -53,4 +53,5 @@ class FinanceBubblePlaceholder extends StatelessWidget {
     );
   }
 }
+
 

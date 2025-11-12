@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'analysis_result.dart';
 import 'recommendation.dart';
 import 'notification_alert.dart';
@@ -114,3 +114,4 @@ extension PlantIntelligenceReportExtension on PlantIntelligenceReport {
   /// Durée de validité restante
   Duration get remainingValidity => expiresAt.difference(DateTime.now());
 }
+

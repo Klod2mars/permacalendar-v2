@@ -706,4 +706,5 @@ class CompactIntelligenceSummary extends StatelessWidget {
     return Colors.grey;
   }
 }
+
 

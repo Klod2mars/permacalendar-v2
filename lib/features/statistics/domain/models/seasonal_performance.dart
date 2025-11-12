@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'seasonal_performance.freezed.dart';
 
@@ -73,3 +73,4 @@ class SeasonalComparison with _$SeasonalComparison {
   /// Détermine si la performance est stable
   bool get isStable => overallScore == 0;
 }
+

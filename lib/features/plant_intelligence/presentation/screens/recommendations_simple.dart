@@ -357,4 +357,5 @@ class RecommendationsSimple extends StatelessWidget {
     );
   }
 }
+
 

@@ -1,4 +1,4 @@
-import '../models/garden.dart' as legacy;
+﻿import '../models/garden.dart' as legacy;
 import '../models/garden_v2.dart' as v2;
 import '../models/garden_hive.dart';
 import '../models/garden_bed_hive.dart';
@@ -391,3 +391,4 @@ class GardenMigrationAdapters {
     };
   }
 }
+

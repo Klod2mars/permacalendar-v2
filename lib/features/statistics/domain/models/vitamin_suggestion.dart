@@ -1,4 +1,4 @@
-import '../../../../core/models/plant.dart';
+﻿import '../../../../core/models/plant.dart';
 
 /// Model pour représenter une suggestion de plante pour rééquilibrer les carences vitaminiques
 class VitaminSuggestion {
@@ -69,3 +69,4 @@ class VitaminSuggestion {
   @override
   int get hashCode => plant.id.hashCode ^ vitaminKey.hashCode;
 }
+

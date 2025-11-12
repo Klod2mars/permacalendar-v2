@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/unified_garden_context.dart';
 import 'data_adapter.dart';
 import 'legacy_data_adapter.dart';
@@ -801,3 +801,4 @@ class GardenAggregationHubException implements Exception {
   @override
   String toString() => 'GardenAggregationHubException: $message';
 }
+

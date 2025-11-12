@@ -1,4 +1,4 @@
-// 🚀 Query Optimization Engine - Smart Query Optimization
+﻿// 🚀 Query Optimization Engine - Smart Query Optimization
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Performance Patterns
 
@@ -465,3 +465,4 @@ class QueryOptimizationEngine {
     _log('QueryOptimizationEngine disposed');
   }
 }
+

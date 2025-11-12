@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:dio/dio.dart';
 
 /// Service d'intégration Open-Meteo (sans clé API)
@@ -236,3 +236,4 @@ class PlaceSuggestion {
     required this.longitude,
   });
 }
+

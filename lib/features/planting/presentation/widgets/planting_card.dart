@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../../../core/models/planting.dart';
 import '../../../../shared/widgets/custom_card.dart';
@@ -478,3 +478,4 @@ class PlantingCard extends StatelessWidget {
     );
   }
 }
+

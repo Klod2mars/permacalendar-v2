@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/unified_garden_context.dart';
 import 'data_adapter.dart';
 
@@ -220,3 +220,4 @@ enum ResolutionStrategy {
   manual, // Résolution manuelle requise
   automatic, // Résolution automatique selon règles
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/planting.dart';
@@ -1491,3 +1491,4 @@ class _InfoItem {
 
   const _InfoItem(this.label, this.value, this.icon);
 }
+

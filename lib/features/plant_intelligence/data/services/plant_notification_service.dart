@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
@@ -993,3 +993,4 @@ class PlantNotificationService {
     _isInitialized = false;
   }
 }
+

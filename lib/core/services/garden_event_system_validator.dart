@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:permacalendar/core/services/garden_event_observer_service.dart';
 import 'package:permacalendar/core/services/garden_data_aggregation_service.dart';
 import 'package:permacalendar/core/data/hive/garden_boxes.dart';
@@ -308,3 +308,4 @@ enum ValidationSeverity {
   error, // ❌ Erreur
   critical, // 🔴 Erreur critique
 }
+

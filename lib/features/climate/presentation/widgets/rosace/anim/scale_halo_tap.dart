@@ -100,4 +100,5 @@ class _ScaleHaloTapState extends State<ScaleHaloTap>
     );
   }
 }
+
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../enums/pillar_type.dart';
 import 'statistics_pillar_card.dart';
 
@@ -37,3 +37,4 @@ class StatisticsPillarsList extends StatelessWidget {
     );
   }
 }
+

@@ -164,4 +164,5 @@ class InsectParticlesPainter extends CustomPainter {
         oldDelegate.bubbleSize != bubbleSize;
   }
 }
+
 

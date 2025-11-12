@@ -1,4 +1,4 @@
-/// Weather alert types
+﻿/// Weather alert types
 enum WeatherAlertType {
   frost, // ❄️ Gel
   heatwave, // 🌡️ Canicule
@@ -86,4 +86,5 @@ class WeatherAlert {
         timestamp.hashCode;
   }
 }
+
 

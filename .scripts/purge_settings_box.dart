@@ -1,4 +1,4 @@
-// Script pour purger les boxes Hive corrompus
+﻿// Script pour purger les boxes Hive corrompus
 // Utilisez ce script depuis l'app Flutter ou exécutez-le manuellement
 
 import 'package:hive_flutter/hive_flutter.dart';
@@ -92,3 +92,4 @@ Future<void> main() async {
     exit(1);
   }
 }
+

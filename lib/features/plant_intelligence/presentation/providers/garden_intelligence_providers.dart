@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:permacalendar/core/providers/active_garden_provider.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_intelligence_memory.dart';
@@ -97,3 +97,4 @@ class GardenIntelligenceNotifier extends Notifier<GardenIntelligenceState> {
 final activeGardenIntelligenceProvider =
     NotifierProvider<GardenIntelligenceNotifier, GardenIntelligenceState>(
         GardenIntelligenceNotifier.new);
+

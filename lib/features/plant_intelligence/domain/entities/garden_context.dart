@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'garden_context.freezed.dart';
 part 'garden_context.g.dart';
@@ -492,3 +492,4 @@ extension SoilInfoExtension on SoilInfo {
     }
   }
 }
+

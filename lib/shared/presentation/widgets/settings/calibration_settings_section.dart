@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/models/calibration_state.dart';
@@ -197,3 +197,4 @@ class CalibrationSettingsSection extends ConsumerWidget {
     }
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recommendation.freezed.dart';
 part 'recommendation.g.dart';
@@ -322,3 +322,4 @@ extension RecommendationExtension on Recommendation {
     );
   }
 }
+

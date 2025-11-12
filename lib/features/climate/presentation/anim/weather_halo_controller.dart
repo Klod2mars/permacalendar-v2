@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/hourly_weather_provider.dart';
@@ -262,3 +262,4 @@ class HaloColorTransition {
     return (hueDiff * 0.5 + lightnessDiff * 0.3 + saturationDiff * 0.2);
   }
 }
+

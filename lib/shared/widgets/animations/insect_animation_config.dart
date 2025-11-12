@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Configuration des paramètres pour l'animation "éveil insecte"
 /// Mission A39-2 : Prototype animation insecte avec 12 particules en spirale
@@ -189,3 +189,4 @@ extension InsectAnimationPhaseExtension on InsectAnimationPhase {
     return (globalProgress - startProgress) / (endProgress - startProgress);
   }
 }
+

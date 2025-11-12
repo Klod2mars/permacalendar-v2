@@ -118,4 +118,5 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
     );
   }
 }
+
 

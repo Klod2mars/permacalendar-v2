@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/garden.dart';
 import '../../models/garden_freezed.dart';
 import '../../data/hive/garden_boxes.dart';
@@ -432,3 +432,4 @@ class ReadSwitchException implements Exception {
   @override
   String toString() => 'ReadSwitchException: $message';
 }
+

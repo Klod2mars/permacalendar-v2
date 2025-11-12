@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'bio_control_recommendation.freezed.dart';
@@ -156,3 +156,4 @@ class BioControlRecommendationHive extends HiveObject {
     );
   }
 }
+

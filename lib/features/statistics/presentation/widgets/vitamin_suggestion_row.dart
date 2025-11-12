@@ -160,4 +160,5 @@ class VitaminSuggestionRow extends StatelessWidget {
     }
   }
 }
+
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/notification_alert.dart';
 import '../providers/notification_providers.dart';
@@ -384,3 +384,4 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen>
     });
   }
 }
+

@@ -1,4 +1,4 @@
-/// Constantes de l'application PermaCalendar 2.0
+﻿/// Constantes de l'application PermaCalendar 2.0
 class AppConstants {
   // Informations de l'application
   static const String appName = 'PermaCalendar 2.0';
@@ -347,3 +347,4 @@ enum ExportFormat {
     }
   }
 }
+

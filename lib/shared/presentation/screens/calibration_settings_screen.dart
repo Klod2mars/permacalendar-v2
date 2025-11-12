@@ -1,4 +1,4 @@
-// lib/shared/presentation/screens/calibration_settings_screen.dart
+﻿// lib/shared/presentation/screens/calibration_settings_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -231,3 +231,4 @@ class _CalibrationSettingsScreenState
     );
   }
 }
+

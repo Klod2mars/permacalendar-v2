@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 /// Cellular Geometry Engine for Organic Rosace V3
@@ -399,3 +399,4 @@ enum CellType {
   forecast, // Weather forecast
   alerts, // Climate alerts
 }
+

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../domain/repositories/i_pest_repository.dart';
 import '../../domain/repositories/i_beneficial_insect_repository.dart';
 import '../../domain/repositories/i_pest_observation_repository.dart';
@@ -401,3 +401,4 @@ class BiologicalControlRepositoryImpl
     }
   }
 }
+

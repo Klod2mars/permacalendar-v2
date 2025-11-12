@@ -1,4 +1,4 @@
-import '../../models/unified_garden_context.dart';
+﻿import '../../models/unified_garden_context.dart';
 
 /// Interface pour les adaptateurs de données
 ///
@@ -52,3 +52,4 @@ class DataAdapterException implements Exception {
   @override
   String toString() => 'DataAdapterException[$adapterName]: $message';
 }
+

@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'garden_freezed.dart';
 
 part 'garden_state.freezed.dart';
@@ -54,3 +54,4 @@ class GardenState with _$GardenState {
     }
   }
 }
+

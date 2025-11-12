@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+﻿import 'package:hive_flutter/hive_flutter.dart';
 
 /// Service de base pour la gestion des boxes Hive
 class HiveService {
@@ -144,3 +144,4 @@ class HiveService {
     }
   }
 }
+

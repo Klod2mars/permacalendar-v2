@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -377,3 +377,4 @@ class DataArchivalException implements Exception {
   @override
   String toString() => 'DataArchivalException: $message';
 }
+

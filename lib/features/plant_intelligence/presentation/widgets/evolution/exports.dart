@@ -1,4 +1,4 @@
-/// 📊 CURSOR PROMPT A8 - Plant Evolution Widgets Exports
+﻿/// 📊 CURSOR PROMPT A8 - Plant Evolution Widgets Exports
 ///
 /// Fichier d'export centralisé pour faciliter l'importation des widgets d'évolution.
 ///
@@ -21,3 +21,4 @@ export '../../providers/plant_evolution_providers.dart';
 
 // Screens (via path relatif)
 export '../../screens/plant_evolution_history_screen.dart';
+

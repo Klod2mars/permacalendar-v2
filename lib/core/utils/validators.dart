@@ -1,4 +1,4 @@
-import 'package:permacalendar/core/services/environment_service.dart';
+﻿import 'package:permacalendar/core/services/environment_service.dart';
 
 /// Utilitaires de validation pour l'application
 class Validators {
@@ -292,3 +292,4 @@ class Validators {
     return null;
   }
 }
+

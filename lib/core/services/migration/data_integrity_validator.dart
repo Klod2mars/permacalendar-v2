@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/garden.dart';
 import '../../models/garden_freezed.dart';
 import '../../data/hive/garden_boxes.dart';
@@ -590,3 +590,4 @@ class DataIntegrityException implements Exception {
   @override
   String toString() => 'DataIntegrityException: $message';
 }
+

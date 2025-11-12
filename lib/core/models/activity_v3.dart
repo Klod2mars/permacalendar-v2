@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'activity_v3.freezed.dart';
@@ -49,3 +49,4 @@ enum ActivityPriority {
   const ActivityPriority(this.value);
   final int value;
 }
+

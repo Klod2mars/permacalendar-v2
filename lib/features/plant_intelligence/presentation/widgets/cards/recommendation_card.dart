@@ -525,4 +525,5 @@ class _RecommendationsListState extends State<RecommendationsList>
     );
   }
 }
+
 

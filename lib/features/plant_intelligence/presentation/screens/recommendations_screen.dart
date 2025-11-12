@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../widgets/cards/recommendation_card.dart';
@@ -381,3 +381,4 @@ class _RecommendationsScreenState extends ConsumerState<RecommendationsScreen> {
     );
   }
 }
+

@@ -86,4 +86,5 @@ class PerformanceBarPlaceholder extends StatelessWidget {
     );
   }
 }
+
 

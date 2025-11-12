@@ -1,4 +1,4 @@
-import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
+﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
@@ -199,3 +199,4 @@ class EvaluatePlantingTimingUsecase {
     return abbr[month - 1];
   }
 }
+

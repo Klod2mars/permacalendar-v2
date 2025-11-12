@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'alignment_raw_data_provider.dart';
 
 /// Insight d'alignement au vivant
@@ -132,3 +132,4 @@ final alignmentEncouragementMessageProvider =
       return 'Commence ton premier semis pour découvrir ton alignement au vivant !';
   }
 });
+

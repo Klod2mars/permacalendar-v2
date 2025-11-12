@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import '../../domain/entities/notification_alert.dart';
 import 'plant_notification_service.dart';
 import 'flutter_notification_service.dart';
@@ -156,3 +156,4 @@ class NotificationStatusAdapter extends TypeAdapter<NotificationStatus> {
     writer.writeByte(obj.index);
   }
 }
+

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// Legacy Cleanup Service - Service de Nettoyage du Système Legacy
@@ -358,3 +358,4 @@ class LegacyCleanupException implements Exception {
   @override
   String toString() => 'LegacyCleanupException: $message';
 }
+

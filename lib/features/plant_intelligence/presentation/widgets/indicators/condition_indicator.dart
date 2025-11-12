@@ -424,4 +424,5 @@ class ConditionData {
     this.color,
   });
 }
+
 

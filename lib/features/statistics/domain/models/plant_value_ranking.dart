@@ -1,4 +1,4 @@
-class PlantValueRanking {
+﻿class PlantValueRanking {
   final String plantName;
   final double totalValue;
 
@@ -23,3 +23,4 @@ class PlantValueRanking {
   @override
   int get hashCode => plantName.hashCode ^ totalValue.hashCode;
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/evolution/plant_evolution_timeline.dart';
 import '../providers/plant_evolution_providers.dart';
@@ -221,3 +221,4 @@ class _StatItem extends StatelessWidget {
     );
   }
 }
+

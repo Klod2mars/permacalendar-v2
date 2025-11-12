@@ -104,4 +104,5 @@ class ClimateAlertsScreen extends ConsumerWidget {
     );
   }
 }
+
 

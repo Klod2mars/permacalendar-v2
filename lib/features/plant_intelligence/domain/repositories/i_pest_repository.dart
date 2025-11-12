@@ -1,4 +1,4 @@
-import '../entities/pest.dart';
+﻿import '../entities/pest.dart';
 
 /// Pest Repository Interface
 ///
@@ -22,3 +22,4 @@ abstract class IPestRepository {
   /// Get pests by severity level
   Future<List<Pest>> getPestsBySeverity(PestSeverity severity);
 }
+

@@ -1,4 +1,4 @@
-/// Repository abstraction for soil metrics data access
+﻿/// Repository abstraction for soil metrics data access
 ///
 /// Defines the contract for soil temperature and pH data operations.
 /// Scope-based operations allow for garden-specific or bed-specific metrics.
@@ -83,3 +83,4 @@ abstract class SoilMetricsRepository {
   /// Clear all metrics (for testing/reset purposes)
   Future<void> clearAllMetrics();
 }
+

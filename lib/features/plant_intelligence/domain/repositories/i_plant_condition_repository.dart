@@ -1,4 +1,4 @@
-import '../entities/plant_condition.dart';
+﻿import '../entities/plant_condition.dart';
 
 /// Interface spécialisée pour la gestion des conditions de plantes
 ///
@@ -60,3 +60,4 @@ abstract class IPlantConditionRepository {
   /// Retourne true si la suppression a réussi
   Future<bool> deletePlantCondition(String conditionId);
 }
+

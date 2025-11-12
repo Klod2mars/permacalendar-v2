@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'recommendation.dart';
 
 part 'recommendation_hive.g.dart';
@@ -114,3 +114,4 @@ class RecommendationHive extends HiveObject {
     );
   }
 }
+

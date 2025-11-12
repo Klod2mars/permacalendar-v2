@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../providers/hourly_weather_provider.dart';
 
 /// Pure helper functions for day phase calculations and blending
@@ -282,3 +282,4 @@ class DayPhaseBlend {
     }
   }
 }
+

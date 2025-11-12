@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 
 // ✅ Patch v1.2 — séparation du box météo
 // Utilise un box distinct pour éviter tout conflit avec AppSettings.
@@ -32,3 +32,4 @@ class CommuneStorage {
     await box.close();
   }
 }
+

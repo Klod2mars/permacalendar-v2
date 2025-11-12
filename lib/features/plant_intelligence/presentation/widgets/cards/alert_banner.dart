@@ -526,4 +526,5 @@ class AlertData {
     this.timestamp,
   });
 }
+
 

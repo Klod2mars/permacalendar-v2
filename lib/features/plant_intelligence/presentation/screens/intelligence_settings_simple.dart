@@ -726,4 +726,5 @@ class _IntelligenceSettingsSimpleState
     }
   }
 }
+
 

@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/soil_metrics_repository.dart';
 import '../../data/repositories/soil_metrics_repository_impl.dart';
 import '../../data/datasources/soil_metrics_local_ds.dart';
@@ -18,3 +18,4 @@ final soilMetricsRepositoryProvider = Provider<SoilMetricsRepository>((ref) {
   // Create and return the repository implementation
   return SoilMetricsRepositoryImpl(localDataSource: localDataSource);
 });
+

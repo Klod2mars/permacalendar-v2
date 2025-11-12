@@ -1,4 +1,4 @@
-import '../entities/recommendation.dart';
+﻿import '../entities/recommendation.dart';
 
 /// Interface spécialisée pour la gestion des recommandations
 ///
@@ -82,3 +82,4 @@ abstract class IRecommendationRepository {
   Future<List<Recommendation>> filterRecommendations(
       Map<String, dynamic> criteria);
 }
+

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import '../../domain/entities/plant_condition.dart';
 import '../../domain/entities/recommendation.dart';
@@ -1443,3 +1443,4 @@ class PlantIntelligenceLocalDataSourceImpl
     }
   }
 }
+

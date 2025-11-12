@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../domain/entities/plant_evolution_report.dart';
@@ -641,3 +641,4 @@ class _ConditionChip extends StatelessWidget {
         label[0].toUpperCase() + label.substring(1);
   }
 }
+

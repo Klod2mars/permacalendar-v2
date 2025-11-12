@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../data/hive/garden_boxes.dart';
 import '../models/planting.dart';
 import '../../features/plant_intelligence/domain/entities/garden_context.dart';
@@ -668,3 +668,4 @@ class GardenDataAggregationService {
     );
   }
 }
+

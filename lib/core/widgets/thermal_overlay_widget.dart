@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/thermal_theme_provider.dart';
 import '../../shared/presentation/widgets/thermal_transition_widget.dart';
@@ -193,3 +193,4 @@ class ThermalDebugWidget extends ConsumerWidget {
     );
   }
 }
+

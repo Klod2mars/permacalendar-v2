@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 
 import '../../../core/models/planting.dart';
 import '../../../core/data/hive/garden_boxes.dart';
@@ -659,3 +659,4 @@ final plantingByIdProvider =
     return const AsyncValue.data(null);
   }
 });
+

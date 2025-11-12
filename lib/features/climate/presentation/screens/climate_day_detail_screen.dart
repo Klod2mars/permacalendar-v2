@@ -104,4 +104,5 @@ class ClimateDayDetailScreen extends ConsumerWidget {
     );
   }
 }
+
 

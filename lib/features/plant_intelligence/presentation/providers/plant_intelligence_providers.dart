@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../domain/repositories/plant_intelligence_repository.dart';
 import '../../domain/entities/intelligence_report.dart';
 import '../../domain/entities/analysis_result.dart';
@@ -774,3 +774,4 @@ class AppSettingsNotifier extends Notifier<Map<String, dynamic>> {
     };
   }
 }
+

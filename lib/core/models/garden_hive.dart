@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 import 'garden_bed_hive.dart';
 import 'garden_freezed.dart';
@@ -182,3 +182,4 @@ class GardenHive extends HiveObject {
   @override
   int get hashCode => id.hashCode;
 }
+

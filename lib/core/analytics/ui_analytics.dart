@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 
 /// Service d'analytics ultra-léger pour tracker l'usage des nouvelles fonctionnalités UI
 ///
@@ -234,3 +234,4 @@ extension UIAnalyticsContext on Object {
     UIAnalytics.logEvent('$className.$eventName', parameters);
   }
 }
+

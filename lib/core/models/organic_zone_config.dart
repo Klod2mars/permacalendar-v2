@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Configuration d'une zone calibrable unifiée (Organic)
 class OrganicZoneConfig {
@@ -32,3 +32,4 @@ class OrganicZoneConfig {
     );
   }
 }
+

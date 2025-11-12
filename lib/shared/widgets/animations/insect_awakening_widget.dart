@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'insect_animation_config.dart';
@@ -284,3 +284,4 @@ extension InsectAwakeningWidgetExtension on InsectAwakeningWidget {
     );
   }
 }
+

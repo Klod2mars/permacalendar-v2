@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../core/models/garden_bed.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/services/activity_observer_service.dart';
@@ -375,3 +375,4 @@ final gardenBedByIdProvider = Provider.family<GardenBed?, String>((ref, bedId) {
     return null;
   }
 });
+

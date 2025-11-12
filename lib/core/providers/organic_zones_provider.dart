@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import '../models/organic_zone_config.dart';
@@ -120,3 +120,4 @@ final organicZonesProvider =
     NotifierProvider<OrganicZonesNotifier, Map<String, OrganicZoneConfig>>(
   OrganicZonesNotifier.new,
 );
+

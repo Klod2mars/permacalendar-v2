@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/notification_alert.dart';
 import '../../data/services/plant_notification_service.dart';
 
@@ -406,3 +406,4 @@ final cleanupOldNotificationsProvider =
     ref.invalidate(notificationListNotifierProvider);
   };
 });
+

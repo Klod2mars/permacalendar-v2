@@ -1,4 +1,4 @@
-/// Use case for computing soil temperature for the next day
+﻿/// Use case for computing soil temperature for the next day
 ///
 /// Implements the thermal diffusion model:
 /// Tsoil(n+1) = Tsoil(n) + alpha * (Tair(n) - Tsoil(n))
@@ -129,3 +129,4 @@ class ComputeSoilTempNextDayUsecase {
     return maxDays; // Return max days if equilibrium not reached
   }
 }
+

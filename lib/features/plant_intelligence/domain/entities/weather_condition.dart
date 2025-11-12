@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'weather_condition.freezed.dart';
 part 'weather_condition.g.dart';
@@ -216,3 +216,4 @@ extension WeatherImpactExtension on WeatherImpact {
     }
   }
 }
+

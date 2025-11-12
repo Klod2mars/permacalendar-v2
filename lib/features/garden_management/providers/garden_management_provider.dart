@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../core/repositories/repository_providers.dart';
 
@@ -21,3 +21,4 @@ final activeGardensProvider = FutureProvider<List<GardenFreezed>>((ref) async {
   final gardens = await ref.watch(gardensListProvider.future);
   return gardens.where((garden) => garden.isActive).toList();
 });
+

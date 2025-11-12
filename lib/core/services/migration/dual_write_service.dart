@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/garden.dart';
 import '../../models/garden_freezed.dart';
 import '../../data/hive/garden_boxes.dart';
@@ -534,3 +534,4 @@ class DualWriteException implements Exception {
   @override
   String toString() => 'DualWriteException: $message';
 }
+

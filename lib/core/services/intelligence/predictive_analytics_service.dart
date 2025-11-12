@@ -1,4 +1,4 @@
-// 🧠 Predictive Analytics Service - AI-Powered Predictions
+﻿// 🧠 Predictive Analytics Service - AI-Powered Predictions
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Machine Learning Patterns
 
@@ -579,3 +579,4 @@ class PredictiveAnalyticsService {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'plant_condition.dart';
+﻿import 'plant_condition.dart';
 import 'recommendation.dart';
 import 'garden_context.dart';
 import 'weather_condition.dart';
@@ -79,3 +79,4 @@ class IntelligenceState {
 
 /// Sentinel value pour détecter si un paramètre a été passé à copyWith
 const _undefined = Object();
+

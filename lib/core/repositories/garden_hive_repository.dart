@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+﻿import 'package:hive_flutter/hive_flutter.dart';
 import '../models/garden_hive.dart';
 import '../models/garden_bed_hive.dart';
 import '../models/garden_freezed.dart';
@@ -212,3 +212,4 @@ class GardenHiveException implements Exception {
   @override
   String toString() => 'GardenHiveException: $message';
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'insect_animation_config.dart';
 
 /// Painter pour le halo persistant des jardins actifs
@@ -76,3 +76,4 @@ class InsectPersistentHaloPainter extends CustomPainter {
         oldDelegate.bubbleSize != bubbleSize;
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:permacalendar/features/plant_intelligence/domain/entities/condition_models.dart';
+﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/condition_models.dart';
 
 /// Modèle composite helper pour les données météo
 ///
@@ -182,3 +182,4 @@ class CompositePlantCondition {
     );
   }
 }
+

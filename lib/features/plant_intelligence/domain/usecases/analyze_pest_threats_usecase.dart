@@ -1,4 +1,4 @@
-import '../entities/pest_observation.dart';
+﻿import '../entities/pest_observation.dart';
 import '../entities/pest_threat_analysis.dart';
 import '../entities/pest.dart';
 import '../repositories/i_pest_observation_repository.dart';
@@ -197,3 +197,4 @@ class AnalyzePestThreatsUsecase {
     return '${threats.length} menace(s) détectée(s). Surveillance régulière conseillée. 👀';
   }
 }
+

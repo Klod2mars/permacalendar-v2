@@ -1,4 +1,4 @@
-import '../models/garden.dart';
+﻿import '../models/garden.dart';
 import '../services/environment_service.dart';
 import '../utils/constants.dart';
 
@@ -227,3 +227,4 @@ class GardenValidationStats {
     return 'GardenValidationStats(active: $activeGardens/$maxAllowed, canAdd: $canAddMore, canRemove: $canRemove)';
   }
 }
+

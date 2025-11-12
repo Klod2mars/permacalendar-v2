@@ -22,4 +22,5 @@ class ActiveGardenIdNotifier extends Notifier<String?> {
 }
 
 /// Provider exposant l'ID du jardin actif (String?).
-final activeGardenIdProvider = NotifierProvider<ActiveGardenIdNotifier, String?>(ActiveGardenIdNotifier.new);
+final activeGardenIdProvider = NotifierProvider<ActiveGardenIdNotifier, String?>(ActiveGardenIdNotifier.new);
+

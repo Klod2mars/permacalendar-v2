@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/notification_alert.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
@@ -110,3 +110,4 @@ final contextualRecommendationsProvider =
 final realTimeAnalysisProvider =
     NotifierProvider<RealTimeAnalysisNotifier, RealTimeAnalysisState>(
         () => RealTimeAnalysisNotifier());
+

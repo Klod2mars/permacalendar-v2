@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../entities/intelligence_report.dart';
 import '../entities/recommendation.dart';
@@ -397,3 +397,4 @@ extension IntelligenceEvolutionSummaryExtension
     }
   }
 }
+

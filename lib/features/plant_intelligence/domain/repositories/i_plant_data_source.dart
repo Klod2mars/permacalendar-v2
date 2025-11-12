@@ -1,4 +1,4 @@
-import '../../../plant_catalog/domain/entities/plant_entity.dart';
+﻿import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
 /// Plant Data Source Interface
 ///
@@ -14,3 +14,4 @@ abstract class IPlantDataSource {
   /// Search plants by name
   Future<List<PlantFreezed>> searchPlants(String query);
 }
+

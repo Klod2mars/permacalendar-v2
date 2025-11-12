@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 
 /// Feature flags pour activer/désactiver les nouvelles fonctionnalités UI
 ///
@@ -96,3 +96,4 @@ final hasNewFeaturesProvider = Provider<bool>((ref) {
   final flags = ref.watch(featureFlagsProvider);
   return flags.homeV2 || flags.calendarView || flags.quickHarvest;
 });
+

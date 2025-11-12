@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/plant_evolution_report.dart';
 import '../providers/plant_evolution_providers.dart';
@@ -348,3 +348,4 @@ class _PlantHealthDegradationBannerState
     );
   }
 }
+

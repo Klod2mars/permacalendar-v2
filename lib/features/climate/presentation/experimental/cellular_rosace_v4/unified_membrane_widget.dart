@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'unified_membrane_geometry.dart';
 import 'unified_membrane_painter.dart';
@@ -449,3 +449,4 @@ class UnifiedMembraneScreen extends StatelessWidget {
     );
   }
 }
+

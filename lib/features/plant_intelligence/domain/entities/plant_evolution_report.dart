@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plant_evolution_report.freezed.dart';
 part 'plant_evolution_report.g.dart';
@@ -113,3 +113,4 @@ extension PlantEvolutionReportExtension on PlantEvolutionReport {
     return (degradedConditions.length / totalConditions) * 100;
   }
 }
+

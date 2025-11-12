@@ -225,4 +225,5 @@ class _ConditionRadarChartSimpleState extends State<ConditionRadarChartSimple>
     }
   }
 }
+
 

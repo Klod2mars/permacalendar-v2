@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/providers/providers.dart' as core_intel;
 
 // ==================== PROVIDERS D'AFFICHAGE ====================
@@ -225,3 +225,4 @@ final contextualRecommendationsProvider = core_intel.contextualRecommendationsPr
 
 @Deprecated('Use core_intel.realTimeAnalysisProvider instead')
 final realTimeAnalysisProvider = core_intel.realTimeAnalysisProvider;
+

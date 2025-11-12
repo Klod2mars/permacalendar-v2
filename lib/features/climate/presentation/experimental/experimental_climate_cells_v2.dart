@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Experimental Climate Cells V2
 ///
@@ -516,3 +516,4 @@ class ExperimentalClimateScreenV2 extends StatelessWidget {
     );
   }
 }
+

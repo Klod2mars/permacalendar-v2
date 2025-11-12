@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
 import '../../../../core/services/plant_catalog_service.dart';
@@ -138,3 +138,4 @@ final vitaminDistributionPercentagesProvider =
     'vitaminK': (vitaminTotals['vitaminK']! / total) * 100,
   };
 });
+

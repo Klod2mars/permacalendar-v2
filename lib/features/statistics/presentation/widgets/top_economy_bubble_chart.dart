@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../domain/models/plant_value_ranking.dart';
 
 /// Widget pour afficher le Top 3 des plantes les plus rentables sous forme de bulles colorées
@@ -67,3 +67,4 @@ class TopEconomyBubbleChart extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../domain/entities/notification_alert.dart';
 
@@ -431,3 +431,4 @@ class FlutterNotificationService {
     print('[FlutterNotificationService] ERROR: $message - $error');
   }
 }
+

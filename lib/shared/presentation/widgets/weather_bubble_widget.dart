@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 import 'package:intl/intl.dart';
@@ -107,3 +107,4 @@ class WeatherBubbleWidget extends ConsumerWidget {
     );
   }
 }
+

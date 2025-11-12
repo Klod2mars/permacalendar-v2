@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Bouton principal personnalisé
 class CustomButton extends StatelessWidget {
@@ -464,3 +464,4 @@ class DeleteButton extends StatelessWidget {
     }
   }
 }
+

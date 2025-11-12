@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'intelligence_report.dart';
 import 'pest_threat_analysis.dart';
 import 'bio_control_recommendation.dart';
@@ -32,3 +32,4 @@ class ComprehensiveGardenAnalysis with _$ComprehensiveGardenAnalysis {
   factory ComprehensiveGardenAnalysis.fromJson(Map<String, dynamic> json) =>
       _$ComprehensiveGardenAnalysisFromJson(json);
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider for narrative mode setting
 /// Controls whether the rosace halo evolves with hourly weather or remains static
@@ -29,3 +29,4 @@ class NarrativeModeNotifier extends Notifier<bool> {
     // TODO: Persist to user preferences
   }
 }
+

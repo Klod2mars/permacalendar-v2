@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'garden_intelligence_context.freezed.dart';
 part 'garden_intelligence_context.g.dart';
@@ -21,3 +21,4 @@ class GardenIntelligenceContext with _$GardenIntelligenceContext {
   factory GardenIntelligenceContext.fromJson(Map<String, dynamic> json) =>
       _$GardenIntelligenceContextFromJson(json);
 }
+

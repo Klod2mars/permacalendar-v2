@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import '../../features/plant_intelligence/domain/entities/plant_condition.dart';
@@ -346,3 +346,4 @@ final intelligenceAutoNotifierProvider =
 
   return notifier;
 });
+

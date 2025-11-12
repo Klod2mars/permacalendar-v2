@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 class AppTheme {
   // Couleurs principales
@@ -128,3 +128,4 @@ class AppTheme {
     );
   }
 }
+

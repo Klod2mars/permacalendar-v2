@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../core/services/germination_service.dart';
 import '../../../core/services/activity_observer_service.dart';
 import '../../../core/models/germination_event.dart';
@@ -199,3 +199,4 @@ final recentGerminationEventsProvider = Provider<List<GerminationEvent>>((ref) {
       .toList()
     ..sort((a, b) => b.confirmedDate.compareTo(a.confirmedDate));
 });
+

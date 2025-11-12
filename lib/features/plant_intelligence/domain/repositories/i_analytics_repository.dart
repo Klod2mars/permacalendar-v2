@@ -1,4 +1,4 @@
-import '../entities/intelligence_report.dart';
+﻿import '../entities/intelligence_report.dart';
 import '../entities/plant_evolution_report.dart';
 
 /// Interface spécialisée pour l'analytics et les statistiques
@@ -247,3 +247,4 @@ abstract class IAnalyticsRepository {
   /// (programmation défensive : ne jamais crasher, skip les rapports corrompus)
   Future<List<PlantEvolutionReport>> getEvolutionReports(String plantId);
 }
+

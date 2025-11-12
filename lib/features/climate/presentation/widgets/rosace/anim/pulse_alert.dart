@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Pulse Alert Animation
 ///
@@ -82,3 +82,4 @@ class _PulseAlertState extends State<PulseAlert>
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'cellular_rosace_widget.dart';
 
 /// Demo screen for Cellular Rosace V3
@@ -286,3 +286,4 @@ class DemoConfiguration {
     this.customColors,
   });
 }
+

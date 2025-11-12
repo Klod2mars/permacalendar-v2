@@ -1,4 +1,4 @@
-import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
+﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
@@ -394,3 +394,4 @@ class GenerateRecommendationsUsecase {
     }
   }
 }
+

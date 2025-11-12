@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'pest.dart';
 
@@ -110,3 +110,4 @@ class PestObservationHive extends HiveObject {
     );
   }
 }
+

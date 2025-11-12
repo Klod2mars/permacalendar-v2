@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../domain/models/vitamin_suggestion.dart';
 import 'vitamin_distribution_provider.dart';
 import '../../../../core/services/plant_catalog_service.dart';
@@ -163,3 +163,4 @@ double _getVitaminValue(Plant plant, String vitamin) {
       return 0.0;
   }
 }
+

@@ -1,4 +1,4 @@
-import '../entities/garden_context.dart';
+﻿import '../entities/garden_context.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
 /// Interface spécialisée pour la gestion du contexte jardin
@@ -53,3 +53,4 @@ abstract class IGardenContextRepository {
   /// Retourne la liste des plantes correspondantes
   Future<List<PlantFreezed>> searchPlants(Map<String, dynamic> criteria);
 }
+

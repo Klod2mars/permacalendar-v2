@@ -1,4 +1,4 @@
-import '../entities/pest_observation.dart';
+﻿import '../entities/pest_observation.dart';
 
 /// Pest Observation Repository Interface
 ///
@@ -35,3 +35,4 @@ abstract class IPestObservationRepository {
   /// Delete an observation (USER ACTION ONLY)
   Future<void> deleteObservation(String observationId);
 }
+

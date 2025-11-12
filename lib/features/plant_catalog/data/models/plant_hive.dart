@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 
 part 'plant_hive.g.dart';
 
@@ -276,3 +276,4 @@ class PlantHive extends HiveObject {
     return 'PlantHive(id: $id, commonName: $commonName, scientificName: $scientificName, family: $family)';
   }
 }
+

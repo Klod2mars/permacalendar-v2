@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/garden/providers/garden_provider.dart';
 import '../providers/intelligence_state_providers.dart';
@@ -387,3 +387,4 @@ class GardenSelectorBottomSheet extends ConsumerWidget {
     );
   }
 }
+

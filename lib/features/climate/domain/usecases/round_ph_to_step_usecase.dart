@@ -1,4 +1,4 @@
-/// Use case for rounding pH values to 0.5 step increments
+﻿/// Use case for rounding pH values to 0.5 step increments
 ///
 /// pH values are rounded to the nearest 0.5 step within the valid range [0.0, 14.0].
 /// This provides a practical granularity for soil pH measurements.
@@ -123,3 +123,4 @@ class RoundPhToStepUsecase {
     return minDistance;
   }
 }
+

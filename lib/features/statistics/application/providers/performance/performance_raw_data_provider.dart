@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../harvest/application/harvest_records_provider.dart';
 import '../../../../../core/models/planting.dart';
@@ -163,3 +163,4 @@ final seasonalPerformanceRawDataProvider =
 
   return performanceByYear;
 });
+

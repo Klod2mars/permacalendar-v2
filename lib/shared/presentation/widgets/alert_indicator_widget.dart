@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 /// Widget indicateur d'alerte météo avec animation pulse
@@ -249,3 +249,4 @@ class AlertIndicatorWithText extends StatelessWidget {
     }
   }
 }
+

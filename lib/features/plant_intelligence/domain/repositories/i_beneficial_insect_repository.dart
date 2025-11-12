@@ -1,4 +1,4 @@
-import '../entities/beneficial_insect.dart';
+﻿import '../entities/beneficial_insect.dart';
 
 /// Beneficial Insect Repository Interface
 ///
@@ -22,3 +22,4 @@ abstract class IBeneficialInsectRepository {
   /// Search beneficial insects by name
   Future<List<BeneficialInsect>> searchInsects(String query);
 }
+

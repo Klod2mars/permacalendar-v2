@@ -1,4 +1,4 @@
-// ✅ Patch v1.2 — purge du box Hive corrompu avant relance
+﻿// ✅ Patch v1.2 — purge du box Hive corrompu avant relance
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -22,3 +22,4 @@ Future<void> main() async {
     exit(1);
   }
 }
+

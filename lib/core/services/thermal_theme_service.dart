@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../theme/thermal_color_schemes.dart';
 import '../../features/climate/domain/models/weather_view_data.dart';
@@ -230,3 +230,4 @@ enum DebugThermalMode {
   heatwave, // Force palette canicule
   moderate, // Force palette tempérée
 }
+

@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/plant.dart';
 
@@ -309,3 +309,4 @@ class PlantCatalogException implements Exception {
   @override
   String toString() => 'PlantCatalogException: $message';
 }
+

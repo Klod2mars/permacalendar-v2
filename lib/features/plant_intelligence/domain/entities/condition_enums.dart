@@ -1,4 +1,4 @@
-/// Enums pour les conditions et recommandations du moteur d'intelligence naturelle
+﻿/// Enums pour les conditions et recommandations du moteur d'intelligence naturelle
 /// Utilisés par les entités de domaine pour typer les états et priorités
 library;
 
@@ -510,3 +510,4 @@ extension ExposureTypeExtension on ExposureType {
     }
   }
 }
+

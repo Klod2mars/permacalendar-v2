@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:io';
 
 /// 🌱 Script de validation de plants.json selon le schéma v2.1.0
@@ -264,3 +264,4 @@ void main(List<String> args) async {
     exit(1);
   }
 }
+

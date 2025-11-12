@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
@@ -125,3 +125,4 @@ Widget _buildGerminationIndicator(DateTime start, DateTime end) {
     ],
   );
 }
+

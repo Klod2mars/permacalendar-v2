@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Palettes thermiques pour adaptation climatique respectueuse
 /// Interface respire avec le climat - Changement complet mais respectueux
@@ -98,3 +98,4 @@ class ThermalColorSchemes {
     );
   }
 }
+

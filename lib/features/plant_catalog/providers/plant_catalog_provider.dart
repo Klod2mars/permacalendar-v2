@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../data/repositories/plant_hive_repository.dart';
 import '../domain/entities/plant_entity.dart';
 import '../data/models/plant_hive.dart';
@@ -245,3 +245,4 @@ final plantsBySeasonProvider =
   final notifier = ref.read(plantCatalogProvider.notifier);
   return notifier.getPlantsBySeason(season);
 });
+

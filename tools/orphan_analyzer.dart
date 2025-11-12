@@ -1,4 +1,4 @@
-// tools/orphan_analyzer.dart
+﻿// tools/orphan_analyzer.dart
 // Analyse non-destructive pour détecter les fichiers/providers/symboles orphelins
 import 'dart:io';
 import 'package:path/path.dart' as path;
@@ -660,4 +660,5 @@ class SymbolInfo {
     required this.kind,
   });
 }
+
 

@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'unified_membrane_geometry.dart';
 import 'organic_membrane_palette.dart';
@@ -504,3 +504,4 @@ class MembraneRenderingUtils {
     }
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'planting_hive.g.dart';
@@ -134,3 +134,4 @@ class PlantingHive extends HiveObject {
   @override
   int get hashCode => id.hashCode;
 }
+

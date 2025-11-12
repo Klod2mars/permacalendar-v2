@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import '../../features/climate/domain/models/weather_view_data.dart';
 import '../../features/climate/domain/entities/weather_alert.dart';
 
@@ -208,3 +208,4 @@ class PlantData {
     required this.isWaterSensitivePeriod,
   });
 }
+

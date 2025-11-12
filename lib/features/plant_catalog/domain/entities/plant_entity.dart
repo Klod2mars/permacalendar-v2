@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'plant_entity.freezed.dart';
@@ -435,3 +435,4 @@ extension PlantFreezedExtension on PlantFreezed {
         'Exposition: $sunExposure';
   }
 }
+

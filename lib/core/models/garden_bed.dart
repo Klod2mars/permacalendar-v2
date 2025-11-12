@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden_bed.g.dart';
@@ -176,3 +176,4 @@ class GardenBed extends HiveObject {
   @override
   int get hashCode => id.hashCode;
 }
+

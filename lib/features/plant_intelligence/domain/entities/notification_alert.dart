@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'notification_alert.freezed.dart';
@@ -390,3 +390,4 @@ extension NotificationAlertExtension on NotificationAlert {
     return baseScore - daysPenalty;
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:uuid/uuid.dart';
+﻿import 'package:uuid/uuid.dart';
 import '../entities/pest_observation.dart';
 import '../entities/pest.dart';
 import '../entities/bio_control_recommendation.dart';
@@ -315,3 +315,4 @@ class GenerateBioControlRecommendationsUsecase {
     }
   }
 }
+

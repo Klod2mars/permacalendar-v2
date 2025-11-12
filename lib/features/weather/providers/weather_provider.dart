@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'package:permacalendar/core/services/environment_service.dart';
 import 'package:permacalendar/core/services/open_meteo_service.dart';
 
@@ -98,3 +98,4 @@ final weatherByCommuneProvider =
     );
   }
 });
+

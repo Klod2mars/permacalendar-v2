@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import 'dual_write_service.dart';
 import 'read_switch_service.dart';
@@ -914,3 +914,4 @@ class MigrationException implements Exception {
 final migrationOrchestratorProvider = Provider<MigrationOrchestrator>((ref) {
   return MigrationOrchestrator();
 });
+

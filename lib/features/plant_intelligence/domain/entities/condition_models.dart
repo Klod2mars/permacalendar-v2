@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'condition_enums.dart';
 
 part 'condition_models.freezed.dart';
@@ -550,3 +550,4 @@ extension OpportunityExtension on Opportunity {
   /// Détermine si l'opportunité est facile à saisir
   bool get isEasyWin => feasibility > 0.8 && benefit > 0.6;
 }
+

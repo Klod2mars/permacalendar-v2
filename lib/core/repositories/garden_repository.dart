@@ -1,4 +1,4 @@
-import '../data/hive/garden_boxes.dart';
+﻿import '../data/hive/garden_boxes.dart';
 import '../models/garden.dart';
 import '../services/environment_service.dart';
 import 'garden_rules.dart';
@@ -192,3 +192,4 @@ class GardenLimitException extends GardenRepositoryException {
   const GardenLimitException(String message)
       : super(message, GardenRepositoryErrorType.limit);
 }
+

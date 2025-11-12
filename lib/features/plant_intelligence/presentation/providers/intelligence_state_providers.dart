@@ -1,4 +1,4 @@
-// FICHIER CORRIGÉ POUR RIVERPOD 3.X PURE (sans annotations)
+﻿// FICHIER CORRIGÉ POUR RIVERPOD 3.X PURE (sans annotations)
 
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
@@ -266,3 +266,4 @@ ref.listen(
   },
 );
 */
+

@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:io';
 
 /// 🌱 Script de migration de plants.json vers le format v2.1.0
@@ -193,3 +193,4 @@ void main() async {
     exit(1);
   }
 }
+

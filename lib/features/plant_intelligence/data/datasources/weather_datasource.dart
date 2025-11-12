@@ -1,4 +1,4 @@
-import '../../domain/entities/weather_condition.dart';
+﻿import '../../domain/entities/weather_condition.dart';
 import '../../../../core/services/open_meteo_service.dart';
 
 /// Interface pour la source de données météorologiques
@@ -310,3 +310,4 @@ class WeatherDataSourceException implements Exception {
     return 'WeatherDataSourceException$codeStr: $message';
   }
 }
+

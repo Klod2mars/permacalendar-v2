@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/condition_models.dart'
     show WeatherForecast;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
@@ -901,3 +901,4 @@ enum RecommendationPriority {
   high,
   urgent,
 }
+

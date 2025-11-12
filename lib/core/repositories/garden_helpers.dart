@@ -1,4 +1,4 @@
-import '../models/garden.dart';
+﻿import '../models/garden.dart';
 import '../data/hive/garden_boxes.dart';
 
 /// Classe utilitaire pour les calculs et opérations sur les jardins
@@ -302,3 +302,4 @@ class GardenStatistics {
     };
   }
 }
+

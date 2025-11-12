@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'cellular_rosace_widget.dart';
 import '../../providers/weather_providers.dart';
@@ -328,3 +328,4 @@ class CellularRosaceIntegrationExample extends ConsumerWidget {
     );
   }
 }
+

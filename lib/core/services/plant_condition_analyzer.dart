@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart'
     show GardenContext, SoilInfo, GardenLocation;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart'
@@ -1080,3 +1080,4 @@ class PlantConditionAnalysisException implements Exception {
   @override
   String toString() => 'PlantConditionAnalysisException: $message';
 }
+

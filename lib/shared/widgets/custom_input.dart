@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// Champ de saisie personnalisé
@@ -542,3 +542,4 @@ class _SearchFieldState extends State<SearchField> {
     );
   }
 }
+

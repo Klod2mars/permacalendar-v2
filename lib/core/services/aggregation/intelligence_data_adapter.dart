@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../../features/plant_intelligence/domain/repositories/plant_intelligence_repository.dart';
 import '../../models/unified_garden_context.dart';
 import 'data_adapter.dart';
@@ -381,3 +381,4 @@ class IntelligenceDataAdapter implements DataAdapter {
     );
   }
 }
+

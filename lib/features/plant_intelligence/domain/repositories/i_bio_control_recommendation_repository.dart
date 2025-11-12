@@ -1,4 +1,4 @@
-import '../entities/bio_control_recommendation.dart';
+﻿import '../entities/bio_control_recommendation.dart';
 
 /// Biological Control Recommendation Repository Interface
 ///
@@ -38,3 +38,4 @@ abstract class IBioControlRecommendationRepository {
   /// Delete a recommendation
   Future<void> deleteRecommendation(String recommendationId);
 }
+

@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden_freezed.freezed.dart';
@@ -80,3 +80,4 @@ extension GardenFreezedExtension on GardenFreezed {
     );
   }
 }
+

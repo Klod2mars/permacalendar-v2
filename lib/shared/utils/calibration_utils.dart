@@ -1,4 +1,4 @@
-// lib/shared/utils/calibration_utils.dart
+﻿// lib/shared/utils/calibration_utils.dart
 import 'package:flutter/widgets.dart';
 
 class RelativeRectData {
@@ -63,3 +63,4 @@ Rect fromRelativeRect(RelativeRectData r, Size containerSize) {
     (r.height * containerSize.height),
   );
 }
+
