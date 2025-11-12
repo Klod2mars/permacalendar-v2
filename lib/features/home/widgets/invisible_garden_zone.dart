@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/providers/active_garden_provider.dart';
-System.Text.RegularExpressions.MatchEvaluator
 import '../../../core/models/garden_freezed.dart';
 import '../../../shared/presentation/themes/organic_palettes.dart';
 import '../../../shared/widgets/animations/insect_awakening_widget.dart';
@@ -233,7 +232,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   void _showCreateGardenDialog(BuildContext context, WidgetRef ref) {
     // TODO: ImplÃ©menter le dialogue de crÃ©ation
     // Pour l'instant, navigation vers la page de crÃ©ation
-    context.go('/gardens/create?slot=');
+    context.go('/gardens/create?slot=${widget.slotNumber}');
   }
 
   /// Construit le label de texte discret
