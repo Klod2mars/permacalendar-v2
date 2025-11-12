@@ -22,252 +22,46 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {\n    return Scaffold(
+  appBar: CustomAppBar(
+    title: 'PermaCalendar 2.0',
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.settings),
+        onPressed: () => context.push(AppRoutes.settings),
+      ),
+    ],
+  ),
+  body: Center(
+    child: SizedBox(
+      width: double.infinity,
+      height: availableHeight,
+      child: OrganicDashboardWidget(
+        showDiagnostics: false,
+      ),
+    ),
+  ),
+  floatingActionButton: FloatingActionButton.extended(
+    heroTag: 'validateCalibration',
+    icon: const Icon(Icons.check),
+    label: const Text('Valider'),
+    onPressed: () {
+      // TODO: connecter à la logique de validation (provider/cubit)
+      // Exemple (à adapter) :
+      // ref.read(calibrationStateProvider.notifier).validate();
+      debugPrint('Validation calibration demandée');
+    },
+  ),
+);\n
     // Affiche uniquement le dashboard organique en pleine hauteur disponible
     final theme = Theme.of(context);
     final appBarHeight = kToolbarHeight + MediaQuery.of(context).padding.top;
     final availableHeight = MediaQuery.of(context).size.height - appBarHeight;
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'PermaCalendar 2.0',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => context.push(AppRoutes.settings),
-          ),
-        ],
+    debugPrint('Validation calibration demandée');
+        },
       ),
-      body: Center(
-        child: SizedBox(
-          width: double.infinity,
-          height: availableHeight,
-          child: OrganicDashboardWidget(
-            // en prod / écran d'accueil, masquer le panneau de diagnostic
-            showDiagnostics: false,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ----------------------------
-  // Weather section
-  // ----------------------------
-  Widget _buildWeatherHome(
-    BuildContext context,
-    ThemeData theme,
-    AsyncValue<WeatherViewData> weatherAsync,
-  ) {
-    return CustomCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: weatherAsync.when(
-          loading: () => const LoadingWidget(),
-          error: (e, st) => ErrorStateWidget(
-            title: 'MÃ©tÃ©o indisponible',
-            subtitle: e.toString(),
-            retryText: 'RÃ©essayer',
-            onRetry: () {},
-          ),
-          data: (data) {
-            // On s'attend Ã  ce que splitByToday() retourne un record (past, forecast).
-            // On utilise la destructuration de record disponible en Dart 3.
-            List<DailyWeatherPoint> past = <DailyWeatherPoint>[];
-            List<DailyWeatherPoint> forecast = <DailyWeatherPoint>[];
-
-            try {
-              // Si splitByToday renvoie un record (List, List), utiliser la destructuration.
-              final (p, f) = data.result.splitByToday();
-              if (p is List<DailyWeatherPoint>) {
-                past = List<DailyWeatherPoint>.from(p);
-              }
-              if (f is List<DailyWeatherPoint>) {
-                forecast = List<DailyWeatherPoint>.from(f);
-              }
-            } catch (_) {
-              // Fallback silencieux : si la structure diffÃ¨re, on laisse les listes vides.
-            }
-
-            final todayPrecip = forecast.isNotEmpty ? forecast.first.precipMm : 0.0;
-
-            return ExpansionTile(
-              tilePadding: EdgeInsets.zero,
-              initiallyExpanded: false,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'MÃ©tÃ©o â€” ${data.locationLabel}',
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Pluie aujourd\'hui: ${todayPrecip.toStringAsFixed(1)} mm',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.outline,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Icon(Icons.wb_sunny, color: Colors.orange),
-                ],
-              ),
-              children: [
-                const SizedBox(height: 12),
-                _buildPrecipChips(theme, 'Historique (7 jours)', past.take(7).toList()),
-                const SizedBox(height: 12),
-                _buildPrecipChips(theme, 'PrÃ©visions (7 jours)', forecast.take(7).toList()),
-                const SizedBox(height: 12),
-                _buildPrecipDetails(theme, 'Historique complet', past),
-                const SizedBox(height: 12),
-                _buildPrecipDetails(theme, 'PrÃ©visions dÃ©taillÃ©es', forecast),
-                const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton.icon(
-                    onPressed: () => context.push(AppRoutes.settings),
-                    icon: const Icon(Icons.location_city),
-                    label: const Text('Choisir ma commune'),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPrecipChips(ThemeData theme, String label, List<DailyWeatherPoint> points) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: points.cast<DailyWeatherPoint>().map<Widget>((p) {
-            final d = '${p.date.day.toString().padLeft(2, '0')}/${p.date.month.toString().padLeft(2, '0')}';
-            return Chip(
-              label: Text('$d â€¢ ${p.precipMm.toStringAsFixed(1)} mm'),
-              avatar: const Icon(Icons.grain, size: 16),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPrecipDetails(ThemeData theme, String label, List<DailyWeatherPoint> points) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
-        Column(
-          children: points.cast<DailyWeatherPoint>().map<Widget>((p) {
-            final d = '${p.date.day.toString().padLeft(2, '0')}/${p.date.month.toString().padLeft(2, '0')}/${p.date.year}';
-            final tRange = (p.tMinC != null && p.tMaxC != null) ? ' â€¢ ${p.tMinC!.toStringAsFixed(0)}â€“${p.tMaxC!.toStringAsFixed(0)}Â°C' : '';
-            return Row(
-              children: [
-                Expanded(child: Text(d, style: theme.textTheme.bodyMedium)),
-                Text('${p.precipMm.toStringAsFixed(1)} mm$tRange', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-              ],
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
-  // ----------------------------
-  // Gardens / Quick Actions
-  // ----------------------------
-  Widget _buildQuickActions(BuildContext context, ThemeData theme, GardenState gardenState, WidgetRef ref) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Mes jardins', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 16),
-        if (gardenState.isLoading)
-          const ListLoadingWidget(itemCount: 4)
-        else if (gardenState.error != null)
-          ErrorStateWidget(
-            title: 'Erreur lors du chargement des jardins',
-            subtitle: gardenState.error,
-            retryText: 'RÃ©essayer',
-            onRetry: () => ref.read(gardenProvider.notifier).loadGardens(),
-          )
-        else if (gardenState.gardens.isEmpty)
-          CustomCard(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(children: [
-                    Icon(Icons.yard, color: theme.colorScheme.outline),
-                    const SizedBox(width: 8),
-                    Text('Aucun jardin', style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.outline, fontWeight: FontWeight.w600)),
-                  ]),
-                  const SizedBox(height: 12),
-                  Text('CrÃ©ez votre premier jardin pour commencer.', style: theme.textTheme.bodyMedium),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: [
-                      ElevatedButton.icon(onPressed: () => context.push(AppRoutes.gardenCreate), icon: const Icon(Icons.add), label: const Text('CrÃ©er un jardin')),
-                      OutlinedButton.icon(onPressed: () => context.push(AppRoutes.gardens), icon: const Icon(Icons.list), label: const Text('Voir tous les jardins')),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          )
-        else
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LayoutBuilder(builder: (context, constraints) {
-                final screenWidth = constraints.maxWidth;
-                int crossAxisCount;
-                double childAspectRatio;
-                if (screenWidth < 600) {
-                  crossAxisCount = 1;
-                  childAspectRatio = 2.0;
-                } else if (screenWidth < 900) {
-                  crossAxisCount = 2;
-                  childAspectRatio = 2.0;
-                } else {
-                  crossAxisCount = 3;
-                  childAspectRatio = 2.0;
-                }
-                return GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: crossAxisCount,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: childAspectRatio,
-                  children: gardenState.gardens.take(6).map<Widget>((garden) {
-                    return GardenCardWithRealArea(garden: garden, onTap: () => context.push('/gardens/${garden.id}'), showActions: false);
-                  }).toList(),
-                );
-              }),
-              const SizedBox(height: 12),
-              Align(alignment: Alignment.centerRight, child: TextButton.icon(onPressed: () => context.push(AppRoutes.gardenCreate), icon: const Icon(Icons.add), label: const Text('CrÃ©er un jardin'))),
-            ],
-          ),
-      ],
-    );
+);
   }
 
   // ----------------------------
@@ -356,3 +150,7 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+
