@@ -1,5 +1,7 @@
 ﻿import 'package:riverpod/riverpod.dart';
+import '../../../core/models/garden_state.dart';
 import '../../../core/models/garden_freezed.dart';
+import '../../../core/repositories/dashboard_slots_repository.dart';
 import '../../../core/repositories/repository_providers.dart';
 import '../../../core/services/activity_observer_service.dart';
 import '../../../core/events/garden_event_bus.dart';
