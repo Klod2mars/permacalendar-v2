@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'planting_hive.dart';
 
@@ -51,4 +51,3 @@ class PlantingHiveAdapter extends TypeAdapter<PlantingHive> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

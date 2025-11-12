@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'notification_alert.dart';
 
@@ -364,4 +364,3 @@ const _$NotificationStatusEnumMap = {
   NotificationStatus.archived: 'archived',
   NotificationStatus.dismissed: 'dismissed',
 };
-

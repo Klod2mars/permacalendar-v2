@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'intelligent_suggestion.dart';
 
@@ -50,4 +50,3 @@ const _$SuggestionCategoryEnumMap = {
   SuggestionCategory.harvest: 'harvest',
   SuggestionCategory.maintenance: 'maintenance',
 };
-

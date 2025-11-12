@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'activity_v3.dart';
 
@@ -83,4 +83,3 @@ Map<String, dynamic> _$$ActivityV3ImplToJson(_$ActivityV3Impl instance) =>
       'isActive': instance.isActive,
       'priority': instance.priority,
     };
-

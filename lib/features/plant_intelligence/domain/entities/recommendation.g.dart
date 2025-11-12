@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'recommendation.dart';
 
@@ -104,4 +104,3 @@ const _$RecommendationStatusEnumMap = {
   RecommendationStatus.dismissed: 'dismissed',
   RecommendationStatus.expired: 'expired',
 };
-

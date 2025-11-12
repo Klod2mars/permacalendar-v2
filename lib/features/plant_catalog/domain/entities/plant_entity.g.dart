@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'plant_entity.dart';
 
@@ -88,4 +88,3 @@ Map<String, dynamic> _$$PlantFreezedImplToJson(_$PlantFreezedImpl instance) =>
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'isActive': instance.isActive,
     };
-

@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_bed_hive.dart';
 
@@ -51,4 +51,3 @@ class GardenBedHiveAdapter extends TypeAdapter<GardenBedHive> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

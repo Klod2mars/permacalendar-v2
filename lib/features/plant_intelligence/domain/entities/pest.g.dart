@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'pest.dart';
 
@@ -116,4 +116,3 @@ const _$PestSeverityEnumMap = {
   PestSeverity.high: 'high',
   PestSeverity.critical: 'critical',
 };
-

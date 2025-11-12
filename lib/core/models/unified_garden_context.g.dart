@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'unified_garden_context.dart';
 
@@ -280,4 +280,3 @@ Map<String, dynamic> _$$UnifiedActivityHistoryImplToJson(
       'bedId': instance.bedId,
       'metadata': instance.metadata,
     };
-

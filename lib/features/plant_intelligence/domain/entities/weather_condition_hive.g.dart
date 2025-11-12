@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'weather_condition_hive.dart';
 
@@ -127,4 +127,3 @@ class WeatherForecastHiveAdapter extends TypeAdapter<WeatherForecastHive> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

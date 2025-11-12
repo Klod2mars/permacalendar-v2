@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_intelligence_memory.dart';
 
@@ -30,4 +30,3 @@ Map<String, dynamic> _$$GardenIntelligenceMemoryImplToJson(
       'memoryCreatedAt': instance.memoryCreatedAt.toIso8601String(),
       'memoryUpdatedAt': instance.memoryUpdatedAt.toIso8601String(),
     };
-

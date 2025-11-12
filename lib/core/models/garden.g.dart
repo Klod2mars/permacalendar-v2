@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden.dart';
 
@@ -66,4 +66,3 @@ class GardenAdapter extends TypeAdapter<Garden> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

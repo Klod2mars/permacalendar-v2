@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'comprehensive_garden_analysis.dart';
 
@@ -36,4 +36,3 @@ Map<String, dynamic> _$$ComprehensiveGardenAnalysisImplToJson(
       'summary': instance.summary,
       'metadata': instance.metadata,
     };
-

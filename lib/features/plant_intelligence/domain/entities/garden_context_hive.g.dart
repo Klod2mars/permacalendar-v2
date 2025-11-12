@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_context_hive.dart';
 
@@ -225,4 +225,3 @@ class GardenContextHiveAdapter extends TypeAdapter<GardenContextHive> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

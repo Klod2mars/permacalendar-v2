@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'growth_cycle.dart';
 
@@ -72,4 +72,3 @@ class GrowthCycleAdapter extends TypeAdapter<GrowthCycle> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

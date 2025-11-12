@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'soil_metrics_local_ds.dart';
 
@@ -45,4 +45,3 @@ class SoilMetricsDtoAdapter extends TypeAdapter<SoilMetricsDto> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-

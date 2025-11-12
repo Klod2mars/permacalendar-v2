@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_context.dart';
 
@@ -278,4 +278,3 @@ const _$CultivationMethodEnumMap = {
   CultivationMethod.hydroponic: 'hydroponic',
   CultivationMethod.aquaponic: 'aquaponic',
 };
-
