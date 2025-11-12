@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/providers/active_garden_provider.dart';
-System.Text.RegularExpressions.MatchEvaluator
+import '../../../features/garden/providers/garden_provider.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../shared/presentation/themes/organic_palettes.dart';
 import '../../../shared/widgets/animations/insect_awakening_widget.dart';
@@ -142,15 +142,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
     final gardenState = ref.watch(gardenProvider);
     final activeGardens = gardenState.activeGardens;
 
-    // 1) Si la box dashboard_slots est prête, tenter la lecture persistante (prévalente)
-    final mappedId = DashboardSlotsRepository.getGardenIdForSlotSync(widget.slotNumber);
-    if (mappedId != null) {
-      final matches = activeGardens.where((g) => g.id == mappedId).toList();
-      if (matches.isNotEmpty) return matches.first;
-      // mappedId existe mais jardin non chargé -> fallback index
-    }
-
-    // 2) Fallback : associer les jardins actifs aux slots par ordre d'index (ancienne logique)
+    // Associer les jardins actifs aux slots par ordre d'index
     if (widget.slotNumber > 0 && widget.slotNumber <= activeGardens.length) {
       return activeGardens[widget.slotNumber - 1];
     }
@@ -233,7 +225,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   void _showCreateGardenDialog(BuildContext context, WidgetRef ref) {
     // TODO: ImplÃ©menter le dialogue de crÃ©ation
     // Pour l'instant, navigation vers la page de crÃ©ation
-    context.go('/gardens/create?slot=');
+    context.go('/gardens/create');
   }
 
   /// Construit le label de texte discret
@@ -331,5 +323,4 @@ class _OrganicGlowAnimationState extends State<_OrganicGlowAnimation>
     super.dispose();
   }
 }
-
 

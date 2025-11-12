@@ -31,6 +31,12 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
     _Hotspot(id: 'activities', centerX: 0.18, centerY: 0.78, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.activities, label: 'Activities'),
     _Hotspot(id: 'weather', centerX: 0.50, centerY: 0.18, widthFrac: 0.18, heightFrac: 0.18, route: AppRoutes.weather, label: 'Weather'),
     _Hotspot(id: 'gardens', centerX: 0.65, centerY: 0.28, widthFrac: 0.42, heightFrac: 0.36, route: AppRoutes.gardens, label: 'Gardens'),
+    // 5 petits slots jardin (définis comme hotspots calibrables, indépendants et facilement tappables)
+    _Hotspot(id: 'garden_1', centerX: 0.60, centerY: 0.52, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 1'),
+    _Hotspot(id: 'garden_2', centerX: 0.68, centerY: 0.50, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 2'),
+    _Hotspot(id: 'garden_3', centerX: 0.72, centerY: 0.58, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 3'),
+    _Hotspot(id: 'garden_4', centerX: 0.64, centerY: 0.60, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 4'),
+    _Hotspot(id: 'garden_5', centerX: 0.54, centerY: 0.60, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 5'),
   ];
 
   @override
@@ -151,53 +157,70 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                 ),
               ),
 
-              // If zones are empty (race condition), fallback to defaults
-              ...((zones.isEmpty) ? OrganicDashboardWidget._hotspots.map((hs) {
-                final double side = ((hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac) * (width < height ? width : height);
-                final double left = (hs.centerX * width) - side / 2;
-                final double top = (hs.centerY * height) - side / 2;
+                            // If zones are empty (race condition), fallback to defaults
+              ...((zones.isEmpty)
+                  ? (() {
+                      // Trier les hotspots par "taille" descendante afin d'afficher les grandes zones
+                      // en dessous et laisser les petites au-dessus (évite le recouvrement bloquant).
+                      final defaultHotspots = List<_Hotspot>.from(OrganicDashboardWidget._hotspots)
+                        ..sort((a, b) {
+                          final asz = (a.widthFrac > a.heightFrac) ? a.widthFrac : a.heightFrac;
+                          final bsz = (b.widthFrac > b.heightFrac) ? b.widthFrac : b.heightFrac;
+                          return bsz.compareTo(asz); // larger first
+                        });
 
-                return Positioned(
-                  left: left,
-                  top: top,
-                  width: side,
-                  height: side,
-                  child: _HotspotButton(
-                    onTap: () {
-                      if (kDebugMode) debugPrint('OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
-                      context.push(hs.route);
-                    },
-                    showDebugOutline: kDebugMode && widget.showDiagnostics,
-                    semanticLabel: hs.label,
-                  ),
-                );
-              }).toList() : zones.entries.map((entry) {
-                final id = entry.key;
-                final cfg = entry.value;
-                if (!cfg.enabled) return const SizedBox.shrink();
+                      return defaultHotspots.map((hs) {
+                        final double side = ((hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac) * (width < height ? width : height);
+                        final double left = (hs.centerX * width) - side / 2;
+                        final double top = (hs.centerY * height) - side / 2;
 
-                final side = (cfg.size * (width < height ? width : height)).clamp(8.0, (width < height ? width : height));
-                final left = (cfg.position.dx * width) - side / 2;
-                final top = (cfg.position.dy * height) - side / 2;
+                        return Positioned(
+                          left: left,
+                          top: top,
+                          width: side,
+                          height: side,
+                          child: _HotspotButton(
+                            onTap: () {
+                              if (kDebugMode) debugPrint('OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
+                              context.push(hs.route);
+                            },
+                            showDebugOutline: kDebugMode && widget.showDiagnostics,
+                            semanticLabel: hs.label,
+                          ),
+                        );
+                      }).toList();
+                    })()
+                  : (() {
+                      // Trier les zones calibrées par size descendante (les petites seront affichées au-dessus)
+                      final sortedEntries = zones.entries.toList()
+                        ..sort((a, b) => b.value.size.compareTo(a.value.size));
 
-                return Positioned(
-                  left: left,
-                  top: top,
-                  width: side,
-                  height: side,
-                  child: _CalibratableHotspot(
-                    id: id,
-                    cfg: cfg,
-                    isCalibrating: isCalibrating,
-                    onTapRoute: _routeMap[id],
-                    containerKey: _containerKey,
-                    ref: ref,
-                    showDebugOutline: kDebugMode && widget.showDiagnostics,
-                  ),
-                );
-              }).toList()),
+                      return sortedEntries.map((entry) {
+                        final id = entry.key;
+                        final cfg = entry.value;
+                        if (!cfg.enabled) return const SizedBox.shrink();
 
-              if (kDebugMode && widget.showDiagnostics)
+                        final side = (cfg.size * (width < height ? width : height)).clamp(8.0, (width < height ? width : height));
+                        final left = (cfg.position.dx * width) - side / 2;
+                        final top = (cfg.position.dy * height) - side / 2;
+
+                        return Positioned(
+                          left: left,
+                          top: top,
+                          width: side,
+                          height: side,
+                          child: _CalibratableHotspot(
+                            id: id,
+                            cfg: cfg,
+                            isCalibrating: isCalibrating,
+                            onTapRoute: _routeMap[id],
+                            containerKey: _containerKey,
+                            ref: ref,
+                            showDebugOutline: kDebugMode && widget.showDiagnostics,
+                          ),
+                        );
+                      }).toList();
+                    })()),if (kDebugMode && widget.showDiagnostics)
                 Positioned(
                   top: 8,
                   right: 8,
@@ -558,6 +581,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
   }
 }
+
 
 
 

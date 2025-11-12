@@ -1,0 +1,262 @@
+﻿*** Begin Patch
+*** Add File: lib/core/repositories/dashboard_slots_repository.dart
++import 'package:hive_flutter/hive_flutter.dart';
++
++/// Repository léger pour lier un "dashboard_slot" à un gardenId
++/// Stocke la map slot -> gardenId dans une box Hive 'dashboard_slots'.
++class DashboardSlotsRepository {
++  static const String _boxName = 'dashboard_slots';
++  static Box<String>? _box;
++
++  static bool isOpen() => _box != null && _box!.isOpen;
++
++  static Future<Box<String>> _ensureBox() async {
++    if (_box == null || !_box!.isOpen) {
++      _box = await Hive.openBox<String>(_boxName);
++    }
++    return _box!;
++  }
++
++  /// Lecture synchrone si la box est déjà ouverte (utilisé depuis la UI pour éviter les await dans build)
++  static String? getGardenIdForSlotSync(int slot) {
++    if (!Hive.isBoxOpen(_boxName)) return null;
++    final box = Hive.box<String>(_boxName);
++    return box.get(slot.toString());
++  }
++
++  /// Lecture asynchrone (sécurisée)
++  static Future<String?> getGardenIdForSlot(int slot) async {
++    final box = await _ensureBox();
++    return box.get(slot.toString());
++  }
++
++  /// Ecriture asynchrone
++  static Future<void> setGardenIdForSlot(int slot, String gardenId) async {
++    final box = await _ensureBox();
++    await box.put(slot.toString(), gardenId);
++  }
++
++  /// Supprime l'association pour un slot
++  static Future<void> clearSlot(int slot) async {
++    final box = await _ensureBox();
++    await box.delete(slot.toString());
++  }
++}
++
+*** End Patch*** Begin Patch
+*** Update File: lib/features/garden/providers/garden_provider.dart
+@@
+-import '../../../core/models/garden_state.dart';
++import '../../../core/models/garden_state.dart';
++import '../../../core/models/garden_freezed.dart';
++import '../../../core/repositories/dashboard_slots_repository.dart';
+@@
+   Future<bool> createGarden(GardenFreezed garden) async {
+@@
+   }
++
++  /// Crée un jardin et l'associe atomiquement à un dashboard slot si celui-ci est libre.
++  /// Retourne true si la création + association réussissent.
++  Future<bool> createGardenForSlot(int slotNumber, GardenFreezed garden) async {
++    try {
++      // Vérifier si le slot est déjà occupé (lecture synchrone si possible)
++      final existingId = DashboardSlotsRepository.getGardenIdForSlotSync(slotNumber);
++      if (existingId != null) {
++        state = GardenState.error('Slot $slotNumber déjà occupé par un jardin');
++        return false;
++      }
++
++      // Créer le jardin via la logique existante
++      final success = await createGarden(garden);
++      if (!success) return false;
++
++      // Lier le slot au garden id (persistant)
++      await DashboardSlotsRepository.setGardenIdForSlot(slotNumber, garden.id);
++
++      // Recharge les jardins (createGarden appelle déjà loadGardens mais on reconfirme)
++      await loadGardens();
++      return true;
++    } catch (e) {
++      state = GardenState.error('Erreur lors de la création pour slot $slotNumber: $e');
++      return false;
++    }
++  }
+*** End Patch*** Begin Patch
+*** Update File: lib/features/home/widgets/invisible_garden_zone.dart
+@@
+-import '../../../core/providers/active_garden_provider.dart';
+-import '../../../features/garden/providers/garden_provider.dart';
++import '../../../core/providers/active_garden_provider.dart';
++import '../../../features/garden/providers/garden_provider.dart';
++import '../../../core/repositories/dashboard_slots_repository.dart';
+@@
+   GardenFreezed? _getGardenForSlot(WidgetRef ref) {
+-    final gardenState = ref.watch(gardenProvider);
+-    final activeGardens = gardenState.activeGardens;
+-
+-    // Associer les jardins actifs aux slots par ordre d'index
+-    if (widget.slotNumber > 0 && widget.slotNumber <= activeGardens.length) {
+-      return activeGardens[widget.slotNumber - 1];
+-    }
+-
+-    return null; // Aucun jardin pour ce slot
++    final gardenState = ref.watch(gardenProvider);
++    final activeGardens = gardenState.activeGardens;
++
++    // 1) Si la box dashboard_slots est prête, tenter la lecture persistante (prévalente)
++    final mappedId = DashboardSlotsRepository.getGardenIdForSlotSync(widget.slotNumber);
++    if (mappedId != null) {
++      final matches = activeGardens.where((g) => g.id == mappedId).toList();
++      if (matches.isNotEmpty) return matches.first;
++      // mappedId existe mais jardin non chargé -> tenter lookup asynchrone impossible ici, fallback index below
++    }
++
++    // 2) Fallback : associer les jardins actifs aux slots par ordre d'index (ancienne logique)
++    if (widget.slotNumber > 0 && widget.slotNumber <= activeGardens.length) {
++      return activeGardens[widget.slotNumber - 1];
++    }
++
++    return null; // Aucun jardin pour ce slot
+   }
+@@
+   void _showCreateGardenDialog(BuildContext context, WidgetRef ref) {
+     // TODO: ImplÃ©menter le dialogue de crÃ©ation
+     // Pour l'instant, navigation vers la page de crÃ©ation
+-    context.go('/gardens/create');
++    // Passer le slot en query param pour que l'écran de création sache le contexte
++    context.go('/gardens/create?slot=${widget.slotNumber}');
+   }
+*** End Patch*** Begin Patch
+*** Update File: lib/shared/widgets/organic_dashboard.dart
+@@
+-  static const List<_Hotspot> _hotspots = <_Hotspot>[
+-    _Hotspot(id: 'intelligence', centerX: 0.18, centerY: 0.22, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.intelligence, label: 'Intelligence'),
+-    _Hotspot(id: 'calendar', centerX: 0.18, centerY: 0.50, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.calendar, label: 'Calendar'),
+-    _Hotspot(id: 'activities', centerX: 0.18, centerY: 0.78, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.activities, label: 'Activities'),
+-    _Hotspot(id: 'weather', centerX: 0.50, centerY: 0.18, widthFrac: 0.18, heightFrac: 0.18, route: AppRoutes.weather, label: 'Weather'),
+-    _Hotspot(id: 'gardens', centerX: 0.65, centerY: 0.28, widthFrac: 0.42, heightFrac: 0.36, route: AppRoutes.gardens, label: 'Gardens'),
+-  ];
++  static const List<_Hotspot> _hotspots = <_Hotspot>[
++    _Hotspot(id: 'intelligence', centerX: 0.18, centerY: 0.22, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.intelligence, label: 'Intelligence'),
++    _Hotspot(id: 'calendar', centerX: 0.18, centerY: 0.50, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.calendar, label: 'Calendar'),
++    _Hotspot(id: 'activities', centerX: 0.18, centerY: 0.78, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.activities, label: 'Activities'),
++    _Hotspot(id: 'weather', centerX: 0.50, centerY: 0.18, widthFrac: 0.18, heightFrac: 0.18, route: AppRoutes.weather, label: 'Weather'),
++    _Hotspot(id: 'gardens', centerX: 0.65, centerY: 0.28, widthFrac: 0.42, heightFrac: 0.36, route: AppRoutes.gardens, label: 'Gardens'),
++    // 5 petits slots jardin (définis comme hotspots calibrables, indépendants et facilement tappables)
++    _Hotspot(id: 'garden_1', centerX: 0.60, centerY: 0.52, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 1'),
++    _Hotspot(id: 'garden_2', centerX: 0.68, centerY: 0.50, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 2'),
++    _Hotspot(id: 'garden_3', centerX: 0.72, centerY: 0.58, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 3'),
++    _Hotspot(id: 'garden_4', centerX: 0.64, centerY: 0.60, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 4'),
++    _Hotspot(id: 'garden_5', centerX: 0.54, centerY: 0.60, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 5'),
++  ];
+@@
+-              // If zones are empty (race condition), fallback to defaults
+-              ...((zones.isEmpty) ? OrganicDashboardWidget._hotspots.map((hs) {
+-                final double side = ((hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac) * (width < height ? width : height);
+-                final double left = (hs.centerX * width) - side / 2;
+-                final double top = (hs.centerY * height) - side / 2;
+-
+-                return Positioned(
+-                  left: left,
+-                  top: top,
+-                  width: side,
+-                  height: side,
+-                  child: _HotspotButton(
+-                    onTap: () {
+-                      if (kDebugMode) debugPrint('OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
+-                      context.push(hs.route);
+-                    },
+-                    showDebugOutline: kDebugMode && widget.showDiagnostics,
+-                    semanticLabel: hs.label,
+-                  ),
+-                );
+-              }).toList() : zones.entries.map((entry) {
+-                final id = entry.key;
+-                final cfg = entry.value;
+-                if (!cfg.enabled) return const SizedBox.shrink();
+-
+-                final side = (cfg.size * (width < height ? width : height)).clamp(8.0, (width < height ? width : height));
+-                final left = (cfg.position.dx * width) - side / 2;
+-                final top = (cfg.position.dy * height) - side / 2;
+-
+-                return Positioned(
+-                  left: left,
+-                  top: top,
+-                  width: side,
+-                  height: side,
+-                  child: _CalibratableHotspot(
+-                    id: id,
+-                    cfg: cfg,
+-                    isCalibrating: isCalibrating,
+-                    onTapRoute: _routeMap[id],
+-                    containerKey: _containerKey,
+-                    ref: ref,
+-                    showDebugOutline: kDebugMode && widget.showDiagnostics,
+-                  ),
+-                );
+-              }).toList()),
++              // If zones are empty (race condition), fallback to defaults
++              ...((zones.isEmpty)
++                  ? (() {
++                      // Trier les hotspots par "taille" descendante afin d'afficher les grandes zones
++                      // en dessous et laisser les petites au-dessus (évite le recouvrement bloquant).
++                      final defaultHotspots = List<_Hotspot>.from(OrganicDashboardWidget._hotspots)
++                        ..sort((a, b) {
++                          final asz = (a.widthFrac > a.heightFrac) ? a.widthFrac : a.heightFrac;
++                          final bsz = (b.widthFrac > b.heightFrac) ? b.widthFrac : b.heightFrac;
++                          return bsz.compareTo(asz); // larger first
++                        });
++
++                      return defaultHotspots.map((hs) {
++                        final double side = ((hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac) * (width < height ? width : height);
++                        final double left = (hs.centerX * width) - side / 2;
++                        final double top = (hs.centerY * height) - side / 2;
++
++                        return Positioned(
++                          left: left,
++                          top: top,
++                          width: side,
++                          height: side,
++                          child: _HotspotButton(
++                            onTap: () {
++                              if (kDebugMode) debugPrint('OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
++                              context.push(hs.route);
++                            },
++                            showDebugOutline: kDebugMode && widget.showDiagnostics,
++                            semanticLabel: hs.label,
++                          ),
++                        );
++                      }).toList();
++                    })()
++                  : (() {
++                      // Trier les zones calibrées par size descendante (les petites seront affichées au-dessus)
++                      final sortedEntries = zones.entries.toList()
++                        ..sort((a, b) => b.value.size.compareTo(a.value.size));
++
++                      return sortedEntries.map((entry) {
++                        final id = entry.key;
++                        final cfg = entry.value;
++                        if (!cfg.enabled) return const SizedBox.shrink();
++
++                        final side = (cfg.size * (width < height ? width : height)).clamp(8.0, (width < height ? width : height));
++                        final left = (cfg.position.dx * width) - side / 2;
++                        final top = (cfg.position.dy * height) - side / 2;
++
++                        return Positioned(
++                          left: left,
++                          top: top,
++                          width: side,
++                          height: side,
++                          child: _CalibratableHotspot(
++                            id: id,
++                            cfg: cfg,
++                            isCalibrating: isCalibrating,
++                            onTapRoute: _routeMap[id],
++                            containerKey: _containerKey,
++                            ref: ref,
++                            showDebugOutline: kDebugMode && widget.showDiagnostics,
++                          ),
++                        );
++                      }).toList();
++                    })()),
+*** End Patch
