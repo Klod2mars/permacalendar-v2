@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'beneficial_insect.dart';
 
@@ -127,3 +127,4 @@ Map<String, dynamic> _$$BeneficialInsectImplToJson(
       'imageUrl': instance.imageUrl,
       'effectiveness': instance.effectiveness,
     };
+

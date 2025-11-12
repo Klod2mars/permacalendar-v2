@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'condition_models.dart';
 
@@ -242,3 +242,4 @@ Map<String, dynamic> _$$CompanionPlantImplToJson(
       'optimalPeriod': instance.optimalPeriod,
       'metadata': instance.metadata,
     };
+

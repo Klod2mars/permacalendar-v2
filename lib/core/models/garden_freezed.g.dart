@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_freezed.dart';
 
@@ -34,3 +34,4 @@ Map<String, dynamic> _$$GardenFreezedImplToJson(_$GardenFreezedImpl instance) =>
       'metadata': instance.metadata,
       'isActive': instance.isActive,
     };
+

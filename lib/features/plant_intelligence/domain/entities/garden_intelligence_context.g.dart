@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_intelligence_context.dart';
 
@@ -31,3 +31,4 @@ Map<String, dynamic> _$$GardenIntelligenceContextImplToJson(
       'soilTemperature': instance.soilTemperature,
       'lastUpdatedAt': instance.lastUpdatedAt.toIso8601String(),
     };
+

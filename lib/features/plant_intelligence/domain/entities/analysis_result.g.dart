@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'analysis_result.dart';
 
@@ -60,3 +60,4 @@ const _$ConditionStatusEnumMap = {
   ConditionStatus.poor: 'poor',
   ConditionStatus.critical: 'critical',
 };
+

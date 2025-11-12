@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'plant_condition_hive.dart';
 
@@ -81,3 +81,4 @@ class PlantConditionHiveAdapter extends TypeAdapter<PlantConditionHive> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+

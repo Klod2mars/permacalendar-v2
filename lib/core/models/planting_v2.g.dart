@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'planting_v2.dart';
 
@@ -51,3 +51,4 @@ class PlantingAdapter extends TypeAdapter<Planting> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+

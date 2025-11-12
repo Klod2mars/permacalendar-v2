@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'intelligence_report.dart';
 
@@ -85,3 +85,4 @@ Map<String, dynamic> _$$PlantingTimingEvaluationImplToJson(
       'unfavorableFactors': instance.unfavorableFactors,
       'risks': instance.risks,
     };
+

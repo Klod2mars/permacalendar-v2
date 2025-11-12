@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'germination_event.dart';
 
@@ -72,3 +72,4 @@ class GerminationEventAdapter extends TypeAdapter<GerminationEvent> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+

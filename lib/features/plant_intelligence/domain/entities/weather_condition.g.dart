@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'weather_condition.dart';
 
@@ -93,3 +93,4 @@ const _$ImpactTypeEnumMap = {
   ImpactType.disease: 'disease',
   ImpactType.pest: 'pest',
 };
+

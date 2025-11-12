@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'garden_intelligence_settings.dart';
 
@@ -31,3 +31,4 @@ Map<String, dynamic> _$$GardenIntelligenceSettingsImplToJson(
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
+

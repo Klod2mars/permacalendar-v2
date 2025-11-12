@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'plant_condition.dart';
 
@@ -69,3 +69,4 @@ const _$ConditionStatusEnumMap = {
   ConditionStatus.poor: 'poor',
   ConditionStatus.critical: 'critical',
 };
+

@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'recommendation_hive.dart';
 
@@ -81,3 +81,4 @@ class RecommendationHiveAdapter extends TypeAdapter<RecommendationHive> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+

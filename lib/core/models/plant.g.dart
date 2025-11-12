@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'plant.dart';
 
@@ -135,3 +135,4 @@ class PlantAdapter extends TypeAdapter<Plant> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+

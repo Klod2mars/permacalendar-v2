@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'plant_intelligence_evolution_tracker.dart';
 
@@ -52,3 +52,4 @@ Map<String, dynamic> _$$IntelligenceEvolutionSummaryImplToJson(
       'newReport': instance.newReport,
       'comparedAt': instance.comparedAt.toIso8601String(),
     };
+

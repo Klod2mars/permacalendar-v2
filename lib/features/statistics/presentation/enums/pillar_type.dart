@@ -1,2 +1,3 @@
-﻿enum PillarType { economieVivante, sante, performance, alignement }
+﻿enum PillarType { economieVivante, sante, performance, alignement }
+
 

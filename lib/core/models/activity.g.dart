@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'activity.dart';
 
@@ -237,3 +237,4 @@ class EntityTypeAdapter extends TypeAdapter<EntityType> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
