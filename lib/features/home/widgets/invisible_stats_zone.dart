@@ -1,0 +1,62 @@
+﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/providers/active_garden_provider.dart';
+
+/// Zone invisible tappable qui ouvre les statistiques du jardin actif.
+/// Conçue pour être placée dans un Positioned (le dashboard gère left/top/width/height).
+class InvisibleStatsZone extends ConsumerWidget {
+  final bool isCalibrationMode;
+  final Color? glowColor;
+
+  const InvisibleStatsZone({
+    super.key,
+    this.isCalibrationMode = false,
+    this.glowColor,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeGardenId = ref.watch(activeGardenIdProvider);
+
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: isCalibrationMode || activeGardenId == null
+          ? null
+          : () {
+              HapticFeedback.lightImpact();
+              // navigation vers la page de stats
+              try {
+                if (!context.mounted) return;
+                context.push('/gardens/$activeGardenId/stats');
+              } catch (e) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Impossible d\'ouvrir les statistiques'),
+                    backgroundColor: Colors.red.shade400,
+                  ),
+                );
+                debugPrint('Navigation error opening garden stats: $e');
+              }
+            },
+      child: Container(
+        // Visible en mode calibration pour aider le dev / QA
+        decoration: BoxDecoration(
+          color: isCalibrationMode ? Colors.cyan.withOpacity(0.08) : Colors.transparent,
+          shape: BoxShape.circle,
+          border: isCalibrationMode
+              ? Border.all(color: Colors.cyanAccent.withOpacity(0.6), width: 2)
+              : null,
+        ),
+        child: Center(
+          child: isCalibrationMode
+              ? const Text('Stats', style: TextStyle(fontSize: 10, color: Colors.white))
+              : const SizedBox.shrink(),
+        ),
+      ),
+    );
+  }
+}
