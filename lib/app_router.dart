@@ -105,8 +105,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final gardenName = state.extra as String? ?? 'Jardin';
           return GardenBedListScreen(
             gardenId: gardenId,
-            gardenName: gardenName,
-          );
+            gardenName: gardenName);
         },
         routes: [
           GoRoute(
@@ -121,8 +120,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 onPop: () {
                   context.go(
                       AppRoutes.gardenBeds.replaceFirst(':gardenId', gardenId));
-                },
-              );
+                });
             },
           ),
         ],
@@ -137,8 +135,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final bedName = state.extra as String? ?? 'Parcelle';
           return PlantingListScreen(
             gardenBedId: bedId,
-            gardenBedName: bedName,
-          );
+            gardenBedName: bedName);
         },
       ),
 
@@ -226,8 +223,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return const Scaffold(
                 body: Center(
                   child: Text('Détail de la plante (à implémenter)'),
-                ),
-              );
+                ));
             },
           ),
           GoRoute(
@@ -250,8 +246,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return PestObservationScreen(
                 gardenId: gardenId,
                 plantId: plantId,
-                bedId: bedId,
-              );
+                bedId: bedId);
             },
           ),
           GoRoute(
@@ -260,8 +255,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final gardenId = state.uri.queryParameters['gardenId'] ?? '';
               return BioControlRecommendationsScreen(
-                gardenId: gardenId,
-              );
+                gardenId: gardenId);
             },
           ),
           GoRoute(
@@ -316,8 +310,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ],
         ),
       ),
-    ),
-  );
+    ));
 });
 
 
@@ -325,4 +318,5 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
 
 
+
 
