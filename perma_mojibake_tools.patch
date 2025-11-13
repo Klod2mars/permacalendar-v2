@@ -1,5 +1,9 @@
-﻿*** Begin Patch
-*** Add File: tools/ensure_analysis_exclude.ps1
+﻿diff --git a/tools/ensure_analysis_exclude.ps1 b/tools/ensure_analysis_exclude.ps1
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/tools/ensure_analysis_exclude.ps1
+@@ -0,0 +1,49 @@
 +<#
 +S'assure que analysis_options.yaml contient l'exclusion pour tools/backup_**/**
 +Fait un backup horodaté avant modification.
@@ -50,9 +54,12 @@
 +    Write-Host "Appended analyzer.exclude to end of file"
 +}
 +
-*** End Patch
-*** Begin Patch
-*** Add File: tools/detect_mojibake.ps1
+diff --git a/tools/detect_mojibake.ps1 b/tools/detect_mojibake.ps1
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/tools/detect_mojibake.ps1
+@@ -0,0 +1,50 @@
 +<#
 +Detecte BOM et motifs de mojibake dans les fichiers courants (.dart/.yaml/.md/.txt/.ps1)
 +Génère tools/mojibake_report.txt
@@ -103,5 +110,3 @@
 +if (-not (Test-Path "tools")) { New-Item -ItemType Directory -Path "tools" | Out-Null }
 +$reportLines | Set-Content -Path $Report -Encoding UTF8
 +Write-Host "Report written to $Report"
-+
-*** End Patch

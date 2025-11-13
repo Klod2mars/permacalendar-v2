@@ -1,0 +1,95 @@
+﻿diff --git a/tools/remove_bom.ps1 b/tools/remove_bom.ps1
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/tools/remove_bom.ps1
+@@ -0,0 +1,85 @@
++<#
++Remove BOM (UTF-8 BOM EF BB BF) from files.
++Fait un backup horodaté avant chaque modification: <file>.bak_YYYYMMDD_HHMMSS
++
++Usage:
++  .\tools\remove_bom.ps1               # scan lib/ et tools/ et demande confirmation
++  .\tools\remove_bom.ps1 -AutoConfirm  # exécute sans demander
++  .\tools\remove_bom.ps1 -Paths @("lib") -AutoConfirm
++
++Ce script n'effectue que la suppression du BOM binaire en tête de fichier
++et ne tente pas de réparer d'autres corruptions (mojibake, apostrophes,...).
++#>
++param(
++    [string[]]$Paths = @("lib","tools"),
++    [string[]]$Extensions = @("*.dart","*.yaml","*.yml","*.md","*.txt","*.ps1"),
++    [switch]$AutoConfirm
++)
++
++Write-Host "Scanning paths:" ($Paths -join ", ")
++$found = @()
++foreach ($p in $Paths) {
++    if (-not (Test-Path $p)) { continue }
++    Get-ChildItem -Path $p -Recurse -Include $Extensions -File -ErrorAction SilentlyContinue | ForEach-Object {
++        try {
++            $bytes = [System.IO.File]::ReadAllBytes($_.FullName)
++            if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
++                $found += $_.FullName
++            }
++        } catch {
++            Write-Host "Skipped (read error): $($_.FullName)"
++        }
++    }
++}
++
++if ($found.Count -eq 0) {
++    Write-Host "Aucun fichier avec BOM trouvé."
++    exit 0
++}
++
++Write-Host "Fichiers trouvés avec BOM:" -ForegroundColor Yellow
++$found | ForEach-Object { Write-Host " - $_" }
++
++if (-not $AutoConfirm) {
++    $ans = Read-Host "Confirmer suppression du BOM pour ces fichiers ? (y/N)"
++    if ($ans -ne 'y' -and $ans -ne 'Y') {
++        Write-Host "Abandon."
++        exit 0
++    }
++}
++
++$report = "tools/remove_bom_report.txt"
++$log = @()
++$log += "Remove BOM report - $(Get-Date -Format s)"
++
++foreach ($file in $found) {
++    try {
++        $bytes = [System.IO.File]::ReadAllBytes($file)
++        if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
++            $ts = Get-Date -Format "yyyyMMdd_HHmmss"
++            $bak = "$file.bak_$ts"
++            Copy-Item -Path $file -Destination $bak -Force
++            if ($bytes.Length -gt 3) {
++                $new = $bytes[3..($bytes.Length - 1)]
++            } else {
++                $new = @()
++            }
++            [System.IO.File]::WriteAllBytes($file, $new)
++            $log += "CLEANED: $file -> backup $bak"
++            Write-Host "Cleaned BOM: $file (backup: $bak)" -ForegroundColor Green
++        } else {
++            $log += "SKIPPED (no BOM on re-check): $file"
++            Write-Host "Skipped (no BOM on re-check): $file"
++        }
++    } catch {
++        $msg = $_.Exception.Message
++        $log += "ERROR: $file - $msg"
++        Write-Host "Error cleaning $file : $msg" -ForegroundColor Red
++    }
++}
++
++$log += "End of report"
++if (-not (Test-Path "tools")) { New-Item -ItemType Directory -Path "tools" | Out-Null }
++$log | Set-Content -Path $report -Encoding UTF8
++Write-Host "Report written to $report"
++
++Write-Host ""
++Write-Host "Restaurer un fichier depuis la sauvegarde:" -ForegroundColor Cyan
++Write-Host "  Copy-Item -Path <file>.bak_YYYYMMDD_HHMMSS -Destination <file> -Force"
++
