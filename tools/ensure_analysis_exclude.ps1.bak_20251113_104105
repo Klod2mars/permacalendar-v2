@@ -1,4 +1,4 @@
-﻿<#
+<#
 S'assure que analysis_options.yaml contient l'exclusion pour tools/backup_**/**
 Fait un backup horodaté avant modification.
 Usage: .\tools\ensure_analysis_exclude.ps1
@@ -20,15 +20,7 @@ if (($allLines -join "`n") -match "tools/backup_") {
     exit 0
 }
 
-# Backup safe filename (Windows-friendly timestamp)
-$ts = Get-Date -Format "yyyyMMdd_HHmmss"
-$bakPath = "$path.bak_$ts"
-try {
-    Copy-Item -Path $path -Destination $bakPath -Force
-    Write-Host "Backup created: $bakPath"
-} catch {
-    Write-Warning "Backup failed: $($_.Exception.Message) -- continuing"
-}
+Copy-Item $path "$path.bak_$(Get-Date -Format s)"
 
 # Cherche la ligne 'analyzer:' si elle existe
 $foundAnalyzer = $null
