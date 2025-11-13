@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
 import '../services/open_meteo_service.dart';
@@ -7,7 +7,7 @@ import '../services/open_meteo_service.dart';
 ///
 /// Utilise un FutureProvider.family pour gérer la recherche dynamique
 /// - Debounce automatique (300ms)
-/// - Longueur minimale (â‰¥2 caractères)
+/// - Longueur minimale (≥2 caractères)
 /// - Gestion d'erreurs silencieuse
 final communeSearchProvider =
     FutureProvider.family<List<PlaceSuggestion>, String>(

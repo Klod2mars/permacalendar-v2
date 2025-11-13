@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -536,7 +536,7 @@ _buildAboutSection(context, theme),
         content:
             'Cette action supprimera définitivement tous vos jardins, plantations et données. '
             'Cette action est irréversible.\n\n'
-            'ÃŠtes-vous sûr de vouloir continuer ?',
+            'Êtes-vous sûr de vouloir continuer ?',
         confirmText: 'Effacer',
         cancelText: 'Annuler',
         isDestructive: true,

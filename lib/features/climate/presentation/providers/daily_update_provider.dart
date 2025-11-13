@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'soil_temp_provider.dart';
 import 'weather_providers.dart';
 

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 import 'package:intl/intl.dart';
@@ -83,7 +83,7 @@ class WeatherBubbleWidget extends ConsumerWidget {
               // Températures min/max
               if (weather.minTemp != null && weather.maxTemp != null)
                 Text(
-                  'Min ${weather.minTemp!.toStringAsFixed(1)}Â° / Max ${weather.maxTemp!.toStringAsFixed(1)}Â°',
+                  'Min ${weather.minTemp!.toStringAsFixed(1)}° / Max ${weather.maxTemp!.toStringAsFixed(1)}°',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white60,
@@ -93,7 +93,7 @@ class WeatherBubbleWidget extends ConsumerWidget {
               else if (weather.temperature != null ||
                   weather.currentTemperatureC != null)
                 Text(
-                  '${(weather.temperature ?? weather.currentTemperatureC ?? 0.0).toStringAsFixed(1)}Â°',
+                  '${(weather.temperature ?? weather.currentTemperatureC ?? 0.0).toStringAsFixed(1)}°',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white60,

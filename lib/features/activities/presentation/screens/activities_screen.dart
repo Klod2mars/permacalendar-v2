@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/activity_tracker_v3_provider.dart';
 import '../../../../core/models/activity_v3.dart';
@@ -240,7 +240,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Les activités de jardinage apparaÃ®tront ici',
+            'Les activités de jardinage apparaîtront ici',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

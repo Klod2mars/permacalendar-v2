@@ -1,4 +1,4 @@
-﻿ï»¿import '../entities/pest.dart';
+import '../entities/pest.dart';
 
 /// Pest Repository Interface
 ///

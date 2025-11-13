@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'intelligence_report.dart';
 import 'pest_threat_analysis.dart';
 import 'bio_control_recommendation.dart';
@@ -14,7 +14,7 @@ part 'comprehensive_garden_analysis.g.dart';
 /// control recommendations. It embodies the holistic permaculture approach.
 ///
 /// FLOW:
-/// Sanctuary (Reality) â†’ Modern System (Filter) â†’ Intelligence (Analysis) â†’ ComprehensiveGardenAnalysis (Output)
+/// Sanctuary (Reality) → Modern System (Filter) → Intelligence (Analysis) → ComprehensiveGardenAnalysis (Output)
 @freezed
 class ComprehensiveGardenAnalysis with _$ComprehensiveGardenAnalysis {
   const factory ComprehensiveGardenAnalysis({

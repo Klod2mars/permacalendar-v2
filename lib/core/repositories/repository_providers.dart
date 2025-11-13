@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import 'garden_hive_repository.dart';
 
 /// Provider pour le repository des jardins

@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/condition_models.dart'
     show WeatherForecast;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
@@ -35,7 +35,7 @@ class WeatherImpactAnalyzer {
     required List<PlantFreezed> plants,
     required GardenContext garden,
   }) async {
-    _logDebug('ðŸŒ¤ï¸ Début analyse impact météo (${plants.length} plantes)');
+    _logDebug('🌤️ Début analyse impact météo (${plants.length} plantes)');
     final stopwatch = Stopwatch()..start();
 
     try {
@@ -44,12 +44,12 @@ class WeatherImpactAnalyzer {
 
       // Analyse des alertes météorologiques PROACTIVES (amélioration Prompt 4)
       final alerts = _detectWeatherAlertsProactive(weather, plants);
-      _logDebug('âš ï¸ ${alerts.length} alertes détectées');
+      _logDebug('⚠️ ${alerts.length} alertes détectées');
 
       // Analyse des tendances avec PRÉDICTIONS (amélioration Prompt 4)
       final trends = _analyzeWeatherTrendsWithForecast(weather);
       _logDebug(
-          'ðŸ“ˆ Tendances analysées (confiance: ${trends.confidence.toStringAsFixed(2)})');
+          '📈 Tendances analysées (confiance: ${trends.confidence.toStringAsFixed(2)})');
 
       // Calcul du score d impact global OPTIMISE
       final impactScore = _calculateOptimizedImpactScore(weather, plants);
@@ -58,11 +58,11 @@ class WeatherImpactAnalyzer {
       // Génération des recommandations PERSONNALISÉES (amélioration Prompt 4)
       final recommendations =
           _generatePersonalizedRecommendations(weather, plants, alerts, garden);
-      _logDebug('ðŸ’¡ ${recommendations.length} recommandations générées');
+      _logDebug('💡 ${recommendations.length} recommandations générées');
 
       stopwatch.stop();
       _logDebug(
-          'âœ… Analyse impact météo terminée (${stopwatch.elapsedMilliseconds}ms)');
+          '✅ Analyse impact météo terminée (${stopwatch.elapsedMilliseconds}ms)');
 
       return WeatherImpactAnalysis(
         weatherId: weather.id,
@@ -76,7 +76,7 @@ class WeatherImpactAnalyzer {
     } catch (e, stackTrace) {
       stopwatch.stop();
       _logError(
-          'âŒ Erreur analyse impact météo (${stopwatch.elapsedMilliseconds}ms): $e');
+          '❌ Erreur analyse impact météo (${stopwatch.elapsedMilliseconds}ms): $e');
       developer.log(
         'Erreur analyse impact météorologique',
         error: e,
@@ -103,10 +103,10 @@ class WeatherImpactAnalyzer {
       throw ArgumentError('Aucune plante fournie pour l\'analyse');
     }
 
-    // Vérifier fraÃ®cheur des données météo
+    // Vérifier fraîcheur des données météo
     final weatherAge = DateTime.now().difference(weather.timestamp);
     if (weatherAge.inHours > 24) {
-      _logDebug('âš ï¸ Données météo anciennes: ${weatherAge.inHours}h');
+      _logDebug('⚠️ Données météo anciennes: ${weatherAge.inHours}h');
     }
   }
 
@@ -134,7 +134,7 @@ class WeatherImpactAnalyzer {
           title:
               'Risque de gel ${weather.currentTemperature < 0 ? "CRITIQUE" : "imminent"}',
           description:
-              'Température: ${weather.currentTemperature.toStringAsFixed(1)}Â°C. '
+              'Température: ${weather.currentTemperature.toStringAsFixed(1)}°C. '
               '${frostSensitivePlants.length} plante(s) sensible(s) au gel à protéger.',
           affectedPlants:
               frostSensitivePlants.map((p) => p.commonName).toList(),
@@ -158,7 +158,7 @@ class WeatherImpactAnalyzer {
           severity: WeatherAlertSeverity.medium,
           title: 'Risque de sécheresse',
           description: 'Humidité: ${weather.humidity.toStringAsFixed(0)}%, '
-              'Temp: ${weather.currentTemperature.toStringAsFixed(1)}Â°C. '
+              'Temp: ${weather.currentTemperature.toStringAsFixed(1)}°C. '
               '${waterSensitivePlants.length} plante(s) nécessite(nt) arrosage.',
           affectedPlants:
               waterSensitivePlants.map((p) => p.commonName).toList(),
@@ -169,7 +169,7 @@ class WeatherImpactAnalyzer {
       }
     }
 
-    // ALERTE TEMPÃŠTE - Plantes hautes et fragiles
+    // ALERTE TEMPÊTE - Plantes hautes et fragiles
     if (weather.windSpeed > 40) {
       final windSensitivePlants = _getWindSensitivePlantsFromData(plants);
 
@@ -205,7 +205,7 @@ class WeatherImpactAnalyzer {
             : WeatherAlertSeverity.high,
         title: 'Canicule',
         description:
-            'Température extrême: ${weather.currentTemperature.toStringAsFixed(1)}Â°C. '
+            'Température extrême: ${weather.currentTemperature.toStringAsFixed(1)}°C. '
             'Risque de stress thermique pour toutes les plantes.',
         affectedPlants: plants.map((p) => p.commonName).toList(),
         recommendedActions: [
@@ -228,7 +228,7 @@ class WeatherImpactAnalyzer {
   WeatherTrends _analyzeWeatherTrendsWithForecast(
       CompositeWeatherData weather) {
     _logDebug(
-        'ðŸ“ˆ Analyse des tendances météo (forecast: ${weather.forecast.length} jours)');
+        '📈 Analyse des tendances météo (forecast: ${weather.forecast.length} jours)');
 
     // Analyse des tendances de température
     final tempTrend = _analyzeTrend(
@@ -266,7 +266,7 @@ class WeatherImpactAnalyzer {
     final confidence = _calculateForecastConfidence(weather.forecast);
 
     _logDebug(
-        'ðŸ“Š Tendances: temp=${tempTrend.name}, hum=${humidityTrend.name}, '
+        '📊 Tendances: temp=${tempTrend.name}, hum=${humidityTrend.name}, '
         'precip=${precipTrend.name}, vent=${windTrend.name}');
 
     return WeatherTrends(
@@ -435,7 +435,7 @@ class WeatherImpactAnalyzer {
     List<WeatherAlert> alerts,
     GardenContext garden,
   ) {
-    _logDebug('ðŸ’¡ Génération recommandations personnalisées');
+    _logDebug('💡 Génération recommandations personnalisées');
     final recommendations = <WeatherRecommendation>[];
 
     // Recommandations basées sur les alertes
@@ -537,13 +537,13 @@ class WeatherImpactAnalyzer {
   List<PlantFreezed> _getFrostSensitivePlantsFromData(
       List<PlantFreezed> plants) {
     return plants.where((plant) {
-      // Sensible si température min de germination > 10Â°C
+      // Sensible si température min de germination > 10°C
       if (plant.minGerminationTemperature != null &&
           plant.minGerminationTemperature! > 10) {
         return true;
       }
 
-      // Ou si température min de croissance > 10Â°C
+      // Ou si température min de croissance > 10°C
       if (plant.growth != null) {
         final minTemp = plant.growth!['minTemperature'] as num?;
         if (minTemp != null && minTemp.toDouble() > 10) {
@@ -578,7 +578,7 @@ class WeatherImpactAnalyzer {
       }
 
       // Plantes hautes connues
-      if (commonName.contains('tournesol') || commonName.contains('maÃ¯s')) {
+      if (commonName.contains('tournesol') || commonName.contains('maïs')) {
         return true;
       }
 
@@ -662,7 +662,7 @@ class WeatherImpactAnalyzer {
     final actions = <String>[];
 
     if (windSpeed > 60) {
-      actions.add('ðŸš¨ Vents violents: protection urgente');
+      actions.add('🚨 Vents violents: protection urgente');
     }
 
     actions.addAll([

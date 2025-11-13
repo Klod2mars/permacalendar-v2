@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recommendation.freezed.dart';
 part 'recommendation.g.dart';
@@ -89,7 +89,7 @@ class Recommendation with _$Recommendation {
     /// Statut actuel de la recommandation
     @Default(RecommendationStatus.pending) RecommendationStatus status,
 
-    /// Date de Création
+    /// Date de création
     DateTime? createdAt,
 
     /// Date de dernière mise à jour

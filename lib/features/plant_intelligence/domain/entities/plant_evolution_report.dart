@@ -1,9 +1,9 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plant_evolution_report.freezed.dart';
 part 'plant_evolution_report.g.dart';
 
-/// ðŸ”„ CURSOR PROMPT A5 - Plant Evolution Report
+/// 🔄 CURSOR PROMPT A5 - Plant Evolution Report
 ///
 /// Represents the evolution delta between two PlantIntelligenceReport instances.
 /// This report tracks how plant health has changed over time by comparing:
@@ -70,11 +70,11 @@ extension PlantEvolutionReportExtension on PlantEvolutionReport {
 
     if (hasImproved) {
       buffer
-          .write('ðŸ“ˆ Amélioration : +${deltaScore.toStringAsFixed(1)} points');
+          .write('📈 Amélioration : +${deltaScore.toStringAsFixed(1)} points');
     } else if (hasDegraded) {
-      buffer.write('ðŸ“‰ Dégradation : ${deltaScore.toStringAsFixed(1)} points');
+      buffer.write('📉 Dégradation : ${deltaScore.toStringAsFixed(1)} points');
     } else {
-      buffer.write('âž¡ï¸ Stable : pas de changement significatif');
+      buffer.write('➡️ Stable : pas de changement significatif');
     }
 
     if (improvedConditions.isNotEmpty) {

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/models/calibration_state.dart';
@@ -179,7 +179,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
       ref.read(calibrationStateProvider.notifier).disableCalibration();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('ðŸŒ¿ Calibration organique désactivée'),
+          content: Text('🌿 Calibration organique désactivée'),
           backgroundColor: Colors.grey,
         ),
       );
@@ -188,7 +188,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-              'ðŸŒ¿ Mode calibration organique activé. Retournez au dashboard.'),
+              '🌿 Mode calibration organique activé. Retournez au dashboard.'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 3),
         ),

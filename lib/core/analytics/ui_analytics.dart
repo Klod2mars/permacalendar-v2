@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 /// Service d'analytics ultra-léger pour tracker l'usage des nouvelles fonctionnalités UI
 ///
@@ -46,7 +46,7 @@ class UIAnalytics {
     });
   }
 
-  /// Menu de Création rapide ouvert
+  /// Menu de création rapide ouvert
   static void quickCreateMenuOpened() {
     logEvent('quick_create_menu_opened');
   }

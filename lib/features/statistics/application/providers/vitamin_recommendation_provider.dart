@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import '../../domain/models/vitamin_suggestion.dart';
 import 'vitamin_distribution_provider.dart';
 import '../../../../core/services/plant_catalog_service.dart';
@@ -9,10 +9,10 @@ import '../../../../core/models/plant.dart';
 /// Ce provider analyse les carences détectées dans la distribution vitaminique
 /// et propose 3 plantes pour rééquilibrer les apports selon les règles :
 ///
-/// - Un seul déficit dominant â†’ 3 plantes riches en cette vitamine
-/// - Deux déficits â†’ 2 plantes riches en la plus basse + 1 pour la suivante
-/// - Trois déficits â†’ 1 plante par vitamine (3 plantes = 3 vitamines)
-/// - 4 ou 5 déficits â†’ ne garder que les 3 plus bas
+/// - Un seul déficit dominant → 3 plantes riches en cette vitamine
+/// - Deux déficits → 2 plantes riches en la plus basse + 1 pour la suivante
+/// - Trois déficits → 1 plante par vitamine (3 plantes = 3 vitamines)
+/// - 4 ou 5 déficits → ne garder que les 3 plus bas
 final vitaminRecommendationProvider =
     FutureProvider<List<VitaminSuggestion>>((ref) async {
   final vitaminDistribution =
@@ -60,7 +60,7 @@ final vitaminRecommendationProvider =
 
   // Générer les suggestions selon les règles
   if (vitaminsToAddress.length == 1) {
-    // Un seul déficit â†’ 3 plantes riches en cette vitamine
+    // Un seul déficit → 3 plantes riches en cette vitamine
     final vitamin = vitaminsToAddress[0];
     final richPlants = _getPlantsRichInVitamin(plants, vitamin);
     for (int i = 0; i < 3 && i < richPlants.length; i++) {
@@ -73,7 +73,7 @@ final vitaminRecommendationProvider =
       ));
     }
   } else if (vitaminsToAddress.length == 2) {
-    // Deux déficits â†’ 2 plantes pour la plus basse + 1 pour la suivante
+    // Deux déficits → 2 plantes pour la plus basse + 1 pour la suivante
     final primaryVitamin = vitaminsToAddress[0];
     final secondaryVitamin = vitaminsToAddress[1];
 
@@ -101,7 +101,7 @@ final vitaminRecommendationProvider =
       ));
     }
   } else {
-    // Trois déficits ou plus â†’ 1 plante par vitamine
+    // Trois déficits ou plus → 1 plante par vitamine
     for (final vitamin in vitaminsToAddress) {
       final richPlants = _getPlantsRichInVitamin(plants, vitamin);
       if (richPlants.isNotEmpty) {

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 import 'condition_models.dart';
 
 part 'weather_condition_hive.g.dart';

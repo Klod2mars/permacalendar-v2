@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Climate Rosace Center PH - V2 Geometric Rounded Design
 ///
@@ -9,7 +9,7 @@
 /// - Circular shape with frost glass effect
 /// - pH value display (X.X format)
 /// - Alert mode support (pulse effect handled by parent)
-/// - Touch target ââ€°Â¥44dp
+/// - Touch target â‰¥44dp
 class ClimateRosaceCenterPH extends StatelessWidget {
   const ClimateRosaceCenterPH({
     super.key,

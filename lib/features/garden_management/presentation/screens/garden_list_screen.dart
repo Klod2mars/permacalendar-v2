@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -130,7 +130,7 @@ class _GardenListScreenState extends ConsumerState<GardenListScreen> {
       icon: Icons.eco,
       title: 'Aucun jardin',
       subtitle:
-          'Commencez par Créer votre premier jardin pour suivre vos plantations.',
+          'Commencez par créer votre premier jardin pour suivre vos plantations.',
       actionText: 'Créer un jardin',
       onAction: () => context.push(AppRoutes.gardenCreate),
     );

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'garden_intelligence_settings.freezed.dart';
 part 'garden_intelligence_settings.g.dart';

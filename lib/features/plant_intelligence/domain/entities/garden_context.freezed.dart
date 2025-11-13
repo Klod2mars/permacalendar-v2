@@ -1,4 +1,4 @@
-﻿// coverage:ignore-file
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -50,7 +50,7 @@ mixin _$GardenContext {
   /// Préférences de culture
   CultivationPreferences get preferences => throw _privateConstructorUsedError;
 
-  /// Date de Création
+  /// Date de création
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Date de dernière mise à jour
@@ -413,7 +413,7 @@ class _$GardenContextImpl implements _GardenContext {
   @override
   final CultivationPreferences preferences;
 
-  /// Date de Création
+  /// Date de création
   @override
   final DateTime? createdAt;
 
@@ -559,7 +559,7 @@ abstract class _GardenContext implements GardenContext {
   CultivationPreferences get preferences;
   @override
 
-  /// Date de Création
+  /// Date de création
   DateTime? get createdAt;
   @override
 
@@ -941,13 +941,13 @@ ClimateConditions _$ClimateConditionsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ClimateConditions {
-  /// Température moyenne annuelle (Â°C)
+  /// Température moyenne annuelle (°C)
   double get averageTemperature => throw _privateConstructorUsedError;
 
-  /// Température minimale enregistrée (Â°C)
+  /// Température minimale enregistrée (°C)
   double get minTemperature => throw _privateConstructorUsedError;
 
-  /// Température maximale enregistrée (Â°C)
+  /// Température maximale enregistrée (°C)
   double get maxTemperature => throw _privateConstructorUsedError;
 
   /// Précipitations annuelles moyennes (mm)
@@ -1171,15 +1171,15 @@ class _$ClimateConditionsImpl implements _ClimateConditions {
   factory _$ClimateConditionsImpl.fromJson(Map<String, dynamic> json) =>
       _$$ClimateConditionsImplFromJson(json);
 
-  /// Température moyenne annuelle (Â°C)
+  /// Température moyenne annuelle (°C)
   @override
   final double averageTemperature;
 
-  /// Température minimale enregistrée (Â°C)
+  /// Température minimale enregistrée (°C)
   @override
   final double minTemperature;
 
-  /// Température maximale enregistrée (Â°C)
+  /// Température maximale enregistrée (°C)
   @override
   final double maxTemperature;
 
@@ -1291,15 +1291,15 @@ abstract class _ClimateConditions implements ClimateConditions {
 
   @override
 
-  /// Température moyenne annuelle (Â°C)
+  /// Température moyenne annuelle (°C)
   double get averageTemperature;
   @override
 
-  /// Température minimale enregistrée (Â°C)
+  /// Température minimale enregistrée (°C)
   double get minTemperature;
   @override
 
-  /// Température maximale enregistrée (Â°C)
+  /// Température maximale enregistrée (°C)
   double get maxTemperature;
   @override
 
@@ -2089,10 +2089,10 @@ mixin _$GardenStats {
   /// Nombre de plantes actives
   int get activePlants => throw _privateConstructorUsedError;
 
-  /// Surface totale cultivée (mÂ²)
+  /// Surface totale cultivée (m²)
   double get totalArea => throw _privateConstructorUsedError;
 
-  /// Surface cultivée actuellement (mÂ²)
+  /// Surface cultivée actuellement (m²)
   double get activeArea => throw _privateConstructorUsedError;
 
   /// Rendement total (kg)
@@ -2110,10 +2110,10 @@ mixin _$GardenStats {
   /// Taux de réussite (%)
   double get successRate => throw _privateConstructorUsedError;
 
-  /// Coût total des intrants (â‚¬)
+  /// Coût total des intrants (€)
   double get totalInputCosts => throw _privateConstructorUsedError;
 
-  /// Valeur totale des récoltes (â‚¬)
+  /// Valeur totale des récoltes (€)
   double get totalHarvestValue => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2337,11 +2337,11 @@ class _$GardenStatsImpl implements _GardenStats {
   @override
   final int activePlants;
 
-  /// Surface totale cultivée (mÂ²)
+  /// Surface totale cultivée (m²)
   @override
   final double totalArea;
 
-  /// Surface cultivée actuellement (mÂ²)
+  /// Surface cultivée actuellement (m²)
   @override
   final double activeArea;
 
@@ -2365,11 +2365,11 @@ class _$GardenStatsImpl implements _GardenStats {
   @override
   final double successRate;
 
-  /// Coût total des intrants (â‚¬)
+  /// Coût total des intrants (€)
   @override
   final double totalInputCosts;
 
-  /// Valeur totale des récoltes (â‚¬)
+  /// Valeur totale des récoltes (€)
   @override
   final double totalHarvestValue;
 
@@ -2464,11 +2464,11 @@ abstract class _GardenStats implements GardenStats {
   int get activePlants;
   @override
 
-  /// Surface totale cultivée (mÂ²)
+  /// Surface totale cultivée (m²)
   double get totalArea;
   @override
 
-  /// Surface cultivée actuellement (mÂ²)
+  /// Surface cultivée actuellement (m²)
   double get activeArea;
   @override
 
@@ -2492,11 +2492,11 @@ abstract class _GardenStats implements GardenStats {
   double get successRate;
   @override
 
-  /// Coût total des intrants (â‚¬)
+  /// Coût total des intrants (€)
   double get totalInputCosts;
   @override
 
-  /// Valeur totale des récoltes (â‚¬)
+  /// Valeur totale des récoltes (€)
   double get totalHarvestValue;
   @override
   @JsonKey(ignore: true)

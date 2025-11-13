@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 
 /// Feature flags pour activer/désactiver les nouvelles fonctionnalités UI
 ///
@@ -15,7 +15,7 @@ class FeatureFlags {
   /// Active la nouvelle version optimisée de l'écran d'accueil
   ///
   /// Inclut:
-  /// - Tuiles d'actions rapides 2Ã—2
+  /// - Tuiles d'actions rapides 2×2
   /// - Carrousel horizontal des jardins
   /// - Activités récentes compactes
   final bool homeV2;
@@ -33,7 +33,7 @@ class FeatureFlags {
   /// Permet:
   /// - Sélection multiple de plantes prêtes
   /// - Récolte groupée en un seul clic
-  /// - FAB contextuel (apparaÃ®t seulement si plantes prêtes)
+  /// - FAB contextuel (apparaît seulement si plantes prêtes)
   final bool quickHarvest;
 
   /// Active le nouveau thème Material Design 3

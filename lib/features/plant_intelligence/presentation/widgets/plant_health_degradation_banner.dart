@@ -1,20 +1,20 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/plant_evolution_report.dart';
 import '../providers/plant_evolution_providers.dart';
 import '../screens/plant_evolution_history_screen.dart';
 
-/// âœ… CURSOR PROMPT A9 - PlantHealthDegradationBanner
+/// ✅ CURSOR PROMPT A9 - PlantHealthDegradationBanner
 ///
 /// Widget conditionnel qui affiche une alerte lorsqu'une plante présente
 /// une dégradation significative de son score de santé.
 ///
 /// **Conditions d'affichage:**
 /// - deltaScore < -1.0 OU trend == 'down'
-/// - La bannière apparaÃ®t dans PlantingDetailScreen ou PlantDetailScreen
+/// - La bannière apparaît dans PlantingDetailScreen ou PlantDetailScreen
 ///
 /// **Features:**
-/// - Design alert avec icône âš ï¸
+/// - Design alert avec icône ⚠️
 /// - Animation slide-in
 /// - CTA vers PlantEvolutionTimeline
 /// - État retractable (peut être replié)
@@ -138,7 +138,7 @@ class _PlantHealthDegradationBannerState
                           Row(
                             children: [
                               const Text(
-                                'âš ï¸ ',
+                                '⚠️ ',
                                 style: TextStyle(fontSize: 20),
                               ),
                               Expanded(

@@ -1,4 +1,4 @@
-﻿ï»¿import '../../domain/entities/plant_condition.dart';
+import '../../domain/entities/plant_condition.dart';
 import '../../domain/entities/recommendation.dart';
 import '../../domain/entities/weather_condition.dart';
 import '../../domain/entities/garden_context.dart';

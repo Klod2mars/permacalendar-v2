@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:permacalendar/core/services/environment_service.dart';
 

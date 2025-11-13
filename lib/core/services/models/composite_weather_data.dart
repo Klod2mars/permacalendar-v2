@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:permacalendar/features/plant_intelligence/domain/entities/condition_models.dart';
+import 'package:permacalendar/features/plant_intelligence/domain/entities/condition_models.dart';
 
 /// Modèle composite helper pour les données météo
 ///
@@ -63,7 +63,7 @@ class CompositeWeatherData {
   /// Factory depuis WeatherCondition unitaire (utilise valeurs par défaut)
   ///
   /// NOTE: WeatherCondition est UNITAIRE (1 type + 1 valeur)
-  /// Cette factory Crée un composite avec des valeurs par défaut acceptables
+  /// Cette factory crée un composite avec des valeurs par défaut acceptables
   factory CompositeWeatherData.fromUnitaryCondition(dynamic weatherCondition) {
     double currentTemp = 20.0; // Valeur par défaut
     double minTemp = 15.0;

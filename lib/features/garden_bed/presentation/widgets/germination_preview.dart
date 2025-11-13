@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
@@ -57,7 +57,7 @@ class GerminationPreview extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('ðŸŒ± Germination',
+            const Text('🌱 Germination',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ...activePlantings.map((planting) {

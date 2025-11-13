@@ -1,10 +1,10 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../domain/models/vitamin_suggestion.dart';
 
 /// Widget pour afficher une ligne de suggestions de plantes vitaminiques
 ///
-/// Affiche les 3 plantes recommandÃƒÂ©es sous forme de bulles colorÃƒÂ©es
-/// similaires au style du Top 3 Ãƒâ€°conomie
+/// Affiche les 3 plantes recommandÃ©es sous forme de bulles colorÃ©es
+/// similaires au style du Top 3 Ã‰conomie
 class VitaminSuggestionRow extends StatelessWidget {
   final List<VitaminSuggestion> suggestions;
 
@@ -22,7 +22,7 @@ class VitaminSuggestionRow extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Suggestions pour rÃƒÂ©ÃƒÂ©quilibrer :',
+          'Suggestions pour rÃ©Ã©quilibrer :',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -63,7 +63,7 @@ class VitaminSuggestionRow extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // IcÃƒÂ´ne de la vitamine
+          // IcÃ´ne de la vitamine
           Container(
             width: 20,
             height: 20,
@@ -109,7 +109,7 @@ class VitaminSuggestionRow extends StatelessWidget {
     );
   }
 
-  /// Construit le message quand aucune recommandation n'est nÃƒÂ©cessaire
+  /// Construit le message quand aucune recommandation n'est nÃ©cessaire
   Widget _buildNoRecommendations(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -131,7 +131,7 @@ class VitaminSuggestionRow extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            'Aucune recommandation nÃƒÂ©cessaire',
+            'Aucune recommandation nÃ©cessaire',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Colors.green.shade700,
                   fontWeight: FontWeight.w500,
@@ -142,7 +142,7 @@ class VitaminSuggestionRow extends StatelessWidget {
     );
   }
 
-  /// Retourne la couleur associÃƒÂ©e ÃƒÂ  une vitamine
+  /// Retourne la couleur associÃ©e Ã  une vitamine
   Color _getVitaminColor(String vitaminKey) {
     switch (vitaminKey) {
       case 'A':
@@ -154,7 +154,7 @@ class VitaminSuggestionRow extends StatelessWidget {
       case 'E':
         return const Color(0xFF9013FE); // Mauve
       case 'K':
-        return const Color(0xFFFFD700); // Jaune pÃƒÂ¢le
+        return const Color(0xFFFFD700); // Jaune pÃ¢le
       default:
         return Colors.grey;
     }

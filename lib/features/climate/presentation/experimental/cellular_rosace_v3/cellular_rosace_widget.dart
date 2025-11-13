@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'cellular_geometry.dart';
 import 'cellular_painter.dart';
@@ -187,7 +187,7 @@ class _CellularRosaceWidgetState extends ConsumerState<CellularRosaceWidget>
           ),
           const SizedBox(height: 4),
           const Text(
-            '14Â° / 7Â°',
+            '14° / 7°',
             style: TextStyle(
               color: Colors.white,
               fontSize: 12,
@@ -218,7 +218,7 @@ class _CellularRosaceWidgetState extends ConsumerState<CellularRosaceWidget>
           ),
           const SizedBox(height: 2),
           const Text(
-            '10.4Â°',
+            '10.4°',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -243,7 +243,7 @@ class _CellularRosaceWidgetState extends ConsumerState<CellularRosaceWidget>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'ðŸ“ˆ',
+            '📈',
             style: TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 2),
@@ -404,13 +404,13 @@ class CellularRosaceScreen extends StatelessWidget {
                     SizedBox(height: 16),
                     Text(
                       'Features:\n'
-                      'âœ“ Unified cellular tissue (no floating elements)\n'
-                      'âœ“ Shared membrane boundaries\n'
-                      'âœ“ Organic pressure variations\n'
-                      'âœ“ Living breathing animations\n'
-                      'âœ“ Pulsating nucleus\n'
-                      'âœ“ Organic touch responses\n'
-                      'âœ“ Irregular cell shapes with natural boundaries',
+                      '✓ Unified cellular tissue (no floating elements)\n'
+                      '✓ Shared membrane boundaries\n'
+                      '✓ Organic pressure variations\n'
+                      '✓ Living breathing animations\n'
+                      '✓ Pulsating nucleus\n'
+                      '✓ Organic touch responses\n'
+                      '✓ Irregular cell shapes with natural boundaries',
                       style: TextStyle(
                         fontSize: 12,
                         color: Color(0xFF689F38),

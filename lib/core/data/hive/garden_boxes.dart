@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../../models/garden.dart';
 import '../../models/garden_bed.dart';
 import '../../models/planting.dart';

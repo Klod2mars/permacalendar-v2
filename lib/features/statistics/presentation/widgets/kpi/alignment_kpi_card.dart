@@ -1,11 +1,11 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/providers/alignment/alignment_insight_provider.dart';
 
 /// Widget KPI pour l'alignement au vivant
 ///
 /// Affiche :
-/// - Si hasData == false : phrase pÃƒÂ©dagogique validÃƒÂ©e
+/// - Si hasData == false : phrase pÃ©dagogique validÃ©e
 /// - Si hasData == true : jauge circulaire avec pourcentage d'alignement
 class AlignmentKpiCard extends ConsumerWidget {
   const AlignmentKpiCard({super.key});
@@ -27,7 +27,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Construit l'ÃƒÂ©tat "pas de donnÃƒÂ©es"
+  /// Construit l'Ã©tat "pas de donnÃ©es"
   Widget _buildNoDataState(BuildContext context) {
     return Column(
       children: [
@@ -36,7 +36,7 @@ class AlignmentKpiCard extends ConsumerWidget {
 
         const SizedBox(height: 16),
 
-        // Message pÃƒÂ©dagogique
+        // Message pÃ©dagogique
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -68,7 +68,7 @@ class AlignmentKpiCard extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Cet outil ÃƒÂ©value ÃƒÂ  quel point tu rÃƒÂ©alises tes semis, plantations et rÃƒÂ©coltes dans la fenÃƒÂªtre idÃƒÂ©ale recommandÃƒÂ©e par l\'Agenda Intelligent.',
+                'Cet outil Ã©value Ã  quel point tu rÃ©alises tes semis, plantations et rÃ©coltes dans la fenÃªtre idÃ©ale recommandÃ©e par l\'Agenda Intelligent.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -76,7 +76,7 @@ class AlignmentKpiCard extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Commence ÃƒÂ  planter et rÃƒÂ©colter pour voir ton alignement !',
+                'Commence Ã  planter et rÃ©colter pour voir ton alignement !',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
@@ -90,7 +90,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Construit l'affichage avec donnÃƒÂ©es d'alignement
+  /// Construit l'affichage avec donnÃ©es d'alignement
   Widget _buildAlignmentDisplay(
       BuildContext context, AlignmentInsight insight) {
     return Column(
@@ -136,7 +136,7 @@ class AlignmentKpiCard extends ConsumerWidget {
 
         const SizedBox(height: 8),
 
-        // Statistiques dÃƒÂ©taillÃƒÂ©es
+        // Statistiques dÃ©taillÃ©es
         _buildDetailedStats(context, insight),
       ],
     );
@@ -190,7 +190,7 @@ class AlignmentKpiCard extends ConsumerWidget {
                       ),
                 ),
                 Text(
-                  'alignÃƒÂ©',
+                  'alignÃ©',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontWeight: FontWeight.w500,
@@ -204,7 +204,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Construit les statistiques dÃƒÂ©taillÃƒÂ©es
+  /// Construit les statistiques dÃ©taillÃ©es
   Widget _buildDetailedStats(BuildContext context, AlignmentInsight insight) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -217,14 +217,14 @@ class AlignmentKpiCard extends ConsumerWidget {
         ),
         _buildStatItem(
           context,
-          'AlignÃƒÂ©es',
+          'AlignÃ©es',
           '${insight.alignedActions}',
           Icons.check_circle_outline,
           _getAlignmentColor(context, insight.level),
         ),
         _buildStatItem(
           context,
-          'DÃƒÂ©calÃƒÂ©es',
+          'DÃ©calÃ©es',
           '${insight.misalignedActions}',
           Icons.schedule_outlined,
           Colors.orange,
@@ -233,7 +233,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Construit un ÃƒÂ©lÃƒÂ©ment de statistique
+  /// Construit un Ã©lÃ©ment de statistique
   Widget _buildStatItem(
     BuildContext context,
     String label,
@@ -270,7 +270,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Construit l'ÃƒÂ©tat de chargement
+  /// Construit l'Ã©tat de chargement
   Widget _buildLoadingState(BuildContext context) {
     return Column(
       children: [
@@ -286,7 +286,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Construit l'ÃƒÂ©tat d'erreur
+  /// Construit l'Ã©tat d'erreur
   Widget _buildErrorState(BuildContext context) {
     return Column(
       children: [
@@ -326,7 +326,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     );
   }
 
-  /// Retourne la couleur appropriÃƒÂ©e selon le niveau d'alignement
+  /// Retourne la couleur appropriÃ©e selon le niveau d'alignement
   Color _getAlignmentColor(BuildContext context, AlignmentLevel level) {
     switch (level) {
       case AlignmentLevel.excellent:
@@ -344,7 +344,7 @@ class AlignmentKpiCard extends ConsumerWidget {
     }
   }
 
-  /// Retourne l'icÃƒÂ´ne appropriÃƒÂ©e selon le niveau d'alignement
+  /// Retourne l'icÃ´ne appropriÃ©e selon le niveau d'alignement
   IconData _getAlignmentIcon(AlignmentLevel level) {
     switch (level) {
       case AlignmentLevel.excellent:

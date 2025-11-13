@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/soil_metrics_repository.dart';
 import '../../domain/usecases/round_ph_to_step_usecase.dart';
 import 'soil_metrics_repository_provider.dart';

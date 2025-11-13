@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import '../../models/garden.dart';
 import '../../models/garden_freezed.dart';
 import '../../data/hive/garden_boxes.dart';
@@ -17,7 +17,7 @@ import '../../repositories/garden_hive_repository.dart';
 ///
 /// **Stratégie de Basculement :**
 /// 1. **Phase initiale** : Lecture 100% Legacy
-/// 2. **Phase transition** : Lecture graduelle Moderne (10% â†’ 50% â†’ 90%)
+/// 2. **Phase transition** : Lecture graduelle Moderne (10% → 50% → 90%)
 /// 3. **Phase finale** : Lecture 100% Moderne
 /// 4. **Fallback** : Retour automatique Legacy si erreurs
 ///
@@ -46,7 +46,7 @@ class ReadSwitchService {
 
   /// Constructeur
   ReadSwitchService() {
-    _log('ðŸ—ï¸ Read Switch Service Créé', level: 500);
+    _log('🏗️ Read Switch Service créé', level: 500);
   }
 
   // ==================== BASCULEMENT ====================
@@ -54,7 +54,7 @@ class ReadSwitchService {
   /// Bascule les lectures vers le système Moderne
   Future<void> switchToModernReads() async {
     try {
-      _log('ðŸ”€ Basculement vers lectures Moderne', level: 500);
+      _log('🔀 Basculement vers lectures Moderne', level: 500);
 
       // Vérifier la disponibilité du système Moderne
       final available = await _checkModernSystemAvailable();
@@ -66,9 +66,9 @@ class ReadSwitchService {
       _modernReadPercentage = 100;
       _switchStrategy = GradualSwitchStrategy.off;
 
-      _log('âœ… Lectures basculées vers Moderne (100%)', level: 500);
+      _log('✅ Lectures basculées vers Moderne (100%)', level: 500);
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur basculement vers Moderne', e, stackTrace);
+      _logError('❌ Erreur basculement vers Moderne', e, stackTrace);
       rethrow;
     }
   }
@@ -76,35 +76,35 @@ class ReadSwitchService {
   /// Bascule les lectures vers le système Legacy
   Future<void> switchToLegacyReads() async {
     try {
-      _log('âª Basculement vers lectures Legacy', level: 900);
+      _log('⏪ Basculement vers lectures Legacy', level: 900);
 
       _currentReadSource = ReadSource.legacy;
       _modernReadPercentage = 0;
       _switchStrategy = GradualSwitchStrategy.off;
 
-      _log('âœ… Lectures basculées vers Legacy (100%)', level: 500);
+      _log('✅ Lectures basculées vers Legacy (100%)', level: 500);
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur basculement vers Legacy', e, stackTrace);
+      _logError('❌ Erreur basculement vers Legacy', e, stackTrace);
       rethrow;
     }
   }
 
-  /// Active le basculement graduel (10% â†’ 50% â†’ 90% â†’ 100%)
+  /// Active le basculement graduel (10% → 50% → 90% → 100%)
   Future<void> enableGradualSwitch({
     GradualSwitchStrategy strategy = GradualSwitchStrategy.conservative,
   }) async {
     try {
-      _log('ðŸ”„ Activation basculement graduel ($strategy)', level: 500);
+      _log('🔄 Activation basculement graduel ($strategy)', level: 500);
 
       _switchStrategy = strategy;
       _modernReadPercentage = _getInitialPercentage(strategy);
 
       _log(
-        'âœ… Basculement graduel activé - Moderne: $_modernReadPercentage%',
+        '✅ Basculement graduel activé - Moderne: $_modernReadPercentage%',
         level: 500,
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur activation basculement graduel', e, stackTrace);
+      _logError('❌ Erreur activation basculement graduel', e, stackTrace);
       rethrow;
     }
   }
@@ -133,7 +133,7 @@ class ReadSwitchService {
       }
 
       _log(
-        'ðŸ“ˆ Pourcentage Moderne: $oldPercentage% â†’ $_modernReadPercentage%',
+        '📈 Pourcentage Moderne: $oldPercentage% → $_modernReadPercentage%',
         level: 500,
       );
 
@@ -141,12 +141,12 @@ class ReadSwitchService {
       if (_modernReadPercentage >= 100) {
         _currentReadSource = ReadSource.modern;
         _switchStrategy = GradualSwitchStrategy.off;
-        _log('âœ… Basculement graduel terminé - 100% Moderne', level: 500);
+        _log('✅ Basculement graduel terminé - 100% Moderne', level: 500);
       }
 
       return true;
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur augmentation pourcentage', e, stackTrace);
+      _logError('❌ Erreur augmentation pourcentage', e, stackTrace);
       return false;
     }
   }
@@ -168,7 +168,7 @@ class ReadSwitchService {
       }
     } catch (e, stackTrace) {
       _errorCount++;
-      _logError('âŒ Erreur lecture jardins', e, stackTrace);
+      _logError('❌ Erreur lecture jardins', e, stackTrace);
 
       // Fallback automatique
       return await _fallbackRead();
@@ -192,7 +192,7 @@ class ReadSwitchService {
       }
     } catch (e, stackTrace) {
       _errorCount++;
-      _logError('âŒ Erreur lecture jardin $gardenId', e, stackTrace);
+      _logError('❌ Erreur lecture jardin $gardenId', e, stackTrace);
 
       // Fallback
       return await _fallbackReadById(gardenId);
@@ -232,7 +232,7 @@ class ReadSwitchService {
     try {
       return await _modernRepository.getAllGardens();
     } catch (e) {
-      _log('âŒ Erreur lecture Moderne, fallback Legacy', level: 900);
+      _log('❌ Erreur lecture Moderne, fallback Legacy', level: 900);
       _fallbackCount++;
       return await _readFromLegacyAsFreezed();
     }
@@ -244,7 +244,7 @@ class ReadSwitchService {
       final legacyGardens = GardenBoxes.getAllGardens();
       return legacyGardens.map((g) => _convertLegacyToFreezed(g)).toList();
     } catch (e) {
-      _log('âŒ Erreur lecture Legacy', level: 1000);
+      _log('❌ Erreur lecture Legacy', level: 1000);
       rethrow;
     }
   }
@@ -261,7 +261,7 @@ class ReadSwitchService {
         // Essayer Moderne en dernier recours
         return await _modernRepository.getAllGardens();
       } catch (e2) {
-        _log('âŒ Fallback complet échoué', level: 1000);
+        _log('❌ Fallback complet échoué', level: 1000);
         return []; // Retour liste vide en dernier recours
       }
     }
@@ -281,7 +281,7 @@ class ReadSwitchService {
       // Essayer Moderne
       return await _modernRepository.getGardenById(gardenId);
     } catch (e) {
-      _log('âŒ Fallback lecture $gardenId échoué', level: 1000);
+      _log('❌ Fallback lecture $gardenId échoué', level: 1000);
       return null;
     }
   }
@@ -289,7 +289,7 @@ class ReadSwitchService {
   // ==================== AUGMENTATION PROGRESSIVE ====================
 
   int _increaseConservative(int currentPercentage) {
-    // Augmentation : 0 â†’ 10 â†’ 25 â†’ 50 â†’ 75 â†’ 90 â†’ 100
+    // Augmentation : 0 → 10 → 25 → 50 → 75 → 90 → 100
     if (currentPercentage == 0) return 10;
     if (currentPercentage == 10) return 25;
     if (currentPercentage == 25) return 50;
@@ -300,7 +300,7 @@ class ReadSwitchService {
   }
 
   int _increaseModerate(int currentPercentage) {
-    // Augmentation : 0 â†’ 20 â†’ 50 â†’ 80 â†’ 100
+    // Augmentation : 0 → 20 → 50 → 80 → 100
     if (currentPercentage == 0) return 20;
     if (currentPercentage == 20) return 50;
     if (currentPercentage == 50) return 80;
@@ -309,7 +309,7 @@ class ReadSwitchService {
   }
 
   int _increaseAggressive(int currentPercentage) {
-    // Augmentation : 0 â†’ 50 â†’ 100
+    // Augmentation : 0 → 50 → 100
     if (currentPercentage == 0) return 50;
     if (currentPercentage == 50) return 100;
     return 100;
@@ -348,7 +348,7 @@ class ReadSwitchService {
       await _modernRepository.getAllGardens();
       return true;
     } catch (e) {
-      _log('âŒ Système Moderne non disponible', level: 1000);
+      _log('❌ Système Moderne non disponible', level: 1000);
       return false;
     }
   }
@@ -379,7 +379,7 @@ class ReadSwitchService {
     _modernReadCount = 0;
     _fallbackCount = 0;
     _errorCount = 0;
-    _log('ðŸ“Š Statistiques réinitialisées', level: 500);
+    _log('📊 Statistiques réinitialisées', level: 500);
   }
 
   // ==================== UTILITAIRES ====================
@@ -419,9 +419,9 @@ enum ReadSource {
 /// Stratégie de basculement graduel
 enum GradualSwitchStrategy {
   off, // Pas de basculement graduel
-  conservative, // 0 â†’ 10 â†’ 25 â†’ 50 â†’ 75 â†’ 90 â†’ 100
-  moderate, // 0 â†’ 20 â†’ 50 â†’ 80 â†’ 100
-  aggressive, // 0 â†’ 50 â†’ 100
+  conservative, // 0 → 10 → 25 → 50 → 75 → 90 → 100
+  moderate, // 0 → 20 → 50 → 80 → 100
+  aggressive, // 0 → 50 → 100
 }
 
 /// Exception de basculement de lecture

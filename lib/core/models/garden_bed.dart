@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden_bed.g.dart';
@@ -98,7 +98,7 @@ class GardenBed extends HiveObject {
   double get sizeInSquareMetersRounded =>
       double.parse(sizeInSquareMeters.toStringAsFixed(2));
 
-  String get formattedSize => '${sizeInSquareMetersRounded}mÂ²';
+  String get formattedSize => '${sizeInSquareMetersRounded}m²';
 
   // Conversion JSON pour export/import
   Map<String, dynamic> toJson() {

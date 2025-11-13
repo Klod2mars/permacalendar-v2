@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Dialog de confirmation personnalisé
 class ConfirmationDialog extends StatelessWidget {

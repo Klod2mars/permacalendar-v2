@@ -1,4 +1,4 @@
-﻿// coverage:ignore-file
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -47,7 +47,7 @@ mixin _$PlantCondition {
   /// Valeur maximale acceptable
   double get maxValue => throw _privateConstructorUsedError;
 
-  /// Unité de mesure (CÂ°, %, lux, etc.)
+  /// Unité de mesure (C°, %, lux, etc.)
   String get unit => throw _privateConstructorUsedError;
 
   /// Description de la condition
@@ -59,7 +59,7 @@ mixin _$PlantCondition {
   /// Date de la mesure
   DateTime get measuredAt => throw _privateConstructorUsedError;
 
-  /// Date de Création
+  /// Date de création
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Date de dernière mise à jour
@@ -367,7 +367,7 @@ class _$PlantConditionImpl implements _PlantCondition {
   @override
   final double maxValue;
 
-  /// Unité de mesure (CÂ°, %, lux, etc.)
+  /// Unité de mesure (C°, %, lux, etc.)
   @override
   final String unit;
 
@@ -392,7 +392,7 @@ class _$PlantConditionImpl implements _PlantCondition {
   @override
   final DateTime measuredAt;
 
-  /// Date de Création
+  /// Date de création
   @override
   final DateTime? createdAt;
 
@@ -530,7 +530,7 @@ abstract class _PlantCondition implements PlantCondition {
   double get maxValue;
   @override
 
-  /// Unité de mesure (CÂ°, %, lux, etc.)
+  /// Unité de mesure (C°, %, lux, etc.)
   String get unit;
   @override
 
@@ -546,7 +546,7 @@ abstract class _PlantCondition implements PlantCondition {
   DateTime get measuredAt;
   @override
 
-  /// Date de Création
+  /// Date de création
   DateTime? get createdAt;
   @override
 

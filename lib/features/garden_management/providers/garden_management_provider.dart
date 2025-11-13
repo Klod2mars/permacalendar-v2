@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../core/repositories/repository_providers.dart';
 

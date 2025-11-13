@@ -1,9 +1,9 @@
-﻿ï»¿import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden.g.dart';
 
-/// âš ï¸ DÉPRÉCIÉ : Utilisez GardenFreezed à la place
+/// ⚠️ DÉPRÉCIÉ : Utilisez GardenFreezed à la place
 ///
 /// Ce modèle Garden (legacy, HiveType 0) est déprécié et sera supprimé dans la v3.0.
 ///
@@ -149,7 +149,7 @@ class Garden extends HiveObject {
 
   @override
   String toString() {
-    return 'Garden(id: $id, name: $name, area: ${totalAreaInSquareMeters}mÂ²)';
+    return 'Garden(id: $id, name: $name, area: ${totalAreaInSquareMeters}m²)';
   }
 
   @override

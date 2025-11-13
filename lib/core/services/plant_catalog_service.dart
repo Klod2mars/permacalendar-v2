@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/plant.dart';
 
@@ -12,7 +12,7 @@ class PlantCatalogService {
 
   /// Charge toutes les plantes depuis le fichier JSON
   ///
-  /// âœ… REFACTORÉ - Support multi-format :
+  /// ✅ REFACTORÉ - Support multi-format :
   /// - Legacy (array-only) : `[{plant1}, {plant2}, ...]`
   /// - v2.1.0 (structured) : `{ schema_version, metadata, plants: [...] }`
   ///
@@ -31,7 +31,7 @@ class PlantCatalogService {
       final String jsonString = await rootBundle.loadString(_plantsAssetPath);
       final dynamic jsonData = json.decode(jsonString);
 
-      // âœ… NOUVEAU : Détection automatique du format
+      // ✅ NOUVEAU : Détection automatique du format
       List<dynamic> jsonList;
 
       if (jsonData is List) {
@@ -52,11 +52,11 @@ class PlantCatalogService {
         // Logger les métadonnées si disponibles
         final metadata = jsonData['metadata'] as Map<String, dynamic>?;
         if (metadata != null) {
-          print('ðŸŒ± PlantCatalogService: Format v$schemaVersion détecté');
+          print('🌱 PlantCatalogService: Format v$schemaVersion détecté');
           print('   - Version: ${metadata['version']}');
           print('   - Total plantes: ${metadata['total_plants']}');
           print('   - Source: ${metadata['source']}');
-          print('   - mise à jour: ${metadata['updated_at']}');
+          print('   - Mise à jour: ${metadata['updated_at']}');
         }
       } else {
         throw PlantCatalogException(
@@ -128,13 +128,13 @@ class PlantCatalogService {
     return plants.where((plant) => plant.difficulty == difficulty).toList();
   }
 
-  /// Filtre les plantes à croissance rapide (â‰¤ 45 jours)
+  /// Filtre les plantes à croissance rapide (≤ 45 jours)
   static Future<List<Plant>> getQuickGrowingPlants() async {
     final plants = await loadPlants();
     return plants.where((plant) => plant.isQuickGrowing).toList();
   }
 
-  /// Filtre les plantes à croissance lente (â‰¥ 90 jours)
+  /// Filtre les plantes à croissance lente (≥ 90 jours)
   static Future<List<Plant>> getSlowGrowingPlants() async {
     final plants = await loadPlants();
     return plants.where((plant) => plant.isSlowGrowing).toList();

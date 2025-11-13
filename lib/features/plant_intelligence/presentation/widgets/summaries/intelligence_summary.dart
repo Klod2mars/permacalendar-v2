@@ -1,10 +1,10 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import '../cards/alert_banner.dart';
 
-/// RÃƒÂ©sumÃƒÂ© de l'intelligence vÃƒÂ©gÃƒÂ©tale pour un jardin
+/// RÃ©sumÃ© de l'intelligence vÃ©gÃ©tale pour un jardin
 class IntelligenceSummary extends StatelessWidget {
   final List<PlantCondition> plantConditions;
   final List<Recommendation> recommendations;
@@ -81,7 +81,7 @@ class IntelligenceSummary extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Intelligence VÃƒÂ©gÃƒÂ©tale',
+                'Intelligence VÃ©gÃ©tale',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -137,7 +137,7 @@ class IntelligenceSummary extends StatelessWidget {
         Expanded(
           child: _buildStatCard(
             theme,
-            'Plantes analysÃƒÂ©es',
+            'Plantes analysÃ©es',
             '${stats['totalPlants']}',
             Icons.eco,
             Colors.green,
@@ -218,7 +218,7 @@ class IntelligenceSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Distribution de santÃƒÂ©',
+          'Distribution de santÃ©',
           style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -514,7 +514,7 @@ class IntelligenceSummary extends StatelessWidget {
     final totalRecommendations = recommendations.length;
     final totalAlerts = alerts?.length ?? 0;
 
-    // Calculer la santÃƒÂ© moyenne
+    // Calculer la santÃ© moyenne
     double averageHealth = 0.0;
     if (totalPlants > 0) {
       averageHealth = plantConditions
@@ -523,7 +523,7 @@ class IntelligenceSummary extends StatelessWidget {
           totalPlants;
     }
 
-    // Distribution de santÃƒÂ©
+    // Distribution de santÃ©
     final healthDistribution = <String, int>{
       'excellent': 0,
       'good': 0,
@@ -569,7 +569,7 @@ class IntelligenceSummary extends StatelessWidget {
   }
 }
 
-/// RÃƒÂ©sumÃƒÂ© compact pour les listes
+/// RÃ©sumÃ© compact pour les listes
 class CompactIntelligenceSummary extends StatelessWidget {
   final String gardenName;
   final int plantCount;
@@ -626,7 +626,7 @@ class CompactIntelligenceSummary extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Intelligence VÃƒÂ©gÃƒÂ©tale',
+                      'Intelligence VÃ©gÃ©tale',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),

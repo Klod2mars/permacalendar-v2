@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import '../data/repositories/plant_hive_repository.dart';
 import '../domain/entities/plant_entity.dart';
 import '../data/models/plant_hive.dart';
@@ -69,7 +69,7 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
       final repository = PlantHiveRepository();
       await repository.addPlant(plant);
 
-      // Tracker l'activité de Création
+      // Tracker l'activité de création
       final activityTracker = ActivityTrackerV3();
       await activityTracker.trackActivity(
         type: 'plantCreated',

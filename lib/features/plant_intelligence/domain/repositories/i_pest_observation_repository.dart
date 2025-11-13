@@ -1,4 +1,4 @@
-﻿ï»¿import '../entities/pest_observation.dart';
+import '../entities/pest_observation.dart';
 
 /// Pest Observation Repository Interface
 ///
@@ -6,7 +6,7 @@
 /// This repository manages pest observations in the Sanctuary (user's garden reality).
 /// Observations are created ONLY by the user, NEVER by the AI.
 /// The Intelligence Végétale can READ observations but MUST NEVER CREATE or MODIFY them.
-/// This maintains the sacred boundary: User (Reality) â†’ Sanctuary (Storage) â†’ Intelligence (Read-only)
+/// This maintains the sacred boundary: User (Reality) → Sanctuary (Storage) → Intelligence (Read-only)
 abstract class IPestObservationRepository {
   /// Save a pest observation (USER ACTION ONLY)
   Future<void> savePestObservation(PestObservation observation);

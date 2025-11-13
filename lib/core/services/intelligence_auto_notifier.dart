@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:async';
+import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import '../../features/plant_intelligence/domain/entities/plant_condition.dart';
@@ -8,7 +8,7 @@ import '../providers/intelligence_runtime_providers.dart';
 import '../../features/plant_intelligence/domain/entities/intelligence_state.dart';
 import '../../features/plant_intelligence/presentation/providers/intelligence_state_providers.dart';
 
-/// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
+/// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
 ///
 /// Service d'écoute pour générer des alertes automatiquement
 ///
@@ -42,12 +42,12 @@ class IntelligenceAutoNotifier {
   /// Initialise les écouteurs
   Future<void> initialize() async {
     if (_isInitialized) {
-      developer.log('ðŸ”” IntelligenceAutoNotifier déjà initialisé',
+      developer.log('🔔 IntelligenceAutoNotifier déjà initialisé',
           name: 'AutoNotifier');
       return;
     }
 
-    developer.log('ðŸ”” Initialisation IntelligenceAutoNotifier',
+    developer.log('🔔 Initialisation IntelligenceAutoNotifier',
         name: 'AutoNotifier');
 
     // Listen to current garden id and subscribe to the correct family instance
@@ -77,7 +77,7 @@ class IntelligenceAutoNotifier {
     }
 
     _isInitialized = true;
-    developer.log('âœ… IntelligenceAutoNotifier initialisé',
+    developer.log('✅ IntelligenceAutoNotifier initialisé',
         name: 'AutoNotifier');
   }
 
@@ -97,7 +97,7 @@ class IntelligenceAutoNotifier {
       await _checkWeatherChanges(previous, next);
     } catch (e, stackTrace) {
       developer.log(
-        'âŒ Erreur traitement changement état',
+        '❌ Erreur traitement changement état',
         name: 'AutoNotifier',
         error: e,
         stackTrace: stackTrace,
@@ -122,7 +122,7 @@ class IntelligenceAutoNotifier {
           continue;
         }
 
-        developer.log('âš ï¸ Condition critique détectée pour $plantId',
+        developer.log('⚠️ Condition critique détectée pour $plantId',
             name: 'AutoNotifier');
 
         // Récupérer le nom de la plante (à partir du state ou provider)
@@ -163,7 +163,7 @@ class IntelligenceAutoNotifier {
           continue;
         }
 
-        developer.log('âœ… Condition optimale atteinte pour $plantId',
+        developer.log('✅ Condition optimale atteinte pour $plantId',
             name: 'AutoNotifier');
 
         final plantName = await _getPlantName(plantId, next);
@@ -202,11 +202,11 @@ class IntelligenceAutoNotifier {
 
     if (prevTemp == null || currTemp == null) return;
 
-    // Changement significatif de température (> 10Â°C)
+    // Changement significatif de température (> 10°C)
     final tempDiff = (currTemp - prevTemp).abs();
     if (tempDiff > 10) {
       developer.log(
-          'ðŸŒ¡ï¸ Changement température important: ${tempDiff.toStringAsFixed(1)}Â°C',
+          '🌡️ Changement température important: ${tempDiff.toStringAsFixed(1)}°C',
           name: 'AutoNotifier');
       await _notificationService.generateWeatherAlerts(
         gardenId: gardenId,
@@ -219,7 +219,7 @@ class IntelligenceAutoNotifier {
 
     // Passage au gel
     if (currTemp < 0 && prevTemp >= 0) {
-      developer.log('â„ï¸ Alerte gel détectée', name: 'AutoNotifier');
+      developer.log('❄️ Alerte gel détectée', name: 'AutoNotifier');
       await _notificationService.generateWeatherAlerts(
         gardenId: gardenId,
         temperature: currTemp,
@@ -231,7 +231,7 @@ class IntelligenceAutoNotifier {
 
     // Passage en canicule
     if (currTemp > 35 && prevTemp <= 35) {
-      developer.log('ðŸ”¥ Alerte canicule détectée', name: 'AutoNotifier');
+      developer.log('🔥 Alerte canicule détectée', name: 'AutoNotifier');
       await _notificationService.generateWeatherAlerts(
         gardenId: gardenId,
         temperature: currTemp,
@@ -313,7 +313,7 @@ class IntelligenceAutoNotifier {
 
   /// Arrête les écouteurs et libère les ressources
   void dispose() {
-    developer.log('ðŸ›‘ Arrêt IntelligenceAutoNotifier', name: 'AutoNotifier');
+    developer.log('🛑 Arrêt IntelligenceAutoNotifier', name: 'AutoNotifier');
     _stateSubscription?.close();
     _gardenIdSubscription?.close();
     _lastNotificationTime.clear();
@@ -323,7 +323,7 @@ class IntelligenceAutoNotifier {
 
 /// Provider pour le service de notifications plantes
 ///
-/// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
+/// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
 final plantNotificationServiceProvider =
     Provider<PlantNotificationService>((ref) {
   return PlantNotificationService();
@@ -331,7 +331,7 @@ final plantNotificationServiceProvider =
 
 /// Provider pour le notifier automatique
 ///
-/// âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
+/// ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
 /// S'initialise automatiquement et écoute les changements d'état
 final intelligenceAutoNotifierProvider =
     Provider<IntelligenceAutoNotifier>((ref) {

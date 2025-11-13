@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/notification_alert.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
@@ -7,7 +7,7 @@ import 'package:permacalendar/features/plant_intelligence/domain/entities/intell
 part 'intelligence_runtime_providers.freezed.dart';
 
 // ------------------------------------------------------------
-// ðŸ§  Core Runtime Providers - Notifiers Autoritatifs
+// 🧠 Core Runtime Providers - Notifiers Autoritatifs
 // ------------------------------------------------------------
 
 class CurrentIntelligenceGardenIdNotifier extends Notifier<String?> {
@@ -16,7 +16,7 @@ class CurrentIntelligenceGardenIdNotifier extends Notifier<String?> {
 }
 
 // =======================
-// âœ… IntelligentAlertsState (restauré définitivement)
+// ✅ IntelligentAlertsState (restauré définitivement)
 // =======================
 @freezed
 class IntelligentAlertsState with _$IntelligentAlertsState {

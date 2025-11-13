@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart'
     show GardenContext, SoilInfo, GardenLocation;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart'
@@ -41,7 +41,7 @@ class PlantConditionAnalyzer {
     required CompositeWeatherData weather,
     required GardenContext garden,
   }) async {
-    _logDebug('ðŸ”¬ Analyse complète des conditions pour ${plant.commonName}');
+    _logDebug('🔬 Analyse complète des conditions pour ${plant.commonName}');
     final stopwatch = Stopwatch()..start();
 
     try {
@@ -49,7 +49,7 @@ class PlantConditionAnalyzer {
       _validateInputs(plant, condition, weather, garden);
 
       // Analyse des différents aspects avec algorithmes AFFINÉS (Prompt 4)
-      _logDebug('ðŸ“Š Analyse multi-facteurs...');
+      _logDebug('📊 Analyse multi-facteurs...');
       final temperatureAnalysis =
           _analyzeTemperatureRefined(plant, condition, weather);
       final moistureAnalysis =
@@ -69,7 +69,7 @@ class PlantConditionAnalyzer {
         healthAnalysis,
       ]);
 
-      _logDebug('ðŸ“ˆ Score global: ${overallScore.toStringAsFixed(2)}');
+      _logDebug('📈 Score global: ${overallScore.toStringAsFixed(2)}');
 
       // Identification des risques et opportunités AMÉLIORÉE
       final risks = _identifyRisksEnhanced(plant, condition, weather, garden);
@@ -77,12 +77,12 @@ class PlantConditionAnalyzer {
           _identifyOpportunitiesEnhanced(plant, condition, weather, garden);
 
       _logDebug(
-          'âš ï¸ ${risks.length} risques, ðŸ’¡ ${opportunities.length} opportunités');
+          '⚠️ ${risks.length} risques, 💡 ${opportunities.length} opportunités');
 
       // Détermination du statut global
       final status = _determineOverallStatus(overallScore, risks);
 
-      // Génération de recommandations CONCRÃˆTES et ACTIONNABLES
+      // Génération de recommandations CONCRÈTES et ACTIONNABLES
       final recommendations = _generateActionableRecommendations(
         plant,
         risks,
@@ -94,7 +94,7 @@ class PlantConditionAnalyzer {
 
       stopwatch.stop();
       _logDebug(
-          'âœ… Analyse terminée (${stopwatch.elapsedMilliseconds}ms, confiance: ${_calculateConfidence(condition, weather).toStringAsFixed(2)})');
+          '✅ Analyse terminée (${stopwatch.elapsedMilliseconds}ms, confiance: ${_calculateConfidence(condition, weather).toStringAsFixed(2)})');
 
       return ConditionAnalysisResult(
         plantId: plant.id,
@@ -116,7 +116,7 @@ class PlantConditionAnalyzer {
     } catch (e, stackTrace) {
       stopwatch.stop();
       _logError(
-          'âŒ Erreur analyse conditions ${plant.commonName} (${stopwatch.elapsedMilliseconds}ms): $e');
+          '❌ Erreur analyse conditions ${plant.commonName} (${stopwatch.elapsedMilliseconds}ms): $e');
       developer.log(
         'Erreur analyse conditions',
         error: e,
@@ -154,14 +154,14 @@ class PlantConditionAnalyzer {
       final deviation = optimalRange['min']! - currentTemp;
       score = (1.0 - (deviation / 20.0)).clamp(0.0, 1.0);
       status = deviation > 10 ? 'critical' : 'suboptimal';
-      description = 'Température trop basse (${currentTemp.toInt()}Â°C)';
+      description = 'Température trop basse (${currentTemp.toInt()}°C)';
       issues.add('Risque de ralentissement de croissance');
       if (deviation > 15) issues.add('Risque de dommages par le froid');
     } else {
       final deviation = currentTemp - optimalRange['max']!;
       score = (1.0 - (deviation / 25.0)).clamp(0.0, 1.0);
       status = deviation > 15 ? 'critical' : 'suboptimal';
-      description = 'Température trop élevée (${currentTemp.toInt()}Â°C)';
+      description = 'Température trop élevée (${currentTemp.toInt()}°C)';
       issues.add('Risque de stress thermique');
       if (deviation > 20) issues.add('Risque de flétrissement');
     }
@@ -173,7 +173,7 @@ class PlantConditionAnalyzer {
       description: description,
       currentValue: currentTemp,
       optimalRange:
-          '${optimalRange['min']!.toInt()}-${optimalRange['max']!.toInt()}Â°C',
+          '${optimalRange['min']!.toInt()}-${optimalRange['max']!.toInt()}°C',
       issues: issues,
       recommendations:
           _getTemperatureRecommendations(currentTemp, optimalRange, issues),
@@ -440,7 +440,7 @@ class PlantConditionAnalyzer {
     final baseScore = totalWeight > 0 ? weightedSum / totalWeight : 0.0;
     final finalScore = baseScore * penaltyFactor;
 
-    _logDebug('ðŸŽ¯ Score calculé: base=${baseScore.toStringAsFixed(2)}, '
+    _logDebug('🎯 Score calculé: base=${baseScore.toStringAsFixed(2)}, '
         'pénalité=${penaltyFactor.toStringAsFixed(2)}, '
         'final=${finalScore.toStringAsFixed(2)}');
 
@@ -465,11 +465,11 @@ class PlantConditionAnalyzer {
       final severity =
           weather.currentTemperature < minTemp - 5 ? 'CRITIQUE' : 'élevé';
       risks.add(
-          'Risque de froid $severity (${weather.currentTemperature.toStringAsFixed(1)}Â°C < ${minTemp.toStringAsFixed(1)}Â°C)');
+          'Risque de froid $severity (${weather.currentTemperature.toStringAsFixed(1)}°C < ${minTemp.toStringAsFixed(1)}°C)');
     }
 
     if (weather.currentTemperature < 2 && _isFrostSensitiveFromData(plant)) {
-      risks.add('âš ï¸ Risque de gel imminent pour ${plant.commonName}');
+      risks.add('⚠️ Risque de gel imminent pour ${plant.commonName}');
     }
 
     // Risques liés à l'humidité (basés sur waterNeeds réels)
@@ -487,7 +487,7 @@ class PlantConditionAnalyzer {
 
     // Risques liés à la santé
     if (condition.healthScore < 0.4) {
-      risks.add('âš ï¸ État critique - intervention URGENTE requise');
+      risks.add('⚠️ État critique - intervention URGENTE requise');
     } else if (condition.healthScore < 0.6) {
       risks.add('Santé dégradée - surveillance accrue nécessaire');
     }
@@ -502,7 +502,7 @@ class PlantConditionAnalyzer {
       }
     }
 
-    _logDebug('âš ï¸ ${risks.length} risques identifiés pour ${plant.commonName}');
+    _logDebug('⚠️ ${risks.length} risques identifiés pour ${plant.commonName}');
     return risks;
   }
 
@@ -520,7 +520,7 @@ class PlantConditionAnalyzer {
     final requiredLight = _getLightRequirement(plant);
     if (condition.lightExposure < requiredLight * 0.7) {
       opportunities.add(
-          'ðŸ’¡ Améliorer l\'exposition lumineuse vers: ${plant.sunExposure}');
+          '💡 Améliorer l\'exposition lumineuse vers: ${plant.sunExposure}');
     }
 
     // Opportunités nutritionnelles
@@ -529,9 +529,9 @@ class PlantConditionAnalyzer {
       final bioControl = plant.biologicalControl;
       if (bioControl != null && bioControl['preparations'] != null) {
         final preps = (bioControl['preparations'] as List).take(2).join(', ');
-        opportunities.add('ðŸŒ¿ Enrichir avec: $preps');
+        opportunities.add('🌿 Enrichir avec: $preps');
       } else {
-        opportunities.add('ðŸŒ¿ Enrichir le sol en nutriments organiques');
+        opportunities.add('🌿 Enrichir le sol en nutriments organiques');
       }
     }
 
@@ -556,10 +556,10 @@ class PlantConditionAnalyzer {
 
     if (season == Season.spring && condition.healthScore > 0.7) {
       if (plant.sowingMonths.contains(currentMonthCode)) {
-        opportunities.add('ðŸŒ± Période OPTIMALE pour semer ${plant.commonName}');
+        opportunities.add('🌱 Période OPTIMALE pour semer ${plant.commonName}');
       }
       opportunities
-          .add('âœ¨ Conditions favorables pour fertilisation printanière');
+          .add('✨ Conditions favorables pour fertilisation printanière');
     }
 
     // Opportunités liées aux conditions météo favorables
@@ -568,11 +568,11 @@ class PlantConditionAnalyzer {
         weather.humidity >= 50 &&
         weather.humidity <= 70 &&
         plant.sowingMonths.contains(currentMonthCode)) {
-      opportunities.add('â­ Conditions IDÉALES pour plantation/semis');
+      opportunities.add('⭐ Conditions IDÉALES pour plantation/semis');
     }
 
     _logDebug(
-        'ðŸ’¡ ${opportunities.length} opportunités identifiées pour ${plant.commonName}');
+        '💡 ${opportunities.length} opportunités identifiées pour ${plant.commonName}');
     return opportunities;
   }
 
@@ -605,7 +605,7 @@ class PlantConditionAnalyzer {
     return confidence.clamp(0.3, 1.0);
   }
 
-  /// Génère des recommandations CONCRÃˆTES et ACTIONNABLES
+  /// Génère des recommandations CONCRÈTES et ACTIONNABLES
   ///
   /// Amélioration Prompt 4 : Actions spécifiques basées sur données plants.json
   List<String> _generateActionableRecommendations(
@@ -623,21 +623,21 @@ class PlantConditionAnalyzer {
       if (risk.contains('gel') || risk.contains('CRITIQUE')) {
         if (risk.contains('gel')) {
           recommendations.add(
-              'ðŸš¨ URGENT: Protéger du gel (voile P17/P30, rentrer en pot, pailler 15cm)');
+              '🚨 URGENT: Protéger du gel (voile P17/P30, rentrer en pot, pailler 15cm)');
         }
         if (risk.contains('Déshydratation')) {
           final wateringData = plant.watering;
           if (wateringData != null) {
             final amount = wateringData['amount'] ?? '3-5 litres';
             final method = wateringData['method'] ?? 'au pied';
-            recommendations.add('ðŸš¨ URGENT: Arroser $amount $method');
+            recommendations.add('🚨 URGENT: Arroser $amount $method');
           } else {
-            recommendations.add('ðŸš¨ URGENT: Arroser abondamment immédiatement');
+            recommendations.add('🚨 URGENT: Arroser abondamment immédiatement');
           }
         }
         if (risk.contains('pourriture')) {
           recommendations.add(
-              'âš ï¸ Suspendre arrosage, vérifier drainage, enlever feuilles malades');
+              '⚠️ Suspendre arrosage, vérifier drainage, enlever feuilles malades');
         }
       }
     }
@@ -648,17 +648,17 @@ class PlantConditionAnalyzer {
         final wateringData = plant.watering;
         final frequency = wateringData?['frequency'] ?? '2-3 fois/semaine';
         recommendations
-            .add('ðŸ’§ Arroser: $frequency (besoins: ${plant.waterNeeds})');
+            .add('💧 Arroser: $frequency (besoins: ${plant.waterNeeds})');
       }
 
       if (risk.contains('Santé dégradée')) {
         recommendations
-            .add('ðŸ” Inspecter feuilles/tiges, rechercher parasites/maladies');
+            .add('🔍 Inspecter feuilles/tiges, rechercher parasites/maladies');
       }
 
       if (risk.contains('vent') || risk.contains('casse')) {
         recommendations
-            .add('ðŸŒ¿ Tuteurer solidement, renforcer supports existants');
+            .add('🌿 Tuteurer solidement, renforcer supports existants');
       }
     }
 
@@ -667,12 +667,12 @@ class PlantConditionAnalyzer {
       if (opportunity.contains('lumière')) {
         final sunExposure = plant.sunExposure;
         recommendations
-            .add('â˜€ï¸ Optimiser exposition ($sunExposure recommandé)');
+            .add('☀️ Optimiser exposition ($sunExposure recommandé)');
       }
 
       if (opportunity.contains('Enrichir avec:')) {
         // Déjà détaillé dans opportunity
-        recommendations.add('âœ… ${opportunity.replaceAll('ðŸŒ¿ ', '')}');
+        recommendations.add('✅ ${opportunity.replaceAll('🌿 ', '')}');
       }
 
       if (opportunity.contains('OPTIMALE pour semer')) {
@@ -683,19 +683,19 @@ class PlantConditionAnalyzer {
             .firstOrNull;
 
         if (sowingTips != null) {
-          recommendations.add('ðŸŒ± Conseil semis: $sowingTips');
+          recommendations.add('🌱 Conseil semis: $sowingTips');
         } else {
-          recommendations.add('ðŸŒ± ${opportunity.replaceAll('ðŸŒ± ', '')}');
+          recommendations.add('🌱 ${opportunity.replaceAll('🌱 ', '')}');
         }
       }
 
       if (opportunity.contains('fertilisation')) {
         recommendations
-            .add('ðŸŒ¿ Apporter compost mûr ou engrais organique équilibré NPK');
+            .add('🌿 Apporter compost mûr ou engrais organique équilibré NPK');
       }
     }
 
-    _logDebug('âœ… ${recommendations.length} recommandations générées');
+    _logDebug('✅ ${recommendations.length} recommandations générées');
     return recommendations.take(5).toList(); // Limiter à 5 recommandations max
   }
 
@@ -715,10 +715,10 @@ class PlantConditionAnalyzer {
       throw ArgumentError('L\'ID du jardin ne peut pas être vide');
     }
 
-    // Vérifier fraÃ®cheur des données météo
+    // Vérifier fraîcheur des données météo
     final weatherAge = DateTime.now().difference(weather.timestamp);
     if (weatherAge.inHours > 24) {
-      _logDebug('âš ï¸ Données météo anciennes: ${weatherAge.inHours}h');
+      _logDebug('⚠️ Données météo anciennes: ${weatherAge.inHours}h');
     }
   }
 
@@ -983,7 +983,7 @@ class PlantConditionAnalyzer {
 
   /// Map SoilType from garden_context to condition_enums
   ///
-  /// NOTE Prompt 4: Mapper temporaire pour résoudre l'ambiguÃ¯té entre deux SoilType
+  /// NOTE Prompt 4: Mapper temporaire pour résoudre l'ambiguïté entre deux SoilType
   SoilType _mapSoilType(garden_ctx.SoilType gardenSoilType) {
     switch (gardenSoilType) {
       case garden_ctx.SoilType.sandy:

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -144,10 +144,10 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                       TextFormField(
                         controller: _sizeController,
                         decoration: const InputDecoration(
-                          labelText: 'Surface (mÂ²) *',
+                          labelText: 'Surface (m²) *',
                           hintText: 'Ex: 10.5',
                           border: OutlineInputBorder(),
-                          suffixText: 'mÂ²',
+                          suffixText: 'm²',
                         ),
                         keyboardType: const TextInputType.numberWithOptions(
                             decimal: true),
@@ -164,7 +164,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                             return 'Veuillez entrer une surface valide';
                           }
                           if (size > 1000) {
-                            return 'La surface ne peut pas dépasser 1000 mÂ²';
+                            return 'La surface ne peut pas dépasser 1000 m²';
                           }
                           return null;
                         },
@@ -385,7 +385,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                   child: Text(
                     widget.gardenBed != null
                         ? 'Parcelle modifiée avec succès'
-                        : 'Parcelle Créée avec succès',
+                        : 'Parcelle créée avec succès',
                   ),
                 ),
               ],

@@ -1,4 +1,4 @@
-﻿ï»¿import '../../features/plant_catalog/domain/entities/plant_entity.dart';
+import '../../features/plant_catalog/domain/entities/plant_entity.dart';
 
 class PlantLifecycleService {
   static Future<Map<String, dynamic>> calculateLifecycle(

@@ -1,4 +1,4 @@
-﻿ï»¿/// Enums pour les conditions et recommandations du moteur d'intelligence naturelle
+/// Enums pour les conditions et recommandations du moteur d'intelligence naturelle
 /// Utilisés par les entités de domaine pour typer les états et priorités
 library;
 
@@ -158,17 +158,17 @@ extension ConditionStatusExtension on ConditionStatus {
   String get icon {
     switch (this) {
       case ConditionStatus.optimal:
-        return 'ðŸŸ¢';
+        return '🟢';
       case ConditionStatus.good:
-        return 'ðŸ”µ';
+        return '🔵';
       case ConditionStatus.suboptimal:
-        return 'ðŸŸ¦';
+        return '🟦';
       case ConditionStatus.fair:
-        return 'ðŸŸ¡';
+        return '🟡';
       case ConditionStatus.poor:
-        return 'ðŸŸ ';
+        return '🟠';
       case ConditionStatus.critical:
-        return 'ðŸ”´';
+        return '🔴';
     }
   }
 
@@ -224,15 +224,15 @@ extension RecommendationTypeExtension on RecommendationType {
   String get icon {
     switch (this) {
       case RecommendationType.planting:
-        return 'ðŸŒ±';
+        return '🌱';
       case RecommendationType.watering:
-        return 'ðŸ’§';
+        return '💧';
       case RecommendationType.harvesting:
-        return 'ðŸŒ¾';
+        return '🌾';
       case RecommendationType.protection:
-        return 'ðŸ›¡ï¸';
+        return '🛡️';
       case RecommendationType.maintenance:
-        return 'ðŸ”§';
+        return '🔧';
     }
   }
 
@@ -282,13 +282,13 @@ extension RecommendationPriorityExtension on RecommendationPriority {
   String get icon {
     switch (this) {
       case RecommendationPriority.low:
-        return 'â¬‡ï¸';
+        return '⬇️';
       case RecommendationPriority.medium:
-        return 'âž¡ï¸';
+        return '➡️';
       case RecommendationPriority.high:
-        return 'â¬†ï¸';
+        return '⬆️';
       case RecommendationPriority.urgent:
-        return 'ðŸš¨';
+        return '🚨';
     }
   }
 
@@ -347,11 +347,11 @@ extension WeatherTrendExtension on WeatherTrend {
   String get icon {
     switch (this) {
       case WeatherTrend.improving:
-        return 'ðŸ“ˆ';
+        return '📈';
       case WeatherTrend.stable:
-        return 'âž¡ï¸';
+        return '➡️';
       case WeatherTrend.deteriorating:
-        return 'ðŸ“‰';
+        return '📉';
     }
   }
 
@@ -401,15 +401,15 @@ extension SoilTypeExtension on SoilType {
   String get icon {
     switch (this) {
       case SoilType.clay:
-        return 'ðŸŸ¤';
+        return '🟤';
       case SoilType.sandy:
-        return 'ðŸŸ¨';
+        return '🟨';
       case SoilType.loamy:
-        return 'ðŸŸ«';
+        return '🟫';
       case SoilType.chalky:
-        return 'âšª';
+        return '⚪';
       case SoilType.peaty:
-        return 'ðŸ–¤';
+        return '🖤';
     }
   }
 
@@ -459,13 +459,13 @@ extension ExposureTypeExtension on ExposureType {
   String get icon {
     switch (this) {
       case ExposureType.fullSun:
-        return 'â˜€ï¸';
+        return '☀️';
       case ExposureType.partialSun:
-        return 'â›…';
+        return '⛅';
       case ExposureType.partialShade:
-        return 'ðŸŒ¤ï¸';
+        return '🌤️';
       case ExposureType.fullShade:
-        return 'â˜ï¸';
+        return '☁️';
     }
   }
 

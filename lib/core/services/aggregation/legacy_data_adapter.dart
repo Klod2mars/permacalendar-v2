@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import '../../data/hive/garden_boxes.dart';
 import '../../data/hive/plant_boxes.dart';
 import '../../models/unified_garden_context.dart';
@@ -61,7 +61,7 @@ class LegacyDataAdapter implements DataAdapter {
       final soilInfo = _calculateSoilInfo(gardenId);
 
       developer.log(
-        'Contexte Legacy Créé: ${activePlants.length} plantes actives',
+        'Contexte Legacy créé: ${activePlants.length} plantes actives',
         name: _logName,
         level: 500,
       );
@@ -118,25 +118,25 @@ class LegacyDataAdapter implements DataAdapter {
       }
 
       developer.log(
-        'ðŸ” AUDIT - ${activePlantIds.length} IDs de plantes actives trouvées: $activePlantIds',
+        '🔍 AUDIT - ${activePlantIds.length} IDs de plantes actives trouvées: $activePlantIds',
         name: _logName,
         level: 500,
       );
 
-      // âœ… CORRECTION : Utiliser PlantCatalogService au lieu de PlantBoxes
+      // ✅ CORRECTION : Utiliser PlantCatalogService au lieu de PlantBoxes
       // PlantBoxes est vide, les plantes sont dans le catalogue JSON
       final plants = <UnifiedPlantData>[];
       for (final plantId in activePlantIds) {
         try {
           developer.log(
-              'ðŸ” AUDIT - Recherche plante $plantId dans le catalogue',
+              '🔍 AUDIT - Recherche plante $plantId dans le catalogue',
               name: _logName);
 
           // Utiliser PlantCatalogService pour récupérer depuis JSON
           final plant = await PlantCatalogService.getPlantById(plantId);
 
           if (plant != null) {
-            developer.log('âœ… AUDIT - Plante trouvée: ${plant.commonName}',
+            developer.log('✅ AUDIT - Plante trouvée: ${plant.commonName}',
                 name: _logName);
 
             plants.add(UnifiedPlantData(
@@ -176,12 +176,12 @@ class LegacyDataAdapter implements DataAdapter {
             ));
           } else {
             developer.log(
-                'âŒ AUDIT - Plante $plantId NOT FOUND dans le catalogue',
+                '❌ AUDIT - Plante $plantId NOT FOUND dans le catalogue',
                 name: _logName);
           }
         } catch (e) {
           developer.log(
-            'âš ï¸ AUDIT - Erreur lors de la récupération de la plante $plantId: $e',
+            '⚠️ AUDIT - Erreur lors de la récupération de la plante $plantId: $e',
             name: _logName,
             level: 900,
           );
@@ -189,7 +189,7 @@ class LegacyDataAdapter implements DataAdapter {
       }
 
       developer.log(
-        'âœ… ${plants.length} plantes actives trouvées et converties (Legacy)',
+        '✅ ${plants.length} plantes actives trouvées et converties (Legacy)',
         name: _logName,
         level: 500,
       );

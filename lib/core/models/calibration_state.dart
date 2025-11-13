@@ -1,17 +1,17 @@
-﻿ï»¿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'calibration_state.freezed.dart';
 
-/// Type d'ÃƒÂ©lÃƒÂ©ment en calibration (unifiÃƒÂ©)
+/// Type d'Ã©lÃ©ment en calibration (unifiÃ©)
 enum CalibrationType {
   none, // Pas de calibration active
   organic, // Calibration organique unifiée
   tapZones, // Calibration par zones tactiles (nouveau)
 }
 
-/// Ãƒâ€°tat de calibration unifiÃƒÂ©
+/// Ã‰tat de calibration unifiÃ©
 @freezed
 class CalibrationState with _$CalibrationState {
   const factory CalibrationState({
@@ -20,7 +20,7 @@ class CalibrationState with _$CalibrationState {
   }) = _CalibrationState;
 }
 
-/// Provider unifiÃƒÂ© pour la calibration
+/// Provider unifiÃ© pour la calibration
 final calibrationStateProvider =
     NotifierProvider<CalibrationStateNotifier, CalibrationState>(() {
   return CalibrationStateNotifier();
@@ -46,10 +46,10 @@ class CalibrationStateNotifier extends Notifier<CalibrationState> {
     );
   }
 
-  /// DÃƒÂ©sactiver toute calibration
+  /// DÃ©sactiver toute calibration
   void disableCalibration() {
     if (kDebugMode) {
-      debugPrint('Ã°Å¸”Â§ disableCalibration() - ${state.activeType} ââ€ ’ none');
+      debugPrint('ðŸ”§ disableCalibration() - ${state.activeType} â†’ none');
     }
     state = state.copyWith(
       activeType: CalibrationType.none,
@@ -57,20 +57,20 @@ class CalibrationStateNotifier extends Notifier<CalibrationState> {
     );
   }
 
-  /// Marquer comme modifiÃƒÂ©
+  /// Marquer comme modifiÃ©
   void markAsModified() {
     state = state.copyWith(hasUnsavedChanges: true);
   }
 
-  /// VÃƒÂ©rifier si calibration active
+  /// VÃ©rifier si calibration active
   bool get isCalibrating => state.activeType != CalibrationType.none;
 
-  /// VÃƒÂ©rifier si calibration organique active
+  /// VÃ©rifier si calibration organique active
   bool get isOrganicCalibrating => state.activeType == CalibrationType.organic;
 }
 
-// Provider de compatibilitÃƒÂ© (dÃƒÂ©prÃƒÂ©ciÃƒÂ©)
-@Deprecated('Utilisez calibrationStateProvider ÃƒÂ  la place')
+// Provider de compatibilitÃ© (dÃ©prÃ©ciÃ©)
+@Deprecated('Utilisez calibrationStateProvider Ã  la place')
 final gardenCalibrationEnabledProvider = Provider<bool>((ref) {
   return ref.watch(calibrationStateProvider).activeType ==
       CalibrationType.organic;

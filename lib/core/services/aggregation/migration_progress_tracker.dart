@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 /// Migration Progress Tracker
 ///
@@ -21,7 +21,7 @@ class MigrationProgressTracker {
     _gardenStatuses[gardenId] = status;
 
     developer.log(
-      'ðŸ“Š Jardin $gardenId: ${status.phase.name} (${status.progressPercent}%)',
+      '📊 Jardin $gardenId: ${status.phase.name} (${status.progressPercent}%)',
       name: _logName,
       level: 500,
     );
@@ -63,7 +63,7 @@ class MigrationProgressTracker {
     }
 
     developer.log(
-      'ðŸ“ˆ Métriques migration: ${metrics.completed}/${metrics.totalGardens} jardins migrés (${metrics.averageProgressPercent.toStringAsFixed(1)}%)',
+      '📈 Métriques migration: ${metrics.completed}/${metrics.totalGardens} jardins migrés (${metrics.averageProgressPercent.toStringAsFixed(1)}%)',
       name: _logName,
       level: 500,
     );

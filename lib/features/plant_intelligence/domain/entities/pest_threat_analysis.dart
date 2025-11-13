@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'pest_observation.dart';
 import 'pest.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';

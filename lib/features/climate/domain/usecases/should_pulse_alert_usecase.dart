@@ -1,4 +1,4 @@
-﻿ï»¿/// Use case for determining if alert pulse animation should be active
+/// Use case for determining if alert pulse animation should be active
 ///
 /// Simple logic to check if alerts are present and should trigger
 /// the pulse animation in the climate rosace panel.

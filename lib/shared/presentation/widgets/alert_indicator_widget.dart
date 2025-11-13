@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 /// Widget indicateur d'alerte météo avec animation pulse
@@ -111,13 +111,13 @@ class _AlertIndicatorWidgetState extends State<AlertIndicatorWidget>
   IconData _getAlertIcon() {
     switch (widget.type) {
       case WeatherAlertType.frost:
-        return Icons.ac_unit; // â„ï¸
+        return Icons.ac_unit; // ❄️
       case WeatherAlertType.heatwave:
-        return Icons.whatshot; // ðŸŒ¡ï¸
+        return Icons.whatshot; // 🌡️
       case WeatherAlertType.watering:
-        return Icons.water_drop; // ðŸ’§
+        return Icons.water_drop; // 💧
       case WeatherAlertType.protection:
-        return Icons.shield; // ðŸ›¡ï¸
+        return Icons.shield; // 🛡️
     }
   }
 }

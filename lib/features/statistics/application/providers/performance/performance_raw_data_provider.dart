@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../harvest/application/harvest_records_provider.dart';
 import '../../../../../core/models/planting.dart';
@@ -20,21 +20,21 @@ final seasonalPerformanceRawDataProvider =
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
   final filters = ref.watch(statisticsFiltersProvider);
 
-  // S'assurer que les boÃ®tes Hive sont ouvertes
+  // S'assurer que les boîtes Hive sont ouvertes
   Box<Planting>? plantingBox;
   Box<PlantingHive>? plantingHiveBox;
 
   try {
     plantingBox = await Hive.openBox<Planting>('plantings');
   } catch (e) {
-    // Si la boÃ®te n'existe pas ou ne peut pas être ouverte, on continue sans
+    // Si la boîte n'existe pas ou ne peut pas être ouverte, on continue sans
     plantingBox = null;
   }
 
   try {
     plantingHiveBox = await Hive.openBox<PlantingHive>('planting_hive');
   } catch (e) {
-    // Si la boÃ®te n'existe pas ou ne peut pas être ouverte, on continue sans
+    // Si la boîte n'existe pas ou ne peut pas être ouverte, on continue sans
     plantingHiveBox = null;
   }
 

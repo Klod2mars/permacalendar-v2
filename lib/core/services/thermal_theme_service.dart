@@ -1,10 +1,10 @@
-﻿ï»¿import 'dart:math' as math;
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../theme/thermal_color_schemes.dart';
 import '../../features/climate/domain/models/weather_view_data.dart';
 
 /// Service de gestion intelligente du thème thermique météo-conscient
-/// Intelligence saisonnière : 27Â°C juillet â‰  27Â°C février
+/// Intelligence saisonnière : 27°C juillet ≠ 27°C février
 class ThermalThemeService {
   /// Calculer température moyenne sur période avec contexte saisonnier
   double calculateAverageTemperature(WeatherViewData weather, {int days = 1}) {
@@ -29,7 +29,7 @@ class ThermalThemeService {
   }
 
   /// Obtenir seuils météo-conscients selon saison et géographie
-  /// Adaptation saisonnière intelligente : 27Â°C juillet â‰  27Â°C février
+  /// Adaptation saisonnière intelligente : 27°C juillet ≠ 27°C février
   ThermalThresholds getSeasonalThresholds(DateTime date, String? location) {
     final month = date.month;
 
@@ -37,17 +37,17 @@ class ThermalThemeService {
       // Hiver : seuils plus bas (sensibilité au froid réduite)
       return const ThermalThresholds(
         freeze: 0.0, // Gel reste absolu
-        cold: 5.0, // 5Â°C = froid en hiver
-        moderate: 15.0, // 15Â°C = agréable en hiver
-        hot: 20.0, // 20Â°C = chaud en hiver !
+        cold: 5.0, // 5°C = froid en hiver
+        moderate: 15.0, // 15°C = agréable en hiver
+        hot: 20.0, // 20°C = chaud en hiver !
       );
     } else if (_isSummerPeriod(month)) {
       // Été : seuils plus hauts (habitude chaleur)
       return const ThermalThresholds(
         freeze: 0.0, // Gel reste absolu
-        cold: 15.0, // 15Â°C = frais en été
-        moderate: 28.0, // 28Â°C = normal en été
-        hot: 35.0, // 35Â°C = vraiment chaud en été
+        cold: 15.0, // 15°C = frais en été
+        moderate: 28.0, // 28°C = normal en été
+        hot: 35.0, // 35°C = vraiment chaud en été
       );
     } else {
       // Intersaison : seuils standards

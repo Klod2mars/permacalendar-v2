@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'analysis_result.dart';
 import 'recommendation.dart';
 import 'notification_alert.dart';

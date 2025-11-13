@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,7 +42,7 @@ class _PlantingListScreenState extends ConsumerState<PlantingListScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final plantingState = ref.watch(plantingProvider);
-    // âœ… CORRECTION : Utiliser le provider spécifique pour cette parcelle
+    // ✅ CORRECTION : Utiliser le provider spécifique pour cette parcelle
     final plantings =
         ref.watch(plantingsByGardenBedProvider(widget.gardenBedId));
     final stats = ref.watch(plantingStatsProvider);
@@ -450,7 +450,7 @@ class _PlantingListScreenState extends ConsumerState<PlantingListScreen> {
       builder: (context) => ConfirmationDialog(
         title: 'Supprimer la plantation',
         content:
-            'ÃŠtes-vous sûr de vouloir supprimer "${planting.plantName}" ?\n\nCette action est irréversible.',
+            'Êtes-vous sûr de vouloir supprimer "${planting.plantName}" ?\n\nCette action est irréversible.',
         confirmText: 'Supprimer',
         cancelText: 'Annuler',
         isDestructive: true,

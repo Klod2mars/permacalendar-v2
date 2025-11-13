@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:async';
+import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
@@ -42,7 +42,7 @@ class ActivityTrackerV3 {
       print('ActivityTrackerV3: Ouverture de la box Hive...');
       _box = await Hive.openBox<ActivityV3>(_boxName);
       _isInitialized = true;
-      print('âœ… ActivityTrackerV3 initialisé avec succès');
+      print('✅ ActivityTrackerV3 initialisé avec succès');
 
       // Nettoyage initial si nécessaire
       await _performCleanupIfNeeded();
@@ -53,7 +53,7 @@ class ActivityTrackerV3 {
         level: 800, // Info level
       );
     } catch (e) {
-      print('âŒ Erreur initialisation ActivityTrackerV3: $e');
+      print('❌ Erreur initialisation ActivityTrackerV3: $e');
       developer.log(
         'Erreur lors de l\'initialisation d\'ActivityTrackerV3: $e',
         name: 'ActivityTrackerV3',

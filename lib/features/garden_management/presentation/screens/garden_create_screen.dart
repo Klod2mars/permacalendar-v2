@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,7 +40,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'CrÃƒÂ©er un jardin',
+        title: 'CrÃ©er un jardin',
         automaticallyImplyLeading: true,
         actions: [
           TextButton(
@@ -59,7 +59,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Information Section
-                  _buildSectionTitle('Informations gÃƒÂ©nÃƒÂ©rales', theme),
+                  _buildSectionTitle('Informations gÃ©nÃ©rales', theme),
                   const SizedBox(height: 16),
 
                   CustomTextField(
@@ -75,7 +75,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                   CustomTextField(
                     controller: _descriptionController,
                     label: 'Description (optionnel)',
-                    hint: 'DÃƒÂ©crivez votre jardin...',
+                    hint: 'DÃ©crivez votre jardin...',
                     prefixIcon: const Icon(Icons.description),
                     maxLines: 3,
                     validator: Validators.validateDescription,
@@ -83,7 +83,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Section Localisation et taille supprimÃƒÂ©e (la superficie est calculÃƒÂ©e via les parcelles)
+                  // Section Localisation et taille supprimÃ©e (la superficie est calculÃ©e via les parcelles)
                   const SizedBox(height: 8),
 
                   // Image Section
@@ -106,7 +106,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                     const SizedBox(height: 24),
                   ],
 
-                  // Tips Section (mise ÃƒÂ  jour)
+                  // Tips Section (mise Ã  jour)
                   _buildTipsSection(theme),
                   const SizedBox(height: 32),
 
@@ -122,7 +122,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                       const SizedBox(width: 16),
                       Expanded(
                         child: CustomButton(
-                          text: 'CrÃƒÂ©er le jardin',
+                          text: 'CrÃ©er le jardin',
                           onPressed: _isLoading ? null : _saveGarden,
                           isLoading: _isLoading,
                         ),
@@ -225,7 +225,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
               ),
               const SizedBox(width: 8),
               Text(
-                'Conseils pour crÃƒÂ©er votre jardin',
+                'Conseils pour crÃ©er votre jardin',
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
@@ -238,28 +238,28 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'ââ‚¬Â¢ CrÃƒÂ©ez votre jardin avec un nom et une description.',
+                'â€¢ CrÃ©ez votre jardin avec un nom et une description.',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withOpacity(0.8),
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                'ââ‚¬Â¢ Ajoutez ensuite des parcelles et attribuez une superficie ÃƒÂ  chacune.',
+                'â€¢ Ajoutez ensuite des parcelles et attribuez une superficie Ã  chacune.',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withOpacity(0.8),
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                'ââ‚¬Â¢ La superficie totale du jardin sera calculÃƒÂ©e automatiquement (somme des parcelles).',
+                'â€¢ La superficie totale du jardin sera calculÃ©e automatiquement (somme des parcelles).',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withOpacity(0.8),
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                'ââ‚¬Â¢ Vous pourrez modifier ces informations plus tard.',
+                'â€¢ Vous pourrez modifier ces informations plus tard.',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withOpacity(0.8),
                 ),
@@ -293,7 +293,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
             : _imageUrlController.text.trim(),
       );
 
-            // Si l\\'écran a été ouvert avec un paramètre ""slot"", tenter la Création atomique pour le slot
+            // Si l\\'écran a été ouvert avec un paramètre ""slot"", tenter la création atomique pour le slot
       final String? slotParam = widget.slot;
       bool success;
       if (slotParam != null && slotParam.isNotEmpty) {
@@ -303,7 +303,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
               .read(gardenProvider.notifier)
               .createGardenForSlot(slotNumber, garden);
         } else {
-          // slot invalide -> fallback sur Création normale
+          // slot invalide -> fallback sur création normale
           success = await ref.read(gardenProvider.notifier).createGarden(garden);
         }
       } else {
@@ -314,7 +314,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
         if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Jardin crÃƒÂ©ÃƒÂ© avec succÃƒÂ¨s'),
+              content: Text('Jardin crÃ©Ã© avec succÃ¨s'),
               backgroundColor: Colors.green,
             ),
           );
@@ -322,7 +322,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Erreur lors de la crÃƒÂ©ation du jardin'),
+              content: Text('Erreur lors de la crÃ©ation du jardin'),
               backgroundColor: Colors.red,
             ),
           );
@@ -332,7 +332,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur lors de la crÃƒÂ©ation : $e'),
+            content: Text('Erreur lors de la crÃ©ation : $e'),
             backgroundColor: Colors.red,
           ),
         );

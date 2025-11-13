@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/notification_alert.dart';
 import '../providers/notification_providers.dart';
@@ -317,7 +317,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen>
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Tout va bien avec vos plantes ! ðŸŒ±',
+                  'Tout va bien avec vos plantes ! 🌱',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.grey[500],
                       ),

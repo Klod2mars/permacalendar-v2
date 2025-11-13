@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Experimental Climate Cells V2
 ///
@@ -128,7 +128,7 @@ class _ExperimentalClimateCellsV2State extends State<ExperimentalClimateCellsV2>
           Icon(Icons.wb_sunny, size: 24, color: Colors.white70),
           SizedBox(height: 4),
           Text(
-            '14Â° / 7Â°',
+            '14° / 7°',
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -147,7 +147,7 @@ class _ExperimentalClimateCellsV2State extends State<ExperimentalClimateCellsV2>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('ðŸ“ˆ', style: TextStyle(fontSize: 28)),
+          Text('📈', style: TextStyle(fontSize: 28)),
           SizedBox(height: 4),
           Text(
             'Prévisions',
@@ -172,7 +172,7 @@ class _ExperimentalClimateCellsV2State extends State<ExperimentalClimateCellsV2>
           Icon(Icons.thermostat, size: 20, color: Colors.white70),
           SizedBox(height: 2),
           Text(
-            '10.4Â°',
+            '10.4°',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -495,11 +495,11 @@ class ExperimentalClimateScreenV2 extends StatelessWidget {
                     SizedBox(height: 16),
                     Text(
                       'Features:\n'
-                      'âœ“ Fused interconnected cell boundaries\n'
-                      'âœ“ Soft radial gradients per cell\n'
-                      'âœ“ Organic asymmetric blob shapes\n'
-                      'âœ“ Pulsating pH nucleus animation\n'
-                      'âœ“ Touch interaction ready (TODO: connect navigation)',
+                      '✓ Fused interconnected cell boundaries\n'
+                      '✓ Soft radial gradients per cell\n'
+                      '✓ Organic asymmetric blob shapes\n'
+                      '✓ Pulsating pH nucleus animation\n'
+                      '✓ Touch interaction ready (TODO: connect navigation)',
                       style: TextStyle(
                         fontSize: 12,
                         color: Color(0xFF689F38),

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Bouton principal personnalisé
 class CustomButton extends StatelessWidget {
@@ -404,7 +404,7 @@ class DeleteButton extends StatelessWidget {
     super.key,
     this.onConfirm,
     this.confirmTitle = 'Confirmer la suppression',
-    this.confirmMessage = 'ÃŠtes-vous sûr de vouloir supprimer cet élément ?',
+    this.confirmMessage = 'Êtes-vous sûr de vouloir supprimer cet élément ?',
     this.confirmButtonText = 'Supprimer',
     this.cancelButtonText = 'Annuler',
     this.icon,

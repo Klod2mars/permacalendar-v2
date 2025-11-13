@@ -1,4 +1,4 @@
-﻿ï»¿import '../entities/plant_condition.dart';
+import '../entities/plant_condition.dart';
 
 /// Interface spécialisée pour la gestion des conditions de plantes
 ///
@@ -14,7 +14,7 @@ abstract class IPlantConditionRepository {
   /// [plantId] - Identifiant unique de la plante
   /// [condition] - Conditions actuelles de la plante
   ///
-  /// Retourne l'ID de l'enregistrement Créé
+  /// Retourne l'ID de l'enregistrement créé
   Future<String> savePlantCondition({
     required String plantId,
     required PlantCondition condition,

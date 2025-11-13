@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import 'dual_write_service.dart';
 import 'read_switch_service.dart';
@@ -65,7 +65,7 @@ class MigrationOrchestrator {
         _archivalService = archivalService ?? DataArchivalService(),
         _healthChecker = healthChecker ?? MigrationHealthChecker(),
         config = config ?? MigrationConfig.defaultConfig() {
-    _log('ðŸ—ï¸ Migration Orchestrator initialisé', level: 500);
+    _log('🏗️ Migration Orchestrator initialisé', level: 500);
   }
 
   // ==================== API PUBLIQUE ====================
@@ -80,7 +80,7 @@ class MigrationOrchestrator {
   ///
   /// **Retourne :** Résultat complet de la migration
   Future<MigrationResult> startCompleteMigration() async {
-    _log('ðŸš€ DÉBUT MIGRATION COMPLÃˆTE', level: 500);
+    _log('🚀 DÉBUT MIGRATION COMPLÈTE', level: 500);
 
     final startTime = DateTime.now();
     final results = <String, dynamic>{};
@@ -139,7 +139,7 @@ class MigrationOrchestrator {
       _currentPhase = MigrationPhase.completed;
 
       final duration = DateTime.now().difference(startTime);
-      _log('âœ… MIGRATION COMPLÃˆTE RÉUSSIE (${duration.inSeconds}s)', level: 500);
+      _log('✅ MIGRATION COMPLÈTE RÉUSSIE (${duration.inSeconds}s)', level: 500);
 
       return MigrationResult(
         success: true,
@@ -150,14 +150,14 @@ class MigrationOrchestrator {
         timestamp: DateTime.now(),
       );
     } catch (e, stackTrace) {
-      _logError('âŒ ERREUR CRITIQUE MIGRATION', e, stackTrace);
+      _logError('❌ ERREUR CRITIQUE MIGRATION', e, stackTrace);
 
       // Tenter rollback en cas d'erreur critique
       try {
         await rollbackMigration();
         results['rollback'] = {'success': true};
       } catch (rollbackError) {
-        _logError('âŒ Échec du rollback', rollbackError);
+        _logError('❌ Échec du rollback', rollbackError);
         results['rollback'] = {
           'success': false,
           'error': rollbackError.toString()
@@ -177,12 +177,12 @@ class MigrationOrchestrator {
   /// **Processus :**
   /// 1. Validation du jardin Legacy
   /// 2. Archivage du jardin
-  /// 3. Conversion Legacy â†’ Moderne
+  /// 3. Conversion Legacy → Moderne
   /// 4. Validation de cohérence
   /// 5. Écriture dans Moderne
   /// 6. Vérification finale
   Future<MigrationResult> migrateGarden(String gardenId) async {
-    _log('ðŸŒ± Migration du jardin $gardenId', level: 500);
+    _log('🌱 Migration du jardin $gardenId', level: 500);
 
     final startTime = DateTime.now();
 
@@ -203,7 +203,7 @@ class MigrationOrchestrator {
       // 2. Archivage
       final archived = await _archivalService.archiveGarden(gardenId);
       if (!archived) {
-        _log('âš ï¸ Archivage échoué (non critique)', level: 900);
+        _log('⚠️ Archivage échoué (non critique)', level: 900);
       }
 
       // 3. Migration via DualWriteService
@@ -223,7 +223,7 @@ class MigrationOrchestrator {
       final coherent =
           await _integrityValidator.validateMigratedGarden(gardenId);
       if (!coherent) {
-        _log('âŒ Validation post-migration échouée', level: 1000);
+        _log('❌ Validation post-migration échouée', level: 1000);
         // Rollback du jardin
         await _dualWriteService.rollbackGarden(gardenId);
         return MigrationResult(
@@ -236,7 +236,7 @@ class MigrationOrchestrator {
         );
       }
 
-      _log('âœ… Jardin $gardenId migré avec succès', level: 500);
+      _log('✅ Jardin $gardenId migré avec succès', level: 500);
 
       return MigrationResult(
         success: true,
@@ -251,7 +251,7 @@ class MigrationOrchestrator {
         timestamp: DateTime.now(),
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur migration jardin $gardenId', e, stackTrace);
+      _logError('❌ Erreur migration jardin $gardenId', e, stackTrace);
 
       return MigrationResult(
         success: false,
@@ -275,7 +275,7 @@ class MigrationOrchestrator {
     int batchSize = 10,
     Duration pauseBetweenBatches = const Duration(seconds: 2),
   }) async {
-    _log('ðŸ”„ Migration de tous les jardins (batch: $batchSize)', level: 500);
+    _log('🔄 Migration de tous les jardins (batch: $batchSize)', level: 500);
 
     final startTime = DateTime.now();
     final successfulMigrations = <String>[];
@@ -286,7 +286,7 @@ class MigrationOrchestrator {
       final legacyGardenIds = await _dualWriteService.getAllLegacyGardenIds();
       final totalGardens = legacyGardenIds.length;
 
-      _log('ðŸ“Š $totalGardens jardins à migrer', level: 500);
+      _log('📊 $totalGardens jardins à migrer', level: 500);
 
       // Migrer par batch
       for (var i = 0; i < legacyGardenIds.length; i += batchSize) {
@@ -296,7 +296,7 @@ class MigrationOrchestrator {
         final batch = legacyGardenIds.sublist(i, batchEnd);
         final batchNumber = (i / batchSize).floor() + 1;
 
-        _log('ðŸ“¦ Batch $batchNumber : ${batch.length} jardins', level: 500);
+        _log('📦 Batch $batchNumber : ${batch.length} jardins', level: 500);
 
         // Migrer chaque jardin du batch
         for (final gardenId in batch) {
@@ -304,17 +304,17 @@ class MigrationOrchestrator {
 
           if (result.success) {
             successfulMigrations.add(gardenId);
-            _log('  âœ… $gardenId migré', level: 500);
+            _log('  ✅ $gardenId migré', level: 500);
           } else {
             failedMigrations[gardenId] = result.message;
-            _log('  âŒ $gardenId échoué: ${result.message}', level: 1000);
+            _log('  ❌ $gardenId échoué: ${result.message}', level: 1000);
           }
 
           // Vérifier le seuil d'erreur
           final errorRate = failedMigrations.length / (i + 1);
           if (errorRate > config.maxErrorRate) {
             _log(
-              'ðŸš¨ Taux d\'erreur trop élevé (${(errorRate * 100).toStringAsFixed(1)}%) - Arrêt',
+              '🚨 Taux d\'erreur trop élevé (${(errorRate * 100).toStringAsFixed(1)}%) - Arrêt',
               level: 1000,
             );
             break;
@@ -323,7 +323,7 @@ class MigrationOrchestrator {
 
         // Pause entre batches pour ne pas surcharger
         if (batchEnd < legacyGardenIds.length) {
-          _log('â¸ï¸ Pause ${pauseBetweenBatches.inSeconds}s...', level: 500);
+          _log('⏸️ Pause ${pauseBetweenBatches.inSeconds}s...', level: 500);
           await Future.delayed(pauseBetweenBatches);
         }
       }
@@ -334,7 +334,7 @@ class MigrationOrchestrator {
           : 0.0;
 
       _log(
-        'ðŸŽ¯ Migration batch terminée: ${successfulMigrations.length}/$totalGardens (${successRate.toStringAsFixed(1)}%)',
+        '🎯 Migration batch terminée: ${successfulMigrations.length}/$totalGardens (${successRate.toStringAsFixed(1)}%)',
         level: 500,
       );
 
@@ -346,7 +346,7 @@ class MigrationOrchestrator {
         successRate: successRate,
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur migration batch', e, stackTrace);
+      _logError('❌ Erreur migration batch', e, stackTrace);
 
       return MigrationBatchResult(
         totalItems: 0,
@@ -367,12 +367,12 @@ class MigrationOrchestrator {
   /// - Permet une migration transparente sans risque
   Future<bool> enableDualWriteMode() async {
     try {
-      _log('ðŸ”„ Activation du mode double écriture', level: 500);
+      _log('🔄 Activation du mode double écriture', level: 500);
 
       // Valider l'état du système
       final health = await _healthChecker.checkSystemHealth();
       if (!health.isHealthy) {
-        _log('âŒ Système non sain - Impossible d\'activer', level: 1000);
+        _log('❌ Système non sain - Impossible d\'activer', level: 1000);
         return false;
       }
 
@@ -382,13 +382,13 @@ class MigrationOrchestrator {
       // Vérifier l'activation
       if (_dualWriteService.isEnabled) {
         _currentPhase = MigrationPhase.transition;
-        _log('âœ… Mode double écriture activé', level: 500);
+        _log('✅ Mode double écriture activé', level: 500);
         return true;
       }
 
       return false;
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur activation double écriture', e, stackTrace);
+      _logError('❌ Erreur activation double écriture', e, stackTrace);
       return false;
     }
   }
@@ -401,11 +401,11 @@ class MigrationOrchestrator {
   /// - Taux d'erreur < seuil acceptable
   Future<bool> switchToModernReads() async {
     try {
-      _log('ðŸ”„ Basculement vers lectures Moderne', level: 500);
+      _log('🔄 Basculement vers lectures Moderne', level: 500);
 
       // Vérifier les préconditions
       if (!_dualWriteService.isEnabled) {
-        _log('âŒ Double écriture non active', level: 1000);
+        _log('❌ Double écriture non active', level: 1000);
         return false;
       }
 
@@ -413,7 +413,7 @@ class MigrationOrchestrator {
       final coherenceResult = await _integrityValidator.validateAllData();
       if (!coherenceResult.isCoherent) {
         _log(
-          'âŒ Données incohérentes - Basculement refusé (${coherenceResult.issuesCount} problèmes)',
+          '❌ Données incohérentes - Basculement refusé (${coherenceResult.issuesCount} problèmes)',
           level: 1000,
         );
         return false;
@@ -422,7 +422,7 @@ class MigrationOrchestrator {
       // Vérifier la santé du système Moderne
       final modernHealth = await _healthChecker.checkModernSystemHealth();
       if (modernHealth != SystemHealth.healthy) {
-        _log('âŒ Système Moderne non sain', level: 1000);
+        _log('❌ Système Moderne non sain', level: 1000);
         return false;
       }
 
@@ -431,13 +431,13 @@ class MigrationOrchestrator {
 
       if (_readSwitchService.isReadingFromModern) {
         _currentPhase = MigrationPhase.switching;
-        _log('âœ… Basculement réussi - Lecture depuis Moderne', level: 500);
+        _log('✅ Basculement réussi - Lecture depuis Moderne', level: 500);
         return true;
       }
 
       return false;
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur basculement lectures', e, stackTrace);
+      _logError('❌ Erreur basculement lectures', e, stackTrace);
       return false;
     }
   }
@@ -447,13 +447,13 @@ class MigrationOrchestrator {
   /// **Attention :** Action irréversible sans rollback manuel
   Future<bool> disableDualWriteMode() async {
     try {
-      _log('âš ï¸ Désactivation du mode double écriture', level: 900);
+      _log('⚠️ Désactivation du mode double écriture', level: 900);
 
       // Validation finale avant désactivation
       final coherenceResult = await _integrityValidator.validateAllData();
       if (!coherenceResult.isCoherent) {
         _log(
-          'âŒ Données incohérentes - Désactivation refusée',
+          '❌ Données incohérentes - Désactivation refusée',
           level: 1000,
         );
         return false;
@@ -463,14 +463,14 @@ class MigrationOrchestrator {
       await _dualWriteService.disableDualWrite();
 
       if (!_dualWriteService.isEnabled) {
-        _log('âœ… Mode double écriture désactivé - Moderne uniquement',
+        _log('✅ Mode double écriture désactivé - Moderne uniquement',
             level: 500);
         return true;
       }
 
       return false;
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur désactivation double écriture', e, stackTrace);
+      _logError('❌ Erreur désactivation double écriture', e, stackTrace);
       return false;
     }
   }
@@ -483,7 +483,7 @@ class MigrationOrchestrator {
   /// 3. Nettoyage des services Legacy
   /// 4. Libération de la mémoire
   Future<MigrationResult> cleanupLegacySystem() async {
-    _log('ðŸ§¹ Nettoyage du système Legacy', level: 500);
+    _log('🧹 Nettoyage du système Legacy', level: 500);
 
     final startTime = DateTime.now();
 
@@ -502,17 +502,17 @@ class MigrationOrchestrator {
       }
 
       // Archivage final
-      _log('ðŸ“¦ Archivage final des données Legacy', level: 500);
+      _log('📦 Archivage final des données Legacy', level: 500);
       final archived = await _archivalService.archiveAllLegacyData();
 
       // Nettoyage progressif
-      _log('ðŸ—‘ï¸ Suppression progressive des boxes Legacy', level: 500);
+      _log('🗑️ Suppression progressive des boxes Legacy', level: 500);
       final cleaned = await _cleanupService.cleanupAllLegacyBoxes();
 
       _currentPhase = MigrationPhase.cleanup;
 
       final duration = DateTime.now().difference(startTime);
-      _log('âœ… Nettoyage terminé (${duration.inSeconds}s)', level: 500);
+      _log('✅ Nettoyage terminé (${duration.inSeconds}s)', level: 500);
 
       return MigrationResult(
         success: true,
@@ -526,7 +526,7 @@ class MigrationOrchestrator {
         timestamp: DateTime.now(),
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur nettoyage Legacy', e, stackTrace);
+      _logError('❌ Erreur nettoyage Legacy', e, stackTrace);
 
       return MigrationResult(
         success: false,
@@ -546,7 +546,7 @@ class MigrationOrchestrator {
   /// 2. Restauration lectures depuis Legacy
   /// 3. Restauration depuis archives si nécessaire
   Future<bool> rollbackMigration() async {
-    _log('âª ROLLBACK DE LA MIGRATION', level: 1000);
+    _log('⏪ ROLLBACK DE LA MIGRATION', level: 1000);
 
     try {
       // Désactiver double écriture
@@ -559,11 +559,11 @@ class MigrationOrchestrator {
       final restored = await _archivalService.restoreFromLatestArchive();
 
       _currentPhase = MigrationPhase.rolledBack;
-      _log('âœ… Rollback terminé', level: 500);
+      _log('✅ Rollback terminé', level: 500);
 
       return restored;
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur critique lors du rollback', e, stackTrace);
+      _logError('❌ Erreur critique lors du rollback', e, stackTrace);
       return false;
     }
   }
@@ -590,7 +590,7 @@ class MigrationOrchestrator {
     try {
       return await _healthChecker.generateFullReport();
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur génération rapport santé', e, stackTrace);
+      _logError('❌ Erreur génération rapport santé', e, stackTrace);
 
       return MigrationHealthReport(
         isHealthy: false,
@@ -608,13 +608,13 @@ class MigrationOrchestrator {
 
   /// Phase 1 : Préparation (Archivage + Validation)
   Future<PhaseResult> _executePreparationPhase() async {
-    _log('ðŸ“‹ PHASE 1 : Préparation', level: 500);
+    _log('📋 PHASE 1 : Préparation', level: 500);
 
     final startTime = DateTime.now();
 
     try {
       // 1. Validation système Legacy
-      _log('ðŸ” Validation du système Legacy', level: 500);
+      _log('🔍 Validation du système Legacy', level: 500);
       final legacyValid = await _integrityValidator.validateLegacySystem();
       if (!legacyValid) {
         return PhaseResult(
@@ -626,18 +626,18 @@ class MigrationOrchestrator {
       }
 
       // 2. Archivage complet
-      _log('ðŸ“¦ Archivage des données Legacy', level: 500);
+      _log('📦 Archivage des données Legacy', level: 500);
       final archived = await _archivalService.archiveAllLegacyData();
       if (!archived) {
-        _log('âš ï¸ Archivage échoué (non bloquant)', level: 900);
+        _log('⚠️ Archivage échoué (non bloquant)', level: 900);
       }
 
       // 3. Préparation système Moderne
-      _log('ðŸ—ï¸ Préparation du système Moderne', level: 500);
+      _log('🏗️ Préparation du système Moderne', level: 500);
       await _dualWriteService.prepareModernSystem();
 
       final duration = DateTime.now().difference(startTime);
-      _log('âœ… Phase préparation terminée (${duration.inSeconds}s)', level: 500);
+      _log('✅ Phase préparation terminée (${duration.inSeconds}s)', level: 500);
 
       return PhaseResult(
         success: true,
@@ -650,7 +650,7 @@ class MigrationOrchestrator {
         },
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur phase préparation', e, stackTrace);
+      _logError('❌ Erreur phase préparation', e, stackTrace);
 
       return PhaseResult(
         success: false,
@@ -663,7 +663,7 @@ class MigrationOrchestrator {
 
   /// Phase 2 : Transition (Double écriture)
   Future<PhaseResult> _executeTransitionPhase() async {
-    _log('ðŸ”„ PHASE 2 : Transition (Double écriture)', level: 500);
+    _log('🔄 PHASE 2 : Transition (Double écriture)', level: 500);
 
     final startTime = DateTime.now();
 
@@ -680,7 +680,7 @@ class MigrationOrchestrator {
       }
 
       // Migrer tous les jardins existants
-      _log('ðŸ“Š Migration des jardins existants', level: 500);
+      _log('📊 Migration des jardins existants', level: 500);
       final batchResult = await migrateAllGardens(
         batchSize: config.batchSize,
         pauseBetweenBatches: config.pauseBetweenBatches,
@@ -700,7 +700,7 @@ class MigrationOrchestrator {
       }
 
       // Validation finale de cohérence
-      _log('ðŸ” Validation de cohérence', level: 500);
+      _log('🔍 Validation de cohérence', level: 500);
       final coherenceResult = await _integrityValidator.validateAllData();
       if (!coherenceResult.isCoherent) {
         return PhaseResult(
@@ -715,7 +715,7 @@ class MigrationOrchestrator {
       }
 
       final duration = DateTime.now().difference(startTime);
-      _log('âœ… Phase transition terminée (${duration.inSeconds}s)', level: 500);
+      _log('✅ Phase transition terminée (${duration.inSeconds}s)', level: 500);
 
       return PhaseResult(
         success: true,
@@ -728,7 +728,7 @@ class MigrationOrchestrator {
         },
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur phase transition', e, stackTrace);
+      _logError('❌ Erreur phase transition', e, stackTrace);
 
       return PhaseResult(
         success: false,
@@ -741,7 +741,7 @@ class MigrationOrchestrator {
 
   /// Phase 3 : Basculement (Lecture depuis Moderne)
   Future<PhaseResult> _executeSwitchPhase() async {
-    _log('ðŸ”€ PHASE 3 : Basculement vers Moderne', level: 500);
+    _log('🔀 PHASE 3 : Basculement vers Moderne', level: 500);
 
     final startTime = DateTime.now();
 
@@ -758,7 +758,7 @@ class MigrationOrchestrator {
       }
 
       // Période de monitoring (selon config)
-      _log('â±ï¸ Période de monitoring (${config.monitoringPeriod.inHours}h)',
+      _log('⏱️ Période de monitoring (${config.monitoringPeriod.inHours}h)',
           level: 500);
       await _monitorSystemStability(config.monitoringPeriod);
 
@@ -777,7 +777,7 @@ class MigrationOrchestrator {
       }
 
       final duration = DateTime.now().difference(startTime);
-      _log('âœ… Phase basculement terminée (${duration.inSeconds}s)', level: 500);
+      _log('✅ Phase basculement terminée (${duration.inSeconds}s)', level: 500);
 
       return PhaseResult(
         success: true,
@@ -786,7 +786,7 @@ class MigrationOrchestrator {
         duration: duration,
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur phase basculement', e, stackTrace);
+      _logError('❌ Erreur phase basculement', e, stackTrace);
 
       return PhaseResult(
         success: false,
@@ -799,7 +799,7 @@ class MigrationOrchestrator {
 
   /// Phase 4 : Nettoyage (Suppression Legacy)
   Future<PhaseResult> _executeCleanupPhase() async {
-    _log('ðŸ§¹ PHASE 4 : Nettoyage Legacy', level: 500);
+    _log('🧹 PHASE 4 : Nettoyage Legacy', level: 500);
 
     final startTime = DateTime.now();
 
@@ -810,9 +810,9 @@ class MigrationOrchestrator {
       final duration = DateTime.now().difference(startTime);
 
       if (cleanupResult.success) {
-        _log('âœ… Phase nettoyage terminée (${duration.inSeconds}s)', level: 500);
+        _log('✅ Phase nettoyage terminée (${duration.inSeconds}s)', level: 500);
       } else {
-        _log('âš ï¸ Phase nettoyage partiellement réussie', level: 900);
+        _log('⚠️ Phase nettoyage partiellement réussie', level: 900);
       }
 
       return PhaseResult(
@@ -823,7 +823,7 @@ class MigrationOrchestrator {
         details: cleanupResult.details,
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur phase nettoyage', e, stackTrace);
+      _logError('❌ Erreur phase nettoyage', e, stackTrace);
 
       return PhaseResult(
         success: false,
@@ -843,11 +843,11 @@ class MigrationOrchestrator {
 
     while (DateTime.now().isBefore(endTime)) {
       checkCount++;
-      _log('ðŸ“Š Monitoring check $checkCount', level: 500);
+      _log('📊 Monitoring check $checkCount', level: 500);
 
       final health = await _healthChecker.checkSystemHealth();
       if (!health.isHealthy) {
-        _log('âš ï¸ Problème détecté lors du monitoring', level: 1000);
+        _log('⚠️ Problème détecté lors du monitoring', level: 1000);
         throw MigrationException(
           'Problème de stabilité détecté : ${health.issues.join(", ")}',
         );
@@ -857,7 +857,7 @@ class MigrationOrchestrator {
       await Future.delayed(const Duration(minutes: 1));
     }
 
-    _log('âœ… Monitoring terminé - Système stable', level: 500);
+    _log('✅ Monitoring terminé - Système stable', level: 500);
   }
 
   /// Crée un résultat d'échec

@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import '../../models/unified_garden_context.dart';
 import 'data_adapter.dart';
 
@@ -21,7 +21,7 @@ class DataConsistencyManager {
     required List<DataAdapter> adapters,
   }) async {
     developer.log(
-      'ðŸ” Vérification cohérence pour jardin $gardenId',
+      '🔍 Vérification cohérence pour jardin $gardenId',
       name: _logName,
       level: 500,
     );
@@ -51,7 +51,7 @@ class DataConsistencyManager {
     }
 
     developer.log(
-      'âœ… Rapport de cohérence : ${report.inconsistencies.length} incohérences détectées',
+      '✅ Rapport de cohérence : ${report.inconsistencies.length} incohérences détectées',
       name: _logName,
       level: 500,
     );
@@ -122,7 +122,7 @@ class DataConsistencyManager {
     required ResolutionStrategy strategy,
   }) async {
     developer.log(
-      'ðŸ”§ Résolution de ${report.inconsistencies.length} incohérences avec stratégie: ${strategy.name}',
+      '🔧 Résolution de ${report.inconsistencies.length} incohérences avec stratégie: ${strategy.name}',
       name: _logName,
       level: 500,
     );

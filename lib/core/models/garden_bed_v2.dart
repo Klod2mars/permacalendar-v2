@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden_bed_v2.g.dart';
@@ -28,7 +28,7 @@ class GardenBed extends HiveObject {
     required this.plantings,
   });
 
-  // Factory constructor pour Créer une nouvelle planche avec ID généré
+  // Factory constructor pour créer une nouvelle planche avec ID généré
   factory GardenBed.create({
     required String name,
     required double sizeInSquareMeters,
@@ -83,7 +83,7 @@ class GardenBed extends HiveObject {
 
   @override
   String toString() {
-    return 'GardenBed(id: $id, name: $name, size: ${sizeInSquareMeters}mÂ², plantings: ${plantings.length})';
+    return 'GardenBed(id: $id, name: $name, size: ${sizeInSquareMeters}m², plantings: ${plantings.length})';
   }
 
   @override

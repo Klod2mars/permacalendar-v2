@@ -1,4 +1,4 @@
-﻿ï»¿enum PlantHealthStatus {
+enum PlantHealthStatus {
   excellent,
   good,
   fair,

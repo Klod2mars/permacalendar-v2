@@ -1,4 +1,4 @@
-﻿ï»¿// FICHIER CORRIGÉ POUR RIVERPOD 3.X PURE (sans annotations)
+// FICHIER CORRIGÉ POUR RIVERPOD 3.X PURE (sans annotations)
 
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
@@ -90,7 +90,7 @@ class IntelligenceStateNotifier extends Notifier<IntelligenceState> {
         }
       }
 
-      // mise à jour intermédiaire
+      // Mise à jour intermédiaire
       state = state.copyWith(
         isInitialized: true,
         isAnalyzing: true,

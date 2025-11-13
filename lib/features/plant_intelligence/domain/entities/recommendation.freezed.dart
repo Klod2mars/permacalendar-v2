@@ -1,4 +1,4 @@
-﻿// coverage:ignore-file
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -71,7 +71,7 @@ mixin _$Recommendation {
   /// Statut actuel de la recommandation
   RecommendationStatus get status => throw _privateConstructorUsedError;
 
-  /// Date de Création
+  /// Date de création
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Date de dernière mise à jour
@@ -541,7 +541,7 @@ class _$RecommendationImpl implements _Recommendation {
   @JsonKey()
   final RecommendationStatus status;
 
-  /// Date de Création
+  /// Date de création
   @override
   final DateTime? createdAt;
 
@@ -758,7 +758,7 @@ abstract class _Recommendation implements Recommendation {
   RecommendationStatus get status;
   @override
 
-  /// Date de Création
+  /// Date de création
   DateTime? get createdAt;
   @override
 

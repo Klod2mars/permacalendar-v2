@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Widget de chargement personnalisé
 class LoadingWidget extends StatelessWidget {

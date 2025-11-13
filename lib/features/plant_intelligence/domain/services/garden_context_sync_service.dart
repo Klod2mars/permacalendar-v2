@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/data/datasources/plant_intelligence_local_datasource.dart';
 import 'package:permacalendar/core/models/garden_freezed.dart';
@@ -18,17 +18,17 @@ class GardenContextSyncService {
   ) async {
     try {
       developer.log(
-          'ðŸ”„ SYNC - Synchronisation GardenContext pour jardin: $gardenId',
+          '🔄 SYNC - Synchronisation GardenContext pour jardin: $gardenId',
           name: 'GardenContextSyncService');
 
-      // Récupérer le contexte existant ou en Créer un nouveau
+      // Récupérer le contexte existant ou en créer un nouveau
       GardenContext? existingContext =
           await _dataSource.getGardenContext(gardenId);
 
       // Récupérer les plantes actives depuis les plantations
       final activePlantIds = await _getActivePlantIdsFromPlantings(gardenId);
       developer.log(
-          'ðŸ”„ SYNC - Plantes actives trouvées: ${activePlantIds.length} - $activePlantIds',
+          '🔄 SYNC - Plantes actives trouvées: ${activePlantIds.length} - $activePlantIds',
           name: 'GardenContextSyncService');
 
       // Créer ou mettre à jour le contexte
@@ -69,14 +69,14 @@ class GardenContextSyncService {
       await _dataSource.updateGardenContext(gardenContext);
 
       developer.log(
-          'âœ… SYNC - GardenContext synchronisé avec succès: ${activePlantIds.length} plantes actives',
+          '✅ SYNC - GardenContext synchronisé avec succès: ${activePlantIds.length} plantes actives',
           name: 'GardenContextSyncService');
 
       return gardenContext;
     } catch (e, stackTrace) {
-      developer.log('âŒ SYNC - Erreur synchronisation GardenContext: $e',
+      developer.log('❌ SYNC - Erreur synchronisation GardenContext: $e',
           name: 'GardenContextSyncService');
-      developer.log('âŒ SYNC - StackTrace: $stackTrace',
+      developer.log('❌ SYNC - StackTrace: $stackTrace',
           name: 'GardenContextSyncService');
       return null;
     }
@@ -95,12 +95,12 @@ class GardenContextSyncService {
           .toList();
 
       developer.log(
-          'ðŸ”„ SYNC - Plantations trouvées: ${plantings.length}, Plantes uniques: ${plantIds.length}',
+          '🔄 SYNC - Plantations trouvées: ${plantings.length}, Plantes uniques: ${plantIds.length}',
           name: 'GardenContextSyncService');
 
       return plantIds;
     } catch (e) {
-      developer.log('âŒ SYNC - Erreur récupération plantations: $e',
+      developer.log('❌ SYNC - Erreur récupération plantations: $e',
           name: 'GardenContextSyncService');
       return [];
     }
@@ -114,7 +114,7 @@ class GardenContextSyncService {
           allGardens.where((garden) => garden.isActive).toList();
 
       developer.log(
-          'ðŸ”„ SYNC - Synchronisation de ${activeGardens.length} jardins actifs',
+          '🔄 SYNC - Synchronisation de ${activeGardens.length} jardins actifs',
           name: 'GardenContextSyncService');
 
       final Map<String, GardenContext> syncedContexts = {};
@@ -127,14 +127,14 @@ class GardenContextSyncService {
       }
 
       developer.log(
-          'âœ… SYNC - ${syncedContexts.length} contextes synchronisés avec succès',
+          '✅ SYNC - ${syncedContexts.length} contextes synchronisés avec succès',
           name: 'GardenContextSyncService');
 
       return syncedContexts;
     } catch (e, stackTrace) {
-      developer.log('âŒ SYNC - Erreur synchronisation globale: $e',
+      developer.log('❌ SYNC - Erreur synchronisation globale: $e',
           name: 'GardenContextSyncService');
-      developer.log('âŒ SYNC - StackTrace: $stackTrace',
+      developer.log('❌ SYNC - StackTrace: $stackTrace',
           name: 'GardenContextSyncService');
       return {};
     }

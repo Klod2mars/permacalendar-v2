@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:hive/hive.dart';
 import '../../features/plant_intelligence/domain/repositories/i_plant_condition_repository.dart';
 import '../../features/plant_intelligence/domain/repositories/i_weather_repository.dart';
@@ -35,10 +35,10 @@ import 'garden_module.dart';
 ///
 /// **Architecture :**
 /// ```
-/// DataSources â†’ Repository Impl â†’ Interfaces spécialisées (ISP)
-///                                       â†“
+/// DataSources → Repository Impl → Interfaces spécialisées (ISP)
+///                                       ↓
 ///                                  UseCases
-///                                       â†“
+///                                       ↓
 ///                                  Orchestrator
 /// ```
 ///
@@ -67,7 +67,7 @@ class IntelligenceModule {
   ///
   /// Gère :
   /// - Catalogues JSON (ravageurs, auxiliaires) - lecture seule
-  /// - Observations de ravageurs (Sanctuaire) - Créées par l'utilisateur
+  /// - Observations de ravageurs (Sanctuaire) - créées par l'utilisateur
   /// - Recommandations de lutte biologique - générées par l'IA
   static final biologicalControlDataSourceProvider =
       Provider<BiologicalControlDataSource>((ref) {
@@ -341,10 +341,10 @@ class IntelligenceModule {
   /// **Architecture :**
   /// ```
   /// Orchestrator
-  ///   â”œâ”€â†’ AnalyzePlantConditionsUsecase â†’ PlantAnalysisResult
-  ///   â”œâ”€â†’ EvaluatePlantingTimingUsecase â†’ PlantingTimingEvaluation
-  ///   â””â”€â†’ GenerateRecommendationsUsecase â†’ List<Recommendation>
-  ///        â†“
+  ///   ├─→ AnalyzePlantConditionsUsecase → PlantAnalysisResult
+  ///   ├─→ EvaluatePlantingTimingUsecase → PlantingTimingEvaluation
+  ///   └─→ GenerateRecommendationsUsecase → List<Recommendation>
+  ///        ↓
   ///   PlantIntelligenceReport (composite)
   /// ```
   ///
@@ -403,10 +403,10 @@ extension BiologicalControlExtensions on Ref {
 /// Permet d'éviter les imports circulaires :
 /// ```dart
 /// // Au lieu de :
-/// final hub = ref.read(IntelligenceModule.aggregationHubProvider); // âŒ Circular
+/// final hub = ref.read(IntelligenceModule.aggregationHubProvider); // ❌ Circular
 ///
 /// // On fait :
-/// final hub = ref.read(GardenModule.aggregationHubProvider); // âœ…
+/// final hub = ref.read(GardenModule.aggregationHubProvider); // ✅
 /// ```
 extension IntelligenceModuleExtensions on Ref {
   /// Raccourci pour accéder à l'orchestrateur

@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import '../../adapters/garden_migration_adapters.dart';
 import '../../models/garden.dart' as legacy;
@@ -48,7 +48,7 @@ class GardenDataMigration {
   ///
   /// [cleanupOldBoxes] : Si true, supprime les anciennes boxes après migration réussie
   /// [dryRun] : Si true, simule la migration sans écrire dans la base
-  /// [backupBeforeMigration] : Si true, Crée un backup avant migration
+  /// [backupBeforeMigration] : Si true, crée un backup avant migration
   ///
   /// Retourne un [GardenMigrationResult] avec les statistiques
   Future<GardenMigrationResult> migrateAllGardens({
@@ -57,7 +57,7 @@ class GardenDataMigration {
     bool backupBeforeMigration = true,
   }) async {
     developer.log(
-      'ðŸŒ± Démarrage migration Garden vers GardenFreezed',
+      '🌱 Démarrage migration Garden vers GardenFreezed',
       name: 'GardenDataMigration',
     );
 
@@ -70,7 +70,7 @@ class GardenDataMigration {
     try {
       // 1. Backup si demandé
       if (backupBeforeMigration && !dryRun) {
-        developer.log('ðŸ’¾ Création du backup...', name: 'GardenDataMigration');
+        developer.log('💾 Création du backup...', name: 'GardenDataMigration');
         await _createBackup();
         result.backupCreated = true;
       }
@@ -79,30 +79,30 @@ class GardenDataMigration {
       Box<GardenFreezed>? targetBox;
       if (!dryRun) {
         targetBox = await _openOrCreateTargetBox();
-        developer.log('âœ… Box cible ouverte', name: 'GardenDataMigration');
+        developer.log('✅ Box cible ouverte', name: 'GardenDataMigration');
       }
 
       // 3. Migrer depuis Legacy (HiveType 0)
-      developer.log('ðŸ“¦ Migration depuis Legacy...',
+      developer.log('📦 Migration depuis Legacy...',
           name: 'GardenDataMigration');
       final legacyMigrated = await _migrateLegacyGardens(targetBox, dryRun);
       result.legacyCount = legacyMigrated.length;
       result.migratedGardens.addAll(legacyMigrated);
 
       // 4. Migrer depuis V2 (HiveType 10)
-      developer.log('ðŸ“¦ Migration depuis V2...', name: 'GardenDataMigration');
+      developer.log('📦 Migration depuis V2...', name: 'GardenDataMigration');
       final v2Migrated = await _migrateV2Gardens(targetBox, dryRun);
       result.v2Count = v2Migrated.length;
       result.migratedGardens.addAll(v2Migrated);
 
       // 5. Migrer depuis Hive (HiveType 25)
-      developer.log('ðŸ“¦ Migration depuis Hive...', name: 'GardenDataMigration');
+      developer.log('📦 Migration depuis Hive...', name: 'GardenDataMigration');
       final hiveMigrated = await _migrateHiveGardens(targetBox, dryRun);
       result.hiveCount = hiveMigrated.length;
       result.migratedGardens.addAll(hiveMigrated);
 
       // 6. Vérification d'intégrité
-      developer.log('ðŸ” Vérification d\'intégrité...',
+      developer.log('🔍 Vérification d\'intégrité...',
           name: 'GardenDataMigration');
       final integrityCheck =
           await _verifyIntegrity(result.migratedGardens, targetBox);
@@ -115,7 +115,7 @@ class GardenDataMigration {
 
       // 7. Cleanup des anciennes boxes si demandé
       if (cleanupOldBoxes && !dryRun && result.success) {
-        developer.log('ðŸ—‘ï¸ Nettoyage des anciennes boxes...',
+        developer.log('🗑️ Nettoyage des anciennes boxes...',
             name: 'GardenDataMigration');
         await _cleanupOldBoxes();
         result.oldBoxesCleanedUp = true;
@@ -127,7 +127,7 @@ class GardenDataMigration {
       result.duration = result.endedAt.difference(startTime);
 
       developer.log(
-        'âœ… Migration terminée avec succès : ${result.migratedCount} jardins en ${result.duration.inSeconds}s',
+        '✅ Migration terminée avec succès : ${result.migratedCount} jardins en ${result.duration.inSeconds}s',
         name: 'GardenDataMigration',
       );
     } catch (e, stackTrace) {
@@ -137,7 +137,7 @@ class GardenDataMigration {
       result.duration = result.endedAt.difference(startTime);
 
       developer.log(
-        'âŒ Échec de la migration',
+        '❌ Échec de la migration',
         name: 'GardenDataMigration',
         error: e,
         stackTrace: stackTrace,
@@ -148,7 +148,7 @@ class GardenDataMigration {
     return result;
   }
 
-  /// Ouvre ou Crée la box cible pour GardenFreezed
+  /// Ouvre ou crée la box cible pour GardenFreezed
   Future<Box<GardenFreezed>> _openOrCreateTargetBox() async {
     try {
       if (Hive.isBoxOpen('gardens_freezed')) {
@@ -157,12 +157,12 @@ class GardenDataMigration {
       return await Hive.openBox<GardenFreezed>('gardens_freezed');
     } catch (e) {
       developer.log(
-        'Erreur ouverture box cible, tentative de suppression et reCréation',
+        'Erreur ouverture box cible, tentative de suppression et recréation',
         name: 'GardenDataMigration',
         level: 900,
       );
 
-      // Si échec, supprimer et reCréer
+      // Si échec, supprimer et recréer
       await Hive.deleteBoxFromDisk('gardens_freezed');
       return await Hive.openBox<GardenFreezed>('gardens_freezed');
     }
@@ -197,7 +197,7 @@ class GardenDataMigration {
       // Lire tous les jardins
       final legacyGardens = legacyBox.values.toList();
       developer.log(
-        'ðŸ“Š ${legacyGardens.length} jardins Legacy trouvés',
+        '📊 ${legacyGardens.length} jardins Legacy trouvés',
         name: 'GardenDataMigration',
       );
 
@@ -211,7 +211,7 @@ class GardenDataMigration {
           if (!dryRun && targetBox != null) {
             await targetBox.put(gardenFreezed.id, gardenFreezed);
             developer.log(
-              'âœ… Legacy "${gardenFreezed.name}" migré (${gardenFreezed.id})',
+              '✅ Legacy "${gardenFreezed.name}" migré (${gardenFreezed.id})',
               name: 'GardenDataMigration',
             );
           }
@@ -263,7 +263,7 @@ class GardenDataMigration {
       // Lire tous les jardins
       final v2Gardens = v2Box.values.toList();
       developer.log(
-        'ðŸ“Š ${v2Gardens.length} jardins V2 trouvés',
+        '📊 ${v2Gardens.length} jardins V2 trouvés',
         name: 'GardenDataMigration',
       );
 
@@ -276,7 +276,7 @@ class GardenDataMigration {
           if (!dryRun && targetBox != null) {
             await targetBox.put(gardenFreezed.id, gardenFreezed);
             developer.log(
-              'âœ… V2 "${gardenFreezed.name}" migré (${gardenFreezed.id})',
+              '✅ V2 "${gardenFreezed.name}" migré (${gardenFreezed.id})',
               name: 'GardenDataMigration',
             );
           }
@@ -328,7 +328,7 @@ class GardenDataMigration {
       // Lire tous les jardins
       final hiveGardens = hiveBox.values.toList();
       developer.log(
-        'ðŸ“Š ${hiveGardens.length} jardins Hive trouvés',
+        '📊 ${hiveGardens.length} jardins Hive trouvés',
         name: 'GardenDataMigration',
       );
 
@@ -341,7 +341,7 @@ class GardenDataMigration {
           if (!dryRun && targetBox != null) {
             await targetBox.put(gardenFreezed.id, gardenFreezed);
             developer.log(
-              'âœ… Hive "${gardenFreezed.name}" migré (${gardenFreezed.id}) - Surface: ${gardenFreezed.totalAreaInSquareMeters.toStringAsFixed(2)} mÂ²',
+              '✅ Hive "${gardenFreezed.name}" migré (${gardenFreezed.id}) - Surface: ${gardenFreezed.totalAreaInSquareMeters.toStringAsFixed(2)} m²',
               name: 'GardenDataMigration',
             );
           }
@@ -380,7 +380,7 @@ class GardenDataMigration {
         final stored = targetBox.get(garden.id);
         if (stored == null) {
           developer.log(
-            'âŒ Jardin "${garden.name}" (${garden.id}) absent de la box cible',
+            '❌ Jardin "${garden.name}" (${garden.id}) absent de la box cible',
             name: 'GardenDataMigration',
             level: 1000,
           );
@@ -391,7 +391,7 @@ class GardenDataMigration {
         if (stored.name != garden.name ||
             stored.createdAt != garden.createdAt) {
           developer.log(
-            'âŒ Jardin "${garden.name}" (${garden.id}) corrompu dans la box cible',
+            '❌ Jardin "${garden.name}" (${garden.id}) corrompu dans la box cible',
             name: 'GardenDataMigration',
             level: 1000,
           );
@@ -400,7 +400,7 @@ class GardenDataMigration {
       }
 
       developer.log(
-        'âœ… Intégrité vérifiée : ${migratedGardens.length} jardins',
+        '✅ Intégrité vérifiée : ${migratedGardens.length} jardins',
         name: 'GardenDataMigration',
       );
       return true;
@@ -435,12 +435,12 @@ class GardenDataMigration {
       await backupBox.close();
 
       developer.log(
-        'ðŸ’¾ Backup Créé : $backupBoxName',
+        '💾 Backup créé : $backupBoxName',
         name: 'GardenDataMigration',
       );
     } catch (e) {
       developer.log(
-        'âš ï¸ Impossible de Créer le backup: $e',
+        '⚠️ Impossible de créer le backup: $e',
         name: 'GardenDataMigration',
         level: 900,
       );
@@ -507,11 +507,11 @@ class GardenDataMigration {
           await Hive.box(boxName).close();
         }
         await Hive.deleteBoxFromDisk(boxName);
-        developer.log('ðŸ—‘ï¸ Box "$boxName" supprimée',
+        developer.log('🗑️ Box "$boxName" supprimée',
             name: 'GardenDataMigration');
       } catch (e) {
         developer.log(
-          'âš ï¸ Impossible de supprimer box "$boxName": $e',
+          '⚠️ Impossible de supprimer box "$boxName": $e',
           name: 'GardenDataMigration',
           level: 900,
         );
@@ -522,7 +522,7 @@ class GardenDataMigration {
   /// Restaure depuis un backup
   Future<void> restoreFromBackup(String backupBoxName) async {
     developer.log(
-      'ðŸ”„ Restauration depuis backup: $backupBoxName',
+      '🔄 Restauration depuis backup: $backupBoxName',
       name: 'GardenDataMigration',
     );
 
@@ -540,7 +540,7 @@ class GardenDataMigration {
         name: 'GardenDataMigration',
       );
 
-      // La restauration complète nécessiterait de reCréer les objets typés
+      // La restauration complète nécessiterait de recréer les objets typés
       // Pour l'instant, on log seulement les données disponibles
       developer.log(
         'Données disponibles dans le backup:',
@@ -553,12 +553,12 @@ class GardenDataMigration {
           name: 'GardenDataMigration');
 
       developer.log(
-        'âœ… Restauration terminée (vérifiez les données)',
+        '✅ Restauration terminée (vérifiez les données)',
         name: 'GardenDataMigration',
       );
     } catch (e, stackTrace) {
       developer.log(
-        'âŒ Erreur lors de la restauration',
+        '❌ Erreur lors de la restauration',
         name: 'GardenDataMigration',
         error: e,
         stackTrace: stackTrace,
@@ -590,16 +590,16 @@ class GardenDataMigration {
     }
 
     final result = _lastResult!;
-    developer.log('\nðŸ“Š STATISTIQUES DE MIGRATION GARDEN\n',
+    developer.log('\n📊 STATISTIQUES DE MIGRATION GARDEN\n',
         name: 'GardenDataMigration');
-    developer.log('â”€' * 50, name: 'GardenDataMigration');
-    developer.log('Statut: ${result.success ? "âœ… RÉUSSI" : "âŒ ÉCHEC"}',
+    developer.log('─' * 50, name: 'GardenDataMigration');
+    developer.log('Statut: ${result.success ? "✅ RÉUSSI" : "❌ ÉCHEC"}',
         name: 'GardenDataMigration');
     developer.log('Mode: ${result.dryRun ? "Dry-run (simulation)" : "Réel"}',
         name: 'GardenDataMigration');
     developer.log('Durée: ${result.duration.inSeconds}s',
         name: 'GardenDataMigration');
-    developer.log('â”€' * 50, name: 'GardenDataMigration');
+    developer.log('─' * 50, name: 'GardenDataMigration');
     developer.log('Jardins migrés:', name: 'GardenDataMigration');
     developer.log('  - Legacy (HiveType 0): ${result.legacyCount}',
         name: 'GardenDataMigration');
@@ -609,24 +609,24 @@ class GardenDataMigration {
         name: 'GardenDataMigration');
     developer.log('  - TOTAL: ${result.migratedCount}',
         name: 'GardenDataMigration');
-    developer.log('â”€' * 50, name: 'GardenDataMigration');
+    developer.log('─' * 50, name: 'GardenDataMigration');
     developer.log('Vérifications:', name: 'GardenDataMigration');
-    developer.log('  - Backup Créé: ${result.backupCreated ? "âœ…" : "âŒ"}',
+    developer.log('  - Backup créé: ${result.backupCreated ? "✅" : "❌"}',
         name: 'GardenDataMigration');
     developer.log(
-        '  - Intégrité vérifiée: ${result.integrityVerified ? "âœ…" : "âŒ"}',
+        '  - Intégrité vérifiée: ${result.integrityVerified ? "✅" : "❌"}',
         name: 'GardenDataMigration');
     developer.log(
-        '  - Anciennes boxes nettoyées: ${result.oldBoxesCleanedUp ? "âœ…" : "âŒ"}',
+        '  - Anciennes boxes nettoyées: ${result.oldBoxesCleanedUp ? "✅" : "❌"}',
         name: 'GardenDataMigration');
-    developer.log('â”€' * 50, name: 'GardenDataMigration');
+    developer.log('─' * 50, name: 'GardenDataMigration');
 
     if (result.errors.isNotEmpty) {
       developer.log('Erreurs:', name: 'GardenDataMigration');
       for (final error in result.errors) {
-        developer.log('  âŒ $error', name: 'GardenDataMigration');
+        developer.log('  ❌ $error', name: 'GardenDataMigration');
       }
-      developer.log('â”€' * 50, name: 'GardenDataMigration');
+      developer.log('─' * 50, name: 'GardenDataMigration');
     }
 
     developer.log('\n', name: 'GardenDataMigration');
@@ -665,7 +665,7 @@ class GardenMigrationResult {
   /// Liste des jardins migrés
   List<GardenFreezed> migratedGardens = [];
 
-  /// Backup Créé
+  /// Backup créé
   bool backupCreated = false;
 
   /// Intégrité vérifiée

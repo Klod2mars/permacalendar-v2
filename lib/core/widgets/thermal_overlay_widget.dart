@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/thermal_theme_provider.dart';
 import '../../shared/presentation/widgets/thermal_transition_widget.dart';
@@ -168,7 +168,7 @@ class ThermalDebugWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'ðŸŒ¡ï¸ Thermal Debug',
+            '🌡️ Thermal Debug',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

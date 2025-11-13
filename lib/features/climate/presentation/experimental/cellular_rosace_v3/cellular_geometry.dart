@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:math' as math;
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 /// Cellular Geometry Engine for Organic Rosace V3

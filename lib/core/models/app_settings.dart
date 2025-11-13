@@ -1,8 +1,8 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 export 'package:flutter/material.dart' show ThemeMode;
 
-/// ModÃƒÂ¨le minimal AppSettings utilisÃƒÂ© par les tests.
-/// ImplÃƒÂ©mentation simple, mutable, et compatible avec les attentes des tests.
+/// ModÃ¨le minimal AppSettings utilisÃ© par les tests.
+/// ImplÃ©mentation simple, mutable, et compatible avec les attentes des tests.
 class AppSettings {
   String themeMode;
   bool showAnimations;
@@ -34,7 +34,7 @@ class AppSettings {
     required this.gardenCalibrationEnabled,
   });
 
-  /// Valeurs par dÃƒÂ©faut (conformes aux tests)
+  /// Valeurs par dÃ©faut (conformes aux tests)
   factory AppSettings.defaults() => AppSettings(
         themeMode: 'system',
         showAnimations: true,
@@ -100,7 +100,7 @@ class AppSettings {
     }
   }
 
-  /// Mettre ÃƒÂ  jour en place depuis un ThemeMode (les tests appellent cela)
+  /// Mettre Ã  jour en place depuis un ThemeMode (les tests appellent cela)
   void setThemeModeEnum(ThemeMode m) {
     switch (m) {
       case ThemeMode.light:

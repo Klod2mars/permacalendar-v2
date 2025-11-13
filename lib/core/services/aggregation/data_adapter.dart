@@ -1,4 +1,4 @@
-﻿ï»¿import '../../models/unified_garden_context.dart';
+import '../../models/unified_garden_context.dart';
 
 /// Interface pour les adaptateurs de données
 ///

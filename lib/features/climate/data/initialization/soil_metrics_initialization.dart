@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../datasources/soil_metrics_local_ds.dart';
 
 /// Initialization service for soil metrics Hive adapters

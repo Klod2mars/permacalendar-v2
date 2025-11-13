@@ -1,4 +1,4 @@
-﻿ï»¿/// Use case for rounding pH values to 0.5 step increments
+/// Use case for rounding pH values to 0.5 step increments
 ///
 /// pH values are rounded to the nearest 0.5 step within the valid range [0.0, 14.0].
 /// This provides a practical granularity for soil pH measurements.
@@ -10,11 +10,11 @@ class RoundPhToStepUsecase {
   /// Returns the rounded pH value
   ///
   /// Examples:
-  /// - 6.24 â†’ 6.0
-  /// - 6.26 â†’ 6.5
-  /// - 6.75 â†’ 7.0
-  /// - -1.0 â†’ 0.0 (clamped)
-  /// - 15.0 â†’ 14.0 (clamped)
+  /// - 6.24 → 6.0
+  /// - 6.26 → 6.5
+  /// - 6.75 → 7.0
+  /// - -1.0 → 0.0 (clamped)
+  /// - 15.0 → 14.0 (clamped)
   double call(double value) {
     // Clamp to valid pH range [0.0, 14.0]
     final clamped = value.clamp(0.0, 14.0);

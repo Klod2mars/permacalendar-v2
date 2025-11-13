@@ -1,4 +1,4 @@
-﻿ï»¿// ðŸš¨ Alerting Service - Intelligent Alert Management
+// 🚨 Alerting Service - Intelligent Alert Management
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Alert Management Patterns
 

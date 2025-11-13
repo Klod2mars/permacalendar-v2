@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:permacalendar/core/services/environment_service.dart';
+import 'package:permacalendar/core/services/environment_service.dart';
 
 /// Utilitaires de validation pour l'application
 class Validators {
@@ -79,7 +79,7 @@ class Validators {
     }
 
     if (area > 10000) {
-      return 'Surface ne peut pas dépasser 10 000 mÂ²';
+      return 'Surface ne peut pas dépasser 10 000 m²';
     }
 
     return null;
@@ -256,7 +256,7 @@ class Validators {
   }
 
   /// Validation de la température
-  static String? validateTemperature(String? value, {String unit = 'Â°C'}) {
+  static String? validateTemperature(String? value, {String unit = '°C'}) {
     if (value == null || value.trim().isEmpty) {
       return null; // Optionnel
     }

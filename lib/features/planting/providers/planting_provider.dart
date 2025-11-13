@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 
 import '../../../core/models/planting.dart';
 import '../../../core/data/hive/garden_boxes.dart';
@@ -106,7 +106,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       await GardenBoxes.savePlanting(planting);
 
-      // âœ… Tracker l'activité via ActivityObserverService
+      // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(gardenBedId);
       if (bed != null) {
         await ActivityObserverService().capturePlantingCreated(
@@ -120,7 +120,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         );
       }
 
-      // âœ… NOUVEAU (Prompt 6) : Émettre événement via GardenEventBus
+      // ✅ NOUVEAU (Prompt 6) : Émettre événement via GardenEventBus
       try {
         final bed = GardenBoxes.getGardenBedById(gardenBedId);
         if (bed != null) {
@@ -139,7 +139,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
           );
         }
       } catch (e) {
-        // Mode silencieux : ne pas faire échouer la Création
+        // Mode silencieux : ne pas faire échouer la création
         print('Erreur émission événement GardenEventBus: $e');
       }
 
@@ -152,7 +152,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       return true;
     } catch (e) {
-      state = state.copyWith(error: 'Erreur lors de la Création: $e');
+      state = state.copyWith(error: 'Erreur lors de la création: $e');
       return false;
     }
   }
@@ -167,7 +167,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       await GardenBoxes.savePlanting(updatedPlanting);
 
-      // âœ… Tracker l'activité via ActivityObserverService
+      // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(updatedPlanting.gardenBedId);
       if (bed != null) {
         await ActivityObserverService().capturePlantingUpdated(
@@ -180,7 +180,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         );
       }
 
-      // âœ… REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
+      // ✅ REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
       try {
         final bed = GardenBoxes.getGardenBedById(updatedPlanting.gardenBedId);
         if (bed != null) {
@@ -228,7 +228,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       await GardenBoxes.deletePlanting(plantingId);
 
-      // âœ… Tracker l'activité via ActivityObserverService
+      // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(plantingToDelete.gardenBedId);
       if (bed != null) {
         await ActivityObserverService().captureGardenBedDeleted(
@@ -239,7 +239,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         );
       }
 
-      // âœ… REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
+      // ✅ REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
       try {
         final bed = GardenBoxes.getGardenBedById(plantingToDelete.gardenBedId);
         if (bed != null) {
@@ -309,7 +309,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       await GardenBoxes.savePlanting(updatedPlanting);
 
-      // âœ… Tracker l'activité via ActivityObserverService
+      // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
       if (bed != null) {
         await ActivityObserverService().captureMaintenanceCompleted(
@@ -353,7 +353,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       await GardenBoxes.savePlanting(updatedPlanting);
 
-      // âœ… Tracker l'activité via ActivityObserverService
+      // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
       if (bed != null) {
         await ActivityObserverService().captureHarvestCompleted(
@@ -367,7 +367,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         );
       }
 
-      // âœ… NOUVEAU (Prompt 6) : Émettre événement via GardenEventBus
+      // ✅ NOUVEAU (Prompt 6) : Émettre événement via GardenEventBus
       try {
         final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
         if (bed != null) {
@@ -557,7 +557,7 @@ final plantingsListProvider = Provider<List<Planting>>((ref) {
   return ref.watch(plantingProvider).plantings;
 });
 
-// âœ… CORRECTION : Provider spécifique pour les plantations d'une parcelle
+// ✅ CORRECTION : Provider spécifique pour les plantations d'une parcelle
 final plantingsByGardenBedProvider =
     Provider.family<List<Planting>, String>((ref, gardenBedId) {
   final allPlantings = ref.watch(plantingProvider).plantings;

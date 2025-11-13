@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/services/weather_alert_service.dart';
 import '../providers/weather_providers.dart';
 import '../../../../core/services/open_meteo_service.dart';

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import '../models/organic_zone_config.dart';
@@ -15,10 +15,10 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
     required Map<String, double> defaultSizes,
     required Map<String, bool> defaultEnabled,
   }) async {
-    // âœ… PHASE 4: Log de debug
+    // ✅ PHASE 4: Log de debug
     if (kDebugMode) {
       debugPrint(
-          'ðŸ”§ [CALIBRATION] loadFromStorage: Chargement de ${defaultPositions.length} zones');
+          '🔧 [CALIBRATION] loadFromStorage: Chargement de ${defaultPositions.length} zones');
     }
 
     final positions =
@@ -39,20 +39,20 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
     }
     state = entries;
 
-    // âœ… PHASE 4: Log de debug
+    // ✅ PHASE 4: Log de debug
     if (kDebugMode) {
       debugPrint(
-          'ðŸ”§ [CALIBRATION] loadFromStorage: ${entries.length} zones chargées');
-      debugPrint('ðŸ”§ [CALIBRATION] Zones chargées: ${entries.keys.toList()}');
+          '🔧 [CALIBRATION] loadFromStorage: ${entries.length} zones chargées');
+      debugPrint('🔧 [CALIBRATION] Zones chargées: ${entries.keys.toList()}');
     }
   }
 
   /// Sauvegarde toutes les zones
   Future<void> saveAll() async {
-    // âœ… PHASE 4: Log de debug
+    // ✅ PHASE 4: Log de debug
     if (kDebugMode) {
       debugPrint(
-          'ðŸ”§ [CALIBRATION] saveAll: Sauvegarde de ${state.length} zones');
+          '🔧 [CALIBRATION] saveAll: Sauvegarde de ${state.length} zones');
     }
 
     final positions = <String, Offset>{};
@@ -69,9 +69,9 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
     await PositionPersistence.saveSizes('organic', sizes);
     await PositionPersistence.saveBooleans('organic', flags);
 
-    // âœ… PHASE 4: Log de debug
+    // ✅ PHASE 4: Log de debug
     if (kDebugMode) {
-      debugPrint('ðŸ”§ [CALIBRATION] saveAll: Sauvegarde terminée avec succès');
+      debugPrint('🔧 [CALIBRATION] saveAll: Sauvegarde terminée avec succès');
     }
   }
 
@@ -79,9 +79,9 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
   void setPosition(String id, Offset position) {
     final current = state[id];
     if (current == null) {
-      // âœ… PHASE 4: Log de debug
+      // ✅ PHASE 4: Log de debug
       if (kDebugMode) {
-        debugPrint('âš ï¸ [CALIBRATION] setPosition: Zone $id introuvable');
+        debugPrint('⚠️ [CALIBRATION] setPosition: Zone $id introuvable');
       }
       return;
     }
@@ -89,10 +89,10 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
     updated[id] = current.copyWith(position: position);
     state = updated;
 
-    // âœ… PHASE 4: Log de debug
+    // ✅ PHASE 4: Log de debug
     if (kDebugMode) {
       debugPrint(
-          'ðŸ”§ [CALIBRATION] setPosition: Zone $id déplacée vers ($position)');
+          '🔧 [CALIBRATION] setPosition: Zone $id déplacée vers ($position)');
     }
   }
 

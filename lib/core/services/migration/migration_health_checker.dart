@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import '../../data/hive/garden_boxes.dart';
 import '../../repositories/garden_hive_repository.dart';
 import 'migration_models.dart';
@@ -41,7 +41,7 @@ class MigrationHealthChecker {
 
   /// Constructeur
   MigrationHealthChecker() {
-    _log('ðŸ—ï¸ Migration Health Checker Créé', level: 500);
+    _log('🏗️ Migration Health Checker créé', level: 500);
   }
 
   // ==================== VÉRIFICATION DE SANTÉ ====================
@@ -49,7 +49,7 @@ class MigrationHealthChecker {
   /// Vérifie la santé globale du système
   Future<MigrationHealthReport> checkSystemHealth() async {
     try {
-      _log('ðŸ¥ Vérification santé globale du système', level: 500);
+      _log('🏥 Vérification santé globale du système', level: 500);
       _healthChecksPerformed++;
 
       final startTime = DateTime.now();
@@ -98,7 +98,7 @@ class MigrationHealthChecker {
       final duration = DateTime.now().difference(startTime);
 
       _log(
-        'ðŸ“Š Santé système: ${isHealthy ? "âœ… Sain" : "âš ï¸ Problèmes"} (${duration.inMilliseconds}ms)',
+        '📊 Santé système: ${isHealthy ? "✅ Sain" : "⚠️ Problèmes"} (${duration.inMilliseconds}ms)',
         level: isHealthy ? 500 : 900,
       );
 
@@ -119,7 +119,7 @@ class MigrationHealthChecker {
         },
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur vérification santé', e, stackTrace);
+      _logError('❌ Erreur vérification santé', e, stackTrace);
       _unhealthyChecks++;
 
       return MigrationHealthReport(
@@ -146,15 +146,15 @@ class MigrationHealthChecker {
 
       // Vérifier performance
       if (duration > _maxResponseTime) {
-        _log('âš ï¸ Système Legacy lent (${duration.inMilliseconds}ms)',
+        _log('⚠️ Système Legacy lent (${duration.inMilliseconds}ms)',
             level: 900);
         return SystemHealth.degraded;
       }
 
-      _log('âœ… Système Legacy sain (${duration.inMilliseconds}ms)', level: 500);
+      _log('✅ Système Legacy sain (${duration.inMilliseconds}ms)', level: 500);
       return SystemHealth.healthy;
     } catch (e) {
-      _log('âŒ Système Legacy non sain: $e', level: 1000);
+      _log('❌ Système Legacy non sain: $e', level: 1000);
       return SystemHealth.unhealthy;
     }
   }
@@ -171,15 +171,15 @@ class MigrationHealthChecker {
 
       // Vérifier performance
       if (duration > _maxResponseTime) {
-        _log('âš ï¸ Système Moderne lent (${duration.inMilliseconds}ms)',
+        _log('⚠️ Système Moderne lent (${duration.inMilliseconds}ms)',
             level: 900);
         return SystemHealth.degraded;
       }
 
-      _log('âœ… Système Moderne sain (${duration.inMilliseconds}ms)', level: 500);
+      _log('✅ Système Moderne sain (${duration.inMilliseconds}ms)', level: 500);
       return SystemHealth.healthy;
     } catch (e) {
-      _log('âŒ Système Moderne non sain: $e', level: 1000);
+      _log('❌ Système Moderne non sain: $e', level: 1000);
       return SystemHealth.unhealthy;
     }
   }
@@ -207,10 +207,10 @@ class MigrationHealthChecker {
 
       final coherence = (minCount / maxCount) * 100;
 
-      _log('ðŸ“Š Cohérence: ${coherence.toStringAsFixed(1)}%', level: 500);
+      _log('📊 Cohérence: ${coherence.toStringAsFixed(1)}%', level: 500);
       return coherence;
     } catch (e) {
-      _log('âŒ Erreur calcul cohérence: $e', level: 1000);
+      _log('❌ Erreur calcul cohérence: $e', level: 1000);
       return 0.0;
     }
   }
@@ -232,7 +232,7 @@ class MigrationHealthChecker {
   /// Génère un rapport de santé complet
   Future<MigrationHealthReport> generateFullReport() async {
     try {
-      _log('ðŸ“‹ Génération rapport santé complet', level: 500);
+      _log('📋 Génération rapport santé complet', level: 500);
 
       final startTime = DateTime.now();
 
@@ -278,7 +278,7 @@ class MigrationHealthChecker {
       final duration = DateTime.now().difference(startTime);
 
       _log(
-        'ðŸ“Š Rapport complet: ${isHealthy ? "âœ… Sain" : "âš ï¸ ${issues.length} problèmes"} (${duration.inMilliseconds}ms)',
+        '📊 Rapport complet: ${isHealthy ? "✅ Sain" : "⚠️ ${issues.length} problèmes"} (${duration.inMilliseconds}ms)',
         level: isHealthy ? 500 : 900,
       );
 
@@ -301,7 +301,7 @@ class MigrationHealthChecker {
         },
       );
     } catch (e, stackTrace) {
-      _logError('âŒ Erreur génération rapport', e, stackTrace);
+      _logError('❌ Erreur génération rapport', e, stackTrace);
 
       return MigrationHealthReport(
         isHealthy: false,
@@ -351,7 +351,7 @@ class MigrationHealthChecker {
     Function(MigrationHealthReport)? onHealthChange,
   }) async {
     _log(
-      'ðŸ”„ Monitoring continu démarré (${duration.inHours}h, check chaque ${checkInterval.inMinutes}min)',
+      '🔄 Monitoring continu démarré (${duration.inHours}h, check chaque ${checkInterval.inMinutes}min)',
       level: 500,
     );
 
@@ -369,7 +369,7 @@ class MigrationHealthChecker {
         if (previousReport != null &&
             report.isHealthy != previousReport.isHealthy) {
           _log(
-            'âš ï¸ Changement de santé détecté: ${previousReport.isHealthy} â†’ ${report.isHealthy}',
+            '⚠️ Changement de santé détecté: ${previousReport.isHealthy} → ${report.isHealthy}',
             level: 900,
           );
 
@@ -383,11 +383,11 @@ class MigrationHealthChecker {
         // Attendre avant le prochain check
         await Future.delayed(checkInterval);
       } catch (e) {
-        _log('âŒ Erreur pendant monitoring: $e', level: 1000);
+        _log('❌ Erreur pendant monitoring: $e', level: 1000);
       }
     }
 
-    _log('âœ… Monitoring continu terminé - ${reports.length} rapports',
+    _log('✅ Monitoring continu terminé - ${reports.length} rapports',
         level: 500);
     return reports;
   }
@@ -411,7 +411,7 @@ class MigrationHealthChecker {
     _healthyChecks = 0;
     _degradedChecks = 0;
     _unhealthyChecks = 0;
-    _log('ðŸ“Š Statistiques santé réinitialisées', level: 500);
+    _log('📊 Statistiques santé réinitialisées', level: 500);
   }
 
   // ==================== UTILITAIRES ====================

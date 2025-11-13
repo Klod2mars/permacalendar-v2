@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:permacalendar/core/services/garden_event_observer_service.dart';
 import 'package:permacalendar/core/services/garden_data_aggregation_service.dart';
 import 'package:permacalendar/core/data/hive/garden_boxes.dart';
@@ -19,7 +19,7 @@ class GardenEventSystemValidator {
 
   /// Valide le système complet
   Future<ValidationReport> validate() async {
-    developer.log('ðŸ” Début de la validation du système d\'événements',
+    developer.log('🔍 Début de la validation du système d\'événements',
         name: _logName);
 
     final checks = <ValidationCheck>[];
@@ -36,7 +36,7 @@ class GardenEventSystemValidator {
     // Check 4 : Statistiques des événements
     checks.add(_checkEventStatistics());
 
-    // Check 5 : Test de Création de GardenContext
+    // Check 5 : Test de création de GardenContext
     checks.add(await _checkGardenContextCreation());
 
     // Calculer le résultat global
@@ -54,8 +54,8 @@ class GardenEventSystemValidator {
 
     developer.log(
       allPassed
-          ? 'âœ… Validation réussie : $passedChecks/$totalChecks checks passés'
-          : 'âš ï¸ Validation partielle : $passedChecks/$totalChecks checks passés',
+          ? '✅ Validation réussie : $passedChecks/$totalChecks checks passés'
+          : '⚠️ Validation partielle : $passedChecks/$totalChecks checks passés',
       name: _logName,
       level: allPassed ? 500 : 900,
     );
@@ -180,7 +180,7 @@ class GardenEventSystemValidator {
     }
   }
 
-  /// Check 5 : Test de Création de GardenContext
+  /// Check 5 : Test de création de GardenContext
   Future<ValidationCheck> _checkGardenContextCreation() async {
     try {
       final aggregationService = GardenDataAggregationService();
@@ -190,25 +190,25 @@ class GardenEventSystemValidator {
 
       if (gardens.isEmpty) {
         return const ValidationCheck(
-          name: 'Test Création GardenContext',
+          name: 'Test création GardenContext',
           passed: true,
           message:
-              'Aucun jardin existant pour tester (Créez-en un pour validation complète)',
+              'Aucun jardin existant pour tester (créez-en un pour validation complète)',
           severity: ValidationSeverity.info,
         );
       }
 
       final testGarden = gardens.first;
 
-      // Tenter de Créer un GardenContext
+      // Tenter de créer un GardenContext
       final context = aggregationService.createGardenContext(testGarden);
 
       return ValidationCheck(
-        name: 'Test Création GardenContext',
+        name: 'Test création GardenContext',
         passed: true,
-        message: 'GardenContext Créé avec succès pour "${context.name}" : '
+        message: 'GardenContext créé avec succès pour "${context.name}" : '
             '${context.activePlantIds.length} plantes actives, '
-            '${context.stats.totalArea.toStringAsFixed(1)}mÂ²',
+            '${context.stats.totalArea.toStringAsFixed(1)}m²',
         severity: ValidationSeverity.success,
         metadata: {
           'gardenId': context.gardenId,
@@ -220,9 +220,9 @@ class GardenEventSystemValidator {
       );
     } catch (e) {
       return ValidationCheck(
-        name: 'Test Création GardenContext',
+        name: 'Test création GardenContext',
         passed: false,
-        message: 'Erreur lors de la Création du GardenContext: $e',
+        message: 'Erreur lors de la création du GardenContext: $e',
         severity: ValidationSeverity.error,
       );
     }
@@ -248,14 +248,14 @@ class ValidationReport {
   /// Retourne un résumé simple
   String toSimpleString() {
     return allPassed
-        ? 'âœ… Validation réussie : $passedCount/$totalCount'
-        : 'âš ï¸ Validation partielle : $passedCount/$totalCount';
+        ? '✅ Validation réussie : $passedCount/$totalCount'
+        : '⚠️ Validation partielle : $passedCount/$totalCount';
   }
 
   /// Retourne un rapport détaillé
   String toDetailedString() {
     final buffer = StringBuffer();
-    buffer.writeln('ðŸ“Š Rapport de Validation du Système d\'Événements');
+    buffer.writeln('📊 Rapport de Validation du Système d\'Événements');
     buffer.writeln('Timestamp: ${timestamp.toIso8601String()}');
     buffer.writeln('Résultat global: ${toSimpleString()}');
     buffer.writeln('');
@@ -295,18 +295,18 @@ class ValidationCheck {
   @override
   String toString() {
     final icon =
-        passed ? 'âœ…' : (severity == ValidationSeverity.critical ? 'âŒ' : 'âš ï¸');
+        passed ? '✅' : (severity == ValidationSeverity.critical ? '❌' : '⚠️');
     return '$icon $name: $message';
   }
 }
 
 /// Sévérité d'un check
 enum ValidationSeverity {
-  success, // âœ… Tout va bien
-  info, // â„¹ï¸ Information
-  warning, // âš ï¸ Attention mais non bloquant
-  error, // âŒ Erreur
-  critical, // ðŸ”´ Erreur critique
+  success, // ✅ Tout va bien
+  info, // ℹ️ Information
+  warning, // ⚠️ Attention mais non bloquant
+  error, // ❌ Erreur
+  critical, // 🔴 Erreur critique
 }
 
 

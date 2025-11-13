@@ -1,4 +1,4 @@
-﻿ï»¿import '../../../../core/models/plant.dart';
+import '../../../../core/models/plant.dart';
 
 /// Model pour représenter une suggestion de plante pour rééquilibrer les carences vitaminiques
 class VitaminSuggestion {
@@ -37,7 +37,7 @@ class VitaminSuggestion {
       case 'A':
       case 'B':
       case 'K':
-        return 'Âµg';
+        return 'µg';
       case 'C':
       case 'E':
         return 'mg';

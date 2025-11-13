@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:convert';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 
 /// Service d'intégration Open-Meteo (sans clé API)
@@ -41,7 +41,7 @@ class OpenMeteoService {
     );
   }
 
-  /// Recherche des localités (communes) via l'API de géocodage Openâ€‘Meteo
+  /// Recherche des localités (communes) via l'API de géocodage Open‑Meteo
   /// Retourne jusqu'à [count] suggestions
   Future<List<PlaceSuggestion>> searchPlaces(String query,
       {int count = 10}) async {
@@ -145,7 +145,7 @@ class OpenMeteoService {
       );
     }
 
-    // Température Â« actuelle Â» estimée par la dernière mesure horaire
+    // Température « actuelle » estimée par la dernière mesure horaire
     final currentTemp = hourlyTemp.isNotEmpty ? hourlyTemp.last : null;
 
     return OpenMeteoResult(

@@ -1,10 +1,10 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 /// Placeholder visuel pour le pilier Alignement
 ///
-/// Affiche un gauge (jauge) avec un arc fin gris reprÃƒÂ©sentant un cadran neutre
-/// PrÃƒÂªt pour l'intÃƒÂ©gration de donnÃƒÂ©es d'alignement en Phase 4
+/// Affiche un gauge (jauge) avec un arc fin gris reprÃ©sentant un cadran neutre
+/// PrÃªt pour l'intÃ©gration de donnÃ©es d'alignement en Phase 4
 class AlignmentGaugePlaceholder extends StatelessWidget {
   const AlignmentGaugePlaceholder({super.key});
 

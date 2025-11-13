@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,13 +37,13 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.load($prefix) - ${loadedPositions.length} positions chargées');
+            '✅ PositionPersistence.load($prefix) - ${loadedPositions.length} positions chargées');
       }
 
       return loadedPositions;
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.load($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.load($prefix) - Erreur: $e');
       }
       // En cas d'erreur, retourner les positions par défaut
       return defaults;
@@ -76,11 +76,11 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.save($prefix) - ${positions.length} positions sauvegardées');
+            '✅ PositionPersistence.save($prefix) - ${positions.length} positions sauvegardées');
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.save($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.save($prefix) - Erreur: $e');
       }
       rethrow; // Propager l'erreur pour gestion par l'appelant
     }
@@ -105,11 +105,11 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.clear($prefix) - ${keysToRemove.length} clés supprimées');
+            '✅ PositionPersistence.clear($prefix) - ${keysToRemove.length} clés supprimées');
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.clear($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.clear($prefix) - Erreur: $e');
       }
       rethrow;
     }
@@ -143,13 +143,13 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.loadSizes($prefix) - ${loadedSizes.length} tailles chargées');
+            '✅ PositionPersistence.loadSizes($prefix) - ${loadedSizes.length} tailles chargées');
       }
 
       return loadedSizes;
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.loadSizes($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.loadSizes($prefix) - Erreur: $e');
       }
       return defaults;
     }
@@ -174,11 +174,11 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.saveSizes($prefix) - ${sizes.length} tailles sauvegardées');
+            '✅ PositionPersistence.saveSizes($prefix) - ${sizes.length} tailles sauvegardées');
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.saveSizes($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.saveSizes($prefix) - Erreur: $e');
       }
       rethrow;
     }
@@ -212,13 +212,13 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.loadBooleans($prefix) - ${loadedFlags.length} états chargés');
+            '✅ PositionPersistence.loadBooleans($prefix) - ${loadedFlags.length} états chargés');
       }
 
       return loadedFlags;
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.loadBooleans($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.loadBooleans($prefix) - Erreur: $e');
       }
       return defaults;
     }
@@ -241,11 +241,11 @@ class PositionPersistence {
 
       if (kDebugMode) {
         debugPrint(
-            'âœ… PositionPersistence.saveBooleans($prefix) - ${flags.length} états sauvegardés');
+            '✅ PositionPersistence.saveBooleans($prefix) - ${flags.length} états sauvegardés');
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.saveBooleans($prefix) - Erreur: $e');
+        debugPrint('❌ PositionPersistence.saveBooleans($prefix) - Erreur: $e');
       }
       rethrow;
     }
@@ -284,7 +284,7 @@ class PositionPersistence {
       };
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('âŒ PositionPersistence.readPosition - Erreur: $e');
+        debugPrint('❌ PositionPersistence.readPosition - Erreur: $e');
       }
       return null;
     }

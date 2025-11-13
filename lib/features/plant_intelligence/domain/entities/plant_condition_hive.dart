@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 import 'plant_condition.dart';
 
 part 'plant_condition_hive.g.dart';

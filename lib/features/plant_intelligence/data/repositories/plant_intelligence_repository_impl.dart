@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import '../../domain/repositories/plant_intelligence_repository.dart';
 import '../../domain/repositories/i_plant_condition_repository.dart';
 import '../../domain/repositories/i_weather_repository.dart';
@@ -24,22 +24,22 @@ import '../../../../core/data/hive/garden_boxes.dart';
 /// **REFACTORÉ - Prompt 4 : ISP (Interface Segregation Principle)**
 ///
 /// Implémente désormais 5 interfaces spécialisées au lieu d'une seule monolithique :
-/// - âœ… IPlantConditionRepository : Gestion des conditions de plantes
-/// - âœ… IWeatherRepository : Gestion de la météo
-/// - âœ… IGardenContextRepository : Gestion du contexte jardin
-/// - âœ… IRecommendationRepository : Gestion des recommandations
-/// - âœ… IAnalyticsRepository : Analytics et statistiques
+/// - ✅ IPlantConditionRepository : Gestion des conditions de plantes
+/// - ✅ IWeatherRepository : Gestion de la météo
+/// - ✅ IGardenContextRepository : Gestion du contexte jardin
+/// - ✅ IRecommendationRepository : Gestion des recommandations
+/// - ✅ IAnalyticsRepository : Analytics et statistiques
 ///
 /// **Architecture précédente (Prompt 2) :**
 /// Ce repository ne dépend PLUS de :
-/// - âŒ GardenHiveRepository (accès direct supprimé)
-/// - âŒ PlantHiveRepository (accès direct supprimé)
-/// - âŒ GardenDataAggregationService (remplacé par le hub)
+/// - ❌ GardenHiveRepository (accès direct supprimé)
+/// - ❌ PlantHiveRepository (accès direct supprimé)
+/// - ❌ GardenDataAggregationService (remplacé par le hub)
 ///
 /// Il consomme maintenant via :
-/// - âœ… GardenAggregationHub : Hub central unifié (Legacy + Modern)
-/// - âœ… PlantIntelligenceLocalDataSource : Persistance Intelligence (conditions, recommandations)
-/// - âœ… WeatherDataSource : Données météorologiques
+/// - ✅ GardenAggregationHub : Hub central unifié (Legacy + Modern)
+/// - ✅ PlantIntelligenceLocalDataSource : Persistance Intelligence (conditions, recommandations)
+/// - ✅ WeatherDataSource : Données météorologiques
 ///
 /// **Bénéfices :**
 /// - Respect du principe ISP (clients ne dépendent que de ce dont ils ont besoin)
@@ -95,27 +95,27 @@ class PlantIntelligenceRepositoryImpl
   @override
   Future<PlantCondition?> getCurrentPlantCondition(String plantId) async {
     developer.log(
-        'ðŸ” DIAGNOSTIC - Début getCurrentPlantCondition: plantId=$plantId',
+        '🔍 DIAGNOSTIC - Début getCurrentPlantCondition: plantId=$plantId',
         name: 'PlantIntelligenceRepositoryImpl');
 
     try {
       final cacheKey = 'current_condition_$plantId';
-      developer.log('ðŸ” DIAGNOSTIC - Vérification cache: $cacheKey',
+      developer.log('🔍 DIAGNOSTIC - Vérification cache: $cacheKey',
           name: 'PlantIntelligenceRepositoryImpl');
 
       if (_isCacheValid(cacheKey)) {
-        developer.log('ðŸ” DIAGNOSTIC - Cache valide trouvé',
+        developer.log('🔍 DIAGNOSTIC - Cache valide trouvé',
             name: 'PlantIntelligenceRepositoryImpl');
         return _cache[cacheKey];
       }
 
       developer.log(
-          'ðŸ” DIAGNOSTIC - Cache invalide, récupération depuis datasource...',
+          '🔍 DIAGNOSTIC - Cache invalide, récupération depuis datasource...',
           name: 'PlantIntelligenceRepositoryImpl');
       final condition =
           await _localDataSource.getCurrentPlantCondition(plantId);
       developer.log(
-          'ðŸ” DIAGNOSTIC - Condition récupérée: ${condition != null ? "OUI" : "NON"}',
+          '🔍 DIAGNOSTIC - Condition récupérée: ${condition != null ? "OUI" : "NON"}',
           name: 'PlantIntelligenceRepositoryImpl');
 
       _cache[cacheKey] = condition;
@@ -123,9 +123,9 @@ class PlantIntelligenceRepositoryImpl
 
       return condition;
     } catch (e, stackTrace) {
-      developer.log('âŒ DIAGNOSTIC - Erreur getCurrentPlantCondition: $e',
+      developer.log('❌ DIAGNOSTIC - Erreur getCurrentPlantCondition: $e',
           name: 'PlantIntelligenceRepositoryImpl');
-      developer.log('âŒ DIAGNOSTIC - StackTrace: $stackTrace',
+      developer.log('❌ DIAGNOSTIC - StackTrace: $stackTrace',
           name: 'PlantIntelligenceRepositoryImpl');
 
       throw PlantIntelligenceRepositoryException(
@@ -345,11 +345,11 @@ class PlantIntelligenceRepositoryImpl
     }
   }
 
-  /// âœ… NOUVEAU - Synchronise le GardenContext avec les plantations actuelles
+  /// ✅ NOUVEAU - Synchronise le GardenContext avec les plantations actuelles
   Future<GardenContext?> _syncGardenContextWithPlantings(
       String gardenId) async {
     try {
-      developer.log('ðŸ”„ SYNC - Synchronisation GardenContext pour: $gardenId',
+      developer.log('🔄 SYNC - Synchronisation GardenContext pour: $gardenId',
           name: 'PlantIntelligenceRepository');
 
       // Récupérer le contexte existant
@@ -361,7 +361,7 @@ class PlantIntelligenceRepositoryImpl
       // Récupérer les plantations actives pour ce jardin
       final activePlantIds = await _getActivePlantIdsFromPlantings(gardenId);
       developer.log(
-          'ðŸ”„ SYNC - Plantes actives trouvées: ${activePlantIds.length} - $activePlantIds',
+          '🔄 SYNC - Plantes actives trouvées: ${activePlantIds.length} - $activePlantIds',
           name: 'PlantIntelligenceRepository');
 
       // Créer ou mettre à jour le contexte avec les plantations synchronisées
@@ -428,14 +428,14 @@ class PlantIntelligenceRepositoryImpl
       await _localDataSource.saveGardenContext(context);
 
       developer.log(
-          'âœ… SYNC - GardenContext synchronisé avec ${activePlantIds.length} plantes actives',
+          '✅ SYNC - GardenContext synchronisé avec ${activePlantIds.length} plantes actives',
           name: 'PlantIntelligenceRepository');
 
       return context;
     } catch (e, stackTrace) {
-      developer.log('âŒ SYNC - Erreur synchronisation: $e',
+      developer.log('❌ SYNC - Erreur synchronisation: $e',
           name: 'PlantIntelligenceRepository');
-      developer.log('âŒ SYNC - StackTrace: $stackTrace',
+      developer.log('❌ SYNC - StackTrace: $stackTrace',
           name: 'PlantIntelligenceRepository');
       // En cas d'erreur, retourner le contexte existant
       return await _localDataSource.getGardenContext(gardenId);
@@ -455,12 +455,12 @@ class PlantIntelligenceRepositoryImpl
           .toList();
 
       developer.log(
-          'ðŸ”„ SYNC - Plantations trouvées: ${plantings.length}, Plantes uniques: ${plantIds.length}',
+          '🔄 SYNC - Plantations trouvées: ${plantings.length}, Plantes uniques: ${plantIds.length}',
           name: 'PlantIntelligenceRepository');
 
       return plantIds;
     } catch (e) {
-      developer.log('âŒ SYNC - Erreur récupération plantations: $e',
+      developer.log('❌ SYNC - Erreur récupération plantations: $e',
           name: 'PlantIntelligenceRepository');
       return [];
     }
@@ -472,7 +472,7 @@ class PlantIntelligenceRepositoryImpl
   Future<String> saveGardenContext(GardenContext garden) async {
     try {
       developer.log(
-        'ðŸ” DIAGNOSTIC: Repository - Début sauvegarde GardenContext ${garden.gardenId}',
+        '🔍 DIAGNOSTIC: Repository - Début sauvegarde GardenContext ${garden.gardenId}',
         name: 'PlantIntelligenceRepository',
         level: 500,
       );
@@ -480,7 +480,7 @@ class PlantIntelligenceRepositoryImpl
       await _localDataSource.saveGardenContext(garden);
 
       developer.log(
-        'ðŸ” DIAGNOSTIC: Repository - GardenContext sauvegardé avec succès',
+        '🔍 DIAGNOSTIC: Repository - GardenContext sauvegardé avec succès',
         name: 'PlantIntelligenceRepository',
         level: 500,
       );
@@ -489,7 +489,7 @@ class PlantIntelligenceRepositoryImpl
       return garden.gardenId;
     } catch (e) {
       developer.log(
-        'âŒ ERREUR CRITIQUE Repository - Échec sauvegarde GardenContext',
+        '❌ ERREUR CRITIQUE Repository - Échec sauvegarde GardenContext',
         name: 'PlantIntelligenceRepository',
         level: 1000,
         error: e,
@@ -506,25 +506,25 @@ class PlantIntelligenceRepositoryImpl
   @override
   Future<GardenContext?> getGardenContext(String gardenId) async {
     try {
-      developer.log('ðŸ” SYNC - Récupération GardenContext pour $gardenId',
+      developer.log('🔍 SYNC - Récupération GardenContext pour $gardenId',
           name: 'PlantIntelligenceRepository');
 
-      // ðŸ”¥ CORRECTION CRITIQUE : TOUJOURS synchroniser avec la source de vérité
+      // 🔥 CORRECTION CRITIQUE : TOUJOURS synchroniser avec la source de vérité
       // Ne pas utiliser le cache pour éviter les désynchronisations
       // Le cache sera mis à jour après la synchronisation
       developer.log(
-          'ðŸ”„ SYNC - Synchronisation forcée depuis la source de vérité (Hive Plantings)',
+          '🔄 SYNC - Synchronisation forcée depuis la source de vérité (Hive Plantings)',
           name: 'PlantIntelligenceRepository');
 
-      // âœ… Synchroniser automatiquement avec les plantations actuelles
+      // ✅ Synchroniser automatiquement avec les plantations actuelles
       var context = await _syncGardenContextWithPlantings(gardenId);
 
-      // Mettre à jour le cache APRÃˆS la synchronisation
+      // Mettre à jour le cache APRÈS la synchronisation
       final cacheKey = 'garden_context_$gardenId';
       _cache[cacheKey] = context;
       _cache['${cacheKey}_timestamp'] = DateTime.now();
 
-      developer.log('âœ… SYNC - GardenContext récupéré et cache mis à jour',
+      developer.log('✅ SYNC - GardenContext récupéré et cache mis à jour',
           name: 'PlantIntelligenceRepository');
 
       return context;
@@ -1319,23 +1319,23 @@ class PlantIntelligenceRepositoryImpl
   @override
   Future<List<PlantFreezed>> getGardenPlants(String gardenId) async {
     try {
-      _logDebug('ðŸ” DIAGNOSTIC - getGardenPlants appelé pour jardin $gardenId');
+      _logDebug('🔍 DIAGNOSTIC - getGardenPlants appelé pour jardin $gardenId');
 
       // **REFACTORÉ - Prompt 2 :** Utilisation du hub au lieu de gardenContext + _plantCatalogService
       final unifiedPlants = await _aggregationHub.getActivePlants(gardenId);
 
       _logDebug(
-          'ðŸ” DIAGNOSTIC - ${unifiedPlants.length} plantes unifiées récupérées depuis le hub');
+          '🔍 DIAGNOSTIC - ${unifiedPlants.length} plantes unifiées récupérées depuis le hub');
 
       // Convertir UnifiedPlantData en PlantFreezed
       final gardenPlants =
           unifiedPlants.map((up) => _convertUnifiedToPlantFreezed(up)).toList();
 
       _logDebug(
-          'âœ… ${gardenPlants.length} plantes trouvées pour le jardin $gardenId');
+          '✅ ${gardenPlants.length} plantes trouvées pour le jardin $gardenId');
       return gardenPlants;
     } catch (e) {
-      _logDebug('âŒ ERREUR - getGardenPlants: $e');
+      _logDebug('❌ ERREUR - getGardenPlants: $e');
       throw PlantIntelligenceRepositoryException(
         'Failed to get garden plants: $e',
         code: 'GET_GARDEN_PLANTS_ERROR',
@@ -1508,7 +1508,7 @@ class PlantIntelligenceRepositoryImpl
   /// **NOUVEAU - Prompt 2 :** Convertit UnifiedPlantData en PlantFreezed
   /// **CORRIGÉ - Prompt 1 Phase 2 :** Mapping correct vers PlantFreezed
   PlantFreezed _convertUnifiedToPlantFreezed(UnifiedPlantData unified) {
-    // Conversion List<String> â†’ String pour plantingSeason/harvestSeason
+    // Conversion List<String> → String pour plantingSeason/harvestSeason
     final plantingSeasonStr = unified.plantingSeason.isNotEmpty
         ? unified.plantingSeason.join(', ')
         : 'Spring';
@@ -1540,13 +1540,13 @@ class PlantIntelligenceRepositoryImpl
       harvestSeason: harvestSeasonStr,
       daysToMaturity:
           90, // Valeur par défaut - TODO: extraire depuis metadata si disponible
-      spacing: (unified.spacingInCm ?? 30.0).round(), // Conversion double â†’ int
+      spacing: (unified.spacingInCm ?? 30.0).round(), // Conversion double → int
       depth: unified.depthInCm ?? 1.0,
       sunExposure: unified.sunExposure ?? 'Full Sun',
       waterNeeds: unified.waterNeeds ?? 'Moderate',
       description: unified.notes ?? 'No description available',
-      sowingMonths: unified.plantingSeason, // List<String> â†’ List<String> (OK)
-      harvestMonths: unified.harvestSeason, // List<String> â†’ List<String> (OK)
+      sowingMonths: unified.plantingSeason, // List<String> → List<String> (OK)
+      harvestMonths: unified.harvestSeason, // List<String> → List<String> (OK)
       metadata: metadata,
       createdAt: unified.createdAt,
       updatedAt: unified.updatedAt ?? DateTime.now(),
@@ -1653,7 +1653,7 @@ class PlantIntelligenceRepositoryImpl
     }
   }
 
-  /// Crée un GardenLocation à partir d'une chaÃ®ne de localisation
+  /// Crée un GardenLocation à partir d'une chaîne de localisation
   GardenLocation _createGardenLocationFromString(String? locationString) {
     if (locationString == null || locationString.isEmpty) {
       return const GardenLocation(
@@ -1665,7 +1665,7 @@ class PlantIntelligenceRepositoryImpl
     }
 
     // Pour l'instant, on utilise des coordonnées par défaut
-    // TODO: Parser la chaÃ®ne de localisation pour extraire lat/lng
+    // TODO: Parser la chaîne de localisation pour extraire lat/lng
     return GardenLocation(
       latitude: 48.8566,
       longitude: 2.3522,
@@ -1718,7 +1718,7 @@ class PlantIntelligenceRepositoryImpl
   Future<void> saveLatestReport(PlantIntelligenceReport report) async {
     try {
       developer.log(
-        'ðŸ’¾ REPOSITORY - Sauvegarde rapport intelligence pour plante ${report.plantId}',
+        '💾 REPOSITORY - Sauvegarde rapport intelligence pour plante ${report.plantId}',
         name: 'PlantIntelligenceRepository',
       );
 
@@ -1732,13 +1732,13 @@ class PlantIntelligenceRepositoryImpl
       _invalidateCache('intelligence_report_${report.plantId}');
 
       developer.log(
-        'âœ… REPOSITORY - Rapport sauvegardé avec succès (score: ${report.intelligenceScore.toStringAsFixed(1)}, confiance: ${(report.confidence * 100).toStringAsFixed(0)}%)',
+        '✅ REPOSITORY - Rapport sauvegardé avec succès (score: ${report.intelligenceScore.toStringAsFixed(1)}, confiance: ${(report.confidence * 100).toStringAsFixed(0)}%)',
         name: 'PlantIntelligenceRepository',
       );
     } catch (e, stackTrace) {
       // Programmation défensive : ne jamais crasher si la persistence échoue
       developer.log(
-        'âŒ REPOSITORY - Erreur sauvegarde rapport (non bloquant): $e',
+        '❌ REPOSITORY - Erreur sauvegarde rapport (non bloquant): $e',
         name: 'PlantIntelligenceRepository',
         error: e,
         stackTrace: stackTrace,
@@ -1752,7 +1752,7 @@ class PlantIntelligenceRepositoryImpl
   Future<PlantIntelligenceReport?> getLastReport(String plantId) async {
     try {
       developer.log(
-        'ðŸ” REPOSITORY - Récupération dernier rapport pour plante $plantId',
+        '🔍 REPOSITORY - Récupération dernier rapport pour plante $plantId',
         name: 'PlantIntelligenceRepository',
       );
 
@@ -1760,7 +1760,7 @@ class PlantIntelligenceRepositoryImpl
       final cacheKey = 'intelligence_report_$plantId';
       if (_isCacheValid(cacheKey)) {
         developer.log(
-          'âœ… REPOSITORY - Rapport trouvé dans le cache',
+          '✅ REPOSITORY - Rapport trouvé dans le cache',
           name: 'PlantIntelligenceRepository',
         );
         return _cache[cacheKey] as PlantIntelligenceReport?;
@@ -1771,7 +1771,7 @@ class PlantIntelligenceRepositoryImpl
 
       if (reportJson == null) {
         developer.log(
-          'â„¹ï¸ REPOSITORY - Aucun rapport trouvé pour plante $plantId',
+          'ℹ️ REPOSITORY - Aucun rapport trouvé pour plante $plantId',
           name: 'PlantIntelligenceRepository',
         );
         return null;
@@ -1785,7 +1785,7 @@ class PlantIntelligenceRepositoryImpl
       _cache['${cacheKey}_timestamp'] = DateTime.now();
 
       developer.log(
-        'âœ… REPOSITORY - Rapport récupéré avec succès (généré le: ${report.generatedAt}, score: ${report.intelligenceScore.toStringAsFixed(1)})',
+        '✅ REPOSITORY - Rapport récupéré avec succès (généré le: ${report.generatedAt}, score: ${report.intelligenceScore.toStringAsFixed(1)})',
         name: 'PlantIntelligenceRepository',
       );
 
@@ -1793,7 +1793,7 @@ class PlantIntelligenceRepositoryImpl
     } catch (e, stackTrace) {
       // Programmation défensive : ne jamais crasher si la récupération échoue
       developer.log(
-        'âŒ REPOSITORY - Erreur récupération rapport (non bloquant): $e',
+        '❌ REPOSITORY - Erreur récupération rapport (non bloquant): $e',
         name: 'PlantIntelligenceRepository',
         error: e,
         stackTrace: stackTrace,
@@ -1810,7 +1810,7 @@ class PlantIntelligenceRepositoryImpl
   Future<void> saveEvolutionReport(PlantEvolutionReport report) async {
     try {
       developer.log(
-        'ðŸ’¾ REPOSITORY - Sauvegarde rapport évolution pour plante ${report.plantId}',
+        '💾 REPOSITORY - Sauvegarde rapport évolution pour plante ${report.plantId}',
         name: 'PlantIntelligenceRepository',
       );
 
@@ -1824,13 +1824,13 @@ class PlantIntelligenceRepositoryImpl
       _invalidateCache('evolution_reports_${report.plantId}');
 
       developer.log(
-        'âœ… REPOSITORY - Rapport évolution sauvegardé avec succès (Î” score: ${report.deltaScore.toStringAsFixed(1)}, trend: ${report.trend})',
+        '✅ REPOSITORY - Rapport évolution sauvegardé avec succès (Δ score: ${report.deltaScore.toStringAsFixed(1)}, trend: ${report.trend})',
         name: 'PlantIntelligenceRepository',
       );
     } catch (e, stackTrace) {
       // Programmation défensive : ne jamais crasher si la persistence échoue
       developer.log(
-        'âŒ REPOSITORY - Erreur sauvegarde rapport évolution (non bloquant): $e',
+        '❌ REPOSITORY - Erreur sauvegarde rapport évolution (non bloquant): $e',
         name: 'PlantIntelligenceRepository',
         error: e,
         stackTrace: stackTrace,
@@ -1844,7 +1844,7 @@ class PlantIntelligenceRepositoryImpl
   Future<List<PlantEvolutionReport>> getEvolutionReports(String plantId) async {
     try {
       developer.log(
-        'ðŸ” REPOSITORY - Récupération rapports évolution pour plante $plantId',
+        '🔍 REPOSITORY - Récupération rapports évolution pour plante $plantId',
         name: 'PlantIntelligenceRepository',
       );
 
@@ -1852,7 +1852,7 @@ class PlantIntelligenceRepositoryImpl
       final cacheKey = 'evolution_reports_$plantId';
       if (_isCacheValid(cacheKey)) {
         developer.log(
-          'âœ… REPOSITORY - Rapports trouvés dans le cache',
+          '✅ REPOSITORY - Rapports trouvés dans le cache',
           name: 'PlantIntelligenceRepository',
         );
         return _cache[cacheKey] as List<PlantEvolutionReport>;
@@ -1863,7 +1863,7 @@ class PlantIntelligenceRepositoryImpl
 
       if (reportsJson.isEmpty) {
         developer.log(
-          'â„¹ï¸ REPOSITORY - Aucun rapport évolution trouvé pour plante $plantId',
+          'ℹ️ REPOSITORY - Aucun rapport évolution trouvé pour plante $plantId',
           name: 'PlantIntelligenceRepository',
         );
         return [];
@@ -1878,7 +1878,7 @@ class PlantIntelligenceRepositoryImpl
           reports.add(report);
         } catch (e) {
           developer.log(
-            'âš ï¸ REPOSITORY - Rapport corrompu ignoré: $e',
+            '⚠️ REPOSITORY - Rapport corrompu ignoré: $e',
             name: 'PlantIntelligenceRepository',
             level: 900,
           );
@@ -1892,7 +1892,7 @@ class PlantIntelligenceRepositoryImpl
       _cache['${cacheKey}_timestamp'] = DateTime.now();
 
       developer.log(
-        'âœ… REPOSITORY - ${reports.length} rapports évolution récupérés',
+        '✅ REPOSITORY - ${reports.length} rapports évolution récupérés',
         name: 'PlantIntelligenceRepository',
       );
 
@@ -1900,7 +1900,7 @@ class PlantIntelligenceRepositoryImpl
     } catch (e, stackTrace) {
       // Programmation défensive : ne jamais crasher si la récupération échoue
       developer.log(
-        'âŒ REPOSITORY - Erreur récupération rapports évolution (non bloquant): $e',
+        '❌ REPOSITORY - Erreur récupération rapports évolution (non bloquant): $e',
         name: 'PlantIntelligenceRepository',
         error: e,
         stackTrace: stackTrace,

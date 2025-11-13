@@ -1,4 +1,4 @@
-﻿ï»¿import '../entities/weather_condition.dart';
+import '../entities/weather_condition.dart';
 
 /// Interface spécialisée pour la gestion des conditions météorologiques
 ///
@@ -14,7 +14,7 @@ abstract class IWeatherRepository {
   /// [gardenId] - Identifiant du jardin
   /// [weather] - Conditions météorologiques
   ///
-  /// Retourne l'ID de l'enregistrement Créé
+  /// Retourne l'ID de l'enregistrement créé
   Future<String> saveWeatherCondition({
     required String gardenId,
     required WeatherCondition weather,

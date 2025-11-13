@@ -1,9 +1,9 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 // import 'package:path_provider/path_provider.dart';
 
-// âœ… IMPORTS CRITIQUES (mentionnés dans le doc)
+// ✅ IMPORTS CRITIQUES (mentionnés dans le doc)
 import 'app_initializer.dart';
 import 'app_router.dart';
 import 'core/feature_flags.dart';
@@ -13,7 +13,7 @@ import 'core/theme/app_theme_m3.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // âœ… NOUVEAU : Utiliser AppInitializer pour une initialisation complète
+  // ✅ NOUVEAU : Utiliser AppInitializer pour une initialisation complète
   await AppInitializer.initialize();
 
   // Initialiser les données locales pour les dates

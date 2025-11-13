@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/notification_alert.dart';
 import '../../data/services/plant_notification_service.dart';
 
@@ -347,7 +347,7 @@ final notificationStatsProvider =
 
 // ==================== ACTION PROVIDERS ====================
 
-/// Provider pour Créer une notification
+/// Provider pour créer une notification
 final createNotificationProvider = Provider<
     Future<NotificationAlert> Function({
       required String title,

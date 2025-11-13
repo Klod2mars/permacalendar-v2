@@ -1,4 +1,4 @@
-﻿ï»¿/// Repository abstraction for soil metrics data access
+/// Repository abstraction for soil metrics data access
 ///
 /// Defines the contract for soil temperature and pH data operations.
 /// Scope-based operations allow for garden-specific or bed-specific metrics.

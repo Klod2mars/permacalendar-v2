@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../entities/intelligence_report.dart';
 import '../entities/recommendation.dart';
@@ -6,7 +6,7 @@ import '../entities/recommendation.dart';
 part 'plant_intelligence_evolution_tracker.freezed.dart';
 part 'plant_intelligence_evolution_tracker.g.dart';
 
-/// ðŸ”„ CURSOR PROMPT A3 - Intelligence Evolution Tracker
+/// 🔄 CURSOR PROMPT A3 - Intelligence Evolution Tracker
 ///
 /// Tracks changes between two intelligence analysis sessions for the same garden
 /// to detect plant health evolution.
@@ -49,7 +49,7 @@ class PlantIntelligenceEvolutionTracker {
     PlantIntelligenceReport oldReport,
     PlantIntelligenceReport newReport,
   ) {
-    _log('ðŸ”„ Starting report comparison for plant ${newReport.plantId}');
+    _log('🔄 Starting report comparison for plant ${newReport.plantId}');
 
     // Validation: ensure we're comparing the same plant
     if (oldReport.plantId != newReport.plantId) {
@@ -64,14 +64,14 @@ class PlantIntelligenceEvolutionTracker {
         newReport.intelligenceScore - oldReport.intelligenceScore;
     final normalizedScoreDelta = _applyTolerance(scoreDelta);
 
-    _log('  ðŸ“Š Score delta: ${scoreDelta.toStringAsFixed(2)} '
+    _log('  📊 Score delta: ${scoreDelta.toStringAsFixed(2)} '
         '(${normalizedScoreDelta == 0 ? "within tolerance" : normalizedScoreDelta > 0 ? "improved" : "degraded"})');
 
     // Calculate confidence delta
     final confidenceDelta = newReport.confidence - oldReport.confidence;
     final normalizedConfidenceDelta = _applyTolerance(confidenceDelta);
 
-    _log('  ðŸŽ¯ Confidence delta: ${confidenceDelta.toStringAsFixed(3)} '
+    _log('  🎯 Confidence delta: ${confidenceDelta.toStringAsFixed(3)} '
         '(${normalizedConfidenceDelta == 0 ? "stable" : normalizedConfidenceDelta > 0 ? "increased" : "decreased"})');
 
     // Compare recommendations
@@ -94,7 +94,7 @@ class PlantIntelligenceEvolutionTracker {
     final isDegraded = normalizedScoreDelta < 0;
 
     _log(
-        '  âœ… Evolution status: ${isImproved ? "IMPROVED" : isStable ? "STABLE" : "DEGRADED"}');
+        '  ✅ Evolution status: ${isImproved ? "IMPROVED" : isStable ? "STABLE" : "DEGRADED"}');
 
     final summary = IntelligenceEvolutionSummary(
       plantId: newReport.plantId,
@@ -113,7 +113,7 @@ class PlantIntelligenceEvolutionTracker {
       comparedAt: DateTime.now(),
     );
 
-    _log('ðŸŽ‰ Comparison complete for ${summary.plantName}');
+    _log('🎉 Comparison complete for ${summary.plantName}');
 
     return summary;
   }
@@ -131,7 +131,7 @@ class PlantIntelligenceEvolutionTracker {
     List<PlantIntelligenceReport> newReports,
   ) {
     _log(
-        'ðŸ”„ Comparing garden reports: ${oldReports.length} old, ${newReports.length} new');
+        '🔄 Comparing garden reports: ${oldReports.length} old, ${newReports.length} new');
 
     final summaries = <IntelligenceEvolutionSummary>[];
 
@@ -149,16 +149,16 @@ class PlantIntelligenceEvolutionTracker {
           final summary = compareReports(oldReport, newReport);
           summaries.add(summary);
         } catch (e) {
-          _log('âš ï¸ Error comparing reports for plant ${newReport.plantId}: $e');
+          _log('⚠️ Error comparing reports for plant ${newReport.plantId}: $e');
           // Continue with other plants
         }
       } else {
         _log(
-            'â„¹ï¸ No previous report found for plant ${newReport.plantId} (new plant)');
+            'ℹ️ No previous report found for plant ${newReport.plantId} (new plant)');
       }
     }
 
-    _log('âœ… Garden comparison complete: ${summaries.length} plants compared');
+    _log('✅ Garden comparison complete: ${summaries.length} plants compared');
 
     return summaries;
   }
@@ -180,7 +180,7 @@ class PlantIntelligenceEvolutionTracker {
     List<Recommendation> newRecommendations,
   ) {
     _log(
-        '  ðŸ“‹ Comparing recommendations: ${oldRecommendations.length} old, ${newRecommendations.length} new');
+        '  📋 Comparing recommendations: ${oldRecommendations.length} old, ${newRecommendations.length} new');
 
     // Create maps for quick lookup by title (recommendations with same title are considered "same")
     final oldRecMap = {for (var rec in oldRecommendations) rec.title: rec};
@@ -215,9 +215,9 @@ class PlantIntelligenceEvolutionTracker {
       }
     }
 
-    _log('    âž• Added: ${added.length}');
-    _log('    âž– Removed: ${removed.length}');
-    _log('    ðŸ”„ Modified: ${modified.length}');
+    _log('    ➕ Added: ${added.length}');
+    _log('    ➖ Removed: ${removed.length}');
+    _log('    🔄 Modified: ${modified.length}');
 
     return _RecommendationChanges(
       addedRecommendations: added,
@@ -232,14 +232,14 @@ class PlantIntelligenceEvolutionTracker {
     PlantingTimingEvaluation? newTiming,
   ) {
     if (oldTiming == null || newTiming == null) {
-      _log('  ðŸ“… Timing comparison: N/A (missing data)');
+      _log('  📅 Timing comparison: N/A (missing data)');
       return 0.0;
     }
 
     final shift = newTiming.timingScore - oldTiming.timingScore;
     final normalizedShift = _applyTolerance(shift);
 
-    _log('  ðŸ“… Timing score shift: ${shift.toStringAsFixed(2)} '
+    _log('  📅 Timing score shift: ${shift.toStringAsFixed(2)} '
         '(${normalizedShift == 0 ? "stable" : normalizedShift > 0 ? "improved" : "degraded"})');
 
     return normalizedShift;
@@ -335,9 +335,9 @@ extension IntelligenceEvolutionSummaryExtension
 
   /// Returns an emoji representing the evolution status
   String get statusEmoji {
-    if (isImproved) return 'ðŸ“ˆ';
-    if (isDegraded) return 'ðŸ“‰';
-    return 'âž¡ï¸';
+    if (isImproved) return '📈';
+    if (isDegraded) return '📉';
+    return '➡️';
   }
 
   /// Returns a human-readable description of the evolution

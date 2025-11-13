@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:ui';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 /// Experimental Climate Cells V1
@@ -134,7 +134,7 @@ class _ExperimentalClimateCellsV1State extends State<ExperimentalClimateCellsV1>
           Icon(Icons.thermostat, size: 28, color: Colors.white70),
           SizedBox(height: 2),
           Text(
-            '10.4Â°',
+            '10.4°',
             style: TextStyle(
               color: Colors.white70,
               fontSize: 16,
@@ -164,7 +164,7 @@ class _ExperimentalClimateCellsV1State extends State<ExperimentalClimateCellsV1>
           Icon(Icons.wb_sunny, size: 28, color: Colors.white70),
           SizedBox(height: 4),
           Text(
-            '14Â° / 7Â°',
+            '14° / 7°',
             style: TextStyle(
               color: Colors.white70,
               fontSize: 15,
@@ -201,7 +201,7 @@ class _ExperimentalClimateCellsV1State extends State<ExperimentalClimateCellsV1>
       color: Color.fromRGBO(212, 181, 224, 0.7), // Lavender
       child: Center(
         child: Text(
-          'ðŸ“ˆ',
+          '📈',
           style: TextStyle(fontSize: 32),
         ),
       ),

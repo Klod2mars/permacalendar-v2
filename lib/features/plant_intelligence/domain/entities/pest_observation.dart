@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'pest.dart';
 
@@ -11,7 +11,7 @@ part 'pest_observation.g.dart';
 /// This entity embodies the Sanctuary principle - it is created ONLY by the user,
 /// NEVER by the AI. The user observes real pests in their garden and records them.
 /// The Intelligence Végétale reads these observations but NEVER creates them.
-/// This maintains the sacred flow: Reality (User) â†’ Sanctuary (Observation) â†’ Intelligence (Analysis)
+/// This maintains the sacred flow: Reality (User) → Sanctuary (Observation) → Intelligence (Analysis)
 @freezed
 class PestObservation with _$PestObservation {
   const factory PestObservation({

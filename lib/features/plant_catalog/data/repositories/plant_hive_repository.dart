@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:convert';
+import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -18,7 +18,7 @@ class PlantHiveException implements Exception {
 ///
 /// Fonctionnalités :
 /// - Chargement depuis assets/data/plants.json
-/// - Conversion flexible PlantHive â†” PlantFreezed
+/// - Conversion flexible PlantHive ↔ PlantFreezed
 /// - Tolérance aux champs manquants
 /// - Journalisation discrète des erreurs
 /// - Aucune validation stricte pour permettre l'ajout libre
@@ -137,15 +137,15 @@ class PlantHiveRepository {
   /// Les erreurs par plante sont journalisées mais n'interrompent pas le chargement.
   /// Initialise le repository avec les données du fichier JSON
   ///
-  /// **âœ… REFACTORÉ - Prompt 9 : Support multi-format**
+  /// **✅ REFACTORÉ - Prompt 9 : Support multi-format**
   ///
   /// Supporte 2 formats :
   /// 1. **Legacy (array-only)** : `[{plant1}, {plant2}, ...]`
   /// 2. **v2.1.0 (structured)** : `{ schema_version, metadata, plants: [...] }`
   ///
   /// Le format est détecté automatiquement :
-  /// - Array â†’ Legacy format
-  /// - Object avec `schema_version` â†’ Format v2.1.0+
+  /// - Array → Legacy format
+  /// - Object avec `schema_version` → Format v2.1.0+
   ///
   /// Charge les plantes depuis assets/data/plants.json et les stocke dans Hive.
   /// Continue le chargement même en cas d'erreur sur une plante individuelle.
@@ -158,7 +158,7 @@ class PlantHiveRepository {
       final String jsonString = await rootBundle.loadString(_jsonAssetPath);
       final dynamic jsonData = json.decode(jsonString);
 
-      // âœ… NOUVEAU - Prompt 9 : Détection automatique du format
+      // ✅ NOUVEAU - Prompt 9 : Détection automatique du format
       List<dynamic> plantsList;
       String detectedFormat;
       Map<String, dynamic>? metadata;
@@ -388,7 +388,7 @@ class PlantHiveRepository {
       );
     } catch (e) {
       throw PlantHiveException(
-          'Erreur lors de la Création de PlantHive depuis JSON: $e');
+          'Erreur lors de la création de PlantHive depuis JSON: $e');
     }
   }
 

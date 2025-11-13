@@ -1,4 +1,4 @@
-﻿ï»¿// lib/shared/utils/calibration_utils.dart
+// lib/shared/utils/calibration_utils.dart
 import 'package:flutter/widgets.dart';
 
 class RelativeRectData {

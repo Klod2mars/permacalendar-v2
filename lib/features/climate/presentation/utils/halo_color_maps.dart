@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../providers/weather_providers.dart';
 import '../providers/hourly_weather_provider.dart';
 
@@ -109,7 +109,7 @@ class HaloColorMaps {
     // Clamp to [0, 1]
     t = t.clamp(0.0, 1.0);
 
-    // Smooth step function (3tÂ² - 2tÂ³)
+    // Smooth step function (3t² - 2t³)
     return 3 * t * t - 2 * t * t * t;
   }
 

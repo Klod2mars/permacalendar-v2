@@ -1,4 +1,4 @@
-﻿ï»¿import 'dart:ui';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/soil_ph_provider.dart';
@@ -103,7 +103,7 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
                             ),
                           ),
                           Text(
-                            'Ajustez le niveau d\'aciditÃƒÂ©',
+                            'Ajustez le niveau d\'aciditÃ©',
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white70,
                             ),
@@ -299,11 +299,11 @@ class _PHInputSheetState extends ConsumerState<PHInputSheet> {
   }
 
   String _getPHDescription(double ph) {
-    if (ph < 5.5) return 'TrÃƒÂ¨s acide';
+    if (ph < 5.5) return 'TrÃ¨s acide';
     if (ph < 6.5) return 'Acide';
     if (ph < 7.5) return 'Neutre';
     if (ph < 8.5) return 'Alcalin';
-    return 'TrÃƒÂ¨s alcalin';
+    return 'TrÃ¨s alcalin';
   }
 }
 

@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/notification_alert.dart';
 import '../providers/notification_providers.dart';
@@ -78,7 +78,7 @@ class NotificationPreferencesScreen extends ConsumerWidget {
         // Section principale
         _buildSection(
           context,
-          title: 'ðŸ”” Activation',
+          title: '🔔 Activation',
           children: [
             SwitchListTile(
               title: const Text('Notifications activées'),
@@ -97,7 +97,7 @@ class NotificationPreferencesScreen extends ConsumerWidget {
         // Types de notifications
         _buildSection(
           context,
-          title: 'ðŸ“‹ Types de Notifications',
+          title: '📋 Types de Notifications',
           children: [
             _buildTypeSwitch(
               context,
@@ -167,7 +167,7 @@ class NotificationPreferencesScreen extends ConsumerWidget {
         // Paramètres supplémentaires
         _buildSection(
           context,
-          title: 'âš™ï¸ Paramètres',
+          title: '⚙️ Paramètres',
           children: [
             SwitchListTile(
               title: const Text('Son'),
@@ -269,7 +269,7 @@ class NotificationPreferencesScreen extends ConsumerWidget {
 
         return _buildSection(
           context,
-          title: 'ðŸ“Š Statistiques',
+          title: '📊 Statistiques',
           children: [
             ListTile(
               leading: const Icon(Icons.notifications),

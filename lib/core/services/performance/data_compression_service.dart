@@ -1,4 +1,4 @@
-﻿ï»¿// ðŸš€ Data Compression Service - Memory Footprint Optimization
+// 🚀 Data Compression Service - Memory Footprint Optimization
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Performance Patterns
 

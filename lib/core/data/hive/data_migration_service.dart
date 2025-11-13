@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
@@ -17,18 +17,18 @@ class DataMigrationService {
           migrationBox.get(_migrationVersionKey, defaultValue: 0) as int;
 
       print(
-          'ðŸ”„ Migration Hive: Version actuelle stockée: $currentStoredVersion, Version cible: $_currentVersion');
+          '🔄 Migration Hive: Version actuelle stockée: $currentStoredVersion, Version cible: $_currentVersion');
 
       if (currentStoredVersion < _currentVersion) {
-        print('âš ï¸ Migration nécessaire détectée');
+        print('⚠️ Migration nécessaire détectée');
         await _performMigration(currentStoredVersion, _currentVersion);
         await migrationBox.put(_migrationVersionKey, _currentVersion);
-        print('âœ… Migration terminée avec succès');
+        print('✅ Migration terminée avec succès');
       } else {
-        print('âœ… Aucune migration nécessaire');
+        print('✅ Aucune migration nécessaire');
       }
     } catch (e) {
-      print('âŒ Erreur lors de la migration: $e');
+      print('❌ Erreur lors de la migration: $e');
       // En cas d'erreur de migration, nettoyer et repartir à zéro
       await _emergencyCleanup();
     }
@@ -37,7 +37,7 @@ class DataMigrationService {
   /// Exécute les migrations étape par étape
   static Future<void> _performMigration(int fromVersion, int toVersion) async {
     for (int version = fromVersion + 1; version <= toVersion; version++) {
-      print('ðŸ”„ Exécution de la migration vers la version $version');
+      print('🔄 Exécution de la migration vers la version $version');
 
       switch (version) {
         case 1:
@@ -47,7 +47,7 @@ class DataMigrationService {
           await _migrateToV2();
           break;
         default:
-          print('âš ï¸ Migration vers la version $version non implémentée');
+          print('⚠️ Migration vers la version $version non implémentée');
       }
     }
   }
@@ -55,12 +55,12 @@ class DataMigrationService {
   /// Migration vers la version 1 (si nécessaire)
   static Future<void> _migrateToV1() async {
     // Migration initiale si nécessaire
-    print('ðŸ“¦ Migration vers v1: Initialisation des structures de base');
+    print('📦 Migration vers v1: Initialisation des structures de base');
   }
 
   /// Migration vers la version 2 (modifications du modèle Planting)
   static Future<void> _migrateToV2() async {
-    print('ðŸ“¦ Migration vers v2: Adaptation du modèle Planting');
+    print('📦 Migration vers v2: Adaptation du modèle Planting');
 
     try {
       // Sauvegarder les données existantes avant migration
@@ -69,9 +69,9 @@ class DataMigrationService {
       // Nettoyer les boxes incompatibles
       await _cleanIncompatibleBoxes();
 
-      print('âœ… Migration v2 terminée');
+      print('✅ Migration v2 terminée');
     } catch (e) {
-      print('âŒ Erreur lors de la migration v2: $e');
+      print('❌ Erreur lors de la migration v2: $e');
       rethrow;
     }
   }
@@ -87,10 +87,10 @@ class DataMigrationService {
       final hiveDir = Directory('${appDir.path}/hive');
       if (await hiveDir.exists()) {
         await hiveDir.rename('${backupDir.path}/hive');
-        print('ðŸ’¾ Sauvegarde Créée dans: ${backupDir.path}');
+        print('💾 Sauvegarde créée dans: ${backupDir.path}');
       }
     } catch (e) {
-      print('âš ï¸ Impossible de Créer une sauvegarde: $e');
+      print('⚠️ Impossible de créer une sauvegarde: $e');
     }
   }
 
@@ -113,26 +113,26 @@ class DataMigrationService {
           await Hive.box(boxName).close();
         }
         await Hive.deleteBoxFromDisk(boxName);
-        print('ðŸ—‘ï¸ Box $boxName nettoyée');
+        print('🗑️ Box $boxName nettoyée');
       } catch (e) {
-        print('âš ï¸ Erreur lors du nettoyage de $boxName: $e');
+        print('⚠️ Erreur lors du nettoyage de $boxName: $e');
       }
     }
   }
 
   /// Nettoyage d'urgence en cas d'échec de migration
   static Future<void> _emergencyCleanup() async {
-    print('ðŸš¨ Nettoyage d\'urgence des données Hive');
+    print('🚨 Nettoyage d\'urgence des données Hive');
     try {
       final appDir = await getApplicationDocumentsDirectory();
       final hiveDir = Directory('${appDir.path}/hive');
 
       if (await hiveDir.exists()) {
         await hiveDir.delete(recursive: true);
-        print('âœ… Nettoyage d\'urgence terminé');
+        print('✅ Nettoyage d\'urgence terminé');
       }
     } catch (e) {
-      print('âŒ Erreur lors du nettoyage d\'urgence: $e');
+      print('❌ Erreur lors du nettoyage d\'urgence: $e');
     }
   }
 
@@ -149,12 +149,12 @@ class DataMigrationService {
 
       if (await backupDir.exists()) {
         await backupDir.rename('${appDir.path}/hive');
-        print('âœ… Données restaurées depuis: $backupPath');
+        print('✅ Données restaurées depuis: $backupPath');
       } else {
-        print('âŒ Sauvegarde introuvable: $backupPath');
+        print('❌ Sauvegarde introuvable: $backupPath');
       }
     } catch (e) {
-      print('âŒ Erreur lors de la restauration: $e');
+      print('❌ Erreur lors de la restauration: $e');
     }
   }
 
@@ -170,7 +170,7 @@ class DataMigrationService {
           .map((entity) => entity.path)
           .toList();
     } catch (e) {
-      print('âŒ Erreur lors de la liste des sauvegardes: $e');
+      print('❌ Erreur lors de la liste des sauvegardes: $e');
       return [];
     }
   }

@@ -1,4 +1,4 @@
-﻿ï»¿// lib/shared/widgets/size_slider_picker.dart
+// lib/shared/widgets/size_slider_picker.dart
 import 'package:flutter/material.dart';
 
 /// SizeSliderPicker

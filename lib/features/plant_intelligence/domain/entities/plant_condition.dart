@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plant_condition.freezed.dart';
 part 'plant_condition.g.dart';
@@ -55,7 +55,7 @@ class PlantCondition with _$PlantCondition {
     /// Valeur maximale acceptable
     required double maxValue,
 
-    /// Unité de mesure (CÂ°, %, lux, etc.)
+    /// Unité de mesure (C°, %, lux, etc.)
     required String unit,
 
     /// Description de la condition
@@ -67,7 +67,7 @@ class PlantCondition with _$PlantCondition {
     /// Date de la mesure
     required DateTime measuredAt,
 
-    /// Date de Création
+    /// Date de création
     DateTime? createdAt,
 
     /// Date de dernière mise à jour

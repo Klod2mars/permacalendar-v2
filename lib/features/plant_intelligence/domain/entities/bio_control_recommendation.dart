@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'bio_control_recommendation.freezed.dart';
@@ -36,7 +36,7 @@ class BioControlAction with _$BioControlAction {
 /// It represents the AI's interpretation and recommendation based on pest observations.
 /// The AI reads from the Sanctuary (observations) and produces recommendations,
 /// but NEVER modifies the Sanctuary. This maintains the unidirectional flow:
-/// Sanctuary (Reality) â†’ Intelligence (Analysis & Recommendations) â†’ User (Decision)
+/// Sanctuary (Reality) → Intelligence (Analysis & Recommendations) → User (Decision)
 @freezed
 class BioControlRecommendation with _$BioControlRecommendation {
   const factory BioControlRecommendation({

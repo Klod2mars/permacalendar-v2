@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'unified_membrane_geometry.dart';
 import 'unified_membrane_painter.dart';
@@ -200,7 +200,7 @@ class _UnifiedMembraneWidgetState extends ConsumerState<UnifiedMembraneWidget>
           ),
           const SizedBox(height: 4),
           const Text(
-            '14Â° / 7Â°',
+            '14° / 7°',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -231,7 +231,7 @@ class _UnifiedMembraneWidgetState extends ConsumerState<UnifiedMembraneWidget>
           ),
           const SizedBox(height: 2),
           const Text(
-            '10.4Â°',
+            '10.4°',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -256,7 +256,7 @@ class _UnifiedMembraneWidgetState extends ConsumerState<UnifiedMembraneWidget>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'ðŸ“ˆ',
+            '📈',
             style: TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 2),
@@ -426,13 +426,13 @@ class UnifiedMembraneScreen extends StatelessWidget {
                     SizedBox(height: 16),
                     Text(
                       'V4 Features:\n'
-                      'âœ“ Unified tissue appearance (no floating elements)\n'
-                      'âœ“ Shared membrane boundaries (visible structural elements)\n'
-                      'âœ“ Morphological pressure (cells deform each other)\n'
-                      'âœ“ Functional hierarchy (weather dominance, pH subtlety)\n'
-                      'âœ“ Contemplative quality (subtle breathing, not flashy)\n'
-                      'âœ“ Organic touch response (membrane ripple)\n'
-                      'âœ“ Authentic plant tissue appearance',
+                      '✓ Unified tissue appearance (no floating elements)\n'
+                      '✓ Shared membrane boundaries (visible structural elements)\n'
+                      '✓ Morphological pressure (cells deform each other)\n'
+                      '✓ Functional hierarchy (weather dominance, pH subtlety)\n'
+                      '✓ Contemplative quality (subtle breathing, not flashy)\n'
+                      '✓ Organic touch response (membrane ripple)\n'
+                      '✓ Authentic plant tissue appearance',
                       style: TextStyle(
                         fontSize: 12,
                         color: Color(0xFF689F38),

@@ -1,11 +1,11 @@
-﻿ï»¿import 'dart:ui';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../../core/models/daily_weather_point.dart';
 
-/// Widget rÃƒÂ©utilisable pour afficher une mini-carte mÃƒÂ©tÃƒÂ©o
+/// Widget rÃ©utilisable pour afficher une mini-carte mÃ©tÃ©o
 ///
-/// Phase P2: Mini-carte simple avec icÃƒÂ´ne, tempÃƒÂ©ratures, prÃƒÂ©cipitations et date
-/// UtilisÃƒÂ© dans la grille du GardenClimatePanel
+/// Phase P2: Mini-carte simple avec icÃ´ne, tempÃ©ratures, prÃ©cipitations et date
+/// UtilisÃ© dans la grille du GardenClimatePanel
 class ClimateMiniCard extends StatelessWidget {
   const ClimateMiniCard({
     super.key,
@@ -69,18 +69,18 @@ class ClimateMiniCard extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            // IcÃƒÂ´ne mÃƒÂ©tÃƒÂ©o
+            // IcÃ´ne mÃ©tÃ©o
             Center(
               child: _getWeatherIcon(),
             ),
 
             const SizedBox(height: 8),
 
-            // TempÃƒÂ©ratures
+            // TempÃ©ratures
             if (weatherPoint.tMaxC != null && weatherPoint.tMinC != null)
               Center(
                 child: Text(
-                  '${weatherPoint.tMaxC!.toStringAsFixed(0)}Ã‚Â° / ${weatherPoint.tMinC!.toStringAsFixed(0)}Ã‚Â°',
+                  '${weatherPoint.tMaxC!.toStringAsFixed(0)}Â° / ${weatherPoint.tMinC!.toStringAsFixed(0)}Â°',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -90,7 +90,7 @@ class ClimateMiniCard extends StatelessWidget {
 
             const SizedBox(height: 4),
 
-            // PrÃƒÂ©cipitations
+            // PrÃ©cipitations
             Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -128,14 +128,14 @@ class ClimateMiniCard extends StatelessWidget {
     if (daysDiff == 1) {
       return 'Demain';
     } else if (daysDiff == 2) {
-      return 'AprÃƒÂ¨s-demain';
+      return 'AprÃ¨s-demain';
     } else {
       return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}';
     }
   }
 
   Widget _getWeatherIcon() {
-    // Logique simple basÃƒÂ©e sur les prÃƒÂ©cipitations et tempÃƒÂ©ratures
+    // Logique simple basÃ©e sur les prÃ©cipitations et tempÃ©ratures
     if (weatherPoint.precipMm > 5.0) {
       return const Icon(
         Icons.grain,

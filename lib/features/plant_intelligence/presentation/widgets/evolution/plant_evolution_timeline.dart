@@ -1,10 +1,10 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../domain/entities/plant_evolution_report.dart';
 import '../../providers/plant_evolution_providers.dart';
 
-/// ðŸ“ˆ CURSOR PROMPT A8 - PlantEvolutionTimeline
+/// 📈 CURSOR PROMPT A8 - PlantEvolutionTimeline
 ///
 /// Widget réutilisable pour afficher l'historique des évolutions d'intelligence végétale.
 ///
@@ -154,7 +154,7 @@ class PlantEvolutionTimeline extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Les évolutions de santé apparaÃ®tront ici après votre première analyse d\'intelligence végétale.',
+              'Les évolutions de santé apparaîtront ici après votre première analyse d\'intelligence végétale.',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -420,10 +420,10 @@ class _EvolutionCard extends StatelessWidget {
 
   Widget _buildTrendEmoji() {
     final emoji = evolution.hasImproved
-        ? 'ðŸ“ˆ'
+        ? '📈'
         : evolution.hasDegraded
-            ? 'ðŸ“‰'
-            : 'âž¡ï¸';
+            ? '📉'
+            : '➡️';
 
     return Text(
       emoji,

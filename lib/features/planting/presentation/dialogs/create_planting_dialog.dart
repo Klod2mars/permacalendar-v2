@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -279,7 +279,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'âš ï¸ La date de début doit être antérieure à la date de fin',
+                '⚠️ La date de début doit être antérieure à la date de fin',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: Colors.orange,
                 ),
@@ -539,7 +539,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(widget.planting == null
-                ? 'Plantation Créée avec succès'
+                ? 'Plantation créée avec succès'
                 : 'Plantation modifiée avec succès'),
             backgroundColor: Colors.green,
           ),

@@ -1,4 +1,4 @@
-﻿ï»¿import 'plant_condition.dart';
+import 'plant_condition.dart';
 import 'recommendation.dart';
 import 'garden_context.dart';
 import 'weather_condition.dart';

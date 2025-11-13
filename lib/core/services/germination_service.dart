@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../models/germination_event.dart';
 
 /// Service pour gérer les événements de germination

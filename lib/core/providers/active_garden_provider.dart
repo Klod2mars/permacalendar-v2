@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 
 /// Notifier qui garde l'ID du jardin "actif".
 /// Usage attendu :

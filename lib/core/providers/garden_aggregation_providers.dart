@@ -1,4 +1,4 @@
-﻿ï»¿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import '../services/aggregation/garden_aggregation_hub.dart';
 import '../services/aggregation/legacy_data_adapter.dart';
 import '../services/aggregation/modern_data_adapter.dart';
@@ -39,7 +39,7 @@ final intelligenceDataAdapterProvider =
 /// Provider pour le Garden Aggregation Hub
 ///
 /// C'est le provider principal à utiliser pour accéder aux données jardins
-/// de manière unifiée depuis n'importe oÃ¹ dans l'application.
+/// de manière unifiée depuis n'importe où dans l'application.
 final gardenAggregationHubProvider = Provider<GardenAggregationHub>((ref) {
   final legacyAdapter = ref.read(legacyDataAdapterProvider);
   final modernAdapter = ref.read(modernDataAdapterProvider);
