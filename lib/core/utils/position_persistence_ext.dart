@@ -1,4 +1,4 @@
-// lib/core/utils/position_persistence_ext.dart
+﻿// lib/core/utils/position_persistence_ext.dart
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,11 +38,11 @@ class PositionPersistenceExt {
 
       if (kDebugMode) {
         debugPrint(
-            '✅ PositionPersistenceExt.writePosition($prefix, $key) - Position sauvegardée');
+            'âœ… PositionPersistenceExt.writePosition($prefix, $key) - Position sauvegardée');
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('❌ PositionPersistenceExt.writePosition - Erreur: $e');
+        debugPrint('âŒ PositionPersistenceExt.writePosition - Erreur: $e');
       }
       rethrow;
     }
@@ -69,7 +69,7 @@ class PositionPersistenceExt {
       return {'x': x, 'y': y, 'size': size, 'enabled': enabled};
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('❌ PositionPersistenceExt.readPosition - Erreur: $e');
+        debugPrint('âŒ PositionPersistenceExt.readPosition - Erreur: $e');
       }
       return null;
     }

@@ -1,4 +1,4 @@
-import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
+﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
@@ -6,7 +6,7 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 
 /// Repository abstrait pour l'intelligence des plantes
 ///
-/// **⚠️ DÉPRÉCIÉ - Prompt 4 : ISP (Interface Segregation Principle)**
+/// **âš ï¸ DÉPRÉCIÉ - Prompt 4 : ISP (Interface Segregation Principle)**
 ///
 /// Cette interface monolithique viole le principe ISP en forçant les clients
 /// à dépendre de nombreuses méthodes dont ils n'ont pas besoin (40+ méthodes).
@@ -20,10 +20,10 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 ///
 /// **Migration :**
 /// ```dart
-/// // ❌ Avant
+/// // âŒ Avant
 /// PlantIntelligenceRepository repository;
 ///
-/// // ✅ Après
+/// // âœ… Après
 /// IPlantConditionRepository conditionRepo;
 /// IWeatherRepository weatherRepo;
 /// IGardenContextRepository gardenRepo;
@@ -48,7 +48,7 @@ abstract class PlantIntelligenceRepository {
   /// [plantId] - Identifiant unique de la plante
   /// [condition] - Conditions actuelles de la plante
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> savePlantCondition({
     required String plantId,
     required PlantCondition condition,
@@ -101,7 +101,7 @@ abstract class PlantIntelligenceRepository {
   /// [gardenId] - Identifiant du jardin
   /// [weather] - Conditions météorologiques
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveWeatherCondition({
     required String gardenId,
     required WeatherCondition weather,
@@ -135,7 +135,7 @@ abstract class PlantIntelligenceRepository {
   ///
   /// [garden] - Contexte du jardin
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveGardenContext(GardenContext garden);
 
   /// Récupère le contexte d'un jardin
@@ -166,7 +166,7 @@ abstract class PlantIntelligenceRepository {
   /// [plantId] - Identifiant de la plante
   /// [recommendation] - Recommandation à sauvegarder
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveRecommendation({
     required String plantId,
     required Recommendation recommendation,
@@ -234,7 +234,7 @@ abstract class PlantIntelligenceRepository {
   /// [result] - Résultat de l'analyse (JSON)
   /// [confidence] - Niveau de confiance de l'analyse
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveAnalysisResult({
     required String plantId,
     required String analysisType,
@@ -280,7 +280,7 @@ abstract class PlantIntelligenceRepository {
   /// [message] - Message de l'alerte
   /// [data] - Données additionnelles (optionnel)
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveAlert({
     required String plantId,
     required String alertType,

@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../harvest/application/harvest_records_provider.dart';
 import '../../../../harvest/domain/models/harvest_record.dart';
@@ -81,13 +81,13 @@ class AlignmentRawData {
 /// 1. Récupère toutes les actions de semis/plantation (Planting/PlantingHive) et récoltes (HarvestRecord)
 /// 2. Mappe chaque action avec sa plante (via PlantCatalog)
 /// 3. Convertit la date réelle en mois abrégé
-/// 4. Identifie si ce mois ∈ sowingMonths ou harvestMonths ou dans la plage basée sur daysToMaturity
+/// 4. Identifie si ce mois âˆˆ sowingMonths ou harvestMonths ou dans la plage basée sur daysToMaturity
 /// 5. Marque chaque action comme alignée = true/false
 final alignmentRawDataProvider = FutureProvider<AlignmentRawData>((ref) async {
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
   final filters = ref.watch(statisticsFiltersProvider);
 
-  // S'assurer que les boîtes Hive sont ouvertes
+  // S'assurer que les boÃ®tes Hive sont ouvertes
   Box<Planting>? plantingBox;
   Box<PlantingHive>? plantingHiveBox;
 
@@ -266,8 +266,8 @@ Future<AlignmentAction?> _createAlignmentActionFromHarvest(
 ///
 /// Retourne un tuple (isAligned, reason)
 ///
-/// Pour les semis/plantations : vérifie si le mois ∈ sowingMonths
-/// Pour les récoltes : vérifie si le mois ∈ harvestMonths OU dans la plage calculée via daysToMaturity
+/// Pour les semis/plantations : vérifie si le mois âˆˆ sowingMonths
+/// Pour les récoltes : vérifie si le mois âˆˆ harvestMonths OU dans la plage calculée via daysToMaturity
 Future<(bool, String?)> _checkAlignment({
   required DateTime date,
   required dynamic plant, // Plant ou PlantFreezed

@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'seasonal_performance.freezed.dart';
 
@@ -24,7 +24,7 @@ class SeasonalPerformance with _$SeasonalPerformance {
   int get averageMaturationDurationInDays => averageMaturationDuration.round();
 
   /// Formate la valeur totale des récoltes
-  String get formattedTotalValue => '${totalHarvestValue.toStringAsFixed(2)} €';
+  String get formattedTotalValue => '${totalHarvestValue.toStringAsFixed(2)} â‚¬';
 
   /// Formate le rendement moyen par culture
   String get formattedAverageYield =>

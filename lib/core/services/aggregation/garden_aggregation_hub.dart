@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/unified_garden_context.dart';
 import 'data_adapter.dart';
 import 'legacy_data_adapter.dart';
@@ -24,10 +24,10 @@ import '../../../features/plant_intelligence/domain/repositories/plant_intellige
 /// - Évolutivité : facile d'ajouter de nouveaux systèmes
 ///
 /// **Stratégie de Résolution :**
-/// 1. Tenter Modern (priorité 3) → Système cible
-/// 2. Fallback Legacy (priorité 2) → Système historique
-/// 3. Fallback Intelligence (priorité 1) → Enrichissement IA
-/// 4. Fallback valeurs par défaut → Garantir résilience
+/// 1. Tenter Modern (priorité 3) â†’ Système cible
+/// 2. Fallback Legacy (priorité 2) â†’ Système historique
+/// 3. Fallback Intelligence (priorité 1) â†’ Enrichissement IA
+/// 4. Fallback valeurs par défaut â†’ Garantir résilience
 /// Cache entry pour l'intelligence d'un jardin
 ///
 /// **PROMPT A15 - Multi-Garden Intelligence Cache**
@@ -73,7 +73,7 @@ class GardenAggregationHub {
     ModernDataAdapter? modernAdapter,
     IntelligenceDataAdapter? intelligenceAdapter,
   }) : _adapters = [] {
-    // Ajouter les adaptateurs fournis ou créer les défauts
+    // Ajouter les adaptateurs fournis ou Créer les défauts
     _adapters.add(legacyAdapter ?? LegacyDataAdapter());
     _adapters.add(modernAdapter ?? ModernDataAdapter());
 
@@ -86,7 +86,7 @@ class GardenAggregationHub {
     _adapters.sort((a, b) => b.priority.compareTo(a.priority));
 
     developer.log(
-      '🏗️ Garden Aggregation Hub initialisé avec ${_adapters.length} adaptateurs',
+      'ðŸ—ï¸ Garden Aggregation Hub initialisé avec ${_adapters.length} adaptateurs',
       name: _logName,
       level: 500,
     );
@@ -100,7 +100,7 @@ class GardenAggregationHub {
     }
   }
 
-  /// Factory méthode pour créer le hub avec tous les adaptateurs
+  /// Factory méthode pour Créer le hub avec tous les adaptateurs
   factory GardenAggregationHub.withIntelligence({
     required PlantIntelligenceRepository intelligenceRepository,
   }) {
@@ -126,7 +126,7 @@ class GardenAggregationHub {
   Future<UnifiedGardenContext> getUnifiedContext(String gardenId) async {
     try {
       developer.log(
-        '🔍 Hub: Récupération contexte unifié pour jardin $gardenId',
+        'ðŸ” Hub: Récupération contexte unifié pour jardin $gardenId',
         name: _logName,
         level: 500,
       );
@@ -135,7 +135,7 @@ class GardenAggregationHub {
       final cacheKey = 'garden_context_$gardenId';
       if (_isCacheValid(cacheKey)) {
         developer.log(
-          '📦 Hub: Contexte trouvé dans le cache',
+          'ðŸ“¦ Hub: Contexte trouvé dans le cache',
           name: _logName,
           level: 500,
         );
@@ -151,7 +151,7 @@ class GardenAggregationHub {
           final isAvailable = await adapter.isAvailable();
           if (!isAvailable) {
             developer.log(
-              '⚠️ Hub: ${adapter.adapterName} non disponible, passage au suivant',
+              'âš ï¸ Hub: ${adapter.adapterName} non disponible, passage au suivant',
               name: _logName,
               level: 900,
             );
@@ -160,7 +160,7 @@ class GardenAggregationHub {
 
           // Tenter de récupérer le contexte
           developer.log(
-            '🔄 Hub: Tentative ${adapter.adapterName}...',
+            'ðŸ”„ Hub: Tentative ${adapter.adapterName}...',
             name: _logName,
             level: 500,
           );
@@ -169,7 +169,7 @@ class GardenAggregationHub {
 
           if (context != null) {
             developer.log(
-              '✅ Hub: Contexte récupéré depuis ${adapter.adapterName}',
+              'âœ… Hub: Contexte récupéré depuis ${adapter.adapterName}',
               name: _logName,
               level: 500,
             );
@@ -177,7 +177,7 @@ class GardenAggregationHub {
           }
         } catch (e) {
           developer.log(
-            '❌ Hub: ${adapter.adapterName} a échoué: $e',
+            'âŒ Hub: ${adapter.adapterName} a échoué: $e',
             name: _logName,
             level: 900,
             error: e,
@@ -189,7 +189,7 @@ class GardenAggregationHub {
       // Si aucun adaptateur n'a réussi, retourner un contexte par défaut
       if (context == null) {
         developer.log(
-          '⚠️ Hub: Aucun adaptateur disponible, création contexte par défaut',
+          'âš ï¸ Hub: Aucun adaptateur disponible, Création contexte par défaut',
           name: _logName,
           level: 1000,
         );
@@ -204,7 +204,7 @@ class GardenAggregationHub {
       _cache['${cacheKey}_timestamp'] = DateTime.now();
 
       developer.log(
-        '🎯 Hub: Contexte unifié créé avec succès',
+        'ðŸŽ¯ Hub: Contexte unifié Créé avec succès',
         name: _logName,
         level: 500,
       );
@@ -212,7 +212,7 @@ class GardenAggregationHub {
       return context;
     } catch (e, stackTrace) {
       developer.log(
-        '❌ ERREUR CRITIQUE Hub: Impossible de créer le contexte unifié',
+        'âŒ ERREUR CRITIQUE Hub: Impossible de Créer le contexte unifié',
         name: _logName,
         level: 1000,
         error: e,
@@ -463,7 +463,7 @@ class GardenAggregationHub {
       // Cache expiré, le supprimer
       _intelligenceCaches.remove(gardenId);
       developer.log(
-        '⏰ Cache intelligence expiré pour jardin $gardenId',
+        'â° Cache intelligence expiré pour jardin $gardenId',
         name: _logName,
         level: 500,
       );
@@ -473,7 +473,7 @@ class GardenAggregationHub {
     // Cache valide, marquer comme accédé et retourner
     cache.markAccessed();
     developer.log(
-      '✅ Cache intelligence trouvé pour jardin $gardenId',
+      'âœ… Cache intelligence trouvé pour jardin $gardenId',
       name: _logName,
       level: 500,
     );
@@ -500,7 +500,7 @@ class GardenAggregationHub {
     );
 
     developer.log(
-      '💾 Cache intelligence sauvegardé pour jardin $gardenId (${_intelligenceCaches.length}/$_maxIntelligenceCaches)',
+      'ðŸ’¾ Cache intelligence sauvegardé pour jardin $gardenId (${_intelligenceCaches.length}/$_maxIntelligenceCaches)',
       name: _logName,
       level: 500,
     );
@@ -512,7 +512,7 @@ class GardenAggregationHub {
   void invalidateGardenIntelligenceCache(String gardenId) {
     if (_intelligenceCaches.remove(gardenId) != null) {
       developer.log(
-        '🗑️ Cache intelligence invalidé pour jardin $gardenId',
+        'ðŸ—‘ï¸ Cache intelligence invalidé pour jardin $gardenId',
         name: _logName,
         level: 500,
       );
@@ -540,7 +540,7 @@ class GardenAggregationHub {
     if (lruGardenId != null) {
       _intelligenceCaches.remove(lruGardenId);
       developer.log(
-        '♻️ LRU: Éviction du cache intelligence pour jardin $lruGardenId (dernier accès: $oldestAccess)',
+        'â™»ï¸ LRU: Éviction du cache intelligence pour jardin $lruGardenId (dernier accès: $oldestAccess)',
         name: _logName,
         level: 500,
       );
@@ -552,7 +552,7 @@ class GardenAggregationHub {
     final count = _intelligenceCaches.length;
     _intelligenceCaches.clear();
     developer.log(
-      '🗑️ Tous les caches intelligence effacés ($count jardins)',
+      'ðŸ—‘ï¸ Tous les caches intelligence effacés ($count jardins)',
       name: _logName,
       level: 500,
     );
@@ -630,7 +630,7 @@ class GardenAggregationHub {
           );
 
           developer.log(
-            '🌟 Hub: Contexte enrichi avec Intelligence (${intelligenceStats.activeRecommendations} recommandations)',
+            'ðŸŒŸ Hub: Contexte enrichi avec Intelligence (${intelligenceStats.activeRecommendations} recommandations)',
             name: _logName,
             level: 500,
           );

@@ -1,9 +1,9 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../entities/intelligence_report.dart';
 import '../entities/plant_evolution_report.dart';
 import '../entities/plant_condition.dart';
 
-/// 🔄 CURSOR PROMPT A5 - Plant Evolution Tracker Service
+/// ðŸ”„ CURSOR PROMPT A5 - Plant Evolution Tracker Service
 ///
 /// Compares two PlantIntelligenceReport instances and computes a structured
 /// evolution delta (PlantEvolutionReport). This service helps track:
@@ -16,7 +16,7 @@ import '../entities/plant_condition.dart';
 /// It uses defensive programming to handle missing/null values gracefully.
 ///
 /// **Threshold Logic:**
-/// - Changes within ±1.0 point are considered "stable"
+/// - Changes within Â±1.0 point are considered "stable"
 /// - Changes > 1.0 are "up" (improvement)
 /// - Changes < -1.0 are "down" (degradation)
 ///
@@ -49,7 +49,7 @@ class PlantEvolutionTrackerService {
     required PlantIntelligenceReport previous,
     required PlantIntelligenceReport current,
   }) {
-    _log('🔄 Starting evolution comparison for plant ${current.plantId}');
+    _log('ðŸ”„ Starting evolution comparison for plant ${current.plantId}');
 
     // Validation: ensure we're comparing the same plant
     if (previous.plantId != current.plantId) {
@@ -62,13 +62,13 @@ class PlantEvolutionTrackerService {
     // Calculate score delta
     final deltaScore = current.intelligenceScore - previous.intelligenceScore;
 
-    _log('  📊 Score delta: ${deltaScore.toStringAsFixed(2)} '
+    _log('  ðŸ“Š Score delta: ${deltaScore.toStringAsFixed(2)} '
         '(previous: ${previous.intelligenceScore}, current: ${current.intelligenceScore})');
 
     // Determine trend based on threshold
     final trend = _determineTrend(deltaScore);
 
-    _log('  📈 Trend: $trend');
+    _log('  ðŸ“ˆ Trend: $trend');
 
     // Compare individual conditions
     final conditionChanges = _compareConditions(
@@ -76,10 +76,10 @@ class PlantEvolutionTrackerService {
       current.analysis,
     );
 
-    _log('  ✅ Comparison complete');
-    _log('    ➕ Improved: ${conditionChanges.improved.length}');
-    _log('    ➖ Degraded: ${conditionChanges.degraded.length}');
-    _log('    ➡️ Unchanged: ${conditionChanges.unchanged.length}');
+    _log('  âœ… Comparison complete');
+    _log('    âž• Improved: ${conditionChanges.improved.length}');
+    _log('    âž– Degraded: ${conditionChanges.degraded.length}');
+    _log('    âž¡ï¸ Unchanged: ${conditionChanges.unchanged.length}');
 
     return PlantEvolutionReport(
       plantId: current.plantId,
@@ -100,7 +100,7 @@ class PlantEvolutionTrackerService {
   /// Determines trend based on score delta and threshold
   ///
   /// Returns:
-  /// - 'stable' if delta is within ±threshold
+  /// - 'stable' if delta is within Â±threshold
   /// - 'up' if delta > threshold
   /// - 'down' if delta < -threshold
   String _determineTrend(double deltaScore) {
@@ -129,7 +129,7 @@ class PlantEvolutionTrackerService {
   ) {
     // Handle null analysis gracefully
     if (previousAnalysis == null || currentAnalysis == null) {
-      _log('  ⚠️ One or both analyses are null, returning empty changes');
+      _log('  âš ï¸ One or both analyses are null, returning empty changes');
       return _ConditionChanges(
         improved: [],
         degraded: [],
@@ -196,7 +196,7 @@ class PlantEvolutionTrackerService {
   ) {
     // Handle null conditions gracefully
     if (previousCondition == null || currentCondition == null) {
-      _log('  ⚠️ $conditionName: null condition detected, skipping comparison');
+      _log('  âš ï¸ $conditionName: null condition detected, skipping comparison');
       return;
     }
 
@@ -207,20 +207,20 @@ class PlantEvolutionTrackerService {
     final currentIndex = currentCondition.status.index;
 
     _log(
-        '  🔍 $conditionName: ${previousCondition.status.name} ($previousIndex) → '
+        '  ðŸ” $conditionName: ${previousCondition.status.name} ($previousIndex) â†’ '
         '${currentCondition.status.name} ($currentIndex)');
 
     if (currentIndex < previousIndex) {
       // Index decreased = condition improved (went from worse to better)
       improved.add(conditionName);
-      _log('    ✅ $conditionName improved');
+      _log('    âœ… $conditionName improved');
     } else if (currentIndex > previousIndex) {
       // Index increased = condition degraded (went from better to worse)
       degraded.add(conditionName);
-      _log('    ⚠️ $conditionName degraded');
+      _log('    âš ï¸ $conditionName degraded');
     } else {
       unchanged.add(conditionName);
-      _log('    ➡️ $conditionName unchanged');
+      _log('    âž¡ï¸ $conditionName unchanged');
     }
   }
 

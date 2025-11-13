@@ -1,4 +1,4 @@
-// 🚀 Real-Time Data Processor - Stream Processing Engine
+﻿// ðŸš€ Real-Time Data Processor - Stream Processing Engine
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Reactive Patterns
 

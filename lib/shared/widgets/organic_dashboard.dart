@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,7 +73,7 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
         defaultEnabled: defaultEnabled,
       );
     } catch (e) {
-      if (kDebugMode) debugPrint('🔧 [CALIBRATION] error loading defaults: $e');
+      if (kDebugMode) debugPrint('ðŸ”§ [CALIBRATION] error loading defaults: $e');
     }
   }
 

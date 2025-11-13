@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../entities/analysis_result.dart';
 import '../entities/intelligence_report.dart';
 import '../entities/recommendation.dart';
@@ -71,7 +71,7 @@ class PlantIntelligenceOrchestrator {
   final GenerateBioControlRecommendationsUsecase? _generateBioControlUsecase;
   final GardenAggregationHub? _gardenAggregationHub;
 
-  /// 🔄 CURSOR PROMPT A6 - Evolution Tracker
+  /// ðŸ”„ CURSOR PROMPT A6 - Evolution Tracker
   ///
   /// Service pour comparer l'évolution entre deux rapports d'intelligence.
   /// Intégré dans generateIntelligenceReport pour traquer les changements.
@@ -131,24 +131,24 @@ class PlantIntelligenceOrchestrator {
     );
 
     try {
-      // 🔄 CURSOR PROMPT A4 - Récupérer le dernier rapport pour comparaison
+      // ðŸ”„ CURSOR PROMPT A4 - Récupérer le dernier rapport pour comparaison
       PlantIntelligenceReport? previousReport;
       try {
         previousReport = await _analyticsRepository.getLastReport(plantId);
         if (previousReport != null) {
           developer.log(
-            '📊 Rapport précédent trouvé (généré le ${previousReport.generatedAt}, score: ${previousReport.intelligenceScore.toStringAsFixed(1)})',
+            'ðŸ“Š Rapport précédent trouvé (généré le ${previousReport.generatedAt}, score: ${previousReport.intelligenceScore.toStringAsFixed(1)})',
             name: 'PlantIntelligenceOrchestrator',
           );
         } else {
           developer.log(
-            'ℹ️ Aucun rapport précédent trouvé - première analyse pour cette plante',
+            'â„¹ï¸ Aucun rapport précédent trouvé - première analyse pour cette plante',
             name: 'PlantIntelligenceOrchestrator',
           );
         }
       } catch (e) {
         developer.log(
-          '⚠️ Erreur récupération rapport précédent (non bloquant): $e',
+          'âš ï¸ Erreur récupération rapport précédent (non bloquant): $e',
           name: 'PlantIntelligenceOrchestrator',
           level: 900,
         );
@@ -253,22 +253,22 @@ class PlantIntelligenceOrchestrator {
         name: 'PlantIntelligenceOrchestrator',
       );
 
-      // 💾 CURSOR PROMPT A4 - Sauvegarder le rapport pour comparaisons futures
+      // ðŸ’¾ CURSOR PROMPT A4 - Sauvegarder le rapport pour comparaisons futures
       try {
         await _analyticsRepository.saveLatestReport(report);
         developer.log(
-          '✅ Rapport sauvegardé pour comparaisons futures',
+          'âœ… Rapport sauvegardé pour comparaisons futures',
           name: 'PlantIntelligenceOrchestrator',
         );
       } catch (e) {
         developer.log(
-          '⚠️ Erreur sauvegarde rapport (non bloquant): $e',
+          'âš ï¸ Erreur sauvegarde rapport (non bloquant): $e',
           name: 'PlantIntelligenceOrchestrator',
           level: 900,
         );
       }
 
-      // 📈 CURSOR PROMPT A6 - Track evolution
+      // ðŸ“ˆ CURSOR PROMPT A6 - Track evolution
       try {
         if (previousReport != null) {
           final evolution = _evolutionTracker.compareReports(
@@ -280,24 +280,24 @@ class PlantIntelligenceOrchestrator {
           final String trendEmoji;
           final String deltaSign;
           if (evolution.isImproved) {
-            trendEmoji = '📈';
+            trendEmoji = 'ðŸ“ˆ';
             deltaSign = '+';
           } else if (evolution.isDegraded) {
-            trendEmoji = '📉';
+            trendEmoji = 'ðŸ“‰';
             deltaSign = '';
           } else {
-            trendEmoji = '➡️';
+            trendEmoji = 'âž¡ï¸';
             deltaSign = evolution.scoreDelta >= 0 ? '+' : '';
           }
 
           // Log the delta
           developer.log(
             '$trendEmoji Evolution detected: ${evolution.isImproved ? "up" : evolution.isDegraded ? "down" : "stable"} '
-            '(Δ $deltaSign${evolution.scoreDelta.toStringAsFixed(2)} points)',
+            '(Î” $deltaSign${evolution.scoreDelta.toStringAsFixed(2)} points)',
             name: 'IntelligenceEvolution',
           );
 
-          // 💾 CURSOR PROMPT A7 - Store evolution for future statistics and timeline visualization
+          // ðŸ’¾ CURSOR PROMPT A7 - Store evolution for future statistics and timeline visualization
           try {
             // Convert IntelligenceEvolutionSummary to PlantEvolutionReport
             final evolutionReport = PlantEvolutionReport(
@@ -320,12 +320,12 @@ class PlantIntelligenceOrchestrator {
             await _analyticsRepository.saveEvolutionReport(evolutionReport);
 
             developer.log(
-              '💾 Evolution report saved successfully',
+              'ðŸ’¾ Evolution report saved successfully',
               name: 'IntelligenceEvolution',
             );
           } catch (saveError, saveStack) {
             developer.log(
-              '⚠️ Evolution report save failed (non-blocking)',
+              'âš ï¸ Evolution report save failed (non-blocking)',
               name: 'IntelligenceEvolution',
               error: saveError,
               stackTrace: saveStack,
@@ -335,7 +335,7 @@ class PlantIntelligenceOrchestrator {
         }
       } catch (e, stack) {
         developer.log(
-          '⚠️ Evolution comparison failed (non-blocking)',
+          'âš ï¸ Evolution comparison failed (non-blocking)',
           name: 'IntelligenceEvolution',
           error: e,
           stackTrace: stack,
@@ -370,7 +370,7 @@ class PlantIntelligenceOrchestrator {
       name: 'PlantIntelligenceOrchestrator',
     );
 
-    // 🧹 CURSOR PROMPT 2: Invalider tous les caches avant l'analyse
+    // ðŸ§¹ CURSOR PROMPT 2: Invalider tous les caches avant l'analyse
     await invalidateAllCache();
 
     try {
@@ -440,40 +440,40 @@ class PlantIntelligenceOrchestrator {
     PlantFreezed? plant,
   }) async {
     developer.log(
-        '🔍 DIAGNOSTIC - Début analyzePlantConditions: plantId=$plantId, gardenId=$gardenId',
+        'ðŸ” DIAGNOSTIC - Début analyzePlantConditions: plantId=$plantId, gardenId=$gardenId',
         name: 'PlantIntelligenceOrchestrator');
 
     try {
-      developer.log('🔍 DIAGNOSTIC - Récupération plante...',
+      developer.log('ðŸ” DIAGNOSTIC - Récupération plante...',
           name: 'PlantIntelligenceOrchestrator');
       final resolvedPlant = plant ?? await _getPlant(plantId);
       developer.log(
-          '🔍 DIAGNOSTIC - Plante récupérée: ${resolvedPlant.commonName} (${resolvedPlant.scientificName})',
+          'ðŸ” DIAGNOSTIC - Plante récupérée: ${resolvedPlant.commonName} (${resolvedPlant.scientificName})',
           name: 'PlantIntelligenceOrchestrator');
 
-      developer.log('🔍 DIAGNOSTIC - Récupération contexte jardin...',
+      developer.log('ðŸ” DIAGNOSTIC - Récupération contexte jardin...',
           name: 'PlantIntelligenceOrchestrator');
       final gardenContext = await _gardenRepository.getGardenContext(gardenId);
       developer.log(
-          '🔍 DIAGNOSTIC - Contexte jardin: ${gardenContext != null ? "OUI" : "NON"}',
+          'ðŸ” DIAGNOSTIC - Contexte jardin: ${gardenContext != null ? "OUI" : "NON"}',
           name: 'PlantIntelligenceOrchestrator');
 
-      developer.log('🔍 DIAGNOSTIC - Récupération météo...',
+      developer.log('ðŸ” DIAGNOSTIC - Récupération météo...',
           name: 'PlantIntelligenceOrchestrator');
       final weather =
           await _weatherRepository.getCurrentWeatherCondition(gardenId);
-      developer.log('🔍 DIAGNOSTIC - Météo: ${weather != null ? "OUI" : "NON"}',
+      developer.log('ðŸ” DIAGNOSTIC - Météo: ${weather != null ? "OUI" : "NON"}',
           name: 'PlantIntelligenceOrchestrator');
 
       if (gardenContext == null || weather == null) {
         developer.log(
-            '❌ DIAGNOSTIC - Données manquantes: gardenContext=${gardenContext != null}, weather=${weather != null}',
+            'âŒ DIAGNOSTIC - Données manquantes: gardenContext=${gardenContext != null}, weather=${weather != null}',
             name: 'PlantIntelligenceOrchestrator');
         throw const PlantIntelligenceOrchestratorException(
             'Données manquantes');
       }
 
-      developer.log('🔍 DIAGNOSTIC - Exécution UseCase analyse...',
+      developer.log('ðŸ” DIAGNOSTIC - Exécution UseCase analyse...',
           name: 'PlantIntelligenceOrchestrator');
       final result = await _analyzeUsecase.execute(
         plant: resolvedPlant,
@@ -482,14 +482,14 @@ class PlantIntelligenceOrchestrator {
       );
 
       developer.log(
-          '✅ DIAGNOSTIC - Analyse terminée: score=${result.healthScore}',
+          'âœ… DIAGNOSTIC - Analyse terminée: score=${result.healthScore}',
           name: 'PlantIntelligenceOrchestrator');
       return result;
     } catch (e, stackTrace) {
       // Remonter les exceptions spécifiques de plantes telles quelles
       if (e is PlantNotFoundException || e is EmptyPlantCatalogException) {
         developer.log(
-          '❌ Erreur liée au catalogue de plantes: $e',
+          'âŒ Erreur liée au catalogue de plantes: $e',
           name: 'PlantIntelligenceOrchestrator',
           level: 1000,
         );
@@ -498,7 +498,7 @@ class PlantIntelligenceOrchestrator {
 
       // Pour les autres erreurs, logger et remonter
       developer.log(
-        '❌ Erreur lors de l\'analyse des conditions',
+        'âŒ Erreur lors de l\'analyse des conditions',
         name: 'PlantIntelligenceOrchestrator',
         error: e,
         stackTrace: stackTrace,
@@ -508,14 +508,14 @@ class PlantIntelligenceOrchestrator {
     }
   }
 
-  /// 🌱 BIOLOGICAL CONTROL INTEGRATION v2.2.A3b
+  /// ðŸŒ± BIOLOGICAL CONTROL INTEGRATION v2.2.A3b
   ///
   /// Génère un rapport d'intelligence complet incluant l'analyse de lutte biologique
   ///
   /// PHILOSOPHY:
   /// Cette méthode étend l'intelligence végétale pour inclure l'analyse des menaces
   /// ravageurs et la génération de recommandations de lutte biologique.
-  /// Elle respecte le flux de vérité : Sanctuaire (Observations) → Modern → Intelligence
+  /// Elle respecte le flux de vérité : Sanctuaire (Observations) â†’ Modern â†’ Intelligence
   ///
   /// [gardenId] - ID du jardin à analyser
   ///
@@ -527,7 +527,7 @@ class PlantIntelligenceOrchestrator {
     required String gardenId,
   }) async {
     developer.log(
-      '🌱 Génération analyse complète avec lutte biologique pour jardin $gardenId',
+      'ðŸŒ± Génération analyse complète avec lutte biologique pour jardin $gardenId',
       name: 'PlantIntelligenceOrchestrator',
     );
 
@@ -539,17 +539,17 @@ class PlantIntelligenceOrchestrator {
       // 2. NOUVEAU : Analyse des menaces ravageurs
       PestThreatAnalysis? pestThreats;
       if (_analyzePestThreatsUsecase != null) {
-        developer.log('🐛 Analyse des menaces ravageurs...',
+        developer.log('ðŸ› Analyse des menaces ravageurs...',
             name: 'PlantIntelligenceOrchestrator');
         try {
           pestThreats = await _analyzePestThreatsUsecase!.execute(gardenId);
           developer.log(
-            '✅ ${pestThreats.totalThreats} menace(s) détectée(s)',
+            'âœ… ${pestThreats.totalThreats} menace(s) détectée(s)',
             name: 'PlantIntelligenceOrchestrator',
           );
         } catch (e) {
           developer.log(
-            '⚠️ Erreur analyse menaces (non bloquant): $e',
+            'âš ï¸ Erreur analyse menaces (non bloquant): $e',
             name: 'PlantIntelligenceOrchestrator',
             level: 900,
           );
@@ -562,7 +562,7 @@ class PlantIntelligenceOrchestrator {
           _bioControlRecommendationRepository != null &&
           pestThreats != null) {
         developer.log(
-          '🌿 Génération recommandations lutte biologique...',
+          'ðŸŒ¿ Génération recommandations lutte biologique...',
           name: 'PlantIntelligenceOrchestrator',
         );
 
@@ -580,7 +580,7 @@ class PlantIntelligenceOrchestrator {
             bioControlRecommendations.addAll(recs);
           } catch (e) {
             developer.log(
-              '⚠️ Erreur génération recommandations pour observation ${threat.observation.id}: $e',
+              'âš ï¸ Erreur génération recommandations pour observation ${threat.observation.id}: $e',
               name: 'PlantIntelligenceOrchestrator',
               level: 900,
             );
@@ -588,7 +588,7 @@ class PlantIntelligenceOrchestrator {
         }
 
         developer.log(
-          '✅ ${bioControlRecommendations.length} recommandation(s) générée(s)',
+          'âœ… ${bioControlRecommendations.length} recommandation(s) générée(s)',
           name: 'PlantIntelligenceOrchestrator',
         );
       }
@@ -615,7 +615,7 @@ class PlantIntelligenceOrchestrator {
       );
 
       developer.log(
-        '✅ Analyse complète générée (santé globale: ${overallHealthScore.toStringAsFixed(1)}%)',
+        'âœ… Analyse complète générée (santé globale: ${overallHealthScore.toStringAsFixed(1)}%)',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -633,7 +633,7 @@ class PlantIntelligenceOrchestrator {
 
   // ==================== CACHE MANAGEMENT METHODS ====================
 
-  /// 🚀 Initialise l'orchestrateur pour un jardin spécifique
+  /// ðŸš€ Initialise l'orchestrateur pour un jardin spécifique
   ///
   /// **CURSOR PROMPT A2 - Garden Initialization Method**
   ///
@@ -645,10 +645,10 @@ class PlantIntelligenceOrchestrator {
   ///
   /// **Responsabilités :**
   /// - Appeler `_cleanOrphanedConditionsInHive()` pour supprimer les données obsolètes
-  /// - Appeler `invalidateAllCache()` pour rafraîchir les caches
+  /// - Appeler `invalidateAllCache()` pour rafraÃ®chir les caches
   /// - Logger toutes les opérations pour la traçabilité
-  /// - Être résiliente : ne jamais lancer d'exception, continuer même si une étape échoue
-  /// - Être idempotente (peut être appelée plusieurs fois sans effets secondaires)
+  /// - ÃŠtre résiliente : ne jamais lancer d'exception, continuer même si une étape échoue
+  /// - ÃŠtre idempotente (peut être appelée plusieurs fois sans effets secondaires)
   ///
   /// **Architecture :**
   /// Respecte Clean Architecture en orchestrant les méthodes de maintenance.
@@ -668,7 +668,7 @@ class PlantIntelligenceOrchestrator {
     required String gardenId,
   }) async {
     developer.log(
-      '🚀 Initialisation pour jardin $gardenId',
+      'ðŸš€ Initialisation pour jardin $gardenId',
       name: 'PlantIntelligenceOrchestrator',
     );
 
@@ -683,7 +683,7 @@ class PlantIntelligenceOrchestrator {
     try {
       // Étape 1 : Nettoyage des conditions orphelines
       developer.log(
-        '🧹 Étape 1/2 : Nettoyage des conditions orphelines',
+        'ðŸ§¹ Étape 1/2 : Nettoyage des conditions orphelines',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -693,7 +693,7 @@ class PlantIntelligenceOrchestrator {
         stats['cleanupSuccess'] = true;
 
         developer.log(
-          '✅ Nettoyage terminé : $deletedCount condition(s) supprimée(s)',
+          'âœ… Nettoyage terminé : $deletedCount condition(s) supprimée(s)',
           name: 'PlantIntelligenceOrchestrator',
         );
       } catch (e, stackTrace) {
@@ -701,7 +701,7 @@ class PlantIntelligenceOrchestrator {
         stats['errors'].add(errorMsg);
 
         developer.log(
-          '⚠️ $errorMsg',
+          'âš ï¸ $errorMsg',
           name: 'PlantIntelligenceOrchestrator',
           error: e,
           stackTrace: stackTrace,
@@ -712,7 +712,7 @@ class PlantIntelligenceOrchestrator {
 
       // Étape 2 : Invalidation de tous les caches
       developer.log(
-        '🧹 Étape 2/2 : Invalidation des caches',
+        'ðŸ§¹ Étape 2/2 : Invalidation des caches',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -721,7 +721,7 @@ class PlantIntelligenceOrchestrator {
         stats['cacheInvalidationSuccess'] = true;
 
         developer.log(
-          '✅ Caches invalidés avec succès',
+          'âœ… Caches invalidés avec succès',
           name: 'PlantIntelligenceOrchestrator',
         );
       } catch (e, stackTrace) {
@@ -730,7 +730,7 @@ class PlantIntelligenceOrchestrator {
         stats['errors'].add(errorMsg);
 
         developer.log(
-          '⚠️ $errorMsg',
+          'âš ï¸ $errorMsg',
           name: 'PlantIntelligenceOrchestrator',
           error: e,
           stackTrace: stackTrace,
@@ -744,18 +744,18 @@ class PlantIntelligenceOrchestrator {
           (stats['cacheInvalidationSuccess'] as bool ? 1 : 0);
 
       developer.log(
-        '🎯 Initialisation terminée : $successCount/2 étape(s) réussie(s)',
+        'ðŸŽ¯ Initialisation terminée : $successCount/2 étape(s) réussie(s)',
         name: 'PlantIntelligenceOrchestrator',
       );
 
       if ((stats['errors'] as List).isEmpty) {
         developer.log(
-          '✅ Initialisation complète avec succès pour jardin $gardenId',
+          'âœ… Initialisation complète avec succès pour jardin $gardenId',
           name: 'PlantIntelligenceOrchestrator',
         );
       } else {
         developer.log(
-          '⚠️ Initialisation terminée avec ${(stats['errors'] as List).length} avertissement(s)',
+          'âš ï¸ Initialisation terminée avec ${(stats['errors'] as List).length} avertissement(s)',
           name: 'PlantIntelligenceOrchestrator',
           level: 900,
         );
@@ -765,7 +765,7 @@ class PlantIntelligenceOrchestrator {
     } catch (e, stackTrace) {
       // Gestion défensive : ne jamais propager l'erreur
       developer.log(
-        '❌ Erreur critique lors de l\'initialisation (non bloquant)',
+        'âŒ Erreur critique lors de l\'initialisation (non bloquant)',
         name: 'PlantIntelligenceOrchestrator',
         error: e,
         stackTrace: stackTrace,
@@ -777,7 +777,7 @@ class PlantIntelligenceOrchestrator {
     }
   }
 
-  /// 🧹 Invalide tous les caches de l'orchestrateur et des dépendances
+  /// ðŸ§¹ Invalide tous les caches de l'orchestrateur et des dépendances
   ///
   /// **Cursor Prompt 2 - Cache Invalidation Method**
   ///
@@ -787,7 +787,7 @@ class PlantIntelligenceOrchestrator {
   /// **Responsabilités :**
   /// - Invalider le cache du GardenAggregationHub si disponible
   /// - Logger toutes les opérations pour la traçabilité
-  /// - Être idempotente (peut être appelée plusieurs fois sans effets secondaires)
+  /// - ÃŠtre idempotente (peut être appelée plusieurs fois sans effets secondaires)
   /// - Ne jamais lancer d'exception (gestion défensive des erreurs)
   ///
   /// **Architecture :**
@@ -801,7 +801,7 @@ class PlantIntelligenceOrchestrator {
   /// **Retourne :** Future<void> - opération asynchrone sans valeur de retour
   Future<void> invalidateAllCache() async {
     developer.log(
-      '🧹 Début invalidation de tous les caches',
+      'ðŸ§¹ Début invalidation de tous les caches',
       name: 'PlantIntelligenceOrchestrator',
     );
 
@@ -814,19 +814,19 @@ class PlantIntelligenceOrchestrator {
           _gardenAggregationHub!.clearCache();
           invalidatedServices++;
           developer.log(
-            '✅ Cache GardenAggregationHub invalidé',
+            'âœ… Cache GardenAggregationHub invalidé',
             name: 'PlantIntelligenceOrchestrator',
           );
         } catch (e) {
           developer.log(
-            '⚠️ Erreur invalidation GardenAggregationHub (non bloquant): $e',
+            'âš ï¸ Erreur invalidation GardenAggregationHub (non bloquant): $e',
             name: 'PlantIntelligenceOrchestrator',
             level: 900,
           );
         }
       } else {
         developer.log(
-          'ℹ️ GardenAggregationHub non injecté - cache non invalidé',
+          'â„¹ï¸ GardenAggregationHub non injecté - cache non invalidé',
           name: 'PlantIntelligenceOrchestrator',
           level: 500,
         );
@@ -838,19 +838,19 @@ class PlantIntelligenceOrchestrator {
 
       // Log du résumé
       developer.log(
-        '🎯 Invalidation terminée: $invalidatedServices service(s) traité(s)',
+        'ðŸŽ¯ Invalidation terminée: $invalidatedServices service(s) traité(s)',
         name: 'PlantIntelligenceOrchestrator',
       );
 
       developer.log(
-        '✅ Tous les caches invalidés avec succès',
+        'âœ… Tous les caches invalidés avec succès',
         name: 'PlantIntelligenceOrchestrator',
       );
     } catch (e, stackTrace) {
       // Gestion défensive : logger mais ne jamais propager l'erreur
       // L'invalidation du cache ne doit jamais bloquer l'application
       developer.log(
-        '❌ Erreur lors de l\'invalidation des caches (non bloquant)',
+        'âŒ Erreur lors de l\'invalidation des caches (non bloquant)',
         name: 'PlantIntelligenceOrchestrator',
         error: e,
         stackTrace: stackTrace,
@@ -873,7 +873,7 @@ class PlantIntelligenceOrchestrator {
   /// Lance [EmptyPlantCatalogException] si le catalogue est vide
   Future<PlantFreezed> _getPlant(String plantId) async {
     developer.log(
-      '🔍 Recherche de la plante "$plantId"',
+      'ðŸ” Recherche de la plante "$plantId"',
       name: 'PlantIntelligenceOrchestrator',
     );
 
@@ -881,7 +881,7 @@ class PlantIntelligenceOrchestrator {
       // Normalisation de l'ID recherché
       final normalizedId = plantId.trim().toLowerCase();
       developer.log(
-        '🔍 ID normalisé: "$normalizedId" (original: "$plantId")',
+        'ðŸ” ID normalisé: "$normalizedId" (original: "$plantId")',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -889,14 +889,14 @@ class PlantIntelligenceOrchestrator {
       final allPlants = await _plantCatalogRepository.getAllPlants();
 
       developer.log(
-        '📚 Catalogue chargé: ${allPlants.length} plantes disponibles',
+        'ðŸ“š Catalogue chargé: ${allPlants.length} plantes disponibles',
         name: 'PlantIntelligenceOrchestrator',
       );
 
       // Vérification catalogue vide
       if (allPlants.isEmpty) {
         developer.log(
-          '❌ ERREUR: Le catalogue de plantes est vide!',
+          'âŒ ERREUR: Le catalogue de plantes est vide!',
           name: 'PlantIntelligenceOrchestrator',
           level: 1000,
         );
@@ -908,7 +908,7 @@ class PlantIntelligenceOrchestrator {
       // Logger les premiers IDs disponibles pour debug
       final availableIds = allPlants.map((p) => p.id).toList();
       developer.log(
-        '📋 Premiers IDs disponibles (${availableIds.take(10).length}/${availableIds.length}): ${availableIds.take(10).join(", ")}',
+        'ðŸ“‹ Premiers IDs disponibles (${availableIds.take(10).length}/${availableIds.length}): ${availableIds.take(10).join(", ")}',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -926,7 +926,7 @@ class PlantIntelligenceOrchestrator {
       // Si plante trouvée
       if (foundPlant != null) {
         developer.log(
-          '✅ Plante trouvée: "${foundPlant.commonName}" (${foundPlant.scientificName})',
+          'âœ… Plante trouvée: "${foundPlant.commonName}" (${foundPlant.scientificName})',
           name: 'PlantIntelligenceOrchestrator',
         );
         return foundPlant;
@@ -934,7 +934,7 @@ class PlantIntelligenceOrchestrator {
 
       // Plante non trouvée - Exception structurée
       developer.log(
-        '❌ Plante "$plantId" introuvable dans le catalogue',
+        'âŒ Plante "$plantId" introuvable dans le catalogue',
         name: 'PlantIntelligenceOrchestrator',
         level: 1000,
       );
@@ -954,7 +954,7 @@ class PlantIntelligenceOrchestrator {
 
       // Sinon, logger et encapsuler dans une exception orchestrateur
       developer.log(
-        '❌ Erreur inattendue lors de la récupération de la plante',
+        'âŒ Erreur inattendue lors de la récupération de la plante',
         name: 'PlantIntelligenceOrchestrator',
         error: e,
         level: 1000,
@@ -1112,7 +1112,7 @@ class PlantIntelligenceOrchestrator {
         .toList();
   }
 
-  /// Mappe la priorité depuis une chaîne de caractères
+  /// Mappe la priorité depuis une chaÃ®ne de caractères
   NotificationPriority _mapPriorityFromString(String? severity) {
     switch (severity?.toLowerCase()) {
       case 'critical':
@@ -1150,14 +1150,14 @@ class PlantIntelligenceOrchestrator {
   /// ```
   Future<int> _cleanOrphanedConditionsInHive() async {
     developer.log(
-      '🧹 Début du nettoyage des conditions orphelines',
+      'ðŸ§¹ Début du nettoyage des conditions orphelines',
       name: 'PlantIntelligenceOrchestrator',
     );
 
     try {
       // 1. Récupérer toutes les plantes actives du catalogue
       developer.log(
-        '📚 Récupération des plantes actives du catalogue...',
+        'ðŸ“š Récupération des plantes actives du catalogue...',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -1168,7 +1168,7 @@ class PlantIntelligenceOrchestrator {
           .toSet(); // Utiliser un Set pour une recherche O(1)
 
       developer.log(
-        '✅ ${activePlantIds.length} plante(s) active(s) trouvée(s)',
+        'âœ… ${activePlantIds.length} plante(s) active(s) trouvée(s)',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -1176,7 +1176,7 @@ class PlantIntelligenceOrchestrator {
       // Note: Nous devons accéder directement au datasource pour obtenir TOUTES les conditions
       // car IPlantConditionRepository n'a pas de méthode pour récupérer toutes les conditions
       developer.log(
-        '🔍 Analyse des conditions stockées...',
+        'ðŸ” Analyse des conditions stockées...',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -1204,7 +1204,7 @@ class PlantIntelligenceOrchestrator {
           }
         } catch (e) {
           developer.log(
-            '⚠️ Erreur lors de la récupération des conditions pour ${plant.id}: $e',
+            'âš ï¸ Erreur lors de la récupération des conditions pour ${plant.id}: $e',
             name: 'PlantIntelligenceOrchestrator',
             level: 900,
           );
@@ -1213,12 +1213,12 @@ class PlantIntelligenceOrchestrator {
       }
 
       developer.log(
-        '📊 Total conditions analysées: ${allConditionIds.length}',
+        'ðŸ“Š Total conditions analysées: ${allConditionIds.length}',
         name: 'PlantIntelligenceOrchestrator',
       );
 
       developer.log(
-        '🗑️ Conditions orphelines détectées: ${orphanedConditionIds.length}',
+        'ðŸ—‘ï¸ Conditions orphelines détectées: ${orphanedConditionIds.length}',
         name: 'PlantIntelligenceOrchestrator',
       );
 
@@ -1227,7 +1227,7 @@ class PlantIntelligenceOrchestrator {
 
       if (orphanedConditionIds.isNotEmpty) {
         developer.log(
-          '🧹 Suppression des conditions orphelines...',
+          'ðŸ§¹ Suppression des conditions orphelines...',
           name: 'PlantIntelligenceOrchestrator',
         );
 
@@ -1240,7 +1240,7 @@ class PlantIntelligenceOrchestrator {
             }
           } catch (e) {
             developer.log(
-              '⚠️ Erreur lors de la suppression de la condition $conditionId: $e',
+              'âš ï¸ Erreur lors de la suppression de la condition $conditionId: $e',
               name: 'PlantIntelligenceOrchestrator',
               level: 900,
             );
@@ -1249,26 +1249,26 @@ class PlantIntelligenceOrchestrator {
         }
 
         developer.log(
-          '✅ $deletedCount condition(s) orpheline(s) supprimée(s) avec succès',
+          'âœ… $deletedCount condition(s) orpheline(s) supprimée(s) avec succès',
           name: 'PlantIntelligenceOrchestrator',
         );
       } else {
         developer.log(
-          '✅ Aucune condition orpheline détectée',
+          'âœ… Aucune condition orpheline détectée',
           name: 'PlantIntelligenceOrchestrator',
         );
       }
 
       // 4. Résumé final
       developer.log(
-        '🎯 Nettoyage terminé : $deletedCount/${orphanedConditionIds.length} condition(s) supprimée(s)',
+        'ðŸŽ¯ Nettoyage terminé : $deletedCount/${orphanedConditionIds.length} condition(s) supprimée(s)',
         name: 'PlantIntelligenceOrchestrator',
       );
 
       return deletedCount;
     } catch (e, stackTrace) {
       developer.log(
-        '❌ Erreur critique lors du nettoyage des conditions orphelines',
+        'âŒ Erreur critique lors du nettoyage des conditions orphelines',
         name: 'PlantIntelligenceOrchestrator',
         error: e,
         stackTrace: stackTrace,
@@ -1338,38 +1338,38 @@ class PlantIntelligenceOrchestrator {
           plantReports.length;
 
       if (avgHealth >= 80) {
-        buffer.write('Excellent état de santé général ! 🌟 ');
+        buffer.write('Excellent état de santé général ! ðŸŒŸ ');
       } else if (avgHealth >= 60) {
-        buffer.write('État de santé satisfaisant. 🌱 ');
+        buffer.write('État de santé satisfaisant. ðŸŒ± ');
       } else {
-        buffer.write('Certaines plantes nécessitent attention. ⚠️ ');
+        buffer.write('Certaines plantes nécessitent attention. âš ï¸ ');
       }
     }
 
     // Partie 2 : Menaces ravageurs
     if (pestThreats != null && pestThreats.totalThreats > 0) {
-      buffer.write('\n\n🐛 Menaces détectées : ');
+      buffer.write('\n\nðŸ› Menaces détectées : ');
 
       if (pestThreats.criticalThreats > 0) {
-        buffer.write('${pestThreats.criticalThreats} critique(s) 🚨 ');
+        buffer.write('${pestThreats.criticalThreats} critique(s) ðŸš¨ ');
       }
       if (pestThreats.highThreats > 0) {
-        buffer.write('${pestThreats.highThreats} élevée(s) ⚠️ ');
+        buffer.write('${pestThreats.highThreats} élevée(s) âš ï¸ ');
       }
       if (pestThreats.moderateThreats > 0) {
-        buffer.write('${pestThreats.moderateThreats} modérée(s) 👀 ');
+        buffer.write('${pestThreats.moderateThreats} modérée(s) ðŸ‘€ ');
       }
       if (pestThreats.lowThreats > 0) {
-        buffer.write('${pestThreats.lowThreats} faible(s) ℹ️ ');
+        buffer.write('${pestThreats.lowThreats} faible(s) â„¹ï¸ ');
       }
     } else {
-      buffer.write('\n\n✅ Aucune menace ravageur détectée.');
+      buffer.write('\n\nâœ… Aucune menace ravageur détectée.');
     }
 
     // Partie 3 : Recommandations
     if (bioControlRecommendations.isNotEmpty) {
       buffer.write(
-          '\n\n🌿 ${bioControlRecommendations.length} recommandation(s) de lutte biologique disponible(s).');
+          '\n\nðŸŒ¿ ${bioControlRecommendations.length} recommandation(s) de lutte biologique disponible(s).');
 
       final urgentRecs =
           bioControlRecommendations.where((r) => r.priority <= 2).length;
@@ -1420,7 +1420,7 @@ class PlantIntelligenceOrchestrator {
       }
     } catch (e) {
       developer.log(
-        '⚠️ Erreur extraction conditions améliorées: $e',
+        'âš ï¸ Erreur extraction conditions améliorées: $e',
         name: 'PlantIntelligenceOrchestrator',
         level: 900,
       );
@@ -1463,7 +1463,7 @@ class PlantIntelligenceOrchestrator {
       }
     } catch (e) {
       developer.log(
-        '⚠️ Erreur extraction conditions dégradées: $e',
+        'âš ï¸ Erreur extraction conditions dégradées: $e',
         name: 'PlantIntelligenceOrchestrator',
         level: 900,
       );
@@ -1514,7 +1514,7 @@ class PlantIntelligenceOrchestrator {
       }
     } catch (e) {
       developer.log(
-        '⚠️ Erreur extraction conditions inchangées: $e',
+        'âš ï¸ Erreur extraction conditions inchangées: $e',
         name: 'PlantIntelligenceOrchestrator',
         level: 900,
       );

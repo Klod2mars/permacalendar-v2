@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/planting.dart';
@@ -103,7 +103,7 @@ class PlantingDetailScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ✅ CURSOR PROMPT A9 - Health Degradation Banner (Conditional)
+          // âœ… CURSOR PROMPT A9 - Health Degradation Banner (Conditional)
           PlantHealthDegradationBanner(
             plantId: planting.plantId,
             plantName: planting.plantName,
@@ -791,7 +791,7 @@ class PlantingDetailScreen extends ConsumerWidget {
     final events = <Map<String, dynamic>>[
       {
         'date': planting.createdAt,
-        'title': 'Plantation créée',
+        'title': 'Plantation Créée',
         'description': 'Enregistrement de la plantation dans le système',
         'icon': Icons.add_circle,
         'color': theme.colorScheme.primary,
@@ -1238,7 +1238,7 @@ class PlantingDetailScreen extends ConsumerWidget {
       builder: (context) => AlertDialog(
         title: const Text('Supprimer la plantation'),
         content: const Text(
-            'Êtes-vous sûr de vouloir supprimer cette plantation ? Cette action est irréversible.'),
+            'ÃŠtes-vous sûr de vouloir supprimer cette plantation ? Cette action est irréversible.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

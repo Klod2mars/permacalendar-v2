@@ -1,4 +1,4 @@
-/// Mapper pour associer les codes météo WMO aux icônes organiques
+﻿/// Mapper pour associer les codes météo WMO aux icônes organiques
 ///
 /// Utilise les codes météo de l'Organisation Météorologique Mondiale (WMO)
 /// pour mapper vers les icônes du pack organique DeeVid.

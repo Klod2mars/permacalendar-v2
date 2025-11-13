@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/evolution/plant_evolution_timeline.dart';
 import '../providers/plant_evolution_providers.dart';
 
-/// 📊 CURSOR PROMPT A8 - Plant Evolution History Screen
+/// ðŸ“Š CURSOR PROMPT A8 - Plant Evolution History Screen
 ///
 /// Écran dédié pour afficher l'historique complet des évolutions d'une plante.
 ///

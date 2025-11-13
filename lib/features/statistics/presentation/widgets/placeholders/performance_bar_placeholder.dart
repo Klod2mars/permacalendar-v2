@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 /// Placeholder visuel pour le pilier Performance
 ///
-/// Affiche un bar chart avec 3 barres grisÃ©es de trÃ¨s faible valeur
-/// PrÃªt pour l'intÃ©gration de donnÃ©es de performance en Phase 4
+/// Affiche un bar chart avec 3 barres grisÃƒÂ©es de trÃƒÂ¨s faible valeur
+/// PrÃƒÂªt pour l'intÃƒÂ©gration de donnÃƒÂ©es de performance en Phase 4
 class PerformanceBarPlaceholder extends StatelessWidget {
   const PerformanceBarPlaceholder({super.key});
 

@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 
 part 'plant_hive.g.dart';
 
@@ -122,7 +122,7 @@ class PlantHive extends HiveObject {
   @HiveField(28)
   Map<String, dynamic>? metadata;
 
-  /// Date de création
+  /// Date de Création
   @HiveField(29)
   DateTime? createdAt;
 
@@ -169,7 +169,7 @@ class PlantHive extends HiveObject {
     this.isActive = true,
   });
 
-  /// Factory constructor pour créer depuis JSON
+  /// Factory constructor pour Créer depuis JSON
   factory PlantHive.fromJson(Map<String, dynamic> json) {
     return PlantHive(
       id: json['id'] as String,

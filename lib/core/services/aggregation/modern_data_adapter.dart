@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../repositories/garden_hive_repository.dart';
 import '../../../features/plant_catalog/data/repositories/plant_hive_repository.dart';
 import '../../models/unified_garden_context.dart';
@@ -13,7 +13,7 @@ import 'data_adapter.dart';
 /// the sacred source of truth containing real plantings from the user's garden.
 ///
 /// FLOW:
-/// Sanctuary (Reality) → Modern System (Filter) → Intelligence (Analyze)
+/// Sanctuary (Reality) â†’ Modern System (Filter) â†’ Intelligence (Analyze)
 ///
 /// RULE:
 /// NEVER return plants from the catalog that are not actively planted
@@ -80,7 +80,7 @@ class ModernDataAdapter implements DataAdapter {
       final recentActivities = await getRecentActivities(gardenId);
 
       developer.log(
-        'Contexte Moderne créé: ${activePlants.length} plantes actives',
+        'Contexte Moderne Créé: ${activePlants.length} plantes actives',
         name: _logName,
         level: 500,
       );
@@ -126,31 +126,31 @@ class ModernDataAdapter implements DataAdapter {
   Future<List<UnifiedPlantData>> getActivePlants(String gardenId) async {
     try {
       developer.log(
-        '🌱 Récupération plantes ACTIVES pour jardin: $gardenId (Sanctuary-Filtered)',
+        'ðŸŒ± Récupération plantes ACTIVES pour jardin: $gardenId (Sanctuary-Filtered)',
         name: _logName,
         level: 500,
       );
 
-      // ✅ ÉTAPE 1 : Récupérer le jardin spécifique depuis le Sanctuaire
+      // âœ… ÉTAPE 1 : Récupérer le jardin spécifique depuis le Sanctuaire
       final garden = GardenBoxes.getGarden(gardenId);
       if (garden == null) {
         developer.log(
-          '⚠️ Jardin $gardenId non trouvé dans le Sanctuaire',
+          'âš ï¸ Jardin $gardenId non trouvé dans le Sanctuaire',
           name: _logName,
           level: 800,
         );
         return [];
       }
 
-      // ✅ ÉTAPE 2 : Récupérer les parcelles du jardin depuis le Sanctuaire
+      // âœ… ÉTAPE 2 : Récupérer les parcelles du jardin depuis le Sanctuaire
       final beds = GardenBoxes.getGardenBeds(gardenId);
       developer.log(
-        '📦 ${beds.length} parcelle(s) trouvée(s) pour jardin $gardenId',
+        'ðŸ“¦ ${beds.length} parcelle(s) trouvée(s) pour jardin $gardenId',
         name: _logName,
         level: 500,
       );
 
-      // ✅ ÉTAPE 3 : Extraire les IDs des plantes ACTIVES uniquement
+      // âœ… ÉTAPE 3 : Extraire les IDs des plantes ACTIVES uniquement
       final activePlantIds = <String>{};
       for (final bed in beds) {
         final plantings = GardenBoxes.getPlantings(bed.id);
@@ -160,12 +160,12 @@ class ModernDataAdapter implements DataAdapter {
       }
 
       developer.log(
-        '✅ ${activePlantIds.length} plante(s) ACTIVE(s) identifiée(s) dans le Sanctuaire',
+        'âœ… ${activePlantIds.length} plante(s) ACTIVE(s) identifiée(s) dans le Sanctuaire',
         name: _logName,
         level: 500,
       );
 
-      // ✅ ÉTAPE 4 : Convertir en UnifiedPlantData (enrichissement depuis le catalogue)
+      // âœ… ÉTAPE 4 : Convertir en UnifiedPlantData (enrichissement depuis le catalogue)
       final plants = <UnifiedPlantData>[];
       for (final plantId in activePlantIds) {
         final plant = await _plantRepository.getPlantById(plantId);
@@ -173,7 +173,7 @@ class ModernDataAdapter implements DataAdapter {
           plants.add(_convertToUnified(plant, garden));
         } else {
           developer.log(
-            '⚠️ Plante $plantId présente dans Sanctuaire mais absente du catalogue',
+            'âš ï¸ Plante $plantId présente dans Sanctuaire mais absente du catalogue',
             name: _logName,
             level: 800,
           );
@@ -181,7 +181,7 @@ class ModernDataAdapter implements DataAdapter {
       }
 
       developer.log(
-        '✅ ${plants.length} plante(s) enrichie(s) retournée(s) (Moderne - Sanctuary Filtered)',
+        'âœ… ${plants.length} plante(s) enrichie(s) retournée(s) (Moderne - Sanctuary Filtered)',
         name: _logName,
         level: 500,
       );
@@ -189,7 +189,7 @@ class ModernDataAdapter implements DataAdapter {
       return plants;
     } catch (e, stackTrace) {
       developer.log(
-        '❌ Erreur lors de la récupération des plantes actives Moderne',
+        'âŒ Erreur lors de la récupération des plantes actives Moderne',
         name: _logName,
         level: 1000,
         error: e,

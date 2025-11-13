@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden_bed_hive.g.dart';
@@ -28,7 +28,7 @@ class GardenBedHive extends HiveObject {
     required this.plantingIds,
   });
 
-  // Factory constructor pour créer une nouvelle parcelle avec ID généré
+  // Factory constructor pour Créer une nouvelle parcelle avec ID généré
   factory GardenBedHive.create({
     required String name,
     required double sizeInSquareMeters,
@@ -98,7 +98,7 @@ class GardenBedHive extends HiveObject {
 
   bool get hasPlantings => plantingIds.isNotEmpty;
 
-  String get formattedSize => '${sizeInSquareMeters.toStringAsFixed(1)} m²';
+  String get formattedSize => '${sizeInSquareMeters.toStringAsFixed(1)} mÂ²';
 
   // Validation
   bool get isValid {
@@ -107,7 +107,7 @@ class GardenBedHive extends HiveObject {
 
   @override
   String toString() {
-    return 'GardenBedHive(id: $id, name: $name, size: ${sizeInSquareMeters}m², plantings: ${plantingIds.length})';
+    return 'GardenBedHive(id: $id, name: $name, size: ${sizeInSquareMeters}mÂ², plantings: ${plantingIds.length})';
   }
 
   @override

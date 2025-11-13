@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../core/models/activity.dart';
 
-/// Widget rÃ©utilisable pour afficher une activitÃ© de maniÃ¨re uniforme
+/// Widget rÃƒÂ©utilisable pour afficher une activitÃƒÂ© de maniÃƒÂ¨re uniforme
 class ActivityItem extends StatelessWidget {
   final Activity activity;
   final VoidCallback? onTap;
@@ -30,7 +30,7 @@ class ActivityItem extends StatelessWidget {
         padding: EdgeInsets.all(compact ? 8.0 : 12.0),
         child: Row(
           children: [
-            // IcÃ´ne avec couleur de fond
+            // IcÃƒÂ´ne avec couleur de fond
             Container(
               padding: EdgeInsets.all(compact ? 6 : 8),
               decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class ActivityItem extends StatelessWidget {
             ),
             SizedBox(width: compact ? 8 : 12),
 
-            // Contenu de l'activitÃ©
+            // Contenu de l'activitÃƒÂ©
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class ActivityItem extends StatelessWidget {
               ),
             ),
 
-            // Timestamp (si demandÃ©)
+            // Timestamp (si demandÃƒÂ©)
             if (showDate && !compact) ...[
               const SizedBox(width: 8),
               Text(
@@ -97,11 +97,11 @@ class ActivityItem extends StatelessWidget {
     );
   }
 
-  /// Construit le sous-titre en combinant description et mÃ©tadonnÃ©es
+  /// Construit le sous-titre en combinant description et mÃƒÂ©tadonnÃƒÂ©es
   String _buildSubtitle() {
     final parts = <String>[];
 
-    // Ajouter des informations contextuelles selon le type d'activitÃ©
+    // Ajouter des informations contextuelles selon le type d'activitÃƒÂ©
     if (activity.metadata.containsKey('gardenName')) {
       parts.add(activity.metadata['gardenName'] as String);
     }
@@ -125,16 +125,16 @@ class ActivityItem extends StatelessWidget {
       parts.add(_formatTimestamp(activity.timestamp));
     }
 
-    return parts.join(' â€¢ ');
+    return parts.join(' ââ‚¬Â¢ ');
   }
 
-  /// Formate le timestamp de maniÃ¨re relative
+  /// Formate le timestamp de maniÃƒÂ¨re relative
   String _formatTimestamp(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
 
     if (difference.inMinutes < 1) {
-      return 'Ã€ l\'instant';
+      return 'Ãƒâ‚¬ l\'instant';
     } else if (difference.inMinutes < 60) {
       return 'Il y a ${difference.inMinutes} min';
     } else if (difference.inHours < 24) {
@@ -146,7 +146,7 @@ class ActivityItem extends StatelessWidget {
     }
   }
 
-  /// Retourne l'icÃ´ne appropriÃ©e pour le type d'activitÃ©
+  /// Retourne l'icÃƒÂ´ne appropriÃƒÂ©e pour le type d'activitÃƒÂ©
   IconData _getActivityIcon(ActivityType type) {
     switch (type) {
       case ActivityType.gardenCreated:
@@ -183,7 +183,7 @@ class ActivityItem extends StatelessWidget {
     }
   }
 
-  /// Retourne la couleur appropriÃ©e pour le type d'activitÃ©
+  /// Retourne la couleur appropriÃƒÂ©e pour le type d'activitÃƒÂ©
   Color _getActivityColor(ActivityType type) {
     switch (type) {
       case ActivityType.gardenCreated:
@@ -214,7 +214,7 @@ class ActivityItem extends StatelessWidget {
   }
 }
 
-/// Widget pour afficher une liste d'activitÃ©s avec un Ã©tat vide
+/// Widget pour afficher une liste d'activitÃƒÂ©s avec un ÃƒÂ©tat vide
 class ActivityList extends StatefulWidget {
   final List<Activity> activities;
   final bool isLoading;
@@ -237,7 +237,7 @@ class ActivityList extends StatefulWidget {
     this.onActivityTap,
     this.compact = false,
     this.maxItems,
-    this.emptyMessage = 'Aucune activitÃ© rÃ©cente',
+    this.emptyMessage = 'Aucune activitÃƒÂ© rÃƒÂ©cente',
     this.emptyIcon = Icons.history,
     this.enablePagination = false,
     this.itemsPerPage = 20,
@@ -282,7 +282,7 @@ class _ActivityListState extends State<ActivityList> {
         _currentPage++;
       });
 
-      // Simuler un dÃ©lai de chargement
+      // Simuler un dÃƒÂ©lai de chargement
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) {
           setState(() {
@@ -360,7 +360,7 @@ class _ActivityListState extends State<ActivityList> {
                 TextButton.icon(
                   onPressed: widget.onRetry,
                   icon: const Icon(Icons.refresh),
-                  label: const Text('RÃ©essayer'),
+                  label: const Text('RÃƒÂ©essayer'),
                 ),
               ],
             ],
@@ -391,7 +391,7 @@ class _ActivityListState extends State<ActivityList> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Commencez par crÃ©er votre premier jardin !',
+                'Commencez par crÃƒÂ©er votre premier jardin !',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.outline,
                 ),
@@ -457,7 +457,7 @@ class _ActivityListState extends State<ActivityList> {
             child: TextButton.icon(
               onPressed: _loadMoreItems,
               icon: const Icon(Icons.expand_more),
-              label: const Text('Charger plus d\'activitÃ©s'),
+              label: const Text('Charger plus d\'activitÃƒÂ©s'),
             ),
           ),
       ],

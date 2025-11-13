@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'cellular_rosace_widget.dart';
 import '../../providers/weather_providers.dart';
@@ -120,7 +120,7 @@ class CellularRosaceIntegrationExample extends ConsumerWidget {
                   const SizedBox(height: 8),
                   _buildValueDisplay('pH', soilPH.toStringAsFixed(1)),
                   _buildValueDisplay(
-                      'Soil Temp', '${soilTemp.toStringAsFixed(1)}°C'),
+                      'Soil Temp', '${soilTemp.toStringAsFixed(1)}Â°C'),
                   _buildValueDisplay(
                       'Weather', _formatWeatherValue(minTemp, maxTemp)),
                   _buildValueDisplay(
@@ -217,7 +217,7 @@ class CellularRosaceIntegrationExample extends ConsumerWidget {
 
   /// Calculate soil temperature importance based on value
   double _calculateSoilTempImportance(double soilTemp) {
-    // Optimal soil temp range: 15-25°C
+    // Optimal soil temp range: 15-25Â°C
     if (soilTemp >= 15 && soilTemp <= 25) {
       return 0.7; // Normal importance
     } else if (soilTemp < 10 || soilTemp > 30) {
@@ -265,11 +265,11 @@ class CellularRosaceIntegrationExample extends ConsumerWidget {
   /// Format weather value for display
   String _formatWeatherValue(double? minTemp, double? maxTemp) {
     if (minTemp != null && maxTemp != null) {
-      return '${maxTemp.toStringAsFixed(0)}° / ${minTemp.toStringAsFixed(0)}°';
+      return '${maxTemp.toStringAsFixed(0)}Â° / ${minTemp.toStringAsFixed(0)}Â°';
     } else if (maxTemp != null) {
-      return '${maxTemp.toStringAsFixed(0)}°';
+      return '${maxTemp.toStringAsFixed(0)}Â°';
     } else if (minTemp != null) {
-      return '${minTemp.toStringAsFixed(0)}°';
+      return '${minTemp.toStringAsFixed(0)}Â°';
     }
     return 'N/A';
   }
@@ -284,9 +284,9 @@ class CellularRosaceIntegrationExample extends ConsumerWidget {
       final maxTemp = forecast.maxTemp;
 
       if (minTemp != null && maxTemp != null) {
-        return 'J+1: ${maxTemp.toStringAsFixed(0)}°/${minTemp.toStringAsFixed(0)}°';
+        return 'J+1: ${maxTemp.toStringAsFixed(0)}Â°/${minTemp.toStringAsFixed(0)}Â°';
       } else if (maxTemp != null) {
-        return 'J+1: ${maxTemp.toStringAsFixed(0)}°';
+        return 'J+1: ${maxTemp.toStringAsFixed(0)}Â°';
       }
     } catch (e) {
       // Handle different forecast data structures

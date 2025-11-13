@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -35,7 +35,7 @@ import 'core/services/garden_event_observer_service.dart';
 import 'core/services/intelligence_auto_notifier.dart';
 import 'features/plant_intelligence/data/services/notification_initialization.dart';
 
-// ✅ NOUVEAU - Prompt 8 : Modules d'injection de dépendances
+// âœ… NOUVEAU - Prompt 8 : Modules d'injection de dépendances
 import 'core/di/intelligence_module.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -54,9 +54,9 @@ import 'core/data/hive/data_migration_service.dart';
 class AppInitializer {
   /// Force un nettoyage complet de toutes les données Hive
   static Future<void> forceCleanHiveData() async {
-    print('🧹 Nettoyage forcé de toutes les données Hive...');
+    print('ðŸ§¹ Nettoyage forcé de toutes les données Hive...');
     await HiveService.deleteAllBoxes();
-    print('✅ Nettoyage terminé');
+    print('âœ… Nettoyage terminé');
   }
 
   static Future<void> initialize() async {
@@ -70,13 +70,13 @@ class AppInitializer {
     EnvironmentService.isSocialEnabled =
         dotenv.env['SOCIAL_ENABLED']?.toLowerCase() == 'true';
 
-    // ✅ NOUVEAU : Valider les données de plantes au démarrage
+    // âœ… NOUVEAU : Valider les données de plantes au démarrage
     await _validatePlantData();
 
-    // ✅ CRITIQUE : Initialiser Hive avant tout
+    // âœ… CRITIQUE : Initialiser Hive avant tout
     await Hive.initFlutter();
 
-    // 🔄 NOUVEAU : Vérifier et exécuter les migrations
+    // ðŸ”„ NOUVEAU : Vérifier et exécuter les migrations
     await DataMigrationService.checkAndMigrate();
 
     // Enregistrer les adaptateurs Hive
@@ -150,13 +150,13 @@ class AppInitializer {
       final plantRepository = PlantHiveRepository();
       await plantRepository.initializeFromJson();
 
-      // ✅ NOUVEAU : Initialiser les boxes pour l'Intelligence Végétale
+      // âœ… NOUVEAU : Initialiser les boxes pour l'Intelligence Végétale
       await _initializePlantIntelligenceBoxes();
 
-      print('✅ Toutes les boxes Hive ont été initialisées avec succès');
+      print('âœ… Toutes les boxes Hive ont été initialisées avec succès');
     } catch (e) {
-      print('❌ Erreur lors de l\'initialisation des boxes Hive: $e');
-      print('🔄 Tentative de nettoyage complet des données Hive...');
+      print('âŒ Erreur lors de l\'initialisation des boxes Hive: $e');
+      print('ðŸ”„ Tentative de nettoyage complet des données Hive...');
 
       // En cas d'erreur, nettoyer complètement et réessayer
       await HiveService.deleteAllBoxes();
@@ -174,9 +174,9 @@ class AppInitializer {
         // Réinitialiser les boxes d'intelligence végétale
         await _initializePlantIntelligenceBoxes();
 
-        print('✅ Réinitialisation réussie après nettoyage');
+        print('âœ… Réinitialisation réussie après nettoyage');
       } catch (retryError) {
-        print('❌ Échec de la réinitialisation: $retryError');
+        print('âŒ Échec de la réinitialisation: $retryError');
         rethrow;
       }
     }
@@ -190,7 +190,7 @@ class AppInitializer {
   /// Initialise les boxes Hive pour l'Intelligence Végétale
   static Future<void> _initializePlantIntelligenceBoxes() async {
     try {
-      print('🌱 Initialisation des boxes Intelligence Végétale...');
+      print('ðŸŒ± Initialisation des boxes Intelligence Végétale...');
 
       // Ouvrir les boxes nécessaires pour l'intelligence végétale avec les types Hive
       await Hive.openBox<PlantCondition>('plant_conditions');
@@ -205,48 +205,48 @@ class AppInitializer {
       await Hive.openBox<Map>('pest_observations');
       await Hive.openBox<Map>('bio_control_recommendations');
 
-      print('✅ Boxes Intelligence Végétale initialisées avec succès');
-      print('✅ Boxes Lutte Biologique initialisées avec succès');
+      print('âœ… Boxes Intelligence Végétale initialisées avec succès');
+      print('âœ… Boxes Lutte Biologique initialisées avec succès');
     } catch (e) {
-      print('❌ Erreur initialisation boxes Intelligence Végétale: $e');
+      print('âŒ Erreur initialisation boxes Intelligence Végétale: $e');
       rethrow;
     }
   }
 
   static Future<void> _initializeConditionalServices() async {
-    print('🔧 Début initialisation des services conditionnels...');
+    print('ðŸ”§ Début initialisation des services conditionnels...');
 
-    // ✅ NOUVEAU : Initialiser ActivityTrackerV3
+    // âœ… NOUVEAU : Initialiser ActivityTrackerV3
     try {
-      print('🔧 Initialisation ActivityTrackerV3...');
+      print('ðŸ”§ Initialisation ActivityTrackerV3...');
       await ActivityTrackerV3().initialize();
-      print('✅ ActivityTrackerV3 initialisé avec succès');
+      print('âœ… ActivityTrackerV3 initialisé avec succès');
     } catch (e) {
-      print('❌ Erreur initialisation ActivityTrackerV3: $e');
+      print('âŒ Erreur initialisation ActivityTrackerV3: $e');
     }
 
-    // ✅ NOUVEAU : Initialiser ActivityObserverService
+    // âœ… NOUVEAU : Initialiser ActivityObserverService
     try {
-      print('🔧 Initialisation ActivityObserverService...');
+      print('ðŸ”§ Initialisation ActivityObserverService...');
       await ActivityObserverService().initialize();
-      print('✅ ActivityObserverService initialisé avec succès');
+      print('âœ… ActivityObserverService initialisé avec succès');
     } catch (e) {
-      print('❌ Erreur initialisation ActivityObserverService: $e');
+      print('âŒ Erreur initialisation ActivityObserverService: $e');
     }
 
-    // ✅ NOUVEAU - Phase 1 : Initialiser le système de notifications
+    // âœ… NOUVEAU - Phase 1 : Initialiser le système de notifications
     try {
-      print('🔔 Initialisation système de notifications...');
+      print('ðŸ”” Initialisation système de notifications...');
       await NotificationInitialization.initialize();
-      print('✅ Système de notifications initialisé');
+      print('âœ… Système de notifications initialisé');
     } catch (e) {
-      print('⚠️ Erreur initialisation notifications: $e');
+      print('âš ï¸ Erreur initialisation notifications: $e');
       print('   Les notifications ne fonctionneront pas');
     }
 
-    // ✅ REFACTORÉ Prompt 8 : Initialiser Intelligence Végétale via modules DI
+    // âœ… REFACTORÉ Prompt 8 : Initialiser Intelligence Végétale via modules DI
     try {
-      print('🔧 Initialisation Intelligence Végétale...');
+      print('ðŸ”§ Initialisation Intelligence Végétale...');
 
       // Créer un conteneur Riverpod temporaire pour l'initialisation
       final container = ProviderContainer();
@@ -261,20 +261,20 @@ class AppInitializer {
         orchestrator: orchestrator,
       );
 
-      // ✅ NOUVEAU - Phase 1 : Notifications automatiques
+      // âœ… NOUVEAU - Phase 1 : Notifications automatiques
       // Initialiser le service de notifications automatiques
       try {
-        print('🔔 Initialisation IntelligenceAutoNotifier...');
+        print('ðŸ”” Initialisation IntelligenceAutoNotifier...');
         container.read(intelligenceAutoNotifierProvider);
-        print('✅ IntelligenceAutoNotifier initialisé');
+        print('âœ… IntelligenceAutoNotifier initialisé');
         print('   - Écoute des changements de conditions: Active');
         print('   - Génération automatique d\'alertes: Active');
       } catch (e) {
-        print('⚠️ Avertissement IntelligenceAutoNotifier: $e');
+        print('âš ï¸ Avertissement IntelligenceAutoNotifier: $e');
         print('   Les notifications automatiques ne fonctionneront pas');
       }
 
-      print('✅ Intelligence Végétale initialisée avec succès');
+      print('âœ… Intelligence Végétale initialisée avec succès');
       print('   - Orchestrateur: Créé via IntelligenceModule');
       print('   - Dépendances: Injectées automatiquement (DI)');
       print('   - EventBus: Écoute active');
@@ -282,9 +282,9 @@ class AppInitializer {
       print('   - Notifications automatiques: Activées');
 
       // Note: Le conteneur est conservé en mémoire pour la durée de l'application
-      // Les dépendances créées restent accessibles via les providers globaux
+      // Les dépendances Créées restent accessibles via les providers globaux
     } catch (e, stackTrace) {
-      print('❌ Erreur initialisation Intelligence Végétale: $e');
+      print('âŒ Erreur initialisation Intelligence Végétale: $e');
       print('   StackTrace: $stackTrace');
       print('   L\'Intelligence Végétale ne fonctionnera pas correctement');
     }
@@ -303,13 +303,13 @@ class AppInitializer {
     // }
   }
 
-  /// ✅ NOUVEAU - Migration v2.1.0 : Validation du format plants.json
+  /// âœ… NOUVEAU - Migration v2.1.0 : Validation du format plants.json
   ///
   /// Détecte automatiquement la version du fichier et affiche les métadonnées.
   /// Valide la cohérence entre metadata.total_plants et la longueur réelle.
   static Future<void> _validatePlantData() async {
     try {
-      print('🔍 ========================================');
+      print('ðŸ” ========================================');
       print('   Validation des données de plantes');
       print('========================================');
 
@@ -325,13 +325,13 @@ class AppInitializer {
         final plants = jsonData['plants'] as List?;
 
         if (schemaVersion != null && metadata != null && plants != null) {
-          print('✅ Format v$schemaVersion détecté');
+          print('âœ… Format v$schemaVersion détecté');
           print('');
-          print('📋 Métadonnées :');
+          print('ðŸ“‹ Métadonnées :');
           print('   - Version        : ${metadata['version']}');
           print('   - Total plantes  : ${metadata['total_plants']}');
           print('   - Source         : ${metadata['source']}');
-          print('   - Mise à jour    : ${metadata['updated_at']}');
+          print('   - mise à jour    : ${metadata['updated_at']}');
           print('   - Description    : ${metadata['description']}');
 
           if (metadata.containsKey('migration_date')) {
@@ -340,7 +340,7 @@ class AppInitializer {
           }
 
           print('');
-          print('🔎 Validation de cohérence :');
+          print('ðŸ”Ž Validation de cohérence :');
 
           // Validation de cohérence
           final expectedTotal = metadata['total_plants'] as int?;
@@ -348,16 +348,16 @@ class AppInitializer {
 
           if (expectedTotal != null) {
             if (actualTotal == expectedTotal) {
-              print('   ✅ Cohérence validée : $actualTotal plantes');
+              print('   âœ… Cohérence validée : $actualTotal plantes');
             } else {
-              print('   ⚠️  INCOHÉRENCE détectée !');
+              print('   âš ï¸  INCOHÉRENCE détectée !');
               print('      - Attendu : $expectedTotal plantes');
               print('      - Trouvé  : $actualTotal plantes');
               print(
                   '      - Écart   : ${(actualTotal - expectedTotal).abs()} plante(s)');
             }
           } else {
-            print('   ⚠️  Champ total_plants manquant dans les métadonnées');
+            print('   âš ï¸  Champ total_plants manquant dans les métadonnées');
             print('      - Plantes trouvées : $actualTotal');
           }
 
@@ -366,7 +366,7 @@ class AppInitializer {
             final firstPlant = plants.first as Map<String, dynamic>?;
             if (firstPlant != null) {
               print('');
-              print('🌱 Première plante :');
+              print('ðŸŒ± Première plante :');
               print('   - ID   : ${firstPlant['id']}');
               print('   - Nom  : ${firstPlant['commonName']}');
 
@@ -376,35 +376,35 @@ class AppInitializer {
               final hasHarvestSeason = firstPlant.containsKey('harvestSeason');
 
               if (!hasPlantingSeason && !hasHarvestSeason) {
-                print('   ✅ Format normalisé (sans champs obsolètes)');
+                print('   âœ… Format normalisé (sans champs obsolètes)');
               } else {
-                print('   ⚠️  Champs obsolètes détectés :');
+                print('   âš ï¸  Champs obsolètes détectés :');
                 if (hasPlantingSeason) print('      - plantingSeason présent');
                 if (hasHarvestSeason) print('      - harvestSeason présent');
               }
             }
           }
         } else {
-          print('⚠️  Format Map détecté mais structure invalide');
-          print('   - schema_version : ${schemaVersion != null ? "✅" : "❌"}');
-          print('   - metadata       : ${metadata != null ? "✅" : "❌"}');
-          print('   - plants         : ${plants != null ? "✅" : "❌"}');
+          print('âš ï¸  Format Map détecté mais structure invalide');
+          print('   - schema_version : ${schemaVersion != null ? "âœ…" : "âŒ"}');
+          print('   - metadata       : ${metadata != null ? "âœ…" : "âŒ"}');
+          print('   - plants         : ${plants != null ? "âœ…" : "âŒ"}');
         }
       } else if (jsonData is List) {
         // Format Legacy (array-only)
-        print('⚠️  Format Legacy détecté (array-only)');
+        print('âš ï¸  Format Legacy détecté (array-only)');
         print('   - Plantes trouvées : ${jsonData.length}');
         print('   - Recommandation   : Migrer vers v2.1.0');
         print('   - Commande         : dart tools/migrate_plants_json.dart');
       } else {
-        print('❌ Format JSON invalide détecté !');
+        print('âŒ Format JSON invalide détecté !');
         print('   - Type reçu : ${jsonData.runtimeType}');
         print('   - Attendu   : List ou Map<String, dynamic>');
       }
 
       print('========================================\n');
     } catch (e, stackTrace) {
-      print('❌ Erreur lors de la validation des données de plantes:');
+      print('âŒ Erreur lors de la validation des données de plantes:');
       print('   $e');
       print('   StackTrace: $stackTrace');
       print('========================================\n');

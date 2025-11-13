@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Palette de base abstraite pour les jardins organiques
 abstract class OrganicPalette {
@@ -18,31 +18,31 @@ abstract class OrganicPalette {
 class MediterraneanPalette implements OrganicPalette {
   @override
   final Color jardin1Color = const Color(0xFFFFF4C4); // Jaune pollen doux
-  // HSL: 54°, 100%, 89% - Lumineux sans être agressif
+  // HSL: 54Â°, 100%, 89% - Lumineux sans être agressif
   // RGB: 255, 244, 196
   // Symbolique: Éveil doux du matin, pollen frais
 
   @override
   final Color jardin2Color = const Color(0xFFD8BFD8); // Mauve lavande
-  // HSL: 300°, 24%, 80% - Douceur florale
+  // HSL: 300Â°, 24%, 80% - Douceur florale
   // RGB: 216, 191, 216
   // Symbolique: Fleurs de lavande, poésie provençale
 
   @override
   final Color jardin3Color = const Color(0xFF6B8E23); // Vert olivier
-  // HSL: 80°, 60%, 35% - Ancré, mature
+  // HSL: 80Â°, 60%, 35% - AnCré, mature
   // RGB: 107, 142, 35
   // Symbolique: Olivier centenaire, racines profondes
 
   @override
   final Color jardin4Color = const Color(0xFF70D7C7); // Turquoise mer
-  // HSL: 170°, 55%, 65% - Fluide, rafraîchissant
+  // HSL: 170Â°, 55%, 65% - Fluide, rafraÃ®chissant
   // RGB: 112, 215, 199
   // Symbolique: Eau de mer méditerranéenne, circulation vitale
 
   @override
   final Color jardin5Color = const Color(0xFFA8E4A0); // Vert menthe
-  // HSL: 113°, 54%, 77% - Léger, frais
+  // HSL: 113Â°, 54%, 77% - Léger, frais
   // RGB: 168, 228, 160
   // Symbolique: Feuille de menthe jeune, légèreté
 }
@@ -56,31 +56,31 @@ class MediterraneanPalette implements OrganicPalette {
 class EnchantedForestPalette implements OrganicPalette {
   @override
   final Color jardin1Color = const Color(0xFFFFD700); // Or solaire
-  // HSL: 51°, 100%, 50% - Éclat maximal
+  // HSL: 51Â°, 100%, 50% - Éclat maximal
   // RGB: 255, 215, 0
   // Symbolique: Soleil levant, réveil de la nature
 
   @override
   final Color jardin2Color = const Color(0xFFDA70D6); // Violet orchidée
-  // HSL: 302°, 59%, 65% - Floraison intense
+  // HSL: 302Â°, 59%, 65% - Floraison intense
   // RGB: 218, 112, 214
   // Symbolique: Orchidée sauvage, mystère floral
 
   @override
   final Color jardin3Color = const Color(0xFF228B22); // Vert forêt
-  // HSL: 120°, 61%, 34% - Force, enracinement
+  // HSL: 120Â°, 61%, 34% - Force, enracinement
   // RGB: 34, 139, 34
-  // Symbolique: Cœur de la forêt, maturité puissante
+  // Symbolique: CÅ“ur de la forêt, maturité puissante
 
   @override
   final Color jardin4Color = const Color(0xFF00CED1); // Cyan aqua
-  // HSL: 181°, 100%, 41% - Énergie fluide
+  // HSL: 181Â°, 100%, 41% - Énergie fluide
   // RGB: 0, 206, 209
   // Symbolique: Cascade vive, sève en mouvement
 
   @override
   final Color jardin5Color = const Color(0xFF7FFF00); // Lime électrique
-  // HSL: 90°, 100%, 50% - Jeunesse vibrante
+  // HSL: 90Â°, 100%, 50% - Jeunesse vibrante
   // RGB: 127, 255, 0
   // Symbolique: Pousse printanière, croissance explosive
 }

@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+﻿import 'package:hive_flutter/hive_flutter.dart';
 import '../../models/plant.dart';
 import '../../models/plant_variety.dart';
 import '../../models/growth_cycle.dart';

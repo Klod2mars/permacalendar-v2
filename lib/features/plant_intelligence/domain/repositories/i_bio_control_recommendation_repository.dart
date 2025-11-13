@@ -1,4 +1,4 @@
-import '../entities/bio_control_recommendation.dart';
+﻿import '../entities/bio_control_recommendation.dart';
 
 /// Biological Control Recommendation Repository Interface
 ///
@@ -6,7 +6,7 @@ import '../entities/bio_control_recommendation.dart';
 /// This repository manages AI-generated recommendations for biological pest control.
 /// Recommendations are created ONLY by the Intelligence Végétale, NEVER by the user directly.
 /// The user can READ recommendations and mark them as applied, but creation is AI-driven.
-/// This maintains the unidirectional flow: Observation (Sanctuary) → Analysis (Intelligence) → Recommendation (AI Output)
+/// This maintains the unidirectional flow: Observation (Sanctuary) â†’ Analysis (Intelligence) â†’ Recommendation (AI Output)
 abstract class IBioControlRecommendationRepository {
   /// Save a recommendation (AI ACTION ONLY)
   Future<void> saveRecommendation(BioControlRecommendation recommendation);

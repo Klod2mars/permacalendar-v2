@@ -1,4 +1,4 @@
-import '../../domain/entities/weather_condition.dart';
+﻿import '../../domain/entities/weather_condition.dart';
 import '../../../../core/services/open_meteo_service.dart';
 
 /// Interface pour la source de données météorologiques
@@ -113,7 +113,7 @@ class WeatherDataSourceImpl implements WeatherDataSource {
         id: '${gardenId}_current_${DateTime.now().millisecondsSinceEpoch}',
         type: WeatherType.temperature,
         value: result.currentTemperatureC ?? 20.0,
-        unit: '°C',
+        unit: 'Â°C',
         description: _getWeatherDescription(
             latestDaily.precipMm, result.currentTemperatureC ?? 20.0),
         measuredAt: DateTime.now(),
@@ -265,7 +265,7 @@ class WeatherDataSourceImpl implements WeatherDataSource {
       id: '${gardenId}_${daily.date.millisecondsSinceEpoch}',
       type: WeatherType.temperature,
       value: temperature,
-      unit: '°C',
+      unit: 'Â°C',
       description: _getWeatherDescription(daily.precipMm, temperature),
       measuredAt: daily.date,
       latitude: latitude,
@@ -285,7 +285,7 @@ class WeatherDataSourceImpl implements WeatherDataSource {
     // Temps sec
     if (temperature < 0.0) return 'Très froid';
     if (temperature < 5.0) return 'Froid';
-    if (temperature < 15.0) return 'Fraîcheur';
+    if (temperature < 15.0) return 'FraÃ®cheur';
     if (temperature < 25.0) return 'Temps doux';
     if (temperature < 30.0) return 'Chaleur agréable';
     return 'Très chaud';

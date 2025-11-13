@@ -1,6 +1,6 @@
-/// Exceptions liées aux plantes
+﻿/// Exceptions liées aux plantes
 ///
-/// Fichier créé pour centraliser les exceptions métier liées
+/// Fichier Créé pour centraliser les exceptions métier liées
 /// à la gestion des plantes dans l'application.
 library;
 

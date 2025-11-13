@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/providers/performance/performance_comparison_provider.dart';
 import '../../../domain/models/seasonal_performance.dart';
 
-/// Placeholder pour le KPI Performance SaisonniÃ¨re
+/// Placeholder pour le KPI Performance SaisonniÃƒÂ¨re
 ///
 /// Affiche soit :
-/// - Un graphique de comparaison si des donnÃ©es de saisons prÃ©cÃ©dentes existent
-/// - Un panneau pÃ©dagogique si c'est la premiÃ¨re saison
+/// - Un graphique de comparaison si des donnÃƒÂ©es de saisons prÃƒÂ©cÃƒÂ©dentes existent
+/// - Un panneau pÃƒÂ©dagogique si c'est la premiÃƒÂ¨re saison
 class PerformanceSeasonalPlaceholder extends ConsumerWidget {
   const PerformanceSeasonalPlaceholder({super.key});
 
@@ -35,7 +35,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 
-  /// Construit le placeholder pour la premiÃ¨re saison
+  /// Construit le placeholder pour la premiÃƒÂ¨re saison
   Widget _buildFirstSeasonPlaceholder(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
@@ -76,7 +76,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'PremiÃ¨re saison active',
+                'PremiÃƒÂ¨re saison active',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -85,7 +85,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Continue Ã  cultiver ! Tes statistiques de performance saisonniÃ¨re apparaÃ®tront bientÃ´t.',
+                'Continue ÃƒÂ  cultiver ! Tes statistiques de performance saisonniÃƒÂ¨re apparaÃƒÂ®tront bientÃƒÂ´t.',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -103,9 +103,9 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
   /// Construit la liste des futurs indicateurs
   Widget _buildFutureIndicators(BuildContext context) {
     final indicators = [
-      'Taux de complÃ©tion des cultures',
-      'DurÃ©e moyenne de maturation',
-      'Valeur totale des rÃ©coltes',
+      'Taux de complÃƒÂ©tion des cultures',
+      'DurÃƒÂ©e moyenne de maturation',
+      'Valeur totale des rÃƒÂ©coltes',
       'Rendement moyen par culture',
     ];
 
@@ -157,7 +157,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Comparaison saisonniÃ¨re',
+              'Comparaison saisonniÃƒÂ¨re',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -179,14 +179,14 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
       BuildContext context, SeasonalComparison comparison) {
     final metrics = [
       {
-        'label': 'ComplÃ©tion',
+        'label': 'ComplÃƒÂ©tion',
         'current': comparison.currentSeason.completionRate,
         'previous': comparison.previousSeason?.completionRate ?? 0.0,
         'improvement': comparison.completionRateImprovement,
         'color': Theme.of(context).colorScheme.primary,
       },
       {
-        'label': 'Valeur (â‚¬)',
+        'label': 'Valeur (ââ€šÂ¬)',
         'current': comparison.currentSeason.totalHarvestValue /
             100, // Normaliser pour l'affichage
         'previous': (comparison.previousSeason?.totalHarvestValue ?? 0.0) / 100,
@@ -213,7 +213,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          // Barre saison prÃ©cÃ©dente
+                          // Barre saison prÃƒÂ©cÃƒÂ©dente
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.only(right: 2),
@@ -255,14 +255,14 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 
-  /// Construit la lÃ©gende
+  /// Construit la lÃƒÂ©gende
   Widget _buildLegend(BuildContext context, SeasonalComparison comparison) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildLegendItem(
           context,
-          'Saison prÃ©cÃ©dente',
+          'Saison prÃƒÂ©cÃƒÂ©dente',
           Theme.of(context).colorScheme.outline,
         ),
         const SizedBox(width: 16),
@@ -275,7 +275,7 @@ class PerformanceSeasonalPlaceholder extends ConsumerWidget {
     );
   }
 
-  /// Construit un Ã©lÃ©ment de lÃ©gende
+  /// Construit un ÃƒÂ©lÃƒÂ©ment de lÃƒÂ©gende
   Widget _buildLegendItem(BuildContext context, String label, Color color) {
     return Row(
       mainAxisSize: MainAxisSize.min,

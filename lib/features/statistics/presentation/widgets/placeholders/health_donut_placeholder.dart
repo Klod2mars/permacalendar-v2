@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-/// Placeholder visuel pour le pilier SantÃ©
+/// Placeholder visuel pour le pilier SantÃƒÂ©
 ///
 /// Affiche un donut chart vide avec un seul secteur gris neutre
-/// PrÃªt pour l'intÃ©gration de donnÃ©es de santÃ© en Phase 4
+/// PrÃƒÂªt pour l'intÃƒÂ©gration de donnÃƒÂ©es de santÃƒÂ© en Phase 4
 class HealthDonutPlaceholder extends StatelessWidget {
   const HealthDonutPlaceholder({super.key});
 

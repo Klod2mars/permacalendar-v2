@@ -1,4 +1,4 @@
-// coverage:ignore-file
+﻿// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -20,16 +20,16 @@ TemperatureCondition _$TemperatureConditionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TemperatureCondition {
-  /// Température actuelle (°C)
+  /// Température actuelle (Â°C)
   double get current => throw _privateConstructorUsedError;
 
-  /// Température optimale pour la plante (°C)
+  /// Température optimale pour la plante (Â°C)
   double get optimal => throw _privateConstructorUsedError;
 
-  /// Température minimale tolérée (°C)
+  /// Température minimale tolérée (Â°C)
   double get min => throw _privateConstructorUsedError;
 
-  /// Température maximale tolérée (°C)
+  /// Température maximale tolérée (Â°C)
   double get max => throw _privateConstructorUsedError;
 
   /// Indique si la température actuelle est dans la plage optimale
@@ -204,19 +204,19 @@ class _$TemperatureConditionImpl implements _TemperatureCondition {
   factory _$TemperatureConditionImpl.fromJson(Map<String, dynamic> json) =>
       _$$TemperatureConditionImplFromJson(json);
 
-  /// Température actuelle (°C)
+  /// Température actuelle (Â°C)
   @override
   final double current;
 
-  /// Température optimale pour la plante (°C)
+  /// Température optimale pour la plante (Â°C)
   @override
   final double optimal;
 
-  /// Température minimale tolérée (°C)
+  /// Température minimale tolérée (Â°C)
   @override
   final double min;
 
-  /// Température maximale tolérée (°C)
+  /// Température maximale tolérée (Â°C)
   @override
   final double max;
 
@@ -296,19 +296,19 @@ abstract class _TemperatureCondition implements TemperatureCondition {
 
   @override
 
-  /// Température actuelle (°C)
+  /// Température actuelle (Â°C)
   double get current;
   @override
 
-  /// Température optimale pour la plante (°C)
+  /// Température optimale pour la plante (Â°C)
   double get optimal;
   @override
 
-  /// Température minimale tolérée (°C)
+  /// Température minimale tolérée (Â°C)
   double get min;
   @override
 
-  /// Température maximale tolérée (°C)
+  /// Température maximale tolérée (Â°C)
   double get max;
   @override
 
@@ -1925,7 +1925,7 @@ mixin _$Opportunity {
   /// Bénéfice potentiel (0.0 à 1.0)
   double get benefit => throw _privateConstructorUsedError;
 
-  /// Facilité de mise en œuvre (0.0 à 1.0)
+  /// Facilité de mise en Å“uvre (0.0 à 1.0)
   double get feasibility => throw _privateConstructorUsedError;
 
   /// Actions recommandées pour saisir l'opportunité
@@ -2146,7 +2146,7 @@ class _$OpportunityImpl implements _Opportunity {
   @override
   final double benefit;
 
-  /// Facilité de mise en œuvre (0.0 à 1.0)
+  /// Facilité de mise en Å“uvre (0.0 à 1.0)
   @override
   final double feasibility;
 
@@ -2268,7 +2268,7 @@ abstract class _Opportunity implements Opportunity {
   double get benefit;
   @override
 
-  /// Facilité de mise en œuvre (0.0 à 1.0)
+  /// Facilité de mise en Å“uvre (0.0 à 1.0)
   double get feasibility;
   @override
 
@@ -2297,10 +2297,10 @@ mixin _$WeatherForecast {
   /// Date de la prévision
   DateTime get date => throw _privateConstructorUsedError;
 
-  /// Température minimale (°C)
+  /// Température minimale (Â°C)
   double get minTemperature => throw _privateConstructorUsedError;
 
-  /// Température maximale (°C)
+  /// Température maximale (Â°C)
   double get maxTemperature => throw _privateConstructorUsedError;
 
   /// Humidité relative (%)
@@ -2529,11 +2529,11 @@ class _$WeatherForecastImpl implements _WeatherForecast {
   @override
   final DateTime date;
 
-  /// Température minimale (°C)
+  /// Température minimale (Â°C)
   @override
   final double minTemperature;
 
-  /// Température maximale (°C)
+  /// Température maximale (Â°C)
   @override
   final double maxTemperature;
 
@@ -2656,11 +2656,11 @@ abstract class _WeatherForecast implements WeatherForecast {
   DateTime get date;
   @override
 
-  /// Température minimale (°C)
+  /// Température minimale (Â°C)
   double get minTemperature;
   @override
 
-  /// Température maximale (°C)
+  /// Température maximale (Â°C)
   double get maxTemperature;
   @override
 

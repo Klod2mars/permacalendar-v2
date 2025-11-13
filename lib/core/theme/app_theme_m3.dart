@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Thème Material Design 3 optimisé pour PermaCalendar
 class AppThemeM3 {

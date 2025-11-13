@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
 import '../../../../core/services/plant_catalog_service.dart';
@@ -9,10 +9,10 @@ import '../../../../core/services/plant_catalog_service.dart';
 /// - Le filtre période sélectionné (today, last7Days, last30Days, currentYear, custom)
 /// - Le filtre jardin s'il est actif (sinon tous les jardins)
 ///
-/// Formule : (total récolté en kg) × (valeur nutritionnelle par 100g) × 10
+/// Formule : (total récolté en kg) Ã— (valeur nutritionnelle par 100g) Ã— 10
 ///
 /// Retourne un Map avec les totaux en unités appropriées :
-/// - vitaminA, vitaminB9, vitaminK : en microgrammes (µg)
+/// - vitaminA, vitaminB9, vitaminK : en microgrammes (Âµg)
 /// - vitaminC, vitaminE : en milligrammes (mg)
 final vitaminDistributionProvider =
     FutureProvider<Map<String, double>>((ref) async {
@@ -66,11 +66,11 @@ final vitaminDistributionProvider =
   final plants = await PlantCatalogService.loadPlants();
 
   // Initialiser les totaux vitaminiques
-  double totalVitaminA = 0.0; // µg
-  double totalVitaminB9 = 0.0; // µg
+  double totalVitaminA = 0.0; // Âµg
+  double totalVitaminB9 = 0.0; // Âµg
   double totalVitaminC = 0.0; // mg
   double totalVitaminE = 0.0; // mg
-  double totalVitaminK = 0.0; // µg
+  double totalVitaminK = 0.0; // Âµg
 
   // Calculer les apports vitaminiques pour chaque récolte
   for (final record in filteredRecords) {
@@ -84,7 +84,7 @@ final vitaminDistributionProvider =
     final nutrition = plant.nutritionPer100g;
     if (nutrition.isEmpty) continue;
 
-    // Appliquer la formule : (poids en kg) × (valeur par 100g) × 10
+    // Appliquer la formule : (poids en kg) Ã— (valeur par 100g) Ã— 10
     final multiplier = record.weight * 10;
 
     // Accumuler les vitamines (unités conservées)

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/garden.dart';
 import '../../models/garden_freezed.dart';
 import '../../data/hive/garden_boxes.dart';
@@ -10,16 +10,16 @@ import 'migration_models.dart';
 /// **Architecture Enterprise - Design Pattern: Validator + Strategy**
 ///
 /// Ce service valide la cohérence et l'intégrité des données pendant
-/// la migration Legacy → Moderne :
+/// la migration Legacy â†’ Moderne :
 /// - Validation des données Legacy avant migration
-/// - Validation de cohérence Legacy ↔ Moderne
+/// - Validation de cohérence Legacy â†” Moderne
 /// - Validation des données après migration
 /// - Détection des incohérences et corruptions
 ///
 /// **Types de Validation :**
 /// 1. **Validation structurelle** : Présence des champs requis
 /// 2. **Validation métier** : Respect des règles métier
-/// 3. **Validation de cohérence** : Comparaison Legacy ↔ Moderne
+/// 3. **Validation de cohérence** : Comparaison Legacy â†” Moderne
 /// 4. **Validation d'intégrité** : Détection de corruptions
 ///
 /// **Standards :**
@@ -41,19 +41,19 @@ class DataIntegrityValidator {
 
   /// Constructeur
   DataIntegrityValidator() {
-    _log('🏗️ Data Integrity Validator créé', level: 500);
+    _log('ðŸ—ï¸ Data Integrity Validator Créé', level: 500);
   }
 
-  // ==================== VALIDATION SYSTÈME ====================
+  // ==================== VALIDATION SYSTÃˆME ====================
 
   /// Valide le système Legacy complet
   Future<bool> validateLegacySystem() async {
     try {
-      _log('🔍 Validation du système Legacy', level: 500);
+      _log('ðŸ” Validation du système Legacy', level: 500);
       _validationsPerformed++;
 
       final gardens = GardenBoxes.getAllGardens();
-      _log('📊 ${gardens.length} jardins à valider', level: 500);
+      _log('ðŸ“Š ${gardens.length} jardins à valider', level: 500);
 
       var validCount = 0;
       final issues = <String>[];
@@ -72,12 +72,12 @@ class DataIntegrityValidator {
           gardens.isNotEmpty ? (validCount / gardens.length) * 100 : 100.0;
 
       _log(
-        '📊 Système Legacy: $validCount/${gardens.length} valides (${validationRate.toStringAsFixed(1)}%)',
+        'ðŸ“Š Système Legacy: $validCount/${gardens.length} valides (${validationRate.toStringAsFixed(1)}%)',
         level: 500,
       );
 
       if (issues.isNotEmpty) {
-        _log('⚠️ ${issues.length} problèmes détectés:', level: 900);
+        _log('âš ï¸ ${issues.length} problèmes détectés:', level: 900);
         for (final issue in issues) {
           _log('  - $issue', level: 900);
         }
@@ -87,14 +87,14 @@ class DataIntegrityValidator {
           issues.length <= _maxAllowedIssues;
 
       if (isSystemValid) {
-        _log('✅ Système Legacy valide', level: 500);
+        _log('âœ… Système Legacy valide', level: 500);
       } else {
-        _log('❌ Système Legacy invalide', level: 1000);
+        _log('âŒ Système Legacy invalide', level: 1000);
       }
 
       return isSystemValid;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur validation système Legacy', e, stackTrace);
+      _logError('âŒ Erreur validation système Legacy', e, stackTrace);
       return false;
     }
   }
@@ -106,7 +106,7 @@ class DataIntegrityValidator {
 
       final garden = GardenBoxes.getGarden(gardenId);
       if (garden == null) {
-        _log('❌ Jardin $gardenId introuvable', level: 1000);
+        _log('âŒ Jardin $gardenId introuvable', level: 1000);
         _issuesDetected++;
         return false;
       }
@@ -114,24 +114,24 @@ class DataIntegrityValidator {
       final isValid = _validateLegacyGardenStructure(garden);
 
       if (isValid) {
-        _log('✅ Jardin $gardenId valide', level: 500);
+        _log('âœ… Jardin $gardenId valide', level: 500);
       } else {
-        _log('❌ Jardin $gardenId invalide', level: 1000);
+        _log('âŒ Jardin $gardenId invalide', level: 1000);
         _issuesDetected++;
       }
 
       return isValid;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur validation jardin $gardenId', e, stackTrace);
+      _logError('âŒ Erreur validation jardin $gardenId', e, stackTrace);
       _issuesDetected++;
       return false;
     }
   }
 
-  /// Valide un jardin migré (comparaison Legacy ↔ Moderne)
+  /// Valide un jardin migré (comparaison Legacy â†” Moderne)
   Future<bool> validateMigratedGarden(String gardenId) async {
     try {
-      _log('🔍 Validation post-migration jardin $gardenId', level: 500);
+      _log('ðŸ” Validation post-migration jardin $gardenId', level: 500);
       _validationsPerformed++;
 
       // Récupérer depuis les deux systèmes
@@ -140,11 +140,11 @@ class DataIntegrityValidator {
 
       // Vérifier la présence dans les deux systèmes
       if (legacyGarden == null) {
-        _log('⚠️ Jardin absent de Legacy', level: 900);
+        _log('âš ï¸ Jardin absent de Legacy', level: 900);
       }
 
       if (modernGarden == null) {
-        _log('❌ Jardin absent de Moderne (échec migration)', level: 1000);
+        _log('âŒ Jardin absent de Moderne (échec migration)', level: 1000);
         _issuesDetected++;
         return false;
       }
@@ -154,10 +154,10 @@ class DataIntegrityValidator {
         final isCoherent = _compareGardens(legacyGarden, modernGarden);
 
         if (isCoherent) {
-          _log('✅ Jardin $gardenId cohérent entre Legacy et Moderne',
+          _log('âœ… Jardin $gardenId cohérent entre Legacy et Moderne',
               level: 500);
         } else {
-          _log('⚠️ Jardin $gardenId présente des différences', level: 900);
+          _log('âš ï¸ Jardin $gardenId présente des différences', level: 900);
           _issuesDetected++;
         }
 
@@ -165,19 +165,19 @@ class DataIntegrityValidator {
       }
 
       // Si Legacy absent mais Moderne présent, considérer comme migré
-      _log('✅ Jardin $gardenId migré avec succès', level: 500);
+      _log('âœ… Jardin $gardenId migré avec succès', level: 500);
       return true;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur validation post-migration $gardenId', e, stackTrace);
+      _logError('âŒ Erreur validation post-migration $gardenId', e, stackTrace);
       _issuesDetected++;
       return false;
     }
   }
 
-  /// Valide la cohérence de toutes les données Legacy ↔ Moderne
+  /// Valide la cohérence de toutes les données Legacy â†” Moderne
   Future<CoherenceResult> validateAllData() async {
     try {
-      _log('🔍 Validation de cohérence complète', level: 500);
+      _log('ðŸ” Validation de cohérence complète', level: 500);
       _validationsPerformed++;
 
       final startTime = DateTime.now();
@@ -187,7 +187,7 @@ class DataIntegrityValidator {
       final modernGardens = await _modernRepository.getAllGardens();
 
       _log(
-        '📊 Comparaison: ${legacyGardens.length} Legacy vs ${modernGardens.length} Moderne',
+        'ðŸ“Š Comparaison: ${legacyGardens.length} Legacy vs ${modernGardens.length} Moderne',
         level: 500,
       );
 
@@ -239,12 +239,12 @@ class DataIntegrityValidator {
 
       final duration = DateTime.now().difference(startTime);
       _log(
-        '📊 Cohérence: $coherentCount/$totalChecked (${coherencePercentage.toStringAsFixed(1)}%) - ${duration.inMilliseconds}ms',
+        'ðŸ“Š Cohérence: $coherentCount/$totalChecked (${coherencePercentage.toStringAsFixed(1)}%) - ${duration.inMilliseconds}ms',
         level: 500,
       );
 
       if (issues.isNotEmpty) {
-        _log('⚠️ ${issues.length} problèmes de cohérence détectés', level: 900);
+        _log('âš ï¸ ${issues.length} problèmes de cohérence détectés', level: 900);
       }
 
       return CoherenceResult(
@@ -256,7 +256,7 @@ class DataIntegrityValidator {
         coherencePercentage: coherencePercentage,
       );
     } catch (e, stackTrace) {
-      _logError('❌ Erreur validation cohérence', e, stackTrace);
+      _logError('âŒ Erreur validation cohérence', e, stackTrace);
 
       return CoherenceResult(
         isCoherent: false,
@@ -276,40 +276,40 @@ class DataIntegrityValidator {
     try {
       // Validation des champs requis
       if (garden.id.isEmpty) {
-        _log('❌ Jardin sans ID', level: 1000);
+        _log('âŒ Jardin sans ID', level: 1000);
         return false;
       }
 
       if (garden.name.isEmpty) {
-        _log('❌ Jardin ${garden.id} sans nom', level: 1000);
+        _log('âŒ Jardin ${garden.id} sans nom', level: 1000);
         return false;
       }
 
       if (garden.totalAreaInSquareMeters < 0) {
-        _log('❌ Jardin ${garden.id} avec surface négative', level: 1000);
+        _log('âŒ Jardin ${garden.id} avec surface négative', level: 1000);
         return false;
       }
 
       // Validation des dates
       if (garden.createdAt.isAfter(DateTime.now())) {
-        _log('❌ Jardin ${garden.id} avec date création future', level: 1000);
+        _log('âŒ Jardin ${garden.id} avec date Création future', level: 1000);
         return false;
       }
 
       if (garden.updatedAt.isBefore(garden.createdAt)) {
-        _log('❌ Jardin ${garden.id} avec updatedAt < createdAt', level: 1000);
+        _log('âŒ Jardin ${garden.id} avec updatedAt < createdAt', level: 1000);
         return false;
       }
 
       // Validation métier
       if (!garden.isValid) {
-        _log('❌ Jardin ${garden.id} échoue isValid()', level: 1000);
+        _log('âŒ Jardin ${garden.id} échoue isValid()', level: 1000);
         return false;
       }
 
       return true;
     } catch (e) {
-      _log('❌ Erreur validation structure jardin ${garden.id}: $e',
+      _log('âŒ Erreur validation structure jardin ${garden.id}: $e',
           level: 1000);
       return false;
     }
@@ -320,12 +320,12 @@ class DataIntegrityValidator {
     try {
       // Comparaison des champs critiques
       if (legacyGarden.id != modernGarden.id) {
-        _log('❌ IDs différents', level: 1000);
+        _log('âŒ IDs différents', level: 1000);
         return false;
       }
 
       if (legacyGarden.name != modernGarden.name) {
-        _log('⚠️ Noms différents pour ${legacyGarden.id}', level: 900);
+        _log('âš ï¸ Noms différents pour ${legacyGarden.id}', level: 900);
         return false;
       }
 
@@ -333,7 +333,7 @@ class DataIntegrityValidator {
       final descriptionMatch =
           legacyGarden.description == (modernGarden.description ?? '');
       if (!descriptionMatch && legacyGarden.description.isNotEmpty) {
-        _log('⚠️ Descriptions différentes pour ${legacyGarden.id}', level: 700);
+        _log('âš ï¸ Descriptions différentes pour ${legacyGarden.id}', level: 700);
       }
 
       // Comparaison des surfaces (tolérance de 0.01)
@@ -342,7 +342,7 @@ class DataIntegrityValidator {
           .abs();
       if (areaDiff > 0.01) {
         _log(
-          '⚠️ Surfaces différentes pour ${legacyGarden.id}: $areaDiff m²',
+          'âš ï¸ Surfaces différentes pour ${legacyGarden.id}: $areaDiff mÂ²',
           level: 900,
         );
         return false;
@@ -352,13 +352,13 @@ class DataIntegrityValidator {
       final locationMatch =
           legacyGarden.location == (modernGarden.location ?? '');
       if (!locationMatch && legacyGarden.location.isNotEmpty) {
-        _log('⚠️ Localisations différentes pour ${legacyGarden.id}',
+        _log('âš ï¸ Localisations différentes pour ${legacyGarden.id}',
             level: 700);
       }
 
       return true;
     } catch (e) {
-      _log('❌ Erreur comparaison jardins: $e', level: 1000);
+      _log('âŒ Erreur comparaison jardins: $e', level: 1000);
       return false;
     }
   }
@@ -368,7 +368,7 @@ class DataIntegrityValidator {
   /// Valide un batch de jardins après migration
   Future<CoherenceResult> validateGardenBatch(List<String> gardenIds) async {
     try {
-      _log('🔍 Validation batch de ${gardenIds.length} jardins', level: 500);
+      _log('ðŸ” Validation batch de ${gardenIds.length} jardins', level: 500);
       _validationsPerformed++;
 
       final issues = <String>[];
@@ -389,7 +389,7 @@ class DataIntegrityValidator {
           gardenIds.isNotEmpty ? (coherentCount / gardenIds.length) * 100 : 0.0;
 
       _log(
-        '📊 Batch: $coherentCount/${gardenIds.length} cohérents (${coherencePercentage.toStringAsFixed(1)}%)',
+        'ðŸ“Š Batch: $coherentCount/${gardenIds.length} cohérents (${coherencePercentage.toStringAsFixed(1)}%)',
         level: 500,
       );
 
@@ -402,7 +402,7 @@ class DataIntegrityValidator {
         coherencePercentage: coherencePercentage,
       );
     } catch (e, stackTrace) {
-      _logError('❌ Erreur validation batch', e, stackTrace);
+      _logError('âŒ Erreur validation batch', e, stackTrace);
 
       return CoherenceResult(
         isCoherent: false,
@@ -463,7 +463,7 @@ class DataIntegrityValidator {
       // Validation métier
       if (garden.totalAreaInSquareMeters > 10000) {
         validation['warnings']
-            .add('Surface très grande (${garden.totalAreaInSquareMeters}m²)');
+            .add('Surface très grande (${garden.totalAreaInSquareMeters}mÂ²)');
       }
 
       if (garden.description.isEmpty) {
@@ -473,13 +473,13 @@ class DataIntegrityValidator {
       validation['isValid'] = (validation['issues'] as List).isEmpty;
 
       _log(
-        '📊 Validation détaillée $gardenId: ${validation['checks'].length} checks, ${validation['issues'].length} problèmes',
+        'ðŸ“Š Validation détaillée $gardenId: ${validation['checks'].length} checks, ${validation['issues'].length} problèmes',
         level: 500,
       );
 
       return validation;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur validation détaillée $gardenId', e, stackTrace);
+      _logError('âŒ Erreur validation détaillée $gardenId', e, stackTrace);
 
       return {
         'gardenId': gardenId,
@@ -494,14 +494,14 @@ class DataIntegrityValidator {
   /// Tente de corriger automatiquement les incohérences simples
   Future<bool> attemptAutoFix(String gardenId) async {
     try {
-      _log('🔧 Tentative correction automatique $gardenId', level: 500);
+      _log('ðŸ”§ Tentative correction automatique $gardenId', level: 500);
 
       // Récupérer les deux versions
       final legacyGarden = GardenBoxes.getGarden(gardenId);
       final modernGarden = await _modernRepository.getGardenById(gardenId);
 
       if (legacyGarden == null || modernGarden == null) {
-        _log('❌ Impossible de corriger - Jardin manquant', level: 1000);
+        _log('âŒ Impossible de corriger - Jardin manquant', level: 1000);
         return false;
       }
 
@@ -528,14 +528,14 @@ class DataIntegrityValidator {
       if (fixed) {
         legacyGarden.markAsUpdated();
         await GardenBoxes.saveGarden(legacyGarden);
-        _log('✅ Corrections appliquées à $gardenId', level: 500);
+        _log('âœ… Corrections appliquées à $gardenId', level: 500);
       } else {
-        _log('ℹ️ Aucune correction nécessaire pour $gardenId', level: 500);
+        _log('â„¹ï¸ Aucune correction nécessaire pour $gardenId', level: 500);
       }
 
       return true;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur correction auto $gardenId', e, stackTrace);
+      _logError('âŒ Erreur correction auto $gardenId', e, stackTrace);
       return false;
     }
   }
@@ -555,7 +555,7 @@ class DataIntegrityValidator {
   void resetStatistics() {
     _validationsPerformed = 0;
     _issuesDetected = 0;
-    _log('📊 Statistiques validateur réinitialisées', level: 500);
+    _log('ðŸ“Š Statistiques validateur réinitialisées', level: 500);
   }
 
   // ==================== UTILITAIRES ====================

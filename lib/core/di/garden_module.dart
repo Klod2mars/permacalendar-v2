@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import 'package:hive/hive.dart';
 import '../services/aggregation/garden_aggregation_hub.dart';
 import '../repositories/garden_hive_repository.dart';
@@ -15,16 +15,16 @@ import '../data/migration/garden_data_migration.dart';
 /// **Architecture :**
 /// ```
 /// GardenAggregationHub (Hub Central)
-///   ├─→ LegacyGardenAdapter
-///   └─→ ModernGardenAdapter
+///   â”œâ”€â†’ LegacyGardenAdapter
+///   â””â”€â†’ ModernGardenAdapter
 ///
 /// GardenHiveRepository
-///   └─→ Hive (gardens_freezed box)
+///   â””â”€â†’ Hive (gardens_freezed box)
 ///
 /// GardenMigrationAdapters
-///   ├─→ Legacy → Freezed
-///   ├─→ V2 → Freezed
-///   └─→ Hive → Freezed
+///   â”œâ”€â†’ Legacy â†’ Freezed
+///   â”œâ”€â†’ V2 â†’ Freezed
+///   â””â”€â†’ Hive â†’ Freezed
 /// ```
 ///
 /// **Usage :**
@@ -50,7 +50,7 @@ class GardenModule {
   ///
   /// **Note importante :**
   /// L'Intelligence Végétale est un CONSOMMATEUR du hub, pas un fournisseur.
-  /// Cela évite la dépendance circulaire Hub → Intelligence → Hub.
+  /// Cela évite la dépendance circulaire Hub â†’ Intelligence â†’ Hub.
   static final aggregationHubProvider = Provider<GardenAggregationHub>((ref) {
     // Créer le hub avec Legacy + Modern uniquement
     // L'Intelligence adapter n'est pas ajouté ici pour éviter les cycles
@@ -80,18 +80,18 @@ class GardenModule {
   ///
   /// **Responsabilité (Prompt 7) :**
   /// Convertir les anciens modèles Garden vers GardenFreezed :
-  /// - Garden (Legacy, HiveType 0) → GardenFreezed
-  /// - Garden (V2, HiveType 10) → GardenFreezed
-  /// - GardenHive (HiveType 25) → GardenFreezed
+  /// - Garden (Legacy, HiveType 0) â†’ GardenFreezed
+  /// - Garden (V2, HiveType 10) â†’ GardenFreezed
+  /// - GardenHive (HiveType 25) â†’ GardenFreezed
   ///
   /// **Méthodes disponibles :**
-  /// - GardenMigrationAdapters.fromLegacy(Garden) → GardenFreezed
-  /// - GardenMigrationAdapters.fromV2(GardenV2) → GardenFreezed
-  /// - GardenMigrationAdapters.fromHive(GardenHive) → GardenFreezed
-  /// - GardenMigrationAdapters.batchMigrateLegacy(List<Garden>) → List<GardenFreezed>
-  /// - GardenMigrationAdapters.batchMigrateV2(List<GardenV2>) → List<GardenFreezed>
-  /// - GardenMigrationAdapters.batchMigrateHive(List<GardenHive>) → List<GardenFreezed>
-  /// - GardenMigrationAdapters.autoMigrate(dynamic) → GardenFreezed
+  /// - GardenMigrationAdapters.fromLegacy(Garden) â†’ GardenFreezed
+  /// - GardenMigrationAdapters.fromV2(GardenV2) â†’ GardenFreezed
+  /// - GardenMigrationAdapters.fromHive(GardenHive) â†’ GardenFreezed
+  /// - GardenMigrationAdapters.batchMigrateLegacy(List<Garden>) â†’ List<GardenFreezed>
+  /// - GardenMigrationAdapters.batchMigrateV2(List<GardenV2>) â†’ List<GardenFreezed>
+  /// - GardenMigrationAdapters.batchMigrateHive(List<GardenHive>) â†’ List<GardenFreezed>
+  /// - GardenMigrationAdapters.autoMigrate(dynamic) â†’ GardenFreezed
 
   /// Provider pour le service de migration des données
   ///
@@ -100,7 +100,7 @@ class GardenModule {
   /// vers le modèle unifié GardenFreezed.
   ///
   /// **Fonctionnalités :**
-  /// - Migration complète (Legacy + V2 + Hive → Freezed)
+  /// - Migration complète (Legacy + V2 + Hive â†’ Freezed)
   /// - Mode dry-run (simulation sans écriture)
   /// - Backup automatique avant migration
   /// - Vérification d'intégrité post-migration
@@ -139,7 +139,7 @@ class GardenModule {
   /// Retourne `true` si au moins une des anciennes boxes contient des données.
   static final isMigrationNeededProvider = FutureProvider<bool>((ref) async {
     try {
-      // Ouvrir les anciennes boxes sans les créer
+      // Ouvrir les anciennes boxes sans les Créer
       final legacyBox = await Hive.openBox('gardens').catchError((_) => null);
       final v2Box = await Hive.openBox('gardens_v2').catchError((_) => null);
       final hiveBox =

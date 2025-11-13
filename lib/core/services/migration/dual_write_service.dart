@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../models/garden.dart';
 import '../../models/garden_freezed.dart';
 import '../../data/hive/garden_boxes.dart';
@@ -9,7 +9,7 @@ import '../../repositories/garden_hive_repository.dart';
 /// **Architecture Enterprise - Design Pattern: Strategy + Proxy**
 ///
 /// Ce service implémente la double écriture pour garantir la cohérence
-/// des données pendant la migration Legacy → Moderne :
+/// des données pendant la migration Legacy â†’ Moderne :
 /// - Écrit simultanément dans Legacy ET Moderne
 /// - Résout les conflits d'écriture
 /// - Garantit zéro perte de données
@@ -42,7 +42,7 @@ class DualWriteService {
 
   /// Constructeur
   DualWriteService() {
-    _log('🏗️ Dual Write Service créé', level: 500);
+    _log('ðŸ—ï¸ Dual Write Service Créé', level: 500);
   }
 
   // ==================== ACTIVATION / DÉSACTIVATION ====================
@@ -50,7 +50,7 @@ class DualWriteService {
   /// Active le mode double écriture
   Future<void> enableDualWrite() async {
     try {
-      _log('🔄 Activation du mode double écriture', level: 500);
+      _log('ðŸ”„ Activation du mode double écriture', level: 500);
 
       // Vérifier que les deux systèmes sont disponibles
       final legacyAvailable = await _checkLegacySystemAvailable();
@@ -65,9 +65,9 @@ class DualWriteService {
       }
 
       _isEnabled = true;
-      _log('✅ Mode double écriture activé', level: 500);
+      _log('âœ… Mode double écriture activé', level: 500);
     } catch (e, stackTrace) {
-      _logError('❌ Erreur activation double écriture', e, stackTrace);
+      _logError('âŒ Erreur activation double écriture', e, stackTrace);
       rethrow;
     }
   }
@@ -75,11 +75,11 @@ class DualWriteService {
   /// Désactive le mode double écriture
   Future<void> disableDualWrite() async {
     try {
-      _log('⚠️ Désactivation du mode double écriture', level: 900);
+      _log('âš ï¸ Désactivation du mode double écriture', level: 900);
       _isEnabled = false;
-      _log('✅ Mode double écriture désactivé', level: 500);
+      _log('âœ… Mode double écriture désactivé', level: 500);
     } catch (e, stackTrace) {
-      _logError('❌ Erreur désactivation double écriture', e, stackTrace);
+      _logError('âŒ Erreur désactivation double écriture', e, stackTrace);
       rethrow;
     }
   }
@@ -87,14 +87,14 @@ class DualWriteService {
   /// Prépare le système Moderne pour la migration
   Future<void> prepareModernSystem() async {
     try {
-      _log('🏗️ Préparation du système Moderne', level: 500);
+      _log('ðŸ—ï¸ Préparation du système Moderne', level: 500);
 
       // Initialiser le repository moderne si nécessaire
       await GardenHiveRepository.initialize();
 
-      _log('✅ Système Moderne prêt', level: 500);
+      _log('âœ… Système Moderne prêt', level: 500);
     } catch (e, stackTrace) {
-      _logError('❌ Erreur préparation système Moderne', e, stackTrace);
+      _logError('âŒ Erreur préparation système Moderne', e, stackTrace);
       rethrow;
     }
   }
@@ -109,7 +109,7 @@ class DualWriteService {
     }
 
     try {
-      _log('💾 Création jardin (double écriture): ${garden.name}', level: 500);
+      _log('ðŸ’¾ Création jardin (double écriture): ${garden.name}', level: 500);
 
       // Écriture parallèle Legacy + Moderne
       final results = await Future.wait([
@@ -122,29 +122,29 @@ class DualWriteService {
 
       // Gestion des résultats
       if (legacySuccess && modernSuccess) {
-        _log('✅ Double écriture réussie', level: 500);
+        _log('âœ… Double écriture réussie', level: 500);
         _legacyWriteSuccessCount++;
         _modernWriteSuccessCount++;
         return true;
       } else if (modernSuccess) {
-        _log('⚠️ Legacy échoué, Moderne OK (migration progressive)',
+        _log('âš ï¸ Legacy échoué, Moderne OK (migration progressive)',
             level: 900);
         _legacyWriteFailureCount++;
         _modernWriteSuccessCount++;
         return true;
       } else if (legacySuccess) {
-        _log('⚠️ Moderne échoué, Legacy OK (fallback)', level: 900);
+        _log('âš ï¸ Moderne échoué, Legacy OK (fallback)', level: 900);
         _legacyWriteSuccessCount++;
         _modernWriteFailureCount++;
         return true;
       } else {
-        _log('❌ Double écriture échouée', level: 1000);
+        _log('âŒ Double écriture échouée', level: 1000);
         _legacyWriteFailureCount++;
         _modernWriteFailureCount++;
         return false;
       }
     } catch (e, stackTrace) {
-      _logError('❌ Erreur création jardin', e, stackTrace);
+      _logError('âŒ Erreur Création jardin', e, stackTrace);
       return false;
     }
   }
@@ -156,7 +156,7 @@ class DualWriteService {
     }
 
     try {
-      _log('🔄 Mise à jour jardin (double écriture): ${garden.name}',
+      _log('ðŸ”„ mise à jour jardin (double écriture): ${garden.name}',
           level: 500);
 
       // Écriture parallèle
@@ -182,7 +182,7 @@ class DualWriteService {
         return legacySuccess;
       }
     } catch (e, stackTrace) {
-      _logError('❌ Erreur mise à jour jardin', e, stackTrace);
+      _logError('âŒ Erreur mise à jour jardin', e, stackTrace);
       return false;
     }
   }
@@ -194,7 +194,7 @@ class DualWriteService {
     }
 
     try {
-      _log('🗑️ Suppression jardin (double écriture): $gardenId', level: 500);
+      _log('ðŸ—‘ï¸ Suppression jardin (double écriture): $gardenId', level: 500);
 
       // Suppression parallèle
       final results = await Future.wait([
@@ -219,7 +219,7 @@ class DualWriteService {
         return legacySuccess;
       }
     } catch (e, stackTrace) {
-      _logError('❌ Erreur suppression jardin', e, stackTrace);
+      _logError('âŒ Erreur suppression jardin', e, stackTrace);
       return false;
     }
   }
@@ -229,12 +229,12 @@ class DualWriteService {
   /// Migre un jardin Legacy vers Moderne
   Future<bool> migrateGardenToModern(String gardenId) async {
     try {
-      _log('🔄 Migration jardin $gardenId vers Moderne', level: 500);
+      _log('ðŸ”„ Migration jardin $gardenId vers Moderne', level: 500);
 
       // 1. Récupérer depuis Legacy
       final legacyGarden = GardenBoxes.getGarden(gardenId);
       if (legacyGarden == null) {
-        _log('❌ Jardin Legacy introuvable: $gardenId', level: 1000);
+        _log('âŒ Jardin Legacy introuvable: $gardenId', level: 1000);
         return false;
       }
 
@@ -245,16 +245,16 @@ class DualWriteService {
       final success = await _modernRepository.createGarden(modernGarden);
 
       if (success) {
-        _log('✅ Jardin $gardenId migré vers Moderne', level: 500);
+        _log('âœ… Jardin $gardenId migré vers Moderne', level: 500);
         _modernWriteSuccessCount++;
       } else {
-        _log('❌ Échec migration jardin $gardenId', level: 1000);
+        _log('âŒ Échec migration jardin $gardenId', level: 1000);
         _modernWriteFailureCount++;
       }
 
       return success;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur migration jardin $gardenId', e, stackTrace);
+      _logError('âŒ Erreur migration jardin $gardenId', e, stackTrace);
       _modernWriteFailureCount++;
       return false;
     }
@@ -263,13 +263,13 @@ class DualWriteService {
   /// Effectue un rollback d'un jardin (restaure Legacy, supprime Moderne)
   Future<bool> rollbackGarden(String gardenId) async {
     try {
-      _log('⏪ Rollback jardin $gardenId', level: 900);
+      _log('âª Rollback jardin $gardenId', level: 900);
 
       // Supprimer de Moderne (si existe)
       try {
         await _modernRepository.deleteGarden(gardenId);
       } catch (e) {
-        _log('⚠️ Suppression Moderne échouée (peut-être absent)', level: 700);
+        _log('âš ï¸ Suppression Moderne échouée (peut-être absent)', level: 700);
       }
 
       // Vérifier que Legacy existe toujours
@@ -277,15 +277,15 @@ class DualWriteService {
       final exists = legacyGarden != null;
 
       if (exists) {
-        _log('✅ Rollback réussi - Jardin $gardenId restauré depuis Legacy',
+        _log('âœ… Rollback réussi - Jardin $gardenId restauré depuis Legacy',
             level: 500);
       } else {
-        _log('⚠️ Jardin $gardenId absent de Legacy également', level: 900);
+        _log('âš ï¸ Jardin $gardenId absent de Legacy également', level: 900);
       }
 
       return exists;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur rollback jardin $gardenId', e, stackTrace);
+      _logError('âŒ Erreur rollback jardin $gardenId', e, stackTrace);
       return false;
     }
   }
@@ -296,7 +296,7 @@ class DualWriteService {
       final gardens = GardenBoxes.getAllGardens();
       return gardens.map((g) => g.id).toList();
     } catch (e, stackTrace) {
-      _logError('❌ Erreur récupération IDs Legacy', e, stackTrace);
+      _logError('âŒ Erreur récupération IDs Legacy', e, stackTrace);
       return [];
     }
   }
@@ -309,7 +309,7 @@ class DualWriteService {
       await GardenBoxes.saveGarden(legacyGarden);
       return true;
     } catch (e) {
-      _log('❌ Erreur écriture Legacy: $e', level: 1000);
+      _log('âŒ Erreur écriture Legacy: $e', level: 1000);
       return false;
     }
   }
@@ -320,7 +320,7 @@ class DualWriteService {
       await GardenBoxes.saveGarden(legacyGarden);
       return true;
     } catch (e) {
-      _log('❌ Erreur mise à jour Legacy: $e', level: 1000);
+      _log('âŒ Erreur mise à jour Legacy: $e', level: 1000);
       return false;
     }
   }
@@ -330,7 +330,7 @@ class DualWriteService {
       await GardenBoxes.deleteGarden(gardenId);
       return true;
     } catch (e) {
-      _log('❌ Erreur suppression Legacy: $e', level: 1000);
+      _log('âŒ Erreur suppression Legacy: $e', level: 1000);
       return false;
     }
   }
@@ -341,7 +341,7 @@ class DualWriteService {
     try {
       return await _modernRepository.createGarden(garden);
     } catch (e) {
-      _log('❌ Erreur écriture Moderne: $e', level: 1000);
+      _log('âŒ Erreur écriture Moderne: $e', level: 1000);
       return false;
     }
   }
@@ -350,7 +350,7 @@ class DualWriteService {
     try {
       return await _modernRepository.updateGarden(garden);
     } catch (e) {
-      _log('❌ Erreur mise à jour Moderne: $e', level: 1000);
+      _log('âŒ Erreur mise à jour Moderne: $e', level: 1000);
       return false;
     }
   }
@@ -360,7 +360,7 @@ class DualWriteService {
       await _modernRepository.deleteGarden(gardenId);
       return true;
     } catch (e) {
-      _log('❌ Erreur suppression Moderne: $e', level: 1000);
+      _log('âŒ Erreur suppression Moderne: $e', level: 1000);
       return false;
     }
   }
@@ -371,7 +371,7 @@ class DualWriteService {
     try {
       return await _modernRepository.createGarden(garden);
     } catch (e) {
-      _logError('❌ Erreur création Moderne seul', e);
+      _logError('âŒ Erreur Création Moderne seul', e);
       return false;
     }
   }
@@ -380,7 +380,7 @@ class DualWriteService {
     try {
       return await _modernRepository.updateGarden(garden);
     } catch (e) {
-      _logError('❌ Erreur mise à jour Moderne seul', e);
+      _logError('âŒ Erreur mise à jour Moderne seul', e);
       return false;
     }
   }
@@ -390,7 +390,7 @@ class DualWriteService {
       await _modernRepository.deleteGarden(gardenId);
       return true;
     } catch (e) {
-      _logError('❌ Erreur suppression Moderne seul', e);
+      _logError('âŒ Erreur suppression Moderne seul', e);
       return false;
     }
   }
@@ -433,7 +433,7 @@ class DualWriteService {
       GardenBoxes.getAllGardens();
       return true; // Si pas d'exception, le système est disponible
     } catch (e) {
-      _log('❌ Système Legacy non disponible: $e', level: 1000);
+      _log('âŒ Système Legacy non disponible: $e', level: 1000);
       return false;
     }
   }
@@ -444,7 +444,7 @@ class DualWriteService {
       await _modernRepository.getAllGardens();
       return true;
     } catch (e) {
-      _log('❌ Système Moderne non disponible: $e', level: 1000);
+      _log('âŒ Système Moderne non disponible: $e', level: 1000);
       return false;
     }
   }
@@ -487,7 +487,7 @@ class DualWriteService {
     _modernWriteSuccessCount = 0;
     _modernWriteFailureCount = 0;
     _conflictResolutionCount = 0;
-    _log('📊 Statistiques réinitialisées', level: 500);
+    _log('ðŸ“Š Statistiques réinitialisées', level: 500);
   }
 
   // ==================== UTILITAIRES ====================

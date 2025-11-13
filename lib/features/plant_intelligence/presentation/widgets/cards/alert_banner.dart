@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// BanniÃ¨re d'alerte intelligente
+/// BanniÃƒÂ¨re d'alerte intelligente
 class AlertBanner extends StatelessWidget {
   final String title;
   final String message;
@@ -216,7 +216,7 @@ class AlertBanner extends StatelessWidget {
       case AlertSeverity.critical:
         return 'CRITIQUE';
       case AlertSeverity.high:
-        return 'Ã‰LEVÃ‰E';
+        return 'Ãƒâ€°LEVÃƒâ€°E';
       case AlertSeverity.medium:
         return 'MOYENNE';
       case AlertSeverity.low:
@@ -240,7 +240,7 @@ class AlertBanner extends StatelessWidget {
   }
 }
 
-/// BanniÃ¨re d'alerte compacte pour les notifications
+/// BanniÃƒÂ¨re d'alerte compacte pour les notifications
 class CompactAlertBanner extends StatelessWidget {
   final String title;
   final String message;
@@ -434,7 +434,7 @@ class _AlertBannerListState extends State<AlertBannerList>
     if (widget.showAnimation) {
       _startAnimations();
     } else {
-      // Si pas d'animation, mettre directement Ã  1.0
+      // Si pas d'animation, mettre directement ÃƒÂ  1.0
       for (final controller in _animationControllers) {
         controller.value = 1.0;
       }
@@ -442,7 +442,7 @@ class _AlertBannerListState extends State<AlertBannerList>
   }
 
   void _startAnimations() {
-    // Utiliser addPostFrameCallback pour Ã©viter les lags
+    // Utiliser addPostFrameCallback pour ÃƒÂ©viter les lags
     WidgetsBinding.instance.addPostFrameCallback((_) {
       for (int i = 0; i < _animationControllers.length; i++) {
         Future.delayed(Duration(milliseconds: i * 80), () {
@@ -490,7 +490,7 @@ class _AlertBannerListState extends State<AlertBannerList>
   }
 }
 
-/// Ã‰numÃ©ration des niveaux de sÃ©vÃ©ritÃ© des alertes
+/// Ãƒâ€°numÃƒÂ©ration des niveaux de sÃƒÂ©vÃƒÂ©ritÃƒÂ© des alertes
 enum AlertSeverity {
   critical,
   high,
@@ -510,7 +510,7 @@ class AlertStyle {
   });
 }
 
-/// DonnÃ©es d'une alerte
+/// DonnÃƒÂ©es d'une alerte
 class AlertData {
   final String title;
   final String message;

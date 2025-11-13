@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Climate Alerts Screen
@@ -59,7 +59,7 @@ class ClimateAlertsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'SystÃ¨me d\'alertes',
+                    'SystÃƒÂ¨me d\'alertes',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -68,7 +68,7 @@ class ClimateAlertsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Cette fonctionnalitÃ© sera disponible dans la Phase 2.\nSystÃ¨me d\'alertes intelligent pour les conditions climatiques critiques.',
+                    'Cette fonctionnalitÃƒÂ© sera disponible dans la Phase 2.\nSystÃƒÂ¨me d\'alertes intelligent pour les conditions climatiques critiques.',
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: Colors.white70,
                     ),

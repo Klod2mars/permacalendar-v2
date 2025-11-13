@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'notification_alert.freezed.dart';
@@ -98,7 +98,7 @@ class NotificationAlert with _$NotificationAlert {
     @Default(AlertSeverity.info)
     AlertSeverity severity,
 
-    /// Date de création
+    /// Date de Création
     @HiveField(5) required DateTime createdAt,
 
     /// Date de lecture
@@ -174,17 +174,17 @@ extension NotificationTypeExtension on NotificationType {
   String get icon {
     switch (this) {
       case NotificationType.weatherAlert:
-        return '🌤️';
+        return 'ðŸŒ¤ï¸';
       case NotificationType.plantCondition:
-        return '🌱';
+        return 'ðŸŒ±';
       case NotificationType.recommendation:
-        return '💡';
+        return 'ðŸ’¡';
       case NotificationType.reminder:
-        return '⏰';
+        return 'â°';
       case NotificationType.criticalCondition:
-        return '🚨';
+        return 'ðŸš¨';
       case NotificationType.optimalCondition:
-        return '✨';
+        return 'âœ¨';
     }
   }
 
@@ -255,13 +255,13 @@ extension NotificationPriorityExtension on NotificationPriority {
   String get icon {
     switch (this) {
       case NotificationPriority.low:
-        return '📗';
+        return 'ðŸ“—';
       case NotificationPriority.medium:
-        return '📙';
+        return 'ðŸ“™';
       case NotificationPriority.high:
-        return '📕';
+        return 'ðŸ“•';
       case NotificationPriority.critical:
-        return '🚨';
+        return 'ðŸš¨';
     }
   }
 
@@ -300,13 +300,13 @@ extension NotificationStatusExtension on NotificationStatus {
   String get icon {
     switch (this) {
       case NotificationStatus.unread:
-        return '🔔';
+        return 'ðŸ””';
       case NotificationStatus.read:
-        return '✅';
+        return 'âœ…';
       case NotificationStatus.archived:
-        return '📦';
+        return 'ðŸ“¦';
       case NotificationStatus.dismissed:
-        return '🚫';
+        return 'ðŸš«';
     }
   }
 }

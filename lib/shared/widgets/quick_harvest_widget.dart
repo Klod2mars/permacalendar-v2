@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/planting/providers/planting_provider.dart';
@@ -422,7 +422,7 @@ class _QuickHarvestWidgetState extends ConsumerState<QuickHarvestWidget> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Les plantes prêtes à être récoltées\napparaîtront ici',
+            'Les plantes prêtes à être récoltées\napparaÃ®tront ici',
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant.withOpacity(0.7),

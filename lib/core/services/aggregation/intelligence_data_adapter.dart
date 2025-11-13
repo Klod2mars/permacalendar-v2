@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../../features/plant_intelligence/domain/repositories/plant_intelligence_repository.dart';
 import '../../models/unified_garden_context.dart';
 import 'data_adapter.dart';
@@ -104,7 +104,7 @@ class IntelligenceDataAdapter implements DataAdapter {
       final stats = await _calculateIntelligenceStats(gardenId, gardenContext);
 
       developer.log(
-        'Contexte Intelligence créé: ${plants.length} plantes, ${stats.activeRecommendations} recommandations',
+        'Contexte Intelligence Créé: ${plants.length} plantes, ${stats.activeRecommendations} recommandations',
         name: _logName,
         level: 500,
       );

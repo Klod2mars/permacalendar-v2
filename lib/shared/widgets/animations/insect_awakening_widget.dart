@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'insect_animation_config.dart';
@@ -206,7 +206,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     } catch (e) {
       // Log silencieux pour éviter de spammer la console
       // Le son est optionnel et ne doit pas bloquer l'animation
-      debugPrint('🐝 InsectAwakening: Erreur lecture son (optionnel): $e');
+      debugPrint('ðŸ InsectAwakening: Erreur lecture son (optionnel): $e');
     }
   }
 

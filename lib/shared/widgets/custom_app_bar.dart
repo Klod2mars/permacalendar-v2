@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// AppBar personnalisée pour l'application PermaCalendar
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {

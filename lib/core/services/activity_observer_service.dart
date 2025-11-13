@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:riverpod/riverpod.dart';
 import 'activity_tracker_v3.dart';
@@ -26,17 +26,17 @@ class ActivityObserverService {
       print('ActivityObserverService: Initialisation du tracker...');
       await _tracker.initialize();
       _isInitialized = true;
-      print('✅ ActivityObserverService initialisé avec succès');
+      print('âœ… ActivityObserverService initialisé avec succès');
       developer.log('ActivityObserverService initialisé avec succès.',
           name: 'ActivityObserver');
     } catch (e) {
-      print('❌ Erreur initialisation ActivityObserverService: $e');
+      print('âŒ Erreur initialisation ActivityObserverService: $e');
       developer.log('Erreur initialisation ActivityObserverService: $e',
           name: 'ActivityObserver');
     }
   }
 
-  /// Capture un événement de création de jardin
+  /// Capture un événement de Création de jardin
   Future<void> captureGardenCreated({
     required String gardenId,
     required String gardenName,
@@ -47,7 +47,7 @@ class ActivityObserverService {
 
     await _tracker.trackActivity(
       type: 'gardenCreated',
-      description: 'Jardin "$gardenName" créé',
+      description: 'Jardin "$gardenName" Créé',
       metadata: {
         'gardenId': gardenId,
         'gardenName': gardenName,
@@ -98,7 +98,7 @@ class ActivityObserverService {
     );
   }
 
-  /// Capture un événement de création de parcelle
+  /// Capture un événement de Création de parcelle
   Future<void> captureGardenBedCreated({
     required String gardenBedId,
     required String gardenBedName,
@@ -112,7 +112,7 @@ class ActivityObserverService {
 
     await _tracker.trackActivity(
       type: 'gardenBedCreated',
-      description: 'Parcelle "$gardenBedName" créée',
+      description: 'Parcelle "$gardenBedName" Créée',
       metadata: {
         'gardenBedId': gardenBedId,
         'gardenBedName': gardenBedName,
@@ -176,7 +176,7 @@ class ActivityObserverService {
     );
   }
 
-  /// Capture un événement de création de plantation
+  /// Capture un événement de Création de plantation
   Future<void> capturePlantingCreated({
     required String plantingId,
     required String plantName,
@@ -302,7 +302,7 @@ class ActivityObserverService {
 
     await _tracker.trackActivity(
       type: 'weatherUpdate',
-      description: 'Mise à jour météo pour $location',
+      description: 'mise à jour météo pour $location',
       metadata: {
         'location': location,
         'weatherType': weatherType,

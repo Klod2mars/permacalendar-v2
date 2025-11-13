@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'planting_hive.g.dart';
@@ -28,7 +28,7 @@ class PlantingHive extends HiveObject {
     required this.status,
   });
 
-  // Factory constructor pour créer une nouvelle plantation avec ID généré
+  // Factory constructor pour Créer une nouvelle plantation avec ID généré
   factory PlantingHive.create({
     required String plantId,
     required String gardenBedId,

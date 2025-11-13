@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -211,7 +211,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.intelligence,
         name: 'intelligence',
         builder: (context, state) {
-          print('🔴 [DIAGNOSTIC] builder() pour /intelligence appelé.');
+          print('ðŸ”´ [DIAGNOSTIC] builder() pour /intelligence appelé.');
           return const PlantIntelligenceDashboardScreen();
         },
         routes: [

@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'intelligent_suggestion.freezed.dart';
 part 'intelligent_suggestion.g.dart';
@@ -37,7 +37,7 @@ class IntelligentSuggestion with _$IntelligentSuggestion {
     /// Suggestion actionnée par l'utilisateur ?
     @Default(false) bool isActioned,
 
-    /// Date de création de la suggestion
+    /// Date de Création de la suggestion
     required DateTime createdAt,
   }) = _IntelligentSuggestion;
 

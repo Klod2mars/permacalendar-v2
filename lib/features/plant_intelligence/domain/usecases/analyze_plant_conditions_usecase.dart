@@ -1,4 +1,4 @@
-import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
+﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart';
@@ -115,7 +115,7 @@ class AnalyzePlantConditionsUsecase {
       throw ArgumentError('L\'ID du jardin ne peut pas être vide');
     }
 
-    // Vérification de la fraîcheur des données météo (max 24h)
+    // Vérification de la fraÃ®cheur des données météo (max 24h)
     final weatherAge = DateTime.now().difference(weather.measuredAt);
     if (weatherAge.inHours > 24) {
       throw ArgumentError(
@@ -144,8 +144,8 @@ class AnalyzePlantConditionsUsecase {
       optimalValue: optimalTemp,
       minValue: minTemp,
       maxValue: maxTemp,
-      unit: '°C',
-      description: 'Température actuelle: ${currentTemp.toStringAsFixed(1)}°C',
+      unit: 'Â°C',
+      description: 'Température actuelle: ${currentTemp.toStringAsFixed(1)}Â°C',
       recommendations: _getTemperatureRecommendations(currentTemp, optimalTemp),
       measuredAt: DateTime.now(),
       createdAt: DateTime.now(),
@@ -607,7 +607,7 @@ class AnalyzePlantConditionsUsecase {
     return actions;
   }
 
-  /// Calcule la confiance de l'analyse basée sur la fraîcheur des données
+  /// Calcule la confiance de l'analyse basée sur la fraÃ®cheur des données
   double _calculateConfidence(WeatherCondition weather, GardenContext garden) {
     final weatherAge = DateTime.now().difference(weather.measuredAt).inHours;
 

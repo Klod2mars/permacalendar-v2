@@ -1,4 +1,4 @@
-// coverage:ignore-file
+﻿// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -47,7 +47,7 @@ mixin _$IntelligentSuggestion {
   /// Suggestion actionnée par l'utilisateur ?
   bool get isActioned => throw _privateConstructorUsedError;
 
-  /// Date de création de la suggestion
+  /// Date de Création de la suggestion
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -276,7 +276,7 @@ class _$IntelligentSuggestionImpl implements _IntelligentSuggestion {
   @JsonKey()
   final bool isActioned;
 
-  /// Date de création de la suggestion
+  /// Date de Création de la suggestion
   @override
   final DateTime createdAt;
 
@@ -378,7 +378,7 @@ abstract class _IntelligentSuggestion implements IntelligentSuggestion {
   bool get isActioned;
   @override
 
-  /// Date de création de la suggestion
+  /// Date de Création de la suggestion
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)

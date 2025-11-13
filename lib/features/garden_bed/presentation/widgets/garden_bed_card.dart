@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../../../core/models/garden_bed.dart';
 import '../../../../shared/widgets/custom_card.dart';
@@ -181,14 +181,14 @@ class GardenBedCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'CrÃ©Ã© le ${_formatDate(gardenBed.createdAt)}',
+                'CrÃƒÂ©ÃƒÂ© le ${_formatDate(gardenBed.createdAt)}',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.outline,
                 ),
               ),
               if (gardenBed.updatedAt != gardenBed.createdAt)
                 Text(
-                  'ModifiÃ© le ${_formatDate(gardenBed.updatedAt)}',
+                  'ModifiÃƒÂ© le ${_formatDate(gardenBed.updatedAt)}',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.outline,
                   ),

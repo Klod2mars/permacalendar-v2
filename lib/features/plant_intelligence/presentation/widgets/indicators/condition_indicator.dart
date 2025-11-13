@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Indicateur pour une condition spÃ©cifique (tempÃ©rature, humiditÃ©, etc.)
+/// Indicateur pour une condition spÃƒÂ©cifique (tempÃƒÂ©rature, humiditÃƒÂ©, etc.)
 class ConditionIndicator extends StatelessWidget {
   final String label;
   final double value;
@@ -406,7 +406,7 @@ class BarConditionIndicator extends StatelessWidget {
   }
 }
 
-/// DonnÃ©es d'une condition
+/// DonnÃƒÂ©es d'une condition
 class ConditionData {
   final String label;
   final double value;

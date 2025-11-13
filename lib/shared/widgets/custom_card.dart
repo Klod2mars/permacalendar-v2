@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Carte personnalisÃ©e de base
+/// Carte personnalisÃƒÂ©e de base
 class CustomCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -56,7 +56,7 @@ class CustomCard extends StatelessWidget {
   }
 }
 
-/// Carte avec en-tÃªte et contenu
+/// Carte avec en-tÃƒÂªte et contenu
 class HeaderCard extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -93,7 +93,7 @@ class HeaderCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // En-tÃªte
+          // En-tÃƒÂªte
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -148,7 +148,7 @@ class HeaderCard extends StatelessWidget {
   }
 }
 
-/// Carte d'information avec icÃ´ne
+/// Carte d'information avec icÃƒÂ´ne
 class InfoCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -432,7 +432,7 @@ class ImageCard extends StatelessWidget {
                   ),
                 ),
 
-              // Overlay personnalisÃ©
+              // Overlay personnalisÃƒÂ©
               if (overlay != null) overlay!,
             ],
           ),

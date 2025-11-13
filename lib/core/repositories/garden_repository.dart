@@ -1,4 +1,4 @@
-import '../data/hive/garden_boxes.dart';
+﻿import '../data/hive/garden_boxes.dart';
 import '../models/garden.dart';
 import '../services/environment_service.dart';
 import 'garden_rules.dart';
@@ -31,7 +31,7 @@ class GardenRepository {
   }
 
   /// Crée un nouveau jardin avec validation de la limite
-  /// Retourne true si la création réussit, false sinon
+  /// Retourne true si la Création réussit, false sinon
   Future<bool> createGarden(Garden garden) async {
     try {
       // Validation des données du jardin
@@ -46,7 +46,7 @@ class GardenRepository {
       final canCreateResult = _gardenRules.canCreateNewGarden(existingGardens);
       if (!canCreateResult) {
         throw GardenLimitException(
-            'Impossible de créer un nouveau jardin. Limite de ${EnvironmentService.maxGardensPerUser} jardins atteinte.');
+            'Impossible de Créer un nouveau jardin. Limite de ${EnvironmentService.maxGardensPerUser} jardins atteinte.');
       }
 
       // Validation du nombre de jardins
@@ -69,7 +69,7 @@ class GardenRepository {
       rethrow;
     } catch (e) {
       throw GardenValidationException(
-          'Erreur lors de la création du jardin: $e');
+          'Erreur lors de la Création du jardin: $e');
     }
   }
 
@@ -88,7 +88,7 @@ class GardenRepository {
         throw GardenNotFoundException('Jardin avec ID ${garden.id} non trouvé');
       }
 
-      // Mise à jour du timestamp
+      // mise à jour du timestamp
       final updatedGarden = garden.copyWith();
       updatedGarden.markAsUpdated();
 
@@ -147,7 +147,7 @@ class GardenRepository {
     return getActiveGardens().length;
   }
 
-  /// Vérifie si un utilisateur peut créer un nouveau jardin
+  /// Vérifie si un utilisateur peut Créer un nouveau jardin
   bool canCreateNewGarden() {
     final existingGardens = getGardens();
     return _gardenRules.canCreateNewGarden(existingGardens);

@@ -1,4 +1,4 @@
-/// 📊 CURSOR PROMPT A8 - Plant Evolution Widgets Exports
+﻿/// ðŸ“Š CURSOR PROMPT A8 - Plant Evolution Widgets Exports
 ///
 /// Fichier d'export centralisé pour faciliter l'importation des widgets d'évolution.
 ///

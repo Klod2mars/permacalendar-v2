@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+﻿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'garden_events.freezed.dart';
 
@@ -45,7 +45,7 @@ class GardenEvent with _$GardenEvent {
   /// Événement : Changement météorologique significatif
   ///
   /// Déclenche une réévaluation de toutes les plantes du jardin
-  /// si le changement est supérieur à 5°C.
+  /// si le changement est supérieur à 5Â°C.
   const factory GardenEvent.weatherChanged({
     required String gardenId,
     required double previousTemperature,
@@ -66,7 +66,7 @@ class GardenEvent with _$GardenEvent {
     Map<String, dynamic>? metadata,
   }) = ActivityPerformedEvent;
 
-  /// Événement : Mise à jour du contexte jardin
+  /// Événement : mise à jour du contexte jardin
   ///
   /// Déclenche une mise à jour du GardenContext dans l'Intelligence Végétale.
   const factory GardenEvent.gardenContextUpdated({

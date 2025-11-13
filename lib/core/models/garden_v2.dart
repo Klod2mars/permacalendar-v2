@@ -1,9 +1,9 @@
-import 'package:hive/hive.dart';
+﻿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'garden_v2.g.dart';
 
-/// ⚠️ DÉPRÉCIÉ : Utilisez GardenFreezed à la place
+/// âš ï¸ DÉPRÉCIÉ : Utilisez GardenFreezed à la place
 ///
 /// Ce modèle Garden (v2, HiveType 10) est déprécié et sera supprimé dans la v3.0.
 ///
@@ -66,7 +66,7 @@ class Garden extends HiveObject {
     required this.gardenBeds,
   });
 
-  // Factory constructor pour créer un nouveau jardin avec ID généré
+  // Factory constructor pour Créer un nouveau jardin avec ID généré
   factory Garden.create({
     required String name,
     required String description,

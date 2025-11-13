@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+﻿import 'package:riverpod/riverpod.dart';
 import '../../../domain/models/seasonal_performance.dart';
 import 'performance_raw_data_provider.dart';
 
@@ -137,15 +137,15 @@ final performanceEncouragementMessageProvider =
   final comparison = await ref.watch(seasonalComparisonProvider.future);
 
   if (!comparison.hasPreviousSeason) {
-    return "Continue à cultiver ! Tes premières statistiques de performance saisonnière apparaîtront bientôt.";
+    return "Continue à cultiver ! Tes premières statistiques de performance saisonnière apparaÃ®tront bientôt.";
   }
 
   if (comparison.isImproving) {
-    return "Excellent ! Tu deviens un meilleur jardinier au fil des saisons ! 🌱";
+    return "Excellent ! Tu deviens un meilleur jardinier au fil des saisons ! ðŸŒ±";
   } else if (comparison.isDeclining) {
-    return "Pas de panique ! Chaque saison est différente. Continue à apprendre ! 📚";
+    return "Pas de panique ! Chaque saison est différente. Continue à apprendre ! ðŸ“š";
   } else {
-    return "Performance stable ! C'est déjà un bon signe de constance ! ⚖️";
+    return "Performance stable ! C'est déjà un bon signe de constance ! âš–ï¸";
   }
 });
 

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import '../../domain/entities/plant_condition.dart';
 import '../../domain/entities/recommendation.dart';
@@ -333,7 +333,7 @@ class PlantIntelligenceLocalDataSourceImpl
     return await hive.openBox<Map<dynamic, dynamic>>('user_preferences');
   }
 
-  /// 🔄 CURSOR PROMPT A4 - Intelligence Reports Box
+  /// ðŸ”„ CURSOR PROMPT A4 - Intelligence Reports Box
   ///
   /// Box Hive pour stocker les rapports d'intelligence complets
   /// Clé = plantId, Valeur = JSON du PlantIntelligenceReport
@@ -341,7 +341,7 @@ class PlantIntelligenceLocalDataSourceImpl
     return await hive.openBox<Map<dynamic, dynamic>>('intelligence_reports');
   }
 
-  /// 🔄 CURSOR PROMPT A7 - Evolution Reports Box
+  /// ðŸ”„ CURSOR PROMPT A7 - Evolution Reports Box
   ///
   /// Box Hive pour stocker l'historique des rapports d'évolution
   /// Clé = plantId_timestamp, Valeur = JSON du PlantEvolutionReport
@@ -360,44 +360,44 @@ class PlantIntelligenceLocalDataSourceImpl
   @override
   Future<PlantCondition?> getCurrentPlantCondition(String plantId) async {
     developer.log(
-        '🔍 DIAGNOSTIC - Début getCurrentPlantCondition: plantId=$plantId',
+        'ðŸ” DIAGNOSTIC - Début getCurrentPlantCondition: plantId=$plantId',
         name: 'PlantIntelligenceLocalDataSource');
 
     try {
-      developer.log('🔍 DIAGNOSTIC - Récupération box plant_conditions...',
+      developer.log('ðŸ” DIAGNOSTIC - Récupération box plant_conditions...',
           name: 'PlantIntelligenceLocalDataSource');
       final box = await _plantConditionsBox;
-      developer.log('🔍 DIAGNOSTIC - Box récupérée: ${box.length} entrées',
+      developer.log('ðŸ” DIAGNOSTIC - Box récupérée: ${box.length} entrées',
           name: 'PlantIntelligenceLocalDataSource');
 
       developer.log(
-          '🔍 DIAGNOSTIC - Filtrage conditions pour plantId=$plantId...',
+          'ðŸ” DIAGNOSTIC - Filtrage conditions pour plantId=$plantId...',
           name: 'PlantIntelligenceLocalDataSource');
       final conditions = box.values.where((c) => c.plantId == plantId).toList();
-      developer.log('🔍 DIAGNOSTIC - Conditions trouvées: ${conditions.length}',
+      developer.log('ðŸ” DIAGNOSTIC - Conditions trouvées: ${conditions.length}',
           name: 'PlantIntelligenceLocalDataSource');
 
       if (conditions.isEmpty) {
         developer.log(
-            '🔍 DIAGNOSTIC - Aucune condition trouvée pour plantId=$plantId',
+            'ðŸ” DIAGNOSTIC - Aucune condition trouvée pour plantId=$plantId',
             name: 'PlantIntelligenceLocalDataSource');
         return null;
       }
 
-      developer.log('🔍 DIAGNOSTIC - Tri par date...',
+      developer.log('ðŸ” DIAGNOSTIC - Tri par date...',
           name: 'PlantIntelligenceLocalDataSource');
       // Retourner la condition la plus récente
       conditions.sort((a, b) => b.measuredAt.compareTo(a.measuredAt));
       final result = conditions.first;
 
       developer.log(
-          '✅ DIAGNOSTIC - Condition récupérée: id=${result.id}, date=${result.measuredAt}',
+          'âœ… DIAGNOSTIC - Condition récupérée: id=${result.id}, date=${result.measuredAt}',
           name: 'PlantIntelligenceLocalDataSource');
       return result;
     } catch (e, stackTrace) {
-      developer.log('❌ DIAGNOSTIC - Erreur getCurrentPlantCondition: $e',
+      developer.log('âŒ DIAGNOSTIC - Erreur getCurrentPlantCondition: $e',
           name: 'PlantIntelligenceLocalDataSource');
-      developer.log('❌ DIAGNOSTIC - StackTrace: $stackTrace',
+      developer.log('âŒ DIAGNOSTIC - StackTrace: $stackTrace',
           name: 'PlantIntelligenceLocalDataSource');
       rethrow;
     }
@@ -502,7 +502,7 @@ class PlantIntelligenceLocalDataSourceImpl
         orElse: () => WeatherType.temperature,
       ),
       value: latestHive.currentTemperature,
-      unit: latestHive.metadata?['unit']?.toString() ?? '°C',
+      unit: latestHive.metadata?['unit']?.toString() ?? 'Â°C',
       description: latestHive.metadata?['description']?.toString(),
       measuredAt: latestHive.timestamp,
       latitude: latestHive.metadata?['latitude']?.toDouble(),
@@ -547,7 +547,7 @@ class PlantIntelligenceLocalDataSourceImpl
                 orElse: () => WeatherType.temperature,
               ),
               value: hive.currentTemperature,
-              unit: hive.metadata?['unit']?.toString() ?? '°C',
+              unit: hive.metadata?['unit']?.toString() ?? 'Â°C',
               description: hive.metadata?['description']?.toString(),
               measuredAt: hive.timestamp,
               latitude: hive.metadata?['latitude']?.toDouble(),
@@ -562,7 +562,7 @@ class PlantIntelligenceLocalDataSourceImpl
   Future<void> saveGardenContext(GardenContext garden) async {
     try {
       developer.log(
-        '🔍 DIAGNOSTIC: DataSource - Début sauvegarde GardenContext ${garden.gardenId}',
+        'ðŸ” DIAGNOSTIC: DataSource - Début sauvegarde GardenContext ${garden.gardenId}',
         name: 'PlantIntelligenceLocalDataSource',
         level: 500,
       );
@@ -570,7 +570,7 @@ class PlantIntelligenceLocalDataSourceImpl
       final box = await _gardenContextsBox;
 
       developer.log(
-        '🔍 DIAGNOSTIC: DataSource - Box récupérée, type: ${box.runtimeType}',
+        'ðŸ” DIAGNOSTIC: DataSource - Box récupérée, type: ${box.runtimeType}',
         name: 'PlantIntelligenceLocalDataSource',
         level: 500,
       );
@@ -579,13 +579,13 @@ class PlantIntelligenceLocalDataSourceImpl
       final gardenContextHive = GardenContextHive.fromGardenContext(garden);
 
       developer.log(
-        '🔍 DIAGNOSTIC: DataSource - Conversion réussie, type Hive: ${gardenContextHive.runtimeType}',
+        'ðŸ” DIAGNOSTIC: DataSource - Conversion réussie, type Hive: ${gardenContextHive.runtimeType}',
         name: 'PlantIntelligenceLocalDataSource',
         level: 500,
       );
 
       developer.log(
-        '🔍 DIAGNOSTIC: DataSource - Début put() avec clé: ${garden.gardenId}',
+        'ðŸ” DIAGNOSTIC: DataSource - Début put() avec clé: ${garden.gardenId}',
         name: 'PlantIntelligenceLocalDataSource',
         level: 500,
       );
@@ -593,13 +593,13 @@ class PlantIntelligenceLocalDataSourceImpl
       await box.put(garden.gardenId, gardenContextHive);
 
       developer.log(
-        '🔍 DIAGNOSTIC: DataSource - GardenContext sauvegardé avec succès',
+        'ðŸ” DIAGNOSTIC: DataSource - GardenContext sauvegardé avec succès',
         name: 'PlantIntelligenceLocalDataSource',
         level: 500,
       );
     } catch (e, stackTrace) {
       developer.log(
-        '❌ ERREUR CRITIQUE DataSource - Échec sauvegarde GardenContext: $e',
+        'âŒ ERREUR CRITIQUE DataSource - Échec sauvegarde GardenContext: $e',
         name: 'PlantIntelligenceLocalDataSource',
         level: 1000,
         error: e,
@@ -1234,7 +1234,7 @@ class PlantIntelligenceLocalDataSourceImpl
       String plantId, Map<String, dynamic> reportJson) async {
     try {
       developer.log(
-        '💾 DATASOURCE - Sauvegarde rapport intelligence pour plante $plantId',
+        'ðŸ’¾ DATASOURCE - Sauvegarde rapport intelligence pour plante $plantId',
         name: 'PlantIntelligenceLocalDataSource',
       );
 
@@ -1245,12 +1245,12 @@ class PlantIntelligenceLocalDataSourceImpl
       await box.put(plantId, reportJson);
 
       developer.log(
-        '✅ DATASOURCE - Rapport sauvegardé avec succès (taille: ${reportJson.keys.length} clés)',
+        'âœ… DATASOURCE - Rapport sauvegardé avec succès (taille: ${reportJson.keys.length} clés)',
         name: 'PlantIntelligenceLocalDataSource',
       );
     } catch (e, stackTrace) {
       developer.log(
-        '❌ DATASOURCE - Erreur sauvegarde rapport: $e',
+        'âŒ DATASOURCE - Erreur sauvegarde rapport: $e',
         name: 'PlantIntelligenceLocalDataSource',
         error: e,
         stackTrace: stackTrace,
@@ -1265,7 +1265,7 @@ class PlantIntelligenceLocalDataSourceImpl
   Future<Map<String, dynamic>?> getIntelligenceReport(String plantId) async {
     try {
       developer.log(
-        '🔍 DATASOURCE - Récupération rapport intelligence pour plante $plantId',
+        'ðŸ” DATASOURCE - Récupération rapport intelligence pour plante $plantId',
         name: 'PlantIntelligenceLocalDataSource',
       );
 
@@ -1276,7 +1276,7 @@ class PlantIntelligenceLocalDataSourceImpl
 
       if (reportJson == null) {
         developer.log(
-          'ℹ️ DATASOURCE - Aucun rapport trouvé pour plante $plantId',
+          'â„¹ï¸ DATASOURCE - Aucun rapport trouvé pour plante $plantId',
           name: 'PlantIntelligenceLocalDataSource',
         );
         return null;
@@ -1286,14 +1286,14 @@ class PlantIntelligenceLocalDataSourceImpl
       final result = Map<String, dynamic>.from(reportJson);
 
       developer.log(
-        '✅ DATASOURCE - Rapport récupéré avec succès (${result.keys.length} clés)',
+        'âœ… DATASOURCE - Rapport récupéré avec succès (${result.keys.length} clés)',
         name: 'PlantIntelligenceLocalDataSource',
       );
 
       return result;
     } catch (e, stackTrace) {
       developer.log(
-        '❌ DATASOURCE - Erreur récupération rapport: $e',
+        'âŒ DATASOURCE - Erreur récupération rapport: $e',
         name: 'PlantIntelligenceLocalDataSource',
         error: e,
         stackTrace: stackTrace,
@@ -1312,13 +1312,13 @@ class PlantIntelligenceLocalDataSourceImpl
       Map<String, dynamic> evolutionReportJson) async {
     try {
       developer.log(
-        '💾 DATASOURCE - Sauvegarde rapport évolution pour plante ${evolutionReportJson['plantId']}',
+        'ðŸ’¾ DATASOURCE - Sauvegarde rapport évolution pour plante ${evolutionReportJson['plantId']}',
         name: 'PlantIntelligenceLocalDataSource',
       );
 
       final box = await _evolutionReportsBox;
 
-      // Extraire plantId et timestamp pour créer la clé
+      // Extraire plantId et timestamp pour Créer la clé
       final plantId = evolutionReportJson['plantId'] as String;
       final currentDate = evolutionReportJson['currentDate'] as String;
 
@@ -1330,12 +1330,12 @@ class PlantIntelligenceLocalDataSourceImpl
       await box.put(key, evolutionReportJson);
 
       developer.log(
-        '✅ DATASOURCE - Rapport évolution sauvegardé avec succès (clé: $key)',
+        'âœ… DATASOURCE - Rapport évolution sauvegardé avec succès (clé: $key)',
         name: 'PlantIntelligenceLocalDataSource',
       );
     } catch (e, stackTrace) {
       developer.log(
-        '❌ DATASOURCE - Erreur sauvegarde rapport évolution: $e',
+        'âŒ DATASOURCE - Erreur sauvegarde rapport évolution: $e',
         name: 'PlantIntelligenceLocalDataSource',
         error: e,
         stackTrace: stackTrace,
@@ -1350,7 +1350,7 @@ class PlantIntelligenceLocalDataSourceImpl
   Future<List<Map<String, dynamic>>> getEvolutionReports(String plantId) async {
     try {
       developer.log(
-        '🔍 DATASOURCE - Récupération rapports évolution pour plante $plantId',
+        'ðŸ” DATASOURCE - Récupération rapports évolution pour plante $plantId',
         name: 'PlantIntelligenceLocalDataSource',
       );
 
@@ -1368,7 +1368,7 @@ class PlantIntelligenceLocalDataSourceImpl
             }
           } catch (e) {
             developer.log(
-              '⚠️ DATASOURCE - Rapport corrompu ignoré (clé: $key): $e',
+              'âš ï¸ DATASOURCE - Rapport corrompu ignoré (clé: $key): $e',
               name: 'PlantIntelligenceLocalDataSource',
               level: 900,
             );
@@ -1390,14 +1390,14 @@ class PlantIntelligenceLocalDataSourceImpl
       });
 
       developer.log(
-        '✅ DATASOURCE - ${allReports.length} rapports évolution récupérés',
+        'âœ… DATASOURCE - ${allReports.length} rapports évolution récupérés',
         name: 'PlantIntelligenceLocalDataSource',
       );
 
       return allReports;
     } catch (e, stackTrace) {
       developer.log(
-        '❌ DATASOURCE - Erreur récupération rapports évolution: $e',
+        'âŒ DATASOURCE - Erreur récupération rapports évolution: $e',
         name: 'PlantIntelligenceLocalDataSource',
         error: e,
         stackTrace: stackTrace,

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -37,7 +37,7 @@ class DataArchivalService {
 
   /// Constructeur
   DataArchivalService() {
-    _log('🏗️ Data Archival Service créé', level: 500);
+    _log('ðŸ—ï¸ Data Archival Service Créé', level: 500);
   }
 
   // ==================== ARCHIVAGE ====================
@@ -45,7 +45,7 @@ class DataArchivalService {
   /// Archive toutes les données Legacy
   Future<bool> archiveAllLegacyData() async {
     try {
-      _log('📦 Archivage complet des données Legacy', level: 500);
+      _log('ðŸ“¦ Archivage complet des données Legacy', level: 500);
 
       final startTime = DateTime.now();
 
@@ -66,13 +66,13 @@ class DataArchivalService {
 
       final duration = DateTime.now().difference(startTime);
       _log(
-        '✅ Archivage terminé: $gardensArchived jardins, ${archiveSize.toStringAsFixed(2)} MB, ${duration.inSeconds}s',
+        'âœ… Archivage terminé: $gardensArchived jardins, ${archiveSize.toStringAsFixed(2)} MB, ${duration.inSeconds}s',
         level: 500,
       );
 
       return true;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur archivage complet', e, stackTrace);
+      _logError('âŒ Erreur archivage complet', e, stackTrace);
       return false;
     }
   }
@@ -80,12 +80,12 @@ class DataArchivalService {
   /// Archive un jardin spécifique
   Future<bool> archiveGarden(String gardenId) async {
     try {
-      _log('📦 Archivage jardin $gardenId', level: 500);
+      _log('ðŸ“¦ Archivage jardin $gardenId', level: 500);
 
       // Récupérer le jardin
       final garden = GardenBoxes.getGarden(gardenId);
       if (garden == null) {
-        _log('❌ Jardin $gardenId introuvable', level: 1000);
+        _log('âŒ Jardin $gardenId introuvable', level: 1000);
         return false;
       }
 
@@ -104,10 +104,10 @@ class DataArchivalService {
 
       _gardensArchived++;
 
-      _log('✅ Jardin $gardenId archivé: $fileName', level: 500);
+      _log('âœ… Jardin $gardenId archivé: $fileName', level: 500);
       return true;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur archivage jardin $gardenId', e, stackTrace);
+      _logError('âŒ Erreur archivage jardin $gardenId', e, stackTrace);
       return false;
     }
   }
@@ -117,21 +117,21 @@ class DataArchivalService {
   /// Restaure depuis la dernière archive
   Future<bool> restoreFromLatestArchive() async {
     try {
-      _log('⏪ Restauration depuis dernière archive', level: 500);
+      _log('âª Restauration depuis dernière archive', level: 500);
 
       final archives = await listAvailableArchives();
       if (archives.isEmpty) {
-        _log('❌ Aucune archive disponible', level: 1000);
+        _log('âŒ Aucune archive disponible', level: 1000);
         return false;
       }
 
       // Prendre la dernière archive (la plus récente)
       final latestArchive = archives.last;
-      _log('📦 Restauration depuis: $latestArchive', level: 500);
+      _log('ðŸ“¦ Restauration depuis: $latestArchive', level: 500);
 
       return await restoreFromArchive(latestArchive);
     } catch (e, stackTrace) {
-      _logError('❌ Erreur restauration dernière archive', e, stackTrace);
+      _logError('âŒ Erreur restauration dernière archive', e, stackTrace);
       return false;
     }
   }
@@ -139,11 +139,11 @@ class DataArchivalService {
   /// Restaure depuis une archive spécifique
   Future<bool> restoreFromArchive(String archivePath) async {
     try {
-      _log('⏪ Restauration depuis: $archivePath', level: 500);
+      _log('âª Restauration depuis: $archivePath', level: 500);
 
       final archiveDir = Directory(archivePath);
       if (!await archiveDir.exists()) {
-        _log('❌ Archive introuvable: $archivePath', level: 1000);
+        _log('âŒ Archive introuvable: $archivePath', level: 1000);
         return false;
       }
 
@@ -153,7 +153,7 @@ class DataArchivalService {
           .where((entity) => entity is File && entity.path.endsWith('.json'))
           .toList();
 
-      _log('📄 ${files.length} fichiers à restaurer', level: 500);
+      _log('ðŸ“„ ${files.length} fichiers à restaurer', level: 500);
 
       var restoredCount = 0;
 
@@ -170,16 +170,16 @@ class DataArchivalService {
               restoredCount++;
             }
           } catch (e) {
-            _log('⚠️ Erreur restauration fichier ${fileEntity.path}: $e',
+            _log('âš ï¸ Erreur restauration fichier ${fileEntity.path}: $e',
                 level: 900);
           }
         }
       }
 
-      _log('✅ Restauration terminée: $restoredCount éléments', level: 500);
+      _log('âœ… Restauration terminée: $restoredCount éléments', level: 500);
       return restoredCount > 0;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur restauration archive', e, stackTrace);
+      _logError('âŒ Erreur restauration archive', e, stackTrace);
       return false;
     }
   }
@@ -203,10 +203,10 @@ class DataArchivalService {
       // Trier par date (plus récent en dernier)
       archives.sort();
 
-      _log('📋 ${archives.length} archives disponibles', level: 500);
+      _log('ðŸ“‹ ${archives.length} archives disponibles', level: 500);
       return archives;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur liste archives', e, stackTrace);
+      _logError('âŒ Erreur liste archives', e, stackTrace);
       return [];
     }
   }
@@ -216,11 +216,11 @@ class DataArchivalService {
   /// Supprime les anciennes archives (garde les 5 plus récentes)
   Future<bool> cleanupOldArchives({int keepCount = 5}) async {
     try {
-      _log('🧹 Nettoyage anciennes archives (garder $keepCount)', level: 500);
+      _log('ðŸ§¹ Nettoyage anciennes archives (garder $keepCount)', level: 500);
 
       final archives = await listAvailableArchives();
       if (archives.length <= keepCount) {
-        _log('ℹ️ Pas besoin de nettoyage (${archives.length} archives)',
+        _log('â„¹ï¸ Pas besoin de nettoyage (${archives.length} archives)',
             level: 500);
         return true;
       }
@@ -234,16 +234,16 @@ class DataArchivalService {
           final archiveDir = Directory(archives[i]);
           await archiveDir.delete(recursive: true);
           deletedCount++;
-          _log('  🗑️ Archive supprimée: ${archives[i]}', level: 500);
+          _log('  ðŸ—‘ï¸ Archive supprimée: ${archives[i]}', level: 500);
         } catch (e) {
-          _log('  ⚠️ Erreur suppression ${archives[i]}: $e', level: 900);
+          _log('  âš ï¸ Erreur suppression ${archives[i]}: $e', level: 900);
         }
       }
 
-      _log('✅ $deletedCount anciennes archives supprimées', level: 500);
+      _log('âœ… $deletedCount anciennes archives supprimées', level: 500);
       return deletedCount == toDelete;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur nettoyage archives', e, stackTrace);
+      _logError('âŒ Erreur nettoyage archives', e, stackTrace);
       return false;
     }
   }
@@ -257,7 +257,7 @@ class DataArchivalService {
         Directory('${appDir.path}/$_archiveFolder/archive_$timestamp');
 
     await archiveDir.create(recursive: true);
-    _log('📁 Dossier archive créé: ${archiveDir.path}', level: 500);
+    _log('ðŸ“ Dossier archive Créé: ${archiveDir.path}', level: 500);
 
     return archiveDir;
   }
@@ -265,7 +265,7 @@ class DataArchivalService {
   Future<bool> _archiveGardens(Directory archiveDir) async {
     try {
       final gardens = GardenBoxes.getAllGardens();
-      _log('📦 Archivage de ${gardens.length} jardins', level: 500);
+      _log('ðŸ“¦ Archivage de ${gardens.length} jardins', level: 500);
 
       for (final garden in gardens) {
         final gardenJson = garden.toJson();
@@ -278,11 +278,11 @@ class DataArchivalService {
       }
 
       _gardensArchived += gardens.length;
-      _log('✅ ${gardens.length} jardins archivés', level: 500);
+      _log('âœ… ${gardens.length} jardins archivés', level: 500);
 
       return true;
     } catch (e) {
-      _log('❌ Erreur archivage jardins: $e', level: 1000);
+      _log('âŒ Erreur archivage jardins: $e', level: 1000);
       return false;
     }
   }
@@ -304,9 +304,9 @@ class DataArchivalService {
         const JsonEncoder.withIndent('  ').convert(metadata),
       );
 
-      _log('✅ Métadonnées archivées', level: 500);
+      _log('âœ… Métadonnées archivées', level: 500);
     } catch (e) {
-      _log('⚠️ Erreur archivage métadonnées: $e', level: 900);
+      _log('âš ï¸ Erreur archivage métadonnées: $e', level: 900);
     }
   }
 
@@ -322,7 +322,7 @@ class DataArchivalService {
 
       return totalSize / (1024 * 1024); // Convertir en MB
     } catch (e) {
-      _log('⚠️ Erreur calcul taille archive: $e', level: 900);
+      _log('âš ï¸ Erreur calcul taille archive: $e', level: 900);
       return 0.0;
     }
   }
@@ -341,7 +341,7 @@ class DataArchivalService {
     _archivesCreated = 0;
     _gardensArchived = 0;
     _totalArchiveSize = 0.0;
-    _log('📊 Statistiques archivage réinitialisées', level: 500);
+    _log('ðŸ“Š Statistiques archivage réinitialisées', level: 500);
   }
 
   // ==================== UTILITAIRES ====================

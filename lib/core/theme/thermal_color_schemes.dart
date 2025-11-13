@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 /// Palettes thermiques pour adaptation climatique respectueuse
 /// Interface respire avec le climat - Changement complet mais respectueux
 class ThermalColorSchemes {
-  /// ❄️ PALETTE FROID EXTRÊME - Bleu glace bioluminescent
+  /// â„ï¸ PALETTE FROID EXTRÃŠME - Bleu glace bioluminescent
   static const ColorScheme freezePalette = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF0D47A1), // Bleu profond glacial
@@ -18,7 +18,7 @@ class ThermalColorSchemes {
     onSurface: Color(0xFFE8EAF6), // Texte surface
   );
 
-  /// 🌊 PALETTE FROID MODÉRÉ - Bleu-vert froid
+  /// ðŸŒŠ PALETTE FROID MODÉRÉ - Bleu-vert froid
   static const ColorScheme coldPalette = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF00695C), // Bleu-vert profond
@@ -33,7 +33,7 @@ class ThermalColorSchemes {
     onSurface: Color(0xFFE0F2F1), // Texte surface
   );
 
-  /// 🌿 PALETTE TEMPÉRÉE - Vert stable (référence actuelle)
+  /// ðŸŒ¿ PALETTE TEMPÉRÉE - Vert stable (référence actuelle)
   static const ColorScheme moderatePalette = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF2E7D32), // Vert permaculture (actuel)
@@ -48,7 +48,7 @@ class ThermalColorSchemes {
     onSurface: Color(0xFFE8F5E8), // Texte surface
   );
 
-  /// 🔥 PALETTE CHALEUR ÉLEVÉE - Vert chaud cuivré
+  /// ðŸ”¥ PALETTE CHALEUR ÉLEVÉE - Vert chaud cuivré
   static const ColorScheme hotPalette = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF6D4C41), // Brun terre chaude
@@ -63,7 +63,7 @@ class ThermalColorSchemes {
     onSurface: Color(0xFFEFEBE9), // Texte surface
   );
 
-  /// 🌋 PALETTE CANICULE - Orange/rouge organique
+  /// ðŸŒ‹ PALETTE CANICULE - Orange/rouge organique
   static const ColorScheme heatwavePalette = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFFD84315), // Rouge terre volcanique
@@ -78,10 +78,10 @@ class ThermalColorSchemes {
     onSurface: Color(0xFFFFE0B2), // Texte ambré
   );
 
-  /// 🌈 Interpoler entre deux palettes pour transitions fluides
+  /// ðŸŒˆ Interpoler entre deux palettes pour transitions fluides
   /// Permet des transitions douces sans flash brutal
   static ColorScheme interpolatePalettes(
-      ColorScheme from, ColorScheme to, double progress // 0.0 → 1.0
+      ColorScheme from, ColorScheme to, double progress // 0.0 â†’ 1.0
       ) {
     return ColorScheme(
       brightness: to.brightness,

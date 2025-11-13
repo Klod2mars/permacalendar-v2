@@ -1,4 +1,4 @@
-/// Modèle unifié DailyWeatherPoint
+﻿/// Modèle unifié DailyWeatherPoint
 ///
 /// Fusion de:
 /// - Version brute (open_meteo_service.dart): date, precipMm, tMaxC, tMinC, weatherCode

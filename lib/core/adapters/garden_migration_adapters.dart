@@ -1,4 +1,4 @@
-import '../models/garden.dart' as legacy;
+﻿import '../models/garden.dart' as legacy;
 import '../models/garden_v2.dart' as v2;
 import '../models/garden_hive.dart';
 import '../models/garden_bed_hive.dart';
@@ -29,16 +29,16 @@ class GardenMigrationAdapters {
   /// Convertit un Garden (legacy, HiveType 0) vers GardenFreezed
   ///
   /// **Mapping des champs :**
-  /// - `id` → `id` (conservé)
-  /// - `name` → `name`
-  /// - `description` → `description`
-  /// - `totalAreaInSquareMeters` → `totalAreaInSquareMeters`
-  /// - `location` → `location`
-  /// - `createdAt` → `createdAt`
-  /// - `updatedAt` → `updatedAt`
-  /// - `imageUrl` → `imageUrl`
-  /// - `metadata` → `metadata`
-  /// - `isActive` → `isActive`
+  /// - `id` â†’ `id` (conservé)
+  /// - `name` â†’ `name`
+  /// - `description` â†’ `description`
+  /// - `totalAreaInSquareMeters` â†’ `totalAreaInSquareMeters`
+  /// - `location` â†’ `location`
+  /// - `createdAt` â†’ `createdAt`
+  /// - `updatedAt` â†’ `updatedAt`
+  /// - `imageUrl` â†’ `imageUrl`
+  /// - `metadata` â†’ `metadata`
+  /// - `isActive` â†’ `isActive`
   ///
   /// **Exemple :**
   /// ```dart
@@ -89,12 +89,12 @@ class GardenMigrationAdapters {
   /// Convertit un Garden (v2, HiveType 10) vers GardenFreezed
   ///
   /// **Mapping des champs :**
-  /// - `id` → `id` (conservé)
-  /// - `name` → `name`
-  /// - `description` → `description`
-  /// - `location` → `location`
-  /// - `createdDate` → `createdAt`
-  /// - `gardenBeds` → `metadata['gardenBedIds']` (liste des IDs)
+  /// - `id` â†’ `id` (conservé)
+  /// - `name` â†’ `name`
+  /// - `description` â†’ `description`
+  /// - `location` â†’ `location`
+  /// - `createdDate` â†’ `createdAt`
+  /// - `gardenBeds` â†’ `metadata['gardenBedIds']` (liste des IDs)
   ///
   /// **Valeurs par défaut :**
   /// - `totalAreaInSquareMeters` = 0.0 (sera recalculé plus tard)
@@ -156,11 +156,11 @@ class GardenMigrationAdapters {
   /// Cet adaptateur fournit une interface unifiée et ajoute des métadonnées.
   ///
   /// **Mapping des champs :**
-  /// - `id` → `id`
-  /// - `name` → `name`
-  /// - `description` → `description`
-  /// - `createdDate` → `createdAt`
-  /// - `gardenBeds` → Surface totale calculée + IDs en metadata
+  /// - `id` â†’ `id`
+  /// - `name` â†’ `name`
+  /// - `description` â†’ `description`
+  /// - `createdDate` â†’ `createdAt`
+  /// - `gardenBeds` â†’ Surface totale calculée + IDs en metadata
   ///
   /// **Calculs effectués :**
   /// - `totalAreaInSquareMeters` = somme des surfaces des parcelles
@@ -197,7 +197,7 @@ class GardenMigrationAdapters {
   /// Convertit un GardenFreezed vers GardenHive
   ///
   /// **Note :** Cette conversion nécessite la liste des GardenBedHive complets.
-  /// Si non fournie, crée un GardenHive vide.
+  /// Si non fournie, Crée un GardenHive vide.
   ///
   /// **Perte de données :**
   /// - `totalAreaInSquareMeters` (recalculé depuis les beds)

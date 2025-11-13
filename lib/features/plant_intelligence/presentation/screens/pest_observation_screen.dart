@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../domain/entities/pest.dart';
@@ -11,7 +11,7 @@ import '../../../../core/di/intelligence_module.dart';
 /// This screen embodies the Sanctuary principle - it allows ONLY the user
 /// to create pest observations, NEVER the AI. The user observes reality
 /// in their garden and records it. This maintains the sacred flow:
-/// Reality (User Observation) → Sanctuary (Record) → Intelligence (Analysis)
+/// Reality (User Observation) â†’ Sanctuary (Record) â†’ Intelligence (Analysis)
 class PestObservationScreen extends ConsumerStatefulWidget {
   final String gardenId;
   final String plantId;
@@ -93,7 +93,7 @@ class _PestObservationScreenState extends ConsumerState<PestObservationScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('✅ Observation enregistrée avec succès'),
+            content: Text('âœ… Observation enregistrée avec succès'),
             backgroundColor: Colors.green,
           ),
         );
@@ -119,7 +119,7 @@ class _PestObservationScreenState extends ConsumerState<PestObservationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🐛 Observer un ravageur'),
+        title: const Text('ðŸ› Observer un ravageur'),
         centerTitle: true,
       ),
       body: _isLoading

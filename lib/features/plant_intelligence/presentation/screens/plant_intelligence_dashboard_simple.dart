@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Version simplifiÃ©e du dashboard d'intelligence vÃ©gÃ©tale
+/// Version simplifiÃƒÂ©e du dashboard d'intelligence vÃƒÂ©gÃƒÂ©tale
 class PlantIntelligenceDashboardSimple extends StatelessWidget {
   const PlantIntelligenceDashboardSimple({super.key});
 
@@ -11,7 +11,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Intelligence VÃ©gÃ©tale'),
+        title: const Text('Intelligence VÃƒÂ©gÃƒÂ©tale'),
         backgroundColor: theme.colorScheme.surface,
         foregroundColor: theme.colorScheme.onSurface,
         elevation: 0,
@@ -21,7 +21,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // En-tÃªte
+            // En-tÃƒÂªte
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -55,7 +55,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Intelligence VÃ©gÃ©tale',
+                              'Intelligence VÃƒÂ©gÃƒÂ©tale',
                               style: theme.textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: theme.colorScheme.onSurface,
@@ -93,7 +93,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
                 Expanded(
                   child: _buildStatCard(
                     context,
-                    'Plantes surveillÃ©es',
+                    'Plantes surveillÃƒÂ©es',
                     '12',
                     Icons.local_florist,
                     theme.colorScheme.primary,
@@ -129,7 +129,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
                 Expanded(
                   child: _buildStatCard(
                     context,
-                    'SantÃ© moyenne',
+                    'SantÃƒÂ© moyenne',
                     '85%',
                     Icons.favorite,
                     Colors.green,
@@ -152,7 +152,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
             _buildActionCard(
               context,
               'Analyser mes plantes',
-              'Obtenez des recommandations personnalisÃ©es',
+              'Obtenez des recommandations personnalisÃƒÂ©es',
               Icons.analytics,
               () => _showComingSoon(context),
             ),
@@ -171,7 +171,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
 
             _buildActionCard(
               context,
-              'ParamÃ¨tres d\'intelligence',
+              'ParamÃƒÂ¨tres d\'intelligence',
               'Configurez les alertes et notifications',
               Icons.settings,
               () => context.push('/intelligence/settings'),
@@ -179,7 +179,7 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // Section en dÃ©veloppement
+            // Section en dÃƒÂ©veloppement
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -199,15 +199,15 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'FonctionnalitÃ©s en dÃ©veloppement',
+                    'FonctionnalitÃƒÂ©s en dÃƒÂ©veloppement',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'L\'intelligence vÃ©gÃ©tale est en cours de dÃ©veloppement. '
-                    'Les fonctionnalitÃ©s avancÃ©es seront bientÃ´t disponibles.',
+                    'L\'intelligence vÃƒÂ©gÃƒÂ©tale est en cours de dÃƒÂ©veloppement. '
+                    'Les fonctionnalitÃƒÂ©s avancÃƒÂ©es seront bientÃƒÂ´t disponibles.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -333,9 +333,9 @@ class PlantIntelligenceDashboardSimple extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('BientÃ´t disponible'),
+        title: const Text('BientÃƒÂ´t disponible'),
         content: const Text(
-          'Cette fonctionnalitÃ© est en cours de dÃ©veloppement et sera disponible dans une prochaine version.',
+          'Cette fonctionnalitÃƒÂ© est en cours de dÃƒÂ©veloppement et sera disponible dans une prochaine version.',
         ),
         actions: [
           TextButton(

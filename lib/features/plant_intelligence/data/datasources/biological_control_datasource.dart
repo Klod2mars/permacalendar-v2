@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -74,7 +74,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
 
       _pestCatalogCache = jsonData.map((json) => Pest.fromJson(json)).toList();
 
-      developer.log('✅ ${_pestCatalogCache!.length} pests loaded',
+      developer.log('âœ… ${_pestCatalogCache!.length} pests loaded',
           name: _logName);
 
       return _pestCatalogCache!;
@@ -108,7 +108,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
           jsonData.map((json) => BeneficialInsect.fromJson(json)).toList();
 
       developer.log(
-          '✅ ${_beneficialCatalogCache!.length} beneficial insects loaded',
+          'âœ… ${_beneficialCatalogCache!.length} beneficial insects loaded',
           name: _logName);
 
       return _beneficialCatalogCache!;
@@ -167,7 +167,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
     try {
       final box = await _observationsBox;
       await box.put(observation.id, observation.toJson());
-      developer.log('✅ Pest observation saved: ${observation.id}',
+      developer.log('âœ… Pest observation saved: ${observation.id}',
           name: _logName);
     } catch (e, stackTrace) {
       developer.log(
@@ -292,7 +292,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
           resolutionMethod: resolutionMethod,
         );
         await box.put(observationId, updated.toJson());
-        developer.log('✅ Observation resolved: $observationId', name: _logName);
+        developer.log('âœ… Observation resolved: $observationId', name: _logName);
       }
     } catch (e, stackTrace) {
       developer.log(
@@ -310,7 +310,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
     try {
       final box = await _observationsBox;
       await box.delete(observationId);
-      developer.log('✅ Observation deleted: $observationId', name: _logName);
+      developer.log('âœ… Observation deleted: $observationId', name: _logName);
     } catch (e, stackTrace) {
       developer.log(
         'Error deleting observation',
@@ -345,7 +345,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
     try {
       final box = await _recommendationsBox;
       await box.put(recommendation.id, recommendation.toJson());
-      developer.log('✅ Bio control recommendation saved: ${recommendation.id}',
+      developer.log('âœ… Bio control recommendation saved: ${recommendation.id}',
           name: _logName);
     } catch (e, stackTrace) {
       developer.log(
@@ -474,7 +474,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
           userFeedback: userFeedback,
         );
         await box.put(recommendationId, updated.toJson());
-        developer.log('✅ Recommendation marked as applied: $recommendationId',
+        developer.log('âœ… Recommendation marked as applied: $recommendationId',
             name: _logName);
       }
     } catch (e, stackTrace) {
@@ -493,7 +493,7 @@ class BiologicalControlDataSourceImpl implements BiologicalControlDataSource {
     try {
       final box = await _recommendationsBox;
       await box.delete(recommendationId);
-      developer.log('✅ Recommendation deleted: $recommendationId',
+      developer.log('âœ… Recommendation deleted: $recommendationId',
           name: _logName);
     } catch (e, stackTrace) {
       developer.log(

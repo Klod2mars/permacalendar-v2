@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import '../../domain/repositories/i_pest_repository.dart';
 import '../../domain/repositories/i_beneficial_insect_repository.dart';
 import '../../domain/repositories/i_pest_observation_repository.dart';
@@ -180,7 +180,7 @@ class BiologicalControlRepositoryImpl
   Future<void> savePestObservation(PestObservation observation) async {
     try {
       await _dataSource.savePestObservation(observation);
-      developer.log('✅ Pest observation saved to Sanctuary', name: _logName);
+      developer.log('âœ… Pest observation saved to Sanctuary', name: _logName);
     } catch (e, stackTrace) {
       developer.log(
         'Error saving pest observation',
@@ -197,7 +197,7 @@ class BiologicalControlRepositoryImpl
     try {
       await _dataSource
           .savePestObservation(observation); // Update uses same method as save
-      developer.log('✅ Pest observation updated', name: _logName);
+      developer.log('âœ… Pest observation updated', name: _logName);
     } catch (e, stackTrace) {
       developer.log(
         'Error updating pest observation',
@@ -263,7 +263,7 @@ class BiologicalControlRepositoryImpl
       String observationId, String resolutionMethod) async {
     try {
       await _dataSource.resolveObservation(observationId, resolutionMethod);
-      developer.log('✅ Observation resolved: $observationId', name: _logName);
+      developer.log('âœ… Observation resolved: $observationId', name: _logName);
     } catch (e, stackTrace) {
       developer.log(
         'Error resolving observation',
@@ -279,7 +279,7 @@ class BiologicalControlRepositoryImpl
   Future<void> deleteObservation(String observationId) async {
     try {
       await _dataSource.deleteObservation(observationId);
-      developer.log('✅ Observation deleted: $observationId', name: _logName);
+      developer.log('âœ… Observation deleted: $observationId', name: _logName);
     } catch (e, stackTrace) {
       developer.log(
         'Error deleting observation',
@@ -298,7 +298,7 @@ class BiologicalControlRepositoryImpl
       BioControlRecommendation recommendation) async {
     try {
       await _dataSource.saveBioControlRecommendation(recommendation);
-      developer.log('✅ Bio control recommendation saved', name: _logName);
+      developer.log('âœ… Bio control recommendation saved', name: _logName);
     } catch (e, stackTrace) {
       developer.log(
         'Error saving recommendation',
@@ -356,7 +356,7 @@ class BiologicalControlRepositoryImpl
     try {
       await _dataSource.markRecommendationApplied(
           recommendationId, DateTime.now(), userFeedback);
-      developer.log('✅ Recommendation marked as applied: $recommendationId',
+      developer.log('âœ… Recommendation marked as applied: $recommendationId',
           name: _logName);
     } catch (e, stackTrace) {
       developer.log(
@@ -388,7 +388,7 @@ class BiologicalControlRepositoryImpl
   Future<void> deleteRecommendation(String recommendationId) async {
     try {
       await _dataSource.deleteRecommendation(recommendationId);
-      developer.log('✅ Recommendation deleted: $recommendationId',
+      developer.log('âœ… Recommendation deleted: $recommendationId',
           name: _logName);
     } catch (e, stackTrace) {
       developer.log(

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../domain/entities/plant_condition_hive.dart';
 import '../../domain/entities/recommendation_hive.dart';
@@ -9,7 +9,7 @@ import '../../../../core/data/hive/garden_boxes.dart';
 /// **Prompt A15 - Multi-Garden Migration**
 ///
 /// Cette migration ajoute le champ `gardenId` à toutes les conditions et recommandations
-/// existantes en inférant le gardenId depuis la relation plant → gardenBed → garden.
+/// existantes en inférant le gardenId depuis la relation plant â†’ gardenBed â†’ garden.
 ///
 /// **Stratégie :**
 /// 1. Pour chaque PlantCondition/Recommendation existante sans gardenId
@@ -31,7 +31,7 @@ class MultiGardenMigration {
   /// Retourne un rapport de migration avec statistiques
   static Future<MigrationReport> execute() async {
     developer.log(
-      '🔄 MIGRATION - Début de la migration multi-garden',
+      'ðŸ”„ MIGRATION - Début de la migration multi-garden',
       name: 'MultiGardenMigration',
     );
 
@@ -41,7 +41,7 @@ class MultiGardenMigration {
     try {
       // Phase 1: Migrer les PlantConditions
       developer.log(
-        '📊 MIGRATION - Phase 1: Migration des PlantConditions',
+        'ðŸ“Š MIGRATION - Phase 1: Migration des PlantConditions',
         name: 'MultiGardenMigration',
       );
       final conditionsResult = await _migrateConditions();
@@ -51,7 +51,7 @@ class MultiGardenMigration {
 
       // Phase 2: Migrer les Recommendations
       developer.log(
-        '📋 MIGRATION - Phase 2: Migration des Recommendations',
+        'ðŸ“‹ MIGRATION - Phase 2: Migration des Recommendations',
         name: 'MultiGardenMigration',
       );
       final recommendationsResult = await _migrateRecommendations();
@@ -63,11 +63,11 @@ class MultiGardenMigration {
       report.duration = DateTime.now().difference(startTime);
 
       developer.log(
-        '✅ MIGRATION - Migration terminée avec succès',
+        'âœ… MIGRATION - Migration terminée avec succès',
         name: 'MultiGardenMigration',
       );
       developer.log(
-        '📊 MIGRATION - Rapport: ${report.conditionsMigrated} conditions + ${report.recommendationsMigrated} recommandations migrées',
+        'ðŸ“Š MIGRATION - Rapport: ${report.conditionsMigrated} conditions + ${report.recommendationsMigrated} recommandations migrées',
         name: 'MultiGardenMigration',
       );
     } catch (e, stackTrace) {
@@ -76,7 +76,7 @@ class MultiGardenMigration {
       report.duration = DateTime.now().difference(startTime);
 
       developer.log(
-        '❌ MIGRATION - Erreur critique: $e',
+        'âŒ MIGRATION - Erreur critique: $e',
         name: 'MultiGardenMigration',
         error: e,
         stackTrace: stackTrace,
@@ -96,7 +96,7 @@ class MultiGardenMigration {
       final box = await Hive.openBox<PlantConditionHive>(_conditionsBoxName);
 
       developer.log(
-        '📦 MIGRATION - Box PlantConditions ouverte: ${box.length} entrées',
+        'ðŸ“¦ MIGRATION - Box PlantConditions ouverte: ${box.length} entrées',
         name: 'MultiGardenMigration',
       );
 
@@ -116,7 +116,7 @@ class MultiGardenMigration {
 
           if (gardenId == null) {
             developer.log(
-              '⚠️ MIGRATION - Impossible d\'inférer gardenId pour condition ${condition.id}',
+              'âš ï¸ MIGRATION - Impossible d\'inférer gardenId pour condition ${condition.id}',
               name: 'MultiGardenMigration',
               level: 900,
             );
@@ -132,13 +132,13 @@ class MultiGardenMigration {
 
           if (migrated % 10 == 0) {
             developer.log(
-              '📊 MIGRATION - Conditions migrées: $migrated',
+              'ðŸ“Š MIGRATION - Conditions migrées: $migrated',
               name: 'MultiGardenMigration',
             );
           }
         } catch (e) {
           developer.log(
-            '❌ MIGRATION - Erreur migration condition à l\'index $i: $e',
+            'âŒ MIGRATION - Erreur migration condition à l\'index $i: $e',
             name: 'MultiGardenMigration',
             level: 900,
           );
@@ -149,12 +149,12 @@ class MultiGardenMigration {
       await box.close();
 
       developer.log(
-        '✅ MIGRATION - Conditions: $migrated migrées, $skipped ignorées, $errors erreurs',
+        'âœ… MIGRATION - Conditions: $migrated migrées, $skipped ignorées, $errors erreurs',
         name: 'MultiGardenMigration',
       );
     } catch (e) {
       developer.log(
-        '❌ MIGRATION - Erreur lors de l\'ouverture de la box conditions: $e',
+        'âŒ MIGRATION - Erreur lors de l\'ouverture de la box conditions: $e',
         name: 'MultiGardenMigration',
         level: 1000,
       );
@@ -175,7 +175,7 @@ class MultiGardenMigration {
           await Hive.openBox<RecommendationHive>(_recommendationsBoxName);
 
       developer.log(
-        '📦 MIGRATION - Box Recommendations ouverte: ${box.length} entrées',
+        'ðŸ“¦ MIGRATION - Box Recommendations ouverte: ${box.length} entrées',
         name: 'MultiGardenMigration',
       );
 
@@ -197,7 +197,7 @@ class MultiGardenMigration {
 
           if (gardenId == null) {
             developer.log(
-              '⚠️ MIGRATION - Impossible d\'inférer gardenId pour recommandation ${recommendation.id}',
+              'âš ï¸ MIGRATION - Impossible d\'inférer gardenId pour recommandation ${recommendation.id}',
               name: 'MultiGardenMigration',
               level: 900,
             );
@@ -213,13 +213,13 @@ class MultiGardenMigration {
 
           if (migrated % 10 == 0) {
             developer.log(
-              '📊 MIGRATION - Recommandations migrées: $migrated',
+              'ðŸ“Š MIGRATION - Recommandations migrées: $migrated',
               name: 'MultiGardenMigration',
             );
           }
         } catch (e) {
           developer.log(
-            '❌ MIGRATION - Erreur migration recommandation à l\'index $i: $e',
+            'âŒ MIGRATION - Erreur migration recommandation à l\'index $i: $e',
             name: 'MultiGardenMigration',
             level: 900,
           );
@@ -230,12 +230,12 @@ class MultiGardenMigration {
       await box.close();
 
       developer.log(
-        '✅ MIGRATION - Recommandations: $migrated migrées, $skipped ignorées, $errors erreurs',
+        'âœ… MIGRATION - Recommandations: $migrated migrées, $skipped ignorées, $errors erreurs',
         name: 'MultiGardenMigration',
       );
     } catch (e) {
       developer.log(
-        '❌ MIGRATION - Erreur lors de l\'ouverture de la box recommandations: $e',
+        'âŒ MIGRATION - Erreur lors de l\'ouverture de la box recommandations: $e',
         name: 'MultiGardenMigration',
         level: 1000,
       );
@@ -247,7 +247,7 @@ class MultiGardenMigration {
 
   /// Infère le gardenId depuis un plantId
   ///
-  /// Stratégie : plant → planting → gardenBed → garden
+  /// Stratégie : plant â†’ planting â†’ gardenBed â†’ garden
   static Future<String?> _inferGardenIdFromPlantId(String plantId) async {
     try {
       // Récupérer toutes les plantations depuis toutes les parcelles
@@ -266,7 +266,7 @@ class MultiGardenMigration {
           final gardenId = gardenBed.gardenId;
 
           developer.log(
-            '✅ MIGRATION - gardenId inféré: $gardenId pour plantId: $plantId',
+            'âœ… MIGRATION - gardenId inféré: $gardenId pour plantId: $plantId',
             name: 'MultiGardenMigration',
           );
 
@@ -276,14 +276,14 @@ class MultiGardenMigration {
 
       // Aucune plantation trouvée pour cette plante
       developer.log(
-        'ℹ️ MIGRATION - Aucune plantation trouvée pour plantId: $plantId',
+        'â„¹ï¸ MIGRATION - Aucune plantation trouvée pour plantId: $plantId',
         name: 'MultiGardenMigration',
         level: 800,
       );
       return null;
     } catch (e) {
       developer.log(
-        '❌ MIGRATION - Erreur inférence gardenId pour plantId $plantId: $e',
+        'âŒ MIGRATION - Erreur inférence gardenId pour plantId $plantId: $e',
         name: 'MultiGardenMigration',
         level: 900,
       );
@@ -326,7 +326,7 @@ class MultiGardenMigration {
       return false;
     } catch (e) {
       developer.log(
-        '❌ MIGRATION - Erreur vérification besoin migration: $e',
+        'âŒ MIGRATION - Erreur vérification besoin migration: $e',
         name: 'MultiGardenMigration',
         level: 1000,
       );
@@ -356,37 +356,37 @@ class MigrationReport {
   @override
   String toString() {
     final buffer = StringBuffer();
-    buffer.writeln('═══════════════════════════════════════════════════════');
+    buffer.writeln('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
     buffer.writeln('        RAPPORT DE MIGRATION MULTI-GARDEN');
-    buffer.writeln('═══════════════════════════════════════════════════════');
+    buffer.writeln('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
     buffer.writeln();
-    buffer.writeln('Statut: ${success ? "✅ SUCCÈS" : "❌ ÉCHEC"}');
+    buffer.writeln('Statut: ${success ? "âœ… SUCCÃˆS" : "âŒ ÉCHEC"}');
     buffer.writeln('Durée: ${duration?.inSeconds ?? 0}s');
     if (error != null) {
       buffer.writeln('Erreur: $error');
     }
     buffer.writeln();
-    buffer.writeln('───────────────────────────────────────────────────────');
+    buffer.writeln('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€');
     buffer.writeln('  PLANT CONDITIONS');
-    buffer.writeln('───────────────────────────────────────────────────────');
-    buffer.writeln('  ✓ Migrées:  $conditionsMigrated');
-    buffer.writeln('  ⊘ Ignorées:  $conditionsSkipped');
-    buffer.writeln('  ✗ Erreurs:   $conditionsErrors');
+    buffer.writeln('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€');
+    buffer.writeln('  âœ“ Migrées:  $conditionsMigrated');
+    buffer.writeln('  âŠ˜ Ignorées:  $conditionsSkipped');
+    buffer.writeln('  âœ— Erreurs:   $conditionsErrors');
     buffer.writeln();
-    buffer.writeln('───────────────────────────────────────────────────────');
+    buffer.writeln('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€');
     buffer.writeln('  RECOMMENDATIONS');
-    buffer.writeln('───────────────────────────────────────────────────────');
-    buffer.writeln('  ✓ Migrées:  $recommendationsMigrated');
-    buffer.writeln('  ⊘ Ignorées:  $recommendationsSkipped');
-    buffer.writeln('  ✗ Erreurs:   $recommendationsErrors');
+    buffer.writeln('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€');
+    buffer.writeln('  âœ“ Migrées:  $recommendationsMigrated');
+    buffer.writeln('  âŠ˜ Ignorées:  $recommendationsSkipped');
+    buffer.writeln('  âœ— Erreurs:   $recommendationsErrors');
     buffer.writeln();
-    buffer.writeln('───────────────────────────────────────────────────────');
+    buffer.writeln('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€');
     buffer.writeln('  TOTAL');
-    buffer.writeln('───────────────────────────────────────────────────────');
-    buffer.writeln('  ✓ Migrées:  $totalMigrated');
-    buffer.writeln('  ⊘ Ignorées:  $totalSkipped');
-    buffer.writeln('  ✗ Erreurs:   $totalErrors');
-    buffer.writeln('═══════════════════════════════════════════════════════');
+    buffer.writeln('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€');
+    buffer.writeln('  âœ“ Migrées:  $totalMigrated');
+    buffer.writeln('  âŠ˜ Ignorées:  $totalSkipped');
+    buffer.writeln('  âœ— Erreurs:   $totalErrors');
+    buffer.writeln('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
 
     return buffer.toString();
   }

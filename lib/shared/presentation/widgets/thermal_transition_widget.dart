@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/theme/thermal_color_schemes.dart';
 
 /// Widget pour transitions thermiques graduelles et douces (2-5s)

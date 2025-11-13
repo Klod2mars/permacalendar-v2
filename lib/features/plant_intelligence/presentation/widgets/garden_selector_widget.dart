@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/garden/providers/garden_provider.dart';
 import '../providers/intelligence_state_providers.dart';
@@ -295,7 +295,7 @@ class GardenSelectorWidget extends ConsumerWidget {
     onGardenChanged?.call(gardenId);
 
     // Logger pour debug
-    debugPrint('🌱 [GardenSelector] Jardin sélectionné: $gardenId');
+    debugPrint('ðŸŒ± [GardenSelector] Jardin sélectionné: $gardenId');
   }
 }
 

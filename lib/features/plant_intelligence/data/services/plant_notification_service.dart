@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
@@ -115,11 +115,11 @@ class PlantNotificationService {
       // Mettre à jour le compteur de notifications non lues
       _updateUnreadCount();
 
-      _logDebug('Notification créée: ${notification.title}');
+      _logDebug('Notification Créée: ${notification.title}');
 
       return notification;
     } catch (e, stackTrace) {
-      _logError('Erreur lors de la création de la notification', e, stackTrace);
+      _logError('Erreur lors de la Création de la notification', e, stackTrace);
       rethrow;
     }
   }
@@ -131,7 +131,7 @@ class PlantNotificationService {
     try {
       final notifications = _notificationsBox!.values.toList();
 
-      // Trier par date de création (plus récentes en premier)
+      // Trier par date de Création (plus récentes en premier)
       notifications.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       return notifications;
@@ -386,23 +386,23 @@ class PlantNotificationService {
 
       // Alerte de gel
       if (weather.temperature < 0) {
-        alertTitle = '❄️ Alerte Gel';
+        alertTitle = 'â„ï¸ Alerte Gel';
         alertMessage =
-            'Risque de gel détecté (${weather.temperature.toStringAsFixed(1)}°C). '
+            'Risque de gel détecté (${weather.temperature.toStringAsFixed(1)}Â°C). '
             'Protégez vos plantes sensibles au froid.';
         priority = NotificationPriority.critical;
       }
       // Alerte température élevée
       else if (weather.temperature > 35) {
-        alertTitle = '🔥 Alerte Chaleur';
+        alertTitle = 'ðŸ”¥ Alerte Chaleur';
         alertMessage =
-            'Température élevée (${weather.temperature.toStringAsFixed(1)}°C). '
+            'Température élevée (${weather.temperature.toStringAsFixed(1)}Â°C). '
             'Augmentez l\'arrosage et protégez vos plantes du soleil.';
         priority = NotificationPriority.high;
       }
       // Alerte sécheresse
       else if (weather.humidity < 30 && weather.precipitation < 1) {
-        alertTitle = '🏜️ Alerte Sécheresse';
+        alertTitle = 'ðŸœï¸ Alerte Sécheresse';
         alertMessage =
             'Humidité très basse (${weather.humidity.toStringAsFixed(0)}%). '
             'Vérifiez l\'arrosage de vos plantes.';
@@ -410,7 +410,7 @@ class PlantNotificationService {
       }
       // Alerte vent fort
       else if (weather.windSpeed > 50) {
-        alertTitle = '💨 Alerte Vent Fort';
+        alertTitle = 'ðŸ’¨ Alerte Vent Fort';
         alertMessage =
             'Vents forts prévus (${weather.windSpeed.toStringAsFixed(0)} km/h). '
             'Sécurisez vos plantes et structures.';
@@ -437,7 +437,7 @@ class PlantNotificationService {
         },
       );
     } catch (e, stackTrace) {
-      _logError('Erreur lors de la création de l\'alerte météo', e, stackTrace);
+      _logError('Erreur lors de la Création de l\'alerte météo', e, stackTrace);
       return null;
     }
   }
@@ -459,7 +459,7 @@ class PlantNotificationService {
       // Créer une notification uniquement si toutes les conditions sont optimales
       if (plantCondition.overallStatus == ConditionStatus.excellent) {
         return await createNotification(
-          title: '✨ Conditions Optimales',
+          title: 'âœ¨ Conditions Optimales',
           message: 'Les conditions sont parfaites pour $plantName ! '
               'C\'est le moment idéal pour planter ou effectuer des actions importantes.',
           type: NotificationType.optimalCondition,
@@ -475,7 +475,7 @@ class PlantNotificationService {
       return null;
     } catch (e, stackTrace) {
       _logError(
-          'Erreur lors de la création de l\'alerte de conditions optimales',
+          'Erreur lors de la Création de l\'alerte de conditions optimales',
           e,
           stackTrace);
       return null;
@@ -520,7 +520,7 @@ class PlantNotificationService {
         }
 
         return await createNotification(
-          title: '🚨 Condition Critique',
+          title: 'ðŸš¨ Condition Critique',
           message: message,
           type: NotificationType.criticalCondition,
           priority: NotificationPriority.critical,
@@ -535,7 +535,7 @@ class PlantNotificationService {
 
       return null;
     } catch (e, stackTrace) {
-      _logError('Erreur lors de la création de l\'alerte de condition critique',
+      _logError('Erreur lors de la Création de l\'alerte de condition critique',
           e, stackTrace);
       return null;
     }
@@ -578,7 +578,7 @@ class PlantNotificationService {
         }
 
         return await createNotification(
-          title: '💡 ${recommendation.title}',
+          title: 'ðŸ’¡ ${recommendation.title}',
           message: recommendation.description,
           type: NotificationType.recommendation,
           priority: notificationPriority,
@@ -595,7 +595,7 @@ class PlantNotificationService {
       return null;
     } catch (e, stackTrace) {
       _logError(
-          'Erreur lors de la création de la notification de recommandation',
+          'Erreur lors de la Création de la notification de recommandation',
           e,
           stackTrace);
       return null;
@@ -740,13 +740,13 @@ class PlantNotificationService {
   }
 
   // ==================== GÉNÉRATION AUTOMATIQUE D'ALERTES ====================
-  // ✅ NOUVEAU - Phase 1 : Connexion Fonctionnelle
+  // âœ… NOUVEAU - Phase 1 : Connexion Fonctionnelle
 
   /// Génère des alertes météo automatiques basées sur les conditions actuelles
   ///
-  /// Détecte et crée des notifications pour :
-  /// - Risque de gel (< 0°C)
-  /// - Alerte canicule (> 35°C)
+  /// Détecte et Crée des notifications pour :
+  /// - Risque de gel (< 0Â°C)
+  /// - Alerte canicule (> 35Â°C)
   /// - Sécheresse (humidité < 30%)
   /// - Vents forts (> 50 km/h)
   Future<void> generateWeatherAlerts({
@@ -762,9 +762,9 @@ class PlantNotificationService {
       // Alerte gel
       if (temperature < 0) {
         await createNotification(
-          title: '❄️ Alerte Gel',
+          title: 'â„ï¸ Alerte Gel',
           message:
-              'Température négative détectée (${temperature.toStringAsFixed(1)}°C). Protégez vos plantes sensibles au gel.',
+              'Température négative détectée (${temperature.toStringAsFixed(1)}Â°C). Protégez vos plantes sensibles au gel.',
           type: NotificationType.weatherAlert,
           priority: NotificationPriority.critical,
           gardenId: gardenId,
@@ -780,9 +780,9 @@ class PlantNotificationService {
       // Alerte canicule
       if (temperature > 35) {
         await createNotification(
-          title: '🔥 Alerte Canicule',
+          title: 'ðŸ”¥ Alerte Canicule',
           message:
-              'Température élevée détectée (${temperature.toStringAsFixed(1)}°C). Augmentez l\'arrosage et protégez du soleil.',
+              'Température élevée détectée (${temperature.toStringAsFixed(1)}Â°C). Augmentez l\'arrosage et protégez du soleil.',
           type: NotificationType.weatherAlert,
           priority: NotificationPriority.high,
           gardenId: gardenId,
@@ -798,7 +798,7 @@ class PlantNotificationService {
       // Alerte sécheresse
       if (humidity != null && humidity < 30) {
         await createNotification(
-          title: '💧 Alerte Sécheresse',
+          title: 'ðŸ’§ Alerte Sécheresse',
           message:
               'Humidité faible détectée (${humidity.toStringAsFixed(1)}%). Vérifiez l\'arrosage de vos plantes.',
           type: NotificationType.weatherAlert,
@@ -816,7 +816,7 @@ class PlantNotificationService {
       // Alerte vents forts
       if (windSpeed != null && windSpeed > 50) {
         await createNotification(
-          title: '💨 Alerte Vents Forts',
+          title: 'ðŸ’¨ Alerte Vents Forts',
           message:
               'Vents forts prévus (${windSpeed.toStringAsFixed(0)} km/h). Protégez vos plantes fragiles.',
           type: NotificationType.weatherAlert,
@@ -857,7 +857,7 @@ class PlantNotificationService {
       final statusText = _getStatusText(conditionStatus);
 
       await createNotification(
-        title: '⚠️ Condition Critique - $plantName',
+        title: 'âš ï¸ Condition Critique - $plantName',
         message:
             '$conditionName en état $statusText (${currentValue.toStringAsFixed(1)} $unit). ${recommendation ?? 'Action immédiate recommandée.'}',
         type: NotificationType.criticalCondition,
@@ -899,7 +899,7 @@ class PlantNotificationService {
       final conditionName = _getConditionName(conditionType);
 
       await createNotification(
-        title: '✅ Conditions Optimales - $plantName',
+        title: 'âœ… Conditions Optimales - $plantName',
         message:
             '$conditionName en état excellent (${currentValue.toStringAsFixed(1)} $unit). Conditions idéales !',
         type: NotificationType.optimalCondition,
