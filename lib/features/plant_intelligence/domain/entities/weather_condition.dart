@@ -1,4 +1,4 @@
-﻿import 'package:freezed_annotation/freezed_annotation.dart';
+﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'weather_condition.freezed.dart';
 part 'weather_condition.g.dart';
@@ -47,7 +47,7 @@ class WeatherCondition with _$WeatherCondition {
     /// Coordonnées géographiques (longitude)
     double? longitude,
 
-    /// Date de création
+    /// Date de Création
     DateTime? createdAt,
 
     /// Date de dernière mise à jour

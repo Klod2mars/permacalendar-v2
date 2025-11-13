@@ -1,4 +1,4 @@
-﻿import '../entities/beneficial_insect.dart';
+﻿ï»¿import '../entities/beneficial_insect.dart';
 
 /// Beneficial Insect Repository Interface
 ///

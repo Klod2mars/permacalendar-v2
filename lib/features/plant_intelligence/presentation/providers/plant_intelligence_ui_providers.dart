@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/providers/providers.dart' as core_intel;
 
 // ==================== PROVIDERS D'AFFICHAGE ====================
@@ -211,7 +211,7 @@ class ChartSettingsNotifier extends Notifier<ChartSettings> {
 }
 
 // -----------------------------------------------------------------
-// 🧩 TEMP COMPATIBILITY ALIASES — WILL BE REMOVED AFTER MIGRATION
+// ðŸ§© TEMP COMPATIBILITY ALIASES — WILL BE REMOVED AFTER MIGRATION
 // -----------------------------------------------------------------
 
 @Deprecated('Use core_intel.currentIntelligenceGardenIdProvider instead')

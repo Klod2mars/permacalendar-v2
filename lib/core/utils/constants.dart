@@ -1,4 +1,4 @@
-﻿/// Constantes de l'application PermaCalendar 2.0
+﻿ï»¿/// Constantes de l'application PermaCalendar 2.0
 class AppConstants {
   // Informations de l'application
   static const String appName = 'PermaCalendar 2.0';
@@ -23,7 +23,7 @@ class AppConstants {
 
   // Messages d'erreur pour jardins
   static const String gardenLimitReachedMessage =
-      'Vous ne pouvez pas créer plus de $maxGardensPerUser jardins';
+      'Vous ne pouvez pas Créer plus de $maxGardensPerUser jardins';
   static const String minimumGardenRequiredMessage =
       'Vous devez avoir au moins $minGardensPerUser jardin';
 
@@ -83,10 +83,10 @@ class AppConstants {
   static const String successColorHex = '#4CAF50';
 
   // Icônes par défaut
-  static const String defaultGardenIcon = '🌱';
-  static const String defaultPlantIcon = '🌿';
-  static const String defaultBedIcon = '🟫';
-  static const String defaultHarvestIcon = '🥕';
+  static const String defaultGardenIcon = 'ðŸŒ±';
+  static const String defaultPlantIcon = 'ðŸŒ¿';
+  static const String defaultBedIcon = 'ðŸŸ«';
+  static const String defaultHarvestIcon = 'ðŸ¥•';
 
   // Regex patterns
   static const String emailPattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
@@ -229,23 +229,23 @@ enum CareActionType {
   String get icon {
     switch (this) {
       case CareActionType.watering:
-        return '💧';
+        return 'ðŸ’§';
       case CareActionType.fertilizing:
-        return '🌱';
+        return 'ðŸŒ±';
       case CareActionType.pruning:
-        return '✂️';
+        return 'âœ‚ï¸';
       case CareActionType.weeding:
-        return '🌿';
+        return 'ðŸŒ¿';
       case CareActionType.mulching:
-        return '🍂';
+        return 'ðŸ‚';
       case CareActionType.pestControl:
-        return '🐛';
+        return 'ðŸ›';
       case CareActionType.harvesting:
-        return '🥕';
+        return 'ðŸ¥•';
       case CareActionType.observation:
-        return '👁️';
+        return 'ðŸ‘ï¸';
       case CareActionType.other:
-        return '📝';
+        return 'ðŸ“';
     }
   }
 }
@@ -274,8 +274,8 @@ enum MeasurementUnit {
   feet('ft'),
 
   // Surface
-  squareMeters('m²'),
-  squareFeet('ft²'),
+  squareMeters('mÂ²'),
+  squareFeet('ftÂ²'),
   hectares('ha'),
   acres('ac'),
 
@@ -291,8 +291,8 @@ enum MeasurementUnit {
   ounces('oz'),
 
   // Température
-  celsius('°C'),
-  fahrenheit('°F');
+  celsius('Â°C'),
+  fahrenheit('Â°F');
 
   const MeasurementUnit(this.symbol);
   final String symbol;

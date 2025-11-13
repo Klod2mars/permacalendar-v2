@@ -1,4 +1,4 @@
-﻿// 🚀 Intelligent Cache Service - Multi-Level Caching System
+﻿ï»¿// ðŸš€ Intelligent Cache Service - Multi-Level Caching System
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Enterprise Patterns
 

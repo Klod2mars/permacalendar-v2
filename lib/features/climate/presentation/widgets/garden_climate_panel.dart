@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+﻿ï»¿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,10 +13,10 @@ import '../../../../core/theme/app_icons.dart';
 
 /// Widget autonome pour l'affichage du climat du jardin
 ///
-/// Ce widget extrait la fonctionnalitÃ© mÃ©tÃ©o de home_screen.dart
-/// et la rend disponible comme composant rÃ©utilisable.
+/// Ce widget extrait la fonctionnalitÃƒÂ© mÃƒÂ©tÃƒÂ©o de home_screen.dart
+/// et la rend disponible comme composant rÃƒÂ©utilisable.
 ///
-/// Phase P2: Grille de mini-cartes mÃ©tÃ©o (J0, J+1, J+2) avec responsive
+/// Phase P2: Grille de mini-cartes mÃƒÂ©tÃƒÂ©o (J0, J+1, J+2) avec responsive
 class GardenClimatePanel extends ConsumerWidget {
   const GardenClimatePanel({super.key});
 
@@ -52,7 +52,7 @@ class GardenClimatePanel extends ConsumerWidget {
                   fontSize: 18),
             ),
             subtitle: const Text(
-              'Conditions mÃ©tÃ©orologiques actuelles',
+              'Conditions mÃƒÂ©tÃƒÂ©orologiques actuelles',
               style: TextStyle(color: Colors.white70),
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.white),
@@ -64,7 +64,7 @@ class GardenClimatePanel extends ConsumerWidget {
 
           const Divider(color: Colors.white24, height: 0.5),
 
-          // Grille de mini-cartes mÃ©tÃ©o
+          // Grille de mini-cartes mÃƒÂ©tÃƒÂ©o
           currentAsync.when(
             loading: () => const Padding(
               padding: EdgeInsets.all(16),
@@ -73,7 +73,7 @@ class GardenClimatePanel extends ConsumerWidget {
             error: (e, st) => const Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                'MÃ©tÃ©o indisponible',
+                'MÃƒÂ©tÃƒÂ©o indisponible',
                 style: TextStyle(color: Colors.white70),
               ),
             ),
@@ -91,8 +91,8 @@ class GardenClimatePanel extends ConsumerWidget {
     WeatherViewData data,
     List<DailyWeatherPoint>? forecast,
   ) {
-    // Pour l'instant, crÃ©er des cartes basÃ©es sur les donnÃ©es actuelles
-    // TODO: IntÃ©grer avec les prÃ©visions complÃ¨tes quand disponible
+    // Pour l'instant, crÃƒÂ©er des cartes basÃƒÂ©es sur les donnÃƒÂ©es actuelles
+    // TODO: IntÃƒÂ©grer avec les prÃƒÂ©visions complÃƒÂ¨tes quand disponible
     final weatherCards = <DailyWeatherPoint>[];
 
     return Padding(
@@ -105,7 +105,7 @@ class GardenClimatePanel extends ConsumerWidget {
               const Icon(Icons.location_on, color: Colors.white70, size: 16),
               const SizedBox(width: 4),
               Text(
-                'MÃ©tÃ©o actuelle',
+                'MÃƒÂ©tÃƒÂ©o actuelle',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: Colors.white70,
                   fontWeight: FontWeight.w500,
@@ -116,7 +116,7 @@ class GardenClimatePanel extends ConsumerWidget {
 
           const SizedBox(height: 16),
 
-          // Carte mÃ©tÃ©o actuelle (temporaire)
+          // Carte mÃƒÂ©tÃƒÂ©o actuelle (temporaire)
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
@@ -133,7 +133,7 @@ class GardenClimatePanel extends ConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      '${(data.temperature ?? data.currentTemperatureC ?? 0.0).toStringAsFixed(1)}Â°C',
+                      '${(data.temperature ?? data.currentTemperatureC ?? 0.0).toStringAsFixed(1)}Ã‚Â°C',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -142,7 +142,7 @@ class GardenClimatePanel extends ConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      data.description ?? 'DonnÃ©es indisponibles',
+                      data.description ?? 'DonnÃƒÂ©es indisponibles',
                       style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 16,
@@ -153,7 +153,7 @@ class GardenClimatePanel extends ConsumerWidget {
                 const SizedBox(height: 8),
                 if ((forecast ?? const []).isNotEmpty)
                   const Text(
-                    'PrÃ©visions disponibles',
+                    'PrÃƒÂ©visions disponibles',
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: 14,

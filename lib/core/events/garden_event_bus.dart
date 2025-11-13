@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+﻿ï»¿import 'dart:async';
 import 'dart:developer' as developer;
 import 'garden_events.dart';
 
@@ -43,7 +43,7 @@ class GardenEventBus {
   /// Constructeur privé
   GardenEventBus._internal() {
     developer.log(
-      '🚌 GardenEventBus créé',
+      'ðŸšŒ GardenEventBus Créé',
       name: _logName,
       level: 500,
     );
@@ -84,7 +84,7 @@ class GardenEventBus {
   void emit(GardenEvent event) {
     if (_controller.isClosed) {
       developer.log(
-        '⚠️ Tentative d\'émission d\'événement sur un bus fermé',
+        'âš ï¸ Tentative d\'émission d\'événement sur un bus fermé',
         name: _logName,
         level: 900,
       );
@@ -94,7 +94,7 @@ class GardenEventBus {
     _eventCount++;
 
     developer.log(
-      '📡 Événement émis (#$_eventCount): ${event.runtimeType}',
+      'ðŸ“¡ Événement émis (#$_eventCount): ${event.runtimeType}',
       name: _logName,
       level: 500,
     );
@@ -109,7 +109,7 @@ class GardenEventBus {
   /// **Note :** Une fois fermé, le bus ne peut plus émettre d'événements.
   void dispose() {
     developer.log(
-      '🔒 Fermeture du GardenEventBus ($_eventCount événements émis)',
+      'ðŸ”’ Fermeture du GardenEventBus ($_eventCount événements émis)',
       name: _logName,
       level: 500,
     );
@@ -121,7 +121,7 @@ class GardenEventBus {
   void resetStats() {
     _eventCount = 0;
     developer.log(
-      '🔄 Statistiques réinitialisées',
+      'ðŸ”„ Statistiques réinitialisées',
       name: _logName,
       level: 500,
     );
@@ -130,7 +130,7 @@ class GardenEventBus {
   /// Affiche les statistiques dans les logs
   void logStats() {
     developer.log(
-      '📊 Statistiques GardenEventBus:\n'
+      'ðŸ“Š Statistiques GardenEventBus:\n'
       '  - Événements émis: $_eventCount\n'
       '  - Listeners actifs: $listenerCount\n'
       '  - Bus actif: ${!_controller.isClosed}',

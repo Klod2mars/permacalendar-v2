@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 
 /// Climate Rosace Petal - V2 Geometric Rounded Design
 ///
@@ -9,7 +9,7 @@
 /// - Rounded geometric shape (rhombus with rounded corners)
 /// - Icon + label + value display
 /// - Alert mode support (visual emphasis)
-/// - Touch target â‰¥44dp
+/// - Touch target ââ€°Â¥44dp
 class ClimateRosacePetal extends StatelessWidget {
   const ClimateRosacePetal({
     super.key,

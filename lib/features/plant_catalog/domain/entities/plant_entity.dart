@@ -1,4 +1,4 @@
-﻿import 'package:freezed_annotation/freezed_annotation.dart';
+﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'plant_entity.freezed.dart';
@@ -96,7 +96,7 @@ class PlantFreezed with _$PlantFreezed {
     /// Métadonnées additionnelles flexibles
     @Default({}) Map<String, dynamic> metadata,
 
-    /// Date de création
+    /// Date de Création
     DateTime? createdAt,
 
     /// Date de dernière mise à jour
@@ -109,7 +109,7 @@ class PlantFreezed with _$PlantFreezed {
   factory PlantFreezed.fromJson(Map<String, dynamic> json) =>
       _$PlantFreezedFromJson(json);
 
-  /// Factory constructor pour créer une nouvelle plante
+  /// Factory constructor pour Créer une nouvelle plante
   factory PlantFreezed.create({
     required String commonName,
     required String scientificName,
@@ -239,7 +239,7 @@ extension PlantFreezedExtension on PlantFreezed {
         lifespan?.toLowerCase().contains('bisannuelle') == true;
   }
 
-  /// Calcule la densité de plantation (plants par m²)
+  /// Calcule la densité de plantation (plants par mÂ²)
   double get plantDensityPerSquareMeter {
     if (spacing <= 0) return 0;
     // Conversion cm vers m et calcul de la surface par plant
@@ -358,7 +358,7 @@ extension PlantFreezedExtension on PlantFreezed {
     return nutritionalScore > 50.0; // Seuil arbitraire
   }
 
-  /// Calcule le rendement économique potentiel (prix × facilité de culture)
+  /// Calcule le rendement économique potentiel (prix Ã— facilité de culture)
   double get economicPotential {
     if (marketPricePerKg == null) return 0.0;
 

@@ -1,4 +1,4 @@
-﻿import '../entities/recommendation.dart';
+﻿ï»¿import '../entities/recommendation.dart';
 
 /// Interface spécialisée pour la gestion des recommandations
 ///
@@ -15,7 +15,7 @@ abstract class IRecommendationRepository {
   /// [plantId] - Identifiant de la plante
   /// [recommendation] - Recommandation à sauvegarder
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveRecommendation({
     required String plantId,
     required Recommendation recommendation,

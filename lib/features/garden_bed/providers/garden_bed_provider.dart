@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import '../../../core/models/garden_bed.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/services/activity_observer_service.dart';
@@ -78,7 +78,7 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
       // Save to Hive
       await GardenBoxes.saveGardenBed(gardenBed);
 
-      // ✅ NOUVEAU : Tracking avec ActivityObserverService (observateur propre)
+      // âœ… NOUVEAU : Tracking avec ActivityObserverService (observateur propre)
       await ActivityObserverService().captureGardenBedCreated(
         gardenBedId: gardenBed.id,
         gardenBedName: gardenBed.name,
@@ -88,7 +88,7 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
         exposure: gardenBed.exposure,
       );
 
-      // ✅ REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
+      // âœ… REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
       try {
         GardenEventBus().emit(
           GardenEvent.gardenContextUpdated(
@@ -114,10 +114,10 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
 
       return true;
     } catch (e) {
-      print('[GardenBedProvider] Erreur lors de la création: $e');
+      print('[GardenBedProvider] Erreur lors de la Création: $e');
       state = state.copyWith(
         isLoading: false,
-        error: 'Erreur lors de la création de la parcelle: $e',
+        error: 'Erreur lors de la Création de la parcelle: $e',
       );
       return false;
     }
@@ -141,7 +141,7 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
       // Update in Hive
       await GardenBoxes.saveGardenBed(updatedGardenBed);
 
-      // ✅ NOUVEAU : Tracking avec ActivityObserverService
+      // âœ… NOUVEAU : Tracking avec ActivityObserverService
       await ActivityObserverService().captureGardenBedUpdated(
         gardenBedId: updatedGardenBed.id,
         gardenBedName: updatedGardenBed.name,
@@ -151,7 +151,7 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
         exposure: updatedGardenBed.exposure,
       );
 
-      // ✅ REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
+      // âœ… REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
       try {
         GardenEventBus().emit(
           GardenEvent.gardenContextUpdated(
@@ -204,14 +204,14 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
       // Delete from Hive
       await GardenBoxes.gardenBeds.delete(gardenBedId);
 
-      // ✅ NOUVEAU : Tracking avec ActivityObserverService
+      // âœ… NOUVEAU : Tracking avec ActivityObserverService
       await ActivityObserverService().captureGardenBedDeleted(
         gardenBedId: bedToDelete.id,
         gardenBedName: bedToDelete.name,
         gardenId: bedToDelete.gardenId,
       );
 
-      // ✅ REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
+      // âœ… REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
       try {
         GardenEventBus().emit(
           GardenEvent.gardenContextUpdated(
@@ -292,7 +292,7 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
     }
 
     if (gardenBed.sizeInSquareMeters > 1000) {
-      return 'La superficie ne peut pas dépasser 1000 m²';
+      return 'La superficie ne peut pas dépasser 1000 mÂ²';
     }
 
     if (!GardenBed.soilTypes.contains(gardenBed.soilType)) {

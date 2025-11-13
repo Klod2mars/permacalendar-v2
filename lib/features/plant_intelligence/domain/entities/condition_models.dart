@@ -1,4 +1,4 @@
-﻿import 'package:freezed_annotation/freezed_annotation.dart';
+﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'condition_enums.dart';
 
 part 'condition_models.freezed.dart';
@@ -8,16 +8,16 @@ part 'condition_models.g.dart';
 @freezed
 class TemperatureCondition with _$TemperatureCondition {
   const factory TemperatureCondition({
-    /// Température actuelle (°C)
+    /// Température actuelle (Â°C)
     required double current,
 
-    /// Température optimale pour la plante (°C)
+    /// Température optimale pour la plante (Â°C)
     required double optimal,
 
-    /// Température minimale tolérée (°C)
+    /// Température minimale tolérée (Â°C)
     required double min,
 
-    /// Température maximale tolérée (°C)
+    /// Température maximale tolérée (Â°C)
     required double max,
 
     /// Indique si la température actuelle est dans la plage optimale
@@ -33,7 +33,7 @@ class TemperatureCondition with _$TemperatureCondition {
   factory TemperatureCondition.fromJson(Map<String, dynamic> json) =>
       _$TemperatureConditionFromJson(json);
 
-  /// Factory pour créer une condition de température
+  /// Factory pour Créer une condition de température
   factory TemperatureCondition.create({
     required double current,
     required double optimal,
@@ -95,7 +95,7 @@ class MoistureCondition with _$MoistureCondition {
   factory MoistureCondition.fromJson(Map<String, dynamic> json) =>
       _$MoistureConditionFromJson(json);
 
-  /// Factory pour créer une condition d'humidité
+  /// Factory pour Créer une condition d'humidité
   factory MoistureCondition.create({
     required double current,
     required double optimal,
@@ -165,7 +165,7 @@ class LightCondition with _$LightCondition {
   factory LightCondition.fromJson(Map<String, dynamic> json) =>
       _$LightConditionFromJson(json);
 
-  /// Factory pour créer une condition de luminosité
+  /// Factory pour Créer une condition de luminosité
   factory LightCondition.create({
     required double current,
     required double optimal,
@@ -248,7 +248,7 @@ class SoilCondition with _$SoilCondition {
   factory SoilCondition.fromJson(Map<String, dynamic> json) =>
       _$SoilConditionFromJson(json);
 
-  /// Factory pour créer une condition de sol
+  /// Factory pour Créer une condition de sol
   factory SoilCondition.create({
     required double ph,
     required double optimalPh,
@@ -367,7 +367,7 @@ class Opportunity with _$Opportunity {
     /// Bénéfice potentiel (0.0 à 1.0)
     required double benefit,
 
-    /// Facilité de mise en œuvre (0.0 à 1.0)
+    /// Facilité de mise en Å“uvre (0.0 à 1.0)
     required double feasibility,
 
     /// Actions recommandées pour saisir l'opportunité
@@ -391,10 +391,10 @@ class WeatherForecast with _$WeatherForecast {
     /// Date de la prévision
     required DateTime date,
 
-    /// Température minimale (°C)
+    /// Température minimale (Â°C)
     required double minTemperature,
 
-    /// Température maximale (°C)
+    /// Température maximale (Â°C)
     required double maxTemperature,
 
     /// Humidité relative (%)

@@ -1,4 +1,4 @@
-﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
+﻿ï»¿import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
@@ -206,7 +206,7 @@ class GenerateRecommendationsUsecase {
           priority: RecommendationPriority.critical,
           title: 'Risque de gel détecté',
           description:
-              'La température va descendre en dessous de 5°C. ${plant.commonName} est sensible au gel.',
+              'La température va descendre en dessous de 5Â°C. ${plant.commonName} est sensible au gel.',
           instructions: [
             'Installer un voile d\'hivernage',
             'Pailler abondamment',

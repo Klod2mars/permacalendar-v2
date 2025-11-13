@@ -1,4 +1,4 @@
-﻿import 'package:intl/intl.dart';
+﻿ï»¿import 'package:intl/intl.dart';
 
 /// Utilitaires pour la gestion des dates
 class AppDateUtils {

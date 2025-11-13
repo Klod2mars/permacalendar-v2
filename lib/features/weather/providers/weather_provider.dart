@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import 'package:permacalendar/core/services/environment_service.dart';
 import 'package:permacalendar/core/services/open_meteo_service.dart';
 
@@ -19,7 +19,7 @@ final weatherByCommuneProvider =
     FutureProvider.family<WeatherViewData, String?>((ref, communeName) async {
   try {
     final svc = OpenMeteoService.instance;
-    // ✅ CORRECTION : Désactiver temporairement le tracking météo pour éviter les boucles
+    // âœ… CORRECTION : Désactiver temporairement le tracking météo pour éviter les boucles
     // final activityService = ref.read(activityServiceProvider);
 
     // Résoudre coordonnées de la commune si possible
@@ -38,7 +38,7 @@ final weatherByCommuneProvider =
     final label = coords.resolvedName ??
         (communeName ?? EnvironmentService.defaultCommuneName);
 
-    // ✅ CORRECTION : Désactiver temporairement le tracking météo pour éviter les boucles
+    // âœ… CORRECTION : Désactiver temporairement le tracking météo pour éviter les boucles
     // TODO: Réactiver le tracking météo une fois les boucles résolues
     /*
     try {

@@ -1,4 +1,4 @@
-﻿import 'dart:developer' as developer;
+﻿ï»¿import 'dart:developer' as developer;
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// Legacy Cleanup Service - Service de Nettoyage du Système Legacy
@@ -44,7 +44,7 @@ class LegacyCleanupService {
 
   /// Constructeur
   LegacyCleanupService() {
-    _log('🏗️ Legacy Cleanup Service créé', level: 500);
+    _log('ðŸ—ï¸ Legacy Cleanup Service Créé', level: 500);
   }
 
   // ==================== NETTOYAGE COMPLET ====================
@@ -58,13 +58,13 @@ class LegacyCleanupService {
   /// 4. Rapport final de nettoyage
   Future<bool> cleanupAllLegacyBoxes() async {
     try {
-      _log('🧹 Nettoyage de toutes les boxes Legacy', level: 500);
+      _log('ðŸ§¹ Nettoyage de toutes les boxes Legacy', level: 500);
 
       final startTime = DateTime.now();
       final results = <String, bool>{};
 
       for (final boxName in _legacyBoxNames) {
-        _log('🗑️ Nettoyage box: $boxName', level: 500);
+        _log('ðŸ—‘ï¸ Nettoyage box: $boxName', level: 500);
 
         try {
           // Vérifier si la box est ouverte
@@ -80,7 +80,7 @@ class LegacyCleanupService {
             _totalSpaceFreed += size;
             results[boxName] = true;
 
-            _log('  ✅ Box $boxName supprimée (~${size.toStringAsFixed(2)} MB)',
+            _log('  âœ… Box $boxName supprimée (~${size.toStringAsFixed(2)} MB)',
                 level: 500);
           } else {
             // Box déjà fermée, juste supprimer du disque
@@ -88,12 +88,12 @@ class LegacyCleanupService {
             _boxesCleanedCount++;
             results[boxName] = true;
 
-            _log('  ✅ Box $boxName supprimée (non ouverte)', level: 500);
+            _log('  âœ… Box $boxName supprimée (non ouverte)', level: 500);
           }
         } catch (e) {
           _boxesFailedCount++;
           results[boxName] = false;
-          _log('  ❌ Échec suppression $boxName: $e', level: 1000);
+          _log('  âŒ Échec suppression $boxName: $e', level: 1000);
         }
 
         // Petite pause entre chaque suppression
@@ -106,18 +106,18 @@ class LegacyCleanupService {
           : 0.0;
 
       _log(
-        '🎯 Nettoyage terminé: $_boxesCleanedCount/${_legacyBoxNames.length} boxes (${successRate.toStringAsFixed(1)}%)',
+        'ðŸŽ¯ Nettoyage terminé: $_boxesCleanedCount/${_legacyBoxNames.length} boxes (${successRate.toStringAsFixed(1)}%)',
         level: 500,
       );
       _log(
-        '💾 Espace libéré: ~${_totalSpaceFreed.toStringAsFixed(2)} MB',
+        'ðŸ’¾ Espace libéré: ~${_totalSpaceFreed.toStringAsFixed(2)} MB',
         level: 500,
       );
-      _log('⏱️ Durée: ${duration.inSeconds}s', level: 500);
+      _log('â±ï¸ Durée: ${duration.inSeconds}s', level: 500);
 
       return _boxesFailedCount == 0;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur nettoyage complet', e, stackTrace);
+      _logError('âŒ Erreur nettoyage complet', e, stackTrace);
       return false;
     }
   }
@@ -125,10 +125,10 @@ class LegacyCleanupService {
   /// Nettoie une box Legacy spécifique
   Future<bool> cleanupBox(String boxName) async {
     try {
-      _log('🗑️ Nettoyage box: $boxName', level: 500);
+      _log('ðŸ—‘ï¸ Nettoyage box: $boxName', level: 500);
 
       if (!_legacyBoxNames.contains(boxName)) {
-        _log('⚠️ Box $boxName non reconnue comme Legacy', level: 900);
+        _log('âš ï¸ Box $boxName non reconnue comme Legacy', level: 900);
         return false;
       }
 
@@ -142,17 +142,17 @@ class LegacyCleanupService {
         _boxesCleanedCount++;
         _totalSpaceFreed += size;
 
-        _log('✅ Box $boxName supprimée (~${size.toStringAsFixed(2)} MB)',
+        _log('âœ… Box $boxName supprimée (~${size.toStringAsFixed(2)} MB)',
             level: 500);
       } else {
         await Hive.deleteBoxFromDisk(boxName);
         _boxesCleanedCount++;
-        _log('✅ Box $boxName supprimée (non ouverte)', level: 500);
+        _log('âœ… Box $boxName supprimée (non ouverte)', level: 500);
       }
 
       return true;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur nettoyage box $boxName', e, stackTrace);
+      _logError('âŒ Erreur nettoyage box $boxName', e, stackTrace);
       _boxesFailedCount++;
       return false;
     }
@@ -161,10 +161,10 @@ class LegacyCleanupService {
   /// Vide une box Legacy sans la supprimer
   Future<bool> clearBox(String boxName) async {
     try {
-      _log('🧹 Vidage box: $boxName', level: 500);
+      _log('ðŸ§¹ Vidage box: $boxName', level: 500);
 
       if (!Hive.isBoxOpen(boxName)) {
-        _log('⚠️ Box $boxName non ouverte', level: 900);
+        _log('âš ï¸ Box $boxName non ouverte', level: 900);
         return false;
       }
 
@@ -173,10 +173,10 @@ class LegacyCleanupService {
 
       await box.clear();
 
-      _log('✅ Box $boxName vidée ($itemCount éléments)', level: 500);
+      _log('âœ… Box $boxName vidée ($itemCount éléments)', level: 500);
       return true;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur vidage box $boxName', e, stackTrace);
+      _logError('âŒ Erreur vidage box $boxName', e, stackTrace);
       return false;
     }
   }
@@ -186,7 +186,7 @@ class LegacyCleanupService {
   /// Nettoie uniquement les jardins Legacy (pas les autres entités)
   Future<bool> cleanupGardensOnly() async {
     try {
-      _log('🧹 Nettoyage jardins Legacy uniquement', level: 500);
+      _log('ðŸ§¹ Nettoyage jardins Legacy uniquement', level: 500);
 
       final gardenBoxes = ['gardens'];
       var success = true;
@@ -198,7 +198,7 @@ class LegacyCleanupService {
 
       return success;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur nettoyage jardins', e, stackTrace);
+      _logError('âŒ Erreur nettoyage jardins', e, stackTrace);
       return false;
     }
   }
@@ -206,7 +206,7 @@ class LegacyCleanupService {
   /// Nettoie les entités liées aux jardins (beds, plantings)
   Future<bool> cleanupGardenRelatedEntities() async {
     try {
-      _log('🧹 Nettoyage entités liées aux jardins', level: 500);
+      _log('ðŸ§¹ Nettoyage entités liées aux jardins', level: 500);
 
       final relatedBoxes = ['garden_beds', 'plantings'];
       var success = true;
@@ -218,7 +218,7 @@ class LegacyCleanupService {
 
       return success;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur nettoyage entités liées', e, stackTrace);
+      _logError('âŒ Erreur nettoyage entités liées', e, stackTrace);
       return false;
     }
   }
@@ -226,7 +226,7 @@ class LegacyCleanupService {
   /// Nettoie les plantes Legacy
   Future<bool> cleanupPlantsOnly() async {
     try {
-      _log('🧹 Nettoyage plantes Legacy', level: 500);
+      _log('ðŸ§¹ Nettoyage plantes Legacy', level: 500);
 
       final plantBoxes = ['plants', 'plant_varieties', 'growth_cycles'];
       var success = true;
@@ -238,7 +238,7 @@ class LegacyCleanupService {
 
       return success;
     } catch (e, stackTrace) {
-      _logError('❌ Erreur nettoyage plantes', e, stackTrace);
+      _logError('âŒ Erreur nettoyage plantes', e, stackTrace);
       return false;
     }
   }
@@ -282,16 +282,16 @@ class LegacyCleanupService {
 
           info['totalBoxes']++;
         } catch (e) {
-          _log('⚠️ Erreur info box $boxName: $e', level: 700);
+          _log('âš ï¸ Erreur info box $boxName: $e', level: 700);
         }
       }
 
       _log(
-        '📊 Info Legacy: ${info['totalBoxes']} boxes, ${info['totalItems']} items, ~${(info['estimatedSize'] as double).toStringAsFixed(2)} MB',
+        'ðŸ“Š Info Legacy: ${info['totalBoxes']} boxes, ${info['totalItems']} items, ~${(info['estimatedSize'] as double).toStringAsFixed(2)} MB',
         level: 500,
       );
     } catch (e, stackTrace) {
-      _logError('❌ Erreur obtention infos Legacy', e, stackTrace);
+      _logError('âŒ Erreur obtention infos Legacy', e, stackTrace);
     }
 
     return info;
@@ -321,7 +321,7 @@ class LegacyCleanupService {
     _boxesCleanedCount = 0;
     _boxesFailedCount = 0;
     _totalSpaceFreed = 0.0;
-    _log('📊 Statistiques nettoyage réinitialisées', level: 500);
+    _log('ðŸ“Š Statistiques nettoyage réinitialisées', level: 500);
   }
 
   // ==================== UTILITAIRES ====================

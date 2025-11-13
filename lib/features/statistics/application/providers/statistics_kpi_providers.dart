@@ -1,9 +1,9 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
 import '../../domain/models/plant_value_ranking.dart';
 
-/// Provider pour le KPI "Valeur totale des récoltes (€)" du pilier Économie Vivante
+/// Provider pour le KPI "Valeur totale des récoltes (â‚¬)" du pilier Économie Vivante
 ///
 /// Ce provider calcule la somme des valeurs totales des récoltes selon :
 /// - Le filtre période sélectionné (today, last7Days, last30Days, currentYear, custom)
@@ -45,7 +45,7 @@ final totalEconomyKpiProvider = Provider<double>((ref) {
       .fold(0.0, (sum, value) => sum + value);
 });
 
-/// Provider pour le KPI "Valeur totale des récoltes (€)" avec gestion d'état de chargement
+/// Provider pour le KPI "Valeur totale des récoltes (â‚¬)" avec gestion d'état de chargement
 ///
 /// Version alternative qui gère les états de chargement et d'erreur
 final totalEconomyKpiAsyncProvider = FutureProvider<double>((ref) async {
@@ -96,7 +96,7 @@ final totalEconomyKpiAsyncProvider = FutureProvider<double>((ref) async {
   return total;
 });
 
-/// Provider pour le Top 3 des plantes les plus rentables (€) du pilier Économie Vivante
+/// Provider pour le Top 3 des plantes les plus rentables (â‚¬) du pilier Économie Vivante
 ///
 /// Ce provider calcule le classement des 3 plantes les plus rentables selon :
 /// - Le filtre période sélectionné (today, last7Days, last30Days, currentYear, custom)

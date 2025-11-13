@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// Provider d'état pour la commune sélectionnée (stockée localement via Hive)

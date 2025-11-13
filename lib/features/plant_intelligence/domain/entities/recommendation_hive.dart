@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import 'recommendation.dart';
 
 part 'recommendation_hive.g.dart';

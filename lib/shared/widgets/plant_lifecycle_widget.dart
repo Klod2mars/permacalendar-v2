@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import '../../core/services/plant_lifecycle_service.dart';
 import '../../features/plant_catalog/domain/entities/plant_entity.dart';
 

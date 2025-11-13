@@ -1,4 +1,4 @@
-﻿import 'package:hive_flutter/hive_flutter.dart';
+﻿ï»¿import 'package:hive_flutter/hive_flutter.dart';
 import '../models/garden_hive.dart';
 import '../models/garden_bed_hive.dart';
 import '../models/garden_freezed.dart';
@@ -50,7 +50,7 @@ class GardenHiveRepository {
   }
 
   /// Crée un nouveau jardin avec validation de la limite
-  /// Retourne true si la création réussit
+  /// Retourne true si la Création réussit
   Future<bool> createGarden(GardenFreezed garden) async {
     try {
       // Validation des données du jardin
@@ -62,7 +62,7 @@ class GardenHiveRepository {
       final existingGardens = await getAllGardens();
       if (existingGardens.length >= EnvironmentService.maxGardensPerUser) {
         throw GardenHiveException(
-            'Impossible de créer un nouveau jardin. Limite de ${EnvironmentService.maxGardensPerUser} jardins atteinte.');
+            'Impossible de Créer un nouveau jardin. Limite de ${EnvironmentService.maxGardensPerUser} jardins atteinte.');
       }
 
       // Conversion vers GardenHive
@@ -73,11 +73,11 @@ class GardenHiveRepository {
 
       return true;
     } catch (e) {
-      print('[GardenHiveRepository] Erreur lors de la création: $e');
+      print('[GardenHiveRepository] Erreur lors de la Création: $e');
       if (e is GardenHiveException) {
         rethrow;
       }
-      throw GardenHiveException('Erreur lors de la création du jardin: $e');
+      throw GardenHiveException('Erreur lors de la Création du jardin: $e');
     }
   }
 
@@ -161,7 +161,7 @@ class GardenHiveRepository {
     }
   }
 
-  /// Conversion GardenHive → GardenFreezed
+  /// Conversion GardenHive â†’ GardenFreezed
   GardenFreezed _convertToGardenFreezed(GardenHive hiveGarden) {
     // Calculer la surface totale à partir des parcelles
     final totalArea = hiveGarden.gardenBeds
@@ -185,11 +185,11 @@ class GardenHiveRepository {
     );
   }
 
-  /// Conversion GardenFreezed → GardenHive
-  /// ✅ CORRECTION COMPLÈTE DU BUG DE PERSISTANCE FANTÔME
+  /// Conversion GardenFreezed â†’ GardenHive
+  /// âœ… CORRECTION COMPLÃˆTE DU BUG DE PERSISTANCE FANTÃ”ME
   /// Garantit l'isolation stricte entre jardins et l'initialisation propre
   GardenHive _convertToGardenHive(GardenFreezed freezedGarden) {
-    // ✅ CORRECTION MAJEURE: Toujours créer un jardin avec des parcelles vides
+    // âœ… CORRECTION MAJEURE: Toujours Créer un jardin avec des parcelles vides
     // Aucune récupération de données existantes pour éviter la contamination
     final List<GardenBedHive> cleanGardenBeds = <GardenBedHive>[];
 

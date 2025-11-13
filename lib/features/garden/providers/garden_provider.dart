@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import '../../../core/models/garden_state.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../core/repositories/dashboard_slots_repository.dart';
@@ -7,12 +7,12 @@ import '../../../core/services/activity_observer_service.dart';
 import '../../../core/events/garden_event_bus.dart';
 import '../../../core/events/garden_events.dart';
 
-/// Notifier pour la gestion de l'Ã©tat des jardins
-/// Utilise GardenHiveRepository pour les opÃ©rations CRUD
+/// Notifier pour la gestion de l'ÃƒÂ©tat des jardins
+/// Utilise GardenHiveRepository pour les opÃƒÂ©rations CRUD
 class GardenNotifier extends Notifier<GardenState> {
   @override
   GardenState build() {
-    // Charger les jardins au dÃ©marrage
+    // Charger les jardins au dÃƒÂ©marrage
     loadGardens();
     return GardenState.initial();
   }
@@ -29,11 +29,11 @@ class GardenNotifier extends Notifier<GardenState> {
     }
   }
 
-  /// CrÃ©e un nouveau jardin
-  /// Retourne true si la crÃ©ation rÃ©ussit, false sinon
+  /// CrÃƒÂ©e un nouveau jardin
+  /// Retourne true si la crÃƒÂ©ation rÃƒÂ©ussit, false sinon
   Future<bool> createGarden(GardenFreezed garden) async {
     try {
-      // VÃ©rifier la limite de jardins avant crÃ©ation
+      // VÃƒÂ©rifier la limite de jardins avant crÃƒÂ©ation
       if (!state.canAddGarden) {
         state = GardenState.error('Limite de 5 jardins atteinte');
         return false;
@@ -43,7 +43,7 @@ class GardenNotifier extends Notifier<GardenState> {
       final success = await repository.createGarden(garden);
 
       if (success) {
-        // âœ… NOUVEAU : Tracking avec ActivityObserverService
+        // âÅ“… NOUVEAU : Tracking avec ActivityObserverService
         await ActivityObserverService().captureGardenCreated(
           gardenId: garden.id,
           gardenName: garden.name,
@@ -51,7 +51,7 @@ class GardenNotifier extends Notifier<GardenState> {
           area: garden.totalAreaInSquareMeters,
         );
 
-        // âœ… REFACTORÃ‰ (SYNC-2) : Ã‰mettre Ã©vÃ©nement via GardenEventBus
+        // âÅ“… REFACTORÃƒâ€° (SYNC-2) : Ãƒâ€°mettre ÃƒÂ©vÃƒÂ©nement via GardenEventBus
         GardenEventBus().emit(
           GardenEvent.gardenContextUpdated(
             gardenId: garden.id,
@@ -63,28 +63,28 @@ class GardenNotifier extends Notifier<GardenState> {
           ),
         );
 
-        // Recharger les jardins aprÃ¨s crÃ©ation
+        // Recharger les jardins aprÃƒÂ¨s crÃƒÂ©ation
         await loadGardens();
         return true;
       } else {
-        state = GardenState.error('Ã‰chec de la crÃ©ation du jardin');
+        state = GardenState.error('Ãƒâ€°chec de la crÃƒÂ©ation du jardin');
         return false;
       }
     } catch (e) {
-      state = GardenState.error('Erreur lors de la crÃ©ation: $e');
+      state = GardenState.error('Erreur lors de la crÃƒÂ©ation: $e');
       return false;
     }
   }
 
-  /// Met Ã  jour un jardin existant
-  /// Retourne true si la mise Ã  jour rÃ©ussit, false sinon
+  /// Met ÃƒÂ  jour un jardin existant
+  /// Retourne true si la mise ÃƒÂ  jour rÃƒÂ©ussit, false sinon
   Future<bool> updateGarden(GardenFreezed garden) async {
     try {
       final repository = ref.read(gardenRepositoryProvider);
       final success = await repository.updateGarden(garden);
 
       if (success) {
-        // âœ… NOUVEAU : Tracking avec ActivityObserverService
+        // âÅ“… NOUVEAU : Tracking avec ActivityObserverService
         await ActivityObserverService().captureGardenUpdated(
           gardenId: garden.id,
           gardenName: garden.name,
@@ -92,7 +92,7 @@ class GardenNotifier extends Notifier<GardenState> {
           area: garden.totalAreaInSquareMeters,
         );
 
-        // âœ… REFACTORÃ‰ (SYNC-2) : Ã‰mettre Ã©vÃ©nement via GardenEventBus
+        // âÅ“… REFACTORÃƒâ€° (SYNC-2) : Ãƒâ€°mettre ÃƒÂ©vÃƒÂ©nement via GardenEventBus
         GardenEventBus().emit(
           GardenEvent.gardenContextUpdated(
             gardenId: garden.id,
@@ -104,31 +104,31 @@ class GardenNotifier extends Notifier<GardenState> {
           ),
         );
 
-        // Recharger les jardins aprÃ¨s mise Ã  jour
+        // Recharger les jardins aprÃƒÂ¨s mise ÃƒÂ  jour
         await loadGardens();
         return true;
       } else {
-        state = GardenState.error('Ã‰chec de la mise Ã  jour du jardin');
+        state = GardenState.error('Ãƒâ€°chec de la mise ÃƒÂ  jour du jardin');
         return false;
       }
     } catch (e) {
-      state = GardenState.error('Erreur lors de la mise Ã  jour: $e');
+      state = GardenState.error('Erreur lors de la mise ÃƒÂ  jour: $e');
       return false;
     }
   }
 
   /// Supprime un jardin par son ID
-  /// Retourne true si la suppression rÃ©ussit, false sinon
+  /// Retourne true si la suppression rÃƒÂ©ussit, false sinon
   Future<bool> deleteGarden(String gardenId) async {
     try {
-      // RÃ©cupÃ©rer le jardin avant suppression pour le tracking
+      // RÃƒÂ©cupÃƒÂ©rer le jardin avant suppression pour le tracking
       final garden = state.findGardenById(gardenId);
 
       final repository = ref.read(gardenRepositoryProvider);
       final success = await repository.deleteGarden(gardenId);
 
       if (success) {
-        // âœ… NOUVEAU : Tracking avec ActivityObserverService
+        // âÅ“… NOUVEAU : Tracking avec ActivityObserverService
         if (garden != null) {
           await ActivityObserverService().captureGardenDeleted(
             gardenId: garden.id,
@@ -136,7 +136,7 @@ class GardenNotifier extends Notifier<GardenState> {
           );
         }
 
-        // âœ… REFACTORÃ‰ (SYNC-2) : Ã‰mettre Ã©vÃ©nement via GardenEventBus
+        // âÅ“… REFACTORÃƒâ€° (SYNC-2) : Ãƒâ€°mettre ÃƒÂ©vÃƒÂ©nement via GardenEventBus
         GardenEventBus().emit(
           GardenEvent.gardenContextUpdated(
             gardenId: gardenId,
@@ -147,11 +147,11 @@ class GardenNotifier extends Notifier<GardenState> {
           ),
         );
 
-        // Recharger les jardins aprÃ¨s suppression
+        // Recharger les jardins aprÃƒÂ¨s suppression
         await loadGardens();
         return true;
       } else {
-        state = GardenState.error('Ã‰chec de la suppression du jardin');
+        state = GardenState.error('Ãƒâ€°chec de la suppression du jardin');
         return false;
       }
     } catch (e) {
@@ -161,12 +161,12 @@ class GardenNotifier extends Notifier<GardenState> {
   }
 
   /// Bascule le statut actif/inactif d'un jardin
-  /// MÃ©thode utilitaire pour archiver/dÃ©sarchiver un jardin
+  /// MÃƒÂ©thode utilitaire pour archiver/dÃƒÂ©sarchiver un jardin
   Future<bool> toggleGardenStatus(String gardenId) async {
     try {
       final garden = state.findGardenById(gardenId);
       if (garden == null) {
-        state = GardenState.error('Jardin non trouvÃ©');
+        state = GardenState.error('Jardin non trouvÃƒÂ©');
         return false;
       }
 
@@ -182,7 +182,7 @@ class GardenNotifier extends Notifier<GardenState> {
     }
   }
 
-  /// SÃ©lectionne un jardin spÃ©cifique
+  /// SÃƒÂ©lectionne un jardin spÃƒÂ©cifique
   void selectGarden(String gardenId) {
     final garden = state.findGardenById(gardenId);
     if (garden != null) {
@@ -190,7 +190,7 @@ class GardenNotifier extends Notifier<GardenState> {
     }
   }
 
-  /// DÃ©sÃ©lectionne le jardin actuel
+  /// DÃƒÂ©sÃƒÂ©lectionne le jardin actuel
   void clearSelection() {
     state = state.copyWith(selectedGarden: null);
   }
@@ -202,7 +202,7 @@ class GardenNotifier extends Notifier<GardenState> {
     }
   }
   /// Crée un jardin et l'associe atomiquement à un dashboard slot si celui-ci est libre.
-  /// Retourne true si la création + association réussissent.
+  /// Retourne true si la Création + association réussissent.
   Future<bool> createGardenForSlot(int slotNumber, GardenFreezed garden) async {
     try {
       // Vérifier si le slot est déjà occupé (lecture synchrone si possible)
@@ -223,7 +223,7 @@ class GardenNotifier extends Notifier<GardenState> {
       await loadGardens();
       return true;
     } catch (e) {
-      state = GardenState.error('Erreur lors de la création pour slot $slotNumber: $e');
+      state = GardenState.error('Erreur lors de la Création pour slot $slotNumber: $e');
       return false;
     }
   }}
@@ -233,15 +233,15 @@ class GardenNotifier extends Notifier<GardenState> {
 final gardenProvider =
     NotifierProvider<GardenNotifier, GardenState>(GardenNotifier.new);
 
-/// Provider pour accÃ©der uniquement aux jardins actifs
-/// DÃ©rivÃ© du gardenProvider principal
+/// Provider pour accÃƒÂ©der uniquement aux jardins actifs
+/// DÃƒÂ©rivÃƒÂ© du gardenProvider principal
 final activeGardensProvider = Provider<List<GardenFreezed>>((ref) {
   final gardenState = ref.watch(gardenProvider);
   return gardenState.activeGardens;
 });
 
-/// Provider pour vÃ©rifier si on peut ajouter un nouveau jardin
-/// Utile pour l'UI pour dÃ©sactiver les boutons d'ajout
+/// Provider pour vÃƒÂ©rifier si on peut ajouter un nouveau jardin
+/// Utile pour l'UI pour dÃƒÂ©sactiver les boutons d'ajout
 final canAddGardenProvider = Provider<bool>((ref) {
   final gardenState = ref.watch(gardenProvider);
   return gardenState.canAddGarden;

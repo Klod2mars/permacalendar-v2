@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import '../cards/alert_banner.dart';
@@ -83,7 +83,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Text(
                 gardenContext.location.city ??
                     gardenContext.location.address ??
-                    'Location non spÃ©cifiÃ©e',
+                    'Location non spÃƒÂ©cifiÃƒÂ©e',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -221,7 +221,7 @@ class GardenOverviewWidget extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'Conditions mÃ©tÃ©orologiques',
+              'Conditions mÃƒÂ©tÃƒÂ©orologiques',
               style: theme.textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -241,7 +241,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Expanded(
                 child: _buildWeatherItem(
                   theme,
-                  'TempÃ©rature',
+                  'TempÃƒÂ©rature',
                   weather.type == WeatherType.temperature
                       ? '${weather.value.toStringAsFixed(1)}${weather.unit}'
                       : 'N/A',
@@ -254,7 +254,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Expanded(
                 child: _buildWeatherItem(
                   theme,
-                  'HumiditÃ©',
+                  'HumiditÃƒÂ©',
                   weather.type == WeatherType.humidity
                       ? '${weather.value.toStringAsFixed(0)}${weather.unit}'
                       : 'N/A',
@@ -265,7 +265,7 @@ class GardenOverviewWidget extends StatelessWidget {
               Expanded(
                 child: _buildWeatherItem(
                   theme,
-                  'PrÃ©cipitations',
+                  'PrÃƒÂ©cipitations',
                   weather.type == WeatherType.precipitation
                       ? '${weather.value.toStringAsFixed(1)}${weather.unit}'
                       : 'N/A',
@@ -373,8 +373,8 @@ class GardenOverviewWidget extends StatelessWidget {
   }
 
   double _calculateOverallHealth() {
-    // Calculer la santÃ© globale basÃ©e sur les plantes du jardin
-    // Pour l'instant, on utilise une valeur par dÃ©faut
+    // Calculer la santÃƒÂ© globale basÃƒÂ©e sur les plantes du jardin
+    // Pour l'instant, on utilise une valeur par dÃƒÂ©faut
     return 7.5;
   }
 
@@ -401,7 +401,7 @@ class GardenOverviewWidget extends StatelessWidget {
   }
 }
 
-/// Widget compact pour afficher un aperÃ§u du jardin
+/// Widget compact pour afficher un aperÃƒÂ§u du jardin
 class CompactGardenOverviewWidget extends StatelessWidget {
   final GardenContext gardenContext;
   final WeatherCondition? currentWeather;
@@ -455,7 +455,7 @@ class CompactGardenOverviewWidget extends StatelessWidget {
                     Text(
                       gardenContext.location.city ??
                           gardenContext.location.address ??
-                          'Location non spÃ©cifiÃ©e',
+                          'Location non spÃƒÂ©cifiÃƒÂ©e',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),

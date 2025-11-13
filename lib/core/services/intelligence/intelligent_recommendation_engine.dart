@@ -1,4 +1,4 @@
-﻿// 🧠 Intelligent Recommendation Engine - ML-Powered Recommendations
+﻿ï»¿// ðŸ§  Intelligent Recommendation Engine - ML-Powered Recommendations
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + ML Patterns
 
@@ -213,9 +213,9 @@ class IntelligentRecommendationEngine {
     if (minTemp < 5.0) {
       recommendations.add(IntelligentRecommendation(
         id: 'frost_warning_${DateTime.now().millisecondsSinceEpoch}',
-        title: '⚠️ Risque de Gel',
+        title: 'âš ï¸ Risque de Gel',
         description:
-            'Température minimale prévue : ${minTemp.toStringAsFixed(1)}°C. Protégez vos plantes sensibles.',
+            'Température minimale prévue : ${minTemp.toStringAsFixed(1)}Â°C. Protégez vos plantes sensibles.',
         type: RecommendationType.seasonal,
         urgency: RecommendationUrgency.critical,
         confidence: 0.95,
@@ -237,9 +237,9 @@ class IntelligentRecommendationEngine {
     if (maxTemp > 35.0) {
       recommendations.add(IntelligentRecommendation(
         id: 'heat_warning_${DateTime.now().millisecondsSinceEpoch}',
-        title: '🔥 Canicule Prévue',
+        title: 'ðŸ”¥ Canicule Prévue',
         description:
-            'Température maximale prévue : ${maxTemp.toStringAsFixed(1)}°C. Augmentez l\'arrosage.',
+            'Température maximale prévue : ${maxTemp.toStringAsFixed(1)}Â°C. Augmentez l\'arrosage.',
         type: RecommendationType.watering,
         urgency: RecommendationUrgency.high,
         confidence: 0.9,
@@ -264,7 +264,7 @@ class IntelligentRecommendationEngine {
     if (rainfall < 1.0 && humidity < 40.0) {
       recommendations.add(IntelligentRecommendation(
         id: 'drought_warning_${DateTime.now().millisecondsSinceEpoch}',
-        title: '💧 Conditions Sèches',
+        title: 'ðŸ’§ Conditions Sèches',
         description:
             'Faible pluviométrie et humidité basse. Arrosage nécessaire.',
         type: RecommendationType.watering,
@@ -302,7 +302,7 @@ class IntelligentRecommendationEngine {
       if (healthScore < 0.5) {
         recommendations.add(IntelligentRecommendation(
           id: 'health_${plant['id']}_${DateTime.now().millisecondsSinceEpoch}',
-          title: '🌱 Santé de $plantName à Surveiller',
+          title: 'ðŸŒ± Santé de $plantName à Surveiller',
           description:
               'Score de santé faible (${(healthScore * 100).toInt()}%). Action immédiate recommandée.',
           type: RecommendationType.pestControl,
@@ -339,7 +339,7 @@ class IntelligentRecommendationEngine {
     if (month >= 3 && month <= 5) {
       recommendations.add(IntelligentRecommendation(
         id: 'spring_planting_${now.millisecondsSinceEpoch}',
-        title: '🌸 Période de Plantation Printanière',
+        title: 'ðŸŒ¸ Période de Plantation Printanière',
         description: 'C\'est le moment idéal pour planter vos légumes d\'été !',
         type: RecommendationType.planting,
         urgency: RecommendationUrgency.medium,
@@ -362,7 +362,7 @@ class IntelligentRecommendationEngine {
     if (month >= 9 && month <= 10) {
       recommendations.add(IntelligentRecommendation(
         id: 'fall_planting_${now.millisecondsSinceEpoch}',
-        title: '🍂 Plantation d\'Automne',
+        title: 'ðŸ‚ Plantation d\'Automne',
         description:
             'Période idéale pour les cultures d\'hiver et légumes-feuilles.',
         type: RecommendationType.planting,
@@ -396,7 +396,7 @@ class IntelligentRecommendationEngine {
     final companions = {
       'tomate': ['basilic', 'oeillet', 'carotte'],
       'carotte': ['oignon', 'poireau', 'tomate'],
-      'haricot': ['maïs', 'courge'],
+      'haricot': ['maÃ¯s', 'courge'],
       'laitue': ['radis', 'carotte'],
     };
 
@@ -415,7 +415,7 @@ class IntelligentRecommendationEngine {
         if (missingCompanions.isNotEmpty) {
           recommendations.add(IntelligentRecommendation(
             id: 'companion_${plant['id']}_${DateTime.now().millisecondsSinceEpoch}',
-            title: '🤝 Opportunité de Compagnonnage',
+            title: 'ðŸ¤ Opportunité de Compagnonnage',
             description:
                 'Améliorez la croissance de vos ${plant['name']} avec des plantes compagnes.',
             type: RecommendationType.companion,
@@ -462,7 +462,7 @@ class IntelligentRecommendationEngine {
     if (preferredActivities.contains('organic_gardening')) {
       recommendations.add(IntelligentRecommendation(
         id: 'organic_${DateTime.now().millisecondsSinceEpoch}',
-        title: '🌿 Jardinage Biologique',
+        title: 'ðŸŒ¿ Jardinage Biologique',
         description: 'Techniques bio adaptées à vos préférences.',
         type: RecommendationType.pestControl,
         urgency: RecommendationUrgency.low,

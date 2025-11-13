@@ -1,4 +1,4 @@
-﻿import '../entities/intelligence_report.dart';
+﻿ï»¿import '../entities/intelligence_report.dart';
 import '../entities/plant_evolution_report.dart';
 
 /// Interface spécialisée pour l'analytics et les statistiques
@@ -23,7 +23,7 @@ abstract class IAnalyticsRepository {
   /// [result] - Résultat de l'analyse (JSON)
   /// [confidence] - Niveau de confiance de l'analyse
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveAnalysisResult({
     required String plantId,
     required String analysisType,
@@ -106,7 +106,7 @@ abstract class IAnalyticsRepository {
   /// [message] - Message de l'alerte
   /// [data] - Données additionnelles (optionnel)
   ///
-  /// Retourne l'ID de l'enregistrement créé
+  /// Retourne l'ID de l'enregistrement Créé
   Future<String> saveAlert({
     required String plantId,
     required String alertType,

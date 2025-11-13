@@ -1,11 +1,11 @@
-﻿import '../models/garden.dart';
+﻿ï»¿import '../models/garden.dart';
 import '../services/environment_service.dart';
 import '../utils/constants.dart';
 
 /// Classe contenant la logique métier pour la validation des jardins
 /// Gère les règles de validation pour la limite de 1-5 jardins par utilisateur
 class GardenRules {
-  /// Vérifie si un utilisateur peut créer un nouveau jardin
+  /// Vérifie si un utilisateur peut Créer un nouveau jardin
   /// Prend en compte la limite maximale de jardins par utilisateur
   bool canCreateNewGarden(List<Garden> existingGardens) {
     final activeGardens =
@@ -86,7 +86,7 @@ class GardenRules {
     if (garden.totalAreaInSquareMeters <= 0) {
       errors.add('La superficie doit être positive');
     } else if (garden.totalAreaInSquareMeters > 10000) {
-      errors.add('La superficie ne peut pas dépasser 10 000 m²');
+      errors.add('La superficie ne peut pas dépasser 10 000 mÂ²');
     }
 
     // Validation de la localisation
@@ -99,12 +99,12 @@ class GardenRules {
 
     // Validation des dates
     if (garden.createdAt.isAfter(DateTime.now())) {
-      errors.add('La date de création ne peut pas être dans le futur');
+      errors.add('La date de Création ne peut pas être dans le futur');
     }
 
     if (garden.updatedAt.isBefore(garden.createdAt)) {
       errors.add(
-          'La date de mise à jour ne peut pas être antérieure à la date de création');
+          'La date de mise à jour ne peut pas être antérieure à la date de Création');
     }
 
     if (errors.isEmpty) {

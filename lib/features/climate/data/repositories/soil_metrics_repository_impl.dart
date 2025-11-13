@@ -1,4 +1,4 @@
-﻿import '../../domain/repositories/soil_metrics_repository.dart';
+﻿ï»¿import '../../domain/repositories/soil_metrics_repository.dart';
 import '../datasources/soil_metrics_local_ds.dart';
 
 /// Implementation of soil metrics repository using local data source
@@ -41,7 +41,7 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
       // Validate temperature range
       if (tempC < -50.0 || tempC > 60.0) {
         throw ArgumentError(
-            'Temperature must be between -50°C and 60°C, got $tempC');
+            'Temperature must be between -50Â°C and 60Â°C, got $tempC');
       }
 
       final existingDto = await _localDataSource.read(scopeKey);
@@ -145,7 +145,7 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
       // Validate inputs
       if (soilTempC != null && (soilTempC < -50.0 || soilTempC > 60.0)) {
         throw ArgumentError(
-            'Temperature must be between -50°C and 60°C, got $soilTempC');
+            'Temperature must be between -50Â°C and 60Â°C, got $soilTempC');
       }
       if (soilPH != null && (soilPH < 0.0 || soilPH > 14.0)) {
         throw ArgumentError('pH must be between 0.0 and 14.0, got $soilPH');

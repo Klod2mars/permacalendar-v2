@@ -1,4 +1,4 @@
-﻿// lib/core/utils/device_calibration_key.dart
+﻿ï»¿// lib/core/utils/device_calibration_key.dart
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/widgets.dart';

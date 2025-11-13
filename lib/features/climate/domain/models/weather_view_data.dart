@@ -1,4 +1,4 @@
-﻿import '../../../../core/services/open_meteo_service.dart'
+﻿ï»¿import '../../../../core/services/open_meteo_service.dart'
     show Coordinates, OpenMeteoResult;
 import '../../../../core/models/daily_weather_point.dart';
 

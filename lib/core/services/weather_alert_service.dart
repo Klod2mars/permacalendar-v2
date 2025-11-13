@@ -1,15 +1,15 @@
-﻿import 'dart:math' as math;
+﻿ï»¿import 'dart:math' as math;
 import '../../features/climate/domain/models/weather_view_data.dart';
 import '../../features/climate/domain/entities/weather_alert.dart';
 
 /// Service de détection d'alertes météo intelligentes
 /// Analyse les prévisions météo et génère des alertes contextuelles basées sur les plantes actives
 class WeatherAlertService {
-  static const double FROST_THRESHOLD = 0.0; // °C
-  static const double HEATWAVE_THRESHOLD = 35.0; // °C
+  static const double FROST_THRESHOLD = 0.0; // Â°C
+  static const double HEATWAVE_THRESHOLD = 35.0; // Â°C
   static const double DROUGHT_DAYS = 3.0; // Jours sans pluie
   static const double HIGH_HYDRIC_NEED_TEMP =
-      28.0; // °C pour besoins hydriques élevés
+      28.0; // Â°C pour besoins hydriques élevés
 
   /// Analyser les prévisions météo et générer alertes intelligentes
   List<WeatherAlert> generateAlerts(
@@ -33,7 +33,7 @@ class WeatherAlertService {
           severity: AlertSeverity.warning,
           title: "Risque de gel demain",
           description:
-              "Température minimale prévue : ${tomorrowWeather.tMinC!.round()}°C",
+              "Température minimale prévue : ${tomorrowWeather.tMinC!.round()}Â°C",
           validFrom: tomorrow,
           validUntil: tomorrow.add(const Duration(hours: 12)),
           temperature: tomorrowWeather.tMinC,
@@ -57,7 +57,7 @@ class WeatherAlertService {
           severity: AlertSeverity.critical,
           title: "Forte chaleur prévue",
           description:
-              "Température maximale prévue : ${tomorrowWeather.tMaxC!.round()}°C",
+              "Température maximale prévue : ${tomorrowWeather.tMaxC!.round()}Â°C",
           validFrom: tomorrow,
           validUntil: tomorrow.add(const Duration(hours: 24)),
           temperature: tomorrowWeather.tMaxC,
@@ -123,9 +123,9 @@ class WeatherAlertService {
       List<PlantData> activePlants,
       DateTime tomorrow) {
     // CONDITIONS BLOQUANTES (mode dormant)
-    if (conditions.rainExpected) return null; // 🌧 Pluie prévue → dormant
+    if (conditions.rainExpected) return null; // ðŸŒ§ Pluie prévue â†’ dormant
     if (conditions.nextTemperatureMax <= 5) {
-      return null; // ❄ Trop froid → dormant
+      return null; // â„ Trop froid â†’ dormant
     }
 
     // Identifier plantes avec besoins hydriques actifs
@@ -137,11 +137,11 @@ class WeatherAlertService {
 
     // CONDITIONS D'ACTIVATION STRICTES
     if (plantsNeedingWater.isEmpty) {
-      return null; // 🌱 Aucune plante à besoin hydrique → dormant
+      return null; // ðŸŒ± Aucune plante à besoin hydrique â†’ dormant
     }
     if (!conditions.droughtRisk &&
         conditions.nextTemperatureMax < HIGH_HYDRIC_NEED_TEMP) {
-      return null; // Pas de risque hydrique → dormant
+      return null; // Pas de risque hydrique â†’ dormant
     }
 
     // ACTIVATION : Conditions réunies pour arrosage intelligent

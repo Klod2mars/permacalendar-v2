@@ -1,4 +1,4 @@
-﻿import 'dart:developer' as developer;
+﻿ï»¿import 'dart:developer' as developer;
 import 'dart:async';
 import 'package:permacalendar/features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/notification_alert.dart';
@@ -72,7 +72,7 @@ class GardenEventObserverService {
   ///
   /// S'abonne au GardenEventBus et commence à écouter les événements.
   ///
-  /// **Appelé depuis `app_initializer.dart` après la création de l'orchestrateur**
+  /// **Appelé depuis `app_initializer.dart` après la Création de l'orchestrateur**
   void initialize({
     required PlantIntelligenceOrchestrator orchestrator,
   }) {
@@ -82,7 +82,7 @@ class GardenEventObserverService {
     _eventSubscription = GardenEventBus().events.listen(_handleEvent);
 
     developer.log(
-      '✅ GardenEventObserverService initialisé et écoute les événements',
+      'âœ… GardenEventObserverService initialisé et écoute les événements',
       name: _logName,
       level: 500,
     );
@@ -98,14 +98,14 @@ class GardenEventObserverService {
   /// Méthode privée appelée automatiquement pour chaque événement.
   Future<void> _handleEvent(GardenEvent event) async {
     developer.log(
-      '📥 Événement reçu: ${event.runtimeType}',
+      'ðŸ“¥ Événement reçu: ${event.runtimeType}',
       name: _logName,
       level: 500,
     );
 
     if (!isInitialized) {
       developer.log(
-        '⚠️ Service non initialisé, événement ignoré',
+        'âš ï¸ Service non initialisé, événement ignoré',
         name: _logName,
         level: 800,
       );
@@ -146,7 +146,7 @@ class GardenEventObserverService {
     _plantingEventsCount++;
 
     developer.log(
-      '🌱 Nouvelle plantation détectée: plantId=$plantId, gardenId=$gardenId',
+      'ðŸŒ± Nouvelle plantation détectée: plantId=$plantId, gardenId=$gardenId',
       name: _logName,
       level: 500,
     );
@@ -154,7 +154,7 @@ class GardenEventObserverService {
     try {
       // Déclencher une analyse complète pour cette nouvelle plante
       developer.log(
-        '🔍 Déclenchement analyse Intelligence Végétale...',
+        'ðŸ” Déclenchement analyse Intelligence Végétale...',
         name: _logName,
         level: 500,
       );
@@ -174,7 +174,7 @@ class GardenEventObserverService {
                   .any((a) => a.priority == NotificationPriority.critical);
 
       developer.log(
-        '✅ Analyse terminée - Score: ${report.intelligenceScore.toStringAsFixed(1)}/100, '
+        'âœ… Analyse terminée - Score: ${report.intelligenceScore.toStringAsFixed(1)}/100, '
         'Recommandations: ${report.recommendations.length}, '
         'Actions urgentes: ${hasUrgentAction ? "OUI" : "NON"}',
         name: _logName,
@@ -202,7 +202,7 @@ class GardenEventObserverService {
     _harvestEventsCount++;
 
     developer.log(
-      '🌾 Récolte enregistrée: plantingId=$plantingId, rendement=${harvestYield}kg',
+      'ðŸŒ¾ Récolte enregistrée: plantingId=$plantingId, rendement=${harvestYield}kg',
       name: _logName,
       level: 500,
     );
@@ -224,16 +224,16 @@ class GardenEventObserverService {
     final tempDiff = (currentTemperature - previousTemperature).abs();
 
     developer.log(
-      '🌡️ Changement météo: ${previousTemperature.toStringAsFixed(1)}°C → '
-      '${currentTemperature.toStringAsFixed(1)}°C (Δ ${tempDiff.toStringAsFixed(1)}°C)',
+      'ðŸŒ¡ï¸ Changement météo: ${previousTemperature.toStringAsFixed(1)}Â°C â†’ '
+      '${currentTemperature.toStringAsFixed(1)}Â°C (Î” ${tempDiff.toStringAsFixed(1)}Â°C)',
       name: _logName,
       level: 500,
     );
 
-    // Si changement significatif (> 5°C), analyser toutes les plantes du jardin
+    // Si changement significatif (> 5Â°C), analyser toutes les plantes du jardin
     if (tempDiff > 5.0) {
       developer.log(
-        '⚠️ Changement météo significatif (> 5°C) - Analyse de toutes les plantes du jardin',
+        'âš ï¸ Changement météo significatif (> 5Â°C) - Analyse de toutes les plantes du jardin',
         name: _logName,
         level: 700,
       );
@@ -254,7 +254,7 @@ class GardenEventObserverService {
         }).length;
 
         developer.log(
-          '✅ Analyses terminées: ${reports.length} plantes, '
+          'âœ… Analyses terminées: ${reports.length} plantes, '
           '$urgentCount nécessitent une action urgente',
           name: _logName,
           level: urgentCount > 0 ? 900 : 500,
@@ -282,7 +282,7 @@ class GardenEventObserverService {
     _activityEventsCount++;
 
     developer.log(
-      '👤 Activité effectuée: type=$activityType, target=$targetId',
+      'ðŸ‘¤ Activité effectuée: type=$activityType, target=$targetId',
       name: _logName,
       level: 500,
     );
@@ -293,17 +293,17 @@ class GardenEventObserverService {
 
     if (analysisTriggered && targetId != null) {
       developer.log(
-        '🔍 Activité "$activityType" détectée - Analyse de mise à jour',
+        'ðŸ” Activité "$activityType" détectée - Analyse de mise à jour',
         name: _logName,
         level: 500,
       );
 
       // Note: targetId pourrait être un plantingId
-      // TODO: Implémenter la résolution plantingId → plantId si nécessaire
+      // TODO: Implémenter la résolution plantingId â†’ plantId si nécessaire
 
       // Pour l'instant, on log simplement
       developer.log(
-        'ℹ️ Analyse post-activité non implémentée (nécessite résolution plantingId → plantId)',
+        'â„¹ï¸ Analyse post-activité non implémentée (nécessite résolution plantingId â†’ plantId)',
         name: _logName,
         level: 600,
       );
@@ -319,7 +319,7 @@ class GardenEventObserverService {
     _contextEventsCount++;
 
     developer.log(
-      '🔄 Contexte jardin mis à jour: gardenId=$gardenId',
+      'ðŸ”„ Contexte jardin mis à jour: gardenId=$gardenId',
       name: _logName,
       level: 500,
     );
@@ -333,7 +333,7 @@ class GardenEventObserverService {
   /// Nettoie les ressources (annule l'abonnement au bus)
   void dispose() {
     developer.log(
-      '🔒 Fermeture du GardenEventObserverService',
+      'ðŸ”’ Fermeture du GardenEventObserverService',
       name: _logName,
       level: 500,
     );
@@ -372,7 +372,7 @@ class GardenEventObserverService {
 
   /// Réinitialise les statistiques
   void resetStats() {
-    developer.log('🔄 Réinitialisation des statistiques',
+    developer.log('ðŸ”„ Réinitialisation des statistiques',
         name: _logName, level: 500);
     _plantingEventsCount = 0;
     _weatherEventsCount = 0;
@@ -387,7 +387,7 @@ class GardenEventObserverService {
   void logStats() {
     final stats = getStats();
     developer.log(
-      '📊 Statistiques GardenEventObserver:\n'
+      'ðŸ“Š Statistiques GardenEventObserver:\n'
       '  - Plantations: ${stats.plantingEventsCount}\n'
       '  - Météo: ${stats.weatherEventsCount}\n'
       '  - Activités: ${stats.activityEventsCount}\n'

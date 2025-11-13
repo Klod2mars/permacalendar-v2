@@ -1,4 +1,4 @@
-﻿import 'package:freezed_annotation/freezed_annotation.dart';
+﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'garden_context.freezed.dart';
 part 'garden_context.g.dart';
@@ -37,7 +37,7 @@ class GardenContext with _$GardenContext {
     /// Préférences de culture
     required CultivationPreferences preferences,
 
-    /// Date de création
+    /// Date de Création
     DateTime? createdAt,
 
     /// Date de dernière mise à jour
@@ -91,13 +91,13 @@ class GardenLocation with _$GardenLocation {
 @freezed
 class ClimateConditions with _$ClimateConditions {
   const factory ClimateConditions({
-    /// Température moyenne annuelle (°C)
+    /// Température moyenne annuelle (Â°C)
     required double averageTemperature,
 
-    /// Température minimale enregistrée (°C)
+    /// Température minimale enregistrée (Â°C)
     required double minTemperature,
 
-    /// Température maximale enregistrée (°C)
+    /// Température maximale enregistrée (Â°C)
     required double maxTemperature,
 
     /// Précipitations annuelles moyennes (mm)
@@ -249,10 +249,10 @@ class GardenStats with _$GardenStats {
     /// Nombre de plantes actives
     required int activePlants,
 
-    /// Surface totale cultivée (m²)
+    /// Surface totale cultivée (mÂ²)
     required double totalArea,
 
-    /// Surface cultivée actuellement (m²)
+    /// Surface cultivée actuellement (mÂ²)
     required double activeArea,
 
     /// Rendement total (kg)
@@ -270,10 +270,10 @@ class GardenStats with _$GardenStats {
     /// Taux de réussite (%)
     required double successRate,
 
-    /// Coût total des intrants (€)
+    /// Coût total des intrants (â‚¬)
     required double totalInputCosts,
 
-    /// Valeur totale des récoltes (€)
+    /// Valeur totale des récoltes (â‚¬)
     required double totalHarvestValue,
   }) = _GardenStats;
 
@@ -344,19 +344,19 @@ extension GardenContextExtension on GardenContext {
   /// Détermine si le jardin est situé dans une zone aride
   bool get isAridZone => climate.averagePrecipitation < 250;
 
-  /// Calcule la densité de plantation (plantes par m²)
+  /// Calcule la densité de plantation (plantes par mÂ²)
   double get plantDensity {
     if (stats.activeArea <= 0) return 0;
     return stats.activePlants / stats.activeArea;
   }
 
-  /// Calcule le rendement par m²
+  /// Calcule le rendement par mÂ²
   double get yieldPerSquareMeter {
     if (stats.activeArea <= 0) return 0;
     return stats.currentYearYield / stats.activeArea;
   }
 
-  /// Calcule la rentabilité du jardin (€/m²)
+  /// Calcule la rentabilité du jardin (â‚¬/mÂ²)
   double get profitabilityPerSquareMeter {
     if (stats.activeArea <= 0) return 0;
     final profit = stats.totalHarvestValue - stats.totalInputCosts;

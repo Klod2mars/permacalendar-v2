@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../shared/widgets/custom_card.dart';
 
@@ -65,8 +65,8 @@ class GardenCard extends StatelessWidget {
                 // Surface totale (en haut à droite)
                 Text(
                   garden.totalAreaInSquareMeters > 0
-                      ? '${garden.totalAreaInSquareMeters.toStringAsFixed(0)} m²'
-                      : '-- m²',
+                      ? '${garden.totalAreaInSquareMeters.toStringAsFixed(0)} mÂ²'
+                      : '-- mÂ²',
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.primary,

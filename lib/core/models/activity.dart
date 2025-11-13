@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'activity.g.dart';
@@ -92,7 +92,7 @@ class Activity extends HiveObject {
   @HiveField(7)
   final Map<String, dynamic> metadata;
 
-  /// Date de création
+  /// Date de Création
   @HiveField(8)
   final DateTime createdAt;
 
@@ -122,7 +122,7 @@ class Activity extends HiveObject {
         createdAt = createdAt ?? DateTime.now(),
         updatedAt = updatedAt ?? DateTime.now();
 
-  /// Factory constructor pour la création d'un jardin
+  /// Factory constructor pour la Création d'un jardin
   factory Activity.gardenCreated({
     required String gardenId,
     required String gardenName,
@@ -130,8 +130,8 @@ class Activity extends HiveObject {
   }) {
     return Activity(
       type: ActivityType.gardenCreated,
-      title: 'Jardin créé',
-      description: 'Le jardin "$gardenName" a été créé avec succès',
+      title: 'Jardin Créé',
+      description: 'Le jardin "$gardenName" a été Créé avec succès',
       entityId: gardenId,
       entityType: EntityType.garden,
       metadata: {
@@ -179,7 +179,7 @@ class Activity extends HiveObject {
     );
   }
 
-  /// Factory constructor pour la création d'une parcelle
+  /// Factory constructor pour la Création d'une parcelle
   factory Activity.bedCreated({
     required String bedId,
     required String bedName,
@@ -188,9 +188,9 @@ class Activity extends HiveObject {
   }) {
     return Activity(
       type: ActivityType.bedCreated,
-      title: 'Parcelle créée',
+      title: 'Parcelle Créée',
       description:
-          'La parcelle "$bedName" a été créée dans le jardin "$gardenName"',
+          'La parcelle "$bedName" a été Créée dans le jardin "$gardenName"',
       entityId: bedId,
       entityType: EntityType.gardenBed,
       metadata: {
@@ -239,7 +239,7 @@ class Activity extends HiveObject {
     );
   }
 
-  /// Factory constructor pour la création d'une plantation
+  /// Factory constructor pour la Création d'une plantation
   factory Activity.plantingCreated({
     required String plantingId,
     required String plantName,
@@ -249,7 +249,7 @@ class Activity extends HiveObject {
   }) {
     return Activity(
       type: ActivityType.plantingCreated,
-      title: 'Plantation créée',
+      title: 'Plantation Créée',
       description: '$quantity $plantName planté(s) dans la parcelle "$bedName"',
       entityId: plantingId,
       entityType: EntityType.planting,
@@ -348,7 +348,7 @@ class Activity extends HiveObject {
     );
   }
 
-  /// Factory constructor pour la création d'une plante
+  /// Factory constructor pour la Création d'une plante
   factory Activity.plantCreated({
     required String plantId,
     required String plantName,

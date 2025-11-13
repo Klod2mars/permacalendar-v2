@@ -1,4 +1,4 @@
-﻿import '../../../plant_catalog/domain/entities/plant_entity.dart';
+﻿ï»¿import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
 /// Plant Data Source Interface
 ///

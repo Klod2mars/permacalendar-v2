@@ -1,4 +1,4 @@
-﻿import 'dart:developer' as developer;
+﻿ï»¿import 'dart:developer' as developer;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../domain/entities/notification_alert.dart';
 
@@ -117,10 +117,10 @@ class FlutterNotificationService {
         await androidPlugin.createNotificationChannel(_defaultChannel);
         await androidPlugin.createNotificationChannel(_lowPriorityChannel);
 
-        _logDebug('Canaux Android créés');
+        _logDebug('Canaux Android Créés');
       }
     } catch (e, stackTrace) {
-      _logError('Erreur lors de la création des canaux Android', e, stackTrace);
+      _logError('Erreur lors de la Création des canaux Android', e, stackTrace);
     }
   }
 
@@ -272,7 +272,7 @@ class FlutterNotificationService {
     return BigTextStyleInformation(
       alert.message,
       contentTitle: alert.title,
-      summaryText: '${alert.type.displayName} · ${alert.ageText}',
+      summaryText: '${alert.type.displayName} Â· ${alert.ageText}',
     );
   }
 

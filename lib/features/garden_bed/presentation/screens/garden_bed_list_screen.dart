@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../shared/widgets/custom_app_bar.dart';
@@ -35,7 +35,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
     // Load garden beds when screen initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(gardenBedProvider.notifier).loadGardenBeds(widget.gardenId);
-      // Charger toutes les plantations et le catalogue pour les prÃ©dictions
+      // Charger toutes les plantations et le catalogue pour les prÃƒÂ©dictions
       ref.read(plantingProvider.notifier).loadAllPlantings();
       ref.read(plantCatalogProvider.notifier).loadPlants();
     });
@@ -50,7 +50,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
   void _loadData() {
     final plantingsState = ref.read(plantingProvider);
 
-    // Recharger uniquement si nÃ©cessaire
+    // Recharger uniquement si nÃƒÂ©cessaire
     if (plantingsState.plantings.isEmpty && !plantingsState.isLoading) {
       ref.read(plantingProvider.notifier).loadAllPlantings();
     }
@@ -172,7 +172,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
                   theme,
                 ),
                 const SizedBox(width: 8),
-                ...['Argileux', 'Sableux', 'Limoneux', 'HumifÃ¨re'].map(
+                ...['Argileux', 'Sableux', 'Limoneux', 'HumifÃƒÂ¨re'].map(
                   (soilType) => Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: _buildFilterChip(
@@ -272,13 +272,13 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
           ),
           _buildStatItem(
             'Surface totale',
-            '${stats['totalArea'].toStringAsFixed(1)} mÂ²',
+            '${stats['totalArea'].toStringAsFixed(1)} mÃ‚Â²',
             Icons.straighten,
             theme,
           ),
           _buildStatItem(
             'Moyenne',
-            '${stats['averageArea'].toStringAsFixed(1)} mÂ²',
+            '${stats['averageArea'].toStringAsFixed(1)} mÃ‚Â²',
             Icons.analytics,
             theme,
           ),
@@ -331,16 +331,16 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
         return EmptyStateWidget(
           icon: Icons.grid_view,
           title: 'Aucune parcelle',
-          subtitle: 'Commencez par crÃ©er votre premiÃ¨re parcelle de jardin.',
-          actionText: 'CrÃ©er une parcelle',
+          subtitle: 'Commencez par crÃƒÂ©er votre premiÃƒÂ¨re parcelle de jardin.',
+          actionText: 'CrÃƒÂ©er une parcelle',
           onAction: () => _showCreateGardenBedDialog(),
         );
       } else {
         return EmptyStateWidget(
           icon: Icons.search_off,
-          title: 'Aucun rÃ©sultat',
+          title: 'Aucun rÃƒÂ©sultat',
           subtitle:
-              'Aucune parcelle ne correspond Ã  vos critÃ¨res de recherche.',
+              'Aucune parcelle ne correspond ÃƒÂ  vos critÃƒÂ¨res de recherche.',
           actionText: 'Effacer les filtres',
           onAction: () => _clearFilters(),
         );
@@ -409,11 +409,11 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
       ),
     );
 
-    // Si une parcelle a Ã©tÃ© crÃ©Ã©e avec succÃ¨s, rafraÃ®chir la liste
+    // Si une parcelle a ÃƒÂ©tÃƒÂ© crÃƒÂ©ÃƒÂ©e avec succÃƒÂ¨s, rafraÃƒÂ®chir la liste
     if (result == true) {
       await _refreshGardenBeds();
-      // Optionnel: afficher un feedback supplÃ©mentaire si nÃ©cessaire
-      // Le SnackBar est dÃ©jÃ  affichÃ© par le dialogue
+      // Optionnel: afficher un feedback supplÃƒÂ©mentaire si nÃƒÂ©cessaire
+      // Le SnackBar est dÃƒÂ©jÃƒÂ  affichÃƒÂ© par le dialogue
     }
   }
 
@@ -426,11 +426,11 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
       ),
     );
 
-    // Si une parcelle a Ã©tÃ© modifiÃ©e avec succÃ¨s, rafraÃ®chir la liste
+    // Si une parcelle a ÃƒÂ©tÃƒÂ© modifiÃƒÂ©e avec succÃƒÂ¨s, rafraÃƒÂ®chir la liste
     if (result == true) {
       await _refreshGardenBeds();
-      // Optionnel: afficher un feedback supplÃ©mentaire si nÃ©cessaire
-      // Le SnackBar est dÃ©jÃ  affichÃ© par le dialogue
+      // Optionnel: afficher un feedback supplÃƒÂ©mentaire si nÃƒÂ©cessaire
+      // Le SnackBar est dÃƒÂ©jÃƒÂ  affichÃƒÂ© par le dialogue
     }
   }
 
@@ -440,7 +440,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
       builder: (context) => ConfirmationDialog(
         title: 'Supprimer la parcelle',
         content:
-            'ÃŠtes-vous sÃ»r de vouloir supprimer "${gardenBed.name}" ?\n\nCette action est irrÃ©versible.',
+            'ÃƒÅ tes-vous sÃƒÂ»r de vouloir supprimer "${gardenBed.name}" ?\n\nCette action est irrÃƒÂ©versible.',
         confirmText: 'Supprimer',
         cancelText: 'Annuler',
         isDestructive: true,
@@ -451,7 +451,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
 
           if (success && mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Parcelle supprimÃ©e avec succÃ¨s')),
+              const SnackBar(content: Text('Parcelle supprimÃƒÂ©e avec succÃƒÂ¨s')),
             );
           }
         },
@@ -462,7 +462,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
   void _navigateToGardenBedDetail(gardenBed) {
     // TODO: Navigate to garden bed detail screen
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('DÃ©tail de parcelle Ã  implÃ©menter')),
+      const SnackBar(content: Text('DÃƒÂ©tail de parcelle ÃƒÂ  implÃƒÂ©menter')),
     );
   }
 
@@ -473,7 +473,7 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
         break;
       case 'export':
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Export Ã  implÃ©menter')),
+          const SnackBar(content: Text('Export ÃƒÂ  implÃƒÂ©menter')),
         );
         break;
     }
@@ -492,19 +492,19 @@ class _GardenBedListScreenState extends ConsumerState<GardenBedListScreen> {
           children: [
             Text('Nombre total de parcelles: ${stats['totalBeds']}'),
             const SizedBox(height: 8),
-            Text('Surface totale: ${stats['totalArea'].toStringAsFixed(1)} mÂ²'),
+            Text('Surface totale: ${stats['totalArea'].toStringAsFixed(1)} mÃ‚Â²'),
             const SizedBox(height: 8),
             Text(
-                'Surface moyenne: ${stats['averageArea'].toStringAsFixed(1)} mÂ²'),
+                'Surface moyenne: ${stats['averageArea'].toStringAsFixed(1)} mÃ‚Â²'),
             const SizedBox(height: 16),
-            const Text('RÃ©partition par type de sol:'),
+            const Text('RÃƒÂ©partition par type de sol:'),
             ...stats['soilTypeDistribution'].entries.map(
-                  (entry) => Text('â€¢ ${entry.key}: ${entry.value}'),
+                  (entry) => Text('ââ‚¬Â¢ ${entry.key}: ${entry.value}'),
                 ),
             const SizedBox(height: 8),
-            const Text('RÃ©partition par exposition:'),
+            const Text('RÃƒÂ©partition par exposition:'),
             ...stats['exposureDistribution'].entries.map(
-                  (entry) => Text('â€¢ ${entry.key}: ${entry.value}'),
+                  (entry) => Text('ââ‚¬Â¢ ${entry.key}: ${entry.value}'),
                 ),
           ],
         ),

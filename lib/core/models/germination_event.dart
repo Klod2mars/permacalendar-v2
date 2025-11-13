@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'germination_event.g.dart';
@@ -10,7 +10,7 @@ class GerminationEvent extends HiveObject {
   @HiveField(0)
   final String id;
 
-  /// Date de création de l'événement
+  /// Date de Création de l'événement
   @HiveField(1)
   final DateTime date;
 
@@ -38,7 +38,7 @@ class GerminationEvent extends HiveObject {
   @HiveField(7)
   final Map<String, dynamic>? weatherContext;
 
-  /// Date de création
+  /// Date de Création
   @HiveField(8)
   final DateTime createdAt;
 
@@ -74,7 +74,7 @@ class GerminationEvent extends HiveObject {
         updatedAt = updatedAt ?? DateTime.now(),
         metadata = metadata ?? {};
 
-  /// Factory constructor pour créer un nouvel événement de germination
+  /// Factory constructor pour Créer un nouvel événement de germination
   factory GerminationEvent.create({
     required String plantingId,
     DateTime? confirmedDate,

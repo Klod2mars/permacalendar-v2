@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+﻿ï»¿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/soil_temp_provider.dart';
@@ -10,7 +10,7 @@ import '../providers/soil_temp_provider.dart';
 ///
 /// Design specs:
 /// - Frost glass bottom sheet
-/// - Temperature slider (0-40Â°C)
+/// - Temperature slider (0-40Ã‚Â°C)
 /// - Manual input field
 /// - Save/Cancel actions
 class SoilTempSheet extends ConsumerStatefulWidget {
@@ -89,14 +89,14 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'TempÃ©rature du sol',
+                            'TempÃƒÂ©rature du sol',
                             style: theme.textTheme.titleLarge?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
-                            'Ajustez la tempÃ©rature mesurÃ©e',
+                            'Ajustez la tempÃƒÂ©rature mesurÃƒÂ©e',
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white70,
                             ),
@@ -116,7 +116,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                 // Temperature display
                 Center(
                   child: Text(
-                    '${_temperature.toStringAsFixed(1)}Â°C',
+                    '${_temperature.toStringAsFixed(1)}Ã‚Â°C',
                     style: theme.textTheme.displayMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
@@ -144,7 +144,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                     min: 0.0,
                     max: 40.0,
                     divisions: 80,
-                    label: '${_temperature.toStringAsFixed(1)}Â°C',
+                    label: '${_temperature.toStringAsFixed(1)}Ã‚Â°C',
                     onChanged: (value) {
                       setState(() {
                         _temperature = value;
@@ -163,7 +163,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                       const TextInputType.numberWithOptions(decimal: true),
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: 'TempÃ©rature (Â°C)',
+                    labelText: 'TempÃƒÂ©rature (Ã‚Â°C)',
                     labelStyle: const TextStyle(color: Colors.white70),
                     hintText: '20.0',
                     hintStyle:

@@ -1,4 +1,4 @@
-﻿// 📈 Metrics Collector Service - Comprehensive Metrics Collection
+﻿ï»¿// ðŸ“ˆ Metrics Collector Service - Comprehensive Metrics Collection
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Observability Patterns
 

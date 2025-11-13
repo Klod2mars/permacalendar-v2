@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/plant_evolution_report.dart';
 import '../../../../core/di/intelligence_module.dart';
 

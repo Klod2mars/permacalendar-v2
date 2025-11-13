@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 
 /// Widget minimal pour une zone calibrable unifiée.
 /// Ne dépend pas encore des providers: utilisable en mode isolé.

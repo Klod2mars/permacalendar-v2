@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'planting.g.dart';
@@ -98,7 +98,7 @@ class Planting extends HiveObject {
     updatedAt = DateTime.now();
   }
 
-  // Méthode pour créer une copie avec les nouveaux champs
+  // Méthode pour Créer une copie avec les nouveaux champs
   Planting copyWith({
     String? id,
     String? gardenBedId,

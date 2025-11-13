@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 
 /// Widget pour afficher le timing optimal pour les actions de jardinage
 class OptimalTimingWidget extends StatelessWidget {
@@ -126,9 +126,9 @@ class OptimalTimingWidget extends StatelessWidget {
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
       children: [
-        _buildTimingItem(theme, 'DÃ©but', timing.startDate),
+        _buildTimingItem(theme, 'DÃƒÂ©but', timing.startDate),
         _buildTimingItem(theme, 'Fin', timing.endDate),
-        _buildTimingItem(theme, 'Moment idÃ©al', timing.optimalDate),
+        _buildTimingItem(theme, 'Moment idÃƒÂ©al', timing.optimalDate),
         _buildTimingItem(theme, 'Urgence', _getUrgencyText(timing.urgency)),
       ],
     );
@@ -167,7 +167,7 @@ class OptimalTimingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'DÃ©tails',
+          'DÃƒÂ©tails',
           style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -268,9 +268,9 @@ class OptimalTimingWidget extends StatelessWidget {
       case TimingStatus.acceptable:
         return 'Timing acceptable';
       case TimingStatus.poor:
-        return 'Timing dÃ©favorable';
+        return 'Timing dÃƒÂ©favorable';
       case TimingStatus.expired:
-        return 'Timing expirÃ©';
+        return 'Timing expirÃƒÂ©';
     }
   }
 
@@ -283,9 +283,9 @@ class OptimalTimingWidget extends StatelessWidget {
       case TimingStatus.acceptable:
         return 'ACCEPTABLE';
       case TimingStatus.poor:
-        return 'DÃ‰FAVORABLE';
+        return 'DÃƒâ€°FAVORABLE';
       case TimingStatus.expired:
-        return 'EXPIRÃ‰';
+        return 'EXPIRÃƒâ€°';
     }
   }
 
@@ -296,7 +296,7 @@ class OptimalTimingWidget extends StatelessWidget {
       case TimingUrgency.medium:
         return 'Moyenne';
       case TimingUrgency.high:
-        return 'Ã‰levÃ©e';
+        return 'Ãƒâ€°levÃƒÂ©e';
       case TimingUrgency.critical:
         return 'Critique';
     }
@@ -423,9 +423,9 @@ class CompactOptimalTimingWidget extends StatelessWidget {
       case TimingStatus.acceptable:
         return 'ACCEPTABLE';
       case TimingStatus.poor:
-        return 'DÃ‰FAVORABLE';
+        return 'DÃƒâ€°FAVORABLE';
       case TimingStatus.expired:
-        return 'EXPIRÃ‰';
+        return 'EXPIRÃƒâ€°';
     }
   }
 }
@@ -484,7 +484,7 @@ class OptimalTimingList extends StatelessWidget {
   }
 }
 
-/// Ã‰numÃ©ration des statuts de timing
+/// Ãƒâ€°numÃƒÂ©ration des statuts de timing
 enum TimingStatus {
   optimal,
   good,
@@ -493,7 +493,7 @@ enum TimingStatus {
   expired,
 }
 
-/// Ã‰numÃ©ration des niveaux d'urgence
+/// Ãƒâ€°numÃƒÂ©ration des niveaux d'urgence
 enum TimingUrgency {
   low,
   medium,
@@ -501,7 +501,7 @@ enum TimingUrgency {
   critical,
 }
 
-/// Classe pour reprÃ©senter un timing optimal
+/// Classe pour reprÃƒÂ©senter un timing optimal
 class OptimalTiming {
   final String action;
   final DateTime startDate;

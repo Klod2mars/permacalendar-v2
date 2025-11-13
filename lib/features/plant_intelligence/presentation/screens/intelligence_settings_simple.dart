@@ -1,10 +1,10 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../../../../core/di/intelligence_module.dart';
 import '../../../../core/providers/providers.dart';
 
-/// Version simplifiÃ©e de l'Ã©cran des paramÃ¨tres d'intelligence
+/// Version simplifiÃƒÂ©e de l'ÃƒÂ©cran des paramÃƒÂ¨tres d'intelligence
 class IntelligenceSettingsSimple extends ConsumerStatefulWidget {
   const IntelligenceSettingsSimple({super.key});
 
@@ -28,14 +28,14 @@ class _IntelligenceSettingsSimpleState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ParamÃ¨tres Intelligence'),
+        title: const Text('ParamÃƒÂ¨tres Intelligence'),
         backgroundColor: theme.colorScheme.surface,
         foregroundColor: theme.colorScheme.onSurface,
         elevation: 0,
         actions: [
           TextButton(
             onPressed: _resetToDefaults,
-            child: const Text('RÃ©initialiser'),
+            child: const Text('RÃƒÂ©initialiser'),
           ),
         ],
       ),
@@ -44,7 +44,7 @@ class _IntelligenceSettingsSimpleState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // En-tÃªte
+            // En-tÃƒÂªte
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -78,7 +78,7 @@ class _IntelligenceSettingsSimpleState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'ParamÃ¨tres d\'Intelligence',
+                              'ParamÃƒÂ¨tres d\'Intelligence',
                               style: theme.textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: theme.colorScheme.onSurface,
@@ -108,24 +108,24 @@ class _IntelligenceSettingsSimpleState
 
             _buildSwitchTile(
               context,
-              'Notifications gÃ©nÃ©rales',
-              'Recevoir des notifications de l\'intelligence vÃ©gÃ©tale',
+              'Notifications gÃƒÂ©nÃƒÂ©rales',
+              'Recevoir des notifications de l\'intelligence vÃƒÂ©gÃƒÂ©tale',
               _notificationsEnabled,
               (value) => setState(() => _notificationsEnabled = value),
             ),
 
             _buildSwitchTile(
               context,
-              'Alertes mÃ©tÃ©o',
-              'Notifications pour les conditions mÃ©tÃ©o critiques',
+              'Alertes mÃƒÂ©tÃƒÂ©o',
+              'Notifications pour les conditions mÃƒÂ©tÃƒÂ©o critiques',
               _weatherAlertsEnabled,
               (value) => setState(() => _weatherAlertsEnabled = value),
             ),
 
             _buildSwitchTile(
               context,
-              'Alertes santÃ© des plantes',
-              'Notifications pour les problÃ¨mes de santÃ© des plantes',
+              'Alertes santÃƒÂ© des plantes',
+              'Notifications pour les problÃƒÂ¨mes de santÃƒÂ© des plantes',
               _plantHealthAlertsEnabled,
               (value) => setState(() => _plantHealthAlertsEnabled = value),
             ),
@@ -140,14 +140,14 @@ class _IntelligenceSettingsSimpleState
 
             const SizedBox(height: 24),
 
-            // FrÃ©quence des analyses
+            // FrÃƒÂ©quence des analyses
             _buildSectionHeader(context, 'Analyse', Icons.analytics),
             const SizedBox(height: 16),
 
-            // âœ… NOUVEAU - Phase 3 : Toggle analyse temps rÃ©el
+            // âÅ“… NOUVEAU - Phase 3 : Toggle analyse temps rÃƒÂ©el
             _buildSwitchTile(
               context,
-              'Analyse en temps rÃ©el',
+              'Analyse en temps rÃƒÂ©el',
               'Analyse automatique toutes les 5 minutes',
               ref.watch(realTimeAnalysisProvider).isRunning,
               (value) {
@@ -163,7 +163,7 @@ class _IntelligenceSettingsSimpleState
               },
             ),
 
-            // Intervalle d'analyse temps rÃ©el
+            // Intervalle d'analyse temps rÃƒÂ©el
             Consumer(
               builder: (context, ref, _) {
                 final realTimeState = ref.watch(realTimeAnalysisProvider);
@@ -185,7 +185,7 @@ class _IntelligenceSettingsSimpleState
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'FrÃ©quence d\'actualisation automatique',
+                          'FrÃƒÂ©quence d\'actualisation automatique',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -211,12 +211,12 @@ class _IntelligenceSettingsSimpleState
                                 label:
                                     '${realTimeState.updateInterval.inMinutes} min',
                                 onChanged: (value) {
-                                  // Note: La mÃ©thode updateAnalysisInterval sera implÃ©mentÃ©e
+                                  // Note: La mÃƒÂ©thode updateAnalysisInterval sera implÃƒÂ©mentÃƒÂ©e
                                   // dans une phase future. Pour l'instant, on affiche juste la valeur.
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                          'Intervalle: ${value.toInt()} min (sauvegarde Ã  implÃ©menter)'),
+                                          'Intervalle: ${value.toInt()} min (sauvegarde ÃƒÂ  implÃƒÂ©menter)'),
                                       duration: const Duration(seconds: 1),
                                     ),
                                   );
@@ -249,7 +249,7 @@ class _IntelligenceSettingsSimpleState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'FrÃ©quence d\'analyse manuelle',
+                      'FrÃƒÂ©quence d\'analyse manuelle',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -307,14 +307,14 @@ class _IntelligenceSettingsSimpleState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Seuil d\'alerte de santÃ©',
+                      'Seuil d\'alerte de santÃƒÂ©',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Niveau de santÃ© en dessous duquel une alerte est dÃ©clenchÃ©e',
+                      'Niveau de santÃƒÂ© en dessous duquel une alerte est dÃƒÂ©clenchÃƒÂ©e',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -365,8 +365,8 @@ class _IntelligenceSettingsSimpleState
 
             const SizedBox(height: 24),
 
-            // âœ… NOUVEAU - Phase 3 : Section Export/Import
-            _buildSectionHeader(context, 'DonnÃ©es', Icons.folder),
+            // âÅ“… NOUVEAU - Phase 3 : Section Export/Import
+            _buildSectionHeader(context, 'DonnÃƒÂ©es', Icons.folder),
             const SizedBox(height: 16),
 
             Card(
@@ -376,14 +376,14 @@ class _IntelligenceSettingsSimpleState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Gestion des donnÃ©es',
+                      'Gestion des donnÃƒÂ©es',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Exportez vos donnÃ©es pour les sauvegarder ou les partager',
+                      'Exportez vos donnÃƒÂ©es pour les sauvegarder ou les partager',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -438,7 +438,7 @@ class _IntelligenceSettingsSimpleState
 
             const SizedBox(height: 24),
 
-            // Section en dÃ©veloppement
+            // Section en dÃƒÂ©veloppement
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -458,15 +458,15 @@ class _IntelligenceSettingsSimpleState
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'ParamÃ¨tres avancÃ©s en dÃ©veloppement',
+                    'ParamÃƒÂ¨tres avancÃƒÂ©s en dÃƒÂ©veloppement',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Des paramÃ¨tres plus avancÃ©s pour personnaliser l\'intelligence '
-                    'vÃ©gÃ©tale seront disponibles dans une prochaine version.',
+                    'Des paramÃƒÂ¨tres plus avancÃƒÂ©s pour personnaliser l\'intelligence '
+                    'vÃƒÂ©gÃƒÂ©tale seront disponibles dans une prochaine version.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -545,34 +545,34 @@ class _IntelligenceSettingsSimpleState
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('ParamÃ¨tres rÃ©initialisÃ©s aux valeurs par dÃ©faut'),
+        content: Text('ParamÃƒÂ¨tres rÃƒÂ©initialisÃƒÂ©s aux valeurs par dÃƒÂ©faut'),
       ),
     );
   }
 
   void _saveSettings() {
-    // TODO: ImplÃ©menter la sauvegarde des paramÃ¨tres
+    // TODO: ImplÃƒÂ©menter la sauvegarde des paramÃƒÂ¨tres
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('ParamÃ¨tres sauvegardÃ©s'),
+        content: Text('ParamÃƒÂ¨tres sauvegardÃƒÂ©s'),
       ),
     );
   }
 
-  /// âœ… NOUVEAU - Phase 3 : Export des donnÃ©es
+  /// âÅ“… NOUVEAU - Phase 3 : Export des donnÃƒÂ©es
   ///
-  /// Permet d'exporter toutes les donnÃ©es d'intelligence vÃ©gÃ©tale
+  /// Permet d'exporter toutes les donnÃƒÂ©es d'intelligence vÃƒÂ©gÃƒÂ©tale
   /// au format JSON pour backup ou partage.
   Future<void> _exportSettings() async {
     try {
-      // RÃ©cupÃ©rer le repository pour export
+      // RÃƒÂ©cupÃƒÂ©rer le repository pour export
       final repository = ref.read(IntelligenceModule.repositoryImplProvider);
       final currentGardenId = ref.read(currentIntelligenceGardenIdProvider);
 
       if (currentGardenId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('âŒ Aucun jardin sÃ©lectionnÃ©'),
+            content: Text('âÂÅ’ Aucun jardin sÃƒÂ©lectionnÃƒÂ©'),
             backgroundColor: Colors.red,
           ),
         );
@@ -583,11 +583,11 @@ class _IntelligenceSettingsSimpleState
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Exporter les donnÃ©es'),
+          title: const Text('Exporter les donnÃƒÂ©es'),
           content: const Text(
-            'Cette action va exporter toutes les donnÃ©es d\'intelligence vÃ©gÃ©tale '
+            'Cette action va exporter toutes les donnÃƒÂ©es d\'intelligence vÃƒÂ©gÃƒÂ©tale '
             'pour le jardin actuel (conditions, recommandations, analyses).\n\n'
-            'Les donnÃ©es seront exportÃ©es au format JSON.',
+            'Les donnÃƒÂ©es seront exportÃƒÂ©es au format JSON.',
           ),
           actions: [
             TextButton(
@@ -604,7 +604,7 @@ class _IntelligenceSettingsSimpleState
 
       if (confirmed != true) return;
 
-      // Exporter les donnÃ©es (simulation - en production, utiliser path_provider + file_picker)
+      // Exporter les donnÃƒÂ©es (simulation - en production, utiliser path_provider + file_picker)
       final exportData = await repository.exportPlantData(
         plantId: currentGardenId,
         format: 'json',
@@ -612,12 +612,12 @@ class _IntelligenceSettingsSimpleState
       );
 
       // En production, sauvegarder le fichier et partager
-      // Pour l'instant, juste afficher un message de succÃ¨s
+      // Pour l'instant, juste afficher un message de succÃƒÂ¨s
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'âœ… Export rÃ©ussi : ${exportData['plant_conditions']?.length ?? 0} conditions, '
+              'âÅ“… Export rÃƒÂ©ussi : ${exportData['plant_conditions']?.length ?? 0} conditions, '
               '${exportData['recommendations']?.length ?? 0} recommandations',
             ),
             backgroundColor: Colors.green,
@@ -626,18 +626,18 @@ class _IntelligenceSettingsSimpleState
               label: 'Voir',
               textColor: Colors.white,
               onPressed: () {
-                // Afficher dialogue avec dÃ©tails export
+                // Afficher dialogue avec dÃƒÂ©tails export
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('DÃ©tails de l\'export'),
+                    title: const Text('DÃƒÂ©tails de l\'export'),
                     content: SingleChildScrollView(
                       child: Text(
-                        'DonnÃ©es exportÃ©es:\n\n'
-                        'â€¢ ${exportData['plant_conditions']?.length ?? 0} conditions de plantes\n'
-                        'â€¢ ${exportData['recommendations']?.length ?? 0} recommandations\n'
-                        'â€¢ ${exportData['analysis_results']?.length ?? 0} rÃ©sultats d\'analyses\n'
-                        'â€¢ ${exportData['weather_conditions']?.length ?? 0} conditions mÃ©tÃ©o\n\n'
+                        'DonnÃƒÂ©es exportÃƒÂ©es:\n\n'
+                        'ââ‚¬Â¢ ${exportData['plant_conditions']?.length ?? 0} conditions de plantes\n'
+                        'ââ‚¬Â¢ ${exportData['recommendations']?.length ?? 0} recommandations\n'
+                        'ââ‚¬Â¢ ${exportData['analysis_results']?.length ?? 0} rÃƒÂ©sultats d\'analyses\n'
+                        'ââ‚¬Â¢ ${exportData['weather_conditions']?.length ?? 0} conditions mÃƒÂ©tÃƒÂ©o\n\n'
                         'Format: JSON\n'
                         'Taille: ${(exportData.toString().length / 1024).toStringAsFixed(2)} Ko',
                       ),
@@ -659,7 +659,7 @@ class _IntelligenceSettingsSimpleState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('âŒ Erreur lors de l\'export: $e'),
+            content: Text('âÂÅ’ Erreur lors de l\'export: $e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -667,19 +667,19 @@ class _IntelligenceSettingsSimpleState
     }
   }
 
-  /// âœ… NOUVEAU - Phase 3 : Import/Restauration des donnÃ©es
+  /// âÅ“… NOUVEAU - Phase 3 : Import/Restauration des donnÃƒÂ©es
   ///
-  /// Permet d'importer des donnÃ©es d'intelligence vÃ©gÃ©tale prÃ©cÃ©demment exportÃ©es.
+  /// Permet d'importer des donnÃƒÂ©es d'intelligence vÃƒÂ©gÃƒÂ©tale prÃƒÂ©cÃƒÂ©demment exportÃƒÂ©es.
   Future<void> _importSettings() async {
     try {
       // Afficher dialogue de confirmation et avertissement
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('âš ï¸ Importer des donnÃ©es'),
+          title: const Text('âÅ¡Â Ã¯Â¸Â Importer des donnÃƒÂ©es'),
           content: const Text(
-            'Cette action va importer des donnÃ©es d\'intelligence vÃ©gÃ©tale.\n\n'
-            'âš ï¸ Attention: Les donnÃ©es existantes peuvent Ãªtre Ã©crasÃ©es.\n\n'
+            'Cette action va importer des donnÃƒÂ©es d\'intelligence vÃƒÂ©gÃƒÂ©tale.\n\n'
+            'âÅ¡Â Ã¯Â¸Â Attention: Les donnÃƒÂ©es existantes peuvent ÃƒÂªtre ÃƒÂ©crasÃƒÂ©es.\n\n'
             'Voulez-vous continuer ?',
           ),
           actions: [
@@ -700,14 +700,14 @@ class _IntelligenceSettingsSimpleState
 
       if (confirmed != true) return;
 
-      // En production, utiliser file_picker pour sÃ©lectionner un fichier
+      // En production, utiliser file_picker pour sÃƒÂ©lectionner un fichier
       // Pour l'instant, simuler avec un message
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'ðŸ“ FonctionnalitÃ© d\'import disponible.\n'
-              'En production: sÃ©lection de fichier JSON Ã  importer.',
+              'Ã°Å¸“Â FonctionnalitÃƒÂ© d\'import disponible.\n'
+              'En production: sÃƒÂ©lection de fichier JSON ÃƒÂ  importer.',
             ),
             backgroundColor: Colors.blue,
             duration: Duration(seconds: 4),
@@ -718,7 +718,7 @@ class _IntelligenceSettingsSimpleState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('âŒ Erreur lors de l\'import: $e'),
+            content: Text('âÂÅ’ Erreur lors de l\'import: $e'),
             backgroundColor: Colors.red,
           ),
         );

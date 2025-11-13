@@ -1,8 +1,8 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/plant_condition.dart';
 
-/// Widget simplifiÃ© pour afficher un graphique radar des conditions d'une plante
-/// OptimisÃ© pour minimiser les rebuilds avec RepaintBoundary
+/// Widget simplifiÃƒÂ© pour afficher un graphique radar des conditions d'une plante
+/// OptimisÃƒÂ© pour minimiser les rebuilds avec RepaintBoundary
 class ConditionRadarChartSimple extends StatefulWidget {
   final PlantCondition? plantCondition;
   final double size;
@@ -78,8 +78,8 @@ class _ConditionRadarChartSimpleState extends State<ConditionRadarChartSimple>
     final typeLabel = _getTypeLabel(widget.plantCondition!.type);
     final semanticLabel =
         '$typeLabel: ${widget.plantCondition!.value.toStringAsFixed(1)} ${widget.plantCondition!.unit}, '
-        'Score de santÃ©: ${widget.plantCondition!.healthScore.toStringAsFixed(0)}%, '
-        'Ã‰tat: ${widget.plantCondition!.statusName}';
+        'Score de santÃƒÂ©: ${widget.plantCondition!.healthScore.toStringAsFixed(0)}%, '
+        'Ãƒâ€°tat: ${widget.plantCondition!.statusName}';
 
     return RepaintBoundary(
       child: AnimatedBuilder(
@@ -104,7 +104,7 @@ class _ConditionRadarChartSimpleState extends State<ConditionRadarChartSimple>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // IcÃ´ne du type de condition
+                    // IcÃƒÂ´ne du type de condition
                     Icon(
                       _getTypeIcon(widget.plantCondition!.type),
                       size: widget.size * 0.2,
@@ -124,7 +124,7 @@ class _ConditionRadarChartSimpleState extends State<ConditionRadarChartSimple>
                       ),
                     ),
 
-                    // Score de santÃ©
+                    // Score de santÃƒÂ©
                     Text(
                       '${widget.plantCondition!.healthScore.toStringAsFixed(0)}%',
                       style: theme.textTheme.labelLarge?.copyWith(
@@ -155,11 +155,11 @@ class _ConditionRadarChartSimpleState extends State<ConditionRadarChartSimple>
   String _getTypeLabel(ConditionType type) {
     switch (type) {
       case ConditionType.temperature:
-        return 'TempÃ©rature';
+        return 'TempÃƒÂ©rature';
       case ConditionType.humidity:
-        return 'HumiditÃ©';
+        return 'HumiditÃƒÂ©';
       case ConditionType.light:
-        return 'LuminositÃ©';
+        return 'LuminositÃƒÂ©';
       case ConditionType.soil:
         return 'Sol';
       case ConditionType.wind:
@@ -191,7 +191,7 @@ class _ConditionRadarChartSimpleState extends State<ConditionRadarChartSimple>
           ),
           const SizedBox(height: 8),
           Text(
-            'Aucune donnÃ©e',
+            'Aucune donnÃƒÂ©e',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

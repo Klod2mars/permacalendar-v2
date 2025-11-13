@@ -1,4 +1,4 @@
-﻿// 🏥 Health Check Service - System Health Monitoring
+﻿ï»¿// ðŸ¥ Health Check Service - System Health Monitoring
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Health Check Patterns
 

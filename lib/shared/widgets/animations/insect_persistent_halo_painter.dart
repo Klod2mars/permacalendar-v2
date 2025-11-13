@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'insect_animation_config.dart';
 
 /// Painter pour le halo persistant des jardins actifs

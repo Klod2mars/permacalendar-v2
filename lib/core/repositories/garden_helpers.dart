@@ -1,4 +1,4 @@
-﻿import '../models/garden.dart';
+﻿ï»¿import '../models/garden.dart';
 import '../data/hive/garden_boxes.dart';
 
 /// Classe utilitaire pour les calculs et opérations sur les jardins
@@ -77,7 +77,7 @@ class GardenHelpers {
     return totalArea / filteredGardens.length;
   }
 
-  /// Trouve les jardins créés dans une période donnée
+  /// Trouve les jardins Créés dans une période donnée
   static List<Garden> getGardensCreatedInPeriod(
       List<Garden> gardens, DateTime startDate, DateTime endDate) {
     return gardens
@@ -100,22 +100,22 @@ class GardenHelpers {
   static Map<String, List<Garden>> groupGardensByAreaRange(
       List<Garden> gardens) {
     final Map<String, List<Garden>> grouped = {
-      'Petit (< 50m²)': [],
-      'Moyen (50-200m²)': [],
-      'Grand (200-500m²)': [],
-      'Très grand (> 500m²)': [],
+      'Petit (< 50mÂ²)': [],
+      'Moyen (50-200mÂ²)': [],
+      'Grand (200-500mÂ²)': [],
+      'Très grand (> 500mÂ²)': [],
     };
 
     for (final garden in gardens.where((g) => g.isActive)) {
       final area = garden.totalAreaInSquareMeters;
       if (area < 50) {
-        grouped['Petit (< 50m²)']!.add(garden);
+        grouped['Petit (< 50mÂ²)']!.add(garden);
       } else if (area < 200) {
-        grouped['Moyen (50-200m²)']!.add(garden);
+        grouped['Moyen (50-200mÂ²)']!.add(garden);
       } else if (area < 500) {
-        grouped['Grand (200-500m²)']!.add(garden);
+        grouped['Grand (200-500mÂ²)']!.add(garden);
       } else {
-        grouped['Très grand (> 500m²)']!.add(garden);
+        grouped['Très grand (> 500mÂ²)']!.add(garden);
       }
     }
 
@@ -181,7 +181,7 @@ class GardenHelpers {
     }).toList();
   }
 
-  /// Calcule la densité de plantation (nombre de zones par m²)
+  /// Calcule la densité de plantation (nombre de zones par mÂ²)
   static double calculatePlantingDensity(Garden garden) {
     final beds = GardenBoxes.getGardenBeds(garden.id);
     if (garden.totalAreaInSquareMeters == 0) return 0.0;
@@ -189,7 +189,7 @@ class GardenHelpers {
     return beds.length / garden.totalAreaInSquareMeters;
   }
 
-  /// Trouve les jardins les plus productifs (avec le plus de zones de culture par m²)
+  /// Trouve les jardins les plus productifs (avec le plus de zones de culture par mÂ²)
   static List<Garden> getMostProductiveGardens(List<Garden> gardens,
       {int limit = 5}) {
     final activeGardens = gardens.where((garden) => garden.isActive).toList();
@@ -228,8 +228,8 @@ class GardenHelpers {
         if (totalBedArea > garden.totalAreaInSquareMeters * 1.1) {
           // Tolérance de 10%
           issues.add(
-              'Jardin "${garden.name}": superficie des zones (${totalBedArea.toStringAsFixed(1)}m²) '
-              'dépasse celle du jardin (${garden.totalAreaInSquareMeters.toStringAsFixed(1)}m²)');
+              'Jardin "${garden.name}": superficie des zones (${totalBedArea.toStringAsFixed(1)}mÂ²) '
+              'dépasse celle du jardin (${garden.totalAreaInSquareMeters.toStringAsFixed(1)}mÂ²)');
         }
 
         // Vérification des zones orphelines
@@ -280,8 +280,8 @@ class GardenStatistics {
     return 'GardenStatistics('
         'total: $totalGardens, '
         'active: $activeGardens, '
-        'totalArea: ${totalArea.toStringAsFixed(1)}m², '
-        'averageArea: ${averageArea.toStringAsFixed(1)}m², '
+        'totalArea: ${totalArea.toStringAsFixed(1)}mÂ², '
+        'averageArea: ${averageArea.toStringAsFixed(1)}mÂ², '
         'totalBeds: $totalBeds'
         ')';
   }

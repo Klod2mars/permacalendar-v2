@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -144,7 +144,7 @@ builder: (context, state) => const GardenListScreen(),
 
 ),
 
-// Route de création AVANT la route avec paramètre dynamique
+// Route de Création AVANT la route avec paramètre dynamique
 
 GoRoute(
 
@@ -356,7 +356,7 @@ builder: (context, state) => const WeatherDetailScreen(),
 
 ),
 
-// ✅ Route pour toutes les activités
+// âœ… Route pour toutes les activités
 
 GoRoute(
 
@@ -380,13 +380,13 @@ builder: (context, state) {
 
 print(
 
-'🔴🔴🔴 [DIAGNOSTIC CRITIQUE] GoRoute.builder pour /intelligence APPELÉ 🔴🔴🔴');
+'ðŸ”´ðŸ”´ðŸ”´ [DIAGNOSTIC CRITIQUE] GoRoute.builder pour /intelligence APPELÉ ðŸ”´ðŸ”´ðŸ”´');
 
 print(
 
-'🔴🔴🔴 [DIAGNOSTIC CRITIQUE] Création de PlantIntelligenceDashboardScreen... 🔴🔴🔴');
+'ðŸ”´ðŸ”´ðŸ”´ [DIAGNOSTIC CRITIQUE] Création de PlantIntelligenceDashboardScreen... ðŸ”´ðŸ”´ðŸ”´');
 
-// ✅ FIX: Retirer `const` pour permettre la reconstruction du widget
+// âœ… FIX: Retirer `const` pour permettre la reconstruction du widget
 
 // lorsque les providers (intelligenceStateProvider) changent d\\'état
 

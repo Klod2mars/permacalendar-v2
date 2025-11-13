@@ -1,4 +1,4 @@
-﻿import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
+﻿ï»¿import 'package:permacalendar/features/plant_intelligence/domain/entities/weather_condition.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_context.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart';
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
@@ -41,14 +41,14 @@ class EvaluatePlantingTimingUsecase {
 
       if (weather.value >= minTemp && weather.value <= maxTemp) {
         favorableFactors.add(
-            'Température optimale pour la germination (${weather.value.toStringAsFixed(1)}°C)');
+            'Température optimale pour la germination (${weather.value.toStringAsFixed(1)}Â°C)');
       } else if (weather.value < minTemp) {
         unfavorableFactors.add(
-            'Température trop basse (${weather.value.toStringAsFixed(1)}°C < $minTemp°C)');
+            'Température trop basse (${weather.value.toStringAsFixed(1)}Â°C < $minTempÂ°C)');
         risks.add('Risque de mauvaise germination');
       } else {
         unfavorableFactors.add(
-            'Température trop élevée (${weather.value.toStringAsFixed(1)}°C > $maxTemp°C)');
+            'Température trop élevée (${weather.value.toStringAsFixed(1)}Â°C > $maxTempÂ°C)');
         risks.add('Risque de stress thermique');
       }
     }
@@ -66,7 +66,7 @@ class EvaluatePlantingTimingUsecase {
           plant.metadata['frostSensitive'] == 'true';
 
       if (isFrostSensitive) {
-        unfavorableFactors.add('Risque de gel (température < 5°C)');
+        unfavorableFactors.add('Risque de gel (température < 5Â°C)');
         risks.add('Plante sensible au gel - risque de mort');
       }
     }

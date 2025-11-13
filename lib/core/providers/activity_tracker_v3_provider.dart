@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import '../services/activity_tracker_v3.dart';
 import '../models/activity_v3.dart';
 

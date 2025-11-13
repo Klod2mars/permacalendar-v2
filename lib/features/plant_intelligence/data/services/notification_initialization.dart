@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import '../../domain/entities/notification_alert.dart';
 import 'plant_notification_service.dart';
 import 'flutter_notification_service.dart';
@@ -34,7 +34,7 @@ class NotificationInitialization {
       _logDebug('Nettoyage des anciennes notifications effectué');
 
       _isInitialized = true;
-      _logDebug('✅ Services de notification initialisés avec succès');
+      _logDebug('âœ… Services de notification initialisés avec succès');
     } catch (e, stackTrace) {
       _logError('Erreur lors de l\'initialisation des services de notification',
           e, stackTrace);

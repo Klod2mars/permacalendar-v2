@@ -1,4 +1,4 @@
-﻿import 'dart:developer' as developer;
+﻿ï»¿import 'dart:developer' as developer;
 import '../data/hive/garden_boxes.dart';
 import '../models/planting.dart';
 import '../../features/plant_intelligence/domain/entities/garden_context.dart';
@@ -35,7 +35,7 @@ class GardenDataAggregationService {
   List<String> getActivePlantIds(String gardenId) {
     try {
       developer.log(
-        '🔍 DIAGNOSTIC - Récupération des plantes actives pour jardin $gardenId',
+        'ðŸ” DIAGNOSTIC - Récupération des plantes actives pour jardin $gardenId',
         name: _logName,
         level: 500,
       );
@@ -44,14 +44,14 @@ class GardenDataAggregationService {
       final beds = GardenBoxes.getGardenBeds(gardenId);
 
       developer.log(
-        '📦 DIAGNOSTIC - Parcelles trouvées: ${beds.length}',
+        'ðŸ“¦ DIAGNOSTIC - Parcelles trouvées: ${beds.length}',
         name: _logName,
         level: 500,
       );
 
       if (beds.isEmpty) {
         developer.log(
-          '❌ DIAGNOSTIC - Aucune parcelle trouvée pour jardin $gardenId',
+          'âŒ DIAGNOSTIC - Aucune parcelle trouvée pour jardin $gardenId',
           name: _logName,
           level: 500,
         );
@@ -64,7 +64,7 @@ class GardenDataAggregationService {
       // Pour chaque parcelle, récupérer les plantations actives
       for (final bed in beds) {
         developer.log(
-          '📦 DIAGNOSTIC - Parcelle: ${bed.name} (ID: ${bed.id})',
+          'ðŸ“¦ DIAGNOSTIC - Parcelle: ${bed.name} (ID: ${bed.id})',
           name: _logName,
           level: 500,
         );
@@ -72,7 +72,7 @@ class GardenDataAggregationService {
         final plantings = GardenBoxes.getPlantings(bed.id);
 
         developer.log(
-          '🌱 DIAGNOSTIC - Plantations trouvées: ${plantings.length}',
+          'ðŸŒ± DIAGNOSTIC - Plantations trouvées: ${plantings.length}',
           name: _logName,
           level: 500,
         );
@@ -81,7 +81,7 @@ class GardenDataAggregationService {
         final activePlantings = plantings.where((p) => p.isActive).toList();
 
         developer.log(
-          '🌱 DIAGNOSTIC - Plantations actives: ${activePlantings.length}',
+          'ðŸŒ± DIAGNOSTIC - Plantations actives: ${activePlantings.length}',
           name: _logName,
           level: 500,
         );
@@ -89,7 +89,7 @@ class GardenDataAggregationService {
         // Extraire les plantId
         for (final planting in activePlantings) {
           developer.log(
-            '🌱 DIAGNOSTIC - Plantation active: ${planting.plantId}',
+            'ðŸŒ± DIAGNOSTIC - Plantation active: ${planting.plantId}',
             name: _logName,
             level: 500,
           );
@@ -100,14 +100,14 @@ class GardenDataAggregationService {
       final result = activePlantIds.toList();
 
       developer.log(
-        '✅ DIAGNOSTIC - Trouvé ${result.length} plantes actives pour jardin $gardenId',
+        'âœ… DIAGNOSTIC - Trouvé ${result.length} plantes actives pour jardin $gardenId',
         name: _logName,
         level: 500,
       );
 
       for (final plantId in result) {
         developer.log(
-          '🌱 DIAGNOSTIC - Plante active finale: $plantId',
+          'ðŸŒ± DIAGNOSTIC - Plante active finale: $plantId',
           name: _logName,
           level: 500,
         );
@@ -195,11 +195,11 @@ class GardenDataAggregationService {
   /// Calcule les statistiques réelles d'un jardin
   ///
   /// **Statistiques calculées :**
-  /// - `totalArea` : Somme des surfaces de toutes les parcelles (m²)
-  /// - `activeArea` : Somme des surfaces des parcelles actives (m²)
+  /// - `totalArea` : Somme des surfaces de toutes les parcelles (mÂ²)
+  /// - `activeArea` : Somme des surfaces des parcelles actives (mÂ²)
   /// - `totalPlants` : Nombre total de plantations
   /// - `activePlants` : Nombre de plantations actives
-  /// - `plantingsThisYear` : Plantations créées cette année
+  /// - `plantingsThisYear` : Plantations Créées cette année
   /// - `harvestsThisYear` : Plantations récoltées cette année
   /// - `successRate` : Taux de réussite (harvestsThisYear / plantingsThisYear * 100)
   ///
@@ -260,7 +260,7 @@ class GardenDataAggregationService {
 
       developer.log(
         'Statistiques calculées : $totalPlants plantations, $activePlants actives, '
-        '${totalArea.toStringAsFixed(2)}m² total, ${activeArea.toStringAsFixed(2)}m² actifs',
+        '${totalArea.toStringAsFixed(2)}mÂ² total, ${activeArea.toStringAsFixed(2)}mÂ² actifs',
         name: _logName,
         level: 500,
       );
@@ -314,12 +314,12 @@ class GardenDataAggregationService {
   /// 5. Crée un objet `SoilInfo` avec valeurs par défaut raisonnables
   ///
   /// **Mapping des types de sol :**
-  /// - "Argileux" → SoilType.clay
-  /// - "Sableux" → SoilType.sandy
-  /// - "Limoneux" → SoilType.loamy
-  /// - "Humifère" → SoilType.peaty
-  /// - "Calcaire" → SoilType.chalky
-  /// - "Mixte" → SoilType.loamy (par défaut)
+  /// - "Argileux" â†’ SoilType.clay
+  /// - "Sableux" â†’ SoilType.sandy
+  /// - "Limoneux" â†’ SoilType.loamy
+  /// - "Humifère" â†’ SoilType.peaty
+  /// - "Calcaire" â†’ SoilType.chalky
+  /// - "Mixte" â†’ SoilType.loamy (par défaut)
   ///
   /// **Retourne :** Objet `SoilInfo` avec type de sol majoritaire et valeurs par défaut
   SoilInfo aggregateSoilInfo(String gardenId) {
@@ -365,7 +365,7 @@ class GardenDataAggregationService {
       final soilType = _mapFrenchSoilTypeToEnum(majorSoilType);
 
       developer.log(
-        'Type de sol majoritaire : $majorSoilType → $soilType',
+        'Type de sol majoritaire : $majorSoilType â†’ $soilType',
         name: _logName,
         level: 500,
       );
@@ -510,7 +510,7 @@ class GardenDataAggregationService {
   /// **Processus :**
   /// 1. Récupère les données réelles du jardin via les autres méthodes du service
   /// 2. Assemble toutes les informations dans un GardenContext
-  /// 3. Utilisée par PlantIntelligenceRepositoryImpl pour créer/mettre à jour le contexte
+  /// 3. Utilisée par PlantIntelligenceRepositoryImpl pour Créer/mettre à jour le contexte
   ///
   /// **Paramètres :**
   /// - `garden` : Objet jardin (GardenHive, Garden ou dynamic avec les propriétés minimales)
@@ -519,7 +519,7 @@ class GardenDataAggregationService {
   GardenContext createGardenContext(dynamic garden) {
     try {
       developer.log(
-        '🏗️ Création GardenContext pour jardin ${_extractGardenId(garden)}',
+        'ðŸ—ï¸ Création GardenContext pour jardin ${_extractGardenId(garden)}',
         name: _logName,
         level: 500,
       );
@@ -537,8 +537,8 @@ class GardenDataAggregationService {
       final soil = aggregateSoilInfo(gardenId);
 
       developer.log(
-        '✅ GardenContext créé: ${activePlantIds.length} plantes actives, '
-        '${stats.activePlants} plantations, ${stats.totalArea.toStringAsFixed(2)}m²',
+        'âœ… GardenContext Créé: ${activePlantIds.length} plantes actives, '
+        '${stats.activePlants} plantations, ${stats.totalArea.toStringAsFixed(2)}mÂ²',
         name: _logName,
         level: 500,
       );
@@ -571,7 +571,7 @@ class GardenDataAggregationService {
       );
     } catch (e, stackTrace) {
       developer.log(
-        'Erreur lors de la création du GardenContext',
+        'Erreur lors de la Création du GardenContext',
         name: _logName,
         level: 1000,
         error: e,
@@ -621,7 +621,7 @@ class GardenDataAggregationService {
     }
   }
 
-  /// Extrait la date de création
+  /// Extrait la date de Création
   DateTime? _extractCreatedAt(dynamic garden) {
     try {
       return garden.createdAt as DateTime?;

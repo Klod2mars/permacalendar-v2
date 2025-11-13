@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 part 'growth_cycle.g.dart';

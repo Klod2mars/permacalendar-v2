@@ -1,4 +1,4 @@
-﻿// 📊 Performance Monitoring Service - Real-Time Performance Tracking
+﻿ï»¿// ðŸ“Š Performance Monitoring Service - Real-Time Performance Tracking
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Observability Patterns
 

@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/soil_metrics_repository.dart';
 import '../../domain/usecases/compute_soil_temp_next_day_usecase.dart';
 import 'soil_metrics_repository_provider.dart';

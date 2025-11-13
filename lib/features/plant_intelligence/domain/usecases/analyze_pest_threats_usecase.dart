@@ -1,4 +1,4 @@
-﻿import '../entities/pest_observation.dart';
+﻿ï»¿import '../entities/pest_observation.dart';
 import '../entities/pest_threat_analysis.dart';
 import '../entities/pest.dart';
 import '../repositories/i_pest_observation_repository.dart';
@@ -13,7 +13,7 @@ import '../repositories/i_plant_data_source.dart';
 /// threat analysis. It NEVER modifies the Sanctuary, only reads and interprets.
 ///
 /// FLOW:
-/// Sanctuary (Observations) → Analysis (UseCase) → Threat Report (Output)
+/// Sanctuary (Observations) â†’ Analysis (UseCase) â†’ Threat Report (Output)
 class AnalyzePestThreatsUsecase {
   final IPestObservationRepository _observationRepository;
   final IPestRepository _pestRepository;
@@ -183,18 +183,18 @@ class AnalyzePestThreatsUsecase {
   /// Generate summary text
   String _generateSummary(List<PestThreat> threats, int critical, int high) {
     if (threats.isEmpty) {
-      return 'Aucune menace détectée. Votre jardin est en bonne santé ! 🌱';
+      return 'Aucune menace détectée. Votre jardin est en bonne santé ! ðŸŒ±';
     }
 
     if (critical > 0) {
-      return 'Attention ! $critical menace(s) critique(s) détectée(s). Action immédiate recommandée. 🚨';
+      return 'Attention ! $critical menace(s) critique(s) détectée(s). Action immédiate recommandée. ðŸš¨';
     }
 
     if (high > 0) {
-      return '$high menace(s) élevée(s) détectée(s). Surveillance et action recommandées. ⚠️';
+      return '$high menace(s) élevée(s) détectée(s). Surveillance et action recommandées. âš ï¸';
     }
 
-    return '${threats.length} menace(s) détectée(s). Surveillance régulière conseillée. 👀';
+    return '${threats.length} menace(s) détectée(s). Surveillance régulière conseillée. ðŸ‘€';
   }
 }
 

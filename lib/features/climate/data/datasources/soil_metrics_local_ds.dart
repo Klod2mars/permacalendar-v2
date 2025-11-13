@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import '../../../../core/hive/type_ids.dart';
 
 part 'soil_metrics_local_ds.g.dart';

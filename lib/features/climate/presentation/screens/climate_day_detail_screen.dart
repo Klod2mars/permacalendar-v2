@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Climate Day Detail Screen
@@ -23,7 +23,7 @@ class ClimateDayDetailScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: Text(
-          'DÃ©tail mÃ©tÃ©o',
+          'DÃƒÂ©tail mÃƒÂ©tÃƒÂ©o',
           style: theme.textTheme.titleLarge?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -59,7 +59,7 @@ class ClimateDayDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'DÃ©tail mÃ©tÃ©o du jour',
+                    'DÃƒÂ©tail mÃƒÂ©tÃƒÂ©o du jour',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -68,7 +68,7 @@ class ClimateDayDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Cette fonctionnalitÃ© sera disponible dans la Phase 2.\nIntÃ©gration complÃ¨te des donnÃ©es mÃ©tÃ©o OpenMeteo.',
+                    'Cette fonctionnalitÃƒÂ© sera disponible dans la Phase 2.\nIntÃƒÂ©gration complÃƒÂ¨te des donnÃƒÂ©es mÃƒÂ©tÃƒÂ©o OpenMeteo.',
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: Colors.white70,
                     ),

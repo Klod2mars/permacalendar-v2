@@ -1,4 +1,4 @@
-﻿import 'dart:developer' as developer;
+﻿ï»¿import 'dart:developer' as developer;
 import '../../domain/repositories/i_plant_data_source.dart';
 import '../../../plant_catalog/data/repositories/plant_hive_repository.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';

@@ -1,4 +1,4 @@
-﻿class PlantValueRanking {
+﻿ï»¿class PlantValueRanking {
   final String plantName;
   final double totalValue;
 

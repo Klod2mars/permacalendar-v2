@@ -1,8 +1,8 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../domain/entities/plant_evolution_report.dart';
 
-/// 📊 CURSOR PROMPT A8 - Plant Evolution Card
+/// ðŸ“Š CURSOR PROMPT A8 - Plant Evolution Card
 ///
 /// Widget carte compact pour afficher une évolution unique.
 /// Utile pour les dashboards ou résumés.
@@ -166,11 +166,11 @@ class PlantEvolutionCard extends StatelessWidget {
     final parts = <String>[];
 
     if (evolution.improvedConditions.isNotEmpty) {
-      parts.add('✅ ${evolution.improvedConditions.length} améliorée(s)');
+      parts.add('âœ… ${evolution.improvedConditions.length} améliorée(s)');
     }
 
     if (evolution.degradedConditions.isNotEmpty) {
-      parts.add('⚠️ ${evolution.degradedConditions.length} dégradée(s)');
+      parts.add('âš ï¸ ${evolution.degradedConditions.length} dégradée(s)');
     }
 
     return Text(

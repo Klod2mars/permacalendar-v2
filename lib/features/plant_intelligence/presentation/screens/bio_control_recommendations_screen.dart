@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/bio_control_recommendation.dart';
 import '../../domain/entities/pest_threat_analysis.dart';
@@ -8,7 +8,7 @@ import '../../../../core/di/intelligence_module.dart';
 ///
 /// PHILOSOPHY:
 /// This screen displays AI-generated recommendations based on user observations.
-/// It respects the unidirectional flow: Sanctuary (Observations) → Intelligence (Analysis) → Recommendations (Display)
+/// It respects the unidirectional flow: Sanctuary (Observations) â†’ Intelligence (Analysis) â†’ Recommendations (Display)
 /// The user can VIEW and APPLY recommendations, but CANNOT create them (only the AI can).
 class BioControlRecommendationsScreen extends ConsumerStatefulWidget {
   final String gardenId;
@@ -82,7 +82,7 @@ class _BioControlRecommendationsScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('✅ Recommandation marquée comme appliquée'),
+            content: Text('âœ… Recommandation marquée comme appliquée'),
             backgroundColor: Colors.green,
           ),
         );
@@ -104,7 +104,7 @@ class _BioControlRecommendationsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🌿 Lutte Biologique'),
+        title: const Text('ðŸŒ¿ Lutte Biologique'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -161,7 +161,7 @@ class _BioControlRecommendationsScreenState
             ),
             const SizedBox(height: 12),
             Text(
-              'Votre jardin est en bonne santé ! 🌱\n\nAucune recommandation de lutte biologique n\'est nécessaire pour le moment.',
+              'Votre jardin est en bonne santé ! ðŸŒ±\n\nAucune recommandation de lutte biologique n\'est nécessaire pour le moment.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
             ),

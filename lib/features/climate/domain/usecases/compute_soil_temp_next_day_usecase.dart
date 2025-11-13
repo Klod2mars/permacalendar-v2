@@ -1,4 +1,4 @@
-﻿/// Use case for computing soil temperature for the next day
+﻿ï»¿/// Use case for computing soil temperature for the next day
 ///
 /// Implements the thermal diffusion model:
 /// Tsoil(n+1) = Tsoil(n) + alpha * (Tair(n) - Tsoil(n))
@@ -14,8 +14,8 @@ class ComputeSoilTempNextDayUsecase {
   /// [soilTempC] Current soil temperature in Celsius
   /// [airTempC] Current air temperature in Celsius
   /// [alpha] Thermal diffusion coefficient (default: 0.15, range: 0.1-0.2)
-  /// [minC] Minimum temperature bound (default: -10.0°C)
-  /// [maxC] Maximum temperature bound (default: 40.0°C)
+  /// [minC] Minimum temperature bound (default: -10.0Â°C)
+  /// [maxC] Maximum temperature bound (default: 40.0Â°C)
   ///
   /// Returns the computed next day soil temperature, clamped to bounds
   double call({

@@ -1,4 +1,4 @@
-﻿import 'package:uuid/uuid.dart';
+﻿ï»¿import 'package:uuid/uuid.dart';
 import '../entities/pest_observation.dart';
 import '../entities/pest.dart';
 import '../entities/bio_control_recommendation.dart';
@@ -14,7 +14,7 @@ import '../repositories/i_plant_data_source.dart';
 /// then generates contextual recommendations. It NEVER modifies the Sanctuary.
 ///
 /// FLOW:
-/// Observation (Sanctuary) + Catalogs (Knowledge) → Analysis (UseCase) → Recommendations (AI Output)
+/// Observation (Sanctuary) + Catalogs (Knowledge) â†’ Analysis (UseCase) â†’ Recommendations (AI Output)
 class GenerateBioControlRecommendationsUsecase {
   final IPestRepository _pestRepository;
   final IBeneficialInsectRepository _beneficialRepository;
@@ -148,7 +148,7 @@ class GenerateBioControlRecommendationsUsecase {
               'Plants de ${plant.commonName}',
             ],
             detailedInstructions:
-                'Les plantes compagnes répulsives doivent être plantées en bordure ou en intercalaire pour créer une barrière olfactive.',
+                'Les plantes compagnes répulsives doivent être plantées en bordure ou en intercalaire pour Créer une barrière olfactive.',
           ),
         ],
         priority: 3, // Preventive measure

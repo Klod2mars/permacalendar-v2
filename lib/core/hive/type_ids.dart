@@ -1,4 +1,4 @@
-﻿/// Centralized TypeIds for Hive adapters
+﻿ï»¿/// Centralized TypeIds for Hive adapters
 ///
 /// This file centralizes all TypeIds to avoid conflicts and ensure
 /// proper management of the modern range (25-30) for new adapters.

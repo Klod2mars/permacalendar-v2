@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'climate_rosace_panel.dart';
@@ -49,7 +49,7 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
                 // Mock other content
                 _buildMockContentCard('Mes Jardins'),
                 const SizedBox(height: 10),
-                _buildMockContentCard('ActivitÃ© RÃ©cente'),
+                _buildMockContentCard('ActivitÃƒÂ© RÃƒÂ©cente'),
 
                 const SizedBox(height: 60),
               ],
@@ -86,7 +86,7 @@ class ClimateRosaceIntegrationExample extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  'Recommandations personnalisÃ©es',
+                  'Recommandations personnalisÃƒÂ©es',
                   style: TextStyle(color: Colors.white70),
                 ),
               ],

@@ -1,4 +1,4 @@
-﻿import 'package:freezed_annotation/freezed_annotation.dart';
+﻿ï»¿import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'migration_models.freezed.dart';
 

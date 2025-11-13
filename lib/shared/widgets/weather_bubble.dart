@@ -1,4 +1,4 @@
-﻿// lib/shared/widgets/weather_bubble.dart
+﻿ï»¿// lib/shared/widgets/weather_bubble.dart
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -86,7 +86,7 @@ class WeatherBubble extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
-                    '${tMin.toStringAsFixed(0)}Â°',
+                    '${tMin.toStringAsFixed(0)}Ã‚Â°',
                     maxLines: 1,
                     minFontSize: minFont,
                     style: TextStyle(
@@ -103,7 +103,7 @@ class WeatherBubble extends StatelessWidget {
                   ),
                   SizedBox(width: diameter * 0.05),
                   AutoSizeText(
-                    '${tMax.toStringAsFixed(0)}Â°',
+                    '${tMax.toStringAsFixed(0)}Ã‚Â°',
                     maxLines: 1,
                     minFontSize: minFont,
                     style: TextStyle(

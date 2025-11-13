@@ -1,4 +1,4 @@
-﻿// 🧠 Predictive Analytics Service - AI-Powered Predictions
+﻿ï»¿// ðŸ§  Predictive Analytics Service - AI-Powered Predictions
 // PermaCalendar v2.8.0 - Prompt 5 Implementation
 // Clean Architecture + Machine Learning Patterns
 
@@ -170,7 +170,7 @@ class PredictiveAnalyticsService {
         final predictedValue =
             regression['slope']! * x + regression['intercept']!;
 
-        // Calculate confidence based on R² and distance from training data
+        // Calculate confidence based on RÂ² and distance from training data
         final confidence = _calculateConfidence(
           rSquared: regression['rSquared']!,
           distanceFromData: i.toDouble(),
@@ -400,7 +400,7 @@ class PredictiveAnalyticsService {
     final slope = denominator != 0 ? numerator / denominator : 0.0;
     final intercept = meanY - slope * meanX;
 
-    // Calculate R² (coefficient of determination)
+    // Calculate RÂ² (coefficient of determination)
     double ssTotal = 0, ssResidual = 0;
     for (int i = 0; i < n; i++) {
       final predicted = slope * i + intercept;
@@ -443,7 +443,7 @@ class PredictiveAnalyticsService {
     required double distanceFromData,
     required double volatility,
   }) {
-    // Base confidence from R²
+    // Base confidence from RÂ²
     double confidence = rSquared;
 
     // Reduce confidence for distant predictions

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -353,7 +353,7 @@ class _IntelligenceSettingsScreenState
       case 'en':
         return 'English';
       case 'es':
-        return 'Español';
+        return 'EspaÃ±ol';
       case 'de':
         return 'Deutsch';
       default:
@@ -370,7 +370,7 @@ class _IntelligenceSettingsScreenState
           mainAxisSize: MainAxisSize.min,
           children: [
             RadioListTile<String>(
-              title: const Text('Celsius (°C)'),
+              title: const Text('Celsius (Â°C)'),
               value: 'celsius',
               groupValue: ref.read(displayPreferencesProvider).temperatureUnit,
               onChanged: (value) {
@@ -383,7 +383,7 @@ class _IntelligenceSettingsScreenState
               },
             ),
             RadioListTile<String>(
-              title: const Text('Fahrenheit (°F)'),
+              title: const Text('Fahrenheit (Â°F)'),
               value: 'fahrenheit',
               groupValue: ref.read(displayPreferencesProvider).temperatureUnit,
               onChanged: (value) {
@@ -476,7 +476,7 @@ class _IntelligenceSettingsScreenState
               },
             ),
             RadioListTile<String>(
-              title: const Text('Español'),
+              title: const Text('EspaÃ±ol'),
               value: 'es',
               groupValue: ref.read(displayPreferencesProvider).language,
               onChanged: (value) {

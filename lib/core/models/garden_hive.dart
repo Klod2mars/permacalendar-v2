@@ -1,4 +1,4 @@
-﻿import 'package:hive/hive.dart';
+﻿ï»¿import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 import 'garden_bed_hive.dart';
 import 'garden_freezed.dart';
@@ -30,7 +30,7 @@ class GardenHive extends HiveObject {
     this.gardenBeds = const <GardenBedHive>[],
   });
 
-  // Factory constructor pour créer un nouveau jardin avec ID généré
+  // Factory constructor pour Créer un nouveau jardin avec ID généré
   factory GardenHive.create({
     required String name,
     required String description,
@@ -134,7 +134,7 @@ class GardenHive extends HiveObject {
   }
 
   // Ajouter une parcelle avec validation de l'isolation
-  /// 🔧 CORRECTION: S'assurer que la parcelle appartient bien à ce jardin
+  /// ðŸ”§ CORRECTION: S'assurer que la parcelle appartient bien à ce jardin
   GardenHive addGardenBed(GardenBedHive gardenBed) {
     // Validation: la parcelle doit appartenir à ce jardin
     if (gardenBed.gardenId != id) {
@@ -154,7 +154,7 @@ class GardenHive extends HiveObject {
   }
 
   // Mettre à jour une parcelle avec validation de l'isolation
-  /// 🔧 CORRECTION: S'assurer que la parcelle mise à jour appartient bien à ce jardin
+  /// ðŸ”§ CORRECTION: S'assurer que la parcelle mise à jour appartient bien à ce jardin
   GardenHive updateGardenBed(GardenBedHive updatedBed) {
     // Validation: la parcelle doit appartenir à ce jardin
     if (updatedBed.gardenId != id) {

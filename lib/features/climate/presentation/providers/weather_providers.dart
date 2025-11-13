@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/usecases/should_pulse_alert_usecase.dart';
 import '../../../../core/services/open_meteo_service.dart' as om;
 import '../../../../core/services/environment_service.dart';
@@ -40,7 +40,7 @@ final selectedCommuneCoordinatesProvider =
   // Si les coordonnées stockées correspondent à la commune actuelle, utiliser celles-ci en priorité
   // (optimisation pour mode hors ligne)
   if (settings.lastLatitude != null && settings.lastLongitude != null) {
-    // Essayer d'abord le géocodage pour obtenir des coordonnées fraîches
+    // Essayer d'abord le géocodage pour obtenir des coordonnées fraÃ®ches
     try {
       final results = await svc.searchPlaces(name, count: 1);
       if (results.isNotEmpty) {
@@ -50,7 +50,7 @@ final selectedCommuneCoordinatesProvider =
           longitude: p.longitude,
           resolvedName: p.name,
         );
-        // ✅ FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
+        // âœ… FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
         final latChanged = (settings.lastLatitude! - p.latitude).abs() > 0.001;
         final lonChanged =
             (settings.lastLongitude! - p.longitude).abs() > 0.001;
@@ -93,7 +93,7 @@ final selectedCommuneCoordinatesProvider =
       longitude: p.longitude,
       resolvedName: p.name,
     );
-    // ✅ FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
+    // âœ… FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
     if (settings.lastLatitude == null || settings.lastLongitude == null) {
       // Pas de coordonnées stockées, sauvegarder
       await notifier.setLastCoordinates(p.latitude, p.longitude);
@@ -123,8 +123,8 @@ final selectedCommuneCoordinatesProvider =
   }
 });
 
-// ✅ Patch v1.2 — ajout provider persistant via CommuneStorage
-// 🔄 Persistent commune restore
+// âœ… Patch v1.2 — ajout provider persistant via CommuneStorage
+// ðŸ”„ Persistent commune restore
 // When app starts, load the last commune from Hive and provide its coordinates.
 final persistedCoordinatesProvider =
     FutureProvider<om.Coordinates?>((ref) async {
@@ -175,10 +175,10 @@ class TimelineWeatherPoint {
 
 /// Weather alert types for intelligent detection
 enum WeatherAlertType {
-  frost, // ❄️ Gel
-  heatwave, // 🌡️ Canicule
-  watering, // 💧 Arrosage intelligent (contextuel)
-  protection, // 🛡️ Protection
+  frost, // â„ï¸ Gel
+  heatwave, // ðŸŒ¡ï¸ Canicule
+  watering, // ðŸ’§ Arrosage intelligent (contextuel)
+  protection, // ðŸ›¡ï¸ Protection
 }
 
 /// Alert severity levels
@@ -345,7 +345,7 @@ final alertsProvider = FutureProvider<List<WeatherAlert>>((ref) async {
         type: WeatherAlertType.frost,
         severity: AlertSeverity.warning,
         title: 'Risque de gel',
-        description: 'Température: ${temp.toStringAsFixed(1)}°C',
+        description: 'Température: ${temp.toStringAsFixed(1)}Â°C',
         validFrom: DateTime.now(),
         validUntil: DateTime.now().add(const Duration(hours: 12)),
         iconPath: 'assets/weather_icons/frost_alert.png',
@@ -359,7 +359,7 @@ final alertsProvider = FutureProvider<List<WeatherAlert>>((ref) async {
         type: WeatherAlertType.heatwave,
         severity: AlertSeverity.critical,
         title: 'Canicule',
-        description: 'Température: ${temp.toStringAsFixed(1)}°C',
+        description: 'Température: ${temp.toStringAsFixed(1)}Â°C',
         validFrom: DateTime.now(),
         validUntil: DateTime.now().add(const Duration(days: 1)),
         iconPath: 'assets/weather_icons/heat_alert.png',
@@ -419,7 +419,7 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
   }
 });
 
-/// Combined forecast + history provider (J-14 → J+7)
+/// Combined forecast + history provider (J-14 â†’ J+7)
 final forecastHistoryProvider =
     FutureProvider<List<TimelineWeatherPoint>>((ref) async {
   try {
@@ -564,19 +564,19 @@ WeatherConditionType _determineWeatherCondition(
 String _getWeatherIcon(WeatherConditionType condition) {
   switch (condition) {
     case WeatherConditionType.sunny:
-      return '☀️';
+      return 'â˜€ï¸';
     case WeatherConditionType.rainy:
-      return '🌧️';
+      return 'ðŸŒ§ï¸';
     case WeatherConditionType.hot:
-      return '🔥';
+      return 'ðŸ”¥';
     case WeatherConditionType.snowOrFrost:
-      return '❄️';
+      return 'â„ï¸';
     case WeatherConditionType.cloudy:
-      return '⛅';
+      return 'â›…';
     case WeatherConditionType.stormy:
-      return '⛈️';
+      return 'â›ˆï¸';
     case WeatherConditionType.other:
-      return '🌤️';
+      return 'ðŸŒ¤ï¸';
   }
 }
 

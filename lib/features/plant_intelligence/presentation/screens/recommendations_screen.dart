@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/intelligence_state_providers.dart';
 import '../widgets/cards/recommendation_card.dart';
@@ -33,7 +33,7 @@ class _RecommendationsScreenState extends ConsumerState<RecommendationsScreen> {
           title: const Text('Recommandations'),
         ),
         body: const Center(
-          child: Text('Aucun jardin sélectionné. Veuillez créer un jardin.'),
+          child: Text('Aucun jardin sélectionné. Veuillez Créer un jardin.'),
         ),
       );
     }
@@ -254,7 +254,7 @@ class _RecommendationsScreenState extends ConsumerState<RecommendationsScreen> {
       final intelligenceState =
           ref.read(intelligenceStateProvider(currentGardenId));
 
-      // Rafraîchir les recommandations pour toutes les plantes actives
+      // RafraÃ®chir les recommandations pour toutes les plantes actives
       for (final plantId in intelligenceState.activePlantIds) {
         await ref
             .read(intelligenceStateProvider(currentGardenId).notifier)

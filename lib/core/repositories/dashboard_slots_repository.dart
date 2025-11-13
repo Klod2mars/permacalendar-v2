@@ -1,4 +1,4 @@
-﻿import 'package:hive_flutter/hive_flutter.dart';
+﻿ï»¿import 'package:hive_flutter/hive_flutter.dart';
 
 /// Repository léger pour lier un "dashboard_slot" à un gardenId
 /// Stocke la map slot -> gardenId dans une box Hive 'dashboard_slots'.

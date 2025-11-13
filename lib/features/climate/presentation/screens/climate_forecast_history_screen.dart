@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+﻿ï»¿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/weather_providers.dart';
 
@@ -24,7 +24,7 @@ class ClimateForecastHistoryScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: Text(
-          'PrÃ©visions & Historique',
+          'PrÃƒÂ©visions & Historique',
           style: theme.textTheme.titleLarge?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -70,14 +70,14 @@ class _TimelineContent extends ConsumerWidget {
             loading: () => const Center(
                 child: CircularProgressIndicator(color: Colors.amber)),
             error: (e, _) => Center(
-              child: Text('MÃ©tÃ©o indisponible',
+              child: Text('MÃƒÂ©tÃƒÂ©o indisponible',
                   style: theme.textTheme.bodyLarge
                       ?.copyWith(color: Colors.white70)),
             ),
             data: (items) {
               if (items.isEmpty) {
                 return Center(
-                  child: Text('Aucune donnÃ©e',
+                  child: Text('Aucune donnÃƒÂ©e',
                       style: theme.textTheme.bodyLarge
                           ?.copyWith(color: Colors.white70)),
                 );
@@ -93,7 +93,7 @@ class _TimelineContent extends ConsumerWidget {
                   final tempLabel = _formatTemp(d.minTemp, d.maxTemp);
                   final precip = d.precipitation != null
                       ? '${d.precipitation!.toStringAsFixed(1)} mm'
-                      : 'â€”';
+                      : 'ââ‚¬”';
                   return Row(
                     children: [
                       Container(
@@ -115,8 +115,8 @@ class _TimelineContent extends ConsumerWidget {
                           children: [
                             Text(
                               isPast
-                                  ? 'J- ${_daysAgo(d.date)} Â· $dateLabel'
-                                  : 'J+ ${_daysAhead(d.date)} Â· $dateLabel',
+                                  ? 'J- ${_daysAgo(d.date)} Ã‚Â· $dateLabel'
+                                  : 'J+ ${_daysAhead(d.date)} Ã‚Â· $dateLabel',
                               style: theme.textTheme.bodySmall
                                   ?.copyWith(color: Colors.white60),
                             ),
@@ -156,11 +156,11 @@ class _TimelineContent extends ConsumerWidget {
 
   String _formatTemp(double? min, double? max) {
     if (min != null && max != null) {
-      return '${max.toStringAsFixed(0)}Â°/${min.toStringAsFixed(0)}Â°';
+      return '${max.toStringAsFixed(0)}Ã‚Â°/${min.toStringAsFixed(0)}Ã‚Â°';
     }
-    if (max != null) return '${max.toStringAsFixed(0)}Â°';
-    if (min != null) return '${min.toStringAsFixed(0)}Â°';
-    return 'â€”';
+    if (max != null) return '${max.toStringAsFixed(0)}Ã‚Â°';
+    if (min != null) return '${min.toStringAsFixed(0)}Ã‚Â°';
+    return 'ââ‚¬”';
   }
 
   String _formatDate(DateTime d) {

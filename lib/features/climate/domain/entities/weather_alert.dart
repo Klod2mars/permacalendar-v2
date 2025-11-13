@@ -1,9 +1,9 @@
-﻿/// Weather alert types
+﻿ï»¿/// Weather alert types
 enum WeatherAlertType {
-  frost, // ❄️ Gel
-  heatwave, // 🌡️ Canicule
-  watering, // 💧 Arrosage intelligent (contextuel)
-  protection, // 🛡️ Protection
+  frost, // â„ï¸ Gel
+  heatwave, // ðŸŒ¡ï¸ Canicule
+  watering, // ðŸ’§ Arrosage intelligent (contextuel)
+  protection, // ðŸ›¡ï¸ Protection
 }
 
 /// Alert severity levels

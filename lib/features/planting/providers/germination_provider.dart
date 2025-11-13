@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿ï»¿import 'package:riverpod/riverpod.dart';
 import '../../../core/services/germination_service.dart';
 import '../../../core/services/activity_observer_service.dart';
 import '../../../core/models/germination_event.dart';
@@ -154,7 +154,7 @@ class GerminationNotifier extends AsyncNotifier<List<GerminationEvent>> {
     }
   }
 
-  /// Rafraîchit la liste des événements
+  /// RafraÃ®chit la liste des événements
   Future<void> refresh() async {
     state = const AsyncValue.loading();
     try {

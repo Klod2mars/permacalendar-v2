@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/services/garden_context_sync_service.dart';
 import '../../data/datasources/plant_intelligence_local_datasource.dart';
 import '../../../core/models/garden_freezed.dart';

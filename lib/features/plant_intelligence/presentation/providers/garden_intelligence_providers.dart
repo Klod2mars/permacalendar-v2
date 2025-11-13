@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+﻿ï»¿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:permacalendar/core/providers/active_garden_provider.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/garden_intelligence_memory.dart';
@@ -39,7 +39,7 @@ class GardenIntelligenceNotifier extends Notifier<GardenIntelligenceState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      // Pour l'instant, créer des données par défaut
+      // Pour l'instant, Créer des données par défaut
       // La persistance Hive sera implémentée en A40-4
 
       final memory = GardenIntelligenceMemory(

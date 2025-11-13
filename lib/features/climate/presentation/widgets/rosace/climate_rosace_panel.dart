@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+﻿ï»¿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'climate_rosace_petal.dart';
@@ -28,7 +28,7 @@ import '../../anim/weather_halo_controller.dart';
 /// - West: Soil Temperature
 /// - Center: pH value (tappable)
 ///
-/// Height constraint: â‰¤240dp on mobile 360Ã—800
+/// Height constraint: ââ€°Â¤240dp on mobile 360Ãƒ—800
 /// Performance: 60fps on Samsung A35
 class ClimateRosacePanel extends ConsumerWidget {
   const ClimateRosacePanel({super.key});
@@ -72,7 +72,7 @@ class ClimateRosacePanel extends ConsumerWidget {
     final maxTemp =
         currentWeather.hasValue ? currentWeather.value!.maxTemp : null;
     final weatherIcon =
-        currentWeather.hasValue ? (currentWeather.value!.icon ?? 'â˜€ï¸') : 'â˜€ï¸';
+        currentWeather.hasValue ? (currentWeather.value!.icon ?? 'âËœâ‚¬Ã¯Â¸Â') : 'âËœâ‚¬Ã¯Â¸Â';
     final weatherCondition = currentWeather.hasValue
         ? parseCondition(currentWeather.value!.condition)
         : null;
@@ -128,7 +128,7 @@ class ClimateRosacePanel extends ConsumerWidget {
                 context: context,
                 position: RosacePosition.south,
                 icon: Icons.timeline,
-                label: 'PrÃ©visions',
+                label: 'PrÃƒÂ©visions',
                 value: _formatForecastValue(tomorrowForecast),
                 onTap: () => _navigateToForecast(context),
               ),
@@ -138,7 +138,7 @@ class ClimateRosacePanel extends ConsumerWidget {
                 position: RosacePosition.west,
                 icon: Icons.thermostat,
                 label: 'Sol',
-                value: '${soilTemp.toStringAsFixed(1)}Â°',
+                value: '${soilTemp.toStringAsFixed(1)}Ã‚Â°',
                 onTap: () => _showSoilTempSheet(context),
               ),
 
@@ -239,11 +239,11 @@ class ClimateRosacePanel extends ConsumerWidget {
   /// Format weather value for EAST petal (min/max temp)
   String? _formatWeatherValue(double? minTemp, double? maxTemp) {
     if (minTemp != null && maxTemp != null) {
-      return '${maxTemp.toStringAsFixed(0)}Â° / ${minTemp.toStringAsFixed(0)}Â°';
+      return '${maxTemp.toStringAsFixed(0)}Ã‚Â° / ${minTemp.toStringAsFixed(0)}Ã‚Â°';
     } else if (maxTemp != null) {
-      return '${maxTemp.toStringAsFixed(0)}Â°';
+      return '${maxTemp.toStringAsFixed(0)}Ã‚Â°';
     } else if (minTemp != null) {
-      return '${minTemp.toStringAsFixed(0)}Â°';
+      return '${minTemp.toStringAsFixed(0)}Ã‚Â°';
     }
     return null;
   }
@@ -252,14 +252,14 @@ class ClimateRosacePanel extends ConsumerWidget {
   String? _formatForecastValue(DailyWeatherPoint? forecast) {
     if (forecast == null) return 'J+1';
 
-    // Utiliser tMinC/tMaxC (bruts) ou minTemp/maxTemp (enrichis) selon disponibilitÃ©
+    // Utiliser tMinC/tMaxC (bruts) ou minTemp/maxTemp (enrichis) selon disponibilitÃƒÂ©
     final maxTemp = forecast.maxTemp ?? forecast.tMaxC;
     final minTemp = forecast.minTemp ?? forecast.tMinC;
 
     if (minTemp != null && maxTemp != null) {
-      return 'J+1\n${maxTemp.toStringAsFixed(0)}Â°/${minTemp.toStringAsFixed(0)}Â°';
+      return 'J+1\n${maxTemp.toStringAsFixed(0)}Ã‚Â°/${minTemp.toStringAsFixed(0)}Ã‚Â°';
     } else if (maxTemp != null) {
-      return 'J+1\n${maxTemp.toStringAsFixed(0)}Â°';
+      return 'J+1\n${maxTemp.toStringAsFixed(0)}Ã‚Â°';
     }
     return 'J+1';
   }
