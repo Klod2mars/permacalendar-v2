@@ -1,0 +1,30 @@
+﻿*** Begin Patch
+*** Update File: lib/app_router.dart
+@@
+-              'La page "${state.uri}" n\\'existe pas.',
++              'La page "${state.uri}" n\'existe pas.',
+@@
+-              child: const Text('Retour à l\\'accueil'),
++              child: const Text('Retour à l\'accueil'),
+*** End Patch
+*** Begin Patch
+*** Update File: lib/features/garden_management/presentation/screens/garden_list_screen.dart
+@@
+-            'Vous avez des jardins archivés. Activez l\\'affichage des jardins archivés pour les voir.',
++            'Vous avez des jardins archivés. Activez l\'affichage des jardins archivés pour les voir.',
+*** End Patch
+*** Begin Patch
+*** Update File: lib/features/garden_management/presentation/screens/garden_create_screen.dart
+@@
+-                    label: 'URL de l\\'image',
++                    label: 'URL de l\'image',
+@@
+-                    hint: 'https://exemple.com/image.jpg',
++                    hint: 'https://exemple.com/image.jpg',
+*** End Patch
+*** Begin Patch
+*** Update File: lib/features/garden_management/presentation/screens/garden_create_screen.dart
+@@
+-                  'Impossible de charger l\\'image',
++                  'Impossible de charger l\'image',
+*** End Patch
