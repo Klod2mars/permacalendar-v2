@@ -1,0 +1,124 @@
+﻿*** Begin Patch
+*** Update File: lib/app_router.dart
+@@
+-            Text(
+-
+-
+-
+-              'La page "${state.uri}" n\\'existe pas.',
+-
+-              style: Theme.of(context).textTheme.bodyMedium,
+-
+-
+-
+-            ),
++            Text(
++
++              'La page "${state.uri}" n\'existe pas.',
++
++              style: Theme.of(context).textTheme.bodyMedium,
++
++            ),
+@@
+-            ElevatedButton(
+-
+-
+-
+-              onPressed: () => context.go(AppRoutes.home),
+-
+-
+-
+-              child: const Text('Retour à l\\'accueil'),
+-
+-
+-
+-            ),
++            ElevatedButton(
++
++              onPressed: () => context.go(AppRoutes.home),
++
++              child: const Text('Retour à l\'accueil'),
++
++            ),
+*** End Patch
+*** Begin Patch
+*** Update File: lib/features/garden_management/presentation/screens/garden_list_screen.dart
+@@
+-            EmptyStateWidget(
+-
+-
+-
+-        icon: Icons.eco,
+-
+-        title: 'Aucun jardin actif',
+-
+-        subtitle:
+-
+-            'Vous avez des jardins archivés. Activez l\\'affichage des jardins archivés pour les voir.',
+-
+-        actionText: 'Afficher les jardins archivés',
+-
+-        onAction: () {
+-
+-          setState(() {
+-
+-            _showArchived = true;
+-
+-          });
+-
+-        },
+-
+-      );
++            EmptyStateWidget(
++
++        icon: Icons.eco,
++
++        title: 'Aucun jardin actif',
++
++        subtitle:
++
++            'Vous avez des jardins archivés. Activez l\'affichage des jardins archivés pour les voir.',
++
++        actionText: 'Afficher les jardins archivés',
++
++        onAction: () {
++
++          setState(() {
++
++            _showArchived = true;
++
++          });
++
++        },
++
++      );
+*** End Patch
+*** Begin Patch
+*** Update File: lib/features/garden_management/presentation/screens/garden_create_screen.dart
+@@
+-                    controller: _imageUrlController,
+-
+-                    label: 'URL de l\\'image',
+-
+-                    hint: 'https://exemple.com/image.jpg',
+-
+-                    prefixIcon: const Icon(Icons.image),
+-
+-                    validator: Validators.validateImageUrl,
+-
+-                    keyboardType: TextInputType.url,
++                    controller: _imageUrlController,
++
++                    label: 'URL de l\'image',
++
++                    hint: 'https://exemple.com/image.jpg',
++
++                    prefixIcon: const Icon(Icons.image),
++
++                    validator: Validators.validateImageUrl,
++
++                    keyboardType: TextInputType.url,
+@@
+-                  'Impossible de charger l\\'image',
++                  'Impossible de charger l\'image',
+*** End Patch
