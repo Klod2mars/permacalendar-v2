@@ -23,7 +23,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   String _selectedSowingSeason = 'Toutes';
 
-  // Saisons basées sur les mois de plantation et récolte du JSON
+  // Saisons disponibles pour les filtres
   final List<String> _seasons = [
     'Toutes',
     'Printemps',
@@ -32,26 +32,38 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     'Hiver',
   ];
 
-  // Mapping des mois vers les saisons
+  // Mapping 3-lettres (EN) vers saisons. Clés en MAJUSCULE pour comparaison insensible à la casse.
   final Map<String, String> _monthToSeason = {
-    'Jan': 'Hiver', // Janvier
-    'Fév': 'Hiver', // Février
-    'Mar': 'Printemps', // Mars
-    'Avr': 'Printemps', // Avril
-    'Mai': 'Printemps', // Mai
-    'Jun': 'Été', // Juin
-    'Jul': 'Été', // Juillet
-    'Aoû': 'Été', // Août
-    'Sep': 'Automne', // Septembre
-    'Oct': 'Automne', // Octobre
-    'Nov': 'Automne', // Novembre
-    'Déc': 'Hiver', // Décembre
+    'JAN': 'Hiver',
+    'FEB': 'Hiver',
+    'MAR': 'Printemps',
+    'APR': 'Printemps',
+    'MAY': 'Printemps',
+    'JUN': 'Été',
+    'JUL': 'Été',
+    'AUG': 'Été',
+    'SEP': 'Automne',
+    'OCT': 'Automne',
+    'NOV': 'Automne',
+    'DEC': 'Hiver',
+  };
+
+  // Table d'appoint pour l'ancien format 1-lettre (legacy).
+  final Map<String, String> _legacyLetterToSeason = {
+    'J': 'Été', // choix pragmatique (J -> Juin/Juillet majoritaire)
+    'F': 'Hiver',
+    'M': 'Printemps', // Mars/Mai -> Printemps pour semis
+    'A': 'Printemps', // Avril/Août -> pragmatique
+    'S': 'Automne',
+    'O': 'Automne',
+    'N': 'Automne',
+    'D': 'Hiver',
   };
 
   @override
   void initState() {
     super.initState();
-    // Load plants when screen initializes
+    // Charger les plantes après le rendu initial
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(plantCatalogProvider.notifier).loadPlants();
     });
@@ -69,11 +81,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.isSelectionMode
-              ? 'Sélectionner une plante'
-              : 'Catalogue des plantes',
-        ),
+        title: Text(widget.isSelectionMode
+            ? 'Sélectionner une plante'
+            : 'Catalogue des plantes'),
         centerTitle: true,
         backgroundColor: theme.colorScheme.primaryContainer,
         foregroundColor: theme.colorScheme.onPrimaryContainer,
@@ -108,13 +118,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       ),
       body: Column(
         children: [
-          // Search Bar
           _buildSearchBar(theme),
-
-          // Filter Chips
           _buildFilterChips(theme),
-
-          // Plant Grid
           Expanded(child: _buildPlantGrid(theme)),
         ],
       ),
@@ -159,7 +164,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Sowing Season Filter
           Text(
             'Saison de plantation',
             style: theme.textTheme.labelMedium?.copyWith(
@@ -175,7 +179,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
               itemBuilder: (context, index) {
                 final season = _seasons[index];
                 final isSelected = season == _selectedSowingSeason;
-
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: FilterChip(
@@ -198,88 +201,82 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   }
 
   Widget _buildPlantGrid(ThemeData theme) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final plantCatalogState = ref.watch(plantCatalogProvider);
+    return Consumer(builder: (context, ref, child) {
+      final plantCatalogState = ref.watch(plantCatalogProvider);
 
-        if (plantCatalogState.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
+      if (plantCatalogState.isLoading) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-        if (plantCatalogState.error != null) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.error, size: 64, color: theme.colorScheme.error),
-                const SizedBox(height: 16),
-                Text(
-                  plantCatalogState.error!,
-                  style: theme.textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () =>
-                      ref.read(plantCatalogProvider.notifier).loadPlants(),
-                  child: const Text('Réessayer'),
-                ),
-              ],
-            ),
-          );
-        }
-
-        // Apply filters
-        var filteredPlants = plantCatalogState.plants;
-
-        // Apply search filter
-        if (_searchQuery.isNotEmpty) {
-          final query = _searchQuery.toLowerCase();
-          filteredPlants = filteredPlants.where((plant) {
-            return plant.commonName.toLowerCase().contains(query) ||
-                plant.scientificName.toLowerCase().contains(query) ||
-                plant.family.toLowerCase().contains(query);
-          }).toList();
-        }
-
-        // Apply sowing season filter
-        if (_selectedSowingSeason != 'Toutes') {
-          filteredPlants = filteredPlants.where((plant) {
-            final sowingSeason = _getSeasonFromMonths(plant.sowingMonths);
-            return sowingSeason == _selectedSowingSeason;
-          }).toList();
-        }
-
-        // NOTE: La notion de "saison de récolte" a été supprimée volontairement.
-        // Nous ne filtrons donc plus sur la saison de récolte.
-
-        if (filteredPlants.isEmpty) {
-          return const EmptyStateWidget(
-            title: 'Aucune plante trouvée',
-            subtitle:
-                'Essayez de modifier vos critères de recherche ou filtres.',
-            icon: Icons.search_off,
-          );
-        }
-
-        return GridView.builder(
-          padding: const EdgeInsets.all(16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            // Chaque carte devient plus haute : ratio largeur/hauteur = 0.5
-            // => hauteur ≈ 2 * largeur (équivalent de deux carrés empilés verticalement)
-            childAspectRatio: 0.5,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
+      if (plantCatalogState.error != null) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error, size: 64, color: theme.colorScheme.error),
+              const SizedBox(height: 16),
+              Text(
+                plantCatalogState.error!,
+                style: theme.textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () =>
+                    ref.read(plantCatalogProvider.notifier).loadPlants(),
+                child: const Text('Réessayer'),
+              ),
+            ],
           ),
-          itemCount: filteredPlants.length,
-          itemBuilder: (context, index) {
-            final plant = filteredPlants[index];
-            return _buildPlantCard(plant, theme, context);
-          },
         );
-      },
-    );
+      }
+
+      // Liste des plantes
+      var filteredPlants = plantCatalogState.plants;
+
+      // Filtre recherche
+      if (_searchQuery.isNotEmpty) {
+        final query = _searchQuery.toLowerCase();
+        filteredPlants = filteredPlants.where((plant) {
+          return plant.commonName.toLowerCase().contains(query) ||
+              plant.scientificName.toLowerCase().contains(query) ||
+              plant.family.toLowerCase().contains(query);
+        }).toList();
+      }
+
+      // Filtre saison de plantation
+      if (_selectedSowingSeason != 'Toutes') {
+        filteredPlants = filteredPlants.where((plant) {
+          final sowingSeason = _getSeasonFromMonths(plant.sowingMonths);
+          return sowingSeason == _selectedSowingSeason;
+        }).toList();
+      }
+
+      // NOTE: la notion "saison de récolte" a été supprimée volontairement.
+
+      if (filteredPlants.isEmpty) {
+        return const EmptyStateWidget(
+          title: 'Aucune plante trouvée',
+          subtitle: 'Essayez de modifier vos critères de recherche ou filtres.',
+          icon: Icons.search_off,
+        );
+      }
+
+      return GridView.builder(
+        padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1, // UNE plante par ligne
+          childAspectRatio: 0.6,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
+        itemCount: filteredPlants.length,
+        itemBuilder: (context, index) {
+          final plant = filteredPlants[index];
+          return _buildPlantCard(plant, theme, context);
+        },
+      );
+    });
   }
 
   String _getSeasonFromMonths(List<String> months) {
@@ -287,7 +284,27 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
     final seasonCounts = <String, int>{};
     for (final month in months) {
-      final season = _monthToSeason[month];
+      if (month == null) continue;
+      final token = month.toString().trim();
+      String? season;
+
+      if (token.length == 1) {
+        // Legacy single-letter token
+        season = _legacyLetterToSeason[token.toUpperCase()];
+      } else {
+        // Try first 3 letters, uppercase (handles "Jan","Fév","FEB", etc.)
+        final key = token.length >= 3
+            ? token.substring(0, 3).toUpperCase()
+            : token.toUpperCase();
+        season = _monthToSeason[key];
+      }
+
+      if (season == null) {
+        // Fallback: try uppercase entire token (for "FÉV"/"Fév" or "DEC"/"Déc")
+        final alt = token.toUpperCase();
+        season = _monthToSeason[alt] ?? _legacyLetterToSeason[alt];
+      }
+
       if (season != null) {
         seasonCounts[season] = (seasonCounts[season] ?? 0) + 1;
       }
@@ -295,25 +312,19 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
     if (seasonCounts.isEmpty) return '';
 
-    // Return the season with the most months
+    // Saison la plus représentée
     return seasonCounts.entries.reduce((a, b) => a.value > b.value ? a : b).key;
   }
 
   Widget _buildPlantCard(
-    PlantFreezed plant,
-    ThemeData theme,
-    BuildContext context,
-  ) {
-    // Get sowing season from months
+      PlantFreezed plant, ThemeData theme, BuildContext context) {
     final sowingSeason = _getSeasonFromMonths(plant.sowingMonths);
 
     return CustomCard(
       onTap: () {
         if (widget.isSelectionMode) {
-          // Return selected plant ID to the previous screen
           Navigator.pop(context, plant.id);
         } else {
-          // Navigate to plant detail screen
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -325,72 +336,60 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Plant image (prefer image in metadata if present)
-          // metadata keys considered: 'image', 'imagePath', 'imageAsset'
-          Builder(
-            builder: (context) {
-              final imagePath =
-                  (plant.metadata['image'] as String?) ??
-                  (plant.metadata['imagePath'] as String?) ??
-                  (plant.metadata['imageAsset'] as String?);
+          // Image (metadata keys: 'image','imagePath','imageAsset')
+          Builder(builder: (context) {
+            final imagePath = (plant.metadata['image'] as String?) ??
+                (plant.metadata['imagePath'] as String?) ??
+                (plant.metadata['imageAsset'] as String?);
 
-              return Container(
-                height: 160,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surfaceContainerHighest,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
-                  ),
+            return Container(
+              height: 220,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainerHighest,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(12),
                 ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
-                  ),
-                  child: imagePath != null && imagePath.isNotEmpty
-                      ? (imagePath.startsWith('http')
-                            ? Image.network(
-                                imagePath,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: 160,
-                              )
-                            : Image.asset(
-                                'assets/images/legumes/$imagePath',
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: 160,
-                              ))
-                      : Center(
-                          child: Icon(
-                            Icons.eco,
-                            size: 48,
-                            color: theme.colorScheme.primary,
-                          ),
+              ),
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+                child: imagePath != null && imagePath.isNotEmpty
+                    ? (imagePath.startsWith('http')
+                        ? Image.network(imagePath,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 220)
+                        : Image.asset('assets/images/legumes/$imagePath',
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 220))
+                    : Center(
+                        child: Icon(
+                          Icons.eco,
+                          size: 56,
+                          color: theme.colorScheme.primary,
                         ),
-                ),
-              );
-            },
-          ),
+                      ),
+              ),
+            );
+          }),
 
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Plant name
                   Text(
                     plant.commonName,
                     style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
-
-                  // Scientific name
+                  const SizedBox(height: 6),
                   Text(
                     plant.scientificName,
                     style: theme.textTheme.bodySmall?.copyWith(
@@ -400,28 +399,25 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
-
-                  // Family
+                  const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
-                      vertical: 4,
+                      vertical: 6,
                     ),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
                       plant.family,
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: theme.colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                   const Spacer(),
-
-                  // Seasons info — only sowing season (la "saison de récolte" a été supprimée)
                   if (sowingSeason.isNotEmpty) ...[
                     const SizedBox(height: 8),
                     Row(
@@ -431,7 +427,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                           size: 16,
                           color: theme.colorScheme.secondary,
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 6),
                         Expanded(
                           child: Text(
                             sowingSeason,
