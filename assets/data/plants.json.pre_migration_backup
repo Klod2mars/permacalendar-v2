@@ -125,23 +125,7 @@
           "pois",
           "concombre"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Mar",
-        "May",
-        "Apr",
-        "Aug"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "lettuce",
@@ -281,28 +265,7 @@
         "type": "Léger, bien drainé",
         "pH": "6.0-7.0",
         "nutrition": "Équilibre NPK sans excès d'azote"
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep"
-      ],
-      "harvestMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "mesclun",
@@ -414,29 +377,7 @@
           "plantes très gourmandes en eau ou en nutriments",
           "plantes à forte concurrence racinaire"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep"
-      ],
-      "harvestMonths3": [
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov"
-      ]
+      }
     },
     {
       "id": "scarole",
@@ -554,32 +495,7 @@
           "endive",
           "autres astéracées"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep",
-        "Oct"
-      ],
-      "harvestMonths3": [
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ]
+      }
     },
     {
       "id": "roquette",
@@ -674,9 +590,7 @@
         "avoid": [
           "Plantes très gourmandes en azote ou en espace (ex: choux volumineux)"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "mache",
@@ -779,20 +693,7 @@
           "légumes à forte concurrence racinaire",
           "cultures ayant eu sclérotinia récemment"
         ]
-      },
-      "sowingMonths3": [
-        "Apr",
-        "Aug",
-        "Oct"
-      ],
-      "harvestMonths3": [
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Jun",
-        "Jul"
-      ]
+      }
     },
     {
       "id": "spinach",
@@ -908,26 +809,7 @@
           "betterave",
           "topinambour"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Sep"
-      ],
-      "harvestMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Oct",
-        "Nov",
-        "Dec"
-      ]
+      }
     },
     {
       "id": "chard",
@@ -1038,26 +920,7 @@
           "poireau",
           "betterave (même famille)"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov"
-      ]
+      }
     },
     {
       "id": "celery_branch",
@@ -1153,9 +1016,7 @@
           "maïs",
           "plantes très gourmandes en eau ou en azote"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "garlic",
@@ -1266,18 +1127,7 @@
           "oignons",
           "asperges"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Mar",
-        "May",
-        "Oct"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul"
-      ]
+      }
     },
     {
       "id": "onion",
@@ -1387,17 +1237,7 @@
           "fèves",
           "légumineuses"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Apr",
-        "Aug"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul"
-      ]
+      }
     },
     {
       "id": "shallot",
@@ -1502,15 +1342,7 @@
           "poireau",
           "autres alliacées (risque de maladies communes)"
         ]
-      },
-      "sowingMonths3": [
-        "Feb"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul"
-      ]
+      }
     },
     {
       "id": "leek",
@@ -1623,18 +1455,7 @@
           "pomme de terre",
           "autres alliacées en rotation rapprochée"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Mar",
-        "May"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "carrot",
@@ -1753,26 +1574,7 @@
           "d'autres ombellifères (céleri, persil) sans rotation",
           "plantes gourmandes en azote"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov"
-      ]
+      }
     },
     {
       "id": "black_radish",
@@ -1874,9 +1676,7 @@
           "chou",
           "autres crucifères en rotation immédiate"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "navet",
@@ -1991,29 +1791,7 @@
           "autres brassicacées (chou, radis, moutarde)",
           "plantes gourmandes en azote si sol pauvre"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep"
-      ],
-      "harvestMonths3": [
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov"
-      ]
+      }
     },
     {
       "id": "beetroot",
@@ -2126,25 +1904,7 @@
           "chénopode",
           "autres amaranthacées"
         ]
-      },
-      "sowingMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "potato",
@@ -2252,9 +2012,7 @@
           "concombre",
           "courge"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "topinambour",
@@ -2359,14 +2117,7 @@
           "légumes sensibles à l'ombre",
           "cultures exigeantes en azote juste après"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May"
-      ],
-      "harvestMonths3": [
-        "Nov"
-      ]
+      }
     },
     {
       "id": "parsnip",
@@ -2480,18 +2231,7 @@
           "fenouil",
           "autres Apiacées"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug"
-      ],
-      "harvestMonths3": [
-        "Oct",
-        "Nov",
-        "Dec"
-      ]
+      }
     },
     {
       "id": "salsify",
@@ -2586,9 +2326,7 @@
           "Plantes gourmandes en azote",
           "Cultures nécessitant un sol lourd"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "eggplant",
@@ -2703,23 +2441,7 @@
           "poivrons",
           "autres solanacées au même endroit"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Mar",
-        "May",
-        "Apr",
-        "Aug"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "pepper",
@@ -2838,23 +2560,7 @@
           "pomme de terre",
           "autres solanacées"
         ]
-      },
-      "sowingMonths3": [
-        "Feb",
-        "Mar",
-        "May",
-        "Apr",
-        "Aug"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "cucumber",
@@ -2968,21 +2674,7 @@
           "pommes de terre",
           "aromatiques fortes comme la sauge"
         ]
-      },
-      "sowingMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep"
-      ]
+      }
     },
     {
       "id": "courgette",
@@ -3097,21 +2789,7 @@
           "autres cucurbitacées (concombre, potiron, melon)",
           "pommes de terre"
         ]
-      },
-      "sowingMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep"
-      ]
+      }
     },
     {
       "id": "melon",
@@ -3218,9 +2896,7 @@
           "autres cucurbitacées",
           "solanacées"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "pumpkin_squash",
@@ -3325,9 +3001,7 @@
           "autres cucurbitacées",
           "fenouil"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "bean",
@@ -3441,24 +3115,7 @@
           "ail",
           "oignon (en excès)"
         ]
-      },
-      "sowingMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep"
-      ]
+      }
     },
     {
       "id": "sweet_corn",
@@ -3560,9 +3217,7 @@
           "betterave",
           "plantes solitaires (pollinisation inefficace)"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "parsley",
@@ -3678,28 +3333,7 @@
         "avoid": [
           "Légumes de la même famille (carotte, céleri, panais) au même endroit — risque de maladies communes"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ]
+      }
     },
     {
       "id": "basil",
@@ -3811,22 +3445,7 @@
           "rue officinale",
           "concombre (risque de concurrence)"
         ]
-      },
-      "sowingMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May"
-      ],
-      "harvestMonths3": [
-        "Jan",
-        "Jun",
-        "Jul",
-        "Apr",
-        "Aug",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "chives",
@@ -3944,24 +3563,7 @@
           "haricots",
           "betterave"
         ]
-      },
-      "sowingMonths3": [
-        "Mar",
-        "May",
-        "Apr",
-        "Aug"
-      ],
-      "harvestMonths3": [
-        "Apr",
-        "Aug",
-        "Mar",
-        "May",
-        "Jan",
-        "Jun",
-        "Jul",
-        "Sep",
-        "Oct"
-      ]
+      }
     },
     {
       "id": "coriander",
@@ -4054,9 +3656,7 @@
         "avoid": [
           "Plantes envahissantes ou à forte concurrence racinaire"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "dill",
@@ -4156,9 +3756,7 @@
           "fenouil",
           "autres Apiacées"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "thyme",
@@ -4262,9 +3860,7 @@
         "avoid": [
           "plantes gourmandes en eau (ex: courgette, laitue) — incompatibilité hydrique"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "rosemary",
@@ -4367,9 +3963,7 @@
         "avoid": [
           "plantes gourmandes en eau ou en sol riche (ex: courges, laitues)"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "artichoke",
@@ -4468,9 +4062,7 @@
           "fenouil",
           "persil"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "asparagus",
@@ -4571,9 +4163,7 @@
           "oignon",
           "betterave"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "cabbage",
@@ -4680,9 +4270,7 @@
           "poivrons",
           "autres brassicacées (choux, navets, radis)"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "cauliflower",
@@ -4785,9 +4373,7 @@
         "avoid": [
           "autres Brassicacées (chou, brocoli, navet...), fraises"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "brussels_sprout",
@@ -4890,9 +4476,7 @@
         "avoid": [
           "autres brassicacées (radis, navets, roquette, moutarde) sur la même parcelle"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "broccoli",
@@ -4997,9 +4581,7 @@
           "autres choux",
           "plantes de la famille des brassicacées au même endroit"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "kale",
@@ -5104,9 +4686,7 @@
         "avoid": [
           "autres Brassicacées (choux, navets, radis, roquette, moutarde) dans les 5-6 ans"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     },
     {
       "id": "pakchoi",
@@ -5214,9 +4794,7 @@
         "avoid": [
           "autres brassicacées (choux, navets, radis piquants, roquette)"
         ]
-      },
-      "sowingMonths3": [],
-      "harvestMonths3": []
+      }
     }
   ]
 }
