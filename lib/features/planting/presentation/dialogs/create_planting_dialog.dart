@@ -83,9 +83,9 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
     final theme = Theme.of(context);
 
     return AlertDialog(
-      title: Text(widget.planting == null
-          ? 'Nouvelle plantation'
-          : 'Modifier la plantation'),
+      title: Text(
+        widget.planting == null ? 'Nouvelle culture' : 'Modifier la culture',
+      ),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Form(
@@ -107,14 +107,12 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                 _buildCustomPlantTile(theme),
                 const SizedBox(height: 8),
 
-                // Statut (compact)
-                _buildStatusDropdown(theme),
-                const SizedBox(height: 8),
-
                 // Notes (repliable)
                 ExpansionTile(
-                  title: Text('Notes (optionnel)',
-                      style: theme.textTheme.bodyMedium),
+                  title: Text(
+                    'Notes (optionnel)',
+                    style: theme.textTheme.bodyMedium,
+                  ),
                   initiallyExpanded: _notesExpanded,
                   onExpansionChanged: (v) => setState(() => _notesExpanded = v),
                   children: [
@@ -134,8 +132,11 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                 ExpansionTile(
                   title: Row(
                     children: [
-                      Icon(Icons.lightbulb_outline,
-                          color: theme.colorScheme.primary, size: 18),
+                      Icon(
+                        Icons.lightbulb_outline,
+                        color: theme.colorScheme.primary,
+                        size: 18,
+                      ),
                       const SizedBox(width: 8),
                       Text('Conseils', style: theme.textTheme.titleSmall),
                     ],
@@ -145,21 +146,26 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
+                        horizontal: 12.0,
+                        vertical: 8,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              '• Utilisez le catalogue pour sélectionner une plante.',
-                              style: theme.textTheme.bodySmall),
+                            '• Utilisez le catalogue pour sélectionner une plante.',
+                            style: theme.textTheme.bodySmall,
+                          ),
                           const SizedBox(height: 6),
                           Text(
-                              '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
-                              style: theme.textTheme.bodySmall),
+                            '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
+                            style: theme.textTheme.bodySmall,
+                          ),
                           const SizedBox(height: 6),
                           Text(
-                              '• Ajoutez des notes pour suivre les conditions spéciales.',
-                              style: theme.textTheme.bodySmall),
+                            '• Ajoutez des notes pour suivre les conditions spéciales.',
+                            style: theme.textTheme.bodySmall,
+                          ),
                         ],
                       ),
                     ),
@@ -181,7 +187,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
               ? const SizedBox(
                   width: 16,
                   height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2))
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
               : Text(widget.planting == null ? 'Créer' : 'Modifier'),
         ),
       ],
@@ -195,6 +202,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   /// Action block uses Wrap so children wrap to next line if needed,
   /// and FittedBox for the date button to avoid overflow.
   Widget _buildActionBlock(ThemeData theme) {
+    final bool isSown = _status == 'Semé';
+
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -227,13 +236,19 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                     selectedBorderColor: theme.colorScheme.primary,
                     children: const [
                       Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          child: Text('Semé')),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        child: Text('Semé'),
+                      ),
                       Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          child: Text('Planté')),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        child: Text('Planté'),
+                      ),
                     ],
                   ),
                 ),
@@ -244,12 +259,21 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                 fit: BoxFit.scaleDown,
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8)),
-                  onPressed: () => _selectDate(context, _plantedDate,
-                      (d) => setState(() => _plantedDate = d)),
-                  icon: Icon(Icons.calendar_today,
-                      size: 18, color: theme.colorScheme.primary),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  onPressed: () => _selectDate(
+                    context,
+                    _plantedDate,
+                    (d) => setState(() => _plantedDate = d),
+                  ),
+                  icon: Icon(
+                    Icons.calendar_today,
+                    size: 18,
+                    color: theme.colorScheme.primary,
+                  ),
                   label: Text(_formatDate(_plantedDate)),
                 ),
               ),
@@ -258,20 +282,24 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
           const SizedBox(height: 8),
 
-          // Quantity (compact)
+          // Quantity (compact) — label/hint dynamic selon Semé / Planté
           CustomTextField(
             controller: _quantityController,
-            hint: 'Nombre de plants',
+            hint: isSown ? 'Nombre de graines' : 'Nombre de plants',
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 12,
+            ),
             validator: (value) {
-              if (value == null || value.trim().isEmpty)
+              if (value == null || value.trim().isEmpty) {
                 return 'La quantité est requise';
+              }
               final q = int.tryParse(value);
-              if (q == null || q <= 0)
+              if (q == null || q <= 0) {
                 return 'La quantité doit être un nombre positif';
+              }
               return null;
             },
           ),
@@ -304,8 +332,10 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
       title: Text('Plante personnalisée', style: theme.textTheme.bodyMedium),
       initiallyExpanded: _customPlantExpanded,
       onExpansionChanged: (v) => setState(() => _customPlantExpanded = v),
-      childrenPadding:
-          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+      childrenPadding: const EdgeInsets.symmetric(
+        horizontal: 12.0,
+        vertical: 8,
+      ),
       children: [
         CustomTextField(
           controller: _plantNameController,
@@ -322,36 +352,11 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
           validator: (value) {
             // Only required if user wants a custom plant (i.e., typed a name)
             if (_plantNameController.text.trim().isNotEmpty) {
-              if (value == null || value.trim().isEmpty)
+              if (value == null || value.trim().isEmpty) {
                 return 'Le nom de la plante est requis';
+              }
             }
             return null;
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStatusDropdown(ThemeData theme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Statut',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(fontWeight: FontWeight.w500)),
-        const SizedBox(height: 6),
-        DropdownButtonFormField<String>(
-          value: _status,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          ),
-          items: Planting.statusOptions
-              .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-              .toList(),
-          onChanged: (v) {
-            if (v != null) setState(() => _status = v);
           },
         ),
       ],
@@ -362,8 +367,11 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   // Helpers & Actions
   // --------------------
 
-  Future<void> _selectDate(BuildContext context, DateTime initialDate,
-      Function(DateTime) onChanged) async {
+  Future<void> _selectDate(
+    BuildContext context,
+    DateTime initialDate,
+    Function(DateTime) onChanged,
+  ) async {
     final date = await showDatePicker(
       context: context,
       initialDate: initialDate,
@@ -378,8 +386,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
     final selectedPlant = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              const PlantCatalogScreen(isSelectionMode: true)),
+        builder: (context) => const PlantCatalogScreen(isSelectionMode: true),
+      ),
     );
 
     if (selectedPlant != null && selectedPlant is String) {
@@ -435,25 +443,34 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
       // Simple validations
       if (quantity <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
             content: Text('La quantité doit être un nombre positif'),
-            backgroundColor: Colors.orange));
+            backgroundColor: Colors.orange,
+          ),
+        );
         setState(() => _isLoading = false);
         return;
       }
 
       if (_plantedDate.isAfter(DateTime.now())) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content:
-                Text('La date de plantation ne peut pas être dans le futur'),
-            backgroundColor: Colors.orange));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'La date de plantation ne peut pas être dans le futur',
+            ),
+            backgroundColor: Colors.orange,
+          ),
+        );
         setState(() => _isLoading = false);
         return;
       }
 
       if (widget.planting == null) {
         // Create new planting
-        await ref.read(plantingProvider.notifier).createPlanting(
+        await ref
+            .read(plantingProvider.notifier)
+            .createPlanting(
               gardenBedId: widget.gardenBedId,
               plantId: _selectedPlantId ?? 'custom',
               plantName: plantName,
@@ -481,18 +498,23 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
       if (mounted) {
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(widget.planting == null
-              ? 'Plantation Créée avec succès'
-              : 'Plantation modifiée avec succès'),
-          backgroundColor: Colors.green,
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              widget.planting == null
+                  ? 'Culture créée avec succès'
+                  : 'Culture modifiée avec succès',
+            ),
+            backgroundColor: Colors.green,
+          ),
+        );
         ref.refresh(recentActivitiesProvider);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Erreur: $e'), backgroundColor: Colors.red));
+          SnackBar(content: Text('Erreur: $e'), backgroundColor: Colors.red),
+        );
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
