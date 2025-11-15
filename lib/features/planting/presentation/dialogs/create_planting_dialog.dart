@@ -35,6 +35,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   DateTime _plantedDate = DateTime.now();
   String _status = 'Planté';
   bool _isLoading = false;
+
+  // UI state
   bool _customPlantExpanded = false;
   bool _notesExpanded = false;
   bool _tipsExpanded = false;
@@ -45,6 +47,17 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
     if (widget.planting != null) {
       _initializeForEdit();
     }
+
+    // If user types a custom plant name, consider that they want a custom plant:
+    _plantNameController.addListener(() {
+      final text = _plantNameController.text;
+      if (text.trim().isNotEmpty && _selectedPlantId != null) {
+        // User typed a custom name -> deselect catalog plant
+        setState(() {
+          _selectedPlantId = null;
+        });
+      }
+    });
   }
 
   void _initializeForEdit() {
@@ -90,7 +103,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                 _buildPlantReminder(theme),
                 const SizedBox(height: 8),
 
-                // Plante personnalisée (repliable)
+                // Plante personnalisée (repliable, no switch)
                 _buildCustomPlantTile(theme),
                 const SizedBox(height: 8),
 
@@ -117,7 +130,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                 ),
                 const SizedBox(height: 8),
 
-                // Tips (repliable)
+                // Tips (repliable) - new text, compact
                 ExpansionTile(
                   title: Row(
                     children: [
@@ -133,12 +146,21 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 8),
-                      child: Text(
-                        '• Utilisez le catalogue pour des informations précises sur les plantes\n'
-                        '• La période de récolte sera gérée par la parcelle\n'
-                        '• Choisissez "Semé" pour les graines, "Planté" pour les plants\n'
-                        '• Ajoutez des notes pour suivre les conditions spéciales',
-                        style: theme.textTheme.bodySmall,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              '• Utilisez le catalogue pour sélectionner une plante.',
+                              style: theme.textTheme.bodySmall),
+                          const SizedBox(height: 6),
+                          Text(
+                              '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
+                              style: theme.textTheme.bodySmall),
+                          const SizedBox(height: 6),
+                          Text(
+                              '• Ajoutez des notes pour suivre les conditions spéciales.',
+                              style: theme.textTheme.bodySmall),
+                        ],
                       ),
                     ),
                   ],
@@ -170,6 +192,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   // UI BUILDERS
   // --------------------
 
+  /// Action block uses Wrap so children wrap to next line if needed,
+  /// and FittedBox for the date button to avoid overflow.
   Widget _buildActionBlock(ThemeData theme) {
     return Container(
       padding: const EdgeInsets.all(8),
@@ -181,67 +205,75 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Operation toggle
-          Row(
+          // Toggle + date in a wrap so the date cannot overflow.
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              ToggleButtons(
-                isSelected: [_status == 'Semé', _status == 'Planté'],
-                onPressed: (index) {
-                  setState(() {
-                    _status = index == 0 ? 'Semé' : 'Planté';
-                  });
-                },
-                borderRadius: BorderRadius.circular(8),
-                fillColor: theme.colorScheme.primary.withOpacity(0.12),
-                selectedBorderColor: theme.colorScheme.primary,
-                children: const [
-                  Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      child: Text('Semé')),
-                  Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      child: Text('Planté')),
-                ],
+              // Toggle inside a ConstrainedBox to avoid being too wide
+              ConstrainedBox(
+                constraints: const BoxConstraints(minWidth: 120, maxWidth: 220),
+                child: IntrinsicWidth(
+                  child: ToggleButtons(
+                    isSelected: [_status == 'Semé', _status == 'Planté'],
+                    onPressed: (index) {
+                      setState(() {
+                        _status = index == 0 ? 'Semé' : 'Planté';
+                      });
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    fillColor: theme.colorScheme.primary.withOpacity(0.12),
+                    selectedBorderColor: theme.colorScheme.primary,
+                    children: const [
+                      Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          child: Text('Semé')),
+                      Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          child: Text('Planté')),
+                    ],
+                  ),
+                ),
               ),
-              const Spacer(),
-              // Small planted date preview / compact
-              TextButton.icon(
-                style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 8)),
-                onPressed: () => _selectDate(context, _plantedDate,
-                    (d) => setState(() => _plantedDate = d)),
-                icon: Icon(Icons.calendar_today,
-                    size: 18, color: theme.colorScheme.primary),
-                label: Text(_formatDate(_plantedDate)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          // Quantity (compact)
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  controller: _quantityController,
-                  hint: 'Nombre de plants',
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty)
-                      return 'La quantité est requise';
-                    final q = int.tryParse(value);
-                    if (q == null || q <= 0)
-                      return 'La quantité doit être un nombre positif';
-                    return null;
-                  },
+
+              // Date button — FittedBox prevents overflow, wraps if needed
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8)),
+                  onPressed: () => _selectDate(context, _plantedDate,
+                      (d) => setState(() => _plantedDate = d)),
+                  icon: Icon(Icons.calendar_today,
+                      size: 18, color: theme.colorScheme.primary),
+                  label: Text(_formatDate(_plantedDate)),
                 ),
               ),
             ],
+          ),
+
+          const SizedBox(height: 8),
+
+          // Quantity (compact)
+          CustomTextField(
+            controller: _quantityController,
+            hint: 'Nombre de plants',
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty)
+                return 'La quantité est requise';
+              final q = int.tryParse(value);
+              if (q == null || q <= 0)
+                return 'La quantité doit être un nombre positif';
+              return null;
+            },
           ),
         ],
       ),
@@ -256,62 +288,45 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
       dense: true,
       contentPadding: const EdgeInsets.symmetric(horizontal: 8),
       leading: const Icon(Icons.eco),
-      title: Text(_selectedPlantId != null ? 'Plante : $plantName' : plantName),
-      trailing: IconButton(
-          icon: const Icon(Icons.arrow_forward_ios),
-          onPressed: _showPlantCatalog),
+      title: _selectedPlantId != null
+          ? Text('Plante : $plantName')
+          : Text(plantName, style: theme.textTheme.bodyMedium),
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: _showPlantCatalog,
     );
   }
 
+  /// Reworked: no switch, purely an ExpansionTile. If user types a name,
+  /// we consider it a custom plant (selected id set to null). If user picks a catalog plant,
+  /// we clear the custom name and collapse the tile.
   Widget _buildCustomPlantTile(ThemeData theme) {
-    final isCustom = _selectedPlantId == null;
     return ExpansionTile(
       title: Text('Plante personnalisée', style: theme.textTheme.bodyMedium),
-      subtitle: Text('Créer une plantation avec un nom personnalisé',
-          style: theme.textTheme.bodySmall),
       initiallyExpanded: _customPlantExpanded,
       onExpansionChanged: (v) => setState(() => _customPlantExpanded = v),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Switch(
-            value: isCustom,
-            onChanged: (value) {
-              setState(() {
-                if (value) {
-                  _selectedPlantId = null;
-                } else {
-                  // Prefer clearing plant name but keep selection empty (user must pick from catalog)
-                  _plantNameController.clear();
-                }
-              });
-            },
-          ),
-        ],
-      ),
+      childrenPadding:
+          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-          child: Column(
-            children: [
-              if (_selectedPlantId == null)
-                CustomTextField(
-                  controller: _plantNameController,
-                  label: 'Nom de la plante',
-                  hint: 'Ex: Tomate cerise',
-                  validator: (value) {
-                    if (_selectedPlantId == null) {
-                      if (value == null || value.trim().isEmpty)
-                        return 'Le nom de la plante est requis';
-                    }
-                    return null;
-                  },
-                )
-              else
-                const SizedBox.shrink(),
-            ],
-          ),
+        CustomTextField(
+          controller: _plantNameController,
+          label: 'Nom de la plante',
+          hint: 'Ex: Tomate cerise',
+          onChanged: (text) {
+            // if user types a custom name, we deselect any catalog plant
+            if (text.trim().isNotEmpty && _selectedPlantId != null) {
+              setState(() {
+                _selectedPlantId = null;
+              });
+            }
+          },
+          validator: (value) {
+            // Only required if user wants a custom plant (i.e., typed a name)
+            if (_plantNameController.text.trim().isNotEmpty) {
+              if (value == null || value.trim().isEmpty)
+                return 'Le nom de la plante est requis';
+            }
+            return null;
+          },
         ),
       ],
     );
@@ -335,7 +350,9 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
           items: Planting.statusOptions
               .map((s) => DropdownMenuItem(value: s, child: Text(s)))
               .toList(),
-          onChanged: (v) => v != null ? setState(() => _status = v) : null,
+          onChanged: (v) {
+            if (v != null) setState(() => _status = v);
+          },
         ),
       ],
     );
@@ -357,16 +374,20 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   }
 
   void _showPlantCatalog() async {
+    // Navigate to plant catalog in selection mode and wait for selected plant
     final selectedPlant = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
               const PlantCatalogScreen(isSelectionMode: true)),
     );
+
     if (selectedPlant != null && selectedPlant is String) {
       setState(() {
         _selectedPlantId = selectedPlant;
+        // Choosing a catalog plant should clear any custom name and collapse custom tile
         _plantNameController.clear();
+        _customPlantExpanded = false;
       });
     }
   }
@@ -404,15 +425,23 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
     setState(() => _isLoading = true);
 
     try {
-      final plantName = _selectedPlantId != null
-          ? _getPlantName(_selectedPlantId!)
-          : _plantNameController.text.trim();
-      final quantity = int.parse(_quantityController.text.trim());
+      final plantName = (_plantNameController.text.trim().isNotEmpty)
+          ? _plantNameController.text.trim()
+          : (_selectedPlantId != null ? _getPlantName(_selectedPlantId!) : '');
+      final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
       final notes = _notesController.text.trim().isEmpty
           ? null
           : _notesController.text.trim();
 
-      // Validate plantedDate
+      // Simple validations
+      if (quantity <= 0) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('La quantité doit être un nombre positif'),
+            backgroundColor: Colors.orange));
+        setState(() => _isLoading = false);
+        return;
+      }
+
       if (_plantedDate.isAfter(DateTime.now())) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content:
@@ -423,19 +452,19 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
       }
 
       if (widget.planting == null) {
-        // Create
+        // Create new planting
         await ref.read(plantingProvider.notifier).createPlanting(
               gardenBedId: widget.gardenBedId,
               plantId: _selectedPlantId ?? 'custom',
               plantName: plantName,
               quantity: quantity,
               plantedDate: _plantedDate,
-              expectedHarvestStartDate: null, // removed from UI
-              expectedHarvestEndDate: null, // removed from UI
+              expectedHarvestStartDate: null,
+              expectedHarvestEndDate: null,
               notes: notes,
             );
       } else {
-        // Update — preserve existing expectedHarvest values (do not overwrite)
+        // Update existing planting - preserve expectedHarvest fields
         final updatedPlanting = widget.planting!.copyWith(
           plantName: plantName,
           quantity: quantity,
