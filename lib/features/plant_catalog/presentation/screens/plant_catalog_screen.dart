@@ -113,11 +113,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return s;
   }
 
-  String _toFilenameSafe(String input) {
-    final n = _normalize(input);
-    return n.replaceAll(' ', '_');
-  }
-
   // -------------------------
   // Search helpers
   // -------------------------
@@ -169,12 +164,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     if (_assetManifestLowerToOriginal == null) return null;
     for (final c in candidates) {
       final lc = c.toLowerCase();
-      // direct
       if (_assetManifestLowerToOriginal!.containsKey(lc)) {
         return _assetManifestLowerToOriginal![lc];
       }
     }
-    // suffix matching (cases where manifest keys include package prefixes)
     for (final c in candidates) {
       final lc = c.toLowerCase();
       for (final keyLower in _assetManifestLowerToOriginal!.keys) {
@@ -263,7 +256,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           },
         );
       } else {
-        // build candidates list including plant.id and commonName variants
         final List<String> candidates = <String>[];
 
         final base = raw;
@@ -271,7 +263,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           candidates.add(base);
           candidates.add(base.toLowerCase());
         } else {
-          // add base raw as-is and lowercase
           candidates.add('assets/images/legumes/$base');
           candidates.add('assets/images/legumes/${base.toLowerCase()}');
           candidates.add('assets/images/plants/$base');
@@ -279,7 +270,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           candidates.add('assets/$base');
           candidates.add('assets/${base.toLowerCase()}');
 
-          // try base without extension variants -> add common extensions
           if (!RegExp(r'\.\w+$').hasMatch(base)) {
             final exts = ['.png', '.jpg', '.jpeg', '.webp'];
             for (final ext in exts) {
@@ -289,13 +279,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
               candidates.add('assets/images/plants/${base.toLowerCase()}$ext');
             }
           } else {
-            // if has extension add lowercase variant
             candidates.add('assets/images/legumes/${base.toLowerCase()}');
             candidates.add('assets/images/plants/${base.toLowerCase()}');
           }
         }
 
-        // add variants from plant.id
         final id = plant.id;
         if (id.isNotEmpty) {
           candidates.add('assets/images/legumes/$id.jpg');
@@ -305,12 +293,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           candidates.add('assets/images/plants/$id.png');
         }
 
-        // add variants from commonName
         final cn = plant.commonName;
         if (cn.isNotEmpty) {
-          final safe = _toFilenameSafe(cn); // lower, ascii, underscores
-          final alt1 = safe; // e.g. tomate -> 'tomate'
-          final alt2 = safe.replaceAll('_', '-'); // 'tomate' or 'artichaut'
+          final safe = _toFilenameSafe(cn);
+          final alt1 = safe;
+          final alt2 = safe.replaceAll('_', '-');
           final exts = ['.png', '.jpg', '.jpeg', '.webp'];
           for (final ext in exts) {
             candidates.add('assets/images/legumes/${alt1}$ext');
@@ -318,12 +305,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
             candidates.add('assets/images/plants/${alt1}$ext');
             candidates.add('assets/images/plants/${alt2}$ext');
           }
-          // also try capitalized commonName (original spelling)
           candidates.add('assets/images/legumes/${cn}');
           candidates.add('assets/images/plants/${cn}');
         }
 
-        // deduplicate preserving order
         final seen = <String>{};
         final finalCandidates = <String>[];
         for (final c in candidates) {
@@ -392,7 +377,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: imageHeight, child: imageWidget),
+            SizedBox(height: 180.0, child: imageWidget),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -428,7 +413,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   // helper to produce ascii-safe filename
   String _toFilenameSafe(String input) {
-    // reuse normalization but keep underscores
     var s = input.toLowerCase();
     const diacritics = {
       'à': 'a',
@@ -464,7 +448,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     diacritics.forEach((k, v) {
       s = s.replaceAll(k, v);
     });
-    // keep only a-z0-9 _-
     s = s.replaceAll(RegExp(r'[^a-z0-9\s_\-]'), '');
     s = s.replaceAll(RegExp(r'\s+'), '_');
     return s;
