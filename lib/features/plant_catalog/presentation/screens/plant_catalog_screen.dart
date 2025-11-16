@@ -1,5 +1,7 @@
 // lib/features/plant_catalog/presentation/screens/plant_catalog_screen.dart
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +34,10 @@ class PlantCatalogScreen extends ConsumerStatefulWidget {
 
 class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   final TextEditingController _searchController = TextEditingController();
+
+  // Cache de AssetManifest -> liste de clés d'assets (original case)
+  static List<String>? _assetManifestKeys;
+  static Set<String>? _assetManifestKeysLower;
 
   @override
   void initState() {
@@ -74,6 +80,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     super.dispose();
   }
 
+  // ============================
+  // Normalisation & Recherche
+  // ============================
   /// Normalisation pour la recherche : minuscules, suppression des diacritiques,
   /// et condensation des espaces.
   String _normalize(String? input) {
@@ -108,6 +117,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       'ü': 'u',
       'ý': 'y',
       'ÿ': 'y',
+      'œ': 'oe',
+      'æ': 'ae',
     };
 
     diacritics.forEach((k, v) {
@@ -135,6 +146,90 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           description.contains(normalizedQuery);
     }).toList();
   }
+
+  // ============================
+  // Asset resolution (case-insensitive)
+  // ============================
+
+  /// Charge et met en cache le AssetManifest keys (une seule fois)
+  Future<void> _ensureAssetManifestLoaded() async {
+    if (_assetManifestKeys != null && _assetManifestKeysLower != null) return;
+    try {
+      final manifestContent = await rootBundle.loadString('AssetManifest.json');
+      final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+      final keys = manifestMap.keys.toList();
+      _assetManifestKeys = keys;
+      _assetManifestKeysLower = keys.map((k) => k.toLowerCase()).toSet();
+      if (kDebugMode) {
+        debugPrint('AssetManifest loaded with ${keys.length} entries');
+      }
+    } catch (e) {
+      // En cas d'erreur, on laisse le cache null (on tombera ensuite sur attempts directes)
+      _assetManifestKeys = null;
+      _assetManifestKeysLower = null;
+      if (kDebugMode) {
+        debugPrint('Failed to load AssetManifest.json: $e');
+      }
+    }
+  }
+
+  /// Recherche un asset existent parmi les candidates en utilisant AssetManifest (insensible à la casse).
+  /// Retourne la clé exacte (case originale) si trouvée, sinon null.
+  Future<String?> _findExistingAssetFromManifest(
+      List<String> candidates) async {
+    await _ensureAssetManifestLoaded();
+
+    if (_assetManifestKeys == null || _assetManifestKeysLower == null) {
+      return null;
+    }
+
+    // Transforme la liste des clés en map lowercase -> original (dernière occurrence reste)
+    final Map<String, String> lowerToOriginal = {};
+    for (final k in _assetManifestKeys!) {
+      lowerToOriginal[k.toLowerCase()] = k;
+    }
+
+    for (final c in candidates) {
+      final lc = c.toLowerCase();
+      // 1) recherche exacte
+      if (lowerToOriginal.containsKey(lc)) {
+        return lowerToOriginal[lc];
+      }
+      // 2) recherche par suffixe (ex: key endsWith '/assets/images/legumes/tomato.jpg')
+      for (final keyLower in lowerToOriginal.keys) {
+        if (keyLower.endsWith('/' + lc) ||
+            keyLower.endsWith('\\' + lc) ||
+            keyLower == lc) {
+          return lowerToOriginal[keyLower];
+        }
+      }
+    }
+    return null;
+  }
+
+  /// Tentative directe (sans manifest) - essaie rootBundle.load pour chaque candidat.
+  Future<String?> _findExistingAssetDirect(List<String> candidates) async {
+    for (final path in candidates) {
+      try {
+        await rootBundle.load(path);
+        return path;
+      } catch (_) {
+        // ignore
+      }
+    }
+    return null;
+  }
+
+  /// Méthode wrapper qui tente manifest d'abord, sinon essais directs.
+  Future<String?> _findExistingAsset(List<String> candidates) async {
+    final fromManifest = await _findExistingAssetFromManifest(candidates);
+    if (fromManifest != null) return fromManifest;
+    return await _findExistingAssetDirect(candidates);
+  }
+
+  // ============================
+  // Image building (robuste)
+  // ============================
 
   Widget _fallbackImage({double height = 180}) {
     return Container(
@@ -204,17 +299,81 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           },
         );
       } else {
-        final assetPath = rawPath.startsWith('assets/')
-            ? rawPath
-            : 'assets/images/legumes/$rawPath';
+        // Construit des candidats robustes (extensions, chemins, lowercase)
+        final String baseRaw = rawPath;
+        final List<String> candidates = [];
 
-        imageWidget = Image.asset(
-          assetPath,
-          height: imageHeight,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) =>
-              _fallbackImage(height: imageHeight),
+        // Si rawPath est déjà un asset complet ('assets/...'), on l'ajoute en priorité
+        if (baseRaw.startsWith('assets/')) {
+          candidates.add(baseRaw);
+          candidates.add(baseRaw.toLowerCase());
+        } else {
+          // Ajout des chemins probables (avec ou sans extension)
+          candidates.add('assets/images/legumes/$baseRaw');
+          candidates.add('assets/images/legumes/${baseRaw.toLowerCase()}');
+          candidates.add('assets/images/plants/$baseRaw');
+          candidates.add('assets/images/plants/${baseRaw.toLowerCase()}');
+          candidates.add('assets/$baseRaw');
+          candidates.add('assets/${baseRaw.toLowerCase()}');
+
+          // si pas d'extension, tester extensions courantes
+          if (!RegExp(r'\.\w+$').hasMatch(baseRaw)) {
+            final exts = ['.png', '.jpg', '.jpeg', '.webp'];
+            for (final ext in exts) {
+              candidates.add('assets/images/legumes/${baseRaw}$ext');
+              candidates
+                  .add('assets/images/legumes/${baseRaw.toLowerCase()}$ext');
+              candidates.add('assets/images/plants/${baseRaw}$ext');
+              candidates
+                  .add('assets/images/plants/${baseRaw.toLowerCase()}$ext');
+            }
+          } else {
+            // si baseRaw contient extension, ajouter version lowercase
+            candidates.add('assets/images/legumes/${baseRaw.toLowerCase()}');
+            candidates.add('assets/images/plants/${baseRaw.toLowerCase()}');
+          }
+        }
+
+        // On retire doublons et on garde l'ordre
+        final seen = <String>{};
+        final finalCandidates = <String>[];
+        for (final c in candidates) {
+          if (!seen.contains(c)) {
+            seen.add(c);
+            finalCandidates.add(c);
+          }
+        }
+
+        // Utiliser FutureBuilder pour résoudre l'asset (manifest rapide)
+        imageWidget = FutureBuilder<String?>(
+          future: _findExistingAsset(finalCandidates),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Container(
+                height: imageHeight,
+                color: Colors.green.shade50,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              );
+            }
+            final found = snapshot.data;
+            if (found != null) {
+              return Image.asset(
+                found,
+                height: imageHeight,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    _fallbackImage(height: imageHeight),
+              );
+            } else {
+              if (kDebugMode) {
+                debugPrint(
+                    'ASSET SEARCH FAILED for "$rawPath". Tried: $finalCandidates');
+              }
+              return _fallbackImage(height: imageHeight);
+            }
+          },
         );
       }
     } else {
@@ -270,6 +429,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     );
   }
 
+  // ============================
+  // Build
+  // ============================
+
   @override
   Widget build(BuildContext context) {
     // Source des plantes : si une liste a été explicitement fournie au constructeur,
@@ -277,6 +440,17 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     final providerPlants = ref.watch(plantsListProvider);
     final sourcePlants =
         widget.plants.isNotEmpty ? widget.plants : providerPlants;
+
+    // Debug simple : print first plant JSON
+    if (kDebugMode) {
+      if (providerPlants.isNotEmpty) {
+        try {
+          debugPrint('DEBUG plant sample: ${providerPlants.first.toJson()}');
+        } catch (_) {}
+      } else {
+        debugPrint('DEBUG providerPlants is EMPTY');
+      }
+    }
 
     // Calculer ici la liste filtrée (recalculée à chaque build — déclenché par setState
     // lorsque la recherche change)
