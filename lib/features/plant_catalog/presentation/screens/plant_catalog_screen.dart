@@ -3,27 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Import central : ré-exporte plant_entity + aliases
-import 'package:permacalendar/features/plant_catalog/domain/entities/plant_freezed.dart';
+// Import correct du modèle PlantFreezed défini dans plant_entity.dart
+import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 
-/// Écran permettant de sélectionner une plante depuis une base interne.
-/// - Recherche normalisée (sans diacritiques, minuscule)
-/// - Affichage des images : asset / network / fallback
+/// Écran de sélection / catalogue de plantes
 class PlantCatalogScreen extends StatefulWidget {
-  /// Liste de plantes à afficher. Si vide, la grille sera vide.
   final List<PlantFreezed> plants;
-
-  /// Callback appelé lorsque l'utilisateur sélectionne une plante.
   final void Function(PlantFreezed plant)? onPlantSelected;
-
-  /// Si true, l'écran est en mode "sélection" : un tap renvoie l'id de la plante via Navigator.pop(id)
-  final bool isSelectionMode;
 
   const PlantCatalogScreen({
     Key? key,
     this.plants = const [],
     this.onPlantSelected,
-    this.isSelectionMode = false,
   }) : super(key: key);
 
   @override
@@ -41,9 +32,8 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
     _allPlants = List<PlantFreezed>.from(widget.plants);
     _filteredPlants = List<PlantFreezed>.from(_allPlants);
 
-    // Mettre à jour l'affichage du suffixIcon et lancer la recherche
+    // Écoute la recherche et applique le filtre (appel de setState dans _applyFilter)
     _searchController.addListener(() {
-      setState(() {}); // pour suffixIcon
       _onSearchChanged(_searchController.text);
     });
   }
@@ -63,11 +53,13 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
     super.dispose();
   }
 
-  /// Normalisation pour la recherche : met en minuscules, retire diacritiques simples et condense les espaces.
+  /// Normalisation pour la recherche : minuscules, suppression des diacritiques courants,
+  /// et condensation des espaces.
   String _normalize(String? input) {
     if (input == null) return '';
     String s = input.toLowerCase().trim();
 
+    // Remplacement simple des diacritiques français / latins usuels
     const Map<String, String> diacritics = {
       'à': 'a',
       'á': 'a',
@@ -96,33 +88,6 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
       'ü': 'u',
       'ý': 'y',
       'ÿ': 'y',
-      'À': 'a',
-      'Á': 'a',
-      'Â': 'a',
-      'Ã': 'a',
-      'Ä': 'a',
-      'Å': 'a',
-      'Ç': 'c',
-      'È': 'e',
-      'É': 'e',
-      'Ê': 'e',
-      'Ë': 'e',
-      'Ì': 'i',
-      'Í': 'i',
-      'Î': 'i',
-      'Ï': 'i',
-      'Ñ': 'n',
-      'Ò': 'o',
-      'Ó': 'o',
-      'Ô': 'o',
-      'Õ': 'o',
-      'Ö': 'o',
-      'Ù': 'u',
-      'Ú': 'u',
-      'Û': 'u',
-      'Ü': 'u',
-      'Ý': 'y',
-      'Ÿ': 'y',
     };
 
     diacritics.forEach((k, v) {
@@ -146,12 +111,15 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
 
     setState(() {
       _filteredPlants = _allPlants.where((p) {
-        final name = _normalize(p.name);
+        final common = _normalize(p.commonName);
+        final scientific = _normalize(p.scientificName);
+        final family = _normalize(p.family);
         final description = _normalize(p.description);
-        final subtitle = _normalize(p.subtitle ?? '');
-        return name.contains(normalizedQuery) ||
-            description.contains(normalizedQuery) ||
-            subtitle.contains(normalizedQuery);
+        // On recherche sur plusieurs champs pertinents
+        return common.contains(normalizedQuery) ||
+            scientific.contains(normalizedQuery) ||
+            family.contains(normalizedQuery) ||
+            description.contains(normalizedQuery);
       }).toList();
     });
   }
@@ -169,15 +137,36 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
     );
   }
 
-  /// Construit la carte pour chaque plante :
-  /// - Image.network si imagePath commence par http(s)
-  /// - Image.asset si chemin local (on préfixe assets/images/legumes/ si nécessaire)
-  /// - Fallback si imagePath null/empty ou en cas d'erreur
+  /// Récupère un chemin d'image à partir de la plante :
+  /// - Recherche dans metadata (image, imagePath, photo, image_url)
+  /// - Peut retourner null
+  String? _resolveImagePathFromPlant(PlantFreezed plant) {
+    try {
+      final meta = plant.metadata;
+      if (meta != null) {
+        // Normaliser les clés communes possibles
+        final candidates = [
+          meta['image'],
+          meta['imagePath'],
+          meta['photo'],
+          meta['image_url'],
+          meta['imageUrl'],
+        ];
+        for (final c in candidates) {
+          if (c is String && c.trim().isNotEmpty) {
+            return c.trim();
+          }
+        }
+      }
+    } catch (_) {
+      // ignore errors reading metadata
+    }
+    return null;
+  }
+
+  /// Construit la carte pour chaque plante avec la gestion local / réseau / fallback
   Widget _buildPlantCard(PlantFreezed plant) {
-    final String? rawPath =
-        (plant.imagePath != null && plant.imagePath!.isNotEmpty)
-            ? plant.imagePath!.trim()
-            : null;
+    final String? rawPath = _resolveImagePathFromPlant(plant);
     const double imageHeight = 180.0;
     Widget imageWidget;
 
@@ -193,11 +182,23 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) =>
               _fallbackImage(height: imageHeight),
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Container(
+              height: imageHeight,
+              color: Colors.green.shade50,
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(),
+            );
+          },
         );
       } else {
+        // Si c'est déjà un asset (commence par 'assets/'), on l'utilise tel quel,
+        // sinon on préfixe par assets/images/legumes/
         final assetPath = rawPath.startsWith('assets/')
             ? rawPath
             : 'assets/images/legumes/$rawPath';
+
         imageWidget = Image.asset(
           assetPath,
           height: imageHeight,
@@ -208,24 +209,11 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
         );
       }
     } else {
-      // Fallback dérivé depuis l'id -> assets/images/legumes/<id>.png
-      final derivedAsset = 'assets/images/legumes/${plant.id}.png';
-      imageWidget = Image.asset(
-        derivedAsset,
-        height: imageHeight,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) =>
-            _fallbackImage(height: imageHeight),
-      );
+      imageWidget = _fallbackImage(height: imageHeight);
     }
 
     return GestureDetector(
       onTap: () {
-        if (widget.isSelectionMode) {
-          Navigator.of(context).pop(plant.id);
-          return;
-        }
         if (widget.onPlantSelected != null) {
           widget.onPlantSelected!(plant);
         }
@@ -247,20 +235,20 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    plant.name.isNotEmpty ? plant.name : '—',
+                    plant.commonName,
                     style: Theme.of(context)
                         .textTheme
-                        .titleMedium
+                        .subtitle1
                         ?.copyWith(fontWeight: FontWeight.w600),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  if ((plant.subtitle ?? '').isNotEmpty)
+                  if ((plant.scientificName).isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 6.0),
                       child: Text(
-                        plant.subtitle ?? '',
-                        style: Theme.of(context).textTheme.bodySmall,
+                        plant.scientificName,
+                        style: Theme.of(context).textTheme.caption,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -276,7 +264,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Eviter que le scaffold remonte automatiquement lors de l'apparition du clavier
+    // Empêche le scaffold de remonter automatiquement quand le clavier apparaît
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -286,10 +274,13 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
       ),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, constraints) {
-          final crossAxisCount = constraints.maxWidth >= 800
+          final crossAxisCount = constraints.maxWidth >= 1000
               ? 4
-              : (constraints.maxWidth >= 600 ? 3 : 2);
+              : (constraints.maxWidth >= 700
+                  ? 3
+                  : (constraints.maxWidth >= 500 ? 2 : 2));
 
+          // Padding bottom dynamique pour ne pas se faire masquer par le clavier
           final bottomInset = MediaQuery.of(context).viewInsets.bottom;
           final bottomPadding = bottomInset + 12.0;
 
@@ -302,7 +293,8 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                   controller: _searchController,
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
-                    hintText: 'Rechercher une plante (nom, description...)',
+                    hintText:
+                        'Rechercher une plante (nom, scientifique, description...)',
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
@@ -328,10 +320,10 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                 child: Row(
                   children: [
                     Text('${_filteredPlants.length} résultat(s)',
-                        style: Theme.of(context).textTheme.bodySmall),
+                        style: Theme.of(context).textTheme.caption),
                     const SizedBox(width: 8),
-                    const Expanded(
-                        child: SizedBox()), // pousse pour aligner à gauche
+                    const Spacer(),
+                    // Placeholder pour bouton filtre/tri si besoin
                   ],
                 ),
               ),
@@ -343,7 +335,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                       ? Center(
                           child: Text(
                             'Aucune plante trouvée',
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         )
                       : GridView.builder(
@@ -354,6 +346,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                             crossAxisCount: crossAxisCount,
                             mainAxisSpacing: 12,
                             crossAxisSpacing: 12,
+                            // ratio approximatif pour contenir l'image 180 + texte
                             childAspectRatio:
                                 (constraints.maxWidth / crossAxisCount) / 280,
                           ),
