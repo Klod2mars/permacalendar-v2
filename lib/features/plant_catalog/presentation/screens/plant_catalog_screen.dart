@@ -31,50 +31,17 @@ class PlantCatalogScreen extends ConsumerStatefulWidget {
 
 class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   final TextEditingController _searchController = TextEditingController();
-  late List<PlantFreezed> _allPlants;
-  late List<PlantFreezed> _filteredPlants;
 
   @override
   void initState() {
     super.initState();
 
-    // Initialise avec ce qui est passé au constructeur (si fourni)
-    _allPlants = List<PlantFreezed>.from(widget.plants);
-    _filteredPlants = List<PlantFreezed>.from(_allPlants);
-
-    // Écoute la recherche et applique le filtre
+    // On garde seulement la listener pour forcer le rebuild quand la recherche change.
     _searchController.addListener(() {
-      _onSearchChanged(_searchController.text);
+      setState(() {
+        // Le setState déclenche build(), qui lira le provider et recalculera la liste filtrée.
+      });
     });
-
-    // Ecoute le provider plantsListProvider : si la source de vérité change,
-    // on met à jour la liste locale et on ré-applique le filtre.
-    // (ref est disponible dans ConsumerState)
-    ref.listen<List<PlantFreezed>>(plantsListProvider, (previous, next) {
-      if (next != null && next.isNotEmpty) {
-        setState(() {
-          _allPlants = List<PlantFreezed>.from(next);
-          _applyFilter(_searchController.text);
-        });
-      }
-    });
-
-    // Si au démarrage il n'y a rien et que le provider a déjà des plantes,
-    // on les récupère.
-    final providerPlants = ref.read(plantsListProvider);
-    if (providerPlants.isNotEmpty && _allPlants.isEmpty) {
-      _allPlants = List<PlantFreezed>.from(providerPlants);
-      _filteredPlants = List<PlantFreezed>.from(_allPlants);
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant PlantCatalogScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.plants != widget.plants && widget.plants.isNotEmpty) {
-      _allPlants = List<PlantFreezed>.from(widget.plants);
-      _applyFilter(_searchController.text);
-    }
   }
 
   @override
@@ -127,29 +94,22 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return s;
   }
 
-  void _onSearchChanged(String query) {
-    _applyFilter(query);
-  }
-
-  void _applyFilter(String query) {
+  /// Filtre une liste de plantes selon la query (utilise _normalize)
+  List<PlantFreezed> _filterPlantsList(
+      List<PlantFreezed> source, String query) {
     final normalizedQuery = _normalize(query);
-    if (normalizedQuery.isEmpty) {
-      setState(() => _filteredPlants = List<PlantFreezed>.from(_allPlants));
-      return;
-    }
+    if (normalizedQuery.isEmpty) return List<PlantFreezed>.from(source);
 
-    setState(() {
-      _filteredPlants = _allPlants.where((p) {
-        final common = _normalize(p.commonName);
-        final scientific = _normalize(p.scientificName);
-        final family = _normalize(p.family);
-        final description = _normalize(p.description);
-        return common.contains(normalizedQuery) ||
-            scientific.contains(normalizedQuery) ||
-            family.contains(normalizedQuery) ||
-            description.contains(normalizedQuery);
-      }).toList();
-    });
+    return source.where((p) {
+      final common = _normalize(p.commonName);
+      final scientific = _normalize(p.scientificName);
+      final family = _normalize(p.family);
+      final description = _normalize(p.description);
+      return common.contains(normalizedQuery) ||
+          scientific.contains(normalizedQuery) ||
+          family.contains(normalizedQuery) ||
+          description.contains(normalizedQuery);
+    }).toList();
   }
 
   Widget _fallbackImage({double height = 180}) {
@@ -288,6 +248,17 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Source des plantes : si une liste a été explicitement fournie au constructeur,
+    // on l'utilise ; sinon on prend la source de vérité du provider.
+    final providerPlants = ref.watch(plantsListProvider);
+    final sourcePlants =
+        widget.plants.isNotEmpty ? widget.plants : providerPlants;
+
+    // Calculer ici la liste filtrée (recalculée à chaque build — déclenché par setState
+    // lorsque la recherche change)
+    final filteredPlants =
+        _filterPlantsList(sourcePlants, _searchController.text);
+
     // Empêche le scaffold de remonter automatiquement quand le clavier apparaît
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -325,7 +296,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             icon: const Icon(Icons.clear),
                             onPressed: () {
                               _searchController.clear();
-                              _applyFilter('');
+                              setState(
+                                  () {}); // force rebuild pour réafficher toutes les plantes
                               FocusScope.of(context).unfocus();
                             },
                           )
@@ -335,7 +307,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 14.0),
                   ),
-                  onChanged: _onSearchChanged,
+                  onChanged: (_) {
+                    // Le listener du controller fait déjà setState, mais on peut aussi forcer ici
+                    setState(() {});
+                  },
                 ),
               ),
               Padding(
@@ -343,7 +318,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                 child: Row(
                   children: [
-                    Text('${_filteredPlants.length} résultat(s)',
+                    Text('${filteredPlants.length} résultat(s)',
                         style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 8),
                     const Spacer(),
@@ -354,7 +329,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                 child: Padding(
                   padding: EdgeInsets.only(
                       left: 12.0, right: 12.0, bottom: bottomPadding),
-                  child: _filteredPlants.isEmpty
+                  child: filteredPlants.isEmpty
                       ? Center(
                           child: Text(
                             'Aucune plante trouvée',
@@ -372,9 +347,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             childAspectRatio:
                                 (constraints.maxWidth / crossAxisCount) / 280,
                           ),
-                          itemCount: _filteredPlants.length,
+                          itemCount: filteredPlants.length,
                           itemBuilder: (context, index) {
-                            final plant = _filteredPlants[index];
+                            final plant = filteredPlants[index];
                             return _buildPlantCard(plant);
                           },
                         ),
