@@ -11,10 +11,14 @@ class PlantCatalogScreen extends StatefulWidget {
   final List<PlantFreezed> plants;
   final void Function(PlantFreezed plant)? onPlantSelected;
 
+  /// Mode sélection — gardé pour compatibilité avec d'autres dialogues
+  final bool isSelectionMode;
+
   const PlantCatalogScreen({
     Key? key,
     this.plants = const [],
     this.onPlantSelected,
+    this.isSelectionMode = false,
   }) : super(key: key);
 
   @override
@@ -32,7 +36,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
     _allPlants = List<PlantFreezed>.from(widget.plants);
     _filteredPlants = List<PlantFreezed>.from(_allPlants);
 
-    // Écoute la recherche et applique le filtre (appel de setState dans _applyFilter)
+    // Écoute la recherche et applique le filtre
     _searchController.addListener(() {
       _onSearchChanged(_searchController.text);
     });
@@ -115,7 +119,6 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
         final scientific = _normalize(p.scientificName);
         final family = _normalize(p.family);
         final description = _normalize(p.description);
-        // On recherche sur plusieurs champs pertinents
         return common.contains(normalizedQuery) ||
             scientific.contains(normalizedQuery) ||
             family.contains(normalizedQuery) ||
@@ -138,13 +141,12 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
   }
 
   /// Récupère un chemin d'image à partir de la plante :
-  /// - Recherche dans metadata (image, imagePath, photo, image_url)
+  /// - Recherche dans metadata (image, imagePath, photo, image_url, imageUrl)
   /// - Peut retourner null
   String? _resolveImagePathFromPlant(PlantFreezed plant) {
     try {
       final meta = plant.metadata;
       if (meta != null) {
-        // Normaliser les clés communes possibles
         final candidates = [
           meta['image'],
           meta['imagePath'],
@@ -214,8 +216,12 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
 
     return GestureDetector(
       onTap: () {
+        // Si on est en mode sélection et qu'un callback est fourni, on l'appelle.
         if (widget.onPlantSelected != null) {
           widget.onPlantSelected!(plant);
+        } else if (widget.isSelectionMode) {
+          // En mode sélection sans callback, on retourne simplement en arrière avec la plante.
+          Navigator.of(context).pop(plant);
         }
       },
       child: Card(
@@ -238,7 +244,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                     plant.commonName,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .titleMedium
                         ?.copyWith(fontWeight: FontWeight.w600),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -248,7 +254,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                       padding: const EdgeInsets.only(top: 6.0),
                       child: Text(
                         plant.scientificName,
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -320,10 +326,9 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                 child: Row(
                   children: [
                     Text('${_filteredPlants.length} résultat(s)',
-                        style: Theme.of(context).textTheme.caption),
+                        style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 8),
                     const Spacer(),
-                    // Placeholder pour bouton filtre/tri si besoin
                   ],
                 ),
               ),
@@ -335,7 +340,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                       ? Center(
                           child: Text(
                             'Aucune plante trouvée',
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         )
                       : GridView.builder(
