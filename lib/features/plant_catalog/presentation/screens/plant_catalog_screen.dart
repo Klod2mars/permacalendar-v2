@@ -37,15 +37,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   void initState() {
     super.initState();
 
-    // On garde seulement la listener pour forcer le rebuild quand la recherche change.
     _searchController.addListener(() {
-      setState(() {
-        // Le setState déclenche build(), qui lira le provider et recalculera la liste filtrée.
-      });
+      setState(() {});
     });
 
-    // FORCER le chargement du provider si nécessaire (comportement attendu :
-    // le catalogue est déjà peuplé quand on ouvre l'écran).
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         final current = ref.read(plantsListProvider);
@@ -74,8 +69,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     super.dispose();
   }
 
-  /// Normalisation pour la recherche : minuscules, suppression des diacritiques courants,
-  /// et condensation des espaces.
   String _normalize(String? input) {
     if (input == null) return '';
     String s = input.toLowerCase().trim();
@@ -118,7 +111,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return s;
   }
 
-  /// Filtre une liste de plantes selon la query (utilise _normalize)
   List<PlantFreezed> _filterPlantsList(
       List<PlantFreezed> source, String query) {
     final normalizedQuery = _normalize(query);
@@ -149,9 +141,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     );
   }
 
-  /// Récupère un chemin d'image à partir de la plante :
-  /// - Recherche dans metadata (image, imagePath, photo, image_url, imageUrl)
-  /// - Peut retourner null
   String? _resolveImagePathFromPlant(PlantFreezed plant) {
     try {
       final meta = plant.metadata;
@@ -169,13 +158,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           }
         }
       }
-    } catch (_) {
-      // ignore errors reading metadata
-    }
+    } catch (_) {}
     return null;
   }
 
-  /// Construit la carte pour chaque plante avec la gestion local / réseau / fallback
   Widget _buildPlantCard(PlantFreezed plant) {
     final String? rawPath = _resolveImagePathFromPlant(plant);
     const double imageHeight = 180.0;
@@ -232,7 +218,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        clipBehavior: Clip.hardEdge,
+        clipBehavior: Clip.hardedge,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -251,7 +237,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  if ((plant.scientificName).isNotEmpty)
+                  if (plant.scientificName.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 6.0),
                       child: Text(
@@ -272,18 +258,13 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Source des plantes : si une liste a été explicitement fournie au constructeur,
-    // on l'utilise ; sinon on prend la source de vérité du provider.
     final providerPlants = ref.watch(plantsListProvider);
     final sourcePlants =
         widget.plants.isNotEmpty ? widget.plants : providerPlants;
 
-    // Calculer ici la liste filtrée (recalculée à chaque build — déclenché par setState
-    // lorsque la recherche change)
     final filteredPlants =
         _filterPlantsList(sourcePlants, _searchController.text);
 
-    // Empêche le scaffold de remonter automatiquement quand le clavier apparaît
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -297,11 +278,14 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
               ? 4
               : (constraints.maxWidth >= 700
                   ? 3
-                  : (constraints.maxWidth >= 500 ? 2 : 2));
+                  : (constraints.maxWidth >= 500 ? 2 : 1));
 
-          // Padding bottom dynamique pour ne pas se faire masquer par le clavier
           final bottomInset = MediaQuery.of(context).viewInsets.bottom;
           final bottomPadding = bottomInset + 12.0;
+
+          // *** AJOUT ICI ***
+          final double desiredTileHeight =
+              constraints.maxWidth >= 700 ? 300.0 : 320.0;
 
           return Column(
             children: [
@@ -320,8 +304,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             icon: const Icon(Icons.clear),
                             onPressed: () {
                               _searchController.clear();
-                              setState(
-                                  () {}); // force rebuild pour réafficher toutes les plantes
+                              setState(() {});
                               FocusScope.of(context).unfocus();
                             },
                           )
@@ -331,10 +314,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 14.0),
                   ),
-                  onChanged: (_) {
-                    // Le listener du controller fait déjà setState, mais on peut aussi forcer ici
-                    setState(() {});
-                  },
+                  onChanged: (_) => setState(() {}),
                 ),
               ),
               Padding(
@@ -368,8 +348,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             crossAxisCount: crossAxisCount,
                             mainAxisSpacing: 12,
                             crossAxisSpacing: 12,
+
+                            /// *** NOUVEL ASPECT RATIO ADAPTATIF ***
                             childAspectRatio:
-                                (constraints.maxWidth / crossAxisCount) / 280,
+                                (constraints.maxWidth / crossAxisCount) /
+                                    desiredTileHeight,
                           ),
                           itemCount: filteredPlants.length,
                           itemBuilder: (context, index) {
