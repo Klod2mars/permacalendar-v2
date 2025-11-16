@@ -56,19 +56,17 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       try {
         final current = ref.read(plantsListProvider);
         if (kDebugMode) {
-          debugPrint(
-              'PlantCatalogScreen.initState: providerPlants.count = ${current.length}');
+          debugPrint('DEBUG_INIT: providerPlants.count = ${current.length}');
         }
         if (current.isEmpty) {
           if (kDebugMode) {
-            debugPrint('PlantCatalogScreen: triggering loadPlants()...');
+            debugPrint('DEBUG_INIT: triggering loadPlants()...');
           }
           ref.read(plantCatalogProvider.notifier).loadPlants();
         }
       } catch (e, st) {
         if (kDebugMode) {
-          debugPrint(
-              'PlantCatalogScreen: erreur lors du check/loadPlants: $e\n$st');
+          debugPrint('DEBUG_INIT ERROR: $e\n$st');
         }
       }
     });
@@ -83,8 +81,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   // ============================
   // Normalisation & Recherche
   // ============================
-  /// Normalisation pour la recherche : minuscules, suppression des diacritiques,
-  /// et condensation des espaces.
   String _normalize(String? input) {
     if (input == null) return '';
     String s = input.toLowerCase().trim();
@@ -129,7 +125,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return s;
   }
 
-  /// Filtre une liste de plantes selon la query (utilise _normalize)
   List<PlantFreezed> _filterPlantsList(
       List<PlantFreezed> source, String query) {
     final normalizedQuery = _normalize(query);
@@ -151,7 +146,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   // Asset resolution (case-insensitive)
   // ============================
 
-  /// Charge et met en cache le AssetManifest keys (une seule fois)
   Future<void> _ensureAssetManifestLoaded() async {
     if (_assetManifestKeys != null && _assetManifestKeysLower != null) return;
     try {
@@ -161,20 +155,19 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       _assetManifestKeys = keys;
       _assetManifestKeysLower = keys.map((k) => k.toLowerCase()).toSet();
       if (kDebugMode) {
-        debugPrint('AssetManifest loaded with ${keys.length} entries');
+        debugPrint(
+            'DEBUG_MANIFEST: AssetManifest loaded with ${keys.length} entries');
       }
     } catch (e) {
-      // En cas d'erreur, on laisse le cache null (on tombera ensuite sur attempts directes)
       _assetManifestKeys = null;
       _assetManifestKeysLower = null;
       if (kDebugMode) {
-        debugPrint('Failed to load AssetManifest.json: $e');
+        debugPrint(
+            'DEBUG_MANIFEST ERROR: Failed to load AssetManifest.json: $e');
       }
     }
   }
 
-  /// Recherche un asset existent parmi les candidates en utilisant AssetManifest (insensible à la casse).
-  /// Retourne la clé exacte (case originale) si trouvée, sinon null.
   Future<String?> _findExistingAssetFromManifest(
       List<String> candidates) async {
     await _ensureAssetManifestLoaded();
@@ -183,7 +176,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       return null;
     }
 
-    // Transforme la liste des clés en map lowercase -> original (dernière occurrence reste)
     final Map<String, String> lowerToOriginal = {};
     for (final k in _assetManifestKeys!) {
       lowerToOriginal[k.toLowerCase()] = k;
@@ -191,11 +183,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
     for (final c in candidates) {
       final lc = c.toLowerCase();
-      // 1) recherche exacte
       if (lowerToOriginal.containsKey(lc)) {
         return lowerToOriginal[lc];
       }
-      // 2) recherche par suffixe (ex: key endsWith '/assets/images/legumes/tomato.jpg')
       for (final keyLower in lowerToOriginal.keys) {
         if (keyLower.endsWith('/' + lc) ||
             keyLower.endsWith('\\' + lc) ||
@@ -207,7 +197,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return null;
   }
 
-  /// Tentative directe (sans manifest) - essaie rootBundle.load pour chaque candidat.
   Future<String?> _findExistingAssetDirect(List<String> candidates) async {
     for (final path in candidates) {
       try {
@@ -220,7 +209,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return null;
   }
 
-  /// Méthode wrapper qui tente manifest d'abord, sinon essais directs.
   Future<String?> _findExistingAsset(List<String> candidates) async {
     final fromManifest = await _findExistingAssetFromManifest(candidates);
     if (fromManifest != null) return fromManifest;
@@ -228,7 +216,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   }
 
   // ============================
-  // Image building (robuste)
+  // Image building (robuste) + logs
   // ============================
 
   Widget _fallbackImage({double height = 180}) {
@@ -244,9 +232,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     );
   }
 
-  /// Récupère un chemin d'image à partir de la plante :
-  /// - Recherche dans metadata (image, imagePath, photo, image_url, imageUrl)
-  /// - Peut retourner null
   String? _resolveImagePathFromPlant(PlantFreezed plant) {
     try {
       final meta = plant.metadata;
@@ -265,29 +250,45 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         }
       }
     } catch (_) {
-      // ignore errors reading metadata
+      // ignore
     }
     return null;
   }
 
-  /// Construit la carte pour chaque plante avec la gestion local / réseau / fallback
   Widget _buildPlantCard(PlantFreezed plant) {
     final String? rawPath = _resolveImagePathFromPlant(plant);
     const double imageHeight = 180.0;
     Widget imageWidget;
 
+    // --- Logs : print metadata + resolution attempt
+    if (kDebugMode) {
+      try {
+        debugPrint(
+            'DEBUG_PLANT: id=${plant.id}, commonName=${plant.commonName}');
+        debugPrint('DEBUG_METADATA: ${plant.metadata}');
+      } catch (_) {}
+    }
+
     if (rawPath != null && rawPath.isNotEmpty) {
+      if (kDebugMode)
+        debugPrint('DEBUG_RAWPATH: "$rawPath" for plant ${plant.id}');
+
       final isNetwork =
           RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(rawPath);
 
       if (isNetwork) {
+        if (kDebugMode)
+          debugPrint('DEBUG_IMAGE: network image for ${plant.id} -> $rawPath');
         imageWidget = Image.network(
           rawPath,
           height: imageHeight,
           width: double.infinity,
           fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) =>
-              _fallbackImage(height: imageHeight),
+          errorBuilder: (context, error, stackTrace) {
+            if (kDebugMode)
+              debugPrint('DEBUG_NETWORK_ERROR: $error for $rawPath');
+            return _fallbackImage(height: imageHeight);
+          },
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
             return Container(
@@ -303,12 +304,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         final String baseRaw = rawPath;
         final List<String> candidates = [];
 
-        // Si rawPath est déjà un asset complet ('assets/...'), on l'ajoute en priorité
         if (baseRaw.startsWith('assets/')) {
           candidates.add(baseRaw);
           candidates.add(baseRaw.toLowerCase());
         } else {
-          // Ajout des chemins probables (avec ou sans extension)
           candidates.add('assets/images/legumes/$baseRaw');
           candidates.add('assets/images/legumes/${baseRaw.toLowerCase()}');
           candidates.add('assets/images/plants/$baseRaw');
@@ -316,7 +315,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           candidates.add('assets/$baseRaw');
           candidates.add('assets/${baseRaw.toLowerCase()}');
 
-          // si pas d'extension, tester extensions courantes
           if (!RegExp(r'\.\w+$').hasMatch(baseRaw)) {
             final exts = ['.png', '.jpg', '.jpeg', '.webp'];
             for (final ext in exts) {
@@ -328,13 +326,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                   .add('assets/images/plants/${baseRaw.toLowerCase()}$ext');
             }
           } else {
-            // si baseRaw contient extension, ajouter version lowercase
             candidates.add('assets/images/legumes/${baseRaw.toLowerCase()}');
             candidates.add('assets/images/plants/${baseRaw.toLowerCase()}');
           }
         }
 
-        // On retire doublons et on garde l'ordre
         final seen = <String>{};
         final finalCandidates = <String>[];
         for (final c in candidates) {
@@ -344,7 +340,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           }
         }
 
-        // Utiliser FutureBuilder pour résoudre l'asset (manifest rapide)
+        if (kDebugMode)
+          debugPrint('DEBUG_CANDIDATES for ${plant.id}: $finalCandidates');
+
         imageWidget = FutureBuilder<String?>(
           future: _findExistingAsset(finalCandidates),
           builder: (context, snapshot) {
@@ -358,25 +356,31 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
             }
             final found = snapshot.data;
             if (found != null) {
+              if (kDebugMode)
+                debugPrint('DEBUG_FOUND_ASSET for ${plant.id} -> $found');
               return Image.asset(
                 found,
                 height: imageHeight,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    _fallbackImage(height: imageHeight),
+                errorBuilder: (context, error, stackTrace) {
+                  if (kDebugMode)
+                    debugPrint('DEBUG_ASSET_ERROR: $error for asset $found');
+                  return _fallbackImage(height: imageHeight);
+                },
               );
             } else {
-              if (kDebugMode) {
+              if (kDebugMode)
                 debugPrint(
-                    'ASSET SEARCH FAILED for "$rawPath". Tried: $finalCandidates');
-              }
+                    'DEBUG_ASSET_MISSING for ${plant.id}, tried: $finalCandidates');
               return _fallbackImage(height: imageHeight);
             }
           },
         );
       }
     } else {
+      if (kDebugMode)
+        debugPrint('DEBUG_NO_RAWPATH for plant ${plant.id} - using fallback');
       imageWidget = _fallbackImage(height: imageHeight);
     }
 
@@ -435,29 +439,23 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Source des plantes : si une liste a été explicitement fournie au constructeur,
-    // on l'utilise ; sinon on prend la source de vérité du provider.
     final providerPlants = ref.watch(plantsListProvider);
     final sourcePlants =
         widget.plants.isNotEmpty ? widget.plants : providerPlants;
 
-    // Debug simple : print first plant JSON
     if (kDebugMode) {
       if (providerPlants.isNotEmpty) {
         try {
-          debugPrint('DEBUG plant sample: ${providerPlants.first.toJson()}');
+          debugPrint('DEBUG_PLANT_SAMPLE: ${providerPlants.first.toJson()}');
         } catch (_) {}
       } else {
-        debugPrint('DEBUG providerPlants is EMPTY');
+        debugPrint('DEBUG_PROVIDER_EMPTY');
       }
     }
 
-    // Calculer ici la liste filtrée (recalculée à chaque build — déclenché par setState
-    // lorsque la recherche change)
     final filteredPlants =
         _filterPlantsList(sourcePlants, _searchController.text);
 
-    // Empêche le scaffold de remonter automatiquement quand le clavier apparaît
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -467,18 +465,15 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       ),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, constraints) {
-          // Nouveau breakpoint : 1 colonne sur petits écrans (une plante par ligne)
           final crossAxisCount = constraints.maxWidth >= 1000
               ? 4
               : (constraints.maxWidth >= 700
                   ? 3
                   : (constraints.maxWidth >= 500 ? 2 : 1));
 
-          // Padding bottom dynamique (plus de marge pour éviter overflow avec barres systèmes)
           final bottomInset = MediaQuery.of(context).viewInsets.bottom;
           final bottomPadding = bottomInset + 20.0;
 
-          // Hauteur cible des tuiles légèrement augmentée pour supprimer le overflow
           final double desiredTileHeight =
               constraints.maxWidth >= 700 ? 300.0 : 320.0;
 
@@ -511,7 +506,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                         horizontal: 12.0, vertical: 14.0),
                   ),
                   onChanged: (_) {
-                    // Le listener du controller fait déjà setState, mais on peut aussi forcer ici
                     setState(() {});
                   },
                 ),
