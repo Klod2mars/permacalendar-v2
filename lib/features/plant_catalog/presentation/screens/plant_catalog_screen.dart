@@ -2,12 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Import correct du modèle PlantFreezed défini dans plant_entity.dart
+// Modèle PlantFreezed
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 
+// Provider (source des plantes)
+import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
+
 /// Écran de sélection / catalogue de plantes
-class PlantCatalogScreen extends StatefulWidget {
+class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
   final void Function(PlantFreezed plant)? onPlantSelected;
 
@@ -22,10 +26,10 @@ class PlantCatalogScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PlantCatalogScreen> createState() => _PlantCatalogScreenState();
+  ConsumerState<PlantCatalogScreen> createState() => _PlantCatalogScreenState();
 }
 
-class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
+class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   final TextEditingController _searchController = TextEditingController();
   late List<PlantFreezed> _allPlants;
   late List<PlantFreezed> _filteredPlants;
@@ -33,6 +37,8 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
   @override
   void initState() {
     super.initState();
+
+    // Initialise avec ce qui est passé au constructeur (si fourni)
     _allPlants = List<PlantFreezed>.from(widget.plants);
     _filteredPlants = List<PlantFreezed>.from(_allPlants);
 
@@ -40,12 +46,32 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
     _searchController.addListener(() {
       _onSearchChanged(_searchController.text);
     });
+
+    // Ecoute le provider plantsListProvider : si la source de vérité change,
+    // on met à jour la liste locale et on ré-applique le filtre.
+    // (ref est disponible dans ConsumerState)
+    ref.listen<List<PlantFreezed>>(plantsListProvider, (previous, next) {
+      if (next != null && next.isNotEmpty) {
+        setState(() {
+          _allPlants = List<PlantFreezed>.from(next);
+          _applyFilter(_searchController.text);
+        });
+      }
+    });
+
+    // Si au démarrage il n'y a rien et que le provider a déjà des plantes,
+    // on les récupère.
+    final providerPlants = ref.read(plantsListProvider);
+    if (providerPlants.isNotEmpty && _allPlants.isEmpty) {
+      _allPlants = List<PlantFreezed>.from(providerPlants);
+      _filteredPlants = List<PlantFreezed>.from(_allPlants);
+    }
   }
 
   @override
   void didUpdateWidget(covariant PlantCatalogScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.plants != widget.plants) {
+    if (oldWidget.plants != widget.plants && widget.plants.isNotEmpty) {
       _allPlants = List<PlantFreezed>.from(widget.plants);
       _applyFilter(_searchController.text);
     }
@@ -63,7 +89,6 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
     if (input == null) return '';
     String s = input.toLowerCase().trim();
 
-    // Remplacement simple des diacritiques français / latins usuels
     const Map<String, String> diacritics = {
       'à': 'a',
       'á': 'a',
@@ -195,8 +220,6 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
           },
         );
       } else {
-        // Si c'est déjà un asset (commence par 'assets/'), on l'utilise tel quel,
-        // sinon on préfixe par assets/images/legumes/
         final assetPath = rawPath.startsWith('assets/')
             ? rawPath
             : 'assets/images/legumes/$rawPath';
@@ -216,11 +239,9 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
 
     return GestureDetector(
       onTap: () {
-        // Si on est en mode sélection et qu'un callback est fourni, on l'appelle.
         if (widget.onPlantSelected != null) {
           widget.onPlantSelected!(plant);
         } else if (widget.isSelectionMode) {
-          // En mode sélection sans callback, on retourne simplement en arrière avec la plante.
           Navigator.of(context).pop(plant);
         }
       },
@@ -231,10 +252,7 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: imageHeight,
-              child: imageWidget,
-            ),
+            SizedBox(height: imageHeight, child: imageWidget),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -351,7 +369,6 @@ class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
                             crossAxisCount: crossAxisCount,
                             mainAxisSpacing: 12,
                             crossAxisSpacing: 12,
-                            // ratio approximatif pour contenir l'image 180 + texte
                             childAspectRatio:
                                 (constraints.maxWidth / crossAxisCount) / 280,
                           ),
