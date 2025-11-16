@@ -7,8 +7,8 @@ import '../../../../shared/widgets/custom_button.dart';
 import '../../providers/garden_bed_provider.dart';
 import '../../../../core/services/activity_observer_service.dart';
 import '../../../../core/events/garden_event_bus.dart';
-import '../../../../core/events/garden_events.dart';
-import '../../../../core/data/hive/garden_boxes.dart';
+import '../../../../core/events/garden_event.dart';
+import '../../../../core/storage/garden_boxes.dart';
 
 class CreateGardenBedDialog extends ConsumerStatefulWidget {
   final String gardenId;
@@ -381,7 +381,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
         } catch (_) {}
 
         // Forcer refresh du provider family
-        ref.invalidate(gardenBedByGardenProvider(updatedBed.gardenId));
+        ref.invalidate(gardenBedProvider(updatedBed.gardenId));
 
         success = true;
       } else {
@@ -426,7 +426,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
         } catch (_) {}
 
         // Forcer refresh
-        ref.invalidate(gardenBedByGardenProvider(newBed.gardenId));
+        ref.invalidate(gardenBedProvider(newBed.gardenId));
 
         success = true;
       }
@@ -494,4 +494,3 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
     }
   }
 }
-
