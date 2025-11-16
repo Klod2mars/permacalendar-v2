@@ -111,7 +111,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
         routes: [
           GoRoute(
-            path: 'detail',
+            path: ':bedId/detail',
             name: 'garden-bed-detail',
             builder: (context, state) {
               final gardenId = state.pathParameters['gardenId']!;
@@ -230,14 +230,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'recommendations',
             name: 'recommendations',
-            builder: (context, state) =>
-                const RecommendationsScreen(),
+            builder: (context, state) => const RecommendationsScreen(),
           ),
           GoRoute(
             path: 'settings',
             name: 'intelligence-settings',
-            builder: (context, state) =>
-                const IntelligenceSettingsSimple(),
+            builder: (context, state) => const IntelligenceSettingsSimple(),
           ),
           GoRoute(
             path: 'pest-observation',
@@ -267,8 +265,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'notifications',
             name: 'notifications',
-            builder: (context, state) =>
-                const NotificationsScreen(),
+            builder: (context, state) => const NotificationsScreen(),
           ),
         ],
       ),
