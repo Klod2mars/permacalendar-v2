@@ -21,45 +21,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   String _searchQuery = '';
 
-  String _selectedSowingSeason = 'Toutes';
-
-  // Saisons disponibles pour les filtres
-  final List<String> _seasons = [
-    'Toutes',
-    'Printemps',
-    'Été',
-    'Automne',
-    'Hiver',
-  ];
-
-  // Mapping 3-lettres (EN) vers saisons. Clés en MAJUSCULE pour comparaison insensible à la casse.
-  final Map<String, String> _monthToSeason = {
-    'JAN': 'Hiver',
-    'FEB': 'Hiver',
-    'MAR': 'Printemps',
-    'APR': 'Printemps',
-    'MAY': 'Printemps',
-    'JUN': 'Été',
-    'JUL': 'Été',
-    'AUG': 'Été',
-    'SEP': 'Automne',
-    'OCT': 'Automne',
-    'NOV': 'Automne',
-    'DEC': 'Hiver',
-  };
-
-  // Table d'appoint pour l'ancien format 1-lettre (legacy).
-  final Map<String, String> _legacyLetterToSeason = {
-    'J': 'Été', // choix pragmatique (J -> Juin/Juillet majoritaire)
-    'F': 'Hiver',
-    'M': 'Printemps', // Mars/Mai -> Printemps pour semis
-    'A': 'Printemps', // Avril/Août -> pragmatique
-    'S': 'Automne',
-    'O': 'Automne',
-    'N': 'Automne',
-    'D': 'Hiver',
-  };
-
   @override
   void initState() {
     super.initState();
@@ -123,8 +84,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       body: Column(
         children: [
           _buildSearchBar(theme),
-          _buildFilterChips(theme),
-          // Le Grid est dans un Expanded — le padding bas est géré dans _buildPlantGrid
+          // On a retiré le module "Saison de plantation".
           Expanded(child: _buildPlantGrid(theme)),
         ],
       ),
@@ -159,48 +119,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
             _searchQuery = value;
           });
         },
-      ),
-    );
-  }
-
-  Widget _buildFilterChips(ThemeData theme) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Saison de plantation',
-            style: theme.textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 40,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _seasons.length,
-              itemBuilder: (context, index) {
-                final season = _seasons[index];
-                final isSelected = season == _selectedSowingSeason;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    label: Text(season),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedSowingSeason = season;
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 16),
-        ],
       ),
     );
   }
@@ -249,16 +167,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         }).toList();
       }
 
-      // Filtre saison de plantation
-      if (_selectedSowingSeason != 'Toutes') {
-        filteredPlants = filteredPlants.where((plant) {
-          final sowingSeason = _getSeasonFromMonths(plant.sowingMonths);
-          return sowingSeason == _selectedSowingSeason;
-        }).toList();
-      }
-
-      // NOTE: la notion "saison de récolte" a été supprimée volontairement.
-
       if (filteredPlants.isEmpty) {
         return const EmptyStateWidget(
           title: 'Aucune plante trouvée',
@@ -269,7 +177,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
       // Adapter le padding bas au clavier pour éviter que le Grid soit masqué.
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: GridView.builder(
           padding: const EdgeInsets.all(16),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -286,43 +195,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         ),
       );
     });
-  }
-
-  String _getSeasonFromMonths(List<String> months) {
-    if (months.isEmpty) return '';
-
-    final seasonCounts = <String, int>{};
-    for (final month in months) {
-      if (month == null) continue;
-      final token = month.toString().trim();
-      String? season;
-
-      if (token.length == 1) {
-        // Legacy single-letter token
-        season = _legacyLetterToSeason[token.toUpperCase()];
-      } else {
-        // Try first 3 letters, uppercase (handles "Jan","Fév","FEB", etc.)
-        final key = token.length >= 3
-            ? token.substring(0, 3).toUpperCase()
-            : token.toUpperCase();
-        season = _monthToSeason[key];
-      }
-
-      if (season == null) {
-        // Fallback: try uppercase entire token (for "FÉV"/"Fév" or "DEC"/"Déc")
-        final alt = token.toUpperCase();
-        season = _monthToSeason[alt] ?? _legacyLetterToSeason[alt];
-      }
-
-      if (season != null) {
-        seasonCounts[season] = (seasonCounts[season] ?? 0) + 1;
-      }
-    }
-
-    if (seasonCounts.isEmpty) return '';
-
-    // Saison la plus représentée
-    return seasonCounts.entries.reduce((a, b) => a.value > b.value ? a : b).key;
   }
 
   /// Normalise une chaîne pour la recherche :
@@ -369,8 +241,6 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
   Widget _buildPlantCard(
       PlantFreezed plant, ThemeData theme, BuildContext context) {
-    final sowingSeason = _getSeasonFromMonths(plant.sowingMonths);
-
     return CustomCard(
       onTap: () {
         if (widget.isSelectionMode) {
@@ -469,27 +339,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                       ),
                     ),
                   ),
-                  const Spacer(),
-                  if (sowingSeason.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.eco,
-                          size: 16,
-                          color: theme.colorScheme.secondary,
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            sowingSeason,
-                            style: theme.textTheme.labelSmall,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  // Intentionnellement pas d'affichage de saison ici — module supprimé.
                 ],
               ),
             ),
