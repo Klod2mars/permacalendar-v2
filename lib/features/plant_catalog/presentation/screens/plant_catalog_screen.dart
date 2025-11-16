@@ -13,12 +13,9 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 // Provider (source des plantes)
 import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
 
-/// Écran de sélection / catalogue de plantes
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
   final void Function(PlantFreezed plant)? onPlantSelected;
-
-  /// Mode sélection — gardé pour compatibilité avec d'autres dialogues
   final bool isSelectionMode;
 
   const PlantCatalogScreen({
@@ -35,23 +32,17 @@ class PlantCatalogScreen extends ConsumerStatefulWidget {
 class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  // Cache de AssetManifest -> liste de clés d'assets (original case)
   static List<String>? _assetManifestKeys;
-  static Set<String>? _assetManifestKeysLower;
+  static Map<String, String>? _assetManifestLowerToOriginal;
 
   @override
   void initState() {
     super.initState();
 
-    // Listener pour forcer rebuild quand la recherche change.
     _searchController.addListener(() {
-      setState(() {
-        // déclenche build() pour recalculer la liste filtrée
-      });
+      setState(() {});
     });
 
-    // FORCER le chargement si nécessaire : on veut que le catalogue soit déjà
-    // peuplé au moment de l'ouverture de l'écran.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         final current = ref.read(plantsListProvider);
@@ -59,15 +50,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           debugPrint('DEBUG_INIT: providerPlants.count = ${current.length}');
         }
         if (current.isEmpty) {
-          if (kDebugMode) {
-            debugPrint('DEBUG_INIT: triggering loadPlants()...');
-          }
+          if (kDebugMode) debugPrint('DEBUG_INIT: triggering loadPlants()...');
           ref.read(plantCatalogProvider.notifier).loadPlants();
         }
       } catch (e, st) {
-        if (kDebugMode) {
-          debugPrint('DEBUG_INIT ERROR: $e\n$st');
-        }
+        if (kDebugMode) debugPrint('DEBUG_INIT ERROR: $e\n$st');
       }
     });
   }
@@ -78,14 +65,14 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     super.dispose();
   }
 
-  // ============================
-  // Normalisation & Recherche
-  // ============================
+  // -------------------------
+  // Normalisation helpers
+  // -------------------------
   String _normalize(String? input) {
     if (input == null) return '';
-    String s = input.toLowerCase().trim();
+    var s = input.toLowerCase().trim();
 
-    const Map<String, String> diacritics = {
+    const diacritics = {
       'à': 'a',
       'á': 'a',
       'â': 'a',
@@ -121,10 +108,19 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       s = s.replaceAll(k, v);
     });
 
+    s = s.replaceAll(RegExp(r'[^a-z0-9\s_\-]'), ''); // remove punctuation
     s = s.replaceAll(RegExp(r'\s+'), ' ');
     return s;
   }
 
+  String _toFilenameSafe(String input) {
+    final n = _normalize(input);
+    return n.replaceAll(' ', '_');
+  }
+
+  // -------------------------
+  // Search helpers
+  // -------------------------
   List<PlantFreezed> _filterPlantsList(
       List<PlantFreezed> source, String query) {
     final normalizedQuery = _normalize(query);
@@ -142,66 +138,58 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     }).toList();
   }
 
-  // ============================
-  // Asset resolution (case-insensitive)
-  // ============================
-
+  // -------------------------
+  // AssetManifest helpers
+  // -------------------------
   Future<void> _ensureAssetManifestLoaded() async {
-    if (_assetManifestKeys != null && _assetManifestKeysLower != null) return;
+    if (_assetManifestKeys != null && _assetManifestLowerToOriginal != null)
+      return;
+
     try {
-      final manifestContent = await rootBundle.loadString('AssetManifest.json');
-      final Map<String, dynamic> manifestMap = json.decode(manifestContent);
-      final keys = manifestMap.keys.toList();
+      final manifest = await rootBundle.loadString('AssetManifest.json');
+      final Map<String, dynamic> m = json.decode(manifest);
+      final keys = m.keys.toList();
       _assetManifestKeys = keys;
-      _assetManifestKeysLower = keys.map((k) => k.toLowerCase()).toSet();
-      if (kDebugMode) {
-        debugPrint(
-            'DEBUG_MANIFEST: AssetManifest loaded with ${keys.length} entries');
+      final mapLower = <String, String>{};
+      for (final k in keys) {
+        mapLower[k.toLowerCase()] = k;
       }
+      _assetManifestLowerToOriginal = mapLower;
+      if (kDebugMode)
+        debugPrint('DEBUG_MANIFEST: loaded ${keys.length} assets');
     } catch (e) {
       _assetManifestKeys = null;
-      _assetManifestKeysLower = null;
-      if (kDebugMode) {
-        debugPrint(
-            'DEBUG_MANIFEST ERROR: Failed to load AssetManifest.json: $e');
-      }
+      _assetManifestLowerToOriginal = null;
+      if (kDebugMode) debugPrint('DEBUG_MANIFEST ERROR: $e');
     }
   }
 
-  Future<String?> _findExistingAssetFromManifest(
-      List<String> candidates) async {
+  Future<String?> _tryManifest(List<String> candidates) async {
     await _ensureAssetManifestLoaded();
-
-    if (_assetManifestKeys == null || _assetManifestKeysLower == null) {
-      return null;
-    }
-
-    final Map<String, String> lowerToOriginal = {};
-    for (final k in _assetManifestKeys!) {
-      lowerToOriginal[k.toLowerCase()] = k;
-    }
-
+    if (_assetManifestLowerToOriginal == null) return null;
     for (final c in candidates) {
       final lc = c.toLowerCase();
-      if (lowerToOriginal.containsKey(lc)) {
-        return lowerToOriginal[lc];
+      // direct
+      if (_assetManifestLowerToOriginal!.containsKey(lc)) {
+        return _assetManifestLowerToOriginal![lc];
       }
-      for (final keyLower in lowerToOriginal.keys) {
-        if (keyLower.endsWith('/' + lc) ||
-            keyLower.endsWith('\\' + lc) ||
-            keyLower == lc) {
-          return lowerToOriginal[keyLower];
-        }
+    }
+    // suffix matching (cases where manifest keys include package prefixes)
+    for (final c in candidates) {
+      final lc = c.toLowerCase();
+      for (final keyLower in _assetManifestLowerToOriginal!.keys) {
+        if (keyLower.endsWith(lc))
+          return _assetManifestLowerToOriginal![keyLower];
       }
     }
     return null;
   }
 
-  Future<String?> _findExistingAssetDirect(List<String> candidates) async {
-    for (final path in candidates) {
+  Future<String?> _tryDirectLoad(List<String> candidates) async {
+    for (final c in candidates) {
       try {
-        await rootBundle.load(path);
-        return path;
+        await rootBundle.load(c);
+        return c;
       } catch (_) {
         // ignore
       }
@@ -210,25 +198,20 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   }
 
   Future<String?> _findExistingAsset(List<String> candidates) async {
-    final fromManifest = await _findExistingAssetFromManifest(candidates);
-    if (fromManifest != null) return fromManifest;
-    return await _findExistingAssetDirect(candidates);
+    final byManifest = await _tryManifest(candidates);
+    if (byManifest != null) return byManifest;
+    return await _tryDirectLoad(candidates);
   }
 
-  // ============================
-  // Image building (robuste) + logs
-  // ============================
-
+  // -------------------------
+  // Image helpers
+  // -------------------------
   Widget _fallbackImage({double height = 180}) {
     return Container(
       height: height,
       color: Colors.green.shade50,
       alignment: Alignment.center,
-      child: Icon(
-        Icons.eco_outlined,
-        size: 56,
-        color: Colors.green.shade700,
-      ),
+      child: Icon(Icons.eco_outlined, size: 56, color: Colors.green.shade700),
     );
   }
 
@@ -244,93 +227,103 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           meta['imageUrl'],
         ];
         for (final c in candidates) {
-          if (c is String && c.trim().isNotEmpty) {
-            return c.trim();
-          }
+          if (c is String && c.trim().isNotEmpty) return c.trim();
         }
       }
-    } catch (_) {
-      // ignore
-    }
+    } catch (_) {}
     return null;
   }
 
+  // Build Plant Card
   Widget _buildPlantCard(PlantFreezed plant) {
-    final String? rawPath = _resolveImagePathFromPlant(plant);
-    const double imageHeight = 180.0;
+    final raw = _resolveImagePathFromPlant(plant);
+    const imageHeight = 180.0;
     Widget imageWidget;
 
-    // --- Logs : print metadata + resolution attempt
     if (kDebugMode) {
-      try {
-        debugPrint(
-            'DEBUG_PLANT: id=${plant.id}, commonName=${plant.commonName}');
-        debugPrint('DEBUG_METADATA: ${plant.metadata}');
-      } catch (_) {}
+      debugPrint('DEBUG_PLANT: id=${plant.id}, commonName=${plant.commonName}');
+      debugPrint('DEBUG_METADATA: ${plant.metadata}');
     }
 
-    if (rawPath != null && rawPath.isNotEmpty) {
-      if (kDebugMode)
-        debugPrint('DEBUG_RAWPATH: "$rawPath" for plant ${plant.id}');
-
+    if (raw != null && raw.isNotEmpty) {
+      if (kDebugMode) debugPrint('DEBUG_RAWPATH: "$raw" for plant ${plant.id}');
       final isNetwork =
-          RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(rawPath);
-
+          RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
       if (isNetwork) {
         if (kDebugMode)
-          debugPrint('DEBUG_IMAGE: network image for ${plant.id} -> $rawPath');
+          debugPrint('DEBUG_IMAGE network for ${plant.id} -> $raw');
         imageWidget = Image.network(
-          rawPath,
+          raw,
           height: imageHeight,
           width: double.infinity,
           fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            if (kDebugMode)
-              debugPrint('DEBUG_NETWORK_ERROR: $error for $rawPath');
+          errorBuilder: (c, e, st) {
+            if (kDebugMode) debugPrint('DEBUG_NETWORK_ERROR: $e for $raw');
             return _fallbackImage(height: imageHeight);
-          },
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Container(
-              height: imageHeight,
-              color: Colors.green.shade50,
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            );
           },
         );
       } else {
-        // Construit des candidats robustes (extensions, chemins, lowercase)
-        final String baseRaw = rawPath;
-        final List<String> candidates = [];
+        // build candidates list including plant.id and commonName variants
+        final List<String> candidates = <String>[];
 
-        if (baseRaw.startsWith('assets/')) {
-          candidates.add(baseRaw);
-          candidates.add(baseRaw.toLowerCase());
+        final base = raw;
+        if (base.startsWith('assets/')) {
+          candidates.add(base);
+          candidates.add(base.toLowerCase());
         } else {
-          candidates.add('assets/images/legumes/$baseRaw');
-          candidates.add('assets/images/legumes/${baseRaw.toLowerCase()}');
-          candidates.add('assets/images/plants/$baseRaw');
-          candidates.add('assets/images/plants/${baseRaw.toLowerCase()}');
-          candidates.add('assets/$baseRaw');
-          candidates.add('assets/${baseRaw.toLowerCase()}');
+          // add base raw as-is and lowercase
+          candidates.add('assets/images/legumes/$base');
+          candidates.add('assets/images/legumes/${base.toLowerCase()}');
+          candidates.add('assets/images/plants/$base');
+          candidates.add('assets/images/plants/${base.toLowerCase()}');
+          candidates.add('assets/$base');
+          candidates.add('assets/${base.toLowerCase()}');
 
-          if (!RegExp(r'\.\w+$').hasMatch(baseRaw)) {
+          // try base without extension variants -> add common extensions
+          if (!RegExp(r'\.\w+$').hasMatch(base)) {
             final exts = ['.png', '.jpg', '.jpeg', '.webp'];
             for (final ext in exts) {
-              candidates.add('assets/images/legumes/${baseRaw}$ext');
-              candidates
-                  .add('assets/images/legumes/${baseRaw.toLowerCase()}$ext');
-              candidates.add('assets/images/plants/${baseRaw}$ext');
-              candidates
-                  .add('assets/images/plants/${baseRaw.toLowerCase()}$ext');
+              candidates.add('assets/images/legumes/${base}$ext');
+              candidates.add('assets/images/legumes/${base.toLowerCase()}$ext');
+              candidates.add('assets/images/plants/${base}$ext');
+              candidates.add('assets/images/plants/${base.toLowerCase()}$ext');
             }
           } else {
-            candidates.add('assets/images/legumes/${baseRaw.toLowerCase()}');
-            candidates.add('assets/images/plants/${baseRaw.toLowerCase()}');
+            // if has extension add lowercase variant
+            candidates.add('assets/images/legumes/${base.toLowerCase()}');
+            candidates.add('assets/images/plants/${base.toLowerCase()}');
           }
         }
 
+        // add variants from plant.id
+        final id = plant.id;
+        if (id.isNotEmpty) {
+          candidates.add('assets/images/legumes/$id.jpg');
+          candidates.add('assets/images/legumes/$id.png');
+          candidates.add('assets/images/legumes/$id.webp');
+          candidates.add('assets/images/plants/$id.jpg');
+          candidates.add('assets/images/plants/$id.png');
+        }
+
+        // add variants from commonName
+        final cn = plant.commonName;
+        if (cn.isNotEmpty) {
+          final safe = _toFilenameSafe(cn); // lower, ascii, underscores
+          final alt1 = safe; // e.g. tomate -> 'tomate'
+          final alt2 = safe.replaceAll('_', '-'); // 'tomate' or 'artichaut'
+          final exts = ['.png', '.jpg', '.jpeg', '.webp'];
+          for (final ext in exts) {
+            candidates.add('assets/images/legumes/${alt1}$ext');
+            candidates.add('assets/images/legumes/${alt2}$ext');
+            candidates.add('assets/images/plants/${alt1}$ext');
+            candidates.add('assets/images/plants/${alt2}$ext');
+          }
+          // also try capitalized commonName (original spelling)
+          candidates.add('assets/images/legumes/${cn}');
+          candidates.add('assets/images/plants/${cn}');
+        }
+
+        // deduplicate preserving order
         final seen = <String>{};
         final finalCandidates = <String>[];
         for (final c in candidates) {
@@ -363,9 +356,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                 height: imageHeight,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
+                errorBuilder: (c, e, st) {
                   if (kDebugMode)
-                    debugPrint('DEBUG_ASSET_ERROR: $error for asset $found');
+                    debugPrint('DEBUG_ASSET_ERROR: $e for $found');
                   return _fallbackImage(height: imageHeight);
                 },
               );
@@ -433,9 +426,49 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     );
   }
 
-  // ============================
-  // Build
-  // ============================
+  // helper to produce ascii-safe filename
+  String _toFilenameSafe(String input) {
+    // reuse normalization but keep underscores
+    var s = input.toLowerCase();
+    const diacritics = {
+      'à': 'a',
+      'á': 'a',
+      'â': 'a',
+      'ã': 'a',
+      'ä': 'a',
+      'å': 'a',
+      'ç': 'c',
+      'è': 'e',
+      'é': 'e',
+      'ê': 'e',
+      'ë': 'e',
+      'ì': 'i',
+      'í': 'i',
+      'î': 'i',
+      'ï': 'i',
+      'ñ': 'n',
+      'ò': 'o',
+      'ó': 'o',
+      'ô': 'o',
+      'õ': 'o',
+      'ö': 'o',
+      'ù': 'u',
+      'ú': 'u',
+      'û': 'u',
+      'ü': 'u',
+      'ý': 'y',
+      'ÿ': 'y',
+      'œ': 'oe',
+      'æ': 'ae',
+    };
+    diacritics.forEach((k, v) {
+      s = s.replaceAll(k, v);
+    });
+    // keep only a-z0-9 _-
+    s = s.replaceAll(RegExp(r'[^a-z0-9\s_\-]'), '');
+    s = s.replaceAll(RegExp(r'\s+'), '_');
+    return s;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -494,8 +527,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             icon: const Icon(Icons.clear),
                             onPressed: () {
                               _searchController.clear();
-                              setState(
-                                  () {}); // force rebuild pour réafficher toutes les plantes
+                              setState(() {});
                               FocusScope.of(context).unfocus();
                             },
                           )
@@ -528,11 +560,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                       left: 12.0, right: 12.0, bottom: bottomPadding),
                   child: filteredPlants.isEmpty
                       ? Center(
-                          child: Text(
-                            'Aucune plante trouvée',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        )
+                          child: Text('Aucune plante trouvée',
+                              style: Theme.of(context).textTheme.titleMedium))
                       : GridView.builder(
                           keyboardDismissBehavior:
                               ScrollViewKeyboardDismissBehavior.onDrag,
