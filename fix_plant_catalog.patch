@@ -1,0 +1,11 @@
+# Exemple PowerShell (rappel syntaxe fiable de la mémoire):
+$patch = @'
+*** Begin Patch
+*** Add File: lib/features/plant_catalog/domain/entities/plant_freezed.dart
++// Petit fichier de ré-export : maintient la compatibilité des imports existants
++export 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
++
+*** End Patch
+'@
+$patch | Set-Content -Encoding UTF8 fix_plant_catalog.patch
+git apply fix_plant_catalog.patch
