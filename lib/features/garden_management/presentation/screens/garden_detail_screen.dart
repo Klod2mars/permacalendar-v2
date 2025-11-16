@@ -14,6 +14,8 @@ import '../../../../core/models/garden_freezed.dart';
 import '../../../garden_bed/presentation/widgets/germination_preview.dart';
 import '../../../planting/providers/planting_provider.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
+import '../../../garden_bed/presentation/widgets/create_garden_bed_dialog.dart';
+import '../../../garden_bed/presentation/widgets/garden_bed_card.dart'; // Import ajouté
 
 class GardenDetailScreen extends ConsumerWidget {
   final String gardenId;
@@ -124,49 +126,24 @@ class GardenDetailScreen extends ConsumerWidget {
                 ],
               ),
 
-              // 📌 FAB ajouté ici
+              // ✅ FAB MODIFIÉ : ouvre directement le formulaire complet
               floatingActionButton: FloatingActionButton.extended(
                 icon: const Icon(Icons.add),
                 label: const Text("Parcelle"),
                 onPressed: () {
-                  showModalBottomSheet(
+                  // Ouvrir le dialog complet de création
+                  showDialog<bool>(
                     context: context,
-                    isScrollControlled: true,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(24)),
-                    ),
-                    builder: (_) {
-                      return Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Créer une parcelle",
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "Le formulaire complet sera ajouté lors de l'étape 2.",
-                              style: theme.textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 24),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text("Fermer"),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                    builder: (ctx) =>
+                        CreateGardenBedDialog(gardenId: garden.id),
+                  ).then((result) async {
+                    if (result == true) {
+                      // Recharger la liste pour montrer immédiatement la parcelle créée
+                      await ref
+                          .read(gardenBedProvider.notifier)
+                          .refresh(garden.id);
+                    }
+                  });
                 },
               ),
 
@@ -232,8 +209,9 @@ class GardenDetailScreen extends ConsumerWidget {
                         garden, theme, totalBedsArea, gardenBeds.length),
                     const SizedBox(height: 24),
 
-                    // Garden Beds Section
-                    _buildGardenBedsSection(context, ref, theme, garden),
+                    // Garden Beds Section - MODIFIÉ
+                    _buildGardenBedsSection(
+                        context, ref, theme, garden, gardenBeds),
                   ],
                 ),
               ),
@@ -367,223 +345,134 @@ class GardenDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildGardenBedsSection(BuildContext context, WidgetRef ref,
-      ThemeData theme, GardenFreezed garden) {
-    // Invalider le provider pour forcer le rechargement des parcelles
-    // Ceci corrige le problème de cache qui empêchait l'affichage immédiat des parcelles
-    // lors de la navigation entre différents jardins
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.invalidate(gardenBedProvider(garden.id));
-    });
-
-    final gardenBedsAsync = ref.watch(gardenBedProvider(garden.id));
-
-    return gardenBedsAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
-        child: Text('Erreur: $error', style: theme.textTheme.bodyMedium),
-      ),
-      data: (gardenBeds) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Parcelles',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+      ThemeData theme, GardenFreezed garden, List<GardenBed> gardenBeds) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Parcelles',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
               ),
-              CustomButton(
-                text: 'Gérer',
-                icon: const Icon(Icons.settings),
-                onPressed: () {
-                  context.push('/garden/${garden.id}/beds', extra: garden.name);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
+            ),
+            const SizedBox.shrink(),
+          ],
+        ),
+        const SizedBox(height: 16),
 
-          // Affichage conditionnel selon l'état des parcelles
-          if (gardenBeds.isEmpty)
-            CustomCard(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.grass,
-                      size: 48,
+        // Affichage conditionnel selon l'état des parcelles
+        if (gardenBeds.isEmpty)
+          CustomCard(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.grass,
+                    size: 48,
+                    color: theme.colorScheme.outline,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Aucune parcelle',
+                    style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.colorScheme.outline,
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Aucune parcelle',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.colorScheme.outline,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Créez des parcelles pour organiser vos plantations',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.outline,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            )
-          else
-            // Affichage des parcelles existantes
-            Column(
-              children: [
-                // Résumé des parcelles
-                CustomCard(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.grid_view,
-                          size: 24,
-                          color: theme.colorScheme.primary,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${gardenBeds.length} parcelle${gardenBeds.length > 1 ? 's' : ''}',
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              // Le total des surfaces est désormais affiché dans la carte d'informations du jardin
-                              // pour éviter la duplication au milieu de la page.
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Créez des parcelles pour organiser vos plantations',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.outline,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          )
+        else
+          // NOUVELLE SECTION : Affichage des parcelles avec GardenBedCard
+          Column(
+            children: [
+              const SizedBox(height: 16),
 
-                // Liste des parcelles (limitée à 3 pour l'aperçu)
-                ...gardenBeds.take(3).map((bed) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: CustomCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor:
-                                    theme.colorScheme.primaryContainer,
-                                child: Icon(
-                                  Icons.grass,
-                                  color: theme.colorScheme.onPrimaryContainer,
-                                  size: 20,
-                                ),
-                              ),
-                              title: Text(
-                                bed.name,
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (bed.description.isNotEmpty) ...[
-                                    Text(
-                                      bed.description,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 2),
-                                  ],
-                                  Row(
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          '${bed.sizeInSquareMeters.toStringAsFixed(1)} m²',
-                                          style: theme.textTheme.bodySmall
-                                              ?.copyWith(
-                                            color: theme.colorScheme.primary,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          softWrap: false,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Flexible(
-                                        child: Text(
-                                          '• ${bed.exposure}',
-                                          style: theme.textTheme.bodySmall
-                                              ?.copyWith(
-                                            color: theme
-                                                .colorScheme.onSurfaceVariant,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          softWrap: false,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16,
-                                color: theme.colorScheme.outline,
-                              ),
-                              onTap: () {
-                                // Navigation vers les plantations de la parcelle
-                                context.push(
-                                    '/garden/${garden.id}/beds/${bed.id}/plantings',
-                                    extra: bed.name);
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              child: GerminationPreview(
-                                gardenBed: bed,
-                                allPlantings: ref.watch(plantingsListProvider),
-                                plants: ref.watch(plantsListProvider),
-                              ),
-                            ),
+              // Affiche chaque parcelle avec les actions intégrées
+              ...gardenBeds.map((bed) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: GardenBedCard(
+                    gardenBed: bed,
+                    onTap: () {
+                      // Si tu as une page de détail de parcelle, naviguer
+                      context.push('/garden/${garden.id}/beds/${bed.id}/detail',
+                          extra: bed.name);
+                    },
+                    onEdit: () async {
+                      // Ouvrir le même dialog en mode édition
+                      final result = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => CreateGardenBedDialog(
+                            gardenId: garden.id, gardenBed: bed),
+                      );
+                      if (result == true) {
+                        await ref
+                            .read(gardenBedProvider.notifier)
+                            .refresh(garden.id);
+                      }
+                    },
+                    onDelete: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (dctx) => AlertDialog(
+                          title: Text('Supprimer la parcelle'),
+                          content: Text(
+                              'Êtes-vous sûr de vouloir supprimer "${bed.name}" ? Cette action est irréversible.'),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.of(dctx).pop(false),
+                                child: const Text('Annuler')),
+                            FilledButton(
+                                onPressed: () => Navigator.of(dctx).pop(true),
+                                child: const Text('Supprimer')),
                           ],
                         ),
-                      ),
-                    )),
-
-                // Bouton "Voir toutes" si plus de 3 parcelles
-                if (gardenBeds.length > 3)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: TextButton(
-                      onPressed: () {
-                        context.push('/garden/${garden.id}/beds',
-                            extra: garden.name);
-                      },
-                      child: Text(
-                          'Voir toutes les parcelles (${gardenBeds.length})'),
+                      );
+                      if (confirmed == true) {
+                        final success = await ref
+                            .read(gardenBedProvider.notifier)
+                            .deleteGardenBed(bed.id);
+                        if (success && context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Parcelle supprimée')));
+                          await ref
+                              .read(gardenBedProvider.notifier)
+                              .refresh(garden.id);
+                        } else if (context.mounted) {
+                          final err = ref.read(gardenBedProvider).error ??
+                              'Erreur lors de la suppression';
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(err)));
+                        }
+                      }
+                    },
+                    extraContent: GerminationPreview(
+                      gardenBed: bed,
+                      allPlantings:
+                          ref.watch(plantingProvider.notifier).state.plantings,
+                      plants: ref.watch(plantsListProvider),
+                      forceRefresh: true,
                     ),
                   ),
-              ],
-            ),
-        ],
-      ),
+                );
+              }).toList(),
+            ],
+          ),
+      ],
     );
   }
 
