@@ -97,7 +97,7 @@ flutter:
     - assets/images/icons/
     - assets/images/backgrounds/
     - assets/images/social/
-    - assets/images/legumes
+    - assets/images/legumes/
     - .env
   
   fonts:
