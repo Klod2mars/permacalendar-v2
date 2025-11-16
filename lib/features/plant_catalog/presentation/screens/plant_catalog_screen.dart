@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Modèle PlantFreezed
@@ -41,6 +42,29 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       setState(() {
         // Le setState déclenche build(), qui lira le provider et recalculera la liste filtrée.
       });
+    });
+
+    // FORCER le chargement du provider si nécessaire (comportement attendu :
+    // le catalogue est déjà peuplé quand on ouvre l'écran).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        final current = ref.read(plantsListProvider);
+        if (kDebugMode) {
+          debugPrint(
+              'PlantCatalogScreen.initState: providerPlants.count = ${current.length}');
+        }
+        if (current.isEmpty) {
+          if (kDebugMode) {
+            debugPrint('PlantCatalogScreen: triggering loadPlants()...');
+          }
+          ref.read(plantCatalogProvider.notifier).loadPlants();
+        }
+      } catch (e, st) {
+        if (kDebugMode) {
+          debugPrint(
+              'PlantCatalogScreen: erreur lors du check/loadPlants: $e\n$st');
+        }
+      }
     });
   }
 
