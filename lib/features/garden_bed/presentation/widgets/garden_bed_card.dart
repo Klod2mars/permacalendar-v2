@@ -1,9 +1,11 @@
+// lib/features/garden_bed/presentation/widgets/garden_bed_card.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../../core/models/garden_bed.dart';
 import '../../../../core/models/planting.dart';
+import '../../../../core/utils/planting_utils.dart';
 import '../../../planting/providers/planting_provider.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 
@@ -27,11 +29,11 @@ class GardenBedCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
-    /// 🔍 1. Récupérer plantations et catalogue
+    // Providers pour réactivité
     final allPlantings = ref.watch(plantingsListProvider);
     final plantsCatalog = ref.watch(plantsListProvider);
 
-    /// 🔍 2. Trouver la plantation active (sans firstWhere)
+    // Trouver la plantation active pour cette parcelle (la plus récente)
     Planting? activePlanting;
     for (final p in allPlantings) {
       if (p.gardenBedId == gardenBed.id && p.isActive) {
@@ -40,18 +42,18 @@ class GardenBedCard extends ConsumerWidget {
       }
     }
 
-    /// 🔍 3. Trouver la plante liée
+    // Trouver la plante liée dans le catalogue (si présente)
     dynamic plant;
     if (activePlanting != null) {
       for (final pl in plantsCatalog) {
-        if (pl.id == activePlanting!.plantId) {
+        if (pl.id == activePlanting.plantId) {
           plant = pl;
           break;
         }
       }
     }
 
-    /// 🔍 4. Trouver l’image dans metadata
+    // Récupérer l'image depuis metadata
     String? imagePath;
     if (plant != null && plant.metadata != null) {
       final meta = plant.metadata!;
@@ -60,7 +62,15 @@ class GardenBedCard extends ConsumerWidget {
           meta['photo'] ??
           meta['image_url'] ??
           meta['imageUrl'];
+      if (imagePath != null &&
+          !imagePath.startsWith('http') &&
+          !imagePath.startsWith('assets/')) {
+        imagePath = 'assets/images/legumes/$imagePath';
+      }
     }
+
+    // Fallback d'image
+    final fallbackImage = 'assets/images/legumes/default.png';
 
     return CustomCard(
       child: InkWell(
@@ -73,26 +83,31 @@ class GardenBedCard extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  /// 🖼 Image de la plante ou icône
+                  // Image (vignette) ou icône
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: (imagePath != null)
+                    child: imagePath != null
                         ? Image.asset(
                             imagePath,
-                            width: 56,
-                            height: 56,
+                            width: 64,
+                            height: 64,
                             fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Image.asset(
+                              fallbackImage,
+                              width: 64,
+                              height: 64,
+                              fit: BoxFit.cover,
+                            ),
                           )
-                        : Icon(
-                            Icons.grass,
-                            size: 48,
-                            color: theme.colorScheme.primary,
+                        : Image.asset(
+                            fallbackImage,
+                            width: 64,
+                            height: 64,
+                            fit: BoxFit.cover,
                           ),
                   ),
-
-                  const SizedBox(width: 16),
-
-                  /// 📝 Texte principal
+                  const SizedBox(width: 12),
+                  // Texte principal + progression si présente
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,29 +125,38 @@ class GardenBedCard extends ConsumerWidget {
                             color: theme.colorScheme.primary,
                           ),
                         ),
-
-                        /// 🌱 Culture active affichée
                         if (activePlanting != null) ...[
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 8),
                           Text(
-                            "${plant?.commonName ?? plant?.id ?? 'Culture'} — "
-                            "Semé le ${activePlanting!.plantedDate.day}/${activePlanting!.plantedDate.month}",
+                            "${plant?.commonName ?? plant?.id ?? activePlanting.plantName} — Semé le ${activePlanting.plantedDate.day}/${activePlanting.plantedDate.month}",
                             style: theme.textTheme.bodySmall,
                           ),
+                          const SizedBox(height: 6),
+                          Builder(builder: (ctx) {
+                            final progress =
+                                computePlantingProgress(activePlanting!);
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                LinearProgressIndicator(value: progress),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '${(progress * 100).toStringAsFixed(0)}% vers début récolte',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
                         ],
                       ],
                     ),
                   ),
-
-                  /// 🌾 Bouton récolte si culture active
+                  // Bouton récolte (visible quand la plantation existe) :
                   if (activePlanting != null)
-                    IconButton(
-                      icon: const Icon(Icons.local_florist),
-                      color: theme.colorScheme.primary,
-                      onPressed: onEdit,
-                    ),
-
-                  /// ⋮ Menu contextuel
+                    _buildHarvestOrEditButton(context, ref, activePlanting),
+                  // Menu contextuel
                   PopupMenuButton<String>(
                     onSelected: (value) {
                       if (value == 'edit' && onEdit != null) onEdit!();
@@ -140,22 +164,16 @@ class GardenBedCard extends ConsumerWidget {
                     },
                     itemBuilder: (context) => [
                       const PopupMenuItem(
-                        value: 'edit',
-                        child: Text('Modifier'),
-                      ),
+                          value: 'edit', child: Text('Modifier')),
                       const PopupMenuItem(
                         value: 'delete',
-                        child: Text(
-                          'Supprimer',
-                          style: TextStyle(color: Colors.red),
-                        ),
+                        child: Text('Supprimer',
+                            style: TextStyle(color: Colors.red)),
                       ),
                     ],
                   ),
                 ],
               ),
-
-              /// Contenu additionnel (germination preview)
               if (extraContent != null) ...[
                 const SizedBox(height: 12),
                 extraContent!,
@@ -163,6 +181,110 @@ class GardenBedCard extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildHarvestOrEditButton(
+      BuildContext context, WidgetRef ref, Planting active) {
+    final theme = Theme.of(context);
+    final progress = computePlantingProgress(active);
+    final bool inHarvestWindow = active.isInHarvestPeriod || progress >= 1.0;
+
+    if (!inHarvestWindow) {
+      // Afficher le bouton d'édition (existant)
+      return IconButton(
+        icon: const Icon(Icons.local_florist),
+        color: theme.colorScheme.primary,
+        onPressed: onEdit,
+      );
+    }
+
+    // Afficher bouton récolte (vert) et ouvrir un dialogue pour enregistrer la récolte
+    return IconButton(
+      tooltip: 'Récolter',
+      icon: const Icon(Icons.agriculture),
+      color: Colors.green,
+      onPressed: () => _showQuickHarvestDialog(context, ref, active),
+    );
+  }
+
+  void _showQuickHarvestDialog(
+      BuildContext context, WidgetRef ref, Planting planting) {
+    final _quantityController = TextEditingController();
+    final _notesController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (dctx) => AlertDialog(
+        title: Text('Récolte: ${planting.plantName}'),
+        content: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _quantityController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration:
+                    const InputDecoration(labelText: 'Quantité (optionnel)'),
+                validator: (v) {
+                  if (v != null && v.trim().isNotEmpty) {
+                    final d = double.tryParse(v.trim().replaceAll(',', '.'));
+                    if (d == null || d < 0) return 'Quantité invalide';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _notesController,
+                decoration:
+                    const InputDecoration(labelText: 'Notes (optionnel)'),
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(dctx).pop(),
+              child: const Text('Annuler')),
+          FilledButton(
+            onPressed: () async {
+              if (!_formKey.currentState!.validate()) return;
+              final raw = _quantityController.text.trim();
+              final double? qty = raw.isEmpty
+                  ? null
+                  : double.tryParse(raw.replaceAll(',', '.'));
+              final notes = _notesController.text.trim().isEmpty
+                  ? null
+                  : _notesController.text.trim();
+
+              Navigator.of(dctx).pop();
+
+              // Appel au provider pour enregistrer la récolte (sans changer le statut)
+              final success = await ref
+                  .read(plantingProvider.notifier)
+                  .recordHarvest(planting.id, DateTime.now(),
+                      quantity: qty, notes: notes);
+
+              if (success && context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Récolte enregistrée')),
+                );
+              } else if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Erreur lors de l\'enregistrement')),
+                );
+              }
+            },
+            child: const Text('Enregistrer'),
+          ),
+        ],
       ),
     );
   }
