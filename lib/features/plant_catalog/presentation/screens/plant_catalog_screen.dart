@@ -80,6 +80,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      // Empêche le redimensionnement automatique lorsque le clavier apparaît.
+      // Nous gérons le padding bas via MediaQuery.viewInsets pour préserver
+      // au moins la première carte visible lorsque le clavier est ouvert.
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(widget.isSelectionMode
             ? 'Sélectionner une plante'
@@ -120,6 +124,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         children: [
           _buildSearchBar(theme),
           _buildFilterChips(theme),
+          // Le Grid est dans un Expanded — le padding bas est géré dans _buildPlantGrid
           Expanded(child: _buildPlantGrid(theme)),
         ],
       ),
@@ -234,13 +239,13 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       // Liste des plantes
       var filteredPlants = plantCatalogState.plants;
 
-      // Filtre recherche
-      if (_searchQuery.isNotEmpty) {
-        final query = _searchQuery.toLowerCase();
+      // Filtre recherche (seulement si non vide après trim)
+      if (_searchQuery.trim().isNotEmpty) {
+        final query = _normalize(_searchQuery);
         filteredPlants = filteredPlants.where((plant) {
-          return plant.commonName.toLowerCase().contains(query) ||
-              plant.scientificName.toLowerCase().contains(query) ||
-              plant.family.toLowerCase().contains(query);
+          return _normalize(plant.commonName).contains(query) ||
+              _normalize(plant.scientificName).contains(query) ||
+              _normalize(plant.family).contains(query);
         }).toList();
       }
 
@@ -262,19 +267,23 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         );
       }
 
-      return GridView.builder(
-        padding: const EdgeInsets.all(16),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1, // UNE plante par ligne
-          childAspectRatio: 0.6,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
+      // Adapter le padding bas au clavier pour éviter que le Grid soit masqué.
+      return Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: GridView.builder(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1, // UNE plante par ligne
+            childAspectRatio: 0.6,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
+          itemCount: filteredPlants.length,
+          itemBuilder: (context, index) {
+            final plant = filteredPlants[index];
+            return _buildPlantCard(plant, theme, context);
+          },
         ),
-        itemCount: filteredPlants.length,
-        itemBuilder: (context, index) {
-          final plant = filteredPlants[index];
-          return _buildPlantCard(plant, theme, context);
-        },
       );
     });
   }
@@ -316,6 +325,48 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return seasonCounts.entries.reduce((a, b) => a.value > b.value ? a : b).key;
   }
 
+  /// Normalise une chaîne pour la recherche :
+  /// - minuscules
+  /// - trim
+  /// - suppression simple des accents les plus courants (français/latin)
+  String _normalize(String input) {
+    var s = input.toLowerCase().trim();
+    if (s.isEmpty) return s;
+    const accents = {
+      'à': 'a',
+      'â': 'a',
+      'ä': 'a',
+      'á': 'a',
+      'ã': 'a',
+      'å': 'a',
+      'ç': 'c',
+      'è': 'e',
+      'é': 'e',
+      'ê': 'e',
+      'ë': 'e',
+      'ì': 'i',
+      'í': 'i',
+      'î': 'i',
+      'ï': 'i',
+      'ò': 'o',
+      'ó': 'o',
+      'ô': 'o',
+      'õ': 'o',
+      'ö': 'o',
+      'ù': 'u',
+      'ú': 'u',
+      'û': 'u',
+      'ü': 'u',
+      'ý': 'y',
+      'ÿ': 'y',
+      'ñ': 'n'
+    };
+    accents.forEach((k, v) {
+      s = s.replaceAll(k, v);
+    });
+    return s;
+  }
+
   Widget _buildPlantCard(
       PlantFreezed plant, ThemeData theme, BuildContext context) {
     final sowingSeason = _getSeasonFromMonths(plant.sowingMonths);
@@ -343,7 +394,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                 (plant.metadata['imageAsset'] as String?);
 
             return Container(
-              height: 220,
+              // Image légèrement réduite pour mieux tenir lorsque l'espace vertical est réduit.
+              height: 180,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: theme.colorScheme.surfaceContainerHighest,
@@ -359,11 +411,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                         ? Image.network(imagePath,
                             fit: BoxFit.cover,
                             width: double.infinity,
-                            height: 220)
+                            height: 180)
                         : Image.asset('assets/images/legumes/$imagePath',
                             fit: BoxFit.cover,
                             width: double.infinity,
-                            height: 220))
+                            height: 180))
                     : Center(
                         child: Icon(
                           Icons.eco,
