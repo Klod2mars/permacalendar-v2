@@ -70,7 +70,31 @@ class GardenBedCard extends ConsumerWidget {
     }
 
     // Fallback d'image
-    final\ String\ fallbackImage\ =\ 'assets/images/legumes/default\.png';\r\r\n\r\r\n\ \ Widget\ _buildFallbackImage\(BuildContext\ ctx,\ \{double\ width\ =\ 64,\ double\ height\ =\ 64,\ BoxFit\ fit\ =\ BoxFit\.cover}\)\ \{\r\r\n\ \ \ \ return\ Image\.asset\(\r\r\n\ \ \ \ \ \ fallbackImage,\r\r\n\ \ \ \ \ \ width:\ width,\r\r\n\ \ \ \ \ \ height:\ height,\r\r\n\ \ \ \ \ \ fit:\ fit,\r\r\n\ \ \ \ \ \ errorBuilder:\ \(context,\ error,\ stackTrace\)\ \{\r\r\n\ \ \ \ \ \ \ \ //\ Ultimate\ fallback:\ simple\ icon\ so\ we\ never\ throw\ at\ runtime\ when\ asset\ is\ missing\.\r\r\n\ \ \ \ \ \ \ \ return\ Container\(\r\r\n\ \ \ \ \ \ \ \ \ \ width:\ width,\r\r\n\ \ \ \ \ \ \ \ \ \ height:\ height,\r\r\n\ \ \ \ \ \ \ \ \ \ color:\ Colors\.grey\.shade200,\r\r\n\ \ \ \ \ \ \ \ \ \ alignment:\ Alignment\.center,\r\r\n\ \ \ \ \ \ \ \ \ \ child:\ Icon\(Icons\.eco,\ size:\ \(width\ <\ height\ \?\ width\ :\ height\)\ \*\ 0\.6,\ color:\ Theme\.of\(context\)\.colorScheme\.primary\),\r\r\n\ \ \ \ \ \ \ \ \);\r\r\n\ \ \ \ \ \ },\r\r\n\ \ \ \ \);\r\r\n\ \ }
+    const String fallbackImage = 'assets/images/legumes/default.png';
+
+    Widget _buildFallbackImage(BuildContext ctx,
+        {double width = 64, double height = 64, BoxFit fit = BoxFit.cover}) {
+      return Image.asset(
+        fallbackImage,
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (context, error, stackTrace) {
+          // Ultimate fallback: simple icon so we never throw at runtime when asset is missing.
+          return Container(
+            width: width,
+            height: height,
+            color: Colors.grey.shade200,
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.eco,
+              size: (width < height ? width : height) * 0.6,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          );
+        },
+      );
+    }
 
     return CustomCard(
       child: InkWell(
@@ -92,7 +116,11 @@ class GardenBedCard extends ConsumerWidget {
                             width: 64,
                             height: 64,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => _buildFallbackImage(context, width: 64, height: 64, fit: BoxFit.cover),
+                            errorBuilder: (_, __, ___) => _buildFallbackImage(
+                                context,
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover),
                           )
                         : Image.asset(
                             fallbackImage,
@@ -245,8 +273,9 @@ class GardenBedCard extends ConsumerWidget {
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.of(dctx).pop(),
-              child: const Text('Annuler')),
+            onPressed: () => Navigator.of(dctx).pop(),
+            child: const Text('Annuler'),
+          ),
           FilledButton(
             onPressed: () async {
               if (!_formKey.currentState!.validate()) return;
@@ -284,4 +313,3 @@ class GardenBedCard extends ConsumerWidget {
     );
   }
 }
-
