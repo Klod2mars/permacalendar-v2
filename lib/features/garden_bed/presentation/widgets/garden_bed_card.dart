@@ -73,7 +73,7 @@ class GardenBedCard extends ConsumerWidget {
     const String fallbackImage = 'assets/images/legumes/default.png';
 
     Widget _buildFallbackImage(BuildContext ctx,
-        {double width = 64, double height = 64, BoxFit fit = BoxFit.cover}) {
+        {double width = 56, double height = 56, BoxFit fit = BoxFit.contain}) {
       return Image.asset(
         fallbackImage,
         width: width,
@@ -111,22 +111,30 @@ class GardenBedCard extends ConsumerWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: imagePath != null
-                        ? Image.asset(
-                            imagePath,
-                            width: 64,
-                            height: 64,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => _buildFallbackImage(
-                                context,
-                                width: 64,
-                                height: 64,
-                                fit: BoxFit.cover),
+                        ? SizedBox(
+                            width: 56,
+                            height: 56,
+                            child: Image.asset(
+                              imagePath,
+                              width: 56,
+                              height: 56,
+                              fit: BoxFit.contain,
+                              errorBuilder: (_, __, ___) => _buildFallbackImage(
+                                  context,
+                                  width: 56,
+                                  height: 56,
+                                  fit: BoxFit.contain),
+                            ),
                           )
-                        : Image.asset(
-                            fallbackImage,
-                            width: 64,
-                            height: 64,
-                            fit: BoxFit.cover,
+                        : SizedBox(
+                            width: 56,
+                            height: 56,
+                            child: Image.asset(
+                              fallbackImage,
+                              width: 56,
+                              height: 56,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                   ),
                   const SizedBox(width: 12),
