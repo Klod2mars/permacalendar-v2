@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿// lib/features/garden_bed/presentation/widgets/create_garden_bed_dialog.dart
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,8 +8,8 @@ import '../../../../shared/widgets/custom_button.dart';
 import '../../providers/garden_bed_provider.dart';
 import '../../../../core/services/activity_observer_service.dart';
 import '../../../../core/events/garden_event_bus.dart';
-import '../../../../core/events/garden_event.dart';
-import '../../../../core/storage/garden_boxes.dart';
+import '../../../../core/events/garden_events.dart';
+import '../../../../core/data/hive/garden_boxes.dart';
 
 class CreateGardenBedDialog extends ConsumerStatefulWidget {
   final String gardenId;
@@ -179,7 +180,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
                       // Soil type dropdown
                       DropdownButtonFormField<String>(
-                        initialValue: _selectedSoilType,
+                        value: _selectedSoilType,
                         decoration: const InputDecoration(
                           labelText: 'Type de sol *',
                           border: OutlineInputBorder(),
@@ -209,7 +210,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
                       // Exposure dropdown
                       DropdownButtonFormField<String>(
-                        initialValue: _selectedExposure,
+                        value: _selectedExposure,
                         decoration: const InputDecoration(
                           labelText: 'Exposition *',
                           border: OutlineInputBorder(),
@@ -380,8 +381,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           );
         } catch (_) {}
 
-        // Forcer refresh du provider family
-        ref.invalidate(gardenBedProvider(updatedBed.gardenId));
+        // Forcer refresh du provider global
+        ref.invalidate(gardenBedProvider);
 
         success = true;
       } else {
@@ -425,8 +426,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           );
         } catch (_) {}
 
-        // Forcer refresh
-        ref.invalidate(gardenBedProvider(newBed.gardenId));
+        // Forcer refresh du provider global
+        ref.invalidate(gardenBedProvider);
 
         success = true;
       }
@@ -447,42 +448,13 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 ),
               ],
             ),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.error, color: Colors.white, size: 20),
-                SizedBox(width: 8),
-                Expanded(child: Text('Erreur lors de la sauvegarde')),
-              ],
-            ),
-            backgroundColor: Colors.red,
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 4),
           ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                const Icon(Icons.error, color: Colors.white, size: 20),
-                const SizedBox(width: 8),
-                Expanded(child: Text('Erreur: $e')),
-              ],
-            ),
-            backgroundColor: Colors.red,
-            behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 4),
-          ),
+          SnackBar(content: Text('Erreur: $e')),
         );
       }
     } finally {
