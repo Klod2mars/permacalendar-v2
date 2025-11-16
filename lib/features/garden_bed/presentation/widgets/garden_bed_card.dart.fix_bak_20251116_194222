@@ -94,7 +94,12 @@ class GardenBedCard extends ConsumerWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => _buildFallbackImage(context, width: 64, height: 64, fit: BoxFit.cover),
                           )
-                        : _buildFallbackImage(context, width: 64, height: 64, fit: BoxFit.cover),
+                        : Image.asset(
+                            fallbackImage,
+                            width: 64,
+                            height: 64,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   const SizedBox(width: 12),
                   // Texte principal + progression si présente
@@ -279,5 +284,4 @@ class GardenBedCard extends ConsumerWidget {
     );
   }
 }
-
 
