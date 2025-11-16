@@ -5,6 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/garden_bed.dart';
 import '../../../../shared/widgets/custom_button.dart';
 import '../../providers/garden_bed_provider.dart';
+import '../../../../core/services/activity_observer_service.dart';
+import '../../../../core/events/garden_event_bus.dart';
+import '../../../../core/events/garden_event.dart';
+import '../../../../core/storage/garden_boxes.dart';
 
 class CreateGardenBedDialog extends ConsumerStatefulWidget {
   final String gardenId;
@@ -334,7 +338,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
     try {
       final size = double.parse(_sizeController.text);
 
-      bool success;
+      bool success = false;
+
       if (widget.gardenBed != null) {
         // Update existing garden bed
         final updatedBed = widget.gardenBed!.copyWith(
@@ -347,9 +352,38 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           isActive: _isActive,
         );
 
-        success = await ref
-            .read(gardenBedProvider.notifier)
-            .updateGardenBed(updatedBed);
+        // Persister dans Hive (sanctuaire)
+        await GardenBoxes.saveGardenBed(updatedBed);
+
+        // Tracker
+        await ActivityObserverService().captureGardenBedUpdated(
+          gardenBedId: updatedBed.id,
+          gardenBedName: updatedBed.name,
+          gardenId: updatedBed.gardenId,
+          area: updatedBed.sizeInSquareMeters,
+          soilType: updatedBed.soilType,
+          exposure: updatedBed.exposure,
+        );
+
+        // Émettre event
+        try {
+          GardenEventBus().emit(
+            GardenEvent.gardenContextUpdated(
+              gardenId: updatedBed.gardenId,
+              timestamp: DateTime.now(),
+              metadata: {
+                'action': 'bed_updated',
+                'bedId': updatedBed.id,
+                'bedName': updatedBed.name,
+              },
+            ),
+          );
+        } catch (_) {}
+
+        // Forcer refresh du provider family
+        ref.invalidate(gardenBedProvider(updatedBed.gardenId));
+
+        success = true;
       } else {
         // Create new garden bed
         final newBed = GardenBed(
@@ -363,31 +397,53 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           isActive: _isActive,
         );
 
-        success =
-            await ref.read(gardenBedProvider.notifier).createGardenBed(newBed);
+        // Persister
+        await GardenBoxes.saveGardenBed(newBed);
+
+        // Tracker
+        await ActivityObserverService().captureGardenBedCreated(
+          gardenBedId: newBed.id,
+          gardenBedName: newBed.name,
+          gardenId: newBed.gardenId,
+          area: newBed.sizeInSquareMeters,
+          soilType: newBed.soilType,
+          exposure: newBed.exposure,
+        );
+
+        // Émettre event
+        try {
+          GardenEventBus().emit(
+            GardenEvent.gardenContextUpdated(
+              gardenId: newBed.gardenId,
+              timestamp: DateTime.now(),
+              metadata: {
+                'action': 'bed_created',
+                'bedId': newBed.id,
+                'bedName': newBed.name,
+              },
+            ),
+          );
+        } catch (_) {}
+
+        // Forcer refresh
+        ref.invalidate(gardenBedProvider(newBed.gardenId));
+
+        success = true;
       }
 
       if (success && mounted) {
-        // Retourner true pour indiquer le succès à l'écran parent
         Navigator.of(context).pop(true);
 
-        // Afficher un message de succès avec une icône
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Row(
               children: [
-                const Icon(
-                  Icons.check_circle,
-                  color: Colors.white,
-                  size: 20,
-                ),
+                const Icon(Icons.check_circle, color: Colors.white, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
-                    widget.gardenBed != null
-                        ? 'Parcelle modifiée avec succès'
-                        : 'Parcelle Créée avec succès',
-                  ),
+                  child: Text(widget.gardenBed != null
+                      ? 'Parcelle modifiée avec succès'
+                      : 'Parcelle créée avec succès'),
                 ),
               ],
             ),
@@ -401,15 +457,9 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           const SnackBar(
             content: Row(
               children: [
-                Icon(
-                  Icons.error,
-                  color: Colors.white,
-                  size: 20,
-                ),
+                Icon(Icons.error, color: Colors.white, size: 20),
                 SizedBox(width: 8),
-                Expanded(
-                  child: Text('Erreur lors de la sauvegarde'),
-                ),
+                Expanded(child: Text('Erreur lors de la sauvegarde')),
               ],
             ),
             backgroundColor: Colors.red,
@@ -424,15 +474,9 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(
-                  Icons.error,
-                  color: Colors.white,
-                  size: 20,
-                ),
+                const Icon(Icons.error, color: Colors.white, size: 20),
                 const SizedBox(width: 8),
-                Expanded(
-                  child: Text('Erreur: $e'),
-                ),
+                Expanded(child: Text('Erreur: $e')),
               ],
             ),
             backgroundColor: Colors.red,
