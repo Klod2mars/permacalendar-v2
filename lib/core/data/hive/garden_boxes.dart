@@ -1,10 +1,15 @@
-﻿import 'package:hive_flutter/hive_flutter.dart';
+﻿// lib/core/data/hive/garden_boxes.dart
+import 'dart:developer' as developer;
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../models/garden.dart';
 import '../../models/garden_bed.dart';
 import '../../models/planting.dart';
 
 class GardenBoxes {
+  /// Activer pour debug ponctuel. Par défaut false pour éviter le flood de logs.
+  static bool verboseLogging = false;
+
   static const String _gardensBoxName = 'gardens';
   static const String _gardenBedsBoxName = 'garden_beds';
   static const String _plantingsBoxName = 'plantings';
@@ -42,9 +47,11 @@ class GardenBoxes {
       _gardenBedsBox = await Hive.openBox<GardenBed>(_gardenBedsBoxName);
       _plantingsBox = await Hive.openBox<Planting>(_plantingsBoxName);
 
-      print('[GardenBoxes] Boxes initialisées avec succès');
+      if (verboseLogging)
+        developer.log('[GardenBoxes] Boxes initialisées avec succès');
     } catch (e) {
-      print('[GardenBoxes] Erreur lors de l\'initialisation: $e');
+      if (verboseLogging)
+        developer.log('[GardenBoxes] Erreur lors de l\'initialisation: $e');
       rethrow;
     }
   }
@@ -108,12 +115,16 @@ class GardenBoxes {
     final allBeds = gardenBeds.values.toList();
     final filteredBeds =
         allBeds.where((bed) => bed.gardenId == gardenId).toList();
-    print(
-        '[GardenBoxes] getGardenBeds($gardenId): ${allBeds.length} parcelles totales, ${filteredBeds.length} pour ce jardin');
-    for (final bed in filteredBeds) {
-      print(
-          '[GardenBoxes]   - Parcelle: ${bed.name} (ID: ${bed.id}, Jardin: ${bed.gardenId})');
+
+    if (verboseLogging) {
+      developer.log(
+          '[GardenBoxes] getGardenBeds($gardenId): ${allBeds.length} parcelles totales, ${filteredBeds.length} pour ce jardin');
+      for (final bed in filteredBeds) {
+        developer.log(
+            '[GardenBoxes]   - Parcelle: ${bed.name} (ID: ${bed.id}, Jardin: ${bed.gardenId})');
+      }
     }
+
     return filteredBeds;
   }
 
@@ -167,8 +178,9 @@ class GardenBoxes {
               gardenBedIds.contains(planting.gardenBedId) && planting.isActive)
           .toList();
     } catch (e) {
-      print(
-          '[GardenBoxes] Erreur lors de la récupération des plantations actives: $e');
+      if (verboseLogging)
+        developer.log(
+            '[GardenBoxes] Erreur lors de la récupération des plantations actives: $e');
       return [];
     }
   }
@@ -185,7 +197,8 @@ class GardenBoxes {
       bedPlantings.sort((a, b) => b.plantedDate.compareTo(a.plantedDate));
       return bedPlantings.first;
     } catch (e) {
-      print('[GardenBoxes] getActivePlantingForBed error: $e');
+      if (verboseLogging)
+        developer.log('[GardenBoxes] getActivePlantingForBed error: $e');
       return null;
     }
   }

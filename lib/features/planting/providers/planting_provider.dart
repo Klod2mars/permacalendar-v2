@@ -338,6 +338,100 @@ class PlantingNotifier extends Notifier<PlantingState> {
     }
   }
 
+  /// Enregistre une récolte pour une planting donnée.
+  /// Ne change PAS le statut de la plantation — on considère la récolte
+  /// comme un événement (historique) attaché à la plantation.
+  Future<bool> recordHarvest(
+    String plantingId,
+    DateTime harvestDate, {
+    double? quantity,
+    String? notes,
+  }) async {
+    try {
+      Planting? planting;
+      for (final p in state.plantings) {
+        if (p.id == plantingId) {
+          planting = p;
+          break;
+        }
+      }
+
+      if (planting == null) {
+        state = state.copyWith(error: 'Plantation non trouvée');
+        return false;
+      }
+
+      final Map<String, dynamic> meta =
+          Map<String, dynamic>.from(planting.metadata ?? {});
+
+      final List<Map<String, dynamic>> harvests = (meta['harvests'] as List?)
+              ?.map((e) => Map<String, dynamic>.from(e as Map))
+              .toList() ??
+          [];
+
+      harvests.add({
+        'date': harvestDate.toIso8601String(),
+        'quantity': quantity,
+        'notes': notes,
+      });
+
+      meta['harvests'] = harvests;
+
+      final updatedPlanting = planting.copyWith(metadata: meta);
+
+      // Persister
+      await GardenBoxes.savePlanting(updatedPlanting);
+
+      // Tracker / observer
+      final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
+      if (bed != null) {
+        await ActivityObserverService().captureHarvestCompleted(
+          plantingId: plantingId,
+          plantName: planting.plantName,
+          gardenBedId: planting.gardenBedId,
+          gardenBedName: bed.name,
+          gardenId: bed.gardenId,
+          quantity: quantity ?? planting.quantity.toDouble(),
+          unit: 'pièces',
+        );
+      }
+
+      // Émettre événement via GardenEventBus (silencieux si erreur)
+      try {
+        final bed2 = GardenBoxes.getGardenBedById(planting.gardenBedId);
+        if (bed2 != null) {
+          GardenEventBus().emit(
+            GardenEvent.plantingHarvested(
+              gardenId: bed2.gardenId,
+              plantingId: plantingId,
+              harvestYield: quantity ?? planting.quantity.toDouble(),
+              timestamp: harvestDate,
+              metadata: {
+                'plantName': planting.plantName,
+                'plantedDate': planting.plantedDate.toIso8601String(),
+                'notes': notes,
+              },
+            ),
+          );
+        }
+      } catch (e) {
+        // silencieux
+      }
+
+      // Mettre à jour l'état
+      final updatedPlantings = state.plantings
+          .map((p) => p.id == updatedPlanting.id ? updatedPlanting : p)
+          .toList();
+
+      state = state.copyWith(plantings: updatedPlantings, error: null);
+      return true;
+    } catch (e) {
+      state = state.copyWith(
+          error: 'Erreur lors de l\'enregistrement de la récolte: $e');
+      return false;
+    }
+  }
+
   // Harvest a planting
   Future<bool> harvestPlanting(String plantingId, DateTime harvestDate) async {
     try {
@@ -402,103 +496,6 @@ class PlantingNotifier extends Notifier<PlantingState> {
       return true;
     } catch (e) {
       state = state.copyWith(error: 'Erreur lors de la récolte: $e');
-      return false;
-    }
-  }
-
-  /// Enregistre une récolte pour une planting donnée.
-  /// Ne change PAS le statut de la plantation — on considère la récolte
-  /// comme un événement (historique) attaché à la plantation.
-  Future<bool> recordHarvest(
-    String plantingId,
-    DateTime harvestDate, {
-    double? quantity,
-    String? notes,
-  }) async {
-    try {
-      // Chercher la plantation dans l'état (safe, sans firstWhere(... orElse: ...))
-      Planting? planting;
-      for (final p in state.plantings) {
-        if (p.id == plantingId) {
-          planting = p;
-          break;
-        }
-      }
-
-      if (planting == null) {
-        state = state.copyWith(error: 'Plantation non trouvée');
-        return false;
-      }
-
-      // Construire / cloner metadata
-      final Map<String, dynamic> meta =
-          Map<String, dynamic>.from(planting.metadata ?? {});
-
-      final List<Map<String, dynamic>> harvests = (meta['harvests'] as List?)
-              ?.map((e) => Map<String, dynamic>.from(e as Map))
-              .toList() ??
-          [];
-
-      harvests.add({
-        'date': harvestDate.toIso8601String(),
-        'quantity': quantity,
-        'notes': notes,
-      });
-
-      meta['harvests'] = harvests;
-
-      final updatedPlanting = planting.copyWith(metadata: meta);
-
-      // Persister
-      await GardenBoxes.savePlanting(updatedPlanting);
-
-      // Tracker / observer (compatibilité avec ActivityObserverService)
-      final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
-      if (bed != null) {
-        await ActivityObserverService().captureHarvestCompleted(
-          plantingId: plantingId,
-          plantName: planting.plantName,
-          gardenBedId: planting.gardenBedId,
-          gardenBedName: bed.name,
-          gardenId: bed.gardenId,
-          quantity: quantity ?? planting.quantity.toDouble(),
-          unit: 'pièces',
-        );
-      }
-
-      // Émettre un événement GardenEvent similaire à la récolte (sans changer le statut)
-      try {
-        final bed2 = GardenBoxes.getGardenBedById(planting.gardenBedId);
-        if (bed2 != null) {
-          GardenEventBus().emit(
-            GardenEvent.plantingHarvested(
-              gardenId: bed2.gardenId,
-              plantingId: plantingId,
-              harvestYield: quantity ?? planting.quantity.toDouble(),
-              timestamp: harvestDate,
-              metadata: {
-                'plantName': planting.plantName,
-                'plantedDate': planting.plantedDate.toIso8601String(),
-                'notes': notes,
-              },
-            ),
-          );
-        }
-      } catch (e) {
-        // Ne pas échouer si l'événement ne passe pas
-        print('Erreur émission événement récolte GardenEventBus: $e');
-      }
-
-      // Mettre à jour l'état
-      final updatedPlantings = state.plantings
-          .map((p) => p.id == updatedPlanting.id ? updatedPlanting : p)
-          .toList();
-
-      state = state.copyWith(plantings: updatedPlantings, error: null);
-      return true;
-    } catch (e) {
-      state = state.copyWith(
-          error: 'Erreur lors de l\'enregistrement de la récolte: $e');
       return false;
     }
   }
