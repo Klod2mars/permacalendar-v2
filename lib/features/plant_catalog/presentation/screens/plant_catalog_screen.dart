@@ -1,33 +1,56 @@
+// lib/features/plant_catalog/presentation/screens/plant_catalog_screen.dart
+
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 
-import '../../domain/entities/plant_entity.dart';
-import '../../../../shared/widgets/custom_card.dart';
-import '../../../../shared/widgets/loading_widgets.dart';
-import '../../providers/plant_catalog_provider.dart';
-import 'plant_detail_screen.dart';
+// Ajustez le chemin selon votre architecture si nécessaire.
+// J'assume la présence d'une entité PlantFreezed dans ce package.
+import 'package:permacalendar/features/plant_catalog/domain/entities/plant_freezed.dart';
 
-class PlantCatalogScreen extends ConsumerStatefulWidget {
-  final bool isSelectionMode;
+/// Écran permettant de sélectionner une plante depuis une base interne.
+/// - Recherche normalisée (sans diacritiques, minuscule)
+/// - Affichage des images : asset / network / fallback
+class PlantCatalogScreen extends StatefulWidget {
+  /// Liste de plantes à afficher. Si vide, la grille sera vide.
+  final List<PlantFreezed> plants;
 
-  const PlantCatalogScreen({super.key, this.isSelectionMode = false});
+  /// Callback appelé lorsque l'utilisateur sélectionne une plante.
+  final void Function(PlantFreezed plant)? onPlantSelected;
+
+  const PlantCatalogScreen({
+    Key? key,
+    this.plants = const [],
+    this.onPlantSelected,
+  }) : super(key: key);
 
   @override
-  ConsumerState<PlantCatalogScreen> createState() => _PlantCatalogScreenState();
+  State<PlantCatalogScreen> createState() => _PlantCatalogScreenState();
 }
 
-class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
+class _PlantCatalogScreenState extends State<PlantCatalogScreen> {
   final TextEditingController _searchController = TextEditingController();
-
-  String _searchQuery = '';
+  late List<PlantFreezed> _allPlants;
+  late List<PlantFreezed> _filteredPlants;
 
   @override
   void initState() {
     super.initState();
-    // Charger les plantes après le rendu initial
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(plantCatalogProvider.notifier).loadPlants();
+    _allPlants = List<PlantFreezed>.from(widget.plants);
+    _filteredPlants = List<PlantFreezed>.from(_allPlants);
+
+    // Si vous voulez initialiser la recherche avec un texte déjà présent :
+    _searchController.addListener(() {
+      _onSearchChanged(_searchController.text);
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant PlantCatalogScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.plants != widget.plants) {
+      _allPlants = List<PlantFreezed>.from(widget.plants);
+      _applyFilter(_searchController.text);
+    }
   }
 
   @override
@@ -36,180 +59,19 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+  /// Normalisation pour la recherche : met en minuscules, retire
+  /// diacritiques simples et condense les espaces.
+  String _normalize(String? input) {
+    if (input == null) return '';
+    String s = input.toLowerCase().trim();
 
-    return Scaffold(
-      // Empêche le redimensionnement automatique lorsque le clavier apparaît.
-      // Nous gérons le padding bas via MediaQuery.viewInsets pour préserver
-      // au moins la première carte visible lorsque le clavier est ouvert.
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(widget.isSelectionMode
-            ? 'Sélectionner une plante'
-            : 'Catalogue des plantes'),
-        centerTitle: true,
-        backgroundColor: theme.colorScheme.primaryContainer,
-        foregroundColor: theme.colorScheme.onPrimaryContainer,
-        actions: widget.isSelectionMode
-            ? null
-            : [
-                PopupMenuButton<String>(
-                  icon: const Icon(Icons.more_vert),
-                  onSelected: (value) async {
-                    switch (value) {
-                      case 'refresh':
-                        await ref
-                            .read(plantCatalogProvider.notifier)
-                            .loadPlants();
-                        break;
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'refresh',
-                      child: Row(
-                        children: [
-                          Icon(Icons.refresh),
-                          SizedBox(width: 8),
-                          Text('Actualiser'),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-      ),
-      body: Column(
-        children: [
-          _buildSearchBar(theme),
-          // On a retiré le module "Saison de plantation".
-          Expanded(child: _buildPlantGrid(theme)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSearchBar(ThemeData theme) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: TextField(
-        controller: _searchController,
-        decoration: InputDecoration(
-          hintText: 'Rechercher par nom, nom scientifique ou famille...',
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: _searchQuery.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    _searchController.clear();
-                    setState(() {
-                      _searchQuery = '';
-                    });
-                  },
-                )
-              : null,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          filled: true,
-          fillColor: theme.colorScheme.surfaceContainerHighest,
-        ),
-        onChanged: (value) {
-          setState(() {
-            _searchQuery = value;
-          });
-        },
-      ),
-    );
-  }
-
-  Widget _buildPlantGrid(ThemeData theme) {
-    return Consumer(builder: (context, ref, child) {
-      final plantCatalogState = ref.watch(plantCatalogProvider);
-
-      if (plantCatalogState.isLoading) {
-        return const Center(child: CircularProgressIndicator());
-      }
-
-      if (plantCatalogState.error != null) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.error, size: 64, color: theme.colorScheme.error),
-              const SizedBox(height: 16),
-              Text(
-                plantCatalogState.error!,
-                style: theme.textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () =>
-                    ref.read(plantCatalogProvider.notifier).loadPlants(),
-                child: const Text('Réessayer'),
-              ),
-            ],
-          ),
-        );
-      }
-
-      // Liste des plantes
-      var filteredPlants = plantCatalogState.plants;
-
-      // Filtre recherche (seulement si non vide après trim)
-      if (_searchQuery.trim().isNotEmpty) {
-        final query = _normalize(_searchQuery);
-        filteredPlants = filteredPlants.where((plant) {
-          return _normalize(plant.commonName).contains(query) ||
-              _normalize(plant.scientificName).contains(query) ||
-              _normalize(plant.family).contains(query);
-        }).toList();
-      }
-
-      if (filteredPlants.isEmpty) {
-        return const EmptyStateWidget(
-          title: 'Aucune plante trouvée',
-          subtitle: 'Essayez de modifier vos critères de recherche ou filtres.',
-          icon: Icons.search_off,
-        );
-      }
-
-      // Adapter le padding bas au clavier pour éviter que le Grid soit masqué.
-      return Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: GridView.builder(
-          padding: const EdgeInsets.all(16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // UNE plante par ligne
-            childAspectRatio: 0.6,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemCount: filteredPlants.length,
-          itemBuilder: (context, index) {
-            final plant = filteredPlants[index];
-            return _buildPlantCard(plant, theme, context);
-          },
-        ),
-      );
-    });
-  }
-
-  /// Normalise une chaîne pour la recherche :
-  /// - minuscules
-  /// - trim
-  /// - suppression simple des accents les plus courants (français/latin)
-  String _normalize(String input) {
-    var s = input.toLowerCase().trim();
-    if (s.isEmpty) return s;
-    const accents = {
+    // Mappage de base pour les diacritiques français et courants
+    const Map<String, String> diacritics = {
       'à': 'a',
-      'â': 'a',
-      'ä': 'a',
       'á': 'a',
+      'â': 'a',
       'ã': 'a',
+      'ä': 'a',
       'å': 'a',
       'ç': 'c',
       'è': 'e',
@@ -220,6 +82,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       'í': 'i',
       'î': 'i',
       'ï': 'i',
+      'ñ': 'n',
       'ò': 'o',
       'ó': 'o',
       'ô': 'o',
@@ -231,120 +94,281 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       'ü': 'u',
       'ý': 'y',
       'ÿ': 'y',
-      'ñ': 'n'
+      // Majuscules - rarement nécessaires après toLowerCase, mais on les met pour sûreté
+      'À': 'a',
+      'Á': 'a',
+      'Â': 'a',
+      'Ã': 'a',
+      'Ä': 'a',
+      'Å': 'a',
+      'Ç': 'c',
+      'È': 'e',
+      'É': 'e',
+      'Ê': 'e',
+      'Ë': 'e',
+      'Ì': 'i',
+      'Í': 'i',
+      'Î': 'i',
+      'Ï': 'i',
+      'Ñ': 'n',
+      'Ò': 'o',
+      'Ó': 'o',
+      'Ô': 'o',
+      'Õ': 'o',
+      'Ö': 'o',
+      'Ù': 'u',
+      'Ú': 'u',
+      'Û': 'u',
+      'Ü': 'u',
+      'Ý': 'y',
+      'Ÿ': 'y',
     };
-    accents.forEach((k, v) {
+
+    diacritics.forEach((k, v) {
       s = s.replaceAll(k, v);
     });
+
+    // Remplacer plusieurs espaces par un seul
+    s = s.replaceAll(RegExp(r'\s+'), ' ');
     return s;
   }
 
-  Widget _buildPlantCard(
-      PlantFreezed plant, ThemeData theme, BuildContext context) {
-    return CustomCard(
+  void _onSearchChanged(String query) {
+    _applyFilter(query);
+  }
+
+  void _applyFilter(String query) {
+    final normalizedQuery = _normalize(query);
+    if (normalizedQuery.isEmpty) {
+      setState(() => _filteredPlants = List<PlantFreezed>.from(_allPlants));
+      return;
+    }
+
+    setState(() {
+      _filteredPlants = _allPlants.where((p) {
+        // IMPORTANT : adaptez ces champs si votre PlantFreezed a d'autres attributs (ex: latinName, tags, etc.)
+        final name = _normalize(p.name ?? '');
+        final description = _normalize((p.description ?? ''));
+        return name.contains(normalizedQuery) ||
+            description.contains(normalizedQuery);
+      }).toList();
+    });
+  }
+
+  Widget _fallbackImage({double height = 180}) {
+    return Container(
+      height: height,
+      color: Colors.green.shade50,
+      alignment: Alignment.center,
+      child: Icon(
+        Icons.eco_outlined,
+        size: 56,
+        color: Colors.green.shade700,
+      ),
+    );
+  }
+
+  /// Construit la carte pour chaque plante :
+  /// - Image.network si imagePath commence par http(s)
+  /// - Image.asset si chemin local (on préfixe assets/images/legumes/ si nécessaire)
+  /// - Fallback si imagePath null/empty ou en cas d'erreur
+  Widget _buildPlantCard(PlantFreezed plant) {
+    final String? rawPath = plant.imagePath?.trim();
+    final double imageHeight = 180.0;
+    Widget imageWidget;
+
+    if (rawPath != null && rawPath.isNotEmpty) {
+      final isNetwork =
+          RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(rawPath);
+
+      if (isNetwork) {
+        imageWidget = Image.network(
+          rawPath,
+          height: imageHeight,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          // Affiche le fallback si le réseau échoue
+          errorBuilder: (context, error, stackTrace) =>
+              _fallbackImage(height: imageHeight),
+        );
+      } else {
+        // Si l'utilisateur a déjà précisé un chemin d'assets complet, on l'utilise tel quel.
+        // Autrement, on préfixe avec assets/images/legumes/
+        final assetPath = rawPath.startsWith('assets/')
+            ? rawPath
+            : 'assets/images/legumes/$rawPath';
+
+        imageWidget = Image.asset(
+          assetPath,
+          height: imageHeight,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          // En cas d'erreur d'asset (ex: fichier manquant), on tombe sur le fallback.
+          errorBuilder: (context, error, stackTrace) =>
+              _fallbackImage(height: imageHeight),
+        );
+      }
+    } else {
+      imageWidget = _fallbackImage(height: imageHeight);
+    }
+
+    return GestureDetector(
       onTap: () {
-        if (widget.isSelectionMode) {
-          Navigator.pop(context, plant.id);
+        if (widget.onPlantSelected != null) {
+          widget.onPlantSelected!(plant);
         } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PlantDetailScreen(plantId: plant.id),
-            ),
-          );
+          // Default behaviour : nothing. Vous pouvez ajouter une navigation ici si souhaité.
         }
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image (metadata keys: 'image','imagePath','imageAsset')
-          Builder(builder: (context) {
-            final imagePath = (plant.metadata['image'] as String?) ??
-                (plant.metadata['imagePath'] as String?) ??
-                (plant.metadata['imageAsset'] as String?);
-
-            return Container(
-              // Image légèrement réduite pour mieux tenir lorsque l'espace vertical est réduit.
-              height: 180,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(12)),
-                child: imagePath != null && imagePath.isNotEmpty
-                    ? (imagePath.startsWith('http')
-                        ? Image.network(imagePath,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: 180)
-                        : Image.asset('assets/images/legumes/$imagePath',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: 180))
-                    : Center(
-                        child: Icon(
-                          Icons.eco,
-                          size: 56,
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-              ),
-            );
-          }),
-
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(14),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Image (avec clip arrondi via ClipRRect inhérent au Card)
+            SizedBox(
+              height: imageHeight,
+              child: imageWidget,
+            ),
+            // Espace pour le nom / info
+            Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    plant.commonName,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    plant.name ?? '—',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(fontWeight: FontWeight.w600),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    plant.scientificName,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontStyle: FontStyle.italic,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      plant.family,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w600,
+                  if ((plant.subtitle ?? '').isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6.0),
+                      child: Text(
+                        plant.subtitle ?? '',
+                        style: Theme.of(context).textTheme.caption,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  ),
-                  // Intentionnellement pas d'affichage de saison ici — module supprimé.
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Eviter que le scaffold remonte automatiquement lors de l'apparition du clavier
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text('Catalogue de plantes'),
+        centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+      ),
+      body: SafeArea(
+        child: LayoutBuilder(builder: (context, constraints) {
+          // Pour ajuster le nombre de colonnes selon la largeur
+          final crossAxisCount = constraints.maxWidth >= 800
+              ? 4
+              : (constraints.maxWidth >= 600 ? 3 : 2);
+
+          // bottom padding dynamique en fonction du clavier pour éviter le masquage de la grille
+          final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+          final bottomPadding = bottomInset + 12.0;
+
+          return Column(
+            children: [
+              // Barre de recherche
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0, vertical: 10.0),
+                child: TextField(
+                  controller: _searchController,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    hintText: 'Rechercher une plante (nom, description...)',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              _searchController.clear();
+                              _applyFilter('');
+                              FocusScope.of(context).unfocus();
+                            },
+                          )
+                        : null,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0)),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 14.0),
+                  ),
+                  onChanged: _onSearchChanged,
+                ),
+              ),
+
+              // Info / count
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                child: Row(
+                  children: [
+                    Text('${_filteredPlants.length} résultat(s)',
+                        style: Theme.of(context).textTheme.caption),
+                    const SizedBox(width: 8),
+                    Expanded(
+                        child: Container()), // pousse pour aligner à gauche
+                    // bouton optionnel : tri, filtre, etc.
+                  ],
+                ),
+              ),
+
+              // Grille
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: 12.0, right: 12.0, bottom: bottomPadding),
+                  child: _filteredPlants.isEmpty
+                      ? Center(
+                          child: Text(
+                            'Aucune plante trouvée',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        )
+                      : GridView.builder(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            // hauteur de la cellule : image(180) + texte => on donne un ratio approximatif
+                            childAspectRatio:
+                                (constraints.maxWidth / crossAxisCount) / 280,
+                          ),
+                          itemCount: _filteredPlants.length,
+                          itemBuilder: (context, index) {
+                            final plant = _filteredPlants[index];
+                            return _buildPlantCard(plant);
+                          },
+                        ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
