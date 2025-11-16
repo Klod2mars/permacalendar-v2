@@ -367,7 +367,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         if (widget.onPlantSelected != null) {
           widget.onPlantSelected!(plant);
         } else if (widget.isSelectionMode) {
-          Navigator.of(context).pop(plant);
+          Navigator.of(context).pop(plant.id);
         }
       },
       child: Card(
