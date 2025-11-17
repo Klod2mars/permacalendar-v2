@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import '../../app_router.dart';
 import '../../core/models/organic_zone_config.dart';
 import '../../core/providers/organic_zones_provider.dart';
@@ -697,13 +697,13 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   }
 
   // Nouvelle méthode pour gérer le tap dynamique des jardins
-  void _handleGardenTap() {
-    final slotsRepo = widget.ref.read(dashboardSlotsRepositoryProvider);
-    final gardenId = slotsRepo.getGardenForSlot(widget.id);
+  void _handleGardenTap() async {
+    final gardenId =
+        await DashboardSlotsRepository.getGardenIdForSlot(widget.id);
 
     if (gardenId != null) {
       // Naviguer vers le jardin existant avec le paramètre fromOrganic
-      widget.ref.read(activeGardenProvider.notifier).setActiveGarden(gardenId);
+      widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
       context.push('/gardens/$gardenId?fromOrganic=1');
     } else {
       // Ouvrir la création de jardin avec le slot spécifié
@@ -711,14 +711,14 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     }
   }
 
-  // Nouvelle méthode pour gérer le long press des jardins (activation)
-  void _handleGardenLongPress() {
-    final slotsRepo = widget.ref.read(dashboardSlotsRepositoryProvider);
-    final gardenId = slotsRepo.getGardenForSlot(widget.id);
+// Nouvelle méthode pour gérer le long press des jardins (activation)
+  void _handleGardenLongPress() async {
+    final gardenId =
+        await DashboardSlotsRepository.getGardenIdForSlot(widget.id);
 
     if (gardenId != null) {
       // Activer le jardin
-      widget.ref.read(activeGardenProvider.notifier).setActiveGarden(gardenId);
+      widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
 
       // Feedback visuel
       ScaffoldMessenger.of(context).showSnackBar(
