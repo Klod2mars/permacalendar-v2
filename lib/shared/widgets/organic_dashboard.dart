@@ -426,7 +426,6 @@ class _OrganicDashboardWidgetState
     });
   }
 }
-
 class _AssetDiagnostic {
   bool manifestLoaded = false;
   bool declared = false;
@@ -544,8 +543,12 @@ class _CalibratableHotspot extends StatefulWidget {
   final WidgetRef ref;
   final bool showDebugOutline;
 
-  // ➤ INSERTION EXACTE ICI
-  // Convertit un ID "garden_3" en entier 3
+  @override
+  State<_CalibratableHotspot> createState() => _CalibratableHotspotState();
+}
+
+class _CalibratableHotspotState extends State<_CalibratableHotspot> {
+  // Convertit "garden_3" → 3
   int? _extractSlotNumber(String id) {
     if (id.startsWith('garden_')) {
       final parts = id.split('_');
@@ -556,11 +559,6 @@ class _CalibratableHotspot extends StatefulWidget {
     return null;
   }
 
-  @override
-  State<_CalibratableHotspot> createState() => _CalibratableHotspotState();
-}
-
-class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   double? _startSize;
   Offset? _startFocalLocal;
   Offset? _startNormalizedPos;
@@ -572,7 +570,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   // Pointer tracking to detect two-finger pinch completely inside the hotspot
   final Map<int, Offset> _activePointers = {};
   bool _isPinchingInside = false;
-
   void _onPointerDown(PointerDownEvent e) {
     _activePointers[e.pointer] = e.position;
   }
@@ -697,6 +694,18 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     }
   }
 
+  void _handleScaleEnd(ScaleEndDetails details) {
+    _startSize = null;
+    _startFocalLocal = null;
+    _startNormalizedPos = null;
+    _resizeStartSize = null;
+    _isResizing = false;
+    _isPinchingInside = false;
+    _activePointers.clear();
+
+    print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
+  }
+
   void _handleGardenTap() async {
     // Convertir l'ID texte ("garden_3") en entier (3)
     final slot = _extractSlotNumber(widget.id);
@@ -716,8 +725,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       context.push('/gardens/create?slot=$slot');
     }
   }
-
-// Nouvelle méthode pour gérer le long press des jardins (activation)
+  // Nouvelle méthode pour gérer le long press des jardins (activation)
   void _handleGardenLongPress() async {
     // Convertir l'ID texte ("garden_3") en entier (3)
     final slot = _extractSlotNumber(widget.id);
@@ -785,10 +793,13 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       onTap: isGardenHotspot
           ? _handleGardenTap
           : () {
-              if (kDebugMode)
+              if (kDebugMode) {
                 debugPrint(
                     'OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
-              if (widget.onTapRoute != null) context.push(widget.onTapRoute!);
+              }
+              if (widget.onTapRoute != null) {
+                context.push(widget.onTapRoute!);
+              }
             },
       onLongPress: isGardenHotspot && !widget.isCalibrating
           ? _handleGardenLongPress
