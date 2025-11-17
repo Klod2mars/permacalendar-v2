@@ -26,7 +26,6 @@ import 'shared/presentation/screens/settings_screen.dart';
 
 import 'core/feature_flags.dart';
 
-/// Routes principales
 class AppRoutes {
   static const String home = '/';
   static const String gardens = '/gardens';
@@ -44,7 +43,6 @@ class AppRoutes {
   static const String calendar = '/calendar';
   static const String weather = '/weather';
 
-  // Routes d'intelligence végétale
   static const String intelligence = '/intelligence';
   static const String intelligenceDetail = '/intelligence/plant/:id';
   static const String recommendations = '/intelligence/recommendations';
@@ -52,11 +50,6 @@ class AppRoutes {
   static const String pestObservation = '/intelligence/pest-observation';
   static const String bioControlRecommendations = '/intelligence/biocontrol';
   static const String notifications = '/intelligence/notifications';
-
-  // Routes sociales (désactivées)
-  // static const String profile = '/profile';
-  // static const String community = '/community';
-  // static const String publicProfile = '/profile/:userId';
 }
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -72,8 +65,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return const HomeScreen();
         },
       ),
-
-      // Gestion des jardins
       GoRoute(
         path: AppRoutes.gardens,
         name: 'gardens',
@@ -92,11 +83,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'garden-detail',
         builder: (context, state) {
           final id = state.pathParameters['id']!;
-          return GardenDetailScreen(gardenId: id);
+          final fromOrganic =
+              state.uri.queryParameters['fromOrganic'] == 'true';
+          return GardenDetailScreen(
+            gardenId: id,
+            openPlantingsOnBedTap: fromOrganic,
+          );
         },
       ),
-
-      // Parcelles
       GoRoute(
         path: AppRoutes.gardenBeds,
         name: 'garden-beds',
@@ -130,7 +124,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-
       GoRoute(
         path: '/garden/:gardenId/beds/:bedId/plantings',
         name: 'garden-bed-plantings',
@@ -144,8 +137,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           );
         },
       ),
-
-      // Catalogue de plantes
       GoRoute(
         path: AppRoutes.plants,
         name: 'plants',
@@ -159,8 +150,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return PlantDetailScreen(plantId: id);
         },
       ),
-
-      // Plantation detail
       GoRoute(
         path: AppRoutes.plantingDetail,
         name: 'planting-detail',
@@ -169,49 +158,36 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return PlantingDetailScreen(plantingId: id);
         },
       ),
-
-      // Export
       GoRoute(
         path: AppRoutes.export,
         name: 'export',
         builder: (context, state) => const ExportScreen(),
       ),
-
-      // Paramètres
       GoRoute(
         path: AppRoutes.settings,
         name: 'settings',
         builder: (context, state) => const SettingsScreen(),
       ),
-
-      // Calendrier conditionnel
       if (flags.calendarView)
         GoRoute(
           path: AppRoutes.calendar,
           name: 'calendar',
           builder: (context, state) => const CalendarViewScreen(),
         ),
-
-      // Météo
       GoRoute(
         path: AppRoutes.weather,
         name: 'weather',
         builder: (context, state) => const WeatherDetailScreen(),
       ),
-
-      // Activités
       GoRoute(
         path: AppRoutes.activities,
         name: 'activities',
         builder: (context, state) => const ActivitiesScreen(),
       ),
-
-      // Intelligence végétale
       GoRoute(
         path: AppRoutes.intelligence,
         name: 'intelligence',
         builder: (context, state) {
-          print('ðŸ”´ [DIAGNOSTIC] builder() pour /intelligence appelé.');
           return const PlantIntelligenceDashboardScreen();
         },
         routes: [
@@ -270,8 +246,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         ],
       ),
     ],
-
-    /// Gestion 404
     errorBuilder: (context, state) => Scaffold(
       body: Center(
         child: Column(
@@ -285,13 +259,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ),
             const SizedBox(height: 8),
             Text(
-              'La page "${state.uri}" n’existe pas.',
+              'La page "${state.uri}" n\'existe pas.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => context.go(AppRoutes.home),
-              child: const Text('Retour à l’accueil'),
+              child: const Text('Retour à l\'accueil'),
             ),
           ],
         ),

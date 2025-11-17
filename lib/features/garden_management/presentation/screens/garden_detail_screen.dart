@@ -26,10 +26,12 @@ import '../../../../core/events/garden_events.dart';
 
 class GardenDetailScreen extends ConsumerWidget {
   final String gardenId;
+  final bool openPlantingsOnBedTap;
 
   const GardenDetailScreen({
     super.key,
     required this.gardenId,
+    this.openPlantingsOnBedTap = false,
   });
 
   @override
@@ -415,10 +417,20 @@ class GardenDetailScreen extends ConsumerWidget {
                   child: GardenBedCard(
                     gardenBed: bedTyped,
                     onTap: () {
-                      // Garder la navigation vers le détail si nécessaire
-                      context.push(
+                      // ✅ MODIFICATION : Navigation conditionnelle selon le flag
+                      if (openPlantingsOnBedTap) {
+                        // Ouvrir directement la liste des plantations
+                        context.push(
+                          '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
+                          extra: bedTyped.name,
+                        );
+                      } else {
+                        // Garder la navigation vers le détail (comportement original)
+                        context.push(
                           '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                          extra: bedTyped.name);
+                          extra: bedTyped.name,
+                        );
+                      }
                     },
                     onEdit: () async {
                       // Editer la parcelle via le même dialog (pré-rempli)
