@@ -11,7 +11,7 @@ import '../../../../shared/widgets/custom_card.dart';
 import '../../../../shared/widgets/loading_widgets.dart';
 import '../../providers/garden_bed_provider.dart';
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
-import '../../../../core/models/planting.dart';
+import 'package:permacalendar/core/models/planting.dart';
 
 class GardenBedDetailScreen extends ConsumerWidget {
   final String gardenId;
@@ -31,8 +31,10 @@ class GardenBedDetailScreen extends ConsumerWidget {
 
     final gardenBed =
         gardenBedState.gardenBeds.where((bed) => bed.id == bedId).firstOrNull;
-
     final theme = Theme.of(context);
+
+    // Vérification de non-nullité pour utiliser gardenBed en toute sécurité
+    final bool hasBed = gardenBed != null;
 
     // Charger les parcelles si nécessaire
     if (gardenBedState.gardenBeds.isEmpty && !gardenBedState.isLoading) {
@@ -68,69 +70,70 @@ class GardenBedDetailScreen extends ConsumerWidget {
                     )
                   : _buildGardenBedDetail(context, ref, gardenBed, theme),
       // FLOATING ACTION BUTTON - POINT 3
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Ajouter une plantation',
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          // 1) Ouvrir directement le catalogue en mode sélection (page 6)
-          final selectedPlantId = await Navigator.of(context).push<String?>(
-            MaterialPageRoute(
-              builder: (_) => const PlantCatalogScreen(isSelectionMode: true),
-              fullscreenDialog: true,
-            ),
-          );
+      floatingActionButton: hasBed
+          ? FloatingActionButton(
+              tooltip: 'Ajouter une plantation',
+              child: const Icon(Icons.add),
+              onPressed: () async {
+                // Ici on sait que gardenBed != null
+                final bed = gardenBed!; // non-null assertion locale
 
-          if (selectedPlantId == null)
-            return; // utilisateur a annulé le catalogue
+                // 1) Ouvrir directement le catalogue en mode sélection
+                final selectedPlantId =
+                    await Navigator.of(context).push<String?>(
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const PlantCatalogScreen(isSelectionMode: true),
+                    fullscreenDialog: true,
+                  ),
+                );
+                if (selectedPlantId == null) return;
 
-          // 2) Essayer de récupérer l'objet plante depuis le provider (pour le nom, metadata)
-          List<PlantFreezed> plantList = ref.read(plantsListProvider);
-          PlantFreezed? plant;
-          try {
-            plant = plantList.firstWhere((p) => p.id == selectedPlantId);
-          } catch (e) {
-            plant = null;
-          }
+                // 2) Récupérer la plante (tentative depuis provider)
+                List<PlantFreezed> plantList = ref.read(plantsListProvider);
+                PlantFreezed? plant;
+                try {
+                  plant = plantList.firstWhere((p) => p.id == selectedPlantId);
+                } catch (_) {
+                  plant = null;
+                }
+                if (plant == null) {
+                  await ref.read(plantCatalogProvider.notifier).loadPlants();
+                  final reloaded = ref.read(plantsListProvider);
+                  try {
+                    plant = reloaded.firstWhere((p) => p.id == selectedPlantId);
+                  } catch (_) {
+                    plant = null;
+                  }
+                }
 
-          // Si non trouvé, forcer le chargement du catalogue puis réessayer
-          if (plant == null) {
-            await ref.read(plantCatalogProvider.notifier).loadPlants();
-            final reloaded = ref.read(plantsListProvider);
-            try {
-              plant = reloaded.firstWhere((p) => p.id == selectedPlantId);
-            } catch (_) {
-              plant = null;
-            }
-          }
+                // 3) Construire le preset Planting en utilisant bed (non-null)
+                final preset = Planting(
+                  gardenBedId: bed.id,
+                  plantId: selectedPlantId,
+                  plantName: plant?.commonName ?? 'Plante',
+                  plantedDate: DateTime.now(),
+                  quantity: 1,
+                );
 
-          // 3) Construire la Planting préremplie
-          final preset = Planting(
-            gardenBedId: gardenBed.id,
-            plantId: selectedPlantId,
-            plantName: plant?.commonName ?? 'Plante',
-            plantedDate: DateTime.now(),
-            quantity: 1,
-          );
+                // 4) Ouvrir la feuille 5 (dialog) préremplie
+                await showDialog(
+                  context: context,
+                  builder: (ctx) => CreatePlantingDialog(
+                    gardenBedId: bed.id,
+                    planting: preset,
+                  ),
+                );
 
-          // 4) Ouvrir la feuille 5 (CreatePlantingDialog) préremplie
-          await showDialog(
-            context: context,
-            builder: (ctx) => CreatePlantingDialog(
-              gardenBedId: gardenBed.id,
-              planting: preset,
-            ),
-          );
-
-          // 5) Rafraîchir l'affichage des plantations pour la parcelle
-          try {
-            await ref
-                .read(plantingProvider.notifier)
-                .loadPlantings(gardenBed.id);
-          } catch (_) {
-            // Pas critique : on ignore l'erreur ici
-          }
-        },
-      ),
+                // 5) Recharger les plantations pour la parcelle
+                try {
+                  await ref
+                      .read(plantingProvider.notifier)
+                      .loadPlantings(bed.id);
+                } catch (_) {}
+              },
+            )
+          : null,
     );
   }
 
@@ -326,7 +329,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                 subtitle: 'Cette parcelle n\'a pas encore de plantations.',
                 actionText: 'Ajouter une plantation',
                 onAction: () async {
-                  // On appelle directement le même flux que le FAB : ouvrir catalogue puis dialog
+                  // Ici gardenBed est non-null (cette méthode reçoit GardenBed)
                   final selectedPlantId =
                       await Navigator.of(context).push<String?>(
                     MaterialPageRoute(
