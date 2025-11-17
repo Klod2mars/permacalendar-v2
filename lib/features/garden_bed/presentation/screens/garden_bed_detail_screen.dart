@@ -10,9 +10,8 @@ import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../../shared/widgets/loading_widgets.dart';
 import '../../providers/garden_bed_provider.dart';
-import '../../../planting/providers/planting_provider.dart';
-import '../../../../shared/widgets/empty_state_widget.dart';
-import '../../../../shared/widgets/error_state_widget.dart';
+import 'package:permacalendar/features/planting/providers/planting_provider.dart';
+import '../../../../core/models/planting.dart';
 
 class GardenBedDetailScreen extends ConsumerWidget {
   final String gardenId;
