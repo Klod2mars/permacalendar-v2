@@ -69,69 +69,83 @@ class GardenBedDetailScreen extends ConsumerWidget {
                           'Cette parcelle n\'existe pas ou a été supprimée.',
                     )
                   : _buildGardenBedDetail(context, ref, gardenBed, theme),
-      // FLOATING ACTION BUTTON - POINT 3
+      // FLOATING ACTION BUTTON - POINT 4
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: hasBed
-          ? FloatingActionButton(
-              tooltip: 'Ajouter une plantation',
-              child: const Icon(Icons.add),
-              onPressed: () async {
-                // Ici on sait que gardenBed != null
-                final bed = gardenBed!; // non-null assertion locale
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 16.0, right: 8.0),
+              child: FloatingActionButton(
+                tooltip: 'Ajouter une plantation',
+                child: const Icon(Icons.add),
+                onPressed: () async {
+                  final bed = gardenBed!; // safe
 
-                // 1) Ouvrir directement le catalogue en mode sélection
-                final selectedPlantId =
-                    await Navigator.of(context).push<String?>(
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const PlantCatalogScreen(isSelectionMode: true),
-                    fullscreenDialog: true,
-                  ),
-                );
-                if (selectedPlantId == null) return;
+                  // 1) Ouvrir le catalogue (6)
+                  final selectedPlantId =
+                      await Navigator.of(context).push<String?>(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          const PlantCatalogScreen(isSelectionMode: true),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                  if (selectedPlantId == null) return;
 
-                // 2) Récupérer la plante (tentative depuis provider)
-                List<PlantFreezed> plantList = ref.read(plantsListProvider);
-                PlantFreezed? plant;
-                try {
-                  plant = plantList.firstWhere((p) => p.id == selectedPlantId);
-                } catch (_) {
-                  plant = null;
-                }
-                if (plant == null) {
-                  await ref.read(plantCatalogProvider.notifier).loadPlants();
-                  final reloaded = ref.read(plantsListProvider);
+                  // 2) récupérer plant (si nécessaire)...
+                  List<PlantFreezed> plantList = ref.read(plantsListProvider);
+                  PlantFreezed? plant;
                   try {
-                    plant = reloaded.firstWhere((p) => p.id == selectedPlantId);
+                    plant =
+                        plantList.firstWhere((p) => p.id == selectedPlantId);
                   } catch (_) {
                     plant = null;
                   }
-                }
+                  if (plant == null) {
+                    await ref.read(plantCatalogProvider.notifier).loadPlants();
+                    final reloaded = ref.read(plantsListProvider);
+                    try {
+                      plant =
+                          reloaded.firstWhere((p) => p.id == selectedPlantId);
+                    } catch (_) {
+                      plant = null;
+                    }
+                  }
 
-                // 3) Construire le preset Planting en utilisant bed (non-null)
-                final preset = Planting(
-                  gardenBedId: bed.id,
-                  plantId: selectedPlantId,
-                  plantName: plant?.commonName ?? 'Plante',
-                  plantedDate: DateTime.now(),
-                  quantity: 1,
-                );
-
-                // 4) Ouvrir la feuille 5 (dialog) préremplie
-                await showDialog(
-                  context: context,
-                  builder: (ctx) => CreatePlantingDialog(
+                  // 3) créer preset
+                  final preset = Planting(
                     gardenBedId: bed.id,
-                    planting: preset,
-                  ),
-                );
+                    plantId: selectedPlantId,
+                    plantName: plant?.commonName ?? 'Plante',
+                    plantedDate: DateTime.now(),
+                    quantity: 1,
+                  );
 
-                // 5) Recharger les plantations pour la parcelle
-                try {
+                  // 4) Ouvrir le dialog (point 5 - bottom sheet)
+                  await showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    builder: (ctx) => Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(ctx).viewInsets.bottom,
+                      ),
+                      child: CreatePlantingDialog(
+                        gardenBedId: bed.id,
+                        planting: preset,
+                      ),
+                    ),
+                  );
+
+                  // 5) recharger les plantings
                   await ref
                       .read(plantingProvider.notifier)
                       .loadPlantings(bed.id);
-                } catch (_) {}
-              },
+                },
+              ),
             )
           : null,
     );
@@ -162,7 +176,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
           const SizedBox(height: 24),
 
           // Actions rapides
-          _buildQuickActions(context, gardenBed, theme),
+          _buildQuickActions(context, ref, gardenBed, theme),
 
           const SizedBox(height: 24),
 
@@ -243,8 +257,9 @@ class GardenBedDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildQuickActions(
-      BuildContext context, GardenBed gardenBed, ThemeData theme) {
+  // POINT 1 - Actions rapides simplifiées
+  Widget _buildQuickActions(BuildContext context, WidgetRef ref,
+      GardenBed gardenBed, ThemeData theme) {
     return CustomCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -253,28 +268,16 @@ class GardenBedDetailScreen extends ConsumerWidget {
           children: [
             Text(
               'Actions rapides',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: theme.textTheme.titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      context.push(
-                          '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings');
-                    },
-                    icon: const Icon(Icons.eco),
-                    label: const Text('Plantations'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      // TODO: Implémenter l'édition de la parcelle
+                      // TODO: implémentation "Modifier" existante
                     },
                     icon: const Icon(Icons.edit),
                     label: const Text('Modifier'),
@@ -302,26 +305,31 @@ class GardenBedDetailScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // POINT 2 - Header résilient avec Expanded
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Plantations actuelles',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+                // Le titre prend tout l'espace disponible
+                Expanded(
+                  child: Text(
+                    'Plantations actuelles',
+                    style: theme.textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.push(
-                        '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings');
-                  },
-                  child: const Text('Voir tout'),
-                ),
+
+                // Voir tout seulement si nécessaire
+                if (plantings.length > 3)
+                  TextButton(
+                    onPressed: () {
+                      context.push(
+                          '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings');
+                    },
+                    child: const Text('Voir tout'),
+                  ),
               ],
             ),
             const SizedBox(height: 16),
-            // CTA DANS LE BLOC PLANTATIONS - POINT 4
+            // POINT 3 - CTA dans état vide avec flow FAB
             if (plantings.isEmpty)
               EmptyStateWidget(
                 icon: Icons.eco,
@@ -329,7 +337,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                 subtitle: 'Cette parcelle n\'a pas encore de plantations.',
                 actionText: 'Ajouter une plantation',
                 onAction: () async {
-                  // Ici gardenBed est non-null (cette méthode reçoit GardenBed)
+                  // Même flow que le FAB : catalogue -> dialog prérempli
                   final selectedPlantId =
                       await Navigator.of(context).push<String?>(
                     MaterialPageRoute(
@@ -340,6 +348,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                   );
                   if (selectedPlantId == null) return;
 
+                  // Récupérer la plante (si dispo) et créer preset
                   List<PlantFreezed> plantList = ref.read(plantsListProvider);
                   PlantFreezed? plant;
                   try {
@@ -367,11 +376,23 @@ class GardenBedDetailScreen extends ConsumerWidget {
                     quantity: 1,
                   );
 
-                  await showDialog(
+                  // Ouvrir la modal de création (bottom sheet)
+                  await showModalBottomSheet(
                     context: context,
-                    builder: (ctx) => CreatePlantingDialog(
-                      gardenBedId: gardenBed.id,
-                      planting: preset,
+                    isScrollControlled: true,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    builder: (ctx) => Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(ctx).viewInsets.bottom,
+                      ),
+                      child: CreatePlantingDialog(
+                        gardenBedId: gardenBed.id,
+                        planting: preset,
+                      ),
                     ),
                   );
 
