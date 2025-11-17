@@ -417,20 +417,11 @@ class GardenDetailScreen extends ConsumerWidget {
                   child: GardenBedCard(
                     gardenBed: bedTyped,
                     onTap: () {
-                      // ✅ MODIFICATION : Navigation conditionnelle selon le flag
-                      if (openPlantingsOnBedTap) {
-                        // Ouvrir directement la liste des plantations
-                        context.push(
-                          '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
-                          extra: bedTyped.name,
-                        );
-                      } else {
-                        // Garder la navigation vers le détail (comportement original)
-                        context.push(
-                          '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                          extra: bedTyped.name,
-                        );
-                      }
+                      // Navigation DIRECTE vers le détail de la parcelle (page 4).
+                      context.push(
+                        '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                        extra: bedTyped.name,
+                      );
                     },
                     onEdit: () async {
                       // Editer la parcelle via le même dialog (pré-rempli)
