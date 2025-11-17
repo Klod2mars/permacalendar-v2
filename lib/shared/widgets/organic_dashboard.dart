@@ -544,6 +544,18 @@ class _CalibratableHotspot extends StatefulWidget {
   final WidgetRef ref;
   final bool showDebugOutline;
 
+  // ➤ INSERTION EXACTE ICI
+  // Convertit un ID "garden_3" en entier 3
+  int? _extractSlotNumber(String id) {
+    if (id.startsWith('garden_')) {
+      final parts = id.split('_');
+      if (parts.length == 2) {
+        return int.tryParse(parts[1]);
+      }
+    }
+    return null;
+  }
+
   @override
   State<_CalibratableHotspot> createState() => _CalibratableHotspotState();
 }
@@ -685,36 +697,36 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     }
   }
 
-  void _handleScaleEnd(ScaleEndDetails details) {
-    _startSize = null;
-    _startFocalLocal = null;
-    _startNormalizedPos = null;
-    _resizeStartSize = null;
-    _isResizing = false;
-    _isPinchingInside = false;
-    _activePointers.clear();
-    print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
-  }
-
-  // Nouvelle méthode pour gérer le tap dynamique des jardins
   void _handleGardenTap() async {
-    final gardenId =
-        await DashboardSlotsRepository.getGardenIdForSlot(widget.id);
+    // Convertir l'ID texte ("garden_3") en entier (3)
+    final slot = _extractSlotNumber(widget.id);
+    if (slot == null) {
+      print('DBG: Slot invalide pour id=${widget.id}');
+      return;
+    }
+
+    final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
       // Naviguer vers le jardin existant avec le paramètre fromOrganic
       widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
       context.push('/gardens/$gardenId?fromOrganic=1');
     } else {
-      // Ouvrir la création de jardin avec le slot spécifié
-      context.push('/gardens/create?slot=${widget.id}');
+      // Ouvrir la création de jardin avec le slot numérique correct
+      context.push('/gardens/create?slot=$slot');
     }
   }
 
 // Nouvelle méthode pour gérer le long press des jardins (activation)
   void _handleGardenLongPress() async {
-    final gardenId =
-        await DashboardSlotsRepository.getGardenIdForSlot(widget.id);
+    // Convertir l'ID texte ("garden_3") en entier (3)
+    final slot = _extractSlotNumber(widget.id);
+    if (slot == null) {
+      print('DBG: Slot invalide pour id=${widget.id}');
+      return;
+    }
+
+    final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
       // Activer le jardin
