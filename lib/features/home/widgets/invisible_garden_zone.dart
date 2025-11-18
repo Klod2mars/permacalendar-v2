@@ -1,5 +1,5 @@
 ﻿import '../../../core/repositories/dashboard_slots_repository.dart';
-
+import 'package:permacalendar/app_router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -301,7 +301,11 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
 
     // navigation vers la page de création en push (réversible)
 
-    context.push('${AppRoutes.gardenCreate}?slot=${widget.slotNumber}');
+    final uri = Uri(
+      path: AppRoutes.gardenCreate,
+      queryParameters: {'slot': widget.slotNumber.toString()},
+    ).toString();
+    context.push(uri);
   }
 
   /// Construit le label de texte discret
