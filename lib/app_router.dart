@@ -23,6 +23,7 @@ import 'features/plant_intelligence/presentation/screens/notifications_screen.da
 import 'features/home/screens/calendar_view_screen.dart';
 import 'shared/presentation/screens/home_screen.dart';
 import 'shared/presentation/screens/settings_screen.dart';
+import '../../../app_router.dart';
 
 import 'core/feature_flags.dart';
 
