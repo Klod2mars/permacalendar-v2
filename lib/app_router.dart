@@ -6,7 +6,7 @@ import 'features/climate/presentation/screens/weather_detail_screen.dart';
 import 'features/garden_management/presentation/screens/garden_list_screen.dart';
 import 'features/garden_management/presentation/screens/garden_detail_screen.dart';
 import 'features/garden_management/presentation/screens/garden_create_screen.dart';
-import 'features/garden_bed/presentation/screens/garden_bed_list_screen.dart';
+
 import 'features/garden_bed/presentation/screens/garden_bed_detail_screen.dart';
 import 'features/planting/presentation/screens/planting_list_screen.dart';
 import 'features/planting/presentation/screens/planting_detail_screen.dart';
@@ -23,7 +23,6 @@ import 'features/plant_intelligence/presentation/screens/notifications_screen.da
 import 'features/home/screens/calendar_view_screen.dart';
 import 'shared/presentation/screens/home_screen.dart';
 import 'shared/presentation/screens/settings_screen.dart';
-import '../../../app_router.dart';
 
 import 'core/feature_flags.dart';
 
@@ -66,11 +65,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return const HomeScreen();
         },
       ),
+
       GoRoute(
         path: AppRoutes.gardens,
         name: 'gardens',
         builder: (context, state) => const GardenListScreen(),
       ),
+
       GoRoute(
         path: AppRoutes.gardenCreate,
         name: 'garden-create',
@@ -79,6 +80,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return GardenCreateScreen(slot: slot);
         },
       ),
+
       GoRoute(
         path: AppRoutes.gardenDetail,
         name: 'garden-detail',
@@ -92,16 +94,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           );
         },
       ),
+
+      // --- Parcelles : fallback vers GardenDetailScreen, mais conserver le détail d'une parcelle
       GoRoute(
         path: AppRoutes.gardenBeds,
         name: 'garden-beds',
         builder: (context, state) {
           final gardenId = state.pathParameters['gardenId']!;
-          final gardenName = state.extra as String? ?? 'Jardin';
-
-          return GardenBedListScreen(
+          // Fallback : afficher la page GardenDetailScreen (aperçu),
+          // la gestion complète ayant été mise en quarantaine.
+          return GardenDetailScreen(
             gardenId: gardenId,
-            gardenName: gardenName,
+            openPlantingsOnBedTap: false,
           );
         },
         routes: [
@@ -111,20 +115,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final gardenId = state.pathParameters['gardenId']!;
               final bedId = state.pathParameters['bedId']!;
-
+              // Planche 2 : page de détail — aucun onPop forcé
               return GardenBedDetailScreen(
                 gardenId: gardenId,
                 bedId: bedId,
-                onPop: () {
-                  context.go(
-                    AppRoutes.gardenBeds.replaceFirst(':gardenId', gardenId),
-                  );
-                },
               );
             },
           ),
         ],
       ),
+
+      // Plantings (liste des plantations pour une parcelle)
       GoRoute(
         path: '/garden/:gardenId/beds/:bedId/plantings',
         name: 'garden-bed-plantings',
@@ -138,11 +139,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           );
         },
       ),
+
       GoRoute(
         path: AppRoutes.plants,
         name: 'plants',
         builder: (context, state) => const PlantCatalogScreen(),
       ),
+
       GoRoute(
         path: AppRoutes.plantDetail,
         name: 'plant-detail',
@@ -151,6 +154,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return PlantDetailScreen(plantId: id);
         },
       ),
+
       GoRoute(
         path: AppRoutes.plantingDetail,
         name: 'planting-detail',
@@ -159,32 +163,38 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return PlantingDetailScreen(plantingId: id);
         },
       ),
+
       GoRoute(
         path: AppRoutes.export,
         name: 'export',
         builder: (context, state) => const ExportScreen(),
       ),
+
       GoRoute(
         path: AppRoutes.settings,
         name: 'settings',
         builder: (context, state) => const SettingsScreen(),
       ),
+
       if (flags.calendarView)
         GoRoute(
           path: AppRoutes.calendar,
           name: 'calendar',
           builder: (context, state) => const CalendarViewScreen(),
         ),
+
       GoRoute(
         path: AppRoutes.weather,
         name: 'weather',
         builder: (context, state) => const WeatherDetailScreen(),
       ),
+
       GoRoute(
         path: AppRoutes.activities,
         name: 'activities',
         builder: (context, state) => const ActivitiesScreen(),
       ),
+
       GoRoute(
         path: AppRoutes.intelligence,
         name: 'intelligence',
