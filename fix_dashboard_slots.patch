@@ -1,0 +1,86 @@
+*** Begin Patch
+*** Update File: lib/core/repositories/dashboard_slots_repository.dart
+@@
+-﻿import 'package:hive_flutter/hive_flutter.dart';
++﻿import 'package:hive_flutter/hive_flutter.dart';
++import 'package:flutter/foundation.dart';
+@@
+   static String? getGardenIdForSlotSync(int slot) {
+ 
+-    if (!Hive.isBoxOpen(_boxName)) return null;
+-
+-
+-    final box = Hive.box<String>(_boxName);
+-
+-
+-    return box.get(slot.toString());
++    if (!Hive.isBoxOpen(_boxName)) return null;
++
++    final box = Hive.box<String>(_boxName);
++
++    // 1) Primary lookup (new canonical key)
++    final primary = box.get(slot.toString());
++    if (primary != null && primary.isNotEmpty) return primary;
++
++    // 2) Legacy key style: "slot_<n>"
++    final legacy = box.get('slot_$slot');
++    if (legacy != null && legacy.isNotEmpty) return legacy;
++
++    // 3) Backwards-compatible fallback: some older code may have stored 0-based keys
++    if (slot > 0) {
++      final zeroBased = box.get((slot - 1).toString());
++      if (zeroBased != null && zeroBased.isNotEmpty) return zeroBased;
++
++      final zeroBasedLegacy = box.get('slot_${slot - 1}');
++      if (zeroBasedLegacy != null && zeroBasedLegacy.isNotEmpty)
++        return zeroBasedLegacy;
++    }
++
++    if (kDebugMode) {
++      // debug hint for developer to inspect box content when lookup fails
++      try {
++        final keys = box.keys.take(20).toList();
++        debugPrint('DashboardSlotsRepository: lookup miss for slot=$slot, seen keys (sample 20): $keys');
++      } catch (_) {}
++    }
++
++    return null;
+   }
+@@
+   static Future<String?> getGardenIdForSlot(int slot) async {
+-
+-
+-    final box = await _ensureBox();
+-
+-
+-    return box.get(slot.toString());
++    final box = await _ensureBox();
++
++    // Primary lookup
++    final primary = box.get(slot.toString());
++    if (primary != null && primary.isNotEmpty) return primary;
++
++    // Legacy key "slot_<n>"
++    final legacy = box.get('slot_$slot');
++    if (legacy != null && legacy.isNotEmpty) return legacy;
++
++    // Zero-based / legacy zero-based fallbacks
++    if (slot > 0) {
++      final zeroBased = box.get((slot - 1).toString());
++      if (zeroBased != null && zeroBased.isNotEmpty) return zeroBased;
++
++      final zeroBasedLegacy = box.get('slot_${slot - 1}');
++      if (zeroBasedLegacy != null && zeroBasedLegacy.isNotEmpty)
++        return zeroBasedLegacy;
++    }
++
++    if (kDebugMode) {
++      try {
++        final keys = box.keys.take(20).toList();
++        debugPrint('DashboardSlotsRepository.async: lookup miss for slot=$slot, seen keys (sample 20): $keys');
++      } catch (_) {}
++    }
++
++    return null;
+   }
+*** End Patch

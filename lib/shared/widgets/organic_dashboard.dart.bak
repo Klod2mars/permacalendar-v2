@@ -1,14 +1,16 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import '../../app_router.dart';
 import '../../core/models/organic_zone_config.dart';
 import '../../core/providers/organic_zones_provider.dart';
 import '../../core/models/calibration_state.dart';
 import '../widgets/calibration_debug_overlay.dart';
+import '../../core/repositories/dashboard_slots_repository.dart'; // Nouvel import
+import '../../core/providers/active_garden_provider.dart'; // Nouvel import
 
 /// OrganicDashboardWidget
 /// - Affiche une grande image organique (background PNG).
@@ -26,24 +28,88 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
 
   // Defaults (migrated from previous static hotspots)
   static const List<_Hotspot> _hotspots = <_Hotspot>[
-    _Hotspot(id: 'intelligence', centerX: 0.18, centerY: 0.22, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.intelligence, label: 'Intelligence'),
-    _Hotspot(id: 'calendar', centerX: 0.18, centerY: 0.50, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.calendar, label: 'Calendar'),
-    _Hotspot(id: 'activities', centerX: 0.18, centerY: 0.78, widthFrac: 0.20, heightFrac: 0.20, route: AppRoutes.activities, label: 'Activities'),
-    _Hotspot(id: 'weather', centerX: 0.50, centerY: 0.18, widthFrac: 0.18, heightFrac: 0.18, route: AppRoutes.weather, label: 'Weather'),
-    _Hotspot(id: 'gardens', centerX: 0.65, centerY: 0.28, widthFrac: 0.42, heightFrac: 0.36, route: AppRoutes.gardens, label: 'Gardens'),
+    _Hotspot(
+        id: 'intelligence',
+        centerX: 0.18,
+        centerY: 0.22,
+        widthFrac: 0.20,
+        heightFrac: 0.20,
+        route: AppRoutes.intelligence,
+        label: 'Intelligence'),
+    _Hotspot(
+        id: 'calendar',
+        centerX: 0.18,
+        centerY: 0.50,
+        widthFrac: 0.20,
+        heightFrac: 0.20,
+        route: AppRoutes.calendar,
+        label: 'Calendar'),
+    _Hotspot(
+        id: 'activities',
+        centerX: 0.18,
+        centerY: 0.78,
+        widthFrac: 0.20,
+        heightFrac: 0.20,
+        route: AppRoutes.activities,
+        label: 'Activities'),
+    _Hotspot(
+        id: 'weather',
+        centerX: 0.50,
+        centerY: 0.18,
+        widthFrac: 0.18,
+        heightFrac: 0.18,
+        route: AppRoutes.weather,
+        label: 'Weather'),
     // 5 petits slots jardin (définis comme hotspots calibrables, indépendants et facilement tappables)
-    _Hotspot(id: 'garden_1', centerX: 0.60, centerY: 0.52, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 1'),
-    _Hotspot(id: 'garden_2', centerX: 0.68, centerY: 0.50, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 2'),
-    _Hotspot(id: 'garden_3', centerX: 0.72, centerY: 0.58, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 3'),
-    _Hotspot(id: 'garden_4', centerX: 0.64, centerY: 0.60, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 4'),
-    _Hotspot(id: 'garden_5', centerX: 0.54, centerY: 0.60, widthFrac: 0.12, heightFrac: 0.12, route: AppRoutes.gardens, label: 'Jardin 5'),
+    _Hotspot(
+        id: 'garden_1',
+        centerX: 0.60,
+        centerY: 0.52,
+        widthFrac: 0.12,
+        heightFrac: 0.12,
+        route: AppRoutes.gardens,
+        label: 'Jardin 1'),
+    _Hotspot(
+        id: 'garden_2',
+        centerX: 0.68,
+        centerY: 0.50,
+        widthFrac: 0.12,
+        heightFrac: 0.12,
+        route: AppRoutes.gardens,
+        label: 'Jardin 2'),
+    _Hotspot(
+        id: 'garden_3',
+        centerX: 0.72,
+        centerY: 0.58,
+        widthFrac: 0.12,
+        heightFrac: 0.12,
+        route: AppRoutes.gardens,
+        label: 'Jardin 3'),
+    _Hotspot(
+        id: 'garden_4',
+        centerX: 0.64,
+        centerY: 0.60,
+        widthFrac: 0.12,
+        heightFrac: 0.12,
+        route: AppRoutes.gardens,
+        label: 'Jardin 4'),
+    _Hotspot(
+        id: 'garden_5',
+        centerX: 0.54,
+        centerY: 0.60,
+        widthFrac: 0.12,
+        heightFrac: 0.12,
+        route: AppRoutes.gardens,
+        label: 'Jardin 5'),
   ];
 
   @override
-  ConsumerState<OrganicDashboardWidget> createState() => _OrganicDashboardWidgetState();
+  ConsumerState<OrganicDashboardWidget> createState() =>
+      _OrganicDashboardWidgetState();
 }
 
-class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget> {
+class _OrganicDashboardWidgetState
+    extends ConsumerState<OrganicDashboardWidget> {
   final GlobalKey _containerKey = GlobalKey();
   double? _initialSizeForScale;
 
@@ -63,18 +129,19 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
 
     for (final hs in OrganicDashboardWidget._hotspots) {
       defaultPositions[hs.id] = Offset(hs.centerX, hs.centerY);
-      defaultSizes[hs.id] = (hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac;
+      defaultSizes[hs.id] =
+          (hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac;
       defaultEnabled[hs.id] = true;
     }
 
     try {
       await ref.read(organicZonesProvider.notifier).loadFromStorage(
-        defaultPositions: defaultPositions,
-        defaultSizes: defaultSizes,
-        defaultEnabled: defaultEnabled,
-      );
+            defaultPositions: defaultPositions,
+            defaultSizes: defaultSizes,
+            defaultEnabled: defaultEnabled,
+          );
     } catch (e) {
-      if (kDebugMode) debugPrint('🔧 [CALIBRATION] error loading defaults: $e');
+      if (kDebugMode) debugPrint('🔗 [CALIBRATION] error loading defaults: $e');
     }
   }
 
@@ -84,7 +151,8 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
     try {
       final manifest = await rootBundle.loadString('AssetManifest.json');
       diag.manifestLoaded = true;
-      diag.declared = manifest.contains('"$assetPath"') || manifest.contains(assetPath);
+      diag.declared =
+          manifest.contains('"$assetPath"') || manifest.contains(assetPath);
     } catch (e) {
       diag.manifestLoaded = false;
       diag.manifestError = e.toString();
@@ -113,11 +181,15 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
     final isCalibrating = calibState.activeType == CalibrationType.organic;
 
     return LayoutBuilder(builder: (context, constraints) {
-      final double width = constraints.maxWidth.isFinite ? constraints.maxWidth : MediaQuery.of(context).size.width;
+      final double width = constraints.maxWidth.isFinite
+          ? constraints.maxWidth
+          : MediaQuery.of(context).size.width;
       final double height = (width * (9.0 / 5.0)).clamp(300.0, 1400.0);
 
       // map of routes from defaults for easy lookup
-      final Map<String, String> _routeMap = {for (final h in OrganicDashboardWidget._hotspots) h.id: h.route};
+      final Map<String, String> _routeMap = {
+        for (final h in OrganicDashboardWidget._hotspots) h.id: h.route
+      };
 
       return SizedBox(
         width: double.infinity,
@@ -135,19 +207,25 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                   alignment: Alignment.center,
                   isAntiAlias: true,
                   errorBuilder: (context, error, stack) {
-                    if (kDebugMode) debugPrint('OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
+                    if (kDebugMode)
+                      debugPrint(
+                          'OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
                     return Container(
                       color: Theme.of(context).colorScheme.surfaceVariant,
                       child: Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.image_not_supported, size: 48, color: Colors.grey.shade300),
+                            Icon(Icons.image_not_supported,
+                                size: 48, color: Colors.grey.shade300),
                             const SizedBox(height: 8),
-                            Text('Visuel absent', style: Theme.of(context).textTheme.bodyMedium),
+                            Text('Visuel absent',
+                                style: Theme.of(context).textTheme.bodyMedium),
                             if (kDebugMode) ...[
                               const SizedBox(height: 8),
-                              Text(widget.assetPath, style: Theme.of(context).textTheme.labelSmall),
+                              Text(widget.assetPath,
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
                             ],
                           ],
                         ),
@@ -157,20 +235,28 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                 ),
               ),
 
-                            // If zones are empty (race condition), fallback to defaults
+              // If zones are empty (race condition), fallback to defaults
               ...((zones.isEmpty)
                   ? (() {
                       // Trier les hotspots par "taille" descendante afin d'afficher les grandes zones
                       // en dessous et laisser les petites au-dessus (évite le recouvrement bloquant).
-                      final defaultHotspots = List<_Hotspot>.from(OrganicDashboardWidget._hotspots)
-                        ..sort((a, b) {
-                          final asz = (a.widthFrac > a.heightFrac) ? a.widthFrac : a.heightFrac;
-                          final bsz = (b.widthFrac > b.heightFrac) ? b.widthFrac : b.heightFrac;
-                          return bsz.compareTo(asz); // larger first
-                        });
+                      final defaultHotspots =
+                          List<_Hotspot>.from(OrganicDashboardWidget._hotspots)
+                            ..sort((a, b) {
+                              final asz = (a.widthFrac > a.heightFrac)
+                                  ? a.widthFrac
+                                  : a.heightFrac;
+                              final bsz = (b.widthFrac > b.heightFrac)
+                                  ? b.widthFrac
+                                  : b.heightFrac;
+                              return bsz.compareTo(asz); // larger first
+                            });
 
                       return defaultHotspots.map((hs) {
-                        final double side = ((hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac) * (width < height ? width : height);
+                        final double side = ((hs.widthFrac > hs.heightFrac)
+                                ? hs.widthFrac
+                                : hs.heightFrac) *
+                            (width < height ? width : height);
                         final double left = (hs.centerX * width) - side / 2;
                         final double top = (hs.centerY * height) - side / 2;
 
@@ -181,10 +267,13 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                           height: side,
                           child: _HotspotButton(
                             onTap: () {
-                              if (kDebugMode) debugPrint('OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
+                              if (kDebugMode)
+                                debugPrint(
+                                    'OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
                               context.push(hs.route);
                             },
-                            showDebugOutline: kDebugMode && widget.showDiagnostics,
+                            showDebugOutline:
+                                kDebugMode && widget.showDiagnostics,
                             semanticLabel: hs.label,
                           ),
                         );
@@ -200,7 +289,9 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                         final cfg = entry.value;
                         if (!cfg.enabled) return const SizedBox.shrink();
 
-                        final side = (cfg.size * (width < height ? width : height)).clamp(8.0, (width < height ? width : height));
+                        final side =
+                            (cfg.size * (width < height ? width : height))
+                                .clamp(8.0, (width < height ? width : height));
                         final left = (cfg.position.dx * width) - side / 2;
                         final top = (cfg.position.dy * height) - side / 2;
 
@@ -216,11 +307,13 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                             onTapRoute: _routeMap[id],
                             containerKey: _containerKey,
                             ref: ref,
-                            showDebugOutline: kDebugMode && widget.showDiagnostics,
+                            showDebugOutline:
+                                kDebugMode && widget.showDiagnostics,
                           ),
                         );
                       }).toList();
-                    })()),if (kDebugMode && widget.showDiagnostics)
+                    })()),
+              if (kDebugMode && widget.showDiagnostics)
                 Positioned(
                   top: 8,
                   right: 8,
@@ -233,49 +326,82 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
                         body = Row(
                           children: const [
                             SizedBox(width: 8),
-                            SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2)),
+                            SizedBox(
+                                width: 12,
+                                height: 12,
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2)),
                             SizedBox(width: 8),
-                            Text('Checking...', style: TextStyle(color: Colors.white, fontSize: 12)),
+                            Text('Checking...',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12)),
                           ],
                         );
                       } else if (snap.hasError) {
-                        body = Text('Diag failed: ${snap.error}', style: const TextStyle(color: Colors.redAccent, fontSize: 12));
+                        body = Text('Diag failed: ${snap.error}',
+                            style: const TextStyle(
+                                color: Colors.redAccent, fontSize: 12));
                       } else {
                         final d = snap.data!;
                         final declared = d.declared ? 'YES' : 'NO';
-                        final declaredColor = d.declared ? Colors.greenAccent : Colors.orangeAccent;
-                        final loadOk = d.loadOk ? 'OK (${d.sizeBytes ?? 0} bytes)' : 'FAILED';
-                        final loadColor = d.loadOk ? Colors.greenAccent : Colors.redAccent;
+                        final declaredColor = d.declared
+                            ? Colors.greenAccent
+                            : Colors.orangeAccent;
+                        final loadOk = d.loadOk
+                            ? 'OK (${d.sizeBytes ?? 0} bytes)'
+                            : 'FAILED';
+                        final loadColor =
+                            d.loadOk ? Colors.greenAccent : Colors.redAccent;
 
                         body = Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Text('asset:', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                                Text('asset:',
+                                    style: TextStyle(
+                                        color: Colors.white70, fontSize: 12)),
                                 const SizedBox(width: 6),
-                                Flexible(child: Text(widget.assetPath, style: const TextStyle(color: Colors.white, fontSize: 12))),
+                                Flexible(
+                                    child: Text(widget.assetPath,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12))),
                               ],
                             ),
                             const SizedBox(height: 6),
                             Row(
                               children: [
-                                Text('declared:', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                                Text('declared:',
+                                    style: const TextStyle(
+                                        color: Colors.white70, fontSize: 12)),
                                 const SizedBox(width: 6),
-                                Text(declared, style: TextStyle(color: declaredColor, fontWeight: FontWeight.bold, fontSize: 12)),
+                                Text(declared,
+                                    style: TextStyle(
+                                        color: declaredColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12)),
                               ],
                             ),
                             const SizedBox(height: 4),
                             Row(
                               children: [
-                                Text('load:', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                                Text('load:',
+                                    style: const TextStyle(
+                                        color: Colors.white70, fontSize: 12)),
                                 const SizedBox(width: 6),
-                                Text(loadOk, style: TextStyle(color: loadColor, fontWeight: FontWeight.bold, fontSize: 12)),
+                                Text(loadOk,
+                                    style: TextStyle(
+                                        color: loadColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12)),
                               ],
                             ),
                           ],
                         );
-                        bg = d.declared && d.loadOk ? Colors.black.withOpacity(0.24) : Colors.black.withOpacity(0.38);
+                        bg = d.declared && d.loadOk
+                            ? Colors.black.withOpacity(0.24)
+                            : Colors.black.withOpacity(0.38);
                       }
                       return Material(
                         color: Colors.transparent,
@@ -300,7 +426,6 @@ class _OrganicDashboardWidgetState extends ConsumerState<OrganicDashboardWidget>
     });
   }
 }
-
 class _AssetDiagnostic {
   bool manifestLoaded = false;
   bool declared = false;
@@ -336,11 +461,13 @@ class _Hotspot {
 class _HotspotButton extends StatelessWidget {
   const _HotspotButton({
     required this.onTap,
+    this.onLongPress,
     this.showDebugOutline = false,
     this.semanticLabel,
   });
 
   final VoidCallback onTap;
+  final VoidCallback? onLongPress; // Nouveau paramètre
   final bool showDebugOutline;
   final String? semanticLabel;
 
@@ -350,6 +477,7 @@ class _HotspotButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress, // Utilisation du nouveau paramètre
         borderRadius: BorderRadius.circular(12),
         splashColor: Colors.white24,
         child: Semantics(
@@ -360,7 +488,9 @@ class _HotspotButton extends StatelessWidget {
                 ? BoxDecoration(
                     color: Colors.black26,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.orangeAccent.withOpacity(0.95), width: 1.5),
+                    border: Border.all(
+                        color: Colors.orangeAccent.withOpacity(0.95),
+                        width: 1.5),
                   )
                 : const BoxDecoration(color: Colors.transparent),
             child: showDebugOutline
@@ -374,7 +504,12 @@ class _HotspotButton extends StatelessWidget {
                           color: Colors.white.withOpacity(0.98),
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          shadows: const [Shadow(blurRadius: 2, color: Colors.black87, offset: Offset(0, 1))],
+                          shadows: const [
+                            Shadow(
+                                blurRadius: 2,
+                                color: Colors.black87,
+                                offset: Offset(0, 1))
+                          ],
                         ),
                       ),
                     ),
@@ -387,8 +522,6 @@ class _HotspotButton extends StatelessWidget {
   }
 }
 
-/// Hotspot widget that supports calibration (pan + pinch-to-scale)
-/// Hotspot widget that supports calibration (pan + pinch-to-scale)
 /// Hotspot widget that supports calibration (pan + pinch-to-scale)
 class _CalibratableHotspot extends StatefulWidget {
   const _CalibratableHotspot({
@@ -415,6 +548,17 @@ class _CalibratableHotspot extends StatefulWidget {
 }
 
 class _CalibratableHotspotState extends State<_CalibratableHotspot> {
+  // Convertit "garden_3" → 3
+  int? _extractSlotNumber(String id) {
+    if (id.startsWith('garden_')) {
+      final parts = id.split('_');
+      if (parts.length == 2) {
+        return int.tryParse(parts[1]);
+      }
+    }
+    return null;
+  }
+
   double? _startSize;
   Offset? _startFocalLocal;
   Offset? _startNormalizedPos;
@@ -426,16 +570,18 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   // Pointer tracking to detect two-finger pinch completely inside the hotspot
   final Map<int, Offset> _activePointers = {};
   bool _isPinchingInside = false;
-
   void _onPointerDown(PointerDownEvent e) {
     _activePointers[e.pointer] = e.position;
   }
+
   void _onPointerMove(PointerMoveEvent e) {
     _activePointers[e.pointer] = e.position;
   }
+
   void _onPointerUp(PointerEvent e) {
     _activePointers.remove(e.pointer);
   }
+
   void _onPointerCancel(PointerCancelEvent e) {
     _activePointers.remove(e.pointer);
   }
@@ -445,7 +591,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final size = box.size;
     for (final pos in _activePointers.values) {
       final local = box.globalToLocal(pos);
-      if (local.dx < 0 || local.dx > size.width || local.dy < 0 || local.dy > size.height) {
+      if (local.dx < 0 ||
+          local.dx > size.width ||
+          local.dy < 0 ||
+          local.dy > size.height) {
         return false;
       }
     }
@@ -455,12 +604,14 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   void _handleLongPressStart(LongPressStartDetails details) {
     _isResizing = true;
     _resizeStartSize = widget.cfg.size;
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+    final box =
+        widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box != null) {
       _startFocalLocal = box.globalToLocal(details.globalPosition);
       _startNormalizedPos = widget.cfg.position;
     }
-    print('DBG: CalibratableHotspot.longPressStart id=${widget.id} resizeStartSize=$_resizeStartSize');
+    print(
+        'DBG: CalibratableHotspot.longPressStart id=${widget.id} resizeStartSize=$_resizeStartSize');
   }
 
   void _handleLongPressEnd(LongPressEndDetails details) {
@@ -471,7 +622,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
   void _handleScaleStart(ScaleStartDetails details) {
     _startSize = widget.cfg.size;
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+    final box =
+        widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box != null) {
       _startFocalLocal = box.globalToLocal(details.focalPoint);
       _startNormalizedPos = widget.cfg.position;
@@ -480,22 +632,30 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     } else {
       _isPinchingInside = false;
     }
-    print('DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize isPinchingInside=$_isPinchingInside');
+    print(
+        'DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize isPinchingInside=$_isPinchingInside');
   }
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
-    final box = widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
+    final box =
+        widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {
-      print('DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
+      print(
+          'DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
       return;
     }
     final size = box.size;
 
     // If pinch-inside detected AND a real pinch (scale != 1.0), resize by pinch
-    if (_isPinchingInside && _startSize != null && (details.scale - 1.0).abs() > 0.0001) {
+    if (_isPinchingInside &&
+        _startSize != null &&
+        (details.scale - 1.0).abs() > 0.0001) {
       final newSize = (_startSize! * details.scale).clamp(0.05, 1.0);
-      widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
-      print('DBG: CalibratableHotspot.pinchResize id=${widget.id} scale=${details.scale} newSize=$newSize');
+      widget.ref
+          .read(organicZonesProvider.notifier)
+          .setSize(widget.id, newSize);
+      print(
+          'DBG: CalibratableHotspot.pinchResize id=${widget.id} scale=${details.scale} newSize=$newSize');
       widget.ref.read(calibrationStateProvider.notifier).markAsModified();
       return;
     }
@@ -504,9 +664,13 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     if (_isResizing && _resizeStartSize != null) {
       final delta = details.focalPointDelta.dy;
       final deltaNormalizedSize = -(delta / size.shortestSide);
-      final newSize = (_resizeStartSize! + deltaNormalizedSize).clamp(0.05, 1.0);
-      widget.ref.read(organicZonesProvider.notifier).setSize(widget.id, newSize);
-      print('DBG: CalibratableHotspot.resize id=${widget.id} delta=$delta deltaNorm=$deltaNormalizedSize newSize=$newSize');
+      final newSize =
+          (_resizeStartSize! + deltaNormalizedSize).clamp(0.05, 1.0);
+      widget.ref
+          .read(organicZonesProvider.notifier)
+          .setSize(widget.id, newSize);
+      print(
+          'DBG: CalibratableHotspot.resize id=${widget.id} delta=$delta deltaNorm=$deltaNormalizedSize newSize=$newSize');
       widget.ref.read(calibrationStateProvider.notifier).markAsModified();
       return;
     }
@@ -514,14 +678,18 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     // Default: pan using focalPointDelta
     if (details.focalPointDelta != Offset.zero) {
       final deltaGlobal = details.focalPointDelta;
-      final deltaNormalized = Offset(deltaGlobal.dx / size.width, deltaGlobal.dy / size.height);
+      final deltaNormalized =
+          Offset(deltaGlobal.dx / size.width, deltaGlobal.dy / size.height);
       final currentPos = widget.cfg.position;
       final newPos = Offset(
         (currentPos.dx + deltaNormalized.dx).clamp(0.0, 1.0),
         (currentPos.dy + deltaNormalized.dy).clamp(0.0, 1.0),
       );
-      widget.ref.read(organicZonesProvider.notifier).setPosition(widget.id, newPos);
-      print('DBG: CalibratableHotspot.pan id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
+      widget.ref
+          .read(organicZonesProvider.notifier)
+          .setPosition(widget.id, newPos);
+      print(
+          'DBG: CalibratableHotspot.pan id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
       widget.ref.read(calibrationStateProvider.notifier).markAsModified();
     }
   }
@@ -534,7 +702,52 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     _isResizing = false;
     _isPinchingInside = false;
     _activePointers.clear();
+
     print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
+  }
+
+  void _handleGardenTap() async {
+    // Convertir l'ID texte ("garden_3") en entier (3)
+    final slot = _extractSlotNumber(widget.id);
+    if (slot == null) {
+      print('DBG: Slot invalide pour id=${widget.id}');
+      return;
+    }
+
+    final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
+
+    if (gardenId != null) {
+      // Naviguer vers le jardin existant avec le paramètre fromOrganic
+      widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
+      context.push('/gardens/$gardenId?fromOrganic=1');
+    } else {
+      // Ouvrir la création de jardin avec le slot numérique correct
+      context.push('/gardens/create?slot=$slot');
+    }
+  }
+  // Nouvelle méthode pour gérer le long press des jardins (activation)
+  void _handleGardenLongPress() async {
+    // Convertir l'ID texte ("garden_3") en entier (3)
+    final slot = _extractSlotNumber(widget.id);
+    if (slot == null) {
+      print('DBG: Slot invalide pour id=${widget.id}');
+      return;
+    }
+
+    final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
+
+    if (gardenId != null) {
+      // Activer le jardin
+      widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
+
+      // Feedback visuel
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Jardin $gardenId activé'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
@@ -562,7 +775,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
             child: Center(
               child: Text(
                 widget.cfg.id,
-                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -570,23 +786,26 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       );
     }
 
-    // Normal behaviour: tap to navigate
+    // Normal behaviour: tap to navigate avec logique dynamique pour les jardins
+    final isGardenHotspot = widget.id.startsWith('garden_');
+
     return _HotspotButton(
-      onTap: () {
-        if (kDebugMode) debugPrint('OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
-        if (widget.onTapRoute != null) context.push(widget.onTapRoute!);
-      },
+      onTap: isGardenHotspot
+          ? _handleGardenTap
+          : () {
+              if (kDebugMode) {
+                debugPrint(
+                    'OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
+              }
+              if (widget.onTapRoute != null) {
+                context.push(widget.onTapRoute!);
+              }
+            },
+      onLongPress: isGardenHotspot && !widget.isCalibrating
+          ? _handleGardenLongPress
+          : null,
       semanticLabel: widget.cfg.id,
       showDebugOutline: widget.showDebugOutline,
     );
   }
 }
-
-
-
-
-
-
-
-
-
