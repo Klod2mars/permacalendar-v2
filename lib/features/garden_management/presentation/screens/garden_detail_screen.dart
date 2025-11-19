@@ -15,7 +15,6 @@ import '../../../garden_bed/presentation/widgets/germination_preview.dart';
 import '../../../planting/providers/planting_provider.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../garden_bed/presentation/widgets/create_garden_bed_dialog.dart';
-import '../../../garden_bed/presentation/widgets/garden_bed_card.dart';
 
 // --- Imports ajoutés ---
 import '../../../../core/models/garden_bed.dart';
@@ -135,23 +134,12 @@ class GardenDetailScreen extends ConsumerWidget {
                 ],
               ),
 
-              // ✅ FAB MODIFIÉ : ouvre directement le formulaire complet
+              // FAB : ouvre le formulaire complet de création de parcelle
               floatingActionButton: FloatingActionButton.extended(
                 icon: const Icon(Icons.add),
                 label: const Text("Parcelle"),
-                onPressed: () {
-                  // Ouvrir le dialog complet de création
-                  showDialog<bool>(
-                    context: context,
-                    builder: (ctx) =>
-                        CreateGardenBedDialog(gardenId: garden.id),
-                  ).then((result) async {
-                    if (result == true) {
-                      // Recharger la liste pour montrer immédiatement la parcelle créée
-                      ref.invalidate(gardenBedProvider(garden.id));
-                    }
-                  });
-                },
+                onPressed: () =>
+                    _showCreateGardenBedDialog(context, ref, garden),
               ),
 
               body: SingleChildScrollView(
@@ -216,7 +204,7 @@ class GardenDetailScreen extends ConsumerWidget {
                         garden, theme, totalBedsArea, gardenBeds.length),
                     const SizedBox(height: 24),
 
-                    // Garden Beds Section - MODIFIÉ
+                    // Garden Beds Section
                     _buildGardenBedsSection(
                         context, ref, theme, garden, gardenBeds),
                   ],
@@ -253,7 +241,7 @@ class GardenDetailScreen extends ConsumerWidget {
           const SizedBox(height: 16),
         ],
 
-        // Encadré principal avec les métriques essentielles (design vert pomme)
+        // Encadré principal avec les métriques essentielles
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
@@ -283,7 +271,7 @@ class GardenDetailScreen extends ConsumerWidget {
           ),
         ),
 
-        // Date de création en position secondaire (texte gris discret)
+        // Date de création
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -402,133 +390,216 @@ class GardenDetailScreen extends ConsumerWidget {
             ),
           )
         else
-          // NOUVELLE SECTION : Affichage des parcelles avec GardenBedCard
           Column(
             children: [
               const SizedBox(height: 16),
 
-              // Affiche chaque parcelle avec les actions intégrées
+              // Affiche chaque parcelle sous forme de Card simple
               ...gardenBeds.map((bed) {
-                // s'assurer du bon typage
                 final GardenBed bedTyped = bed as GardenBed;
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: GardenBedCard(
-                    gardenBed: bedTyped,
-                    onTap: () {
-                      // Navigation DIRECTE vers le détail de la parcelle (page 4).
-                      context.push(
-                        '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                        extra: bedTyped.name,
-                      );
-                    },
-                    onEdit: () async {
-                      // Editer la parcelle via le même dialog (pré-rempli)
-                      final result = await showDialog<bool>(
-                        context: context,
-                        builder: (ctx) => CreateGardenBedDialog(
-                            gardenId: garden.id, gardenBed: bedTyped),
-                      );
-
-                      if (result == true) {
-                        // Forcer le refresh du provider family pour ce jardin
-                        ref.invalidate(gardenBedProvider(garden.id));
-                      }
-                    },
-                    onDelete: () async {
-                      final confirmed = await showDialog<bool>(
-                        context: context,
-                        builder: (dctx) => AlertDialog(
-                          title: Text('Supprimer la parcelle'),
-                          content: Text(
-                            'Êtes-vous sûr de vouloir supprimer "${bedTyped.name}" ? Cette action est irréversible.',
+                  child: CustomCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Row principal : titre + actions
+                        ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          title: Text(bedTyped.name),
+                          subtitle: Text(bedTyped.formattedSize),
+                          trailing: PopupMenuButton<String>(
+                            onSelected: (value) async {
+                              switch (value) {
+                                case 'edit':
+                                  await _editBed(
+                                      context, ref, garden, bedTyped);
+                                  break;
+                                case 'delete':
+                                  await _deleteBed(
+                                      context, ref, garden, bedTyped);
+                                  break;
+                                case 'open':
+                                  context.push(
+                                    '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                                    extra: bedTyped.name,
+                                  );
+                                  break;
+                              }
+                            },
+                            itemBuilder: (_) => [
+                              const PopupMenuItem(
+                                  value: 'open', child: Text('Ouvrir')),
+                              const PopupMenuItem(
+                                  value: 'edit', child: Text('Modifier')),
+                              const PopupMenuItem(
+                                  value: 'delete', child: Text('Supprimer')),
+                            ],
                           ),
-                          actions: [
-                            TextButton(
-                                onPressed: () => Navigator.of(dctx).pop(false),
-                                child: const Text('Annuler')),
-                            FilledButton(
-                                onPressed: () => Navigator.of(dctx).pop(true),
-                                child: const Text('Supprimer')),
-                          ],
+                          onTap: () {
+                            if (openPlantingsOnBedTap) {
+                              // Ouvrir la liste de plantations si demandé
+                              context.push(
+                                '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
+                                extra: bedTyped.name,
+                              );
+                            } else {
+                              // Ouvrir la Planche 2
+                              context.push(
+                                '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                                extra: bedTyped.name,
+                              );
+                            }
+                          },
                         ),
-                      );
 
-                      if (confirmed == true) {
-                        try {
-                          // Supprimer de Hive (sanctuaire)
-                          await GardenBoxes.gardenBeds.delete(bedTyped.id);
-
-                          // Tracker l'activité
-                          await ActivityObserverService()
-                              .captureGardenBedDeleted(
-                            gardenBedId: bedTyped.id,
-                            gardenBedName: bedTyped.name,
-                            gardenId: bedTyped.gardenId,
-                          );
-
-                          // Émettre event (silencieux si erreur)
-                          try {
-                            GardenEventBus().emit(
-                              GardenEvent.gardenContextUpdated(
-                                gardenId: bedTyped.gardenId,
-                                timestamp: DateTime.now(),
-                                metadata: {
-                                  'action': 'bed_deleted',
-                                  'bedId': bedTyped.id,
-                                },
+                        // Extra content : preview germination + small stats
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GerminationPreview(
+                                gardenBed: bedTyped,
+                                allPlantings:
+                                    ref.watch(plantingProvider).plantings,
+                                plants: ref.watch(plantsListProvider),
+                                forceRefresh: true,
                               ),
-                            );
-                          } catch (e) {
-                            // silencieux
-                          }
-
-                          // Forcer le refresh
-                          ref.invalidate(gardenBedProvider(garden.id));
-
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Parcelle supprimée')),
-                            );
-                          }
-                        } catch (e) {
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text('Erreur lors de la suppression: $e')));
-                          }
-                        }
-                      }
-                    },
-                    extraContent: GerminationPreview(
-                      gardenBed: bedTyped,
-                      allPlantings:
-                          ref.watch(plantingProvider.notifier).state.plantings,
-                      plants: ref.watch(plantsListProvider),
-                      forceRefresh: true,
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
               }).toList(),
+
+              const SizedBox(height: 8),
+
+              // CTA "Gérer les parcelles"
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    context.push(
+                      AppRoutes.gardenBeds.replaceFirst(':gardenId', garden.id),
+                      extra: garden.name,
+                    );
+                  },
+                  child: const Text('Gérer les parcelles'),
+                ),
+              ),
             ],
           ),
       ],
     );
   }
 
+  Future<void> _showCreateGardenBedDialog(
+      BuildContext context, WidgetRef ref, GardenFreezed garden) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => CreateGardenBedDialog(gardenId: garden.id),
+    );
+
+    if (result == true) {
+      ref.invalidate(gardenBedProvider(garden.id));
+    }
+  }
+
+  Future<void> _editBed(BuildContext context, WidgetRef ref,
+      GardenFreezed garden, GardenBed bedTyped) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (ctx) =>
+          CreateGardenBedDialog(gardenId: garden.id, gardenBed: bedTyped),
+    );
+
+    if (result == true) {
+      ref.invalidate(gardenBedProvider(garden.id));
+    }
+  }
+
+  Future<void> _deleteBed(BuildContext context, WidgetRef ref,
+      GardenFreezed garden, GardenBed bedTyped) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dctx) => AlertDialog(
+        title: const Text('Supprimer la parcelle'),
+        content: Text(
+          'Êtes-vous sûr de vouloir supprimer "${bedTyped.name}" ? Cette action est irréversible.',
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(dctx).pop(false),
+              child: const Text('Annuler')),
+          FilledButton(
+              onPressed: () => Navigator.of(dctx).pop(true),
+              child: const Text('Supprimer')),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      try {
+        // Supprimer de Hive (sanctuaire)
+        await GardenBoxes.gardenBeds.delete(bedTyped.id);
+
+        // Tracker l'activité
+        await ActivityObserverService().captureGardenBedDeleted(
+          gardenBedId: bedTyped.id,
+          gardenBedName: bedTyped.name,
+          gardenId: bedTyped.gardenId,
+        );
+
+        // Émettre event (silencieux si erreur)
+        try {
+          GardenEventBus().emit(
+            GardenEvent.gardenContextUpdated(
+              gardenId: bedTyped.gardenId,
+              timestamp: DateTime.now(),
+              metadata: {
+                'action': 'bed_deleted',
+                'bedId': bedTyped.id,
+              },
+            ),
+          );
+        } catch (_) {
+          // silencieux
+        }
+
+        // Forcer le refresh
+        ref.invalidate(gardenBedProvider(garden.id));
+
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Parcelle supprimée'),
+                backgroundColor: Colors.green),
+          );
+        }
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Erreur lors de la suppression: $e')));
+        }
+      }
+    }
+  }
+
   void _handleMenuAction(
       BuildContext context, WidgetRef ref, String action, String gardenId) {
     switch (action) {
       case 'edit':
-        // TODO: Navigate to edit screen
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Édition à implémenter')),
         );
         break;
       case 'toggle_status':
-        // TODO: Implement toggle status with new provider
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Toggle status à implémenter')),
         );
