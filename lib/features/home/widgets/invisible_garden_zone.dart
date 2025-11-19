@@ -1,5 +1,6 @@
 ﻿import '../../../core/repositories/dashboard_slots_repository.dart';
 import 'package:permacalendar/app_router.dart';
+import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -127,7 +128,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
 
                   border: widget.isCalibrationMode
                       ? Border.all(
-                          color: Colors.cyan.withOpacity(0.6),
+                          color: Colors.cyan.withValues(alpha: 0.6),
                           width: 2,
                         )
                       : null,
@@ -135,7 +136,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
                   // Mode normal : transparent total
 
                   color: widget.isCalibrationMode
-                      ? Colors.cyan.withOpacity(0.1)
+                      ? Colors.cyan.withValues(alpha: 0.1)
                       : Colors.transparent,
                 ),
               ),
