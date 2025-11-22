@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
-
+import 'dart:math';
 import '../../../core/repositories/dashboard_slots_repository.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/adapters/garden_migration_adapters.dart';
@@ -12,7 +12,6 @@ import '../../../core/providers/active_garden_provider.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../shared/presentation/themes/organic_palettes.dart';
 import '../../../shared/widgets/animations/insect_awakening_widget.dart';
-import 'package:permacalendar/app_router.dart';
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 
 /// Widget de zone interactive invisible pour un slot jardin
@@ -49,6 +48,16 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   // Clé globale pour contrôler l'animation insecte
   final GlobalKey<InsectAwakeningWidgetState> _awakeningKey = GlobalKey();
 
+  // --- AJOUT: mémoriser dernier point local de tap pour valider la hit area circulaire
+  Offset? _lastLocalTapPosition;
+
+  // --- AJOUT: utilitaire pour vérifier si un point local est dans le cercle
+  bool _isPointInsideCircle(Offset localPos, Size circleSize) {
+    final center = Offset(circleSize.width / 2, circleSize.height / 2);
+    final radius = min(circleSize.width, circleSize.height) / 2;
+    return (localPos - center).distance <= radius;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Récupération du jardin pour ce slot
@@ -60,75 +69,113 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
     // Identifiant de zone pour le drag (format: JARDIN_X)
     final zoneId = 'JARDIN_${widget.slotNumber}';
 
+    // Diamètre pour la bulle : 75% du plus petit côté du rect (pour être 1/4 plus petit)
+    final diameter = min(widget.zone.width, widget.zone.height) * 0.75;
+
     return Positioned.fromRect(
       rect: widget.zone,
-      child: InsectAwakeningWidget(
-        key: _awakeningKey,
-        particleColor: widget.glowColor,
-        gardenId: garden?.id ?? 'slot_${widget.slotNumber}',
-        enabled: !widget.isCalibrationMode,
-        child: GestureDetector(
-          // Interactions conservées
-          onTap: widget.isCalibrationMode
-              ? null
-              : () => _handleTap(context, ref, garden),
-          onLongPress: widget.isCalibrationMode
-              ? null
-              : () => _handleLongPress(context, ref, garden),
+      child: ClipOval(
+        // clippe la peinture pour éviter tout débordement carré
+        child: InsectAwakeningWidget(
+          key: _awakeningKey,
+          particleColor: widget.glowColor,
+          gardenId: garden?.id ?? 'slot_${widget.slotNumber}',
+          enabled: !widget.isCalibrationMode,
+          child: Center(
+            child: SizedBox(
+              width: diameter,
+              height: diameter,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
 
-          // Drag & Drop pour calibration
-          onPanStart: widget.isCalibrationMode && widget.onPanStart != null
-              ? (details) => widget.onPanStart!(zoneId, details)
-              : null,
-          onPanUpdate: widget.isCalibrationMode && widget.onPanUpdate != null
-              ? (details) {
-                  final screenWidth = MediaQuery.of(context).size.width;
-                  final screenHeight = MediaQuery.of(context).size.height;
-                  widget.onPanUpdate!(
-                      zoneId, details, screenWidth, screenHeight);
-                }
-              : null,
-          onPanEnd: widget.isCalibrationMode && widget.onPanEnd != null
-              ? (details) => widget.onPanEnd!(zoneId, details)
-              : null,
+                // Pour que la zone tactile corresponde parfaitement au rond,
+                // on mémorise la position locale du tap et on valide via distance
+                onTapDown: (details) {
+                  _lastLocalTapPosition = details.localPosition;
+                },
 
-          child: Stack(
-            children: [
-              // Zone invisible (ou cadre en mode calibration)
-              Container(
-                decoration: BoxDecoration(
-                  border: widget.isCalibrationMode
-                      ? Border.all(
-                          color: Colors.cyan.withOpacity(0.6),
-                          width: 2,
-                        )
-                      : null,
-                  color: widget.isCalibrationMode
-                      ? Colors.cyan.withOpacity(0.1)
-                      : Colors.transparent,
+                // Sécurité: si le tap est annulé, on reset la position
+                onTapCancel: () {
+                  _lastLocalTapPosition = null;
+                },
+
+                onTap: () {
+                  if (_lastLocalTapPosition != null &&
+                      _isPointInsideCircle(
+                          _lastLocalTapPosition!, Size(diameter, diameter))) {
+                    if (!widget.isCalibrationMode) {
+                      _handleTap(context, ref, garden);
+                    }
+                  }
+                  _lastLocalTapPosition = null;
+                },
+                onLongPressStart: (details) {
+                  if (_isPointInsideCircle(
+                      details.localPosition, Size(diameter, diameter))) {
+                    if (!widget.isCalibrationMode) {
+                      _handleLongPress(context, ref, garden);
+                    }
+                  }
+                },
+
+                // Calibration gestures (conserve le comportement)
+                onPanStart:
+                    widget.isCalibrationMode && widget.onPanStart != null
+                        ? (details) => widget.onPanStart!(zoneId, details)
+                        : null,
+                onPanUpdate: widget.isCalibrationMode &&
+                        widget.onPanUpdate != null
+                    ? (details) {
+                        final screenWidth = MediaQuery.of(context).size.width;
+                        final screenHeight = MediaQuery.of(context).size.height;
+                        widget.onPanUpdate!(
+                            zoneId, details, screenWidth, screenHeight);
+                      }
+                    : null,
+                onPanEnd: widget.isCalibrationMode && widget.onPanEnd != null
+                    ? (details) => widget.onPanEnd!(zoneId, details)
+                    : null,
+
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Cercle de base (visible uniquement en calibration)
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: widget.isCalibrationMode
+                            ? Border.all(
+                                color:
+                                    Colors.cyan.withAlpha((0.6 * 255).round()),
+                                width: 2,
+                              )
+                            : null,
+                        color: widget.isCalibrationMode
+                            ? Colors.cyan.withAlpha((0.08 * 255).round())
+                            : Colors.transparent,
+                      ),
+                    ),
+
+                    // L'étiquette discrète (si nécessaire)
+                    if (widget.isCalibrationMode)
+                      Center(
+                        child: Text(
+                          garden?.name ?? 'Slot ${widget.slotNumber}',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    else if (garden != null)
+                      Center(child: _buildDiscreetLabel(garden, isActive)),
+                    // Note : l'animation visuelle (flame) est dessinée par InsectAwakeningWidget
+                    // et, grâce au ClipOval, restera ronde et ne dépassera pas en coins carrés.
+                  ],
                 ),
               ),
-
-              // Lueur organique animée (si actif et pas en mode calibration)
-              if (isActive && !widget.isCalibrationMode)
-                _OrganicGlowAnimation(glowColor: widget.glowColor),
-
-              // Label : soit jardin existant, soit nom du slot en calibration
-              if (widget.isCalibrationMode)
-                Center(
-                  child: Text(
-                    garden?.name ?? 'Slot ${widget.slotNumber}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              else if (garden != null)
-                Center(child: _buildDiscreetLabel(garden, isActive)),
-            ],
+            ),
           ),
         ),
       ),
@@ -197,11 +244,15 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
     if (garden != null) {
       // Ouvrir le jardin existant avec gestion d'erreur
       try {
-        if (!context.mounted) return;
+        if (!context.mounted) {
+          return;
+        }
         context.push('/gardens/${garden.id}');
       } catch (e) {
         // Afficher un message contextuel si le jardin est introuvable
-        if (!context.mounted) return;
+        if (!context.mounted) {
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Jardin introuvable: ${garden.name}'),
@@ -234,7 +285,9 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
     ref.read(activeGardenIdProvider.notifier).setActiveGarden(garden.id);
 
     // Feedback visuel optionnel (SnackBar)
-    if (!context.mounted) return;
+    if (!context.mounted) {
+      return;
+    }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('${garden.name} activé comme jardin courant'),
@@ -326,6 +379,9 @@ class _OrganicGlowAnimationState extends State<_OrganicGlowAnimation>
         // Taille de base : adapter selon l'UI (empirique)
         final baseSize = 44.0 + (spreadRadius * 2);
 
+        final intAlpha1 = (opacity.clamp(0.0, 1.0) * 255).round();
+        final intAlpha2 = ((opacity * 0.6).clamp(0.0, 1.0) * 255).round();
+
         return IgnorePointer(
           child: Center(
             child: Container(
@@ -336,13 +392,13 @@ class _OrganicGlowAnimationState extends State<_OrganicGlowAnimation>
                 color: Colors.transparent,
                 boxShadow: [
                   BoxShadow(
-                    color: widget.glowColor.withOpacity(opacity),
+                    color: widget.glowColor.withAlpha(intAlpha1),
                     blurRadius: blurRadius,
                     spreadRadius: spreadRadius,
                   ),
                   // Un deuxième shadow plus diffus pour donner de la profondeur
                   BoxShadow(
-                    color: widget.glowColor.withOpacity(opacity * 0.6),
+                    color: widget.glowColor.withAlpha(intAlpha2),
                     blurRadius: blurRadius * 1.6,
                     spreadRadius: spreadRadius * 0.6,
                   ),
