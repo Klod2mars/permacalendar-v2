@@ -1,4 +1,7 @@
-﻿import 'package:flutter/material.dart';
+// lib/shared/widgets/animations/insect_awakening_widget.dart
+
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -7,21 +10,23 @@ import 'insect_particles_painter.dart';
 import 'insect_persistent_halo_painter.dart';
 import '../../../core/providers/active_garden_provider.dart';
 
-/// Widget d'animation "éveil insecte" avec 12 particules lumineuses en spirale
-/// Mission A39-2 : Animation de 800ms avec son de bourdonnement
-/// Mission A39-2.1 : Halo persistant pour jardins actifs
+/// Widget d'animation "éveil insecte" avec particules et halo persistant
+///
+/// Conçu pour être monté autour d'une zone circulaire (ex : ClipOval + SizedBox),
+/// il écoute `activeGardenIdProvider` et passe en état `persistent` lorsque
+/// son gardenId devient actif.
 class InsectAwakeningWidget extends ConsumerStatefulWidget {
   final Widget child;
   final Color particleColor;
   final VoidCallback? onAnimationComplete;
   final bool enabled;
-  final String gardenId; // NOUVEAU : ID du jardin pour tracking
+  final String gardenId;
 
   const InsectAwakeningWidget({
     super.key,
     required this.child,
     required this.particleColor,
-    required this.gardenId, // NOUVEAU
+    required this.gardenId,
     this.onAnimationComplete,
     this.enabled = true,
   });
@@ -33,43 +38,56 @@ class InsectAwakeningWidget extends ConsumerStatefulWidget {
 
 class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     with TickerProviderStateMixin {
-  // Animation éveil (existante)
+  // Controllers
   late AnimationController _awakeningController;
   late Animation<double> _awakeningAnimation;
 
-  // NOUVEAUX : Animation halo persistant
   late AnimationController _persistentHaloController;
   late Animation<double> _persistentHaloAnimation;
 
-  // NOUVEAU : Animation fade out
   AnimationController? _fadeOutController;
   Animation<double>? _fadeOutAnimation;
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   InsectAnimationState _currentState = InsectAnimationState.idle;
 
+  // Guard to avoid repeatedly calling repeat() on persistent controller
+  bool _persistentRepeatActive = false;
+
   @override
   void initState() {
     super.initState();
+
     _initializeAnimations();
+
+    // Listen to the awakening animation status to move to persistent state.
     _awakeningController.addStatusListener(_onAwakeningStatusChange);
 
-    // Audit init log
-    debugPrint(
-        '[Audit][InsectAwakening:init] gardenId=${widget.gardenId} currentState=$_currentState');
-
-    // Écoute fiable du provider : réagir immédiatement aux changements d'ID actif
-    // (ne dépend plus uniquement des rebuilds parents)
+    // Reliable listen to provider for immediate reaction to active garden changes.
+    // Using ref.listen inside initState is safe in ConsumerState.
     ref.listen<String?>(activeGardenIdProvider, (prev, next) {
-      debugPrint(
-          '[Audit][InsectAwakening:listen] gardenId=${widget.gardenId} prev=$prev next=$next currentState=$_currentState');
       final isActive = next == widget.gardenId;
-      if (isActive && _currentState == InsectAnimationState.idle) {
-        triggerAnimation();
-      } else if (!isActive &&
-          (_currentState == InsectAnimationState.persistent ||
-              _currentState == InsectAnimationState.awakening)) {
-        _startFadeOut();
+      if (isActive) {
+        // If garden becomes active, either start animation (idle) or cancel fadeOut.
+        if (_currentState == InsectAnimationState.idle) {
+          triggerAnimation();
+        } else if (_currentState == InsectAnimationState.fadingOut) {
+          // Cancel fade out and go straight to persistent
+          _fadeOutController?.stop();
+          _fadeOutController?.dispose();
+          _fadeOutController = null;
+          _fadeOutAnimation = null;
+          setState(() {
+            _currentState = InsectAnimationState.persistent;
+          });
+          _startPersistentIfNeeded();
+        }
+      } else {
+        // If garden is no longer active, and we were persistent/awakening, fade out.
+        if (_currentState == InsectAnimationState.persistent ||
+            _currentState == InsectAnimationState.awakening) {
+          _startFadeOut();
+        }
       }
     });
   }
@@ -84,22 +102,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     super.dispose();
   }
 
-  @override
-  void didUpdateWidget(InsectAwakeningWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Détecter changement de jardin actif (fallback si nécessaire)
-    _checkActiveGardenChange();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _checkActiveGardenChange();
-  }
-
-  /// Initialise les contrôleurs d'animation
   void _initializeAnimations() {
-    // Controller éveil (existant)
     _awakeningController = AnimationController(
       duration: InsectAwakeningConfig.totalDuration,
       vsync: this,
@@ -109,7 +112,6 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       curve: Curves.linear,
     );
 
-    // NOUVEAU : Controller halo persistant
     _persistentHaloController = AnimationController(
       duration: InsectAwakeningConfig.persistentHaloDuration,
       vsync: this,
@@ -120,84 +122,82 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     );
   }
 
-  /// NOUVEAU : Vérifier si ce jardin est actif
-  void _checkActiveGardenChange() {
-    final activeGardenId = ref.watch(activeGardenIdProvider);
-    final isThisGardenActive = activeGardenId == widget.gardenId;
-
-    debugPrint(
-        '[Audit][InsectAwakening:_check] gardenId=${widget.gardenId} activeGardenId=$activeGardenId currentState=$_currentState');
-
-    if (isThisGardenActive && _currentState == InsectAnimationState.idle) {
-      // Ce jardin vient d'être activé ailleurs (ex: par long press)
-      // Lancer l'animation complète
-      triggerAnimation();
-    } else if (!isThisGardenActive &&
-        (_currentState == InsectAnimationState.persistent ||
-            _currentState == InsectAnimationState.awakening)) {
-      // Ce jardin n'est plus actif, lancer fade out
-      _startFadeOut();
+  /// Ensure persistent controller is running once.
+  void _startPersistentIfNeeded() {
+    if (!_persistentHaloController.isAnimating) {
+      _persistentHaloController.repeat(reverse: true);
+      _persistentRepeatActive = true;
     }
   }
 
-  /// Gère les changements de statut de l'animation d'éveil
+  void _stopPersistentIfNeeded() {
+    if (_persistentHaloController.isAnimating) {
+      _persistentHaloController.stop();
+      _persistentRepeatActive = false;
+    }
+  }
+
+  /// Called when awakening animation completes.
   void _onAwakeningStatusChange(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
-      // Animation éveil terminée, passer en mode persistant
+      // Switch to persistent with setState so UI rebuilds and painter is shown.
       setState(() {
         _currentState = InsectAnimationState.persistent;
       });
 
+      // Reset awakening controller for future uses.
       _awakeningController.reset();
 
-      // Démarrer la pulsation du halo persistant
-      _persistentHaloController.repeat(reverse: true);
-
-      debugPrint(
-          '[Audit][InsectAwakening] gardenId=${widget.gardenId} newState=$_currentState');
+      // Start persistent pulsation loop.
+      _startPersistentIfNeeded();
 
       widget.onAnimationComplete?.call();
     }
   }
 
-  /// Déclenche l'animation d'éveil insecte
-  /// Vérifie les paramètres d'accessibilité et lance l'animation + son
+  /// Trigger the awakening animation (or directly persistent if animations disabled).
   Future<void> triggerAnimation() async {
     if (!widget.enabled || _currentState == InsectAnimationState.awakening) {
       return;
     }
 
-    debugPrint(
-        '[Audit][InsectAwakening] triggerAnimation called gardenId=${widget.gardenId} currentState=$_currentState');
-
-    // Vérifier accessibilité
     final mediaQuery = MediaQuery.maybeOf(context);
     if (mediaQuery != null && mediaQuery.disableAnimations) {
+      // Accessibility mode: directly go persistent.
       setState(() {
         _currentState = InsectAnimationState.persistent;
       });
-      _persistentHaloController.repeat(reverse: true);
+      _startPersistentIfNeeded();
       widget.onAnimationComplete?.call();
       return;
     }
 
-    // Annuler fade out si en cours
-    _fadeOutController?.stop();
-    _fadeOutController = null;
-    _fadeOutAnimation = null;
+    // Cancel any in-flight fade-out
+    if (_fadeOutController != null) {
+      _fadeOutController!.stop();
+      _fadeOutController!.dispose();
+      _fadeOutController = null;
+      _fadeOutAnimation = null;
+    }
 
     setState(() {
       _currentState = InsectAnimationState.awakening;
     });
 
-    // Lancer animation éveil
     _awakeningController.forward(from: 0.0);
-
-    // Lancer le son
-    await _playInsectSound();
+    // Play sound opportunistically; errors are ignored.
+    _playInsectSound();
   }
 
-  /// NOUVEAU : Démarre la transition fade out
+  Future<void> _playInsectSound() async {
+    try {
+      await _audioPlayer.setVolume(InsectAwakeningConfig.soundVolume);
+      await _audioPlayer.play(AssetSource(InsectAwakeningConfig.soundAsset));
+    } catch (_) {
+      // Silent catch: sound is optional
+    }
+  }
+
   void _startFadeOut() {
     if (_currentState == InsectAnimationState.fadingOut ||
         _currentState == InsectAnimationState.idle) {
@@ -208,13 +208,10 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       _currentState = InsectAnimationState.fadingOut;
     });
 
-    debugPrint(
-        '[Audit][InsectAwakening] _startFadeOut gardenId=${widget.gardenId} currentState=$_currentState');
+    // Stop persistent pulsation immediately
+    _stopPersistentIfNeeded();
 
-    // Arrêter la pulsation
-    _persistentHaloController.stop();
-
-    // Créer controller fade out
+    // Build fade-out controller
     _fadeOutController = AnimationController(
       duration: InsectAwakeningConfig.fadeOutDuration,
       vsync: this,
@@ -226,50 +223,69 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
 
     _fadeOutController!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        // Fully faded out: go idle and dispose fade controller
         setState(() {
           _currentState = InsectAnimationState.idle;
-          _fadeOutController?.dispose();
-          _fadeOutController = null;
-          _fadeOutAnimation = null;
         });
-        debugPrint(
-            '[Audit][InsectAwakening] fadeOut completed gardenId=${widget.gardenId} newState=$_currentState');
+        _fadeOutController?.dispose();
+        _fadeOutController = null;
+        _fadeOutAnimation = null;
       }
     });
 
-    _fadeOutController!.forward();
+    _fadeOutController!.forward(from: 0.0);
   }
 
-  /// Joue le son de bourdonnement d'insecte
-  /// Gère les erreurs de lecture audio de manière silencieuse
-  Future<void> _playInsectSound() async {
-    try {
-      await _audioPlayer.setVolume(InsectAwakeningConfig.soundVolume);
-      await _audioPlayer.play(AssetSource(InsectAwakeningConfig.soundAsset));
-    } catch (e) {
-      // Log silencieux pour éviter de spammer la console
-      // Le son est optionnel et ne doit pas bloquer l'animation
-      debugPrint('🐝 InsectAwakening: Erreur lecture son (optionnel): $e');
+  /// Fallback check: useful if widget's gardenId has changed or after a hot reload.
+  void _checkActiveGardenChange() {
+    final activeGardenId = ref.read(activeGardenIdProvider);
+    final isThisGardenActive = activeGardenId == widget.gardenId;
+
+    if (isThisGardenActive && _currentState == InsectAnimationState.idle) {
+      // If garden already active, ensure persistent state
+      triggerAnimation();
+    } else if (!isThisGardenActive &&
+        (_currentState == InsectAnimationState.persistent ||
+            _currentState == InsectAnimationState.awakening)) {
+      _startFadeOut();
     }
+  }
+
+  @override
+  void didUpdateWidget(InsectAwakeningWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If the gardenId changed (or other props), re-evaluate active state
+    if (oldWidget.gardenId != widget.gardenId) {
+      _checkActiveGardenChange();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _checkActiveGardenChange();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Widget enfant (zone de jardin)
+        // Child content (the bubble/base)
         widget.child,
 
-        // Animation éveil (particules)
+        // Awakening particles (shown only during awakening)
         if (widget.enabled && _currentState == InsectAnimationState.awakening)
           Positioned.fill(
             child: IgnorePointer(
               child: AnimatedBuilder(
                 animation: _awakeningAnimation,
                 builder: (context, child) {
-                  // Utiliser la vraie taille de la bulle via LayoutBuilder (évite MediaQuery global)
                   return LayoutBuilder(builder: (context, constraints) {
                     final bubbleSize = constraints.biggest;
+                    // If bubble has no meaningful size, avoid painting
+                    if (bubbleSize.width <= 0 || bubbleSize.height <= 0) {
+                      return const SizedBox.shrink();
+                    }
                     return CustomPaint(
                       size: bubbleSize,
                       painter: InsectParticlesPainter(
@@ -284,7 +300,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
             ),
           ),
 
-        // NOUVEAU : Halo persistant
+        // Persistent halo (shown in persistent or fadingOut states)
         if (widget.enabled &&
             (_currentState == InsectAnimationState.persistent ||
                 _currentState == InsectAnimationState.fadingOut))
@@ -298,6 +314,10 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
                 builder: (context, child) {
                   return LayoutBuilder(builder: (context, constraints) {
                     final bubbleSize = constraints.biggest;
+                    if (bubbleSize.width <= 0 || bubbleSize.height <= 0) {
+                      return const SizedBox.shrink();
+                    }
+
                     return CustomPaint(
                       size: bubbleSize,
                       painter: InsectPersistentHaloPainter(
@@ -317,9 +337,8 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   }
 }
 
-/// Extension pour faciliter l'utilisation du widget
+/// Extension helper to create default widget quickly.
 extension InsectAwakeningWidgetExtension on InsectAwakeningWidget {
-  /// Crée une instance avec des paramètres par défaut optimisés
   static InsectAwakeningWidget createDefault({
     required Widget child,
     required Color particleColor,
@@ -328,11 +347,11 @@ extension InsectAwakeningWidgetExtension on InsectAwakeningWidget {
     bool enabled = true,
   }) {
     return InsectAwakeningWidget(
+      child: child,
       particleColor: particleColor,
       gardenId: gardenId,
       onAnimationComplete: onAnimationComplete,
       enabled: enabled,
-      child: child,
     );
   }
 }

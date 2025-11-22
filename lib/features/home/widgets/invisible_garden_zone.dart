@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
+
 import '../../../core/repositories/dashboard_slots_repository.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/adapters/garden_migration_adapters.dart';
@@ -71,6 +72,13 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
 
     // Diamètre pour la bulle : 75% du plus petit côté du rect (pour être 1/4 plus petit)
     final diameter = min(widget.zone.width, widget.zone.height) * 0.75;
+
+    // Debug/log AFTER avoir calculé isActive et diameter
+    debugPrint(
+      '[Audit] InvisibleGardenZone build slot=${widget.slotNumber} '
+      'gardenId=${garden?.id} isCalibration=${widget.isCalibrationMode} '
+      'isActive=$isActive diameter=$diameter',
+    );
 
     return Positioned.fromRect(
       rect: widget.zone,
@@ -277,12 +285,20 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
 
     HapticFeedback.mediumImpact(); // Feedback plus fort pour le long press
 
+    // Audit log avant action
+    debugPrint(
+        '[Audit] InvisibleGardenZone longPress slot=${widget.slotNumber} gardenId=${garden.id} gardenName=${garden.name}');
+
     // Déclencher l'animation insecte
     final awakeningState = _awakeningKey.currentState;
     await awakeningState?.triggerAnimation();
 
     // Activer ce jardin comme jardin courant
+    debugPrint(
+        '[Audit] InvisibleGardenZone calling setActiveGarden for ${garden.id}');
     ref.read(activeGardenIdProvider.notifier).setActiveGarden(garden.id);
+    debugPrint(
+        '[Audit] InvisibleGardenZone setActiveGarden called for ${garden.id}');
 
     // Feedback visuel optionnel (SnackBar)
     if (!context.mounted) {
@@ -328,92 +344,5 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
         overflow: TextOverflow.ellipsis,
       ),
     );
-  }
-}
-
-/// Animation de respiration organique pour la lueur des jardins actifs
-class _OrganicGlowAnimation extends StatefulWidget {
-  final Color glowColor;
-
-  const _OrganicGlowAnimation({required this.glowColor});
-
-  @override
-  _OrganicGlowAnimationState createState() => _OrganicGlowAnimationState();
-}
-
-class _OrganicGlowAnimationState extends State<_OrganicGlowAnimation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: OrganicBreathAnimation.cycleDuration,
-      vsync: this,
-    )..repeat(reverse: true); // Boucle infinie aller-retour
-
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: OrganicBreathAnimation.curve,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        // Calcul des valeurs animées
-        final opacity = OrganicBreathAnimation.minOpacity +
-            (_animation.value * OrganicBreathAnimation.opacityAmplitude);
-
-        final blurRadius = OrganicBreathAnimation.minBlurRadius +
-            (_animation.value * OrganicBreathAnimation.blurAmplitude);
-
-        final spreadRadius = OrganicBreathAnimation.minSpreadRadius +
-            (_animation.value * OrganicBreathAnimation.spreadAmplitude);
-
-        // Taille de base : adapter selon l'UI (empirique)
-        final baseSize = 44.0 + (spreadRadius * 2);
-
-        final intAlpha1 = (opacity.clamp(0.0, 1.0) * 255).round();
-        final intAlpha2 = ((opacity * 0.6).clamp(0.0, 1.0) * 255).round();
-
-        return IgnorePointer(
-          child: Center(
-            child: Container(
-              width: baseSize,
-              height: baseSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.transparent,
-                boxShadow: [
-                  BoxShadow(
-                    color: widget.glowColor.withAlpha(intAlpha1),
-                    blurRadius: blurRadius,
-                    spreadRadius: spreadRadius,
-                  ),
-                  // Un deuxième shadow plus diffus pour donner de la profondeur
-                  BoxShadow(
-                    color: widget.glowColor.withAlpha(intAlpha2),
-                    blurRadius: blurRadius * 1.6,
-                    spreadRadius: spreadRadius * 0.6,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }
