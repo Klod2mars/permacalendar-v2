@@ -6,7 +6,7 @@ import '../repositories/i_plant_condition_repository.dart';
 import '../repositories/i_garden_context_repository.dart';
 import '../repositories/i_weather_repository.dart';
 import '../usecases/generate_recommendations_usecase.dart';
-import '../../plant_catalog/domain/entities/plant_entity.dart';
+import 'package:permacalendar/features/plant_catalog/domain/entities/plant_freezed.dart';
 
 /// Pipeline dédiée à la génération des recommandations pour une plante.
 ///

@@ -2,7 +2,7 @@ import 'dart:developer' as developer;
 
 import '../entities/intelligence_report.dart';
 import '../repositories/i_garden_context_repository.dart';
-import '../../plant_catalog/domain/entities/plant_entity.dart';
+import 'package:permacalendar/features/plant_catalog/domain/entities/plant_freezed.dart';
 
 /// Pipeline pour analyser un jardin entier.
 ///

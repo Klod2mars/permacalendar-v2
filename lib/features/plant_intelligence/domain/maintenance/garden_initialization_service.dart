@@ -1,114 +1,48 @@
 import 'dart:developer' as developer;
 
-import 'cache_invalidation_service.dart';
-import 'orphan_cleanup_service.dart';
+import 'package:permacalendar/core/services/aggregation/garden_aggregation_hub.dart';
 
-/// Service d’initialisation d’un jardin.
-///
-/// SRP strict :
-///   👉 Nettoyer les données obsolètes (conditions orphelines)
-///   👉 Invalider tous les caches internes
-///   👉 Ne jamais lancer d'exception
-///   👉 Produire un rapport JSON-like des opérations
-///
-/// Sanctuaire :
-///   - Aucune écriture dans garden_*
-///   - Suppression autorisée uniquement dans les modern boxes IA
-class GardenInitializationService {
-  final OrphanCleanupService _cleanupService;
-  final CacheInvalidationService _cacheService;
+/// Service dédié à l’invalidation des caches internes.
+class CacheInvalidationService {
+  final GardenAggregationHub? _gardenAggregationHub;
 
-  GardenInitializationService({
-    required OrphanCleanupService cleanupService,
-    required CacheInvalidationService cacheService,
-  })  : _cleanupService = cleanupService,
-        _cacheService = cacheService;
+  CacheInvalidationService({
+    required GardenAggregationHub? gardenAggregationHub,
+  }) : _gardenAggregationHub = gardenAggregationHub;
 
-  /// Initialise un jardin avant une session d'analyse.
-  ///
-  /// Retourne un Map<String, dynamic> avec :
-  ///   - gardenId
-  ///   - orphanedRemoved
-  ///   - cleanupSuccess
-  ///   - cacheInvalidationSuccess
-  ///   - errors[]
-  ///
-  /// 100% non-bloquant.
-  Future<Map<String, dynamic>> initialize({
-    required String gardenId,
-  }) async {
+  Future<void> invalidateAll() async {
     developer.log(
-      '🚀 InitService → Initialisation jardin $gardenId',
-      name: 'GardenInitializationService',
+      '🧹 CacheInvalidationService → Invalidation des caches…',
+      name: 'CacheInvalidationService',
     );
 
-    final stats = <String, dynamic>{
-      'gardenId': gardenId,
-      'orphanedRemoved': 0,
-      'cleanupSuccess': false,
-      'cacheInvalidationSuccess': false,
-      'errors': <String>[],
-    };
+    int invalidated = 0;
 
-    // ──────────────────────────────────────────────
-    // 1) Nettoyage conditions orphelines
-    // ──────────────────────────────────────────────
-    try {
-      final removed = await _cleanupService.clean();
-      stats['orphanedRemoved'] = removed;
-      stats['cleanupSuccess'] = true;
-
+    if (_gardenAggregationHub != null) {
+      try {
+        _gardenAggregationHub!.clearCache();
+        invalidated++;
+        developer.log(
+          '✔️ Cache GardenAggregationHub invalidé',
+          name: 'CacheInvalidationService',
+        );
+      } catch (e) {
+        developer.log(
+          '⚠️ Échec invalidation GardenAggregationHub: $e',
+          name: 'CacheInvalidationService',
+          level: 900,
+        );
+      }
+    } else {
       developer.log(
-        '✔️ InitService → $removed condition(s) orpheline(s) supprimée(s)',
-        name: 'GardenInitializationService',
-      );
-    } catch (e, st) {
-      final msg = 'Erreur nettoyage orphelines: $e';
-      stats['errors'].add(msg);
-
-      developer.log(
-        '⚠️ InitService → $msg',
-        name: 'GardenInitializationService',
-        error: e,
-        stackTrace: st,
-        level: 900,
+        'ℹ️ Aucun GardenAggregationHub injecté',
+        name: 'CacheInvalidationService',
       );
     }
 
-    // ──────────────────────────────────────────────
-    // 2) Invalidation caches
-    // ──────────────────────────────────────────────
-    try {
-      await _cacheService.invalidateAll();
-      stats['cacheInvalidationSuccess'] = true;
-
-      developer.log(
-        '✔️ InitService → Caches invalidés',
-        name: 'GardenInitializationService',
-      );
-    } catch (e, st) {
-      final msg = 'Erreur invalidation cache: $e';
-      stats['errors'].add(msg);
-
-      developer.log(
-        '⚠️ InitService → $msg',
-        name: 'GardenInitializationService',
-        error: e,
-        stackTrace: st,
-        level: 900,
-      );
-    }
-
-    // ──────────────────────────────────────────────
-    // 3) Résumé
-    // ──────────────────────────────────────────────
     developer.log(
-      '🏁 InitService → Initialisation terminée '
-      '(${stats["cleanupSuccess"] == true ? 1 : 0}'
-      '/${stats["cacheInvalidationSuccess"] == true ? 1 : 0} étapes réussies)',
-      name: 'GardenInitializationService',
+      '🏁 CacheInvalidationService → $invalidated service(s) invalidé(s)',
+      name: 'CacheInvalidationService',
     );
-
-    return stats;
   }
 }
