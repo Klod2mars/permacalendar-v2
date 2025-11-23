@@ -8,8 +8,6 @@
 // - Throttling des logs d'audit (on logge seulement quand bubbleSize ou isPersistent change)
 // - Défensif : protections pour Size(0,0), Overlay.of(context) == null, nettoyage dans dispose
 //
-// Remarque : utilise les imports package: pour éviter les erreurs d'import relatif.
-
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -144,16 +142,27 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   }
 
   /// Stoppe la persistance et enlève l'overlay (si présent)
+  ///
+  /// NOTE: on remet aussi l'animation à zéro pour éviter que le CustomPainter
+  /// continue d'afficher une intensité résiduelle après l'arrêt.
   void stopPersistent() {
     if (kDebugMode)
       debugPrint('[Insect] stopPersistent for ${widget.gardenId}');
     _isPersistent = false;
     try {
-      _controller.stop(canceled: false);
+      // Remise à zéro défensive de l'animation pour garantir extinction visuelle
+      // -> reset() positionne la valeur au lowerBound (généralement 0.0) et stoppe
+      _controller.reset();
     } catch (e, st) {
       if (kDebugMode)
-        debugPrint('[Insect] stopPersistent controller stop error: $e\n$st');
+        debugPrint('[Insect] stopPersistent controller reset error: $e\n$st');
+      // En fallback assurer valeur 0.0
+      try {
+        _controller.stop(canceled: true);
+        _controller.value = 0.0;
+      } catch (_) {}
     }
+
     _removeOverlay();
     if (mounted) setState(() {});
     _logState('stopPersistent');
@@ -224,7 +233,6 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   }
 
   // ---------------- Overlay helpers ----------------
-
   void _ensureOverlay() {
     if (_overlayEntry != null) return;
 
@@ -456,7 +464,6 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   }
 
   // ---------------- Debug helpers ----------------
-
   void _logState(String origin) {
     if (kDebugMode) {
       debugPrint(
