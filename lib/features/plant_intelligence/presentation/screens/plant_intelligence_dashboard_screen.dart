@@ -210,11 +210,14 @@ class _PlantIntelligenceDashboardScreenState
               const SizedBox(height: 12),
               Column(
                 children: intelligenceState.activePlantIds.map((plantId) {
-                  // Récupérer nom / image depuis plantCatalog si disponible
-                  final maybePlant = plantCatalog.plants
-                      .firstWhere((p) => p.id == plantId, orElse: () => null);
+                  // --- CORRECTION ICI : recherche sûre du PlantFreezed ---
+                  final matches =
+                      plantCatalog.plants.where((p) => p.id == plantId);
+                  final maybePlant = matches.isNotEmpty ? matches.first : null;
                   final plantName = maybePlant?.commonName ?? plantId;
-                  final imageUrl = maybePlant?.metadata?['image'] ?? '';
+                  final imageUrl = (maybePlant?.metadata is Map)
+                      ? (maybePlant!.metadata['image'] ?? '')
+                      : '';
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12),
