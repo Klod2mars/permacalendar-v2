@@ -483,39 +483,141 @@ class GlowPainter extends CustomPainter {
 
   GlowPainter({required this.color, this.intensity = 1.0});
 
+  double _safeDouble(double v, double fallback) =>
+      (v.isFinite && !v.isNaN) ? v : fallback;
+
   @override
   void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = math.min(size.width, size.height) / 2;
+    try {
+      // Défauts sûrs si size anormal
+      final double w = _safeDouble(size.width, 1.0);
+      final double h = _safeDouble(size.height, 1.0);
+      final Offset center0 = Offset(w / 2.0, h / 2.0);
+      double radius = _safeDouble(math.min(w, h) / 2.0, 1.0);
 
-    // Outer halo / glow (soft blurred)
-    final glowPaint = Paint()
-      ..color = color.withOpacity(0.25 * intensity)
-      ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.normal, radius * 0.6);
+      // Temps en secondes
+      final double now =
+          _safeDouble(DateTime.now().millisecondsSinceEpoch / 1000.0, 0.0);
 
-    canvas.drawCircle(center, radius * 1.25, glowPaint);
+      // Pulsation et petits flutters
+      final double beat = _safeDouble(math.sin(now * 2.0 * math.pi * 0.9), 0.0);
+      final double flutter =
+          _safeDouble(math.sin(now * 2.0 * math.pi * 1.9), 0.0);
 
-    // Mid halo
-    final midPaint = Paint()
-      ..color = color.withOpacity(0.16 * intensity)
-      ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.normal, radius * 0.3);
-    canvas.drawCircle(center, radius * 1.0, midPaint);
+      // Amplitudes (toujours très petites)
+      final double beatAmp = _safeDouble(0.06 * intensity, 0.0);
+      final double jitterAmp = _safeDouble(0.025 * intensity, 0.0);
+      final double centerJitterAmp =
+          _safeDouble(0.02 * intensity * radius, 0.0);
 
-    // Core circle
-    final circlePaint = Paint()
-      ..shader = RadialGradient(
-        colors: [
-          color.withOpacity(0.95 * intensity),
-          color.withOpacity(0.6 * intensity),
-        ],
-      ).createShader(Rect.fromCircle(center: center, radius: radius))
-      ..style = PaintingStyle.fill;
+      // Safe center jitter
+      final double cjx =
+          _safeDouble(math.sin(now * 2.3) * centerJitterAmp, 0.0);
+      final double cjy =
+          _safeDouble(math.cos(now * 1.7) * centerJitterAmp, 0.0);
+      final Offset center = center0 + Offset(cjx, cjy);
 
-    canvas.drawCircle(center, radius * 0.75, circlePaint);
+      // Core radius (respiration douce) — clamp minimal
+      double coreRadius =
+          _safeDouble(radius * (0.72 + beat * beatAmp), radius * 0.5);
+      if (coreRadius <= 0 || !coreRadius.isFinite)
+        coreRadius = math.max(radius * 0.5, 1.0);
+
+      // Helper pour sigma de blur (sigma must be >= small epsilon)
+      double _sigma(double v) {
+        final double s = _safeDouble(v, 0.001);
+        return s <= 0.0 || !s.isFinite ? 0.001 : s;
+      }
+
+      // 1) Outer broad soft halo — faible teinte verte pour garder l'identité
+      final double outerSigma = _sigma(radius * 0.82);
+      final outerPaint = Paint()
+        ..color = (color)
+            .withOpacity(_safeDouble((0.10 + 0.02 * beat) * intensity, 0.05))
+        ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.normal, outerSigma);
+      canvas.drawCircle(center, _safeDouble(radius * 1.45, radius), outerPaint);
+
+      // 2) Large white mid halo — diffuse, un peu pulsante
+      final double midSigma = _sigma(radius * 0.55);
+      final whiteMid = Paint()
+        ..color = Colors.white
+            .withOpacity(_safeDouble((0.12 + 0.03 * flutter) * intensity, 0.08))
+        ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.normal, midSigma);
+      canvas.drawCircle(center, _safeDouble(radius * 1.08, radius), whiteMid);
+
+      // 3) Petites taches blanches décalées — micro-variations
+      final List<Offset> baseOffsets = [
+        Offset(-0.06 * radius, -0.03 * radius),
+        Offset(0.05 * radius, 0.04 * radius),
+        Offset(0.10 * radius, -0.06 * radius),
+      ];
+      for (int i = 0; i < baseOffsets.length; i++) {
+        final double phase = (i + 1) * 1.33;
+        final double localFlutter = _safeDouble(
+            math.sin(now * 2.0 * math.pi * (1.3 + i * 0.2) + phase), 0.0);
+        final Offset ofs = baseOffsets[i] +
+            Offset(localFlutter * jitterAmp * radius,
+                math.cos(now * 1.5 * (i + 1) + phase) * jitterAmp * radius);
+
+        final double f =
+            _safeDouble(0.18 * (1.0 - i * 0.12) * (1.0 + 0.08 * flutter), 0.06);
+        final double spotOpacity = _safeDouble(
+            (0.18 * (1.0 - i * 0.12) * (1.0 + 0.12 * beat)).clamp(0.04, 0.32) *
+                intensity,
+            0.06);
+
+        final double spotSigma = _sigma(radius * 0.28 * (1.0 + 0.06 * flutter));
+        final spotPaint = Paint()
+          ..color = Colors.white.withOpacity(spotOpacity)
+          ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.normal, spotSigma);
+        canvas.drawCircle(
+            center + ofs, _safeDouble(radius * f, 1.0), spotPaint);
+      }
+
+      // 4) Core: gradient blanc doux, légèrement décentré et micro-variation
+      final double alignX =
+          _safeDouble((math.sin(now * 1.8) * 0.06).clamp(-0.12, 0.12), 0.0);
+      final double alignY =
+          _safeDouble((math.cos(now * 1.4) * 0.06).clamp(-0.12, 0.12), 0.0);
+      final Rect shaderRect =
+          Rect.fromCircle(center: center, radius: coreRadius);
+      final corePaint = Paint()
+        ..shader = RadialGradient(
+          center: Alignment(alignX, alignY),
+          colors: [
+            Colors.white.withOpacity(
+                _safeDouble((0.98 - 0.04 * beat) * intensity, 0.6)),
+            Colors.white.withOpacity(
+                _safeDouble((0.62 - 0.03 * flutter) * intensity, 0.34)),
+            color.withOpacity(
+                _safeDouble((0.16 + 0.02 * beat) * intensity, 0.08)),
+          ],
+          stops: const [0.0, 0.52, 1.0],
+        ).createShader(shaderRect)
+        ..style = PaintingStyle.fill;
+      canvas.drawCircle(center, coreRadius, corePaint);
+
+      // 5) Subtil anneau bluré autour du coeur
+      final double ringSigma = _sigma(radius * (0.16 + 0.02 * flutter));
+      final ringPaint = Paint()
+        ..color = Colors.white
+            .withOpacity(_safeDouble((0.06 + 0.01 * flutter) * intensity, 0.03))
+        ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.normal, ringSigma);
+      canvas.drawCircle(
+          center,
+          _safeDouble(coreRadius * (1.08 + 0.02 * beat), coreRadius * 1.08),
+          ringPaint);
+    } catch (e, st) {
+      if (kDebugMode) {
+        debugPrint('[GlowPainter] paint error: $e\n$st');
+      }
+      // En cas d'erreur, on laisse le paint silencieux (prévenir le crash/loop)
+    }
   }
 
   @override
   bool shouldRepaint(covariant GlowPainter oldDelegate) {
-    return oldDelegate.color != color || oldDelegate.intensity != intensity;
+    // On force repaint pour l'animation (on a des variations temporelles).
+    return true;
   }
 }
