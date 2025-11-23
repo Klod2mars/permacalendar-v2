@@ -849,10 +849,15 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
-      // 1) Sélectionner le jardin
-      widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
+      // 1) Sélection logique (contexte)
+      try {
+        widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
+      } catch (e, st) {
+        if (kDebugMode)
+          debugPrint('[Insect][select] selectGarden error: $e\n$st');
+      }
 
-      // 2) Toggle atomique via provider
+      // 2) Toggle atomique via le provider central (qui orchestre registry)
       try {
         widget.ref
             .read(activeGardenIdProvider.notifier)
@@ -865,33 +870,48 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
               '[Insect][activate] error toggling active garden: $e\n$st');
       }
 
-      // 3) Feedback visuel
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Jardin $gardenId activé / togglé'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      // 3) Lire l'état APRES le toggle pour décider du feedback visuel:
+      final nowActive = widget.ref.read(activeGardenIdProvider);
 
-      // 4) Trigger une animation si le widget est monté (mais NE PAS forcer persistent ici)
-      try {
-        final awakeningState = _awakeningKey.currentState;
-        if (awakeningState != null) {
-          awakeningState.triggerAnimation();
+      if (nowActive == gardenId) {
+        // Nous venons d'activer ce garden:
+        try {
+          // Feedback visuel léger : déclenche l'animation locale (ne force pas persistent,
+          // le provider a déjà demandé la mise en persistent via le registry).
+          final awakeningState = _awakeningKey.currentState;
+          awakeningState?.triggerAnimation();
+        } catch (e, st) {
           if (kDebugMode)
             debugPrint(
-                '[Insect][trigger] triggered awakeningState for gardenId=$gardenId');
-        } else {
-          // fallback : si l'instance n'est pas montée, on peut afficher un overlay temporaire ou message
-          if (kDebugMode)
-            debugPrint('[Insect][trigger] awakeningState null for $gardenId');
+                '[Insect][trigger] triggerAnimation error after activate: $e\n$st');
         }
-      } catch (e, st) {
-        if (kDebugMode)
-          debugPrint(
-              '[Insect][trigger] error triggering awakening for gardenId=$gardenId : $e\n$st');
+
+        // Message utilisateur
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Jardin $gardenId activé'),
+              duration: const Duration(seconds: 2)),
+        );
+      } else {
+        // Nous venons de désactiver ce garden :
+        try {
+          // Defensive: demander explicitement l'arrêt local si l'instance est montée.
+          _awakeningKey.currentState?.stopPersistent();
+        } catch (e, st) {
+          if (kDebugMode)
+            debugPrint(
+                '[Insect][activate] awakeningKey.stopPersistent error on deactivate: $e\n$st');
+        }
+
+        // Message utilisateur
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Jardin $gardenId désactivé'),
+              duration: const Duration(seconds: 1)),
+        );
       }
     } else {
+      // Pas de garden assigné : feedback + navigation si tu veux.
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Aucun jardin assigné à ce slot')),
       );
