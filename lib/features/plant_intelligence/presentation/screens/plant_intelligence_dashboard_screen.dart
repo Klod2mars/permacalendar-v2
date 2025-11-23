@@ -10,10 +10,6 @@ import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../core/providers/intelligence_runtime_providers.dart';
 import '../../../../core/di/intelligence_module.dart';
 
-/// Écran principal "Intelligence Végétale"
-/// - Multigarden : respecte la logique "5 jardins individuellement"
-/// - Affiche compteurs (plantes actives, analyses, alertes)
-/// - Liste de PlantChecklistCard pour chaque plante active du jardin
 class PlantIntelligenceDashboardScreen extends ConsumerStatefulWidget {
   const PlantIntelligenceDashboardScreen({super.key});
 
@@ -30,24 +26,19 @@ class _PlantIntelligenceDashboardScreenState
   void initState() {
     super.initState();
 
-    // Post frame : s'assurer que le catalogue de plantes et le jardin courant sont initialisés.
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // Charger catalogue plantes si nécessaire
       final plantCatalogState = ref.read(plantCatalogProvider);
       if (plantCatalogState.plants.isEmpty && !plantCatalogState.isLoading) {
         await ref.read(plantCatalogProvider.notifier).loadPlants();
       }
 
-      // Si aucun jardin courant sélectionné, GardenSelectorWidget l'initialisera.
       final currentGardenId = ref.read(currentIntelligenceGardenIdProvider);
       if (currentGardenId != null) {
-        // initialiser l'intelligence pour ce jardin (sécurisé par notifier)
         try {
           await ref
               .read(intelligenceStateProvider(currentGardenId).notifier)
               .initializeForGarden();
         } catch (e) {
-          // ne pas faire planter l'UI
           debugPrint('⚠️ init intelligence erreur: $e');
         }
       }
@@ -59,7 +50,6 @@ class _PlantIntelligenceDashboardScreenState
   }
 
   Future<void> _refreshGarden(String gardenId) async {
-    // Réinitialiser et relancer l'initialisation / analyses pour le jardin
     final notifier = ref.read(intelligenceStateProvider(gardenId).notifier);
     try {
       notifier.reset();
@@ -71,15 +61,85 @@ class _PlantIntelligenceDashboardScreenState
     }
   }
 
+  void _showActivePlantsSheet(String gardenId, List<String> activePlantIds) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                  title: Text('Plantes actives'), leading: Icon(Icons.eco)),
+              const Divider(),
+              ...activePlantIds.map((plantId) {
+                final maybePlant =
+                    ref.read(plantCatalogProvider).plants.firstWhere(
+                          (p) => p.id == plantId,
+                          orElse: () => null,
+                        );
+                final name = maybePlant?.commonName ?? plantId;
+                return ListTile(
+                  title: Text(name),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.play_arrow),
+                    onPressed: () async {
+                      Navigator.of(ctx).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Analyse en cours...')));
+                      await ref
+                          .read(intelligenceStateProvider(gardenId).notifier)
+                          .analyzePlant(plantId);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Analyse terminée')));
+                    },
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showAlertsSheet() {
+    final alertsState = ref.read(intelligentAlertsProvider);
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                  title: Text('Alertes'), leading: Icon(Icons.warning_rounded)),
+              const Divider(),
+              if (alertsState.activeAlerts.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text('Aucune alerte active'),
+                )
+              else
+                ...alertsState.activeAlerts.map((a) => ListTile(
+                      title: Text(a.title),
+                      subtitle: Text(a.message),
+                    )),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentGardenId = ref.watch(currentIntelligenceGardenIdProvider);
-    // Si pas encore choisi de jardin : afficher sélecteur seul
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Intelligence Végétale'),
         centerTitle: true,
-        // On propose le sélecteur compact dans l'appBar
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(56),
           child: Padding(
@@ -134,10 +194,8 @@ class _PlantIntelligenceDashboardScreenState
     final intelligenceState = ref.watch(intelligenceStateProvider(gardenId));
     final plantCatalog = ref.watch(plantCatalogProvider);
 
-    // Compteurs
     final activePlantsCount = intelligenceState.activePlantIds.length;
     final analysesCount = intelligenceState.plantConditions.length;
-    // Les alertes globales peuvent provenir d'un provider central ; ici on affiche 0 si absent
     final alertsState = ref.watch(intelligentAlertsProvider);
     final alertsCount = alertsState.activeAlerts.length;
 
@@ -152,21 +210,36 @@ class _PlantIntelligenceDashboardScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // En-tête jardin
               Text('Jardin: $gardenId',
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
-
-              // Badges : Plantes actives / Analyses / Alertes
               Row(
                 children: [
-                  _buildBadge('Plantes actives', activePlantsCount.toString()),
+                  GestureDetector(
+                    onTap: () => _showActivePlantsSheet(
+                        gardenId, intelligenceState.activePlantIds),
+                    child: _buildBadge(
+                        'Plantes actives', activePlantsCount.toString()),
+                  ),
                   const SizedBox(width: 8),
-                  _buildBadge('Analyses', analysesCount.toString()),
+                  GestureDetector(
+                    onTap: () async {
+                      if (!intelligenceState.isAnalyzing) {
+                        await ref
+                            .read(intelligenceStateProvider(gardenId).notifier)
+                            .initializeForGarden();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Analyse lancée')));
+                      }
+                    },
+                    child: _buildBadge('Analyses', analysesCount.toString()),
+                  ),
                   const SizedBox(width: 8),
-                  _buildBadge('Alertes', alertsCount.toString()),
+                  GestureDetector(
+                    onTap: _showAlertsSheet,
+                    child: _buildBadge('Alertes', alertsCount.toString()),
+                  ),
                   const Spacer(),
-                  // Bouton global : Analyser tout le jardin
                   ElevatedButton.icon(
                     icon: const Icon(Icons.play_arrow_rounded),
                     label: const Text('Analyser'),
@@ -189,10 +262,7 @@ class _PlantIntelligenceDashboardScreenState
                   ),
                 ],
               ),
-
               const SizedBox(height: 18),
-
-              // Si aucune plante active
               if (activePlantsCount == 0)
                 Container(
                   padding: const EdgeInsets.all(16),
@@ -200,17 +270,12 @@ class _PlantIntelligenceDashboardScreenState
                     borderRadius: BorderRadius.circular(10),
                     color: Theme.of(context).colorScheme.surfaceVariant,
                   ),
-                  child: Text(
-                    'Aucune plante active dans ce jardin.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                  child: Text('Aucune plante active dans ce jardin.',
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
-
-              // Liste des cartes par plante
               const SizedBox(height: 12),
               Column(
                 children: intelligenceState.activePlantIds.map((plantId) {
-                  // --- CORRECTION ICI : recherche sûre du PlantFreezed ---
                   final matches =
                       plantCatalog.plants.where((p) => p.id == plantId);
                   final maybePlant = matches.isNotEmpty ? matches.first : null;
@@ -225,7 +290,7 @@ class _PlantIntelligenceDashboardScreenState
                       plantId: plantId,
                       gardenId: gardenId,
                       plantName: plantName,
-                      imageUrl: imageUrl ?? '',
+                      imageUrl: imageUrl,
                     ),
                   );
                 }).toList(),
