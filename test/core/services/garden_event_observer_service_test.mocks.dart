@@ -3,19 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart'
-    as _i7;
-import 'package:permacalendar/features/plant_intelligence/domain/entities/analysis_result.dart'
-    as _i3;
-import 'package:permacalendar/features/plant_intelligence/domain/entities/comprehensive_garden_analysis.dart'
-    as _i4;
+    as _i5;
 import 'package:permacalendar/features/plant_intelligence/domain/entities/intelligence_report.dart'
     as _i2;
 import 'package:permacalendar/features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart'
-    as _i5;
+    as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -41,42 +37,20 @@ class _FakePlantIntelligenceReport_0 extends _i1.SmartFake
         );
 }
 
-class _FakePlantAnalysisResult_1 extends _i1.SmartFake
-    implements _i3.PlantAnalysisResult {
-  _FakePlantAnalysisResult_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeComprehensiveGardenAnalysis_2 extends _i1.SmartFake
-    implements _i4.ComprehensiveGardenAnalysis {
-  _FakeComprehensiveGardenAnalysis_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [PlantIntelligenceOrchestrator].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPlantIntelligenceOrchestrator extends _i1.Mock
-    implements _i5.PlantIntelligenceOrchestrator {
+    implements _i3.PlantIntelligenceOrchestrator {
   MockPlantIntelligenceOrchestrator() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i2.PlantIntelligenceReport> generateIntelligenceReport({
+  _i4.Future<_i2.PlantIntelligenceReport> generateIntelligenceReport({
     required String? plantId,
     required String? gardenId,
-    _i7.PlantFreezed? plant,
+    _i5.PlantFreezed? plant,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -88,7 +62,7 @@ class MockPlantIntelligenceOrchestrator extends _i1.Mock
             #plant: plant,
           },
         ),
-        returnValue: _i6.Future<_i2.PlantIntelligenceReport>.value(
+        returnValue: _i4.Future<_i2.PlantIntelligenceReport>.value(
             _FakePlantIntelligenceReport_0(
           this,
           Invocation.method(
@@ -101,10 +75,10 @@ class MockPlantIntelligenceOrchestrator extends _i1.Mock
             },
           ),
         )),
-      ) as _i6.Future<_i2.PlantIntelligenceReport>);
+      ) as _i4.Future<_i2.PlantIntelligenceReport>);
 
   @override
-  _i6.Future<List<_i2.PlantIntelligenceReport>>
+  _i4.Future<List<_i2.PlantIntelligenceReport>>
       generateGardenIntelligenceReport({required String? gardenId}) =>
           (super.noSuchMethod(
             Invocation.method(
@@ -112,81 +86,7 @@ class MockPlantIntelligenceOrchestrator extends _i1.Mock
               [],
               {#gardenId: gardenId},
             ),
-            returnValue: _i6.Future<List<_i2.PlantIntelligenceReport>>.value(
+            returnValue: _i4.Future<List<_i2.PlantIntelligenceReport>>.value(
                 <_i2.PlantIntelligenceReport>[]),
-          ) as _i6.Future<List<_i2.PlantIntelligenceReport>>);
-
-  @override
-  _i6.Future<_i3.PlantAnalysisResult> analyzePlantConditions({
-    required String? plantId,
-    required String? gardenId,
-    _i7.PlantFreezed? plant,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #analyzePlantConditions,
-          [],
-          {
-            #plantId: plantId,
-            #gardenId: gardenId,
-            #plant: plant,
-          },
-        ),
-        returnValue: _i6.Future<_i3.PlantAnalysisResult>.value(
-            _FakePlantAnalysisResult_1(
-          this,
-          Invocation.method(
-            #analyzePlantConditions,
-            [],
-            {
-              #plantId: plantId,
-              #gardenId: gardenId,
-              #plant: plant,
-            },
-          ),
-        )),
-      ) as _i6.Future<_i3.PlantAnalysisResult>);
-
-  @override
-  _i6.Future<_i4.ComprehensiveGardenAnalysis> analyzeGardenWithBioControl(
-          {required String? gardenId}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #analyzeGardenWithBioControl,
-          [],
-          {#gardenId: gardenId},
-        ),
-        returnValue: _i6.Future<_i4.ComprehensiveGardenAnalysis>.value(
-            _FakeComprehensiveGardenAnalysis_2(
-          this,
-          Invocation.method(
-            #analyzeGardenWithBioControl,
-            [],
-            {#gardenId: gardenId},
-          ),
-        )),
-      ) as _i6.Future<_i4.ComprehensiveGardenAnalysis>);
-
-  @override
-  _i6.Future<Map<String, dynamic>> initializeForGarden(
-          {required String? gardenId}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #initializeForGarden,
-          [],
-          {#gardenId: gardenId},
-        ),
-        returnValue:
-            _i6.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i6.Future<Map<String, dynamic>>);
-
-  @override
-  _i6.Future<void> invalidateAllCache() => (super.noSuchMethod(
-        Invocation.method(
-          #invalidateAllCache,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+          ) as _i4.Future<List<_i2.PlantIntelligenceReport>>);
 }
