@@ -211,7 +211,6 @@ class _PlantIntelligenceDashboardScreenState
                 onGardenChanged: (gardenId) async {
                   // On s'assure que la sélection déclenche l'initialisation.
                   try {
-                    // Définition déjà réalisée dans GardenSelectorWidget, mais on force l'init ici au cas où.
                     await ref
                         .read(intelligenceStateProvider(gardenId).notifier)
                         .initializeForGarden();
@@ -245,6 +244,8 @@ class _PlantIntelligenceDashboardScreenState
                 ],
               ),
             ),
+
+            const Divider(),
 
             // Statuts (nombre de plantes actives / analyses / alerts)
             Padding(
@@ -290,12 +291,28 @@ class _PlantIntelligenceDashboardScreenState
                           trailing: IconButton(
                             icon: const Icon(Icons.history),
                             onPressed: () {
-                              // Ouvre l'historique d'évolution
-                              if (context.mounted) {
-                                GoRouter.of(context).push(
-                                    AppRouter.plantEvolutionHistory(
-                                        pathParamPlantId: entry.key));
+                              // Récupérer le nom de la plante depuis le catalogue si possible
+                              final plantsList = ref.read(plantsListProvider);
+                              PlantFreezed? plantEntity;
+                              for (final p in plantsList) {
+                                if (p.id == entry.key) {
+                                  plantEntity = p;
+                                  break;
+                                }
                               }
+                              final plantName =
+                                  plantEntity?.commonName ?? entry.key;
+
+                              // Ouvre l'historique d'évolution via Navigator (MaterialPageRoute)
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PlantEvolutionHistoryScreen(
+                                    plantId: entry.key,
+                                    plantName: plantName,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         ),
