@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
+import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 
 import '../../../core/repositories/dashboard_slots_repository.dart';
 import '../../../core/data/hive/garden_boxes.dart';
@@ -12,7 +13,6 @@ import '../../../core/adapters/garden_migration_adapters.dart';
 import '../../../core/providers/active_garden_provider.dart';
 import '../../../core/models/garden_freezed.dart';
 import '../../../shared/presentation/themes/organic_palettes.dart';
-import '../../../shared/widgets/animations/insect_awakening_widget.dart';
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 
 /// Widget de zone interactive invisible pour un slot jardin
