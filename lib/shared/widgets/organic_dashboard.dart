@@ -793,24 +793,49 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
-      // Avant la navigation, on désactive le jardin actif pour éviter que la lueur
-      // persiste sur les autres écrans.
+      // 1) Stoppe synchroniquement toute lueur visible (ne touche pas aux providers).
       try {
-        widget.ref.read(activeGardenIdProvider.notifier).setActiveGarden(null);
+        widget.ref.read(gardenAwakeningRegistryProvider).stopAllExcept(null);
+      } catch (e) {
         if (kDebugMode)
-          debugPrint(
-              '[Insect][navigate] cleared activeGarden before navigation');
-      } catch (e, st) {
-        if (kDebugMode)
-          debugPrint(
-              '[Insect][navigate] error clearing active garden: $e\n$st');
+          debugPrint('[Insect][navigate] registry.stopAllExcept error: $e');
       }
 
-      // Sélection et navigation
-      widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
-      context.push('/gardens/$gardenId?fromOrganic=1');
+      // 2) Planifier la modification du provider + navigation APRÈS la frame courante
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        try {
+          // Efface proprement l'active garden (après le build), évite l'assert Riverpod.
+          widget.ref
+              .read(activeGardenIdProvider.notifier)
+              .setActiveGarden(null);
+          if (kDebugMode)
+            debugPrint(
+                '[Insect][navigate] cleared activeGarden (postFrame) before navigation');
+        } catch (e, st) {
+          if (kDebugMode)
+            debugPrint(
+                '[Insect][navigate] error clearing active garden postFrame: $e\n$st');
+        }
+
+        try {
+          // Sélection du jardin et navigation (toujours après le clear).
+          widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
+          context.push('/gardens/$gardenId?fromOrganic=1');
+        } catch (e, st) {
+          if (kDebugMode)
+            debugPrint('[Insect][navigate] select or push error: $e\n$st');
+        }
+      });
     } else {
-      context.push('/gardens/create?slot=$slot');
+      // Pas de garden : navigation vers création, planifiée hors frame pour cohérence.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        try {
+          context.push('/gardens/create?slot=$slot');
+        } catch (e, st) {
+          if (kDebugMode)
+            debugPrint('[Insect][navigate] push create error: $e\n$st');
+        }
+      });
     }
   }
 
