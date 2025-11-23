@@ -1,4 +1,8 @@
-﻿import 'dart:developer' as developer;
+﻿// lib/features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart
+
+import 'dart:developer' as developer;
+
+import 'package:uuid/uuid.dart';
 
 import '../pipelines/analysis_pipeline.dart';
 import '../pipelines/recommendation_pipeline.dart';
@@ -10,37 +14,35 @@ import '../pipelines/garden_report_pipeline.dart';
 import '../services/intelligence_scoring_service.dart';
 import '../services/confidence_service.dart';
 import '../services/summary_service.dart';
+
 import '../maintenance/garden_initialization_service.dart';
 import '../utils/plant_resolver.dart';
 
+import '../../plant_catalog/domain/entities/plant_entity.dart';
+
 import '../entities/intelligence_report.dart';
-import '../entities/plant_evolution_report.dart';
+import '../entities/comprehensive_garden_analysis.dart';
 import '../entities/pest_threat_analysis.dart';
 import '../entities/bio_control_recommendation.dart';
 import '../entities/recommendation.dart';
 import '../entities/analysis_result.dart';
-import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
 import '../repositories/i_analytics_repository.dart';
+import '../repositories/i_garden_context_repository.dart';
+import '../repositories/i_weather_repository.dart';
 
-/// 🌿
-/// NOUVEL ORCHESTRATEUR CLEAN ARCHITECTURE
-/// ---------------------------------------
+import '../usecases/evaluate_planting_timing_usecase.dart';
+
+/// Plant Intelligence Orchestrator (refactoré)
 ///
-/// Rôles :
-////   - Orchestrer les pipelines
-////   - Construire les rapports
-////   - Coordonner la persistance finale des rapports
-////   - Appeler evolution pipeline
+/// Rôle : chef d'orchestre — composer pipelines, construire et persister
+/// les rapports d'intelligence végétale. Aucune logique métier lourde,
+/// tout est délégable aux pipelines & services.
 ///
-/// Ce fichier NE fait pas :
-////   - d’analyse (delegué aux pipelines)
-////   - de persistance de conditions/recommandations (déjà dans les pipelines ou services dédiés)
-////   - de nettoyage Hive (delegué)
-////   - d'évolution détaillée (delegué)
-///
-/// SRP strict : orchestrer.
-///
+/// Principes :
+///  - SRP : uniquement orchestration
+///  - Défensive : la persistance ne doit pas bloquer l'analyse
+///  - Compatibilité : expose quelques wrappers historiques attendus par la UI
 class PlantIntelligenceOrchestrator {
   // Pipelines
   final AnalysisPipeline _analysisPipeline;
@@ -51,18 +53,21 @@ class PlantIntelligenceOrchestrator {
   final GardenReportPipeline _gardenPipeline;
 
   // Services
-  final IntelligenceScoringService _scoring;
-  final ConfidenceService _confidence;
-  final SummaryService _summary;
+  final IntelligenceScoringService _scoringService;
+  final ConfidenceService _confidenceService;
+  final SummaryService _summaryService;
 
-  // Utils
+  // Utils / Maintenance
   final PlantResolver _resolver;
+  final GardenInitializationService _initializationService;
 
-  // Repositories
+  // Repos / infra
   final IAnalyticsRepository _analyticsRepository;
+  final IGardenContextRepository _gardenRepository;
+  final IWeatherRepository _weatherRepository;
 
-  // Maintenance
-  final GardenInitializationService _initService;
+  // Usecases
+  final EvaluatePlantingTimingUsecase _evaluateTimingUsecase;
 
   PlantIntelligenceOrchestrator({
     required AnalysisPipeline analysisPipeline,
@@ -73,132 +78,305 @@ class PlantIntelligenceOrchestrator {
     required ConfidenceService confidenceService,
     required SummaryService summaryService,
     required PlantResolver resolver,
-    required IAnalyticsRepository analyticsRepository,
     required GardenInitializationService initializationService,
+    required IAnalyticsRepository analyticsRepository,
+    required IGardenContextRepository gardenRepository,
+    required IWeatherRepository weatherRepository,
+    required EvaluatePlantingTimingUsecase evaluateTimingUsecase,
     PestAnalysisPipeline? pestPipeline,
     BioControlPipeline? bioControlPipeline,
   })  : _analysisPipeline = analysisPipeline,
         _recommendationPipeline = recommendationPipeline,
         _evolutionPipeline = evolutionPipeline,
         _gardenPipeline = gardenPipeline,
-        _scoring = scoringService,
-        _confidence = confidenceService,
-        _summary = summaryService,
+        _scoringService = scoringService,
+        _confidenceService = confidenceService,
+        _summaryService = summaryService,
         _resolver = resolver,
+        _initializationService = initializationService,
         _analyticsRepository = analyticsRepository,
-        _initService = initializationService,
+        _gardenRepository = gardenRepository,
+        _weatherRepository = weatherRepository,
+        _evaluateTimingUsecase = evaluateTimingUsecase,
         _pestPipeline = pestPipeline,
         _bioPipeline = bioControlPipeline;
 
   // ---------------------------------------------------------------------------
-  // 🌱 Analyse d’une seule plante (méthode principale)
+  // Génération d'un rapport d'intelligence pour une plante
   // ---------------------------------------------------------------------------
-
   Future<PlantIntelligenceReport> generateIntelligenceReport({
     required String plantId,
     required String gardenId,
     PlantFreezed? plant,
   }) async {
     developer.log(
-      '🌿 Orchestrator → Analyse plante $plantId',
+      '🌿 Orchestrator → Génération rapport pour plantId=$plantId, gardenId=$gardenId',
       name: 'PlantIntelligenceOrchestrator',
     );
 
-    // 1) Résoudre la plante
+    // 1) Résolution plante
     final resolvedPlant = plant ?? await _resolver.resolve(plantId);
 
-    // 2) Analyse des conditions
+    // 2) Récupérer contexte jardin et météo (pour usecases externes)
+    final gardenContext = await _gardenRepository.getGardenContext(gardenId);
+    if (gardenContext == null) {
+      throw Exception('Contexte jardin $gardenId introuvable');
+    }
+
+    final weather =
+        await _weatherRepository.getCurrentWeatherCondition(gardenId);
+    if (weather == null) {
+      developer.log(
+          '⚠️ Aucune météo disponible pour gardenId=$gardenId — la confiance sera réduite',
+          name: 'PlantIntelligenceOrchestrator',
+          level: 900);
+    }
+
+    // 3) Analyse des conditions (pipeline dédié)
     final analysis = await _analysisPipeline.run(
       plant: resolvedPlant,
       gardenId: gardenId,
     );
 
-    // 3) Recommandations
-    final recos = await _recommendationPipeline.run(
+    // 4) Évaluer le timing (usecase dédié)
+    PlantingTimingEvaluation? plantingTiming;
+    try {
+      if (weather != null) {
+        plantingTiming = await _evaluateTimingUsecase.execute(
+          plant: resolvedPlant,
+          weather: weather,
+          garden: gardenContext,
+        );
+      } else {
+        // Si pas de météo, on appelle quand même le usecase avec un fallback (non bloquant)
+        plantingTiming = await _evaluateTimingUsecase.execute(
+          plant: resolvedPlant,
+          weather: WeatherCondition(
+              value: 0.0, measuredAt: DateTime.now()), // minimal dummy
+          garden: gardenContext,
+        );
+      }
+    } catch (e, st) {
+      developer.log('⚠️ Échec EvaluatePlantingTimingUsecase (non bloquant): $e',
+          name: 'PlantIntelligenceOrchestrator',
+          error: e,
+          stackTrace: st,
+          level: 900);
+      plantingTiming = null;
+    }
+
+    // 5) Génération des recommandations (pipeline dédié)
+    final recommendations = await _recommendationPipeline.run(
       plant: resolvedPlant,
       gardenId: gardenId,
       analysis: analysis,
     );
 
-    // 4) Analyse des ravageurs
-    PestThreatAnalysis? threats;
+    // 6) Pest analysis (optionnel)
+    PestThreatAnalysis? pestThreats;
     if (_pestPipeline != null) {
-      threats = await _pestPipeline!.run(gardenId);
+      try {
+        pestThreats = await _pestPipeline!.run(gardenId);
+      } catch (e, st) {
+        developer.log('⚠️ PestAnalysis failed (non-blocking): $e',
+            name: 'PlantIntelligenceOrchestrator',
+            error: e,
+            stackTrace: st,
+            level: 900);
+      }
     }
 
-    // 5) Recommandations bio-control
-    List<BioControlRecommendation> bioRecs = [];
+    // 7) Bio-control recommendations (optionnel)
+    List<BioControlRecommendation> bioControlRecs = [];
     if (_bioPipeline != null) {
-      bioRecs = await _bioPipeline!.run(threats);
+      try {
+        bioControlRecs = await _bioPipeline!.run(pestThreats);
+      } catch (e, st) {
+        developer.log('⚠️ BioControlPipeline failed (non-blocking): $e',
+            name: 'PlantIntelligenceOrchestrator',
+            error: e,
+            stackTrace: st,
+            level: 900);
+      }
     }
 
-    // 6) Score global
-    final timing = analysis.plantingTiming; // déjà dans le résultat
-    final score = _scoring.compute(
+    // 8) Score global
+    final timingForScoring = plantingTiming ??
+        PlantingTimingEvaluation(
+            isOptimalTime: false,
+            timingScore: 0.0,
+            reason: 'no-timing',
+            favorableFactors: [],
+            unfavorableFactors: [],
+            risks: []);
+    final intelligenceScore = _scoringService.compute(
       analysis: analysis,
-      recommendations: recos,
-      timing: timing,
+      recommendations: recommendations,
+      timing: timingForScoring,
     );
 
-    // 7) Confiance
-    final confidence = _confidence.compute(
-      analysis: analysis,
-      weather: analysis.weather,
-    );
+    // 9) Confiance globale
+    double confidence = 0.0;
+    try {
+      if (weather != null) {
+        confidence =
+            _confidenceService.compute(analysis: analysis, weather: weather);
+      } else {
+        // fallback: base sur analysis.confidence
+        confidence = analysis.confidence;
+      }
+    } catch (e, st) {
+      developer.log('⚠️ Confidence computation failed (non-blocking): $e',
+          name: 'PlantIntelligenceOrchestrator',
+          error: e,
+          stackTrace: st,
+          level: 900);
+      confidence = analysis.confidence;
+    }
 
-    // 8) Construction rapport final
+    // 10) Construire le rapport
+    final generatedAt = DateTime.now();
     final report = PlantIntelligenceReport(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: const Uuid().v4(),
       plantId: resolvedPlant.id,
       plantName: resolvedPlant.commonName,
       gardenId: gardenId,
       analysis: analysis,
-      recommendations: recos,
-      plantingTiming: timing,
+      recommendations: recommendations,
+      plantingTiming: plantingTiming,
       activeAlerts: const [],
-      intelligenceScore: score,
+      intelligenceScore: intelligenceScore,
       confidence: confidence,
-      generatedAt: DateTime.now(),
-      expiresAt: DateTime.now().add(const Duration(hours: 6)),
+      generatedAt: generatedAt,
+      expiresAt: generatedAt.add(const Duration(hours: 6)),
       metadata: {
-        'historicalDataPoints': analysis.historicalCount,
+        'historicalDataPoints': analysis.metadata['historicalDataPoints'] ?? 0,
+        'weatherAgeHours': weather != null
+            ? DateTime.now().difference(weather.measuredAt).inHours
+            : null,
       },
     );
 
-    // 9) Persister rapport
-    await _analyticsRepository.saveLatestReport(report);
+    developer.log(
+        '✅ Orchestrator → Rapport construit (score=${intelligenceScore.toStringAsFixed(1)})',
+        name: 'PlantIntelligenceOrchestrator');
 
-    // 10) Évolution
-    await _evolutionPipeline.run(current: report);
+    // 11) Persister le rapport de manière défensive (ne doit pas bloquer)
+    try {
+      await _analyticsRepository.saveLatestReport(report);
+      developer.log('✔️ Rapport sauvegardé via analyticsRepository',
+          name: 'PlantIntelligenceOrchestrator');
+    } catch (e, st) {
+      developer.log('⚠️ Échec sauvegarde rapport (non bloquant): $e',
+          name: 'PlantIntelligenceOrchestrator',
+          error: e,
+          stackTrace: st,
+          level: 900);
+    }
+
+    // 12) Traquer et sauvegarder l'évolution (non bloquant)
+    try {
+      await _evolutionPipeline.run(current: report);
+    } catch (e, st) {
+      developer.log('⚠️ Échec evolutionPipeline (non bloquant): $e',
+          name: 'PlantIntelligenceOrchestrator',
+          error: e,
+          stackTrace: st,
+          level: 900);
+    }
 
     return report;
   }
 
   // ---------------------------------------------------------------------------
-  // 🌳 Analyse jardin complet
+  // Génération de rapports pour tout le jardin
   // ---------------------------------------------------------------------------
-
   Future<List<PlantIntelligenceReport>> generateGardenIntelligenceReport({
     required String gardenId,
   }) async {
     developer.log(
-      '🌳 Orchestrator → Analyse complète jardin $gardenId',
-      name: 'PlantIntelligenceOrchestrator',
-    );
+        '🌳 Orchestrator → Génération rapports pour gardenId=$gardenId',
+        name: 'PlantIntelligenceOrchestrator');
 
-    // Initialisation (nettoyage + cache invalidation)
-    await _initService.initialize(gardenId: gardenId);
+    // Initialisation sécurisée : nettoyage + invalidation caches
+    try {
+      await _initializationService.initialize(gardenId: gardenId);
+    } catch (e, st) {
+      developer.log('⚠️ Initialisation jardin échouée (non bloquant): $e',
+          name: 'PlantIntelligenceOrchestrator',
+          error: e,
+          stackTrace: st,
+          level: 900);
+    }
 
-    // Pipeline jardin
-    final reports = await _gardenPipeline.run(
-      gardenId: gardenId,
-    );
+    // Déléguer au GardenReportPipeline (qui appellera generateIntelligenceReport via callback)
+    final reports = await _gardenPipeline.run(gardenId: gardenId);
 
     developer.log(
-      '🏁 Orchestrator → ${reports.length} rapport(s) généré(s)',
-      name: 'PlantIntelligenceOrchestrator',
-    );
+        '🏁 Orchestrator → ${reports.length} rapport(s) généré(s) pour gardenId=$gardenId',
+        name: 'PlantIntelligenceOrchestrator');
 
     return reports;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Wrappers de compatibilité (API historique pour la présentation)
+  // ---------------------------------------------------------------------------
+
+  /// Compatibilité : expose l'analyse des conditions seule (historique)
+  Future<PlantAnalysisResult> analyzePlantConditions({
+    required String plantId,
+    required String gardenId,
+    PlantFreezed? plant,
+  }) async {
+    final resolved = plant ?? await _resolver.resolve(plantId);
+    return await _analysisPipeline.run(plant: resolved, gardenId: gardenId);
+  }
+
+  /// Compatibilité : expose l'analyse complète du jardin incluant bio-control
+  Future<ComprehensiveGardenAnalysis> analyzeGardenWithBioControl({
+    required String gardenId,
+  }) async {
+    final plantReports =
+        await generateGardenIntelligenceReport(gardenId: gardenId);
+
+    PestThreatAnalysis? threats;
+    if (_pestPipeline != null) {
+      try {
+        threats = await _pestPipeline!.run(gardenId);
+      } catch (e, st) {
+        developer.log(
+            '⚠️ PestAnalysis failed in analyzeGardenWithBioControl: $e',
+            name: 'PlantIntelligenceOrchestrator',
+            error: e,
+            stackTrace: st,
+            level: 900);
+      }
+    }
+
+    final bioRecs = (_bioPipeline != null)
+        ? await _bioPipeline!.run(threats)
+        : <BioControlRecommendation>[];
+
+    final overallHealthScore = plantReports.isEmpty
+        ? 0.0
+        : plantReports.fold<double>(0.0, (s, r) => s + r.intelligenceScore) /
+            plantReports.length;
+
+    final summary = _summaryService.buildGardenSummary(
+      plantReports: plantReports,
+      pestThreats: threats,
+      bioControlRecommendations: bioRecs,
+    );
+
+    return ComprehensiveGardenAnalysis(
+      gardenId: gardenId,
+      plantReports: plantReports,
+      pestThreats: threats,
+      bioControlRecommendations: bioRecs,
+      overallHealthScore: overallHealthScore,
+      analyzedAt: DateTime.now(),
+      summary: summary,
+    );
   }
 }
