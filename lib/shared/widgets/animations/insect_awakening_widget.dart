@@ -1,22 +1,7 @@
 // lib/shared/widgets/insect_awakening_widget.dart
 //
+// Version corrigée : ref.listen moved to build (one-time) to satisfy Riverpod debug assertion.
 // Self-contained, defensive InsectAwakeningWidget used by the Organic Dashboard.
-// This version includes enhanced debug logging to diagnose mounting/size/provider/overlay issues.
-//
-// - Designed to be mounted with a GlobalKey<InsectAwakeningWidgetState> so parent
-//   can call `triggerAnimation()` and `forcePersistent()`.
-// - Listens to `activeGardenIdProvider` (Riverpod) and starts/stops persistent glow
-//   when garden becomes active/inactive.
-// - Optionally uses an OverlayEntry to draw the glow outside parent's clip/z-order.
-// - Very defensive: logs, protects against Size(0,0), nulls, and disposes overlay.
-//
-// IMPORTANT:
-// - Adjust the import path for `active_garden_provider.dart` to match your project layout.
-//   I used: `package:permacalendar/core/providers/active_garden_provider.dart`
-// - Use with GlobalKey:
-//     final _awakeningKey = GlobalKey<InsectAwakeningWidgetState>();
-//     InsectAwakeningWidget(key: _awakeningKey, gardenId: garden.id, useOverlay: true)
-//
 
 import 'dart:math' as math;
 import 'dart:ui' as ui;
@@ -24,7 +9,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// <-- ADJUST THIS IMPORT to your actual provider path in the project:
+// <-- Ajuste le chemin d'import si nécessaire dans ton projet
 import 'package:permacalendar/core/providers/active_garden_provider.dart';
 
 class InsectAwakeningWidget extends ConsumerStatefulWidget {
@@ -51,6 +36,9 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   bool _isPersistent = false;
   OverlayEntry? _overlayEntry;
 
+  // Flag: avoid calling ref.listen multiple times from build
+  bool _refListenerAttached = false;
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +56,9 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
 
     _controller.addListener(() {
       // ensure the widget repaint; for overlay also mark it needs build
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
       if (_overlayEntry != null) {
         try {
           _overlayEntry!.markNeedsBuild();
@@ -78,29 +68,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       }
     });
 
-    // Listen the active garden provider so that when this garden becomes active
-    // we can start the persistent glow.
-    ref.listen<dynamic>(activeGardenIdProvider, (prev, next) {
-      debugPrint(
-          '[Insect] provider change prev=$prev next=$next for <${widget.gardenId}>');
-      try {
-        final activeId = next;
-        if (activeId != null && activeId == widget.gardenId) {
-          debugPrint(
-              '[Insect] detected active garden matches this widget -> forcePersistent');
-          forcePersistent();
-        } else {
-          if (_isPersistent) {
-            debugPrint('[Insect] active garden changed away -> stopPersistent');
-            stopPersistent();
-          }
-        }
-      } catch (e, st) {
-        debugPrint('[Insect] provider listen error: $e\n$st');
-      }
-    });
-
-    // If the garden is already active at mount, force persistent after frame.
+    // Keep a postFrame callback to detect if the garden is already active at mount.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         final active = ref.read(activeGardenIdProvider);
@@ -116,7 +84,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     });
   }
 
-  /// Public API: short animation (non persistent).
+  // PUBLIC API
   void triggerAnimation() {
     debugPrint(
         '[Insect] triggerAnimation for ${widget.gardenId} overlay=${_overlayEntry != null} controller.value=${_controller.value}');
@@ -131,17 +99,12 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     _logState('triggerAnimation');
   }
 
-  /// Public API: force persistent glow (repeat animation).
   void forcePersistent() {
     debugPrint(
         '[Insect] forcePersistent requested for ${widget.gardenId} (already=$_isPersistent)');
-    if (_isPersistent) {
-      return;
-    }
+    if (_isPersistent) return;
     _isPersistent = true;
-    if (widget.useOverlay) {
-      _ensureOverlay();
-    }
+    if (widget.useOverlay) _ensureOverlay();
     try {
       _controller.repeat(period: const Duration(milliseconds: 900));
       debugPrint(
@@ -152,7 +115,6 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     _logState('forcePersistent');
   }
 
-  /// Public API: stop persistent glow.
   void stopPersistent() {
     debugPrint('[Insect] stopPersistent for ${widget.gardenId}');
     _isPersistent = false;
@@ -162,11 +124,11 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       debugPrint('[Insect] stopPersistent controller stop error: $e\n$st');
     }
     _removeOverlay();
-    setState(() {});
+    if (mounted) setState(() {});
     _logState('stopPersistent');
   }
 
-  // ----------------- Overlay helpers -----------------
+  // ---------------- Overlay helpers ----------------
 
   void _ensureOverlay() {
     if (_overlayEntry != null) {
@@ -187,10 +149,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     debugPrint(
         '[Overlay] creating for ${widget.gardenId} offset=$offset size=$size overlayExists=${_overlayEntry != null}');
 
-    // Capture offset/size at insertion time. If the widget moves you can extend
-    // this method to recalculate and reposition the overlay.
     _overlayEntry = OverlayEntry(builder: (ctx) {
-      // The builder uses current _isPersistent/_glowAnim values each markNeedsBuild.
       return Positioned(
         left: offset.dx,
         top: offset.dy,
@@ -245,10 +204,42 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     _overlayEntry = null;
   }
 
-  // ----------------- Build & painter -----------------
+  // ---------------- Build & provider listen ----------------
 
   @override
   Widget build(BuildContext context) {
+    // Attach ref.listen only during build, and only once.
+    if (!_refListenerAttached) {
+      _refListenerAttached = true;
+      // IMPORTANT: calling ref.listen during build satisfies Riverpod debug assert.
+      ref.listen<dynamic>(activeGardenIdProvider, (prev, next) {
+        debugPrint(
+            '[Insect] provider change prev=$prev next=$next for <${widget.gardenId}>');
+        try {
+          final activeId = next;
+          if (activeId != null && activeId == widget.gardenId) {
+            debugPrint(
+                '[Insect] detected active garden matches this widget -> forcePersistent');
+            // Use scheduleMicrotask so we don't call setState synchronously during build
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) forcePersistent();
+            });
+          } else {
+            if (_isPersistent) {
+              debugPrint(
+                  '[Insect] active garden changed away -> stopPersistent');
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) stopPersistent();
+              });
+            }
+          }
+        } catch (e, st) {
+          debugPrint('[Insect] provider listen error: $e\n$st');
+        }
+      });
+      debugPrint('[Insect] ref.listen attached for widget ${widget.gardenId}');
+    }
+
     return LayoutBuilder(builder: (context, constraints) {
       final bubbleSize = constraints.biggest;
       debugPrint(
@@ -278,8 +269,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
         );
       }
 
-      // If overlay is used, we still draw a local shape as fallback; overlay handles
-      // the "escape clip / z-order" case.
+      // Draw local painter; overlay will mirror this if used.
       return CustomPaint(
         size: bubbleSize,
         painter: GlowPainter(
@@ -302,7 +292,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     super.dispose();
   }
 
-  // ----------------- Debug helpers -----------------
+  // ---------------- Debug helpers ----------------
 
   void _logState(String origin) {
     debugPrint(

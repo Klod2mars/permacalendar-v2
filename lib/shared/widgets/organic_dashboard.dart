@@ -1,3 +1,12 @@
+// lib/shared/widgets/organic_dashboard.dart
+//
+// OrganicDashboardWidget - version adaptée pour intégrer InsectAwakeningWidget
+// - Intègre InsectAwakeningWidget pour les hotspots garden_1...garden_5
+// - Résolution asynchrone du gardenId (DashboardSlotsRepository)
+// - GlobalKey par hotspot, mounted in State, never recreated in build()
+// - Uses Overlay (useOverlay: true) to escape clipping/z-order issues.
+
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,13 +18,13 @@ import '../../core/models/organic_zone_config.dart';
 import '../../core/providers/organic_zones_provider.dart';
 import '../../core/models/calibration_state.dart';
 import '../widgets/calibration_debug_overlay.dart';
-import '../../core/repositories/dashboard_slots_repository.dart'; // Nouvel import
-import '../../core/providers/active_garden_provider.dart'; // Nouvel import
+import '../../core/repositories/dashboard_slots_repository.dart';
+import '../../core/providers/active_garden_provider.dart';
+
+// <-- NOUS AVONS BESOIN D'INSECT AWAKENING WIDGET ICI
+import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 
 /// OrganicDashboardWidget
-/// - Affiche une grande image organique (background PNG).
-/// - Superpose des hotspots qui peuvent être calibrés (position + taille).
-/// - En mode debug, affiche un outline + label pour caler les zones.
 class OrganicDashboardWidget extends ConsumerStatefulWidget {
   const OrganicDashboardWidget({
     super.key,
@@ -26,7 +35,6 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
   final String assetPath;
   final bool showDiagnostics;
 
-  // Defaults (migrated from previous static hotspots)
   static const List<_Hotspot> _hotspots = <_Hotspot>[
     _Hotspot(
         id: 'intelligence',
@@ -60,7 +68,6 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         heightFrac: 0.18,
         route: AppRoutes.weather,
         label: 'Weather'),
-    // 5 petits slots jardin (définis comme hotspots calibrables, indépendants et facilement tappables)
     _Hotspot(
         id: 'garden_1',
         centerX: 0.60,
@@ -116,7 +123,6 @@ class _OrganicDashboardWidgetState
   @override
   void initState() {
     super.initState();
-    // Load stored positions / sizes for organic zones (defaults derived from _hotspots)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadDefaultsIfNeeded();
     });
@@ -141,11 +147,10 @@ class _OrganicDashboardWidgetState
             defaultEnabled: defaultEnabled,
           );
     } catch (e) {
-      if (kDebugMode) debugPrint('🔗 [CALIBRATION] error loading defaults: $e');
+      if (kDebugMode) debugPrint('🔧 [CALIBRATION] error loading defaults: $e');
     }
   }
 
-  // Diagnostic helper that returns asset checks
   static Future<_AssetDiagnostic> _diagnoseAsset(String assetPath) async {
     final diag = _AssetDiagnostic();
     try {
@@ -186,7 +191,6 @@ class _OrganicDashboardWidgetState
           : MediaQuery.of(context).size.width;
       final double height = (width * (9.0 / 5.0)).clamp(300.0, 1400.0);
 
-      // map of routes from defaults for easy lookup
       final Map<String, String> _routeMap = {
         for (final h in OrganicDashboardWidget._hotspots) h.id: h.route
       };
@@ -199,7 +203,6 @@ class _OrganicDashboardWidgetState
           child: Stack(
             key: _containerKey,
             children: [
-              // Use BoxFit.fill so the pixel area matches the overlay box (no center crop)
               Positioned.fill(
                 child: Image.asset(
                   widget.assetPath,
@@ -235,11 +238,9 @@ class _OrganicDashboardWidgetState
                 ),
               ),
 
-              // If zones are empty (race condition), fallback to defaults
+              // If zones are empty (fallback to defaults)
               ...((zones.isEmpty)
                   ? (() {
-                      // Trier les hotspots par "taille" descendante afin d'afficher les grandes zones
-                      // en dessous et laisser les petites au-dessus (évite le recouvrement bloquant).
                       final defaultHotspots =
                           List<_Hotspot>.from(OrganicDashboardWidget._hotspots)
                             ..sort((a, b) {
@@ -280,7 +281,6 @@ class _OrganicDashboardWidgetState
                       }).toList();
                     })()
                   : (() {
-                      // Trier les zones calibrées par size descendante (les petites seront affichées au-dessus)
                       final sortedEntries = zones.entries.toList()
                         ..sort((a, b) => b.value.size.compareTo(a.value.size));
 
@@ -426,6 +426,7 @@ class _OrganicDashboardWidgetState
     });
   }
 }
+
 class _AssetDiagnostic {
   bool manifestLoaded = false;
   bool declared = false;
@@ -436,7 +437,6 @@ class _AssetDiagnostic {
   String? loadError;
 }
 
-/// Small hotspot descriptor (defaults)
 class _Hotspot {
   const _Hotspot({
     required this.id,
@@ -457,7 +457,6 @@ class _Hotspot {
   final String? label;
 }
 
-/// Basic tappable hotspot used as fallback / non-calibration UI
 class _HotspotButton extends StatelessWidget {
   const _HotspotButton({
     required this.onTap,
@@ -467,7 +466,7 @@ class _HotspotButton extends StatelessWidget {
   });
 
   final VoidCallback onTap;
-  final VoidCallback? onLongPress; // Nouveau paramètre
+  final VoidCallback? onLongPress;
   final bool showDebugOutline;
   final String? semanticLabel;
 
@@ -477,7 +476,7 @@ class _HotspotButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        onLongPress: onLongPress, // Utilisation du nouveau paramètre
+        onLongPress: onLongPress,
         borderRadius: BorderRadius.circular(12),
         splashColor: Colors.white24,
         child: Semantics(
@@ -522,7 +521,6 @@ class _HotspotButton extends StatelessWidget {
   }
 }
 
-/// Hotspot widget that supports calibration (pan + pinch-to-scale)
 class _CalibratableHotspot extends StatefulWidget {
   const _CalibratableHotspot({
     Key? key,
@@ -548,7 +546,7 @@ class _CalibratableHotspot extends StatefulWidget {
 }
 
 class _CalibratableHotspotState extends State<_CalibratableHotspot> {
-  // Convertit "garden_3" → 3
+  // Convert "garden_3" -> 3
   int? _extractSlotNumber(String id) {
     if (id.startsWith('garden_')) {
       final parts = id.split('_');
@@ -563,13 +561,19 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   Offset? _startFocalLocal;
   Offset? _startNormalizedPos;
 
-  // Resize mode (activated by long press)
   bool _isResizing = false;
   double? _resizeStartSize;
 
-  // Pointer tracking to detect two-finger pinch completely inside the hotspot
   final Map<int, Offset> _activePointers = {};
   bool _isPinchingInside = false;
+
+  // GlobalKey for InsectAwakeningWidget - IMPORTANT: field of State (not created in build)
+  final GlobalKey<InsectAwakeningWidgetState> _awakeningKey =
+      GlobalKey<InsectAwakeningWidgetState>();
+
+  // Resolved gardenId for this slot (may be null until async resolution)
+  String? _gardenId;
+
   void _onPointerDown(PointerDownEvent e) {
     _activePointers[e.pointer] = e.position;
   }
@@ -601,6 +605,31 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     return true;
   }
 
+  @override
+  void initState() {
+    super.initState();
+    // Resolve gardenId for this slot so InsectAwakeningWidget receives it
+    _resolveGardenId();
+  }
+
+  Future<void> _resolveGardenId() async {
+    final slot = _extractSlotNumber(widget.id);
+    if (slot == null) return;
+    try {
+      final gid = await DashboardSlotsRepository.getGardenIdForSlot(slot);
+      if (mounted) {
+        setState(() {
+          _gardenId = gid;
+        });
+      }
+      debugPrint(
+          '[Insect][resolve] resolved gardenId for ${widget.id} -> $_gardenId');
+    } catch (e, st) {
+      debugPrint(
+          '[Insect][resolve] error resolving gardenId for ${widget.id}: $e\n$st');
+    }
+  }
+
   void _handleLongPressStart(LongPressStartDetails details) {
     _isResizing = true;
     _resizeStartSize = widget.cfg.size;
@@ -627,7 +656,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     if (box != null) {
       _startFocalLocal = box.globalToLocal(details.focalPoint);
       _startNormalizedPos = widget.cfg.position;
-      // determine if all active pointers are inside the widget (for thumb pinch)
       _isPinchingInside = _areAllActivePointersInsideBox(box);
     } else {
       _isPinchingInside = false;
@@ -646,7 +674,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     }
     final size = box.size;
 
-    // If pinch-inside detected AND a real pinch (scale != 1.0), resize by pinch
     if (_isPinchingInside &&
         _startSize != null &&
         (details.scale - 1.0).abs() > 0.0001) {
@@ -660,7 +687,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       return;
     }
 
-    // If in long-press resize mode -> vertical drag adjusts size
     if (_isResizing && _resizeStartSize != null) {
       final delta = details.focalPointDelta.dy;
       final deltaNormalizedSize = -(delta / size.shortestSide);
@@ -675,7 +701,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       return;
     }
 
-    // Default: pan using focalPointDelta
     if (details.focalPointDelta != Offset.zero) {
       final deltaGlobal = details.focalPointDelta;
       final deltaNormalized =
@@ -706,8 +731,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
   }
 
-  void _handleGardenTap() async {
-    // Convertir l'ID texte ("garden_3") en entier (3)
+  Future<void> _handleGardenTap() async {
     final slot = _extractSlotNumber(widget.id);
     if (slot == null) {
       print('DBG: Slot invalide pour id=${widget.id}');
@@ -717,17 +741,14 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
-      // Naviguer vers le jardin existant avec le paramètre fromOrganic
       widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
       context.push('/gardens/$gardenId?fromOrganic=1');
     } else {
-      // Ouvrir la création de jardin avec le slot numérique correct
       context.push('/gardens/create?slot=$slot');
     }
   }
-  // Nouvelle méthode pour gérer le long press des jardins (activation)
-  void _handleGardenLongPress() async {
-    // Convertir l'ID texte ("garden_3") en entier (3)
+
+  Future<void> _handleGardenLongPress() async {
     final slot = _extractSlotNumber(widget.id);
     if (slot == null) {
       print('DBG: Slot invalide pour id=${widget.id}');
@@ -747,6 +768,29 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
           duration: const Duration(seconds: 2),
         ),
       );
+
+      // Trigger insect awakening widget: immediate animation + persistent via provider
+      try {
+        debugPrint(
+            '[Insect][trigger] Attempting to trigger for gardenId=$gardenId (key=${_awakeningKey})');
+        // If we resolved _gardenId earlier, but ensure widget has correct gardenId:
+        if (_gardenId == null) {
+          // update it so the InsectAwakeningWidget listens to the correct id
+          setState(() {
+            _gardenId = gardenId;
+          });
+        }
+        // Try direct calls (defensive)
+        final awakeningState = _awakeningKey.currentState;
+        debugPrint('[Insect][trigger] awakeningState => $awakeningState');
+        awakeningState?.triggerAnimation();
+        awakeningState?.forcePersistent();
+        debugPrint(
+            '[Insect][trigger] triggered awakeningState for gardenId=$gardenId');
+      } catch (e, st) {
+        debugPrint(
+            '[Insect][trigger] error triggering awakening for gardenId=$gardenId : $e\n$st');
+      }
     }
   }
 
@@ -786,10 +830,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       );
     }
 
-    // Normal behaviour: tap to navigate avec logique dynamique pour les jardins
     final isGardenHotspot = widget.id.startsWith('garden_');
 
-    return _HotspotButton(
+    // Create the hotspot button as before
+    final hotspotButton = _HotspotButton(
       onTap: isGardenHotspot
           ? _handleGardenTap
           : () {
@@ -807,5 +851,32 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       semanticLabel: widget.cfg.id,
       showDebugOutline: widget.showDebugOutline,
     );
+
+    // If this is a garden hotspot, wrap with InsectAwakeningWidget so glow can appear.
+    if (isGardenHotspot) {
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          // The awakening widget listens to activeGardenIdProvider and
+          // will start persistent glow when the garden becomes active.
+          InsectAwakeningWidget(
+            key: _awakeningKey,
+            gardenId: _gardenId ?? ('unknown_' + widget.id),
+            useOverlay: true,
+            fallbackSize: 60.0,
+          ),
+          hotspotButton,
+        ],
+      );
+    }
+
+    // Non-garden hotspots: just return the button
+    return hotspotButton;
+  }
+
+  @override
+  void dispose() {
+    _activePointers.clear();
+    super.dispose();
   }
 }
