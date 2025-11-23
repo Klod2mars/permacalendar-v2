@@ -3,8 +3,9 @@
 // OrganicDashboardWidget - intégration propre de InsectAwakeningWidget
 // - Un seul jardin actif à la fois via activeGardenIdProvider
 // - Désactivation de l'active garden avant navigation (évite la persistance)
-// - InsectAwakeningWidget monté par hotspot jardin (useOverlay: true)
-// - Structure propre, pas d'appels Riverpod invalides
+// - InsectAwakeningWidget monté par hotspot jardin (useOverlay: true + layerLink)
+// - Registry central pour permettre l'arrêt / forçage synchrone via GlobalKey
+// - Réduction du flood de logs et usage de toggleActiveGarden pour toggle atomique
 //
 
 import 'dart:ui';
@@ -23,7 +24,11 @@ import '../widgets/calibration_debug_overlay.dart';
 import '../../core/repositories/dashboard_slots_repository.dart';
 import '../../core/providers/active_garden_provider.dart';
 
+// Nouveaux imports recommandés (à créer si pas encore présent)
+import '../../core/providers/garden_awakening_registry.dart';
+
 // Insect awakening widget (assure path correct)
+// NOTE: InsectAwakeningWidget doit accepter désormais un paramètre `layerLink: LayerLink?`
 import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 
 /// OrganicDashboardWidget
@@ -242,7 +247,7 @@ class _OrganicDashboardWidgetState
                 ),
               ),
 
-              // Zones : fallback defaults or calibrated ones
+              // Zones : fallback defaults ou calibrées
               ...((zones.isEmpty)
                   ? (() {
                       final defaultHotspots =
@@ -357,7 +362,6 @@ class _OrganicDashboardWidgetState
                             : 'FAILED';
                         final loadColor =
                             d.loadOk ? Colors.greenAccent : Colors.redAccent;
-
                         body = Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -469,7 +473,6 @@ class _HotspotButton extends StatelessWidget {
     this.showDebugOutline = false,
     this.semanticLabel,
   });
-
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
   final bool showDebugOutline;
@@ -577,6 +580,9 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   final GlobalKey<InsectAwakeningWidgetState> _awakeningKey =
       GlobalKey<InsectAwakeningWidgetState>();
 
+  // LayerLink for CompositedTransformTarget/Follower so overlay follows the hotspot
+  final LayerLink _layerLink = LayerLink();
+
   // Resolved gardenId for this slot (may be null until async resolution)
   String? _gardenId;
 
@@ -591,16 +597,45 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     if (slot == null) return;
     try {
       final gid = await DashboardSlotsRepository.getGardenIdForSlot(slot);
-      if (mounted) {
-        setState(() {
-          _gardenId = gid;
-        });
+      if (!mounted) return;
+
+      // If gardenId changed, unregister old one from registry
+      if (_gardenId != null && _gardenId != gid) {
+        try {
+          widget.ref
+              .read(gardenAwakeningRegistryProvider)
+              .unregister(_gardenId!);
+        } catch (_) {}
       }
-      debugPrint(
-          '[Insect][resolve] resolved gardenId for ${widget.id} -> $_gardenId');
+
+      setState(() {
+        _gardenId = gid;
+      });
+
+      // If we have a gid, register this awakening key for it
+      if (gid != null) {
+        try {
+          widget.ref
+              .read(gardenAwakeningRegistryProvider)
+              .register(gid, _awakeningKey);
+          if (kDebugMode) {
+            debugPrint(
+                '[Insect][resolve] registered awakeningKey for ${widget.id} -> $gid');
+          }
+        } catch (e) {
+          if (kDebugMode)
+            debugPrint('[Insect][resolve] registry register error: $e');
+        }
+      }
+
+      if (kDebugMode) {
+        debugPrint(
+            '[Insect][resolve] resolved gardenId for ${widget.id} -> $_gardenId');
+      }
     } catch (e, st) {
-      debugPrint(
-          '[Insect][resolve] error resolving gardenId for ${widget.id}: $e\n$st');
+      if (kDebugMode)
+        debugPrint(
+            '[Insect][resolve] error resolving gardenId for ${widget.id}: $e\n$st');
     }
   }
 
@@ -644,37 +679,43 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       _startFocalLocal = box.globalToLocal(details.globalPosition);
       _startNormalizedPos = widget.cfg.position;
     }
-    print(
-        'DBG: CalibratableHotspot.longPressStart id=${widget.id} resizeStartSize=$_resizeStartSize');
+    if (kDebugMode) {
+      print(
+          'DBG: CalibratableHotspot.longPressStart id=${widget.id} resizeStartSize=$_resizeStartSize');
+    }
   }
 
   void _handleLongPressEnd(LongPressEndDetails details) {
     _isResizing = false;
     _resizeStartSize = null;
-    print('DBG: CalibratableHotspot.longPressEnd id=${widget.id}');
+    if (kDebugMode)
+      print('DBG: CalibratableHotspot.longPressEnd id=${widget.id}');
   }
 
   void _handleScaleStart(ScaleStartDetails details) {
     _startSize = widget.cfg.size;
     final box =
         widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null) {
+    if (box == null) {
+      _isPinchingInside = false;
+    } else {
       _startFocalLocal = box.globalToLocal(details.focalPoint);
       _startNormalizedPos = widget.cfg.position;
       _isPinchingInside = _areAllActivePointersInsideBox(box);
-    } else {
-      _isPinchingInside = false;
     }
-    print(
-        'DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize isPinchingInside=$_isPinchingInside');
+    if (kDebugMode) {
+      print(
+          'DBG: CalibratableHotspot.scaleStart id=${widget.id} startSize=$_startSize isPinchingInside=$_isPinchingInside');
+    }
   }
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     final box =
         widget.containerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) {
-      print(
-          'DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
+      if (kDebugMode)
+        print(
+            'DBG: CalibratableHotspot.scaleUpdate id=${widget.id} - no renderbox');
       return;
     }
     final size = box.size;
@@ -686,8 +727,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       widget.ref
           .read(organicZonesProvider.notifier)
           .setSize(widget.id, newSize);
-      print(
-          'DBG: CalibratableHotspot.pinchResize id=${widget.id} scale=${details.scale} newSize=$newSize');
+      if (kDebugMode) {
+        print(
+            'DBG: CalibratableHotspot.pinchResize id=${widget.id} scale=${details.scale} newSize=$newSize');
+      }
       widget.ref.read(calibrationStateProvider.notifier).markAsModified();
       return;
     }
@@ -700,8 +743,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       widget.ref
           .read(organicZonesProvider.notifier)
           .setSize(widget.id, newSize);
-      print(
-          'DBG: CalibratableHotspot.resize id=${widget.id} delta=$delta deltaNorm=$deltaNormalizedSize newSize=$newSize');
+      if (kDebugMode) {
+        print(
+            'DBG: CalibratableHotspot.resize id=${widget.id} delta=$delta deltaNorm=$deltaNormalizedSize newSize=$newSize');
+      }
       widget.ref.read(calibrationStateProvider.notifier).markAsModified();
       return;
     }
@@ -718,8 +763,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       widget.ref
           .read(organicZonesProvider.notifier)
           .setPosition(widget.id, newPos);
-      print(
-          'DBG: CalibratableHotspot.pan id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
+      if (kDebugMode) {
+        print(
+            'DBG: CalibratableHotspot.pan id=${widget.id} deltaGlobal=$deltaGlobal deltaNormalized=$deltaNormalized newPos=$newPos');
+      }
       widget.ref.read(calibrationStateProvider.notifier).markAsModified();
     }
   }
@@ -733,13 +780,13 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     _isPinchingInside = false;
     _activePointers.clear();
 
-    print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
+    if (kDebugMode) print('DBG: CalibratableHotspot.scaleEnd id=${widget.id}');
   }
 
   Future<void> _handleGardenTap() async {
     final slot = _extractSlotNumber(widget.id);
     if (slot == null) {
-      print('DBG: Slot invalide pour id=${widget.id}');
+      if (kDebugMode) print('DBG: Slot invalide pour id=${widget.id}');
       return;
     }
 
@@ -749,12 +796,17 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       // Avant la navigation, on désactive le jardin actif pour éviter que la lueur
       // persiste sur les autres écrans.
       try {
-        widget.ref.read(activeGardenIdProvider.notifier).setActiveGarden('');
-        debugPrint('[Insect][navigate] cleared activeGarden before navigation');
+        widget.ref.read(activeGardenIdProvider.notifier).setActiveGarden(null);
+        if (kDebugMode)
+          debugPrint(
+              '[Insect][navigate] cleared activeGarden before navigation');
       } catch (e, st) {
-        debugPrint('[Insect][navigate] error clearing active garden: $e\n$st');
+        if (kDebugMode)
+          debugPrint(
+              '[Insect][navigate] error clearing active garden: $e\n$st');
       }
 
+      // Sélection et navigation
       widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
       context.push('/gardens/$gardenId?fromOrganic=1');
     } else {
@@ -765,7 +817,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   Future<void> _handleGardenLongPress() async {
     final slot = _extractSlotNumber(widget.id);
     if (slot == null) {
-      print('DBG: Slot invalide pour id=${widget.id}');
+      if (kDebugMode) print('DBG: Slot invalide pour id=${widget.id}');
       return;
     }
 
@@ -775,43 +827,44 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       // 1) Sélectionner le jardin
       widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
 
-      // 2) Marquer ce jardin comme "actif" globalement (assure qu'il soit l'unique actif)
+      // 2) Toggle atomique via provider
       try {
         widget.ref
             .read(activeGardenIdProvider.notifier)
-            .setActiveGarden(gardenId);
-        debugPrint('[Insect][activate] setActiveGarden -> $gardenId');
+            .toggleActiveGarden(gardenId);
+        if (kDebugMode)
+          debugPrint('[Insect][activate] toggleActiveGarden -> $gardenId');
       } catch (e, st) {
-        debugPrint('[Insect][activate] error setting active garden: $e\n$st');
+        if (kDebugMode)
+          debugPrint(
+              '[Insect][activate] error toggling active garden: $e\n$st');
       }
 
       // 3) Feedback visuel
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Jardin $gardenId activé'),
+          content: Text('Jardin $gardenId activé / togglé'),
           duration: const Duration(seconds: 2),
         ),
       );
 
-      // 4) Trigger awakening if widget is mounted
+      // 4) Trigger une animation si le widget est monté (mais NE PAS forcer persistent ici)
       try {
-        if (_gardenId == null) {
-          setState(() {
-            _gardenId = gardenId;
-          });
-        }
-
         final awakeningState = _awakeningKey.currentState;
-        debugPrint(
-            '[Insect][trigger] awakeningState => $awakeningState for $gardenId');
-        awakeningState?.triggerAnimation();
-        awakeningState?.forcePersistent();
-
-        debugPrint(
-            '[Insect][trigger] triggered awakeningState for gardenId=$gardenId');
+        if (awakeningState != null) {
+          awakeningState.triggerAnimation();
+          if (kDebugMode)
+            debugPrint(
+                '[Insect][trigger] triggered awakeningState for gardenId=$gardenId');
+        } else {
+          // fallback : si l'instance n'est pas montée, on peut afficher un overlay temporaire ou message
+          if (kDebugMode)
+            debugPrint('[Insect][trigger] awakeningState null for $gardenId');
+        }
       } catch (e, st) {
-        debugPrint(
-            '[Insect][trigger] error triggering awakening for gardenId=$gardenId : $e\n$st');
+        if (kDebugMode)
+          debugPrint(
+              '[Insect][trigger] error triggering awakening for gardenId=$gardenId : $e\n$st');
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -878,6 +931,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
 
     if (isGardenHotspot) {
+      // InsectAwakeningWidget will follow the hotspot via layerLink/follower
       return Stack(
         fit: StackFit.expand,
         children: [
@@ -885,9 +939,15 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
             key: _awakeningKey,
             gardenId: _gardenId ?? ('unknown_' + widget.id),
             useOverlay: true,
+            layerLink: _layerLink,
             fallbackSize: 60.0,
           ),
-          hotspotButton,
+
+          // The hotspotButton is wrapped with a CompositedTransformTarget so the overlay can follow it.
+          CompositedTransformTarget(
+            link: _layerLink,
+            child: hotspotButton,
+          ),
         ],
       );
     }
@@ -897,6 +957,12 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
   @override
   void dispose() {
+    // Unregister from registry if registered
+    if (_gardenId != null) {
+      try {
+        widget.ref.read(gardenAwakeningRegistryProvider).unregister(_gardenId!);
+      } catch (_) {}
+    }
     _activePointers.clear();
     super.dispose();
   }
