@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
 import 'package:permacalendar/core/di/intelligence_module.dart';
 
+// <-- Ajout : importer le provider d'état pour pouvoir appeler intelligenceStateProvider()
+import '../providers/intelligence_state_providers.dart';
+
 class PlantChecklistCard extends ConsumerWidget {
   final String plantId;
   final String gardenId;
@@ -25,12 +28,11 @@ class PlantChecklistCard extends ConsumerWidget {
   }
 
   Future<void> _onTapAnalyze(BuildContext context, WidgetRef ref) async {
-    // Feedback immédiat
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('Analyse démarrée...')));
 
     try {
-      // Lancer l'analyse via le notifier (mettra à jour l'état global)
+      // Appel de l'analyse via le notifier familial (gardenId)
       await ref
           .read(intelligenceStateProvider(gardenId).notifier)
           .analyzePlant(plantId);
@@ -185,10 +187,8 @@ class PlantChecklistCard extends ConsumerWidget {
                       IconButton(
                         icon: const Icon(Icons.refresh),
                         onPressed: () {
-                          // Forcer un reload des recommandations pour cette plante
                           ref.invalidate(IntelligenceModule
                               .recommendationRepositoryProvider);
-                          // Lancer une analyse asynchrone (non-bloquante)
                           ref
                               .read(
                                   intelligenceStateProvider(gardenId).notifier)
@@ -243,7 +243,6 @@ class PlantChecklistCard extends ConsumerWidget {
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Marqué fait')));
-                  // On peut invalider le provider pour forcer refresh
                   ref.invalidate(
                       IntelligenceModule.recommendationRepositoryProvider);
                 } else {

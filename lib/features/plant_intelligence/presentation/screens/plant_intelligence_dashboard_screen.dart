@@ -73,11 +73,14 @@ class _PlantIntelligenceDashboardScreenState
                   title: Text('Plantes actives'), leading: Icon(Icons.eco)),
               const Divider(),
               ...activePlantIds.map((plantId) {
-                final maybePlant =
-                    ref.read(plantCatalogProvider).plants.firstWhere(
-                          (p) => p.id == plantId,
-                          orElse: () => null,
-                        );
+                // Recherche sûre du plant dans le catalogue (sans orElse: () => null)
+                final plantsList = ref.read(plantCatalogProvider).plants;
+                PlantFreezed? maybePlant;
+                try {
+                  maybePlant = plantsList.firstWhere((p) => p.id == plantId);
+                } catch (_) {
+                  maybePlant = null;
+                }
                 final name = maybePlant?.commonName ?? plantId;
                 return ListTile(
                   title: Text(name),
@@ -192,7 +195,8 @@ class _PlantIntelligenceDashboardScreenState
 
   Widget _buildForGarden(BuildContext context, String gardenId) {
     final intelligenceState = ref.watch(intelligenceStateProvider(gardenId));
-    final plantCatalog = ref.watch(plantCatalogProvider);
+    final plantCatalog = ref.watch(
+        plant_catalogProvider); // si nom diffère, garder plantCatalogProvider
 
     final activePlantsCount = intelligenceState.activePlantIds.length;
     final analysesCount = intelligenceState.plantConditions.length;
