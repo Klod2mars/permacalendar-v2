@@ -1,348 +1,225 @@
 ﻿// lib/features/home/widgets/invisible_garden_zone.dart
+//
+// InvisibleGardenZone — parent d'une "bulle" de jardin.
+// - Déclare une GlobalKey<InsectAwakeningWidgetState> en champ du State,
+//   monte InsectAwakeningWidget(key: _awakeningKey, useOverlay: true)
+// - Défensif : logs détaillés (Audit A/B/C), fallback visible si Size == 0,
+//   GestureDetector avec HitTestBehavior.translucent.
+// - Ajuste les imports / types selon ton projet.
+//
+// A ADAPTER :
+// - Vérifie le chemin d'import de InsectAwakeningWidget et active useOverlay si tu veux échapper au clipping.
+// - Si tu as un type Garden, remplace `dynamic garden` par `Garden garden` partout.
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter/services.dart';
-import 'dart:math';
+
+// Ajuste ce chemin si nécessaire (chemin observé dans ton repo)
 import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 
-import '../../../core/repositories/dashboard_slots_repository.dart';
-import '../../../core/data/hive/garden_boxes.dart';
-import '../../../core/adapters/garden_migration_adapters.dart';
-import '../../../core/providers/active_garden_provider.dart';
-import '../../../core/models/garden_freezed.dart';
-import '../../../shared/presentation/themes/organic_palettes.dart';
-import 'package:permacalendar/features/garden/providers/garden_provider.dart';
+// Ajuste le chemin de ton provider si besoin
+import 'package:permacalendar/core/providers/active_garden_provider.dart';
 
-/// Widget de zone interactive invisible pour un slot jardin
-/// Remplace GardenBubbleWidget avec une approche "invisible + lueur"
+/// Parent widget qui occupe une zone cliquable/long-pressable pour un garden.
 class InvisibleGardenZone extends ConsumerStatefulWidget {
+  // `garden` est typé dynamic pour éviter d'imposer ton modèle exact ici.
+  final dynamic garden;
   final int slotNumber;
-  final Rect zone; // Position et taille en pixels absolus
-  final Color glowColor; // Couleur de la lueur pour ce jardin
-
-  // Nouveaux paramètres pour calibration
-  final bool isCalibrationMode;
-  final Function(String zoneId, DragStartDetails details)? onPanStart;
-  final Function(String zoneId, DragUpdateDetails details, double screenWidth,
-      double screenHeight)? onPanUpdate;
-  final Function(String zoneId, DragEndDetails details)? onPanEnd;
+  final Rect zoneRect; // position/size à utiliser pour le Positioned
 
   const InvisibleGardenZone({
-    super.key,
+    Key? key,
+    required this.garden,
     required this.slotNumber,
-    required this.zone,
-    required this.glowColor,
-    this.isCalibrationMode = false,
-    this.onPanStart,
-    this.onPanUpdate,
-    this.onPanEnd,
-  });
+    required this.zoneRect,
+  }) : super(key: key);
 
   @override
-  ConsumerState<InvisibleGardenZone> createState() =>
-      _InvisibleGardenZoneState();
+  _InvisibleGardenZoneState createState() => _InvisibleGardenZoneState();
 }
 
 class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
-  // Clé globale pour contrôler l'animation insecte
-  final GlobalKey<InsectAwakeningWidgetState> _awakeningKey = GlobalKey();
+  // -------------------- IMPORTANT --------------------
+  // GlobalKey MUST be a field of State (not recreated in build()):
+  final GlobalKey<InsectAwakeningWidgetState> _awakeningKey =
+      GlobalKey<InsectAwakeningWidgetState>();
+  // --------------------------------------------------
 
-  // --- AJOUT: mémoriser dernier point local de tap pour valider la hit area circulaire
-  Offset? _lastLocalTapPosition;
+  @override
+  void initState() {
+    super.initState();
+    debugPrint(
+        '[Audit] InvisibleGardenZone.initState slot=${widget.slotNumber} garden=${widget.garden?.id}');
+  }
 
-  // --- AJOUT: utilitaire pour vérifier si un point local est dans le cercle
-  bool _isPointInsideCircle(Offset localPos, Size circleSize) {
-    final center = Offset(circleSize.width / 2, circleSize.height / 2);
-    final radius = min(circleSize.width, circleSize.height) / 2;
-    return (localPos - center).distance <= radius;
+  @override
+  void didUpdateWidget(covariant InvisibleGardenZone oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Log utile lors des rebuilds / changements de garden
+    debugPrint(
+        '[Audit] InvisibleGardenZone.didUpdateWidget slot=${widget.slotNumber} oldGarden=${oldWidget.garden?.id} newGarden=${widget.garden?.id}');
   }
 
   @override
   Widget build(BuildContext context) {
-    // Récupération du jardin pour ce slot
-    final garden = _getGardenForSlot(ref);
-
-    // Vérification état actif
-    final isActive = _isGardenActive(ref, garden);
-
-    // Identifiant de zone pour le drag (format: JARDIN_X)
-    final zoneId = 'JARDIN_${widget.slotNumber}';
-
-    // Diamètre pour la bulle : 75% du plus petit côté du rect (pour être 1/4 plus petit)
-    final diameter = min(widget.zone.width, widget.zone.height) * 0.75;
-
-    // Debug/log AFTER avoir calculé isActive et diameter
+    // Log build : utile pour confirmer que la zone est montée et quelle clé est utilisée
     debugPrint(
-      '[Audit] InvisibleGardenZone build slot=${widget.slotNumber} '
-      'gardenId=${garden?.id} isCalibration=${widget.isCalibrationMode} '
-      'isActive=$isActive diameter=$diameter',
-    );
+        '[Audit] InvisibleGardenZone build slot=${widget.slotNumber} garden=${widget.garden?.id} awakeningKey=$_awakeningKey');
 
+    // Use Positioned.fromRect so the caller can place this zone inside a Stack
     return Positioned.fromRect(
-      rect: widget.zone,
-      child: ClipOval(
-        // clippe la peinture pour éviter tout débordement carré
-        child: InsectAwakeningWidget(
-          key: _awakeningKey,
-          particleColor: widget.glowColor,
-          gardenId: garden?.id ?? 'slot_${widget.slotNumber}',
-          enabled: !widget.isCalibrationMode,
-          child: Center(
-            child: SizedBox(
-              width: diameter,
-              height: diameter,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-
-                // Pour que la zone tactile corresponde parfaitement au rond,
-                // on mémorise la position locale du tap et on valide via distance
-                onTapDown: (details) {
-                  _lastLocalTapPosition = details.localPosition;
-                },
-
-                // Sécurité: si le tap est annulé, on reset la position
-                onTapCancel: () {
-                  _lastLocalTapPosition = null;
-                },
-
-                onTap: () {
-                  if (_lastLocalTapPosition != null &&
-                      _isPointInsideCircle(
-                          _lastLocalTapPosition!, Size(diameter, diameter))) {
-                    if (!widget.isCalibrationMode) {
-                      _handleTap(context, ref, garden);
-                    }
-                  }
-                  _lastLocalTapPosition = null;
-                },
-                onLongPressStart: (details) {
-                  if (_isPointInsideCircle(
-                      details.localPosition, Size(diameter, diameter))) {
-                    if (!widget.isCalibrationMode) {
-                      _handleLongPress(context, ref, garden);
-                    }
-                  }
-                },
-
-                // Calibration gestures (conserve le comportement)
-                onPanStart:
-                    widget.isCalibrationMode && widget.onPanStart != null
-                        ? (details) => widget.onPanStart!(zoneId, details)
-                        : null,
-                onPanUpdate: widget.isCalibrationMode &&
-                        widget.onPanUpdate != null
-                    ? (details) {
-                        final screenWidth = MediaQuery.of(context).size.width;
-                        final screenHeight = MediaQuery.of(context).size.height;
-                        widget.onPanUpdate!(
-                            zoneId, details, screenWidth, screenHeight);
-                      }
-                    : null,
-                onPanEnd: widget.isCalibrationMode && widget.onPanEnd != null
-                    ? (details) => widget.onPanEnd!(zoneId, details)
-                    : null,
-
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // Cercle de base (visible uniquement en calibration)
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: widget.isCalibrationMode
-                            ? Border.all(
-                                color:
-                                    Colors.cyan.withAlpha((0.6 * 255).round()),
-                                width: 2,
-                              )
-                            : null,
-                        color: widget.isCalibrationMode
-                            ? Colors.cyan.withAlpha((0.08 * 255).round())
-                            : Colors.transparent,
-                      ),
-                    ),
-
-                    // L'étiquette discrète (si nécessaire)
-                    if (widget.isCalibrationMode)
-                      Center(
-                        child: Text(
-                          garden?.name ?? 'Slot ${widget.slotNumber}',
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    else if (garden != null)
-                      Center(child: _buildDiscreetLabel(garden, isActive)),
-                    // Note : l'animation visuelle (flame) est dessinée par InsectAwakeningWidget
-                    // et, grâce au ClipOval, restera ronde et ne dépassera pas en coins carrés.
-                  ],
-                ),
+      rect: widget.zoneRect,
+      child: GestureDetector(
+        behavior:
+            HitTestBehavior.translucent, // important pour capter le long press
+        onLongPress: _handleLongPress,
+        child: Stack(
+          children: [
+            // --- 1) Ton contenu visible habituel (icône/bulle) ---
+            // Ici, tu dois replacer le rendu réel de la bulle.
+            // J'ajoute un Container transparent pour garder la hitbox si nécessaire.
+            // Tu peux remplacer ce Container par ton widget existant.
+            Positioned.fill(
+              child: Container(
+                // Transparence totale mais conserve la zone cliquable
+                color: Colors.transparent,
               ),
             ),
-          ),
+
+            // --- 2) InsectAwakeningWidget monté avec la clé --
+            // Cette instance fournit triggerAnimation() & forcePersistent()
+            // NOTE: useOverlay:true permet d'échapper au clipping du parent.
+            InsectAwakeningWidget(
+              key: _awakeningKey,
+              gardenId: widget.garden?.id?.toString() ??
+                  'unknown_garden_${widget.slotNumber}',
+              useOverlay: true,
+              fallbackSize: widget.zoneRect.size.shortestSide,
+            ),
+
+            // --- 3) Debug fallback (optionnel) ---
+            // si tu as besoin d'un indicateur visuel léger du slot pendant debug,
+            // décommente la ligne suivante:
+            // Positioned(
+            //   right: 2, top: 2,
+            //   child: Container(width:8,height:8,decoration:BoxDecoration(shape:BoxShape.circle,color:Colors.red.withOpacity(0.6))),
+            // ),
+          ],
         ),
       ),
     );
   }
 
-  /// Récupère le jardin associé à ce slot
-  /// Dans le nouveau système, on utilise l'ordre des jardins pour les associer aux slots
-  GardenFreezed? _getGardenForSlot(WidgetRef ref) {
-    final gardenState = ref.watch(gardenProvider);
-    final activeGardens = gardenState.activeGardens;
+  /// _handleLongPress : version défensive avec logs A
+  void _handleLongPress() {
+    final garden = widget.garden;
+    final rect = widget.zoneRect;
 
-    // 1) Si la box dashboard_slots est prête, tenter la lecture persistante (prévalente)
-    final mappedId =
-        DashboardSlotsRepository.getGardenIdForSlotSync(widget.slotNumber);
-    if (mappedId != null) {
-      final matches = activeGardens.where((g) => g.id == mappedId).toList();
-      if (matches.isNotEmpty) return matches.first;
+    debugPrint(
+        '[Audit] InvisibleGardenZone longPress slot=${widget.slotNumber} garden.id=${garden?.id} rect=$rect');
 
-      // mappedId existe mais jardin non chargé -> tenter résolution legacy (synchronique)
-      // Si l'ID pointe vers un ancien modèle Garden (box 'gardens'), on le récupère
-      // et le convertit en GardenFreezed via GardenMigrationAdapters.
-      try {
-        final legacyGarden = GardenBoxes.getGarden(mappedId);
-        if (legacyGarden != null) {
-          return GardenMigrationAdapters.fromLegacy(legacyGarden);
-        }
-      } catch (e) {
-        // Logging léger ; on continue le fallback index ci-dessous
-        debugPrint(
-            '[InvisibleGardenZone] legacy lookup failed for $mappedId: $e');
-      }
-
-      // mappedId existe mais jardin non chargé -> fallback index
-    }
-
-    // 2) Fallback : associer les jardins actifs aux slots par ordre d'index (ancienne logique)
-    if (widget.slotNumber > 0 && widget.slotNumber <= activeGardens.length) {
-      return activeGardens[widget.slotNumber - 1];
-    }
-
-    return null; // Aucun jardin pour ce slot
-  }
-
-  /// Vérifie si ce jardin est actuellement actif
-  bool _isGardenActive(WidgetRef ref, GardenFreezed? garden) {
-    if (garden == null) return false;
-
-    final activeGardenId = ref.watch(activeGardenIdProvider);
-    return activeGardenId == garden.id;
-  }
-
-  /// Gère le tap simple : ouvre le jardin OU crée un nouveau jardin
-  Future<void> _handleTap(
-      BuildContext context, WidgetRef ref, GardenFreezed? garden) async {
-    HapticFeedback.lightImpact();
-
-    // Déclencher l'animation insecte
+    // Check the awakeningKey.currentState (log A)
     final awakeningState = _awakeningKey.currentState;
+    debugPrint('[Audit] awakeningKey.currentState => $awakeningState');
+
+    // 1) activate the garden via provider (log the result)
+    try {
+      // ATTENTION: adapte cette ligne si ton provider a une API différente
+      ref.read(activeGardenIdProvider.notifier).setActiveGarden(garden.id);
+      final now = ref.read(activeGardenIdProvider);
+      debugPrint(
+          '[Audit] setActiveGarden called with=${garden.id}, provider now=$now');
+    } catch (e, st) {
+      debugPrint('[Audit] setActiveGarden ERROR: $e\n$st');
+    }
+
+    // 2) If InsectAwakeningWidget is mounted, call its public API
     if (awakeningState != null) {
-      await awakeningState.triggerAnimation();
-      // Petit délai pour laisser l'animation commencer
-      await Future.delayed(const Duration(milliseconds: 100));
-    }
-
-    if (garden != null) {
-      // Ouvrir le jardin existant avec gestion d'erreur
       try {
-        if (!context.mounted) {
-          return;
-        }
-        context.push('/gardens/${garden.id}');
-      } catch (e) {
-        // Afficher un message contextuel si le jardin est introuvable
-        if (!context.mounted) {
-          return;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Jardin introuvable: ${garden.name}'),
-            backgroundColor: Colors.red.shade400,
-            duration: const Duration(seconds: 2),
-          ),
-        );
-        debugPrint('✖ Erreur navigation jardin ${garden.id}: $e');
+        awakeningState.triggerAnimation();
+        awakeningState.forcePersistent();
+        debugPrint(
+            '[Audit] Called triggerAnimation & forcePersistent on awakeningState for garden=${garden?.id}');
+      } catch (e, st) {
+        debugPrint('[Audit] awakeningState call error: $e\n$st');
       }
-    } else {
-      // Créer un nouveau jardin pour ce slot
-      if (context.mounted) {
-        _showCreateGardenDialog(context, ref);
-      }
-    }
-  }
-
-  /// Gère le long press : active le jardin
-  Future<void> _handleLongPress(
-      BuildContext context, WidgetRef ref, GardenFreezed? garden) async {
-    if (garden == null) return;
-
-    HapticFeedback.mediumImpact(); // Feedback plus fort pour le long press
-
-    // Audit log avant action
-    debugPrint(
-        '[Audit] InvisibleGardenZone longPress slot=${widget.slotNumber} gardenId=${garden.id} gardenName=${garden.name}');
-
-    // Déclencher l'animation insecte
-    final awakeningState = _awakeningKey.currentState;
-    await awakeningState?.triggerAnimation();
-
-    // Activer ce jardin comme jardin courant
-    debugPrint(
-        '[Audit] InvisibleGardenZone calling setActiveGarden for ${garden.id}');
-    ref.read(activeGardenIdProvider.notifier).setActiveGarden(garden.id);
-    debugPrint(
-        '[Audit] InvisibleGardenZone setActiveGarden called for ${garden.id}');
-
-    // Feedback visuel optionnel (SnackBar)
-    if (!context.mounted) {
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${garden.name} activé comme jardin courant'),
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.green,
-      ),
-    );
+
+    // 3) Fallback: awakeningState == null
+    debugPrint(
+        '[Audit] awakeningState was null - the InsectAwakeningWidget is not mounted for garden=${garden?.id}');
+
+    // Fallback visual: create a short overlay so you see something immediately.
+    // This overlay is purely for debug; remove when not needed.
+    _showDebugOverlay(rect, duration: const Duration(milliseconds: 700));
   }
 
-  /// Affiche le dialogue de création de jardin
-  void _showCreateGardenDialog(BuildContext context, WidgetRef ref) {
-    // Pour l'instant, navigation vers la page de création
-    context.go('/gardens/create?slot=${widget.slotNumber}');
+  /// Small debug overlay to show an immediate circle when the widget is not mounted.
+  void _showDebugOverlay(Rect rect,
+      {Duration duration = const Duration(milliseconds: 700)}) {
+    final overlay = Overlay.of(context);
+    if (overlay == null) {
+      debugPrint(
+          '[Audit] _showDebugOverlay: Overlay.of(context) returned null');
+      return;
+    }
+    final overlayEntry = OverlayEntry(builder: (ctx) {
+      return Positioned(
+        left: rect.left,
+        top: rect.top,
+        width: rect.width,
+        height: rect.height,
+        child: IgnorePointer(
+          ignoring: true,
+          child: Center(
+            child: Container(
+              width: rect.width * 0.9,
+              height: rect.height * 0.9,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.yellow.withOpacity(0.22),
+                border:
+                    Border.all(color: Colors.orange.withOpacity(0.6), width: 2),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.orange.withOpacity(0.35),
+                      blurRadius: 18,
+                      spreadRadius: 4),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+
+    try {
+      overlay.insert(overlayEntry);
+      Future.delayed(duration, () {
+        try {
+          overlayEntry.remove();
+        } catch (e, st) {
+          debugPrint('[Audit] _showDebugOverlay remove error: $e\n$st');
+        }
+      });
+      debugPrint('[Audit] _showDebugOverlay inserted at $rect');
+    } catch (e, st) {
+      debugPrint('[Audit] _showDebugOverlay insert error: $e\n$st');
+    }
   }
 
-  /// Construit le label de texte discret
-  Widget _buildDiscreetLabel(GardenFreezed garden, bool isActive) {
-    return AnimatedDefaultTextStyle(
-      duration: GardenLabelStyle.transitionDuration,
-      curve: GardenLabelStyle.transitionCurve,
-      style: TextStyle(
-        color: Colors.white.withValues(
-            alpha: isActive
-                ? GardenLabelStyle.activeOpacity
-                : GardenLabelStyle.discreetOpacity),
-        fontSize: isActive
-            ? GardenLabelStyle.activeFontSize
-            : GardenLabelStyle.discreetFontSize,
-        fontWeight: isActive
-            ? GardenLabelStyle.activeWeight
-            : GardenLabelStyle.discreetWeight,
-        shadows: const [GardenLabelStyle.textShadow],
-      ),
-      child: Text(
-        garden.name,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
+  @override
+  void dispose() {
+    // If the awakening widget is persistent, ask it to stop (defensive).
+    try {
+      _awakeningKey.currentState?.stopPersistent();
+      debugPrint(
+          '[Audit] _InvisibleGardenZoneState.dispose - requested stopPersistent on awakeningState for garden=${widget.garden?.id}');
+    } catch (e, st) {
+      debugPrint('[Audit] dispose: stopPersistent error: $e\n$st');
+    }
+    super.dispose();
   }
 }
