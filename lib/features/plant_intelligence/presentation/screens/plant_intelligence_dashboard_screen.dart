@@ -216,8 +216,8 @@ class _PlantIntelligenceDashboardScreenState
                   final maybePlant = matches.isNotEmpty ? matches.first : null;
                   final plantName = maybePlant?.commonName ?? plantId;
                   final imageUrl = (maybePlant?.metadata is Map)
-                      ? (maybePlant!.metadata['image'] ?? '')
-                      : '';
+                      ? (maybePlant!.metadata['image']?.toString())
+                      : null;
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12),
