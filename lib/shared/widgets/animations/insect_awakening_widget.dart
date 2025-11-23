@@ -1,11 +1,14 @@
 // lib/shared/widgets/animations/insect_awakening_widget.dart
 //
-// InsectAwakeningWidget (révisé)
+// InsectAwakeningWidget (version retravaillée)
 // - ConsumerStatefulWidget exposant triggerAnimation(), forcePersistent(), stopPersistent()
-// - Optionally accepts a LayerLink so the overlay can follow the target via
-//   CompositedTransformFollower (recommended when used with CompositedTransformTarget).
-// - Defensive: handles Size(0,0), Overlay.of(context) == null, cleans up in dispose.
-// - Reduced logging; keep only meaningful debug logs under kDebugMode.
+// - Support optionnel de LayerLink pour overlay follow via CompositedTransformFollower
+// - Clamp de la taille de l'overlay pour éviter des boules géantes
+// - Logs d'insertions d'overlay explicites pour debug
+// - Throttling des logs d'audit (on logge seulement quand bubbleSize ou isPersistent change)
+// - Défensif : protections pour Size(0,0), Overlay.of(context) == null, nettoyage dans dispose
+//
+// Remarque : utilise les imports package: pour éviter les erreurs d'import relatif.
 
 import 'dart:math' as math;
 import 'dart:ui' as ui;
@@ -14,6 +17,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Assure-toi que le package name dans pubspec.yaml est 'permacalendar'.
+// Si différent, remplace 'permacalendar' par le nom correct.
+import 'package:permacalendar/core/providers/active_garden_provider.dart';
+
+/// Widget d'éveil / lueur pour un "garden" (petite bulle).
+/// - Peut dessiner localement ou via Overlay (useOverlay=true).
+/// - Si [layerLink] est fourni, l'overlay utilise CompositedTransformFollower pour suivre la bulle.
 class InsectAwakeningWidget extends ConsumerStatefulWidget {
   final String gardenId;
   final bool useOverlay;
@@ -40,8 +50,16 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   bool _isPersistent = false;
   OverlayEntry? _overlayEntry;
 
-  // Flag: avoid calling ref.listen multiple times from build
+  // Flag : n'attacher ref.listen qu'une seule fois (satisfait assertion Riverpod)
   bool _refListenerAttached = false;
+
+  // Audit throttling : n'imprimer que sur changement
+  Size? _lastAuditSize;
+  bool? _lastPersistentState;
+
+  // Safety clamp pour overlay size
+  static const double _maxOverlaySide = 180.0;
+  static const double _minOverlaySide = 10.0;
 
   @override
   void initState() {
@@ -61,10 +79,9 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     );
 
     _controller.addListener(() {
-      if (mounted) {
-        // Only trigger a local repaint; overlay (if present) will be markedNeedsBuild below
-        setState(() {});
-      }
+      // repaint local
+      if (mounted) setState(() {});
+      // if overlay present, mark it needs build
       if (_overlayEntry != null) {
         try {
           _overlayEntry!.markNeedsBuild();
@@ -74,7 +91,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       }
     });
 
-    // After first frame, if this garden is already active, ensure persistent.
+    // Si le jardin est déjà actif au mount, forcer persistent après le 1er frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         final active = ref.read(activeGardenIdProvider);
@@ -94,7 +111,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
 
   // ---------------- PUBLIC API ----------------
 
-  /// Simple pulse/animation trigger (non-persistent).
+  /// Déclenche une animation courte (non persistante)
   void triggerAnimation() {
     if (kDebugMode) {
       debugPrint(
@@ -111,7 +128,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     _logState('triggerAnimation');
   }
 
-  /// Make the glow persistent (repeat animation) and ensure overlay present if requested.
+  /// Rendre la lueur persistante (répétée)
   void forcePersistent() {
     if (_isPersistent) return;
     if (kDebugMode)
@@ -126,7 +143,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     _logState('forcePersistent');
   }
 
-  /// Stop persistent state and remove overlay.
+  /// Stoppe la persistance et enlève l'overlay (si présent)
   void stopPersistent() {
     if (kDebugMode)
       debugPrint('[Insect] stopPersistent for ${widget.gardenId}');
@@ -142,8 +159,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
     _logState('stopPersistent');
   }
 
-  /// Small helper: show a short, debug-only overlay if the widget isn't mounted in place.
-  /// Useful when the hotspot logic wants immediate feedback but the widget isn't ready.
+  /// Affiche une lueur temporaire via un overlay de debug (utile si widget n'est pas monté)
   void triggerTemporaryGlow(
       {Duration duration = const Duration(milliseconds: 700)}) {
     if (!widget.useOverlay) return;
@@ -155,7 +171,6 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       return;
     }
 
-    // compute a size if possible
     Size size = Size(widget.fallbackSize, widget.fallbackSize);
     try {
       final ro = context.findRenderObject();
@@ -164,6 +179,12 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
         if (s.width > 0 && s.height > 0) size = s;
       }
     } catch (_) {}
+
+    // clamp size
+    size = Size(
+      size.width.clamp(_minOverlaySide, _maxOverlaySide),
+      size.height.clamp(_minOverlaySide, _maxOverlaySide),
+    );
 
     final debugEntry = OverlayEntry(builder: (ctx) {
       return Center(
@@ -193,7 +214,9 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
           debugEntry.remove();
         } catch (_) {}
       });
-      if (kDebugMode) debugPrint('[Insect] triggerTemporaryGlow inserted');
+      if (kDebugMode)
+        debugPrint(
+            '[Insect] triggerTemporaryGlow inserted for ${widget.gardenId}');
     } catch (e, st) {
       if (kDebugMode)
         debugPrint('[Insect] triggerTemporaryGlow insert error: $e\n$st');
@@ -203,12 +226,9 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   // ---------------- Overlay helpers ----------------
 
   void _ensureOverlay() {
-    if (_overlayEntry != null) {
-      // overlay already present; keep it
-      return;
-    }
+    if (_overlayEntry != null) return;
 
-    // Try to determine the size of the widget; if zero, use fallback.
+    // Tentative de déterminer la taille réelle du widget ; fallback si zéro
     Size bubbleSize = Size(widget.fallbackSize, widget.fallbackSize);
     Offset? offset;
     try {
@@ -224,8 +244,24 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       }
     } catch (_) {}
 
-    // Create overlay with CompositedTransformFollower if a LayerLink was provided.
+    // Clamp de sécurité pour éviter des overflows visuels
+    bubbleSize = Size(
+      bubbleSize.width.clamp(_minOverlaySide, _maxOverlaySide),
+      bubbleSize.height.clamp(_minOverlaySide, _maxOverlaySide),
+    );
+
+    // Log informatif
+    if (kDebugMode) {
+      debugPrint(
+          '[Overlay] final bubbleSize=$bubbleSize for ${widget.gardenId} layerLink=${widget.layerLink != null}');
+    }
+
+    // Créer overlay via CompositedTransformFollower si layerLink fourni
     if (widget.layerLink != null) {
+      if (kDebugMode) {
+        debugPrint(
+            '[Overlay] using LayerLink for ${widget.gardenId}, size=$bubbleSize');
+      }
       _overlayEntry = OverlayEntry(builder: (ctx) {
         return CompositedTransformFollower(
           link: widget.layerLink!,
@@ -250,17 +286,22 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
         );
       });
     } else {
-      // Fallback: position by absolute offset in the overlay.
+      // Fallback: position par offset global
       if (offset == null) {
         if (kDebugMode)
           debugPrint(
-              '[Overlay] cannot determine offset for ${widget.gardenId}');
+              '[Overlay] cannot determine offset for ${widget.gardenId} - skipping overlay');
         return;
       }
       final left = offset.dx;
       final top = offset.dy;
       final width = math.max(bubbleSize.width, 1.0);
       final height = math.max(bubbleSize.height, 1.0);
+
+      if (kDebugMode) {
+        debugPrint(
+            '[Overlay] creating Positioned overlay for ${widget.gardenId} at left=$left top=$top size=${width}x${height}');
+      }
 
       _overlayEntry = OverlayEntry(builder: (ctx) {
         return Positioned(
@@ -285,6 +326,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       });
     }
 
+    // Insert overlay (si possible)
     try {
       final overlay = Overlay.of(context);
       if (overlay != null && _overlayEntry != null) {
@@ -319,7 +361,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
 
   @override
   Widget build(BuildContext context) {
-    // Attach ref.listen only during build, and only once (satisfies Riverpod debug assertion).
+    // Attach ref.listen only during build, and only once (satisfies Riverpod debug assert)
     if (!_refListenerAttached) {
       _refListenerAttached = true;
       ref.listen<String?>(activeGardenIdProvider, (prev, next) {
@@ -330,12 +372,12 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
         try {
           final activeId = next;
           if (activeId != null && activeId == widget.gardenId) {
-            // Ensure forced persistent after build
+            // Force persistent après le prochain frame
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) forcePersistent();
             });
           } else {
-            // If we were persistent and active moved away, stop persistent after frame
+            // Si on était persistent et que l'actif a changé, stop après frame
             if (_isPersistent) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (mounted) stopPersistent();
@@ -353,13 +395,21 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
 
     return LayoutBuilder(builder: (context, constraints) {
       final bubbleSize = constraints.biggest;
-      // Light debug info
+
+      // Audit throttling : ne logger que si changement de taille ou d'état persistent
       if (kDebugMode) {
-        debugPrint(
-            '[Audit] InsectAwakeningWidget ${widget.gardenId} - bubbleSize=$bubbleSize state=$_isPersistent overlay=${_overlayEntry != null}');
+        if (_lastAuditSize == null ||
+            _lastPersistentState == null ||
+            _lastAuditSize != bubbleSize ||
+            _lastPersistentState != _isPersistent) {
+          debugPrint(
+              '[Audit] InsectAwakeningWidget ${widget.gardenId} - bubbleSize=$bubbleSize state=$_isPersistent overlay=${_overlayEntry != null}');
+          _lastAuditSize = bubbleSize;
+          _lastPersistentState = _isPersistent;
+        }
       }
 
-      // If parent gave zero size, use a visible fallback so developer can see placement.
+      // Si parent donne une taille zero, rendre fallback visible pour le debug
       if (bubbleSize.width == 0 || bubbleSize.height == 0) {
         return SizedBox(
           width: widget.fallbackSize,
@@ -381,7 +431,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
         );
       }
 
-      // Draw local painter; overlay will mirror this if used.
+      // Dessin local ; si overlay actif il le reflètera
       return CustomPaint(
         size: bubbleSize,
         painter: GlowPainter(
@@ -419,7 +469,7 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
   }
 }
 
-/// Painter for the glow. Uses MaskFilter.blur to create a soft halo.
+/// Painter pour la lueur (halo)
 class GlowPainter extends CustomPainter {
   final Color color;
   final double intensity; // 0..1
