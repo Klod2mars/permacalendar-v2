@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/entities/recommendation.dart';
 import 'package:permacalendar/core/di/intelligence_module.dart';
 
-// <-- Ajout : importer le provider d'état pour pouvoir appeler intelligenceStateProvider()
+// Import du provider d'état pour pouvoir appeler intelligenceStateProvider()
 import '../providers/intelligence_state_providers.dart';
 
 class PlantChecklistCard extends ConsumerWidget {

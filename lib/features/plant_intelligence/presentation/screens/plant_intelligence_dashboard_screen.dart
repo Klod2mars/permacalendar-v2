@@ -75,13 +75,16 @@ class _PlantIntelligenceDashboardScreenState
               ...activePlantIds.map((plantId) {
                 // Recherche sûre du plant dans le catalogue (sans orElse: () => null)
                 final plantsList = ref.read(plantCatalogProvider).plants;
-                PlantFreezed? maybePlant;
+                dynamic maybePlant;
                 try {
                   maybePlant = plantsList.firstWhere((p) => p.id == plantId);
                 } catch (_) {
                   maybePlant = null;
                 }
-                final name = maybePlant?.commonName ?? plantId;
+                final name = (maybePlant != null &&
+                        (maybePlant as dynamic).commonName != null)
+                    ? (maybePlant as dynamic).commonName as String
+                    : plantId;
                 return ListTile(
                   title: Text(name),
                   trailing: IconButton(
@@ -195,8 +198,7 @@ class _PlantIntelligenceDashboardScreenState
 
   Widget _buildForGarden(BuildContext context, String gardenId) {
     final intelligenceState = ref.watch(intelligenceStateProvider(gardenId));
-    final plantCatalog = ref.watch(
-        plant_catalogProvider); // si nom diffère, garder plantCatalogProvider
+    final plantCatalog = ref.watch(plantCatalogProvider);
 
     final activePlantsCount = intelligenceState.activePlantIds.length;
     final analysesCount = intelligenceState.plantConditions.length;
