@@ -1,99 +1,115 @@
 ﻿// lib/core/providers/active_garden_provider.dart
-//
-// ActiveGardenIdNotifier
-// - Fournit l'ID du jardin "actif" (String?)
-// - API robuste : setActiveGarden(String?), toggleActiveGarden(String),
-//   setActiveGardenByName(String) et clear()
-// - Conçu pour être utilisé depuis le dashboard / hotspots afin d'avoir une
-//   activation atomique et nullable (null == aucun jardin actif).
-//
-// Remarque : conserve la dépendance au repository via repository_providers.dart
-// si tu utilises setActiveGardenByName.
-
-import 'package:riverpod/riverpod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:riverpod/riverpod.dart';
 
-import '../repositories/repository_providers.dart'; // pour gardenRepositoryProvider
+import '../repositories/repository_providers.dart';
+import 'garden_awakening_registry.dart';
 
-/// Notifier qui garde l'ID du jardin "actif".
-///
-/// Usage attendu :
-///   ref.watch(activeGardenIdProvider);
-///   ref.read(activeGardenIdProvider.notifier).setActiveGarden(gardenId);
-///   ref.read(activeGardenIdProvider.notifier).toggleActiveGarden(gardenId);
+/// Notifier qui garde l'ID du jardin "actif" (String?).
+/// Il orchestre aussi le registry pour s'assurer que les overlays sont
+/// arrêtés/forcés de façon synchrone quand on change d'actif.
 class ActiveGardenIdNotifier extends Notifier<String?> {
   @override
   String? build() {
-    // Aucun jardin actif par défaut
     return null;
   }
 
   /// Définit le jardin actif (ID). Accepte null pour effacer la sélection.
-  /// Utiliser plutôt toggleActiveGarden pour les interactions 'long-press'.
   void setActiveGarden(String? gardenId) {
     if (kDebugMode) {
-      debugPrint('[ActiveGarden] setActiveGarden -> ${gardenId ?? "null"}');
+      debugPrint(
+          '[ActiveGarden] setActiveGarden -> ${gardenId ?? "null"} (prev=$state)');
     }
     state = gardenId;
   }
 
   /// Toggle atomique : si le même garden est déjà actif, on le désactive.
-  /// Sinon on active le nouveau (opération synchrone sur state).
+  /// Sinon on active le nouveau.
+  /// En plus : on appelle le registry pour stopper l'ancien overlay et
+  /// forcer le nouveau afin de garder overlay/state synchrones.
   void toggleActiveGarden(String gardenId) {
+    final prev = state;
     if (kDebugMode) {
       debugPrint(
-          '[ActiveGarden] toggleActiveGarden called for $gardenId (current=$state)');
+          '[ActiveGarden] toggleActiveGarden called for $gardenId (current=$prev)');
     }
-    if (state == gardenId) {
+
+    final registry = ref.read(gardenAwakeningRegistryProvider);
+
+    if (prev == gardenId) {
+      // Désactivation : demander au registry d'arrêter la lueur pour cet id
+      try {
+        registry.stopPersistentFor(gardenId);
+      } catch (e, st) {
+        if (kDebugMode)
+          debugPrint(
+              '[ActiveGarden] registry stopPersistentFor error: $e\n$st');
+      }
       state = null;
       if (kDebugMode) debugPrint('[ActiveGarden] toggled OFF $gardenId');
-    } else {
-      state = gardenId;
-      if (kDebugMode) debugPrint('[ActiveGarden] toggled ON $gardenId');
+      return;
+    }
+
+    // Activation d'un nouveau garden : arrêter l'ancien synchroniquement
+    if (prev != null) {
+      try {
+        registry.stopPersistentFor(prev);
+      } catch (e, st) {
+        if (kDebugMode)
+          debugPrint(
+              '[ActiveGarden] registry stopPersistentFor previous error: $e\n$st');
+      }
+    }
+
+    // Définir le nouvel état
+    state = gardenId;
+    if (kDebugMode) debugPrint('[ActiveGarden] toggled ON $gardenId');
+
+    // Forcer la lueur pour le nouveau garden (si la clé est déjà enregistrée).
+    try {
+      registry.forcePersistentFor(gardenId);
+    } catch (e, st) {
+      if (kDebugMode)
+        debugPrint('[ActiveGarden] registry forcePersistentFor error: $e\n$st');
     }
   }
 
   /// Active un jardin à partir de son nom (résolution nom -> id).
-  /// Retourne true si un jardin a été trouvé et activé.
   Future<bool> setActiveGardenByName(String name) async {
     try {
-      // Récupérer le repository des jardins
       final repo = ref.read(gardenRepositoryProvider);
-
-      // Charger tous les jardins (async)
       final gardens = await repo.getAllGardens();
-
-      // Filtrer par correspondance (insensible à la casse)
       final normalized = name.toLowerCase().trim();
       final candidates = gardens
           .where((g) => g.name.toLowerCase().contains(normalized))
           .toList();
-
       if (candidates.isEmpty) return false;
-
-      // Prioriser correspondance exacte (si existante), sinon prendre le premier
       final match = candidates.firstWhere(
-        (g) => g.name.toLowerCase().trim() == normalized,
-        orElse: () => candidates.first,
-      );
-
-      // Activer via l'API centrale (nullable)
+          (g) => g.name.toLowerCase().trim() == normalized,
+          orElse: () => candidates.first);
       setActiveGarden(match.id);
       return true;
     } catch (e, st) {
-      debugPrint('[ActiveGarden] setActiveGardenByName error: $e\n$st');
+      if (kDebugMode)
+        debugPrint('[ActiveGarden] setActiveGardenByName error: $e\n$st');
       return false;
     }
   }
 
-  /// Efface la sélection (met à null)
   void clear() {
     if (kDebugMode) debugPrint('[ActiveGarden] clear()');
+    // stop all overlays as well for safety
+    try {
+      ref.read(gardenAwakeningRegistryProvider).stopAllExcept(null);
+    } catch (e, st) {
+      if (kDebugMode)
+        debugPrint(
+            '[ActiveGarden] registry.stopAllExcept error on clear: $e\n$st');
+    }
     state = null;
   }
 }
 
-/// Provider exposant l'ID du jardin actif (String?).
 final activeGardenIdProvider =
     NotifierProvider<ActiveGardenIdNotifier, String?>(
         ActiveGardenIdNotifier.new);

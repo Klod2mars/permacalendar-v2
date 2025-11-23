@@ -1,12 +1,13 @@
 ﻿// lib/features/home/widgets/invisible_garden_zone.dart
 //
 // InvisibleGardenZone — parent d'une "bulle" de jardin.
-// Version mise à jour :
-// - Utilise toggleActiveGarden() au lieu d'appels ad hoc.
-// - S'enregistre dans gardenAwakeningRegistryProvider pour orchestration synchrone.
-// - Fournit un LayerLink pour que l'overlay suive la bulle (CompositedTransformTarget/Follower).
-// - Défensif : fallback overlay temporaire si InsectAwakeningWidget n'est pas monté.
-// - Logs réduits (kDebugMode).
+// Version finale adaptée au nouveau ActiveGardenIdNotifier:
+// - Utilise toggleActiveGarden() (le provider orchestre la registry).
+// - S'enregistre / se désenregistre dans gardenAwakeningRegistryProvider.
+// - Fournit LayerLink pour que l'Overlay suive la bulle.
+// - Debounce des long-press pour éviter doubles toggles.
+// - Fallback pour slot -> getGardenIdForSlot.
+// - Logs réduits mais informatifs (kDebugMode).
 //
 
 import 'dart:ui';
@@ -14,10 +15,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Ajuste le chemin si nécessaire (doit correspondre à ton arborescence)
+// InsectAwakeningWidget - assure-toi que ce chemin package: est correct
 import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 import 'package:permacalendar/core/providers/active_garden_provider.dart';
 import 'package:permacalendar/core/providers/garden_awakening_registry.dart';
+import 'package:permacalendar/core/repositories/dashboard_slots_repository.dart';
+import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 
 /// Parent widget qui occupe une zone cliquable/long-pressable pour un garden.
 class InvisibleGardenZone extends ConsumerStatefulWidget {
@@ -44,6 +47,9 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
       GlobalKey<InsectAwakeningWidgetState>();
   // LayerLink so the overlay created by InsectAwakeningWidget can follow this widget
   final LayerLink _layerLink = LayerLink();
+
+  // Debounce to block rapid toggles
+  DateTime? _lastToggleAt;
   // --------------------------------------------------
 
   @override
@@ -54,7 +60,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
           '[Audit] InvisibleGardenZone.initState slot=${widget.slotNumber} garden=${widget.garden?.id}');
     }
 
-    // If garden is already present at mount, try to register in the registry.
+    // Register if garden available at mount
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final gid = _gardenIdFromWidget();
       if (gid != null) {
@@ -75,7 +81,6 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   @override
   void didUpdateWidget(covariant InvisibleGardenZone oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Log utile lors des rebuilds / changements de garden
     if (kDebugMode) {
       debugPrint(
           '[Audit] InvisibleGardenZone.didUpdateWidget slot=${widget.slotNumber} oldGarden=${oldWidget.garden?.id} newGarden=${widget.garden?.id}');
@@ -84,7 +89,6 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
     final oldGid = _gardenIdFromDynamic(oldWidget.garden);
     final newGid = _gardenIdFromWidget();
 
-    // If garden changed, update registry accordingly
     if (oldGid != newGid) {
       if (oldGid != null) {
         try {
@@ -111,7 +115,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
 
   @override
   void dispose() {
-    // If the awakening widget is persistent, ask it to stop (defensive).
+    // Defensive: stop persistent if mounted
     try {
       _awakeningKey.currentState?.stopPersistent();
       if (kDebugMode)
@@ -144,112 +148,113 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   String? _gardenIdFromDynamic(dynamic g) {
     try {
       if (g == null) return null;
-      // Try common patterns
       if (g is String) return g;
       if (g is Map && g.containsKey('id')) return g['id']?.toString();
-      if (g is Object) {
-        // Reflection-free attempt: check .id property if accessible
-        final dyn = g;
-        try {
-          // ignore: avoid_dynamic_calls
-          final idVal = dyn.id;
-          return idVal?.toString();
-        } catch (_) {
-          return null;
-        }
+      // Reflection-free attempt to access `.id` if present
+      try {
+        // ignore: avoid_dynamic_calls
+        final idVal = g.id;
+        return idVal?.toString();
+      } catch (_) {
+        return null;
       }
     } catch (_) {}
     return null;
   }
 
-  /// Handle long press: toggle the active garden via provider (atomic),
-  /// and orchestrate registry for synchronous start/stop of overlays.
-  void _handleLongPress() {
-    final garden = widget.garden;
-    final rect = widget.zoneRect;
+  /// Handle long press: toggleActiveGarden via provider (atomic).
+  /// Debounce to avoid double toggles. Provide fallback when no garden assigned.
+  Future<void> _handleLongPress() async {
+    // Debounce : ignore multiple rapid activations
+    final now = DateTime.now();
+    if (_lastToggleAt != null &&
+        now.difference(_lastToggleAt!) < const Duration(milliseconds: 350)) {
+      if (kDebugMode)
+        debugPrint(
+            '[Insect] ignoring rapid longPress for slot=${widget.slotNumber}');
+      return;
+    }
+    _lastToggleAt = now;
 
-    if (kDebugMode) {
-      debugPrint(
-          '[Audit] InvisibleGardenZone longPress slot=${widget.slotNumber} garden.id=${garden?.id}');
-      debugPrint(
-          '[Audit] awakeningKey.currentState => ${_awakeningKey.currentState}');
+    String? gardenId = _gardenIdFromWidget();
+
+    // If not in widget.garden, try resolving via slots repository
+    if (gardenId == null) {
+      try {
+        gardenId = await DashboardSlotsRepository.getGardenIdForSlot(
+            widget.slotNumber);
+      } catch (e, st) {
+        if (kDebugMode)
+          debugPrint(
+              '[Insect][resolve] error resolving garden for slot ${widget.slotNumber}: $e\n$st');
+      }
     }
 
-    final gardenId = _gardenIdFromWidget();
     if (gardenId == null) {
-      // No garden assigned: show temporary overlay as feedback
-      _showDebugOverlay(rect, duration: const Duration(milliseconds: 700));
+      // No garden assigned: visual feedback and message
+      _showDebugOverlay(widget.zoneRect,
+          duration: const Duration(milliseconds: 700));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Aucun jardin assigné à ce slot')),
       );
       return;
     }
 
+    // Select the garden for context (UI state)
     try {
-      // 1) Toggle active garden (atomic)
-      ref.read(activeGardenIdProvider.notifier).toggleActiveGarden(gardenId);
-
-      // 2) Read the new state synchronously
-      final now = ref.read(activeGardenIdProvider);
-
-      // 3) If we just activated this garden, stop others synchronously then force persistent for this one.
-      if (now == gardenId) {
-        try {
-          ref.read(gardenAwakeningRegistryProvider).stopAllExcept(gardenId);
-        } catch (e) {
-          if (kDebugMode)
-            debugPrint('[Audit] registry stopAllExcept error: $e');
-        }
-        // Try to force persistent synchronously via registry (if state available)
-        try {
-          ref
-              .read(gardenAwakeningRegistryProvider)
-              .forcePersistentFor(gardenId);
-        } catch (e) {
-          if (kDebugMode)
-            debugPrint('[Audit] registry forcePersistentFor error: $e');
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Jardin $gardenId activé'),
-              duration: const Duration(seconds: 2)),
-        );
-      } else {
-        // It was toggled off — ensure we stop persistent if any
-        try {
-          ref.read(gardenAwakeningRegistryProvider).stopPersistentFor(gardenId);
-        } catch (e) {
-          if (kDebugMode)
-            debugPrint('[Audit] registry stopPersistentFor error: $e');
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Jardin $gardenId désactivé'),
-              duration: const Duration(seconds: 1)),
-        );
-      }
-
-      // 4) Trigger a short animation locally if InsectAwakeningWidget is mounted.
-      final awakeningState = _awakeningKey.currentState;
-      if (awakeningState != null) {
-        try {
-          awakeningState.triggerAnimation();
-        } catch (e, st) {
-          if (kDebugMode)
-            debugPrint(
-                '[Audit] awakeningState.triggerAnimation error: $e\n$st');
-        }
-      } else {
-        // If the widget is not mounted, show the debug overlay for visual feedback
-        _showDebugOverlay(rect, duration: const Duration(milliseconds: 700));
-      }
+      ref.read(gardenProvider.notifier).selectGarden(gardenId);
     } catch (e, st) {
-      if (kDebugMode) debugPrint('[Audit] _handleLongPress error: $e\n$st');
+      if (kDebugMode)
+        debugPrint('[Insect][select] selectGarden error: $e\n$st');
+    }
+
+    // Toggle atomically via provider. The provider will orchestrate registry stop/force.
+    try {
+      ref.read(activeGardenIdProvider.notifier).toggleActiveGarden(gardenId);
+      if (kDebugMode)
+        debugPrint('[Insect][activate] toggleActiveGarden -> $gardenId');
+    } catch (e, st) {
+      if (kDebugMode)
+        debugPrint('[Insect][activate] error toggling active garden: $e\n$st');
+    }
+
+    // Read the new state to decide local actions (feedback)
+    final nowActive = ref.read(activeGardenIdProvider);
+
+    if (nowActive == gardenId) {
+      // Activated — provide feedback
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Jardin $gardenId activé'),
+            duration: const Duration(seconds: 2)),
+      );
+    } else {
+      // Deactivated — ensure local awakening widget stops as defensive measure
+      try {
+        _awakeningKey.currentState?.stopPersistent();
+      } catch (e, st) {
+        if (kDebugMode)
+          debugPrint(
+              '[Insect][activate] awakeningKey.stopPersistent error: $e\n$st');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Jardin $gardenId désactivé'),
+            duration: const Duration(seconds: 1)),
+      );
+    }
+
+    // Trigger a short animation for immediate feedback (if mounted)
+    try {
+      _awakeningKey.currentState?.triggerAnimation();
+    } catch (e, st) {
+      if (kDebugMode)
+        debugPrint('[Insect][trigger] triggerAnimation error: $e\n$st');
     }
   }
 
   /// Small debug overlay to show an immediate circle when the widget is not mounted.
-  /// This overlay is purely for debug; remove or reduce when not needed.
+  /// This overlay is purely for debug; keep rect log for diagnosis of mega-spheres.
   void _showDebugOverlay(Rect rect,
       {Duration duration = const Duration(milliseconds: 700)}) {
     final overlay = Overlay.of(context);
@@ -259,6 +264,11 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
             '[Audit] _showDebugOverlay: Overlay.of(context) returned null');
       return;
     }
+
+    if (kDebugMode)
+      debugPrint(
+          '[Audit] _showDebugOverlay inserting rect=$rect for slot=${widget.slotNumber}');
+
     final overlayEntry = OverlayEntry(builder: (ctx) {
       return Positioned(
         left: rect.left,
@@ -299,7 +309,9 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
             debugPrint('[Audit] _showDebugOverlay remove error: $e');
         }
       });
-      if (kDebugMode) debugPrint('[Audit] _showDebugOverlay inserted at $rect');
+      if (kDebugMode)
+        debugPrint(
+            '[Audit] _showDebugOverlay inserted at $rect for slot=${widget.slotNumber}');
     } catch (e, st) {
       if (kDebugMode)
         debugPrint('[Audit] _showDebugOverlay insert error: $e\n$st');
@@ -320,18 +332,13 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
           child: Stack(
             children: [
               // --- 1) Ton contenu visible habituel (icône/bulle) ---
-              // Ici, tu dois replacer le rendu réel de la bulle.
-              // J'ajoute un Container transparent pour garder la hitbox si nécessaire.
               Positioned.fill(
                 child: Container(
-                  // Transparence totale mais conserve la zone cliquable
                   color: Colors.transparent,
                 ),
               ),
 
               // --- 2) InsectAwakeningWidget monté avec la clé + layerLink --
-              // Cette instance fournit triggerAnimation() & forcePersistent().
-              // NOTE: useOverlay:true permet d'échapper au clipping du parent.
               InsectAwakeningWidget(
                 key: _awakeningKey,
                 gardenId: widget.garden?.id?.toString() ??
@@ -340,14 +347,6 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
                 layerLink: _layerLink,
                 fallbackSize: widget.zoneRect.size.shortestSide,
               ),
-
-              // --- 3) Optional debug marker ---
-              // si tu as besoin d'un indicateur visuel léger du slot pendant debug,
-              // décommente la ligne suivante:
-              // Positioned(
-              //   right: 2, top: 2,
-              //   child: Container(width:8,height:8,decoration:BoxDecoration(shape:BoxShape.circle,color:Colors.red.withOpacity(0.6))),
-              // ),
             ],
           ),
         ),
