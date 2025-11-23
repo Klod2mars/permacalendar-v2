@@ -290,19 +290,31 @@ class GardenSelectorWidget extends ConsumerWidget {
   }
 
   /// Gère la sélection d'un jardin
-  void _onGardenSelected(WidgetRef ref, String gardenId) {
-    // Mettre à jour le provider
+  Future<void> _onGardenSelected(WidgetRef ref, String gardenId) async {
+    // 1) Mettre à jour le provider courant pour l'UI intelligence
     ref.read(currentIntelligenceGardenIdProvider.notifier).state = gardenId;
 
-    // -------------------- À AJOUTER DANS _onGardenSelected --------------------
+    // 2) Orchestrer la lueur / active garden (déjà prévu)
     ref.read(activeGardenIdProvider.notifier).setActiveGarden(gardenId);
-    // ------------------------------------------------------------------------
 
-    // Appeler le callback si fourni
+    // 3) Initialiser (ou ré-initialiser) l'intelligence pour ce garden
+    // On appelle initializeForGarden() : si cela plante, on loggue proprement.
+    try {
+      await ref
+          .read(intelligenceStateProvider(gardenId).notifier)
+          .initializeForGarden();
+    } catch (e, st) {
+      // Debug / fallback : ne pas faire planter l'UI
+      debugPrint(
+          '🌱 [GardenSelector] erreur init intelligence pour $gardenId : $e\n$st');
+    }
+
+    // 4) Callback optionnel
     onGardenChanged?.call(gardenId);
 
-    // Logger pour debug
-    debugPrint('🌱 [GardenSelector] Jardin sélectionné: $gardenId');
+    // 5) Logger pour debug
+    debugPrint(
+        '🌱 [GardenSelector] Jardin sélectionné et intelligence initialisée: $gardenId');
   }
 }
 
