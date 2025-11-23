@@ -1,10 +1,11 @@
 // lib/shared/widgets/organic_dashboard.dart
 //
-// OrganicDashboardWidget - version adaptée pour intégrer InsectAwakeningWidget
-// - Intègre InsectAwakeningWidget pour les hotspots garden_1...garden_5
-// - Résolution asynchrone du gardenId (DashboardSlotsRepository)
-// - GlobalKey par hotspot, mounted in State, never recreated in build()
-// - Uses Overlay (useOverlay: true) to escape clipping/z-order issues.
+// OrganicDashboardWidget - intégration propre de InsectAwakeningWidget
+// - Un seul jardin actif à la fois via activeGardenIdProvider
+// - Désactivation de l'active garden avant navigation (évite la persistance)
+// - InsectAwakeningWidget monté par hotspot jardin (useOverlay: true)
+// - Structure propre, pas d'appels Riverpod invalides
+//
 
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import '../../app_router.dart';
 import '../../core/models/organic_zone_config.dart';
@@ -21,7 +23,7 @@ import '../widgets/calibration_debug_overlay.dart';
 import '../../core/repositories/dashboard_slots_repository.dart';
 import '../../core/providers/active_garden_provider.dart';
 
-// <-- NOUS AVONS BESOIN D'INSECT AWAKENING WIDGET ICI
+// Insect awakening widget (assure path correct)
 import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 
 /// OrganicDashboardWidget
@@ -147,7 +149,9 @@ class _OrganicDashboardWidgetState
             defaultEnabled: defaultEnabled,
           );
     } catch (e) {
-      if (kDebugMode) debugPrint('🔧 [CALIBRATION] error loading defaults: $e');
+      if (kDebugMode) {
+        debugPrint('🔧 [CALIBRATION] error loading defaults: $e');
+      }
     }
   }
 
@@ -238,7 +242,7 @@ class _OrganicDashboardWidgetState
                 ),
               ),
 
-              // If zones are empty (fallback to defaults)
+              // Zones : fallback defaults or calibrated ones
               ...((zones.isEmpty)
                   ? (() {
                       final defaultHotspots =
@@ -313,6 +317,7 @@ class _OrganicDashboardWidgetState
                         );
                       }).toList();
                     })()),
+
               if (kDebugMode && widget.showDiagnostics)
                 Positioned(
                   top: 8,
@@ -521,6 +526,7 @@ class _HotspotButton extends StatelessWidget {
   }
 }
 
+/// Hotspot widget that supports calibration (pan + pinch-to-scale)
 class _CalibratableHotspot extends StatefulWidget {
   const _CalibratableHotspot({
     Key? key,
@@ -574,6 +580,30 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   // Resolved gardenId for this slot (may be null until async resolution)
   String? _gardenId;
 
+  @override
+  void initState() {
+    super.initState();
+    _resolveGardenId();
+  }
+
+  Future<void> _resolveGardenId() async {
+    final slot = _extractSlotNumber(widget.id);
+    if (slot == null) return;
+    try {
+      final gid = await DashboardSlotsRepository.getGardenIdForSlot(slot);
+      if (mounted) {
+        setState(() {
+          _gardenId = gid;
+        });
+      }
+      debugPrint(
+          '[Insect][resolve] resolved gardenId for ${widget.id} -> $_gardenId');
+    } catch (e, st) {
+      debugPrint(
+          '[Insect][resolve] error resolving gardenId for ${widget.id}: $e\n$st');
+    }
+  }
+
   void _onPointerDown(PointerDownEvent e) {
     _activePointers[e.pointer] = e.position;
   }
@@ -603,31 +633,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       }
     }
     return true;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Resolve gardenId for this slot so InsectAwakeningWidget receives it
-    _resolveGardenId();
-  }
-
-  Future<void> _resolveGardenId() async {
-    final slot = _extractSlotNumber(widget.id);
-    if (slot == null) return;
-    try {
-      final gid = await DashboardSlotsRepository.getGardenIdForSlot(slot);
-      if (mounted) {
-        setState(() {
-          _gardenId = gid;
-        });
-      }
-      debugPrint(
-          '[Insect][resolve] resolved gardenId for ${widget.id} -> $_gardenId');
-    } catch (e, st) {
-      debugPrint(
-          '[Insect][resolve] error resolving gardenId for ${widget.id}: $e\n$st');
-    }
   }
 
   void _handleLongPressStart(LongPressStartDetails details) {
@@ -741,6 +746,15 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
+      // Avant la navigation, on désactive le jardin actif pour éviter que la lueur
+      // persiste sur les autres écrans.
+      try {
+        widget.ref.read(activeGardenIdProvider.notifier).setActiveGarden('');
+        debugPrint('[Insect][navigate] cleared activeGarden before navigation');
+      } catch (e, st) {
+        debugPrint('[Insect][navigate] error clearing active garden: $e\n$st');
+      }
+
       widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
       context.push('/gardens/$gardenId?fromOrganic=1');
     } else {
@@ -758,10 +772,20 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
-      // Activer le jardin
+      // 1) Sélectionner le jardin
       widget.ref.read(gardenProvider.notifier).selectGarden(gardenId);
 
-      // Feedback visuel
+      // 2) Marquer ce jardin comme "actif" globalement (assure qu'il soit l'unique actif)
+      try {
+        widget.ref
+            .read(activeGardenIdProvider.notifier)
+            .setActiveGarden(gardenId);
+        debugPrint('[Insect][activate] setActiveGarden -> $gardenId');
+      } catch (e, st) {
+        debugPrint('[Insect][activate] error setting active garden: $e\n$st');
+      }
+
+      // 3) Feedback visuel
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Jardin $gardenId activé'),
@@ -769,28 +793,30 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
         ),
       );
 
-      // Trigger insect awakening widget: immediate animation + persistent via provider
+      // 4) Trigger awakening if widget is mounted
       try {
-        debugPrint(
-            '[Insect][trigger] Attempting to trigger for gardenId=$gardenId (key=${_awakeningKey})');
-        // If we resolved _gardenId earlier, but ensure widget has correct gardenId:
         if (_gardenId == null) {
-          // update it so the InsectAwakeningWidget listens to the correct id
           setState(() {
             _gardenId = gardenId;
           });
         }
-        // Try direct calls (defensive)
+
         final awakeningState = _awakeningKey.currentState;
-        debugPrint('[Insect][trigger] awakeningState => $awakeningState');
+        debugPrint(
+            '[Insect][trigger] awakeningState => $awakeningState for $gardenId');
         awakeningState?.triggerAnimation();
         awakeningState?.forcePersistent();
+
         debugPrint(
             '[Insect][trigger] triggered awakeningState for gardenId=$gardenId');
       } catch (e, st) {
         debugPrint(
             '[Insect][trigger] error triggering awakening for gardenId=$gardenId : $e\n$st');
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Aucun jardin assigné à ce slot')),
+      );
     }
   }
 
@@ -832,7 +858,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
     final isGardenHotspot = widget.id.startsWith('garden_');
 
-    // Create the hotspot button as before
     final hotspotButton = _HotspotButton(
       onTap: isGardenHotspot
           ? _handleGardenTap
@@ -852,13 +877,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       showDebugOutline: widget.showDebugOutline,
     );
 
-    // If this is a garden hotspot, wrap with InsectAwakeningWidget so glow can appear.
     if (isGardenHotspot) {
       return Stack(
         fit: StackFit.expand,
         children: [
-          // The awakening widget listens to activeGardenIdProvider and
-          // will start persistent glow when the garden becomes active.
           InsectAwakeningWidget(
             key: _awakeningKey,
             gardenId: _gardenId ?? ('unknown_' + widget.id),
@@ -870,7 +892,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       );
     }
 
-    // Non-garden hotspots: just return the button
     return hotspotButton;
   }
 
