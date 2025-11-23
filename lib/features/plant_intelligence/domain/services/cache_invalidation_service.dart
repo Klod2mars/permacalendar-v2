@@ -1,16 +1,9 @@
+// lib/features/plant_intelligence/domain/services/cache_invalidation_service.dart
 import 'dart:developer' as developer;
 
-import '../../../../core/services/aggregation/garden_aggregation_hub.dart';
+import 'package:permacalendar/core/services/aggregation/garden_aggregation_hub.dart';
 
 /// Service dédié à l’invalidation des caches internes.
-/// 
-/// SRP strict :
-///   👉 Efface uniquement les caches mémoire des services dépendants.
-///   👉 Ne touche à aucune box Hive.
-///   👉 Ne lance aucune exception (toutes sont absorbées et loguées).
-///   👉 Est totalement idempotente.
-/// 
-/// Utilisé par l’Orchestrateur et par initializeForGarden().
 class CacheInvalidationService {
   final GardenAggregationHub? _gardenAggregationHub;
 
@@ -24,4 +17,41 @@ class CacheInvalidationService {
   Future<void> invalidateAll() async {
     developer.log(
       '🧹 CacheInvalidationService → Invalidation des caches…',
-      name: 'Cac
+      name: 'CacheInvalidationService',
+    );
+
+    int invalidated = 0;
+
+    // 1) GardenAggregationHub
+    if (_gardenAggregationHub != null) {
+      try {
+        _gardenAggregationHub!.clearCache();
+        invalidated++;
+        developer.log(
+          '✔️ Cache GardenAggregationHub invalidé',
+          name: 'CacheInvalidationService',
+        );
+      } catch (e, st) {
+        developer.log(
+          '⚠️ Échec invalidation GardenAggregationHub: $e',
+          name: 'CacheInvalidationService',
+          error: e,
+          stackTrace: st,
+          level: 900,
+        );
+      }
+    } else {
+      developer.log(
+        'ℹ️ Aucun GardenAggregationHub injecté',
+        name: 'CacheInvalidationService',
+      );
+    }
+
+    // → Place pour futurs invalidateurs de cache (ex: repos locaux)
+
+    developer.log(
+      '🏁 CacheInvalidationService → $invalidated service(s) invalidé(s)',
+      name: 'CacheInvalidationService',
+    );
+  }
+}

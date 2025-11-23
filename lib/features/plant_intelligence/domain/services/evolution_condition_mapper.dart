@@ -1,3 +1,5 @@
+import '../entities/plant_condition.dart';
+
 import 'dart:developer' as developer;
 
 import '../entities/intelligence_report.dart';
