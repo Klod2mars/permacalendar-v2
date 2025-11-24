@@ -3,7 +3,7 @@ import 'garden_module.dart';
 
 import 'package:hive/hive.dart';
 
-// Pipelines + services (nouveau orchestrator)
+// Pipelines + services
 import 'package:permacalendar/features/plant_intelligence/domain/pipelines/recommendation_pipeline.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/pipelines/analysis_pipeline.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/pipelines/evolution_pipeline.dart';
@@ -17,10 +17,10 @@ import 'package:permacalendar/features/plant_intelligence/domain/services/summar
 import 'package:permacalendar/features/plant_intelligence/domain/maintenance/garden_initialization_service.dart';
 import 'package:permacalendar/features/plant_intelligence/domain/services/evolution_condition_mapper.dart';
 
-// Domain orchestrator + evolution tracker + plant catalog repo
 import '../../features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart';
 import '../../features/plant_intelligence/domain/services/plant_intelligence_evolution_tracker.dart';
 import '../../features/plant_catalog/data/repositories/plant_hive_repository.dart';
+import '../../features/plant_catalog/domain/entities/plant_freezed.dart';
 
 // Repository interfaces
 import '../../features/plant_intelligence/domain/repositories/i_plant_condition_repository.dart';
@@ -68,9 +68,12 @@ class IntelligenceModule {
   // ==================== REPOSITORIES ====================
 
   static final repositoryImplProvider = Provider<PlantIntelligenceRepositoryImpl>((ref) {
-    final local = ref.read(localDataSourceProvider);
-    final hub = ref.read(GardenModule.aggregationHubProvider);
-    return PlantIntelligenceRepositoryImpl(localDataSource: local, aggregationHub: hub);
+    final localDataSource = ref.read(localDataSourceProvider);
+    final aggregationHub = ref.read(GardenModule.aggregationHubProvider);
+    return PlantIntelligenceRepositoryImpl(
+      localDataSource: localDataSource,
+      aggregationHub: aggregationHub,
+    );
   });
 
   static final conditionRepositoryProvider = Provider<IPlantConditionRepository>((ref) {
@@ -93,9 +96,11 @@ class IntelligenceModule {
     return ref.read(repositoryImplProvider);
   });
 
-  // BIO CONTROL
+  // ==================== BIOLOGICAL CONTROL REPOSITORIES ====================
+
   static final biologicalControlRepositoryImplProvider = Provider<BiologicalControlRepositoryImpl>((ref) {
-    return BiologicalControlRepositoryImpl(dataSource: ref.read(biologicalControlDataSourceProvider));
+    final dataSource = ref.read(biologicalControlDataSourceProvider);
+    return BiologicalControlRepositoryImpl(dataSource: dataSource);
   });
 
   static final pestRepositoryProvider = Provider<IPestRepository>((ref) {
@@ -136,7 +141,8 @@ class IntelligenceModule {
     );
   });
 
-  static final generateBioControlRecommendationsUsecaseProvider = Provider<GenerateBioControlRecommendationsUsecase>((ref) {
+  static final generateBioControlRecommendationsUsecaseProvider =
+      Provider<GenerateBioControlRecommendationsUsecase>((ref) {
     return GenerateBioControlRecommendationsUsecase(
       pestRepository: ref.read(pestRepositoryProvider),
       beneficialRepository: ref.read(beneficialInsectRepositoryProvider),
@@ -166,4 +172,83 @@ class IntelligenceModule {
     final recommendationPipeline = RecommendationPipeline(
       generateUsecase: ref.read(generateRecommendationsUsecaseProvider),
       conditionRepository: ref.read(conditionRepositoryProvider),
-      gardenRepository: ref.read(gardenContextReposi
+      gardenRepository: ref.read(gardenContextRepositoryProvider),
+      weatherRepository: ref.read(weatherRepositoryProvider),
+    );
+
+    final pestPipeline = PestAnalysisPipeline(
+      analyzePestThreatsUsecase: ref.read(analyzePestThreatsUsecaseProvider),
+    );
+
+    final bioPipeline = BioControlPipeline(
+      generateUsecase: ref.read(generateBioControlRecommendationsUsecaseProvider),
+      bioControlRecommendationRepository:
+          ref.read(bioControlRecommendationRepositoryProvider),
+    );
+
+    final evolutionPipeline = EvolutionPipeline(
+      analyticsRepository: ref.read(analyticsRepositoryProvider),
+      tracker: ref.read(evolutionTrackerProvider),
+      conditionMapper: EvolutionConditionMapper(),
+    );
+
+    late PlantIntelligenceOrchestrator orchestrator;
+
+    final gardenPipeline = GardenReportPipeline(
+      gardenRepository: ref.read(gardenContextRepositoryProvider),
+      reportGenerator: ({
+        required String plantId,
+        required String gardenId,
+        PlantFreezed? plant,
+      }) =>
+          orchestrator.generateIntelligenceReport(
+            plantId: plantId,
+            gardenId: gardenId,
+            plant: plant,
+          ),
+    );
+
+    orchestrator = PlantIntelligenceOrchestrator(
+      analysisPipeline: analysisPipeline,
+      recommendationPipeline: recommendationPipeline,
+      evolutionPipeline: evolutionPipeline,
+      gardenPipeline: gardenPipeline,
+      scoringService: IntelligenceScoringService(),
+      confidenceService: ConfidenceService(),
+      summaryService: SummaryService(),
+      resolver: PlantResolver(plantCatalogRepository: PlantHiveRepository()),
+      initializationService: GardenInitializationService(),
+      analyticsRepository: ref.read(analyticsRepositoryProvider),
+      gardenRepository: ref.read(gardenContextRepositoryProvider),
+      weatherRepository: ref.read(weatherRepositoryProvider),
+      evaluateTimingUsecase: ref.read(evaluateTimingUsecaseProvider),
+      pestPipeline: pestPipeline,
+      bioControlPipeline: bioPipeline,
+    );
+
+    return orchestrator;
+  });
+}
+
+// ====================== EXTENSIONS ======================
+
+/// Extension pour faciliter l'accès aux providers de lutte biologique
+extension BiologicalControlExtensions on Ref {
+  IPestRepository get pestRepository =>
+      read(IntelligenceModule.pestRepositoryProvider);
+
+  IBeneficialInsectRepository get beneficialInsectRepository =>
+      read(IntelligenceModule.beneficialInsectRepositoryProvider);
+
+  IPestObservationRepository get pestObservationRepository =>
+      read(IntelligenceModule.pestObservationRepositoryProvider);
+
+  IBioControlRecommendationRepository get bioControlRecommendationRepository =>
+      read(IntelligenceModule.bioControlRecommendationRepositoryProvider);
+}
+
+/// Extension pour faciliter l'accès aux providers depuis GardenModule
+extension IntelligenceModuleExtensions on Ref {
+  PlantIntelligenceOrchestrator get intelligenceOrchestrator =>
+      read(IntelligenceModule.orchestratorProvider);
+}
