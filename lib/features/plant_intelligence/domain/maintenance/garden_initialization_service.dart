@@ -1,5 +1,4 @@
 import 'dart:developer' as developer;
-
 import 'package:permacalendar/core/services/aggregation/garden_aggregation_hub.dart';
 
 /// Service dédié à l’invalidation des caches internes.
@@ -15,7 +14,6 @@ class CacheInvalidationService {
       '🧹 CacheInvalidationService → Invalidation des caches…',
       name: 'CacheInvalidationService',
     );
-
     int invalidated = 0;
 
     if (_gardenAggregationHub != null) {
@@ -44,5 +42,18 @@ class CacheInvalidationService {
       '🏁 CacheInvalidationService → $invalidated service(s) invalidé(s)',
       name: 'CacheInvalidationService',
     );
+  }
+}
+
+class GardenInitializationService {
+  /// Initialisation minimale pour un jardin.
+  /// Stub temporaire — remplacer par la vraie logique d'initialisation.
+  Future<void> initialize({required String gardenId}) async {
+    developer.log(
+      'GardenInitializationService → initialisation pour $gardenId',
+      name: 'GardenInitializationService',
+    );
+    // no-op minimal pour permettre la compilation et l'exécution.
+    await Future<void>.value();
   }
 }
