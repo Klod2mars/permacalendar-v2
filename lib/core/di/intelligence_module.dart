@@ -1,5 +1,6 @@
 ﻿import 'package:riverpod/riverpod.dart';
-
+import 'garden_module.dart';
+import 'package:permacalendar/features/plant_intelligence/domain/pipelines/recommendation_pipeline.dart';
 import 'package:hive/hive.dart';
 
 import '../../features/plant_intelligence/domain/repositories/i_plant_condition_repository.dart';
@@ -582,12 +583,17 @@ class IntelligenceModule {
 
   static final orchestratorProvider =
       Provider<PlantIntelligenceOrchestrator>((ref) {
-    return PlantIntelligenceOrchestrator(
+   
       weatherRepository: ref.read(weatherRepositoryProvider),
 
       gardenRepository: ref.read(gardenContextRepositoryProvider),
 
-      recommendationRepository: ref.read(recommendationRepositoryProvider),
+      recommendationPipeline: RecommendationPipeline(
+       generateUsecase: ref.read(generateRecommendationsUsecaseProvider),
+       conditionRepository: ref.read(conditionRepositoryProvider),
+       gardenRepository: ref.read(gardenContextRepositoryProvider),
+       weatherRepository: ref.read(weatherRepositoryProvider),
+      ),
 
       analyticsRepository: ref.read(analyticsRepositoryProvider),
 
