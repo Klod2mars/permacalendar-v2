@@ -1,4 +1,5 @@
 import '../entities/plant_condition.dart';
+import 'package:permacalendar/features/plant_intelligence/domain/services/plant_intelligence_evolution_tracker.dart';
 
 import 'dart:developer' as developer;
 

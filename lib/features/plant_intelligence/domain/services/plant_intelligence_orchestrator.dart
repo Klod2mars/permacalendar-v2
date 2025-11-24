@@ -131,7 +131,12 @@ class PlantIntelligenceOrchestrator {
       // FIX: Added 'id' parameter required by Freezed
       final usedWeather = weather ??
           WeatherCondition(
-              id: 'default_temp', value: 0.0, measuredAt: DateTime.now());
+            id: 'default_temp',
+            type: WeatherType.temperature,
+            value: 0.0,
+            unit: '°C',
+            measuredAt: DateTime.now(),
+          );
 
       plantingTiming = await _evaluateTimingUsecase.execute(
           plant: resolvedPlant, weather: usedWeather, garden: gardenContext);
