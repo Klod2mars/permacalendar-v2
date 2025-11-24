@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/intelligence_state_providers.dart';
-import '../providers/plant_intelligence_providers.dart';
+
 import '../widgets/garden_selector_widget.dart';
 import '../widgets/plant_checklist_card.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../core/providers/intelligence_runtime_providers.dart';
-import '../../../../core/di/intelligence_module.dart';
 
 class PlantIntelligenceDashboardScreen extends ConsumerStatefulWidget {
   const PlantIntelligenceDashboardScreen({super.key});

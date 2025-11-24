@@ -20,7 +20,9 @@ import 'package:permacalendar/features/plant_intelligence/domain/services/evolut
 import '../../features/plant_intelligence/domain/services/plant_intelligence_orchestrator.dart';
 import '../../features/plant_intelligence/domain/services/plant_intelligence_evolution_tracker.dart';
 import '../../features/plant_catalog/data/repositories/plant_hive_repository.dart';
-import '../../features/plant_catalog/domain/entities/plant_freezed.dart';
+
+// 🔧 PATCH APPLIQUÉ ICI :
+import '../../features/plant_intelligence/domain/models/plant_freezed.dart';
 
 // Repository interfaces
 import '../../features/plant_intelligence/domain/repositories/i_plant_condition_repository.dart';
@@ -53,11 +55,13 @@ class IntelligenceModule {
 
   // ==================== DATA SOURCES ====================
 
-  static final localDataSourceProvider = Provider<PlantIntelligenceLocalDataSource>((ref) {
+  static final localDataSourceProvider =
+      Provider<PlantIntelligenceLocalDataSource>((ref) {
     return PlantIntelligenceLocalDataSourceImpl(Hive);
   });
 
-  static final biologicalControlDataSourceProvider = Provider<BiologicalControlDataSource>((ref) {
+  static final biologicalControlDataSourceProvider =
+      Provider<BiologicalControlDataSource>((ref) {
     return BiologicalControlDataSourceImpl(Hive);
   });
 
@@ -67,7 +71,8 @@ class IntelligenceModule {
 
   // ==================== REPOSITORIES ====================
 
-  static final repositoryImplProvider = Provider<PlantIntelligenceRepositoryImpl>((ref) {
+  static final repositoryImplProvider =
+      Provider<PlantIntelligenceRepositoryImpl>((ref) {
     final localDataSource = ref.read(localDataSourceProvider);
     final aggregationHub = ref.read(GardenModule.aggregationHubProvider);
     return PlantIntelligenceRepositoryImpl(
@@ -76,7 +81,8 @@ class IntelligenceModule {
     );
   });
 
-  static final conditionRepositoryProvider = Provider<IPlantConditionRepository>((ref) {
+  static final conditionRepositoryProvider =
+      Provider<IPlantConditionRepository>((ref) {
     return ref.read(repositoryImplProvider);
   });
 
@@ -84,21 +90,25 @@ class IntelligenceModule {
     return ref.read(repositoryImplProvider);
   });
 
-  static final gardenContextRepositoryProvider = Provider<IGardenContextRepository>((ref) {
+  static final gardenContextRepositoryProvider =
+      Provider<IGardenContextRepository>((ref) {
     return ref.read(repositoryImplProvider);
   });
 
-  static final recommendationRepositoryProvider = Provider<IRecommendationRepository>((ref) {
+  static final recommendationRepositoryProvider =
+      Provider<IRecommendationRepository>((ref) {
     return ref.read(repositoryImplProvider);
   });
 
-  static final analyticsRepositoryProvider = Provider<IAnalyticsRepository>((ref) {
+  static final analyticsRepositoryProvider =
+      Provider<IAnalyticsRepository>((ref) {
     return ref.read(repositoryImplProvider);
   });
 
   // ==================== BIOLOGICAL CONTROL REPOSITORIES ====================
 
-  static final biologicalControlRepositoryImplProvider = Provider<BiologicalControlRepositoryImpl>((ref) {
+  static final biologicalControlRepositoryImplProvider =
+      Provider<BiologicalControlRepositoryImpl>((ref) {
     final dataSource = ref.read(biologicalControlDataSourceProvider);
     return BiologicalControlRepositoryImpl(dataSource: dataSource);
   });
@@ -107,33 +117,40 @@ class IntelligenceModule {
     return ref.read(biologicalControlRepositoryImplProvider);
   });
 
-  static final beneficialInsectRepositoryProvider = Provider<IBeneficialInsectRepository>((ref) {
+  static final beneficialInsectRepositoryProvider =
+      Provider<IBeneficialInsectRepository>((ref) {
     return ref.read(biologicalControlRepositoryImplProvider);
   });
 
-  static final pestObservationRepositoryProvider = Provider<IPestObservationRepository>((ref) {
+  static final pestObservationRepositoryProvider =
+      Provider<IPestObservationRepository>((ref) {
     return ref.read(biologicalControlRepositoryImplProvider);
   });
 
-  static final bioControlRecommendationRepositoryProvider = Provider<IBioControlRecommendationRepository>((ref) {
+  static final bioControlRecommendationRepositoryProvider =
+      Provider<IBioControlRecommendationRepository>((ref) {
     return ref.read(biologicalControlRepositoryImplProvider);
   });
 
   // ==================== USE CASES ====================
 
-  static final analyzeConditionsUsecaseProvider = Provider<AnalyzePlantConditionsUsecase>((ref) {
+  static final analyzeConditionsUsecaseProvider =
+      Provider<AnalyzePlantConditionsUsecase>((ref) {
     return const AnalyzePlantConditionsUsecase();
   });
 
-  static final evaluateTimingUsecaseProvider = Provider<EvaluatePlantingTimingUsecase>((ref) {
+  static final evaluateTimingUsecaseProvider =
+      Provider<EvaluatePlantingTimingUsecase>((ref) {
     return const EvaluatePlantingTimingUsecase();
   });
 
-  static final generateRecommendationsUsecaseProvider = Provider<GenerateRecommendationsUsecase>((ref) {
+  static final generateRecommendationsUsecaseProvider =
+      Provider<GenerateRecommendationsUsecase>((ref) {
     return const GenerateRecommendationsUsecase();
   });
 
-  static final analyzePestThreatsUsecaseProvider = Provider<AnalyzePestThreatsUsecase>((ref) {
+  static final analyzePestThreatsUsecaseProvider =
+      Provider<AnalyzePestThreatsUsecase>((ref) {
     return AnalyzePestThreatsUsecase(
       observationRepository: ref.read(pestObservationRepositoryProvider),
       pestRepository: ref.read(pestRepositoryProvider),
@@ -152,7 +169,8 @@ class IntelligenceModule {
 
   // ==================== EVOLUTION TRACKER ====================
 
-  static final evolutionTrackerProvider = Provider<PlantIntelligenceEvolutionTracker>((ref) {
+  static final evolutionTrackerProvider =
+      Provider<PlantIntelligenceEvolutionTracker>((ref) {
     return PlantIntelligenceEvolutionTracker(
       enableLogging: false,
       toleranceThreshold: 0.01,
@@ -161,7 +179,8 @@ class IntelligenceModule {
 
   // ==================== ORCHESTRATOR (VERSION AFTER) ====================
 
-  static final orchestratorProvider = Provider<PlantIntelligenceOrchestrator>((ref) {
+  static final orchestratorProvider =
+      Provider<PlantIntelligenceOrchestrator>((ref) {
     final analysisPipeline = AnalysisPipeline(
       analyzeUsecase: ref.read(analyzeConditionsUsecaseProvider),
       gardenRepository: ref.read(gardenContextRepositoryProvider),
@@ -181,7 +200,8 @@ class IntelligenceModule {
     );
 
     final bioPipeline = BioControlPipeline(
-      generateUsecase: ref.read(generateBioControlRecommendationsUsecaseProvider),
+      generateUsecase:
+          ref.read(generateBioControlRecommendationsUsecaseProvider),
       bioControlRecommendationRepository:
           ref.read(bioControlRecommendationRepositoryProvider),
     );
@@ -202,10 +222,10 @@ class IntelligenceModule {
         PlantFreezed? plant,
       }) =>
           orchestrator.generateIntelligenceReport(
-            plantId: plantId,
-            gardenId: gardenId,
-            plant: plant,
-          ),
+        plantId: plantId,
+        gardenId: gardenId,
+        plant: plant,
+      ),
     );
 
     orchestrator = PlantIntelligenceOrchestrator(
