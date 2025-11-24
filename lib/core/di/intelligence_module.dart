@@ -583,21 +583,21 @@ class IntelligenceModule {
 
   static final orchestratorProvider =
       Provider<PlantIntelligenceOrchestrator>((ref) {
-   
+    return PlantIntelligenceOrchestrator(
       weatherRepository: ref.read(weatherRepositoryProvider),
 
       gardenRepository: ref.read(gardenContextRepositoryProvider),
 
       recommendationPipeline: RecommendationPipeline(
-       generateUsecase: ref.read(generateRecommendationsUsecaseProvider),
-       conditionRepository: ref.read(conditionRepositoryProvider),
-       gardenRepository: ref.read(gardenContextRepositoryProvider),
-       weatherRepository: ref.read(weatherRepositoryProvider),
+        generateUsecase: ref.read(generateRecommendationsUsecaseProvider),
+        conditionRepository: ref.read(conditionRepositoryProvider),
+        gardenRepository: ref.read(gardenContextRepositoryProvider),
+        weatherRepository: ref.read(weatherRepositoryProvider),
       ),
 
       analyticsRepository: ref.read(analyticsRepositoryProvider),
 
-      plantCatalogRepository: PlantHiveRepository(),
+      resolver: PlantResolver(plantCatalogRepository: PlantHiveRepository()),
 
       analyzeUsecase: ref.read(analyzeConditionsUsecaseProvider),
 
