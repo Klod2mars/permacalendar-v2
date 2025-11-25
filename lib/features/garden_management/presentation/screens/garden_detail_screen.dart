@@ -358,7 +358,7 @@ class GardenDetailScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
 
-        // Affichage conditionnel selon l'état des parcelles
+        // Etat vide
         if (gardenBeds.isEmpty)
           CustomCard(
             child: Padding(
@@ -385,98 +385,147 @@ class GardenDetailScreen extends ConsumerWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
+                  const SizedBox(height: 12),
+                  FilledButton.icon(
+                    onPressed: () =>
+                        _showCreateGardenBedDialog(context, ref, garden),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Créer une parcelle'),
+                  ),
                 ],
               ),
             ),
           )
         else
+          // Liste de parcelles
           Column(
             children: [
               const SizedBox(height: 16),
 
-              // Affiche chaque parcelle sous forme de Card simple
+              // Parcelles listées
               ...gardenBeds.map((bed) {
                 final GardenBed bedTyped = bed as GardenBed;
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: CustomCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Row principal : titre + actions
-                        ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          title: Text(bedTyped.name),
-                          subtitle: Text(bedTyped.formattedSize),
-                          trailing: PopupMenuButton<String>(
-                            onSelected: (value) async {
-                              switch (value) {
-                                case 'edit':
-                                  await _editBed(
-                                      context, ref, garden, bedTyped);
-                                  break;
-                                case 'delete':
-                                  await _deleteBed(
-                                      context, ref, garden, bedTyped);
-                                  break;
-                                case 'open':
-                                  context.push(
-                                    '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                                    extra: bedTyped.name,
-                                  );
-                                  break;
+                    child: Semantics(
+                      container: true,
+                      label:
+                          'Parcelle ${bedTyped.name}, ${bedTyped.formattedSize}. ${bedTyped.soilType}, ${bedTyped.exposure}.',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Titre + actions
+                          ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            title: Text(
+                              bedTyped.name,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            subtitle: Text(
+                              bedTyped.formattedSize,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onBackground
+                                    .withOpacity(0.7),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            trailing: PopupMenuButton<String>(
+                              onSelected: (value) async {
+                                switch (value) {
+                                  case 'edit':
+                                    await _editBed(
+                                        context, ref, garden, bedTyped);
+                                    break;
+                                  case 'delete':
+                                    await _deleteBed(
+                                        context, ref, garden, bedTyped);
+                                    break;
+                                  case 'open':
+                                    context.push(
+                                      '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                                      extra: bedTyped.name,
+                                    );
+                                    break;
+                                }
+                              },
+                              itemBuilder: (_) => [
+                                const PopupMenuItem(
+                                    value: 'open', child: Text('Ouvrir')),
+                                const PopupMenuItem(
+                                    value: 'edit', child: Text('Modifier')),
+                                const PopupMenuItem(
+                                    value: 'delete', child: Text('Supprimer')),
+                              ],
+                            ),
+                            onTap: () {
+                              if (openPlantingsOnBedTap) {
+                                context.push(
+                                  '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
+                                  extra: bedTyped.name,
+                                );
+                              } else {
+                                context.push(
+                                  '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                                  extra: bedTyped.name,
+                                );
                               }
                             },
-                            itemBuilder: (_) => [
-                              const PopupMenuItem(
-                                  value: 'open', child: Text('Ouvrir')),
-                              const PopupMenuItem(
-                                  value: 'edit', child: Text('Modifier')),
-                              const PopupMenuItem(
-                                  value: 'delete', child: Text('Supprimer')),
-                            ],
                           ),
-                          onTap: () {
-                            if (openPlantingsOnBedTap) {
-                              // Ouvrir la liste de plantations si demandé
-                              context.push(
-                                '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
-                                extra: bedTyped.name,
-                              );
-                            } else {
-                              // Ouvrir la Planche 2
-                              context.push(
-                                '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                                extra: bedTyped.name,
-                              );
-                            }
-                          },
-                        ),
 
-                        // Extra content : preview germination + small stats
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GerminationPreview(
-                                gardenBed: bedTyped,
-                                allPlantings:
-                                    ref.watch(plantingProvider).plantings,
-                                plants: ref.watch(plantsListProvider),
-                                forceRefresh: true,
-                              ),
-                            ],
+                          // Preview + petites infos
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // GerminationPreview (compact)
+                                GerminationPreview(
+                                  gardenBed: bedTyped,
+                                  allPlantings:
+                                      ref.watch(plantingProvider).plantings,
+                                  plants: ref.watch(plantsListProvider),
+                                  forceRefresh: true,
+                                ),
+                                const SizedBox(height: 8),
+
+                                // Ligne d'information : sol • exposition
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.terrain,
+                                      size: 16,
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Flexible(
+                                      child: Text(
+                                        '${bedTyped.soilType} • ${bedTyped.exposure}',
+                                        style: theme.textTheme.labelSmall
+                                            ?.copyWith(
+                                          color: theme.colorScheme.onBackground
+                                              .withOpacity(0.7),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
               }).toList(),
+
+              const SizedBox(height: 8),
 
               // CTA retiré — le FloatingActionButton suffit
               const SizedBox.shrink(),
