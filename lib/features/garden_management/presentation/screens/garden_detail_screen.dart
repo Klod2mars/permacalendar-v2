@@ -478,21 +478,8 @@ class GardenDetailScreen extends ConsumerWidget {
                 );
               }).toList(),
 
-              const SizedBox(height: 8),
-
-              // CTA "Gérer les parcelles"
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    context.push(
-                      AppRoutes.gardenBeds.replaceFirst(':gardenId', garden.id),
-                      extra: garden.name,
-                    );
-                  },
-                  child: const Text('Gérer les parcelles'),
-                ),
-              ),
+              // CTA retiré — le FloatingActionButton suffit
+              const SizedBox.shrink(),
             ],
           ),
       ],
