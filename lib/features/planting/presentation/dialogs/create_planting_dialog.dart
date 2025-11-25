@@ -200,7 +200,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(widget.planting == null ? 'Créer' : 'Modifier'),
+              : Text((widget.planting == null || _isPreset) ? 'Créer' : 'Modifier'),
         ),
       ],
     );
@@ -440,93 +440,87 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   }
 
   Future<void> _savePlanting() async {
-    if (!_formKey.currentState!.validate()) return;
-    setState(() => _isLoading = true);
+  if (!_formKey.currentState!.validate()) return;
+  setState(() => _isLoading = true);
 
-    try {
-      final plantName = (_plantNameController.text.trim().isNotEmpty)
-          ? _plantNameController.text.trim()
-          : (_selectedPlantId != null ? _getPlantName(_selectedPlantId!) : '');
-      final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
-      final notes = _notesController.text.trim().isEmpty
-          ? null
-          : _notesController.text.trim();
+  try {
+    final plantName = (_plantNameController.text.trim().isNotEmpty)
+        ? _plantNameController.text.trim()
+        : (_selectedPlantId != null ? _getPlantName(_selectedPlantId!) : '');
+    final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
+    final notes = _notesController.text.trim().isEmpty
+        ? null
+        : _notesController.text.trim();
 
-      // Simple validations
-      if (quantity <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('La quantité doit être un nombre positif'),
-            backgroundColor: Colors.orange,
-          ),
-        );
-        setState(() => _isLoading = false);
-        return;
-      }
-
-      if (_plantedDate.isAfter(DateTime.now())) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'La date de plantation ne peut pas être dans le futur',
-            ),
-            backgroundColor: Colors.orange,
-          ),
-        );
-        setState(() => _isLoading = false);
-        return;
-      }
-
-      if (widget.planting == null || _isPreset) {
-        // Create new planting
-        await ref.read(plantingProvider.notifier).createPlanting(
-              gardenBedId: widget.gardenBedId,
-              plantId: _selectedPlantId ?? 'custom',
-              plantName: plantName,
-              quantity: quantity,
-              plantedDate: _plantedDate,
-              expectedHarvestStartDate: null,
-              expectedHarvestEndDate: null,
-              notes: notes,
-            );
-      } else {
-        // Update existing planting - preserve expectedHarvest fields
-        final updatedPlanting = widget.planting!.copyWith(
-          plantName: plantName,
-          quantity: quantity,
-          plantedDate: _plantedDate,
-          status: _status,
-          notes: notes,
-          expectedHarvestStartDate: widget.planting!.expectedHarvestStartDate,
-          expectedHarvestEndDate: widget.planting!.expectedHarvestEndDate,
-        );
-        await ref
-            .read(plantingProvider.notifier)
-            .updatePlanting(updatedPlanting);
-      }
-
-      if (mounted) {
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              widget.planting == null
-                  ? 'Culture créée avec succès'
-                  : 'Culture modifiée avec succès',
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
-        ref.refresh(recentActivitiesProvider);
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur: $e'), backgroundColor: Colors.red),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+    // Simple validations
+    if (quantity <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('La quantité doit être un nombre positif'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      setState(() => _isLoading = false);
+      return;
     }
+
+    if (_plantedDate.isAfter(DateTime.now())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('La date de plantation ne peut pas être dans le futur'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      setState(() => _isLoading = false);
+      return;
+    }
+
+    if (widget.planting == null || _isPreset) {
+      // Create new planting
+      await ref.read(plantingProvider.notifier).createPlanting(
+            gardenBedId: widget.gardenBedId,
+            plantId: _selectedPlantId ?? 'custom',
+            plantName: plantName,
+            quantity: quantity,
+            plantedDate: _plantedDate,
+            expectedHarvestStartDate: null,
+            expectedHarvestEndDate: null,
+            notes: notes,
+          );
+    } else {
+      // Update existing planting - preserve expectedHarvest fields
+      final updatedPlanting = widget.planting!.copyWith(
+        plantName: plantName,
+        quantity: quantity,
+        plantedDate: _plantedDate,
+        status: _status,
+        notes: notes,
+        expectedHarvestStartDate: widget.planting!.expectedHarvestStartDate,
+        expectedHarvestEndDate: widget.planting!.expectedHarvestEndDate,
+      );
+      await ref.read(plantingProvider.notifier).updatePlanting(updatedPlanting);
+    }
+
+    if (mounted) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            (widget.planting == null || _isPreset)
+                ? 'Culture créée avec succès'
+                : 'Culture modifiée avec succès',
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+      ref.refresh(recentActivitiesProvider);
+    }
+  } catch (e) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur: $e'), backgroundColor: Colors.red),
+      );
+    }
+  } finally {
+    if (mounted) setState(() => _isLoading = false);
   }
-}
