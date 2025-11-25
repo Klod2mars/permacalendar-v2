@@ -77,6 +77,8 @@ class PlantingNotifier extends Notifier<PlantingState> {
   }
 
   // Create a new planting
+  // NOTE: Accept status & metadata so callers (UI) can provide planting status
+  // and an initial growth percentage without requiring a Hive migration.
   Future<bool> createPlanting({
     required String gardenBedId,
     required String plantId,
@@ -86,6 +88,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
     DateTime? expectedHarvestEndDate,
     required int quantity,
     String? notes,
+    String status = 'Planté', // propagate the user's choice (Semé / Planté)
+    Map<String, dynamic>?
+        metadata, // contains 'initialGrowthPercent' when applicable
   }) async {
     try {
       final planting = Planting(
@@ -96,7 +101,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
         expectedHarvestStartDate: expectedHarvestStartDate,
         expectedHarvestEndDate: expectedHarvestEndDate,
         quantity: quantity,
+        status: status,
         notes: notes,
+        metadata: metadata,
       );
 
       if (!_validatePlanting(planting)) {

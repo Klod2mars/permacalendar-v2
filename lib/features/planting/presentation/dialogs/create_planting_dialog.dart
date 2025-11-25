@@ -480,6 +480,41 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
       if (widget.planting == null || _isPreset) {
         // Create new planting
+        // Determine plant-specific initial growth percent when available,
+        // otherwise apply sensible defaults (0.0 for Semé, 0.3 for Planté).
+        PlantFreezed? selectedPlantObj;
+        if (_selectedPlantId != null) {
+          final plantCatalogState = ref.read(plantCatalogProvider);
+          try {
+            selectedPlantObj = plantCatalogState.plants
+                .firstWhere((p) => p.id == _selectedPlantId);
+          } catch (e) {
+            selectedPlantObj = null;
+          }
+        }
+
+        double initialGrowthPercent = 0.0;
+        if (_status == 'Planté') {
+          double? plantSpecific;
+          if (selectedPlantObj != null && selectedPlantObj.growth != null) {
+            final raw = selectedPlantObj.growth!['transplantInitialPercent'];
+            if (raw is num) {
+              plantSpecific = raw.toDouble();
+            } else if (raw is String) {
+              plantSpecific = double.tryParse(raw);
+            }
+          }
+          initialGrowthPercent =
+              ((plantSpecific ?? 0.3).clamp(0.0, 1.0)) as double;
+        } else {
+          // Semé => 0%
+          initialGrowthPercent = 0.0;
+        }
+
+        final metadataForCreation = <String, dynamic>{
+          'initialGrowthPercent': initialGrowthPercent,
+        };
+
         await ref.read(plantingProvider.notifier).createPlanting(
               gardenBedId: widget.gardenBedId,
               plantId: _selectedPlantId ?? 'custom',
@@ -489,6 +524,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
               expectedHarvestStartDate: null,
               expectedHarvestEndDate: null,
               notes: notes,
+              status: _status,
+              metadata: metadataForCreation,
             );
       } else {
         // Update existing planting - preserve expectedHarvest fields
