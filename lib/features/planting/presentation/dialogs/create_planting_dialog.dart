@@ -524,3 +524,4 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   } finally {
     if (mounted) setState(() => _isLoading = false);
   }
+}
