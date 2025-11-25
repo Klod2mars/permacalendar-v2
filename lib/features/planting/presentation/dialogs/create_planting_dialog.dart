@@ -36,6 +36,10 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   String _status = 'Planté';
   bool _isLoading = false;
 
+  /// Indique si le planting fourni est un "preset" utilisé pour créer une nouvelle
+  /// culture (true) ou s'il s'agit d'un planting existant à éditer (false).
+  bool _isPreset = false;
+
   // UI state
   bool _customPlantExpanded = false;
   bool _notesExpanded = false;
@@ -44,15 +48,20 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   @override
   void initState() {
     super.initState();
+
+    // Détecter si le planting passé est un preset de création
+    _isPreset = widget.planting?.metadata['preset'] == true;
+
+    // On initialise l'écran à partir du planting passé (preset ou valeur réelle)
     if (widget.planting != null) {
       _initializeForEdit();
     }
 
-    // If user types a custom plant name, consider that they want a custom plant:
+    // Si l'utilisateur tape un nom personnalisé, on considère qu'il veut une plante personnalisée:
     _plantNameController.addListener(() {
       final text = _plantNameController.text;
       if (text.trim().isNotEmpty && _selectedPlantId != null) {
-        // User typed a custom name -> deselect catalog plant
+        // L'utilisateur a saisi un nom → désélectionner la plante du catalogue
         setState(() {
           _selectedPlantId = null;
         });
@@ -84,7 +93,9 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
     return AlertDialog(
       title: Text(
-        widget.planting == null ? 'Nouvelle culture' : 'Modifier la culture',
+        (widget.planting == null || _isPreset)
+            ? 'Nouvelle culture'
+            : 'Modifier la culture',
       ),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -466,11 +477,9 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
         return;
       }
 
-      if (widget.planting == null) {
+      if (widget.planting == null || _isPreset) {
         // Create new planting
-        await ref
-            .read(plantingProvider.notifier)
-            .createPlanting(
+        await ref.read(plantingProvider.notifier).createPlanting(
               gardenBedId: widget.gardenBedId,
               plantId: _selectedPlantId ?? 'custom',
               plantName: plantName,

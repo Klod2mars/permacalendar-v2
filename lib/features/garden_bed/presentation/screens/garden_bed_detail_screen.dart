@@ -118,6 +118,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                     plantName: plant?.commonName ?? 'Plante',
                     plantedDate: DateTime.now(),
                     quantity: 1,
+                    metadata: {'preset': true},
                   );
 
                   // 4) Ouvrir le dialog (point 5 - bottom sheet)
