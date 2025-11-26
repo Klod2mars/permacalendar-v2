@@ -93,6 +93,14 @@ class PlantingNotifier extends Notifier<PlantingState> {
         metadata, // contains 'initialGrowthPercent' when applicable
   }) async {
     try {
+      // Normaliser les métadonnées et garantir initialGrowthPercent
+      final Map<String, dynamic> metaFinal =
+          Map<String, dynamic>.from(metadata ?? {});
+      if (!metaFinal.containsKey('initialGrowthPercent')) {
+        // Par défaut : Planté => 0.3, Semé => 0.0
+        metaFinal['initialGrowthPercent'] = (status == 'Planté') ? 0.3 : 0.0;
+      }
+
       final planting = Planting(
         gardenBedId: gardenBedId,
         plantId: plantId,
@@ -103,7 +111,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         quantity: quantity,
         status: status,
         notes: notes,
-        metadata: metadata,
+        metadata: metaFinal,
       );
 
       if (!_validatePlanting(planting)) {
