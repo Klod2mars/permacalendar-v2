@@ -34,10 +34,12 @@ class GerminationPreview extends ConsumerWidget {
 
     // Recharger si nécessaire et demandé
     if (forceRefresh) {
-      final provider = ref.read(plantingLoadingProvider);
-      if (!provider) {
-        ref.read(plantingProvider.notifier).loadAllPlantings();
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final isLoading = ref.read(plantingLoadingProvider);
+        if (!isLoading) {
+          ref.read(plantingProvider.notifier).loadAllPlantings();
+        }
+      });
     }
 
     final activePlantings = allPlantingsList

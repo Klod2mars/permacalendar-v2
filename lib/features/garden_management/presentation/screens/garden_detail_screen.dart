@@ -487,8 +487,7 @@ class GardenDetailScreen extends ConsumerWidget {
                                 // GerminationPreview (compact)
                                 GerminationPreview(
                                   gardenBed: bedTyped,
-                                  allPlantings:
-                                      ref.watch(plantingProvider).plantings,
+                                  gardenBedId: bedTyped.id,
                                   plants: ref.watch(plantsListProvider),
                                   forceRefresh: true,
                                 ),
