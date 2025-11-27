@@ -292,7 +292,40 @@ class PlantingNotifier extends Notifier<PlantingState> {
   Future<bool> updatePlantingStatus(String plantingId, String newStatus) async {
     try {
       final planting = state.plantings.firstWhere((p) => p.id == plantingId);
-      final updatedPlanting = planting.copyWith(status: newStatus);
+
+      // Synchroniser metadata pour éviter incohérences Semé <-> Planté
+      final meta = Map<String, dynamic>.from(planting.metadata ?? {});
+
+      if (newStatus == 'Planté') {
+        // Si aucune valeur initiale, poser un défaut sûr (0.3)
+        if (!meta.containsKey('initialGrowthPercent') ||
+            (meta['initialGrowthPercent'] is num &&
+                (meta['initialGrowthPercent'] as num).toDouble() == 0.0) ||
+            (meta['initialGrowthPercent'] is String &&
+                double.tryParse(meta['initialGrowthPercent']) == 0.0)) {
+          meta['initialGrowthPercent'] = 0.3;
+        }
+        // Init progressReference à plantedDate si absent
+        if (!meta.containsKey('progressReference')) {
+          meta['progressReference'] =
+              PlantProgressService.buildProgressReferenceMap(
+                  planting.plantedDate,
+                  (meta['initialGrowthPercent'] is num)
+                      ? (meta['initialGrowthPercent'] as num).toDouble()
+                      : double.tryParse(
+                              meta['initialGrowthPercent']?.toString() ?? '') ??
+                          0.3);
+        }
+      } else if (newStatus == 'Semé') {
+        // Semé => forcer 0.0 et update reference
+        meta['initialGrowthPercent'] = 0.0;
+        meta['progressReference'] =
+            PlantProgressService.buildProgressReferenceMap(
+                planting.plantedDate, 0.0);
+      }
+
+      final updatedPlanting =
+          planting.copyWith(status: newStatus, metadata: meta);
 
       return await updatePlanting(updatedPlanting);
     } catch (e) {
