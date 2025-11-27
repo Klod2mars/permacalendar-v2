@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿// lib/features/garden_bed/presentation/widgets/germination_preview.dart
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
@@ -6,8 +7,11 @@ import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_pro
 
 import '../../../../core/models/planting.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
+import 'package:permacalendar/core/services/plant_progress_service.dart';
 
 /// Widget utilitaire réutilisable pour afficher un aperçu de germination
+/// Version "Minimal" : une ligne par planting -> "• Nom — dd/MM — XX%"
+/// Affiche toujours la ligne (ne dépend plus uniquement de la plage de germination).
 class GerminationPreview extends ConsumerWidget {
   final dynamic gardenBed; // accepte GardenBedFreezed ou modèle équivalent
   final String? gardenBedId; // permet de passer directement l'ID si disponible
@@ -40,33 +44,6 @@ class GerminationPreview extends ConsumerWidget {
           ref.read(plantingProvider.notifier).loadAllPlantings();
         }
       });
-    }
-
-    // Helper local : récupère l'initialGrowthPercent en respectant les priorités
-    double _getInitialPercent(Planting planting, PlantFreezed? plant) {
-      try {
-        final meta = planting.metadata ?? {};
-        if (meta.containsKey('initialGrowthPercent')) {
-          final v = meta['initialGrowthPercent'];
-          if (v is num) return v.toDouble().clamp(0.0, 1.0);
-          final parsed = double.tryParse(v?.toString() ?? '');
-          return (parsed ?? 0.0).clamp(0.0, 1.0);
-        }
-      } catch (_) {}
-      if (planting.status == 'Planté') {
-        try {
-          if (plant?.growth != null) {
-            final raw = plant!.growth!['transplantInitialPercent'];
-            if (raw is num) return raw.toDouble().clamp(0.0, 1.0);
-            if (raw is String) {
-              final p = double.tryParse(raw);
-              if (p != null) return p.clamp(0.0, 1.0);
-            }
-          }
-        } catch (_) {}
-        return 0.3; // défaut Planté
-      }
-      return 0.0; // Semé
     }
 
     final activePlantings = allPlantingsList
@@ -106,41 +83,71 @@ class GerminationPreview extends ConsumerWidget {
               final planted = planting.plantedDate;
               final plantedDateStr =
                   '${planted.day.toString().padLeft(2, '0')}/${planted.month.toString().padLeft(2, '0')}';
-              final initialPercentDouble = _getInitialPercent(planting, plant);
-              final initialPercentInt = (initialPercentDouble * 100).toInt();
+
+              // Utilise le service centralisé pour obtenir le % de progression
+              final double computed =
+                  PlantProgressService.computeProgress(planting, plant);
+              final int percent = (computed * 100).toInt();
+
+              // Option : afficher la plage de germination sur une 2e ligne si disponible
+              String? germinationRange;
+              try {
+                final germ = plant?.germination;
+                final time = germ is Map<String, dynamic> ? germ['germinationTime'] : null;
+                final minDays = (time is Map<String, dynamic>) ? (time['min'] as num?)?.toInt() : null;
+                final maxDays = (time is Map<String, dynamic>) ? (time['max'] as num?)?.toInt() : null;
+                if (minDays != null && maxDays != null) {
+                  final germStart = planted.add(Duration(days: minDays));
+                  final germEnd = planted.add(Duration(days: maxDays));
+                  germinationRange =
+                      '${germStart.day.toString().padLeft(2, '0')}/${germStart.month.toString().padLeft(2, '0')} - ${germEnd.day.toString().padLeft(2, '0')}/${germEnd.month.toString().padLeft(2, '0')}';
+                }
+              } catch (_) {
+                germinationRange = null;
+              }
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text(
-                        '• ${plant?.commonName ?? planting.plantName} — $plantedDateStr',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: initialPercentInt > 0
-                            ? Colors.green.withOpacity(0.12)
-                            : Colors.grey.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        '$initialPercentInt%',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: initialPercentInt > 0
-                              ? Colors.green
-                              : Colors.grey[700],
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '• ${plant?.commonName ?? planting.plantName} — $plantedDateStr',
+                            style: const TextStyle(fontSize: 12),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: percent > 0
+                                ? Colors.green.withOpacity(0.12)
+                                : Colors.grey.withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            '$percent%',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: percent > 0 ? Colors.green : Colors.grey[700],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                    if (germinationRange != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        'Germination: $germinationRange',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[400]),
+                      ),
+                    ],
                   ],
                 ),
               );
@@ -150,23 +157,4 @@ class GerminationPreview extends ConsumerWidget {
       ),
     );
   }
-}
-
-Widget _buildGerminationIndicator(DateTime start, DateTime end) {
-  final now = DateTime.now();
-  final totalDays = end.difference(start).inDays;
-  final passedDays = now.difference(start).inDays;
-  final safeTotal = totalDays <= 0 ? 1.0 : totalDays.toDouble();
-  final progress = (passedDays / safeTotal).clamp(0.0, 1.0);
-
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      LinearProgressIndicator(value: progress),
-      const SizedBox(height: 4),
-      Text(
-          '${passedDays.clamp(0, totalDays)} / ${totalDays > 0 ? totalDays : 1} jours',
-          style: const TextStyle(fontSize: 11)),
-    ],
-  );
 }
