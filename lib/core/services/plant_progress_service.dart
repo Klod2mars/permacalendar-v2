@@ -1,13 +1,10 @@
 // lib/core/services/plant_progress_service.dart
-import 'dart:developer' as developer;
-
 import '../../features/plant_catalog/domain/entities/plant_entity.dart';
 import '../models/planting.dart';
 
 /// Service utilitaire pour calculer le pourcentage de vie (0.0..1.0)
 /// d'une planting et produire la date de récolte attendue.
 /// Il centralise la logique :
-///
 /// - getProgressReference(...) : obtient la référence temporelle et le % de référence
 ///   (progressReference dans metadata, sinon initialGrowthPercent, sinon règles Semé/Planté)
 /// - computeProgress(...) : calcule le % actuel à partir de la référence
@@ -15,22 +12,6 @@ import '../models/planting.dart';
 /// - buildProgressReferenceMap(...) : format JSON-friendly pour la sauvegarde
 /// - addObservationToMeta(...) : ajoute une observation et met à jour progressReference
 class PlantProgressService {
-  /// Helper de debug : log la référence calculée pour une planting.
-  static void _debugLogRef(
-      Planting planting, PlantFreezed? plant, DateTime refDate, double refProgress) {
-    try {
-      final plantName = planting.plantName;
-      final id = planting.id;
-      final status = planting.status;
-      final daysToMaturity = plant?.daysToMaturity;
-      developer.log(
-        '[PlantProgressService] ref: planting=$id name="$plantName" status=$status refDate=${refDate.toIso8601String()} refProgress=${(refProgress * 100).toStringAsFixed(1)}% daysToMaturity=${daysToMaturity ?? 'null'}',
-      );
-    } catch (_) {
-      // ignore logging errors
-    }
-  }
-
   /// Lit et normalise la progressReference depuis la planting.
   /// Retourne une Map {'date': DateTime, 'progress': double}.
   /// Priorités :
@@ -58,17 +39,11 @@ class PlantProgressService {
           if (dateStr != null && p != null) {
             refDate = DateTime.parse(dateStr);
             refProgress = p.clamp(0.0, 1.0).toDouble();
-            _debugLogRef(planting, plant, refDate, refProgress);
             return {'date': refDate, 'progress': refProgress};
-          } else {
-            developer.log(
-                '[PlantProgressService] progressReference present but malformed for planting=${planting.id} rawRef=$rawRef');
           }
         }
       }
-    } catch (e, s) {
-      developer.log(
-          '[PlantProgressService] getProgressReference: error reading progressReference for planting=${planting.id}: $e\n$s');
+    } catch (_) {
       // fallback to next options
     }
 
@@ -82,16 +57,11 @@ class PlantProgressService {
         if (ip != null) {
           refDate = planting.plantedDate;
           refProgress = ip.clamp(0.0, 1.0).toDouble();
-          _debugLogRef(planting, plant, refDate, refProgress);
           return {'date': refDate, 'progress': refProgress};
-        } else {
-          developer.log(
-              '[PlantProgressService] initialGrowthPercent present but unparsable for planting=${planting.id} value=$ipRaw');
         }
       }
-    } catch (e, s) {
-      developer.log(
-          '[PlantProgressService] getProgressReference: error reading initialGrowthPercent for planting=${planting.id}: $e\n$s');
+    } catch (_) {
+      // fallback
     }
 
     // 3) status Planté -> chercher plant.growth['transplantInitialPercent']
@@ -112,18 +82,15 @@ class PlantProgressService {
         }
         refDate = planting.plantedDate;
         refProgress = candidate.clamp(0.0, 1.0).toDouble();
-        _debugLogRef(planting, plant, refDate, refProgress);
         return {'date': refDate, 'progress': refProgress};
       }
-    } catch (e, s) {
-      developer.log(
-          '[PlantProgressService] getProgressReference: error processing Planté fallback for planting=${planting.id}: $e\n$s');
+    } catch (_) {
+      // fallback
     }
 
     // 4) défaut Semé
     refDate = planting.plantedDate;
     refProgress = 0.0;
-    _debugLogRef(planting, plant, refDate, refProgress);
     return {'date': refDate, 'progress': refProgress};
   }
 
@@ -138,24 +105,10 @@ class PlantProgressService {
     final DateTime refDate = ref['date'] as DateTime;
     final double refProgress = (ref['progress'] as double).clamp(0.0, 1.0);
 
-    if (M <= 0) {
-      developer.log(
-          '[PlantProgressService] computeProgress: M<=0 for planting=${planting.id}, returning refProgress ${(refProgress * 100).toStringAsFixed(1)}%');
-      return refProgress;
-    }
+    if (M <= 0) return refProgress;
 
     final int daysSinceRef = now.isBefore(refDate) ? 0 : now.difference(refDate).inDays;
     final double progress = (refProgress + (daysSinceRef / M)).clamp(0.0, 1.0).toDouble();
-
-    // Debug log détaillé
-    try {
-      developer.log(
-        '[PlantProgressService] computeProgress: planting=${planting.id} refDate=${refDate.toIso8601String()} daysSinceRef=$daysSinceRef M=$M refProgress=${(refProgress * 100).toStringAsFixed(1)}% => progress=${(progress * 100).toStringAsFixed(1)}% now=${now.toIso8601String()}',
-      );
-    } catch (_) {
-      // ignore logging errors
-    }
-
     return progress;
   }
 
@@ -169,13 +122,7 @@ class PlantProgressService {
     if (M <= 0) return refDate;
 
     final int effectiveMaturityDays = (M * (1.0 - refProgress)).ceil().clamp(1, M);
-    final DateTime expected = refDate.add(Duration(days: effectiveMaturityDays));
-
-    developer.log(
-      '[PlantProgressService] computeExpectedHarvestDate: planting=${planting.id} refProgress=${(refProgress * 100).toStringAsFixed(1)}% effectiveMaturityDays=$effectiveMaturityDays expected=${expected.toIso8601String()}',
-    );
-
-    return expected;
+    return refDate.add(Duration(days: effectiveMaturityDays));
   }
 
   /// Construit un objet progressReference JSON-friendly pour stockage.
@@ -208,9 +155,6 @@ class PlantProgressService {
     });
     newMeta['observations'] = obs;
     newMeta['progressReference'] = buildProgressReferenceMap(date, progress);
-    developer.log(
-      '[PlantProgressService] addObservationToMeta: added observation type=$type date=${date.toIso8601String()} progress=${(progress * 100).toStringAsFixed(1)}%',
-    );
     return newMeta;
   }
 }
