@@ -42,6 +42,33 @@ class GerminationPreview extends ConsumerWidget {
       });
     }
 
+    // Helper local : récupère l'initialGrowthPercent en respectant les priorités
+    double _getInitialPercent(Planting planting, PlantFreezed? plant) {
+      try {
+        final meta = planting.metadata ?? {};
+        if (meta.containsKey('initialGrowthPercent')) {
+          final v = meta['initialGrowthPercent'];
+          if (v is num) return v.toDouble().clamp(0.0, 1.0);
+          final parsed = double.tryParse(v?.toString() ?? '');
+          return (parsed ?? 0.0).clamp(0.0, 1.0);
+        }
+      } catch (_) {}
+      if (planting.status == 'Planté') {
+        try {
+          if (plant?.growth != null) {
+            final raw = plant!.growth!['transplantInitialPercent'];
+            if (raw is num) return raw.toDouble().clamp(0.0, 1.0);
+            if (raw is String) {
+              final p = double.tryParse(raw);
+              if (p != null) return p.clamp(0.0, 1.0);
+            }
+          }
+        } catch (_) {}
+        return 0.3; // défaut Planté
+      }
+      return 0.0; // Semé
+    }
+
     final activePlantings = allPlantingsList
         .where((p) => p.isActive && p.gardenBedId == bedId)
         .toList();
@@ -51,7 +78,7 @@ class GerminationPreview extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    // Afficher les données réelles de germination pour chaque plantation active
+    // Vue synthétique : nom — date plantation/semi — badge %
     return Card(
       elevation: 2,
       child: Padding(
@@ -76,37 +103,47 @@ class GerminationPreview extends ConsumerWidget {
                 plant = null;
               }
 
-              final germ = plant?.germination;
-              final time =
-                  germ is Map<String, dynamic> ? germ['germinationTime'] : null;
-              final minDays = (time is Map<String, dynamic>)
-                  ? (time['min'] as num?)?.toInt()
-                  : null;
-              final maxDays = (time is Map<String, dynamic>)
-                  ? (time['max'] as num?)?.toInt()
-                  : null;
+              final planted = planting.plantedDate;
+              final plantedDateStr =
+                  '${planted.day.toString().padLeft(2, '0')}/${planted.month.toString().padLeft(2, '0')}';
+              final initialPercentDouble = _getInitialPercent(planting, plant);
+              final initialPercentInt = (initialPercentDouble * 100).toInt();
 
-              if (minDays != null && maxDays != null) {
-                final plantedDate = planting.plantedDate;
-                final germStart = plantedDate.add(Duration(days: minDays));
-                final germEnd = plantedDate.add(Duration(days: maxDays));
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '• ${plant?.commonName ?? planting.plantName}: ${germStart.day}/${germStart.month} - ${germEnd.day}/${germEnd.month}',
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '• ${plant?.commonName ?? planting.plantName} — $plantedDateStr',
                         style: const TextStyle(fontSize: 12),
                       ),
-                      const SizedBox(height: 4),
-                      _buildGerminationIndicator(germStart, germEnd),
-                    ],
-                  ),
-                );
-              }
-              return const SizedBox.shrink();
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: initialPercentInt > 0
+                            ? Colors.green.withOpacity(0.12)
+                            : Colors.grey.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '$initialPercentInt%',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: initialPercentInt > 0
+                              ? Colors.green
+                              : Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }),
           ],
         ),
