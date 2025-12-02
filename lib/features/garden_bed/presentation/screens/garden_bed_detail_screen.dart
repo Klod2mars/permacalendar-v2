@@ -487,7 +487,8 @@ class GardenBedDetailScreen extends ConsumerWidget {
                         child: SizedBox(
                           width: 44,
                           height: 44,
-                          child: _buildPlantThumbnailWidget(plant, planting, theme),
+                          child: _buildPlantThumbnailWidget(
+                              plant, planting, theme),
                         ),
                       ),
                     ),
@@ -576,3 +577,4 @@ class GardenBedDetailScreen extends ConsumerWidget {
       return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
     }
   }
+}
