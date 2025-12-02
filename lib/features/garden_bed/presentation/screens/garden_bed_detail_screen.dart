@@ -176,8 +176,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
 
           const SizedBox(height: 24),
 
-          const SizedBox(height: 24),
-
           // Plantations actuelles
           _buildCurrentPlantings(context, ref, gardenBed, theme),
         ],
@@ -186,38 +184,111 @@ class GardenBedDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildBasicInfo(GardenBed gardenBed, ThemeData theme) {
+    // Version compacte : la surface est mise en avant, le sol/exposition en petits chips,
+    // et les détails sont repliables.
     return CustomCard(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Informations',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+            // Surface mise en avant
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Surface',
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(color: theme.colorScheme.outline),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        gardenBed.formattedSize,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // petit icône d'aide visuelle (non intrusif)
+                Icon(Icons.grid_view,
+                    color: theme.colorScheme.primary, size: 26),
+              ],
             ),
-            const SizedBox(height: 16),
-            if (gardenBed.description.isNotEmpty) ...[
-              _buildInfoRow(Icons.description, 'Description',
-                  gardenBed.description, theme),
-              const SizedBox(height: 12),
-            ],
-            _buildInfoRow(
-                Icons.straighten, 'Surface', gardenBed.formattedSize, theme),
+
             const SizedBox(height: 12),
-            _buildInfoRow(
-                Icons.terrain, 'Type de sol', gardenBed.soilType, theme),
-            const SizedBox(height: 12),
-            _buildInfoRow(
-                Icons.wb_sunny, 'Exposition', gardenBed.exposure, theme),
-            if (gardenBed.notes != null && gardenBed.notes!.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              _buildInfoRow(Icons.note, 'Notes', gardenBed.notes!, theme),
+
+            // Chips compacts pour Type de sol / Exposition (adoucissement des libellés)
+            Row(
+              children: [
+                _buildSmallInfoChip(
+                    Icons.terrain, '${gardenBed.soilType} (est.)', theme),
+                const SizedBox(width: 8),
+                _buildSmallInfoChip(
+                    Icons.wb_sunny, '${gardenBed.exposure} (variable)', theme),
+              ],
+            ),
+
+            // Détails repliables si nécessaire (description / notes)
+            if (gardenBed.description.isNotEmpty ||
+                (gardenBed.notes != null && gardenBed.notes!.isNotEmpty)) ...[
+              const SizedBox(height: 8),
+              ExpansionTile(
+                tilePadding: EdgeInsets.zero,
+                title: Text(
+                  'Détails',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                children: [
+                  if (gardenBed.description.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 4, vertical: 6),
+                      child: _buildInfoRow(Icons.description, 'Description',
+                          gardenBed.description, theme),
+                    ),
+                  if (gardenBed.notes != null && gardenBed.notes!.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 4, vertical: 6),
+                      child: _buildInfoRow(
+                          Icons.note, 'Notes', gardenBed.notes!, theme),
+                    ),
+                ],
+              ),
             ],
           ],
         ),
+      ),
+    );
+  }
+
+  // Helper pour afficher un petit “chip” d'information compact et visuel.
+  Widget _buildSmallInfoChip(IconData icon, String text, ThemeData theme) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceVariant,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.08)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: theme.colorScheme.primary),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }
