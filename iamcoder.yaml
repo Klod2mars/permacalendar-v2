@@ -1,60 +1,56 @@
 meta:
   project_name: IAMcoder
-  description: "Minimal: replace single line in create_planting_dialog.dart to add insetPadding"
+  description: "Test yaml_apply : détecte et insère insetPadding après return AlertDialog("
   version: "1.0"
 
 context:
   mode: write_enabled
 
 tasks:
-  - name: apply_writes_dry_run
-    goal: "Dry-run: replace single line (return AlertDialog() -> return AlertDialog(insetPadding: ...))"
-    task_type: task_apply_writes
+  - name: test_yaml_apply_dryrun
+    goal: "Dry-run: détecter le point d'insertion via regex et lister les matches (sans écrire)"
+    task_type: yaml_apply
     parameters:
       instructions:
-        writes:
+        replacements:
           - file: "lib/features/planting/presentation/dialogs/create_planting_dialog.dart"
-            # Minimal textual replacement instruction.
-            # IAMcoder should replace the first exact occurrence of the 'search' text with the 'replace' block.
-            replace:
-              search: "return AlertDialog("
-              replace: |
-                return AlertDialog(
-                  insetPadding: EdgeInsets.only(
-                    left: 24.0,
-                    right: 24.0,
-                    top: 24.0,
-                    bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
-                  ),
-            create_backup: true
+            anchor_pattern: "^\\s*return AlertDialog\\("
+            anchor_regex: true
+            case_insensitive: false
+            multiline: true
+            dotall: false
+            after: |
+              \n  insetPadding: EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                top: 24.0,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
+              ),
+            include_anchor: true
+            replace_all: false
       dry_run: true
+      create_backup: false
       output: "reports/last_report.json"
 
-  - name: check_dry_run_report
-    goal: "Ensure dry run reported changes"
-    task_type: yaml_check_report
-    parameters:
-      report_path: "reports/last_report.json"
-      expected_status: "dry_run_ok"
-
-  - name: apply_writes_live
-    goal: "Apply the replacement for real"
-    task_type: task_apply_writes
+  - name: apply_yaml_apply_live
+    goal: "Application LIVE : insérer insetPadding et créer une sauvegarde"
+    task_type: yaml_apply
     parameters:
       instructions:
-        writes:
+        replacements:
           - file: "lib/features/planting/presentation/dialogs/create_planting_dialog.dart"
-            replace:
-              search: "return AlertDialog("
-              replace: |
-                return AlertDialog(
-                  insetPadding: EdgeInsets.only(
-                    left: 24.0,
-                    right: 24.0,
-                    top: 24.0,
-                    bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
-                  ),
-            create_backup: true
+            anchor_pattern: "^\\s*return AlertDialog\\("
+            anchor_regex: true
+            multiline: true
+            after: |
+              \n  insetPadding: EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                top: 24.0,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
+              ),
+            include_anchor: true
+            replace_all: false
       dry_run: false
       create_backup: true
-      create_git_checkpoint: false
+      output: "reports/last_report.json"

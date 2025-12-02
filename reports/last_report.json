@@ -1,12 +1,21 @@
 {
-  "generated_at": "2025-12-02T04:52:35.562906Z",
-  "workspace": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2",
+  "status": "applied",
   "entries": [
     {
       "file": "lib/features/planting/presentation/dialogs/create_planting_dialog.dart",
-      "target": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\planting\\presentation\\dialogs\\create_planting_dialog.dart",
-      "error": "no_content"
+      "anchor": "",
+      "occurrences": 1,
+      "found": true,
+      "matches": [
+        {
+          "start": 3012,
+          "end": 3036,
+          "snippet": "al theme = Theme.of(context);\\n\\n    return AlertDialog(\\n      title: Text(\\n        (w"
+        }
+      ],
+      "backup": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\backups\\create_planting_dialog.dart.bak_20251202061924",
+      "applied": true,
+      "applied_matches": 1
     }
-  ],
-  "status": "dry_run_no_change"
+  ]
 }
