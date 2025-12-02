@@ -90,9 +90,11 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final keyboard = MediaQuery.of(context).viewInsets.bottom;
 
     return AlertDialog(
-      // fixed inset padding (no viewInsets here — AnimatedPadding handles keyboard)
+      // ✅ Le dialog devient scrollable quand l’espace vertical se réduit
+      scrollable: true,
       insetPadding:
           const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
       title: Text(
@@ -100,122 +102,95 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
             ? 'Nouvelle culture'
             : 'Modifier la culture',
       ),
-      content: AnimatedPadding(
-        padding: MediaQuery.of(context).viewInsets,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOut,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: LayoutBuilder(
-            builder: (ctx, constraints) {
-              // compute available height as the container height minus keyboard height and a small margin
-              final keyboard = MediaQuery.of(ctx).viewInsets.bottom;
-              double available = constraints.maxHeight - keyboard - 24.0;
-              if (available <= 0) {
-                available = constraints.maxHeight * 0.8;
-              }
-              return ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: available,
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.9,
+        // ✅ Une seule gestion du clavier : padding bottom = viewInsets.bottom
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: keyboard + 8.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ACTION BLOCK (compact, always visible)
+                _buildActionBlock(theme),
+                const SizedBox(height: 12),
+
+                // PLANT SELECTION (compact)
+                _buildPlantReminder(theme),
+                const SizedBox(height: 8),
+
+                // Plante personnalisée (repliable, no switch)
+                _buildCustomPlantTile(theme),
+                const SizedBox(height: 8),
+
+                // Notes (repliable)
+                ExpansionTile(
+                  title: Text(
+                    'Notes (optionnel)',
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                  initiallyExpanded: _notesExpanded,
+                  onExpansionChanged: (v) => setState(() => _notesExpanded = v),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: CustomTextField(
+                        controller: _notesController,
+                        hint: 'Informations supplémentaires...',
+                        maxLines: 3,
+                      ),
+                    ),
+                  ],
                 ),
-                child: ListView(
-                  reverse: true,
-                  padding: EdgeInsets.only(bottom: keyboard + 8.0),
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    Form(
-                      key: _formKey,
+                const SizedBox(height: 8),
+
+                // Tips (repliable) - new text, compact
+                ExpansionTile(
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.lightbulb_outline,
+                        color: theme.colorScheme.primary,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      Text('Conseils', style: theme.textTheme.titleSmall),
+                    ],
+                  ),
+                  initiallyExpanded: _tipsExpanded,
+                  onExpansionChanged: (v) => setState(() => _tipsExpanded = v),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0,
+                        vertical: 8,
+                      ),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ACTION BLOCK (compact, always visible)
-                          _buildActionBlock(theme),
-                          const SizedBox(height: 12),
-
-                          // PLANT SELECTION (compact)
-                          _buildPlantReminder(theme),
-                          const SizedBox(height: 8),
-
-                          // Plante personnalisée (repliable, no switch)
-                          _buildCustomPlantTile(theme),
-                          const SizedBox(height: 8),
-
-                          // Notes (repliable)
-                          ExpansionTile(
-                            title: Text(
-                              'Notes (optionnel)',
-                              style: theme.textTheme.bodyMedium,
-                            ),
-                            initiallyExpanded: _notesExpanded,
-                            onExpansionChanged: (v) =>
-                                setState(() => _notesExpanded = v),
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: CustomTextField(
-                                  controller: _notesController,
-                                  hint: 'Informations supplémentaires...',
-                                  maxLines: 3,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            '• Utilisez le catalogue pour sélectionner une plante.',
+                            style: theme.textTheme.bodySmall,
                           ),
-                          const SizedBox(height: 8),
-
-                          // Tips (repliable) - new text, compact
-                          ExpansionTile(
-                            title: Row(
-                              children: [
-                                Icon(
-                                  Icons.lightbulb_outline,
-                                  color: theme.colorScheme.primary,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: 8),
-                                Text('Conseils',
-                                    style: theme.textTheme.titleSmall),
-                              ],
-                            ),
-                            initiallyExpanded: _tipsExpanded,
-                            onExpansionChanged: (v) =>
-                                setState(() => _tipsExpanded = v),
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0,
-                                  vertical: 8,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '• Utilisez le catalogue pour sélectionner une plante.',
-                                      style: theme.textTheme.bodySmall,
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
-                                      style: theme.textTheme.bodySmall,
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      '• Ajoutez des notes pour suivre les conditions spéciales.',
-                                      style: theme.textTheme.bodySmall,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          const SizedBox(height: 6),
+                          Text(
+                            '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            '• Ajoutez des notes pour suivre les conditions spéciales.',
+                            style: theme.textTheme.bodySmall,
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-              );
-            },
+              ],
+            ),
           ),
         ),
       ),
@@ -232,9 +207,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text((widget.planting == null || _isPreset)
-                  ? 'Créer'
-                  : 'Modifier'),
+              : Text((widget.planting == null || _isPreset) ? 'Créer' : 'Modifier'),
         ),
       ],
     );
@@ -372,7 +345,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
   /// Reworked: no switch, purely an ExpansionTile. If user types a name,
   /// we consider it a custom plant (selected id set to null). If user picks a catalog plant,
-  /// we clear the custom name and collapse custom tile.
+  /// we clear the custom name and collapse the tile.
   Widget _buildCustomPlantTile(ThemeData theme) {
     return ExpansionTile(
       title: Text('Plante personnalisée', style: theme.textTheme.bodyMedium),
@@ -502,8 +475,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
       if (_plantedDate.isAfter(DateTime.now())) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content:
-                Text('La date de plantation ne peut pas être dans le futur'),
+            content: Text('La date de plantation ne peut pas être dans le futur'),
             backgroundColor: Colors.orange,
           ),
         );
