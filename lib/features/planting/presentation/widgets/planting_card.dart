@@ -34,7 +34,7 @@ class PlantingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header with plant name and status
+          // Header: nom + quantité + statut + menu
           Row(
             children: [
               Expanded(
@@ -147,10 +147,10 @@ class PlantingCard extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Planting details
+          // DETAILS: plantation / récolte prévue / récolté
           Row(
             children: [
-              // Date de plantation — label dynamique selon statut
+              // Label dynamique : 'Semé le' si Semé sinon 'Planté le'
               Expanded(
                 child: _buildDetailItem(
                   Icons.calendar_today,
@@ -159,8 +159,6 @@ class PlantingCard extends StatelessWidget {
                   theme,
                 ),
               ),
-
-              // Récolte prévue, si disponible
               if (planting.expectedHarvestStartDate != null)
                 Expanded(
                   child: _buildDetailItem(
@@ -170,8 +168,6 @@ class PlantingCard extends StatelessWidget {
                     theme,
                   ),
                 ),
-
-              // Date de récolte effective, si disponible
               if (planting.actualHarvestDate != null)
                 Expanded(
                   child: _buildDetailItem(
@@ -184,14 +180,14 @@ class PlantingCard extends StatelessWidget {
             ],
           ),
 
-          // Progress indicator for growing plants
+          // Progression (uniquement pour 'Planté' et si dates existantes)
           if (planting.status == 'Planté' &&
               planting.expectedHarvestStartDate != null) ...[
             const SizedBox(height: 12),
             _buildProgressIndicator(theme),
           ],
 
-          // Care actions
+          // Care Actions
           if (planting.careActions.isNotEmpty) ...[
             const SizedBox(height: 12),
             _buildCareActions(theme),
@@ -233,24 +229,21 @@ class PlantingCard extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          // Footer with creation / modified date
+          // Footer: Créé / Modifié — n'affiche "Créé" que si différent de plantedDate
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Afficher "Créé le" seulement si différent de plantedDate pour éviter doublon
               if (planting.createdAt != planting.plantedDate)
                 Text(
                   'Créé le ${_formatDate(planting.createdAt)}',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.outline,
-                  ),
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: theme.colorScheme.outline),
                 ),
               if (planting.updatedAt != planting.createdAt)
                 Text(
                   'Modifié le ${_formatDate(planting.updatedAt)}',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.outline,
-                  ),
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: theme.colorScheme.outline),
                 ),
             ],
           ),
@@ -304,9 +297,8 @@ class PlantingCard extends StatelessWidget {
           children: [
             Text(
               'Progression',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
             Text(
               '${(progress * 100).toInt()}%',
@@ -354,9 +346,8 @@ class PlantingCard extends StatelessWidget {
               ),
               child: Text(
                 action,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSecondaryContainer,
-                ),
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.onSecondaryContainer),
               ),
             );
           }).toList(),
