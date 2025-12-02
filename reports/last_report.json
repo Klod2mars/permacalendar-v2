@@ -1,12 +1,12 @@
 {
-  "generated_at": "2025-12-02T04:33:35.376323Z",
+  "generated_at": "2025-12-02T04:52:35.562906Z",
   "workspace": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2",
   "entries": [
     {
       "file": "lib/features/planting/presentation/dialogs/create_planting_dialog.dart",
       "target": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\planting\\presentation\\dialogs\\create_planting_dialog.dart",
-      "would_change": true
+      "error": "no_content"
     }
   ],
-  "status": "dry_run_ok"
+  "status": "dry_run_no_change"
 }
