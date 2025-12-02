@@ -118,15 +118,17 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                 constraints: BoxConstraints(
                   maxHeight: available,
                 ),
-                child: SingleChildScrollView(
+                child: ListView(
                   reverse: true,
                   padding: EdgeInsets.only(bottom: keyboard + 8.0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                  shrinkWrap: true,
+                  children: [
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                         // ACTION BLOCK (compact, always visible)
                         _buildActionBlock(theme),
                         const SizedBox(height: 12),
