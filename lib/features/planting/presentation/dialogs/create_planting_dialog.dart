@@ -509,7 +509,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
         // Create new planting
         PlantFreezed? selectedPlantObj;
         if (_selectedPlantId != null) {
-          final plantCatalogState = ref.read(plant_catalog_provider);
+          final plantCatalogState = ref.read(plantcatalogprovider);
           try {
             selectedPlantObj = plantCatalogState.plants
                 .firstWhere((p) => p.id == _selectedPlantId);
