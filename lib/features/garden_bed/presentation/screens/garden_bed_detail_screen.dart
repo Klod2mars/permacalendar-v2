@@ -368,16 +368,18 @@ class GardenBedDetailScreen extends ConsumerWidget {
         .where((planting) => planting.gardenBedId == gardenBed.id)
         .toList();
 
+    // Récupérer la liste des plantes une seule fois pour les vignettes
+    final plants = ref.watch(plantsListProvider);
+
     return CustomCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // POINT 2 - Header résilient avec Expanded
+            // Header
             Row(
               children: [
-                // Le titre prend tout l'espace disponible
                 Expanded(
                   child: Text(
                     'Plantations actuelles',
@@ -385,8 +387,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-
-                // Voir tout seulement si nécessaire
                 if (plantings.length > 3)
                   TextButton(
                     onPressed: () {
@@ -398,7 +398,8 @@ class GardenBedDetailScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 16),
-            // POINT 3 - CTA dans état vide avec flow FAB
+
+            // Etat vide / CTA
             if (plantings.isEmpty)
               EmptyStateWidget(
                 icon: Icons.eco,
@@ -406,7 +407,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
                 subtitle: 'Cette parcelle n\'a pas encore de plantations.',
                 actionText: 'Ajouter une plantation',
                 onAction: () async {
-                  // Même flow que le FAB : catalogue -> dialog prérempli
                   final selectedPlantId =
                       await Navigator.of(context).push<String?>(
                     MaterialPageRoute(
@@ -417,7 +417,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
                   );
                   if (selectedPlantId == null) return;
 
-                  // Récupérer la plante (si dispo) et créer preset
                   List<PlantFreezed> plantList = ref.read(plantsListProvider);
                   PlantFreezed? plant;
                   try {
@@ -445,7 +444,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
                     quantity: 1,
                   );
 
-                  // Ouvrir la modal de création (bottom sheet)
                   await showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
@@ -471,11 +469,27 @@ class GardenBedDetailScreen extends ConsumerWidget {
                 },
               )
             else
+              // Liste compacte avec vignettes provenant du catalogue si disponibles
               Column(
                 children: plantings.take(3).map((planting) {
+                  PlantFreezed? plant;
+                  try {
+                    plant = plants.firstWhere((p) => p.id == planting.plantId);
+                  } catch (_) {
+                    plant = null;
+                  }
+
                   return ListTile(
-                    leading: const CircleAvatar(
-                      child: Icon(Icons.eco),
+                    leading: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: theme.colorScheme.surfaceVariant,
+                      child: ClipOval(
+                        child: SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: _buildPlantThumbnailWidget(plant, planting, theme),
+                        ),
+                      ),
                     ),
                     title: Text(planting.plantName),
                     subtitle: Text(
@@ -492,4 +506,73 @@ class GardenBedDetailScreen extends ConsumerWidget {
       ),
     );
   }
-}
+
+  // Helper local : tente d'afficher l'image réseau ou asset depuis plant.metadata ou depuis assets/images/plants/<id> (avec fallback).
+  Widget _buildPlantThumbnailWidget(
+      PlantFreezed? plant, Planting planting, ThemeData theme) {
+    if (plant == null) {
+      return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
+    }
+
+    try {
+      final meta = plant.metadata;
+      String? raw;
+      if (meta != null) {
+        final candidates = [
+          meta['image'],
+          meta['imagePath'],
+          meta['photo'],
+          meta['image_url'],
+          meta['imageUrl'],
+          meta['photoUrl']
+        ];
+        for (final c in candidates) {
+          if (c is String && c.trim().isNotEmpty) {
+            raw = c.trim();
+            break;
+          }
+        }
+      }
+
+      if (raw != null && raw.isNotEmpty) {
+        final isNetwork =
+            RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
+        if (isNetwork) {
+          return Image.network(
+            raw,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) =>
+                Icon(Icons.eco_outlined, color: theme.colorScheme.primary),
+          );
+        } else {
+          // supposer chemin relatif -> essayer quelques candidats d'asset
+          final candidates = <String>[
+            if (raw.startsWith('assets/')) raw,
+            'assets/images/plants/$raw',
+            'assets/images/plants/${raw.toLowerCase()}',
+            'assets/images/plants/${plant.id}.png',
+            'assets/images/plants/${plant.id}.jpg',
+            'assets/images/plants/${plant.id}.webp',
+          ];
+          // On essaye le premier candidat plausible ; Image.asset gérera l'erreur via errorBuilder
+          final chosen = candidates.first;
+          return Image.asset(
+            chosen,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) =>
+                Icon(Icons.eco_outlined, color: theme.colorScheme.primary),
+          );
+        }
+      } else {
+        // fallback : par id
+        return Image.asset(
+          'assets/images/plants/${plant.id}.png',
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) =>
+              Icon(Icons.eco_outlined, color: theme.colorScheme.primary),
+        );
+      }
+    } catch (_) {
+      return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
+    }
+  }
