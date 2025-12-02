@@ -264,7 +264,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
               // Toggle inside a ConstrainedBox to avoid being too wide
               ConstrainedBox(
                 constraints: const BoxConstraints(minWidth: 120, maxWidth: 220),
-                child: IntrinsicWidth(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
                   child: ToggleButtons(
                     isSelected: [_status == 'Semé', _status == 'Planté'],
                     onPressed: (index) {
