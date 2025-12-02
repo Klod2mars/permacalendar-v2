@@ -122,96 +122,97 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                   reverse: true,
                   padding: EdgeInsets.only(bottom: keyboard + 8.0),
                   shrinkWrap: true,
-                  children: [
+                  children: <Widget>[
                     Form(
                       key: _formKey,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                        // ACTION BLOCK (compact, always visible)
-                        _buildActionBlock(theme),
-                        const SizedBox(height: 12),
+                          // ACTION BLOCK (compact, always visible)
+                          _buildActionBlock(theme),
+                          const SizedBox(height: 12),
 
-                        // PLANT SELECTION (compact)
-                        _buildPlantReminder(theme),
-                        const SizedBox(height: 8),
+                          // PLANT SELECTION (compact)
+                          _buildPlantReminder(theme),
+                          const SizedBox(height: 8),
 
-                        // Plante personnalisée (repliable, no switch)
-                        _buildCustomPlantTile(theme),
-                        const SizedBox(height: 8),
+                          // Plante personnalisée (repliable, no switch)
+                          _buildCustomPlantTile(theme),
+                          const SizedBox(height: 8),
 
-                        // Notes (repliable)
-                        ExpansionTile(
-                          title: Text(
-                            'Notes (optionnel)',
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          initiallyExpanded: _notesExpanded,
-                          onExpansionChanged: (v) =>
-                              setState(() => _notesExpanded = v),
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: CustomTextField(
-                                controller: _notesController,
-                                hint: 'Informations supplémentaires...',
-                                maxLines: 3,
-                              ),
+                          // Notes (repliable)
+                          ExpansionTile(
+                            title: Text(
+                              'Notes (optionnel)',
+                              style: theme.textTheme.bodyMedium,
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-
-                        // Tips (repliable) - new text, compact
-                        ExpansionTile(
-                          title: Row(
+                            initiallyExpanded: _notesExpanded,
+                            onExpansionChanged: (v) =>
+                                setState(() => _notesExpanded = v),
                             children: [
-                              Icon(
-                                Icons.lightbulb_outline,
-                                color: theme.colorScheme.primary,
-                                size: 18,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: CustomTextField(
+                                  controller: _notesController,
+                                  hint: 'Informations supplémentaires...',
+                                  maxLines: 3,
+                                ),
                               ),
-                              const SizedBox(width: 8),
-                              Text('Conseils',
-                                  style: theme.textTheme.titleSmall),
                             ],
                           ),
-                          initiallyExpanded: _tipsExpanded,
-                          onExpansionChanged: (v) =>
-                              setState(() => _tipsExpanded = v),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0,
-                                vertical: 8,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '• Utilisez le catalogue pour sélectionner une plante.',
-                                    style: theme.textTheme.bodySmall,
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
-                                    style: theme.textTheme.bodySmall,
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    '• Ajoutez des notes pour suivre les conditions spéciales.',
-                                    style: theme.textTheme.bodySmall,
-                                  ),
-                                ],
-                              ),
+                          const SizedBox(height: 8),
+
+                          // Tips (repliable) - new text, compact
+                          ExpansionTile(
+                            title: Row(
+                              children: [
+                                Icon(
+                                  Icons.lightbulb_outline,
+                                  color: theme.colorScheme.primary,
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 8),
+                                Text('Conseils',
+                                    style: theme.textTheme.titleSmall),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
+                            initiallyExpanded: _tipsExpanded,
+                            onExpansionChanged: (v) =>
+                                setState(() => _tipsExpanded = v),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                  vertical: 8,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '• Utilisez le catalogue pour sélectionner une plante.',
+                                      style: theme.textTheme.bodySmall,
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
+                                      style: theme.textTheme.bodySmall,
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      '• Ajoutez des notes pour suivre les conditions spéciales.',
+                                      style: theme.textTheme.bodySmall,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               );
             },
@@ -371,7 +372,7 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
 
   /// Reworked: no switch, purely an ExpansionTile. If user types a name,
   /// we consider it a custom plant (selected id set to null). If user picks a catalog plant,
-  /// we clear the custom name and collapse the tile.
+  /// we clear the custom name and collapse custom tile.
   Widget _buildCustomPlantTile(ThemeData theme) {
     return ExpansionTile(
       title: Text('Plante personnalisée', style: theme.textTheme.bodyMedium),
