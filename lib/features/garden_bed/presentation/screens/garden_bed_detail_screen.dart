@@ -176,9 +176,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
 
           const SizedBox(height: 24),
 
-          // Actions rapides
-          _buildQuickActions(context, ref, gardenBed, theme),
-
           const SizedBox(height: 24),
 
           // Plantations actuelles
