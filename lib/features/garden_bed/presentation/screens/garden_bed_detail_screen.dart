@@ -12,7 +12,8 @@ import '../../../../shared/widgets/loading_widgets.dart';
 import '../../providers/garden_bed_provider.dart';
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
 import 'package:permacalendar/core/models/planting.dart';
-
+import 'dart:convert';
+import 'package:flutter/services.dart';
 class GardenBedDetailScreen extends ConsumerWidget {
   final String gardenId;
   final String bedId;
@@ -510,71 +511,153 @@ class GardenBedDetailScreen extends ConsumerWidget {
 
   // Helper local : tente d'afficher l'image réseau ou asset depuis plant.metadata ou depuis assets/images/plants/<id> (avec fallback).
   Widget _buildPlantThumbnailWidget(
-      PlantFreezed? plant, Planting planting, ThemeData theme) {
-    if (plant == null) {
-      return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
-    }
+    PlantFreezed? plant, Planting planting, ThemeData theme) {
+  if (plant == null) {
+    return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
+  }
 
-    try {
-      final meta = plant.metadata;
-      String? raw;
-      if (meta != null) {
-        final candidates = [
-          meta['image'],
-          meta['imagePath'],
-          meta['photo'],
-          meta['image_url'],
-          meta['imageUrl'],
-          meta['photoUrl']
-        ];
-        for (final c in candidates) {
-          if (c is String && c.trim().isNotEmpty) {
-            raw = c.trim();
-            break;
-          }
-        }
+  return FutureBuilder<String?>(
+    future: _findExistingAssetForPlant(plant),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState != ConnectionState.done) {
+        return Center(
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        );
       }
 
-      if (raw != null && raw.isNotEmpty) {
+      final path = snapshot.data;
+      if (path != null && path.isNotEmpty) {
         final isNetwork =
-            RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
+            RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(path);
         if (isNetwork) {
           return Image.network(
-            raw,
+            path,
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) =>
                 Icon(Icons.eco_outlined, color: theme.colorScheme.primary),
           );
         } else {
-          // supposer chemin relatif -> essayer quelques candidats d'asset
-          final candidates = <String>[
-            if (raw.startsWith('assets/')) raw,
-            'assets/images/plants/$raw',
-            'assets/images/plants/${raw.toLowerCase()}',
-            'assets/images/plants/${plant.id}.png',
-            'assets/images/plants/${plant.id}.jpg',
-            'assets/images/plants/${plant.id}.webp',
-          ];
-          // On essaye le premier candidat plausible ; Image.asset gérera l'erreur via errorBuilder
-          final chosen = candidates.first;
           return Image.asset(
-            chosen,
+            path,
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) =>
                 Icon(Icons.eco_outlined, color: theme.colorScheme.primary),
           );
         }
-      } else {
-        // fallback : par id
-        return Image.asset(
-          'assets/images/plants/${plant.id}.png',
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) =>
-              Icon(Icons.eco_outlined, color: theme.colorScheme.primary),
-        );
+      }
+
+      // Si rien n'a été trouvé, fallback simple (icône)
+      return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
+    },
+  );
+}
+
+/// Cherche dans l'AssetManifest les chemins candidats pour la plante.
+/// Retourne :
+/// - une URL réseau (si metadata contient une URL) OU
+/// - le chemin d'asset exact (si trouvé) OU
+/// - null si aucun asset/URL trouvé.
+Future<String?> _findExistingAssetForPlant(PlantFreezed plant) async {
+  try {
+    // 1) Si metadata contient une URL (http/https), on la renvoie directement.
+    final meta = plant.metadata;
+    if (meta != null) {
+      final metaCandidates = [
+        meta['image'],
+        meta['imagePath'],
+        meta['photo'],
+        meta['image_url'],
+        meta['imageUrl'],
+        meta['photoUrl']
+      ];
+      for (final c in metaCandidates) {
+        if (c is String && c.trim().isNotEmpty) {
+          final raw = c.trim();
+          if (RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw)) {
+            return raw;
+          }
+          if (raw.startsWith('assets/')) {
+            return raw;
+          }
+          // sinon on garde en tant que base candidate plus bas
+          break;
+        }
+      }
+    }
+
+    // 2) Construire une liste de candidats plausibles (legumes / plants / id / commonName)
+    final cn = plant.commonName ?? '';
+    final id = plant.id ?? '';
+    final bases = <String>{};
+
+    if (cn.isNotEmpty) {
+      bases.add(cn); // nom tel quel (ex: "Betterave")
+      bases.add(cn.toLowerCase());
+      bases.add(_toFilenameSafe(cn));
+      bases.add(_toFilenameSafe(cn).replaceAll('_', '-'));
+    }
+    if (id.isNotEmpty) {
+      bases.add(id);
+      bases.add(id.toLowerCase());
+    }
+
+    final exts = ['.png', '.jpg', '.jpeg', '.webp'];
+
+    final candidatePaths = <String>[];
+    for (final b in bases) {
+      for (final e in exts) {
+        candidatePaths.add('assets/images/legumes/$b$e');
+        candidatePaths.add('assets/images/plants/$b$e');
+        candidatePaths.add('assets/images/$b$e');
+        candidatePaths.add('assets/$b$e');
+      }
+    }
+
+    // 3) Charger AssetManifest et tester rapidement la présence
+    try {
+      final manifestContent = await rootBundle.loadString('AssetManifest.json');
+      final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+      final keys = manifestMap.keys.toList();
+
+      // Vérifier égalité directe d'abord (fast path)
+      for (final candidate in candidatePaths) {
+        if (keys.contains(candidate)) return candidate;
+      }
+
+      // Puis vérifier en fin de chaîne (cas où Assets sont préfixés)
+      final lowerKeys = keys.map((k) => k.toLowerCase()).toList();
+      for (final candidate in candidatePaths) {
+        final lc = candidate.toLowerCase();
+        for (final k in lowerKeys) {
+          if (k.endsWith(lc)) {
+            // retrouver la clé originale (sensible à la casse)
+            final index = lowerKeys.indexOf(k);
+            return keys[index];
+          }
+        }
       }
     } catch (_) {
-      return Icon(Icons.eco_outlined, color: theme.colorScheme.primary);
+      // Si AssetManifest indisponible (rare), on ignore et on essaie un dernier fallback
     }
+
+    // 4) Fallback heuristique : retourner le chemin le plus probable (non garanti)
+    if (id.isNotEmpty) return 'assets/images/legumes/${id.toLowerCase()}.png';
+    if (cn.isNotEmpty) return 'assets/images/legumes/${cn.toLowerCase()}.png';
+
+    return null;
+  } catch (_) {
+    return null;
   }
+}
+
+/// Simplified filename-safe helper (retire ponctuation et remplace espaces par _)
+String _toFilenameSafe(String s) {
+  var out = s.trim();
+  out = out.replaceAll(RegExp(r'[^\w\s\-]'), '');
+  out = out.replaceAll(RegExp(r'\s+'), '_');
+  return out;
 }
