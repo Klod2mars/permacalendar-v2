@@ -91,13 +91,13 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return AlertDialog(\n  insetPadding: EdgeInsets.only(\n    left: 24.0,\n    right: 24.0,\n    top: 24.0,\n    bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,\n  ),\n  insetPadding: EdgeInsets.only(
-  left: 24.0,
-  right: 24.0,
-  top: 24.0,
-  bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
-),
-
+    return AlertDialog(
+      insetPadding: EdgeInsets.only(
+        left: 24.0,
+        right: 24.0,
+        top: 24.0,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
+      ),
       title: Text(
         (widget.planting == null || _isPreset)
             ? 'Nouvelle culture'
@@ -135,7 +135,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                       style: theme.textTheme.bodyMedium,
                     ),
                     initiallyExpanded: _notesExpanded,
-                    onExpansionChanged: (v) => setState(() => _notesExpanded = v),
+                    onExpansionChanged: (v) =>
+                        setState(() => _notesExpanded = v),
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -163,7 +164,8 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
                       ],
                     ),
                     initiallyExpanded: _tipsExpanded,
-                    onExpansionChanged: (v) => setState(() => _tipsExpanded = v),
+                    onExpansionChanged: (v) =>
+                        setState(() => _tipsExpanded = v),
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
