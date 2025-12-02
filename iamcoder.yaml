@@ -1,33 +1,39 @@
 meta:
   project_name: IAMcoder
-  description: "Re-apply insetPadding after return AlertDialog (helper decodes \\n -> newline)"
+  description: "Insert insetPadding after AlertDialog (safe block scalar)"
   version: "1.0"
 
 context:
   mode: write_enabled
 
 tasks:
-  - name: reapply_insetpadding_dryrun
-    goal: "Dry-run: detect insertion point with regex (no write)"
+  - name: dry_run_insert_insetpadding
+    goal: "Dry-run: find insertion point (regex) and preview"
     task_type: yaml_apply
     parameters:
       instructions:
         replacements:
           - file: "lib/features/planting/presentation/dialogs/create_planting_dialog.dart"
+            # regex matching the line possibly indented
             anchor_pattern: "^\\s*return AlertDialog\\("
             anchor_regex: true
             multiline: true
-            # note: we put literal backslash-n sequences; helpers._resolve_placeholders + _stringify_content
-            # will be applied and unicode_escape decoding will turn "\\n" into a real newline.
-            after: "\\n  insetPadding: EdgeInsets.only(\\n    left: 24.0,\\n    right: 24.0,\\n    top: 24.0,\\n    bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,\\n  ),"
+            dotall: false
+            # Here use a YAML block to represent the lines to insert (very safe)
+            after: |
+              insetPadding: EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                top: 24.0,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
+              ),
             include_anchor: true
             replace_all: false
       dry_run: true
-      create_backup: false
       output: "reports/last_report.json"
 
-  - name: reapply_insetpadding_live
-    goal: "Live: insert insetPadding after return AlertDialog and create backup"
+  - name: apply_insert_insetpadding
+    goal: "Live: insert insetPadding and create backup"
     task_type: yaml_apply
     parameters:
       instructions:
@@ -36,7 +42,13 @@ tasks:
             anchor_pattern: "^\\s*return AlertDialog\\("
             anchor_regex: true
             multiline: true
-            after: "\\n  insetPadding: EdgeInsets.only(\\n    left: 24.0,\\n    right: 24.0,\\n    top: 24.0,\\n    bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,\\n  ),"
+            after: |
+              insetPadding: EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                top: 24.0,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
+              ),
             include_anchor: true
             replace_all: false
       dry_run: false
