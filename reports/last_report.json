@@ -1,21 +1,17 @@
 {
-  "status": "applied",
+  "generated_at": "2025-12-02T13:24:06.155089Z",
+  "workspace": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2",
   "entries": [
     {
-      "file": "lib/features/planting/presentation/dialogs/create_planting_dialog.dart",
-      "anchor": "",
-      "occurrences": 1,
-      "found": true,
-      "matches": [
-        {
-          "start": 3012,
-          "end": 3036,
-          "snippet": "al theme = Theme.of(context);\\n\\n    return AlertDialog(\\n      insetPadding: EdgeInset"
-        }
-      ],
-      "backup": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\backups\\create_planting_dialog.dart.bak_20251202071837",
-      "applied": true,
-      "applied_matches": 1
+      "file": "lib/shared/utils/plant_image_resolver.dart",
+      "target": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\shared\\utils\\plant_image_resolver.dart",
+      "would_change": true
+    },
+    {
+      "file": "lib/features/garden_bed/presentation/widgets/garden_bed_card.dart",
+      "target": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\garden_bed\\presentation\\widgets\\garden_bed_card.dart",
+      "would_change": true
     }
-  ]
+  ],
+  "status": "dry_run_ok"
 }
