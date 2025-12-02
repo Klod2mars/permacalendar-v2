@@ -91,19 +91,9 @@ class _CreatePlantingDialogState extends ConsumerState<CreatePlantingDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return AlertDialog(insetPadding: EdgeInsets.only(
-  left: 24.0,
-  right: 24.0,
-  top: 24.0,
-  bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
-),
-
-      insetPadding: EdgeInsets.only(
-        left: 24.0,
-        right: 24.0,
-        top: 24.0,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
-      ),
+    return AlertDialog(
+      insetPadding:
+          const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
       title: Text(
         (widget.planting == null || _isPreset)
             ? 'Nouvelle culture'
