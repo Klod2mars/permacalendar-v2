@@ -360,9 +360,9 @@ class GardenBedDetailScreen extends ConsumerWidget {
                   child: PlantingCard(
                     planting: p,
                     onTap: () {
-                      // ouvrir détail planting (si implémenté)
-                      context.push(
-                          '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings/${p.id}');
+                      // ouvrir le détail de la plantation via la route de l'application
+                      // (route déclarée dans app_router.dart : /plantings/:id)
+                      context.push('/plantings/${p.id}');
                     },
                   ),
                 );
