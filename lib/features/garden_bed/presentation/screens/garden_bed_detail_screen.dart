@@ -204,13 +204,16 @@ class GardenBedDetailScreen extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Row(children: [
-                      _buildSmallInfoChip(
-                          Icons.terrain, '${gardenBed.soilType} (est.)', theme),
-                      const SizedBox(width: 8),
-                      _buildSmallInfoChip(Icons.wb_sunny,
-                          '${gardenBed.exposure} (variable)', theme),
-                    ]),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      children: [
+                        _buildSmallInfoChip(Icons.terrain,
+                            '${gardenBed.soilType} (est.)', theme),
+                        _buildSmallInfoChip(Icons.wb_sunny,
+                            '${gardenBed.exposure} (variable)', theme),
+                      ],
+                    ),
                     if (gardenBed.description.isNotEmpty ||
                         (gardenBed.notes != null &&
                             gardenBed.notes!.isNotEmpty)) ...[
@@ -373,11 +376,11 @@ class GardenBedDetailScreen extends ConsumerWidget {
                   ),
                 ] else if (plantings.length <= 3) ...[
                   SizedBox(
-                    height: 240,
+                    height: 260,
                     child: ListView(
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.vertical,
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 12.0),
+                          vertical: 10.0, horizontal: 16.0),
                       children: plantings
                           .map((p) => Padding(
                                 padding: const EdgeInsets.only(right: 14.0),
