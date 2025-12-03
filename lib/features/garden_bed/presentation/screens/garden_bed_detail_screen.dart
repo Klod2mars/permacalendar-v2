@@ -1,7 +1,8 @@
-﻿import 'package:flutter/material.dart';
+﻿// lib/features/garden_bed/presentation/screens/garden_bed_detail_screen.dart
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:permacalendar/features/planting/presentation/widgets/planting_preview.dart';
+
 import '../../../plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
@@ -14,6 +15,7 @@ import '../../providers/garden_bed_provider.dart';
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
 import 'package:permacalendar/core/models/planting.dart';
 import 'package:permacalendar/features/planting/presentation/widgets/planting_card.dart';
+import 'package:permacalendar/features/planting/presentation/widgets/planting_preview.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
@@ -353,53 +355,71 @@ class GardenBedDetailScreen extends ConsumerWidget {
               },
             )
           else
+            // ===== REPLACEMENT: compact visual previews (1 / 2–3 / 4+) =====
             Column(
               children: [
-                // Si peu de plantings -> ligne horizontale de vignettes compactes
-                if (plantings.length <= 3)
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+                if (plantings.length == 1) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: PlantingPreview(
+                        planting: plantings.first,
+                        onTap: () =>
+                            context.push('/plantings/${plantings.first.id}'),
+                        imageSize: 220,
+                      ),
+                    ),
+                  ),
+                ] else if (plantings.length <= 3) ...[
+                  SizedBox(
+                    height: 240,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 12.0),
                       children: plantings
                           .map((p) => Padding(
-                                padding: const EdgeInsets.only(right: 12.0),
-                                child: PlantingPreview(
-                                  planting: p,
-                                  onTap: () =>
-                                      context.push('/plantings/${p.id}'),
+                                padding: const EdgeInsets.only(right: 14.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    PlantingPreview(
+                                      planting: p,
+                                      onTap: () =>
+                                          context.push('/plantings/${p.id}'),
+                                      imageSize: 180,
+                                    ),
+                                  ],
                                 ),
                               ))
                           .toList(),
                     ),
-                  )
-                else
-                  // Si plusieurs plantings -> grille compacte 2x2 + bouton "Voir tout"
-                  Column(
-                    children: [
-                      Wrap(
-                        spacing: 12,
-                        runSpacing: 12,
-                        children: plantings
-                            .take(4)
-                            .map((p) => PlantingPreview(
-                                  planting: p,
-                                  onTap: () =>
-                                      context.push('/plantings/${p.id}'),
-                                  imageSize: 120,
-                                ))
-                            .toList(),
-                      ),
-                      const SizedBox(height: 12),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => context.push(
-                              '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
-                          child: const Text('Voir tout'),
-                        ),
-                      ),
-                    ],
                   ),
+                ] else ...[
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    alignment: WrapAlignment.start,
+                    children: plantings
+                        .take(4)
+                        .map((p) => PlantingPreview(
+                              planting: p,
+                              onTap: () => context.push('/plantings/${p.id}'),
+                              imageSize: 160,
+                            ))
+                        .toList(),
+                  ),
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () => context.push(
+                          '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
+                      child: const Text('Voir tout'),
+                    ),
+                  ),
+                ],
               ],
             ),
         ]),
