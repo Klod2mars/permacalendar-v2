@@ -1,0 +1,137 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'plant.dart';
+
+// **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class PlantAdapter extends TypeAdapter<Plant> {
+  @override
+  final int typeId = 2;
+
+  @override
+  Plant read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Plant(
+      id: fields[0] as String?,
+      commonName: fields[1] as String,
+      scientificName: fields[2] as String,
+      family: fields[3] as String,
+      description: fields[4] as String,
+      plantingSeason: fields[5] as String,
+      harvestSeason: fields[6] as String,
+      daysToMaturity: fields[7] as int,
+      spacing: fields[8] as double,
+      depth: fields[9] as double,
+      sunExposure: fields[10] as String,
+      waterNeeds: fields[11] as String,
+      sowingMonths: (fields[12] as List).cast<String>(),
+      harvestMonths: (fields[13] as List).cast<String>(),
+      marketPricePerKg: fields[14] as double,
+      defaultUnit: fields[15] as String,
+      nutritionPer100g: (fields[16] as Map).cast<String, dynamic>(),
+      germination: (fields[17] as Map).cast<String, dynamic>(),
+      growth: (fields[18] as Map).cast<String, dynamic>(),
+      watering: (fields[19] as Map).cast<String, dynamic>(),
+      thinning: (fields[20] as Map).cast<String, dynamic>(),
+      weeding: (fields[21] as Map).cast<String, dynamic>(),
+      culturalTips: (fields[22] as List).cast<String>(),
+      biologicalControl: (fields[23] as Map).cast<String, dynamic>(),
+      harvestTime: fields[24] as String,
+      companionPlanting: (fields[25] as Map).cast<String, dynamic>(),
+      notificationSettings: (fields[26] as Map).cast<String, dynamic>(),
+      imageUrl: fields[27] as String?,
+      createdAt: fields[28] as DateTime?,
+      updatedAt: fields[29] as DateTime?,
+      metadata: (fields[30] as Map?)?.cast<String, dynamic>(),
+      isActive: fields[31] as bool,
+      notes: fields[32] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Plant obj) {
+    writer
+      ..writeByte(33)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.commonName)
+      ..writeByte(2)
+      ..write(obj.scientificName)
+      ..writeByte(3)
+      ..write(obj.family)
+      ..writeByte(4)
+      ..write(obj.description)
+      ..writeByte(5)
+      ..write(obj.plantingSeason)
+      ..writeByte(6)
+      ..write(obj.harvestSeason)
+      ..writeByte(7)
+      ..write(obj.daysToMaturity)
+      ..writeByte(8)
+      ..write(obj.spacing)
+      ..writeByte(9)
+      ..write(obj.depth)
+      ..writeByte(10)
+      ..write(obj.sunExposure)
+      ..writeByte(11)
+      ..write(obj.waterNeeds)
+      ..writeByte(12)
+      ..write(obj.sowingMonths)
+      ..writeByte(13)
+      ..write(obj.harvestMonths)
+      ..writeByte(14)
+      ..write(obj.marketPricePerKg)
+      ..writeByte(15)
+      ..write(obj.defaultUnit)
+      ..writeByte(16)
+      ..write(obj.nutritionPer100g)
+      ..writeByte(17)
+      ..write(obj.germination)
+      ..writeByte(18)
+      ..write(obj.growth)
+      ..writeByte(19)
+      ..write(obj.watering)
+      ..writeByte(20)
+      ..write(obj.thinning)
+      ..writeByte(21)
+      ..write(obj.weeding)
+      ..writeByte(22)
+      ..write(obj.culturalTips)
+      ..writeByte(23)
+      ..write(obj.biologicalControl)
+      ..writeByte(24)
+      ..write(obj.harvestTime)
+      ..writeByte(25)
+      ..write(obj.companionPlanting)
+      ..writeByte(26)
+      ..write(obj.notificationSettings)
+      ..writeByte(27)
+      ..write(obj.imageUrl)
+      ..writeByte(28)
+      ..write(obj.createdAt)
+      ..writeByte(29)
+      ..write(obj.updatedAt)
+      ..writeByte(30)
+      ..write(obj.metadata)
+      ..writeByte(31)
+      ..write(obj.isActive)
+      ..writeByte(32)
+      ..write(obj.notes);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlantAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
