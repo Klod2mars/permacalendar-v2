@@ -354,19 +354,53 @@ class GardenBedDetailScreen extends ConsumerWidget {
             )
           else
             Column(
-              children: plantings.map((p) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: PlantingCard(
-                    planting: p,
-                    onTap: () {
-                      // ouvrir le détail de la plantation via la route de l'application
-                      // (route déclarée dans app_router.dart : /plantings/:id)
-                      context.push('/plantings/${p.id}');
-                    },
+              children: [
+                // Si peu de plantings -> ligne horizontale de vignettes compactes
+                if (plantings.length <= 3)
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: plantings
+                          .map((p) => Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: PlantingPreview(
+                                  planting: p,
+                                  onTap: () =>
+                                      context.push('/plantings/${p.id}'),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  )
+                else
+                  // Si plusieurs plantings -> grille compacte 2x2 + bouton "Voir tout"
+                  Column(
+                    children: [
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        children: plantings
+                            .take(4)
+                            .map((p) => PlantingPreview(
+                                  planting: p,
+                                  onTap: () =>
+                                      context.push('/plantings/${p.id}'),
+                                  imageSize: 120,
+                                ))
+                            .toList(),
+                      ),
+                      const SizedBox(height: 12),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () => context.push(
+                              '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
+                          child: const Text('Voir tout'),
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }).toList(),
+              ],
             ),
         ]),
       ),
