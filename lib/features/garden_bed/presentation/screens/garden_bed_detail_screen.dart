@@ -288,147 +288,155 @@ class GardenBedDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildCurrentPlantings(BuildContext context, WidgetRef ref,
-      GardenBed gardenBed, ThemeData theme) {
-    final plantingState = ref.watch(plantingProvider);
-    final plantings = plantingState.plantings
-        .where((planting) => planting.gardenBedId == gardenBed.id)
-        .toList();
-    final plants = ref.watch(plantsListProvider);
+    GardenBed gardenBed, ThemeData theme) {
+  final plantingState = ref.watch(plantingProvider);
+  final plantings = plantingState.plantings
+      .where((planting) => planting.gardenBedId == gardenBed.id)
+      .toList();
+  final plants = ref.watch(plantsListProvider);
 
-    return CustomCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
+  return CustomCard(
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text('Plantations actuelles',
+                  style: theme.textTheme.titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold)),
+            ),
+            if (plantings.length > 3)
+              TextButton(
+                  onPressed: () => context.push(
+                      '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
+                  child: const Text('Voir tout')),
+          ],
+        ),
+        const SizedBox(height: 16),
+        if (plantings.isEmpty)
+          EmptyStateWidget(
+            icon: Icons.eco,
+            title: 'Aucune plantation',
+            subtitle: 'Cette parcelle n\'a pas encore de plantations.',
+            actionText: 'Ajouter une plantation',
+            onAction: () async {
+              // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
+              final selectedPlantId =
+                  await Navigator.of(context).push<String?>(
+                MaterialPageRoute(
+                    builder: (_) =>
+                        const PlantCatalogScreen(isSelectionMode: true),
+                    fullscreenDialog: true),
+              );
+              if (selectedPlantId == null) return;
+              // create minimal preset and show dialog
+              final preset = Planting(
+                  gardenBedId: gardenBed.id,
+                  plantId: selectedPlantId,
+                  plantName: selectedPlantId,
+                  plantedDate: DateTime.now(),
+                  quantity: 1,
+                  metadata: {'preset': true});
+              await showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20))),
+                builder: (ctx) => Padding(
+                  padding:
+                      EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                  child: CreatePlantingDialog(
+                      gardenBedId: gardenBed.id, planting: preset),
+                ),
+              );
+              await ref.read(plantingProvider.notifier).loadPlantings(gardenBed.id);
+            },
+          )
+        else
+          // Compact visual previews (1 / 2–3 / 4+)
+          Column(
             children: [
-              Expanded(
-                child: Text('Plantations actuelles',
-                    style: theme.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              if (plantings.length > 3)
-                TextButton(
-                    onPressed: () => context.push(
-                        '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
-                    child: const Text('Voir tout')),
-            ],
-          ),
-          const SizedBox(height: 16),
-          if (plantings.isEmpty)
-            EmptyStateWidget(
-              icon: Icons.eco,
-              title: 'Aucune plantation',
-              subtitle: 'Cette parcelle n\'a pas encore de plantations.',
-              actionText: 'Ajouter une plantation',
-              onAction: () async {
-                // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
-                final selectedPlantId =
-                    await Navigator.of(context).push<String?>(
-                  MaterialPageRoute(
-                      builder: (_) =>
-                          const PlantCatalogScreen(isSelectionMode: true),
-                      fullscreenDialog: true),
-                );
-                if (selectedPlantId == null) return;
-                // create minimal preset and show dialog
-                final preset = Planting(
-                    gardenBedId: gardenBed.id,
-                    plantId: selectedPlantId,
-                    plantName: selectedPlantId,
-                    plantedDate: DateTime.now(),
-                    quantity: 1,
-                    metadata: {'preset': true});
-                await showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20))),
-                  builder: (ctx) => Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(ctx).viewInsets.bottom),
-                    child: CreatePlantingDialog(
-                        gardenBedId: gardenBed.id, planting: preset),
-                  ),
-                );
-                await ref
-                    .read(plantingProvider.notifier)
-                    .loadPlantings(gardenBed.id);
-              },
-            )
-          else
-            // ===== REPLACEMENT: compact visual previews (1 / 2–3 / 4+) =====
-            Column(
-              children: [
-                if (plantings.length == 1) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: SizedBox(
+              // 1 planting -> large full-width card
+              if (plantings.length == 1) ...[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Builder(builder: (ctx) {
+                    final double horizontalCardPadding = 16.0;
+                    final double fullWidth =
+                        MediaQuery.of(ctx).size.width - (horizontalCardPadding * 2);
+                    // Optionally subtract extra margin if you want
+                    final double imageSize = fullWidth; // square occupying width
+                    return SizedBox(
                       width: double.infinity,
                       child: PlantingPreview(
                         planting: plantings.first,
                         onTap: () =>
                             context.push('/plantings/${plantings.first.id}'),
-                        imageSize: 220,
+                        imageSize: imageSize,
                       ),
-                    ),
+                    );
+                  }),
+                ),
+              ]
+              // 2–3 plantings -> vertical stacked cards occupying width
+              else if (plantings.length <= 3) ...[
+                Column(
+                  children: plantings.map((p) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Builder(builder: (ctx) {
+                        final double horizontalCardPadding = 16.0;
+                        final double fullWidth =
+                            MediaQuery.of(ctx).size.width - (horizontalCardPadding * 2);
+                        // leave a small inner margin so the card doesn't touch too close to edges
+                        final double innerMargin = 12.0;
+                        final double imageSize = fullWidth - innerMargin;
+                        return SizedBox(
+                          width: double.infinity,
+                          child: PlantingPreview(
+                            planting: p,
+                            onTap: () => context.push('/plantings/${p.id}'),
+                            imageSize: imageSize,
+                          ),
+                        );
+                      }),
+                    );
+                  }).toList(),
+                ),
+              ]
+              // 4+ plantings -> compact 2x2 grid previews + "Voir tout"
+              else ...[
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  alignment: WrapAlignment.start,
+                  children: plantings
+                      .take(4)
+                      .map((p) => PlantingPreview(
+                            planting: p,
+                            onTap: () => context.push('/plantings/${p.id}'),
+                            imageSize: 160,
+                          ))
+                      .toList(),
+                ),
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => context.push(
+                        '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
+                    child: const Text('Voir tout'),
                   ),
-                ] else if (plantings.length <= 3) ...[
-                  SizedBox(
-                    height: 260,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 16.0),
-                      children: plantings
-                          .map((p) => Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    PlantingPreview(
-                                      planting: p,
-                                      onTap: () =>
-                                          context.push('/plantings/${p.id}'),
-                                      imageSize: 180,
-                                    ),
-                                  ],
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                ] else ...[
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    alignment: WrapAlignment.start,
-                    children: plantings
-                        .take(4)
-                        .map((p) => PlantingPreview(
-                              planting: p,
-                              onTap: () => context.push('/plantings/${p.id}'),
-                              imageSize: 160,
-                            ))
-                        .toList(),
-                  ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () => context.push(
-                          '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
-                      child: const Text('Voir tout'),
-                    ),
-                  ),
-                ],
+                ),
               ],
-            ),
-        ]),
-      ),
-    );
-  }
+            ],
+          ),
+      ]),
+    ),
+  );
 }
 
 /// Cherche dans l'AssetManifest les chemins candidats pour la plante.
