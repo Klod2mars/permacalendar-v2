@@ -1,8 +1,8 @@
-*** Begin Patch
-*** Update File: scripts/generate_plants_merged.py
+diff --git a/generate_plants_merged.py b/generate_plants_merged.py
+index 0000000..0000000 100644
+--- a/generate_plants_merged.py
++++ b/generate_plants_merged.py
 @@
-     # companionPlanting.* normalize lists
-     cp = p.get('companionPlanting')
      if isinstance(cp, dict):
          if 'beneficial' in cp:
              cp['beneficial'] = normalize_companion_list(cp['beneficial'])
@@ -42,4 +42,3 @@
 +        cp['avoid'] = normalize_companion_list(avoid)
 +        if moved:
 +            print(f"[normalize_plant] moved beneficial->avoid for {p.get('id')}: {moved}")
-*** End Patch
