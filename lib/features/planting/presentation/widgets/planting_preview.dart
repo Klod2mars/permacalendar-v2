@@ -9,10 +9,6 @@ import 'package:permacalendar/core/models/planting.dart';
 import 'package:permacalendar/core/models/plant.dart';
 import 'package:permacalendar/core/services/plant_catalog_service.dart';
 
-/// Compact visual preview used on the garden-bed screen.
-/// - shows image (network / asset / resolved heuristically)
-/// - overlays status pill + quantity badge
-/// - below: plant name, planted/seeded date and simple harvest estimate
 class PlantingPreview extends StatelessWidget {
   final Planting planting;
   final VoidCallback? onTap;
@@ -25,7 +21,6 @@ class PlantingPreview extends StatelessWidget {
     this.imageSize = 110,
   }) : super(key: key);
 
-  // AssetManifest cache
   static Map<String, String>? _assetManifestLowerToOriginal;
 
   static Future<void> _ensureAssetManifest() async {
@@ -36,30 +31,25 @@ class PlantingPreview extends StatelessWidget {
       final m = <String, String>{};
       for (final k in map.keys) m[k.toLowerCase()] = k;
       _assetManifestLowerToOriginal = m;
-      if (kDebugMode)
-        debugPrint('PlantingPreview: loaded ${m.length} manifest entries');
+      if (kDebugMode) debugPrint('PlantingPreview: loaded asset manifest (${m.length} entries)');
     } catch (e) {
       _assetManifestLowerToOriginal = null;
-      if (kDebugMode)
-        debugPrint('PlantingPreview: unable to load AssetManifest: $e');
+      if (kDebugMode) debugPrint('PlantingPreview: AssetManifest load failed: $e');
     }
   }
 
-  static Future<String?> _searchManifestCandidates(
-      List<String> candidates) async {
+  static Future<String?> _searchManifestCandidates(List<String> candidates) async {
     await _ensureAssetManifest();
     if (_assetManifestLowerToOriginal == null) return null;
     for (final c in candidates) {
       final lc = c.toLowerCase();
-      if (_assetManifestLowerToOriginal!.containsKey(lc))
-        return _assetManifestLowerToOriginal![lc];
+      if (_assetManifestLowerToOriginal!.containsKey(lc)) return _assetManifestLowerToOriginal![lc];
     }
     // try endsWith
     for (final c in candidates) {
       final lc = c.toLowerCase();
       for (final keyLower in _assetManifestLowerToOriginal!.keys) {
-        if (keyLower.endsWith(lc))
-          return _assetManifestLowerToOriginal![keyLower];
+        if (keyLower.endsWith(lc)) return _assetManifestLowerToOriginal![keyLower];
       }
     }
     return null;
@@ -82,11 +72,26 @@ class PlantingPreview extends StatelessWidget {
     return out.toLowerCase();
   }
 
-  /// Build a list of plausible asset paths to try (ordered).
-  static List<String> _buildCandidates(
-      String base, String id, String? commonName) {
+  static List<String> _buildCandidates(String base, String id, String commonName) {
     final candidates = <String>[];
 
+    // Primary: use commonName (from planting.plantName) — this fixes mismatch where assets use French names
+    if (commonName.isNotEmpty) {
+      // try raw commonName first (original capitalization)
+      candidates.add('assets/images/legumes/$commonName');
+      candidates.add('assets/images/plants/$commonName');
+      // safe/normalized versions
+      final safe = _toFilenameSafe(commonName);
+      final altHyphen = safe.replaceAll('_', '-');
+      for (final ext in ['.png', '.jpg', '.jpeg', '.webp']) {
+        candidates.add('assets/images/legumes/$safe$ext');
+        candidates.add('assets/images/legumes/$altHyphen$ext');
+        candidates.add('assets/images/plants/$safe$ext');
+        candidates.add('assets/images/plants/$altHyphen$ext');
+      }
+    }
+
+    // If explicit base provided (metadata), include it
     if (base.isNotEmpty) {
       if (base.startsWith('assets/')) {
         candidates.add(base);
@@ -99,18 +104,18 @@ class PlantingPreview extends StatelessWidget {
         candidates.add('assets/${base.toLowerCase()}');
       }
       if (!RegExp(r'\.\w+$').hasMatch(base)) {
-        final exts = ['.png', '.jpg', '.jpeg', '.webp'];
-        for (final e in exts) {
-          candidates.add('assets/images/legumes/$base$e');
-          candidates.add('assets/images/plants/$base$e');
-          candidates.add('assets/images/$base$e');
-          candidates.add('assets/$base$e');
+        for (final ext in ['.png', '.jpg', '.jpeg', '.webp']) {
+          candidates.add('assets/images/legumes/$base$ext');
+          candidates.add('assets/images/plants/$base$ext');
+          candidates.add('assets/images/$base$ext');
+          candidates.add('assets/$base$ext');
         }
       } else {
         candidates.add(base.toLowerCase());
       }
     }
 
+    // id-based fallback
     if (id.isNotEmpty) {
       candidates.add('assets/images/legumes/$id.jpg');
       candidates.add('assets/images/legumes/$id.png');
@@ -119,21 +124,7 @@ class PlantingPreview extends StatelessWidget {
       candidates.add('assets/images/plants/$id.png');
     }
 
-    if (commonName != null && commonName.isNotEmpty) {
-      final safe = _toFilenameSafe(commonName);
-      final alt1 = safe;
-      final alt2 = safe.replaceAll('_', '-');
-      for (final e in ['.png', '.jpg', '.jpeg', '.webp']) {
-        candidates.add('assets/images/legumes/${alt1}$e');
-        candidates.add('assets/images/legumes/${alt2}$e');
-        candidates.add('assets/images/plants/${alt1}$e');
-        candidates.add('assets/images/plants/${alt2}$e');
-      }
-      candidates.add('assets/images/legumes/$commonName');
-      candidates.add('assets/images/plants/$commonName');
-    }
-
-    // dedupe while preserving order
+    // dedupe keeping order
     final seen = <String>{};
     final finalCandidates = <String>[];
     for (final c in candidates) {
@@ -152,8 +143,7 @@ class PlantingPreview extends StatelessWidget {
       width: size,
       color: Colors.green.shade50,
       alignment: Alignment.center,
-      child: Icon(Icons.eco_outlined,
-          size: size * 0.36, color: Colors.green.shade700),
+      child: Icon(Icons.eco_outlined, size: size * 0.36, color: Colors.green.shade700),
     );
   }
 
@@ -169,20 +159,20 @@ class PlantingPreview extends StatelessWidget {
       builder: (ctx, snap) {
         final plant = snap.data;
 
-        // priority: plant.imageUrl > plant.metadata fields > heuristic resolution by id/commonName
+        // Determine raw candidate (metadata or imageUrl) using plant if available
         String? raw;
         try {
           raw = plant?.imageUrl;
-          if ((raw == null || raw.isEmpty) && (plant?.metadata != null)) {
+          if ((raw == null || raw.isEmpty) && plant?.metadata != null) {
             final meta = plant!.metadata;
-            final candidates = [
+            final metaCandidates = [
               meta['image'],
               meta['imagePath'],
               meta['photo'],
               meta['image_url'],
               meta['imageUrl']
             ];
-            for (final c in candidates) {
+            for (final c in metaCandidates) {
               if (c is String && c.trim().isNotEmpty) {
                 raw = c.trim();
                 break;
@@ -193,16 +183,24 @@ class PlantingPreview extends StatelessWidget {
           raw = null;
         }
 
-        // Build the image widget (may use FutureBuilder when heuristic is needed)
-        Widget buildImageArea() {
-          // network url
-          if (raw != null &&
-              raw.isNotEmpty &&
-              RegExp(r'^(http|https):\/\/', caseSensitive: false)
-                  .hasMatch(raw)) {
-            if (kDebugMode)
-              debugPrint(
-                  'PlantingPreview: using network image for ${planting.plantId} -> $raw');
+        // Use planting.plantName (this is the crucial change)
+        final String commonNameFromPlanting = planting.plantName.trim();
+
+        // Build candidates: prefer commonNameFromPlanting, fallback to raw, fallback to plant.id / planting.plantId
+        final base = raw ?? '';
+        final id = (plant?.id ?? planting.plantId).toString();
+        final commonName = commonNameFromPlanting.isNotEmpty ? commonNameFromPlanting : (plant?.commonName ?? '');
+
+        final candidates = _buildCandidates(base, id, commonName);
+
+        if (kDebugMode) {
+          debugPrint('PlantingPreview: resolving image for ${planting.plantId} (plantName="${planting.plantName}") -> candidates(${candidates.length}) sample=${candidates.take(6).toList()}');
+        }
+
+        Widget imageArea() {
+          // If raw is network URL
+          if (raw != null && raw.isNotEmpty && RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw)) {
+            if (kDebugMode) debugPrint('PlantingPreview: using network image for ${planting.plantId} -> $raw');
             return Image.network(
               raw!,
               height: imageSize,
@@ -212,11 +210,9 @@ class PlantingPreview extends StatelessWidget {
             );
           }
 
-          // explicit asset path
+          // If raw points to explicit asset path
           if (raw != null && raw.isNotEmpty && raw.startsWith('assets/')) {
-            if (kDebugMode)
-              debugPrint(
-                  'PlantingPreview: using explicit asset for ${planting.plantId} -> $raw');
+            if (kDebugMode) debugPrint('PlantingPreview: using explicit asset for ${planting.plantId} -> $raw');
             return Image.asset(
               raw,
               height: imageSize,
@@ -226,23 +222,11 @@ class PlantingPreview extends StatelessWidget {
             );
           }
 
-          // heuristic resolution (async)
-          final base = raw ?? '';
-          final id = plant?.id ?? planting.plantId;
-          final cn = plant?.commonName ?? '';
-          final candidates = _buildCandidates(base, id, cn);
-
-          if (kDebugMode) {
-            debugPrint(
-                'PlantingPreview: resolving image for ${planting.plantId} -> candidates(${candidates.length}) sample=${candidates.take(6).toList()}');
-          }
-
+          // Otherwise resolve heuristically via manifest or rootBundle.load
           return FutureBuilder<String?>(
             future: () async {
-              // try manifest lookup first
               final byManifest = await _searchManifestCandidates(candidates);
               if (byManifest != null) return byManifest;
-              // try rootBundle load
               final byLoad = await _tryRootBundleLoad(candidates);
               return byLoad;
             }(),
@@ -258,9 +242,7 @@ class PlantingPreview extends StatelessWidget {
               }
               final found = snap2.data;
               if (found != null) {
-                if (kDebugMode)
-                  debugPrint(
-                      'PlantingPreview: found asset for ${planting.plantId} -> $found');
+                if (kDebugMode) debugPrint('PlantingPreview: found asset for ${planting.plantId} -> $found');
                 return Image.asset(
                   found,
                   height: imageSize,
@@ -269,22 +251,16 @@ class PlantingPreview extends StatelessWidget {
                   errorBuilder: (_, __, ___) => _fallback(imageSize),
                 );
               } else {
-                if (kDebugMode)
-                  debugPrint(
-                      'PlantingPreview: no asset found for ${planting.plantId} -> fallback');
+                if (kDebugMode) debugPrint('PlantingPreview: no asset found for ${planting.plantId} -> fallback');
                 return _fallback(imageSize);
               }
             },
           );
         }
 
-        // estimate harvest
         final DateTime? estimateDate = planting.expectedHarvestStartDate ??
-            (plant != null
-                ? planting.plantedDate.add(Duration(days: plant.daysToMaturity))
-                : null);
+            (plant != null ? planting.plantedDate.add(Duration(days: plant.daysToMaturity)) : null);
 
-        // status colors
         Color statusBg(String status) {
           switch (status) {
             case 'Planté':
@@ -297,6 +273,8 @@ class PlantingPreview extends StatelessWidget {
               return Colors.green.withOpacity(0.26);
             case 'Échoué':
               return Colors.red.withOpacity(0.18);
+            case 'Semé':
+              return Colors.grey.withOpacity(0.22);
             default:
               return theme.colorScheme.surfaceContainerHighest;
           }
@@ -314,19 +292,18 @@ class PlantingPreview extends StatelessWidget {
               return Colors.green.shade800;
             case 'Échoué':
               return Colors.red.shade700;
+            case 'Semé':
+              return Colors.white; // ensure contrast for semé pill
             default:
               return theme.colorScheme.onSurface;
           }
         }
 
-        // final widget assembly
         return GestureDetector(
-          onTap: onTap ??
-              () => GoRouter.of(context).push('/plantings/${planting.id}'),
+          onTap: onTap ?? () => GoRouter.of(context).push('/plantings/${planting.id}'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // image box with overlays
               Container(
                 width: imageSize,
                 height: imageSize,
@@ -337,13 +314,12 @@ class PlantingPreview extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 child: Stack(
                   children: [
-                    Positioned.fill(child: buildImageArea()),
+                    Positioned.fill(child: imageArea()),
                     Positioned(
                       top: 8,
                       right: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: statusBg(planting.status),
                           borderRadius: BorderRadius.circular(12),
@@ -361,47 +337,39 @@ class PlantingPreview extends StatelessWidget {
                       left: 8,
                       bottom: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.55),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           '${planting.quantity}',
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(color: Colors.white),
+                          style: theme.textTheme.bodySmall?.copyWith(color: Colors.white),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-
               const SizedBox(height: 8),
-
-              // Name + dates
               SizedBox(
                 width: imageSize,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(planting.plantName,
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.w600)),
+                        style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 4),
                     Text(
                       planting.status == 'Semé'
                           ? 'Semé le ${_formatDate(planting.plantedDate)}'
                           : 'Planté le ${_formatDate(planting.plantedDate)}',
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(color: theme.colorScheme.outline),
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
                     ),
                     if (estimateDate != null)
                       Text(
                         'Récolte estimée: ${_formatDate(estimateDate)}',
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: theme.colorScheme.outline),
+                        style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
                       ),
                   ],
                 ),
