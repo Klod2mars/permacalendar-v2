@@ -7,7 +7,7 @@ import '../models/plant.dart';
 /// Service pour gérer le catalogue de plantes depuis plants.json
 
 class PlantCatalogService {
-  static const String _plantsAssetPath = 'assets/data/plants.json';
+  static const String _plantsAssetPath = 'assets/data/plants_merged_clean.json';
 
   static List<Plant>? _cachedPlants;
 
