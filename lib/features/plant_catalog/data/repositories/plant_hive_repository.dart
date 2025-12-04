@@ -29,7 +29,7 @@ class PlantHiveException implements Exception {
 /// - Aucune validation stricte pour permettre l'ajout libre
 class PlantHiveRepository {
   static const String _boxName = 'plants_box';
-  static const String _jsonAssetPath = 'assets/data/plants.json';
+  static const String _jsonAssetPath = 'assets/data/plants_merged_clean.json';
 
   Box<PlantHive>? _box;
   bool _isInitialized = false;
@@ -332,6 +332,108 @@ class PlantHiveRepository {
       // Récupérer / normaliser les métadonnées
       final Map<String, dynamic> meta = _getMapValue(json, 'metadata', {});
 
+      // === NORMALISATION LÉGÈRE POUR plants_merged_clean.json ===
+      // 1) sowingMonths3 -> sowingMonths (si présent)
+      if (json.containsKey('sowingMonths3') && json['sowingMonths3'] is List) {
+        try {
+          json['sowingMonths'] =
+              List<String>.from(json['sowingMonths3'] as List);
+        } catch (_) {}
+      }
+
+      // 2) biologicalControl.companionPlants : string -> List<String>
+      if (json['biologicalControl'] is Map) {
+        final bc = Map<String, dynamic>.from(json['biologicalControl'] as Map);
+        final cp = bc['companionPlants'];
+        if (cp is String) {
+          final list = cp
+              .split(RegExp(r'[;,\n]'))
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList();
+          bc['companionPlants'] = list;
+          json['biologicalControl'] = bc;
+        } else if (cp is List) {
+          bc['companionPlants'] = cp.map((e) => e.toString().trim()).toList();
+          json['biologicalControl'] = bc;
+        }
+
+        // 2b) Normaliser les températures dans preparations si ce sont des strings ("20 °C" -> 20.0)
+        if (bc['preparations'] is List) {
+          final preparations = List.from(bc['preparations'] as List);
+          for (var i = 0; i < preparations.length; i++) {
+            final p = Map<String, dynamic>.from(preparations[i] as Map);
+            for (final k in ['temperature', 'temp']) {
+              final v = p[k];
+              if (v is String) {
+                final m = RegExp(r'([-+]?[0-9]*\.?[0-9]+)').firstMatch(v);
+                if (m != null) p[k] = double.tryParse(m.group(0)!);
+              } else if (v is int || v is double) {
+                p[k] = (v as num).toDouble();
+              }
+            }
+            preparations[i] = p;
+          }
+          bc['preparations'] = preparations;
+          json['biologicalControl'] = bc;
+        }
+      }
+
+      // 3) companionPlanting : s'assurer que beneficial est une liste,
+      //    déplacer les phrases 'éviter...' vers avoid et notes
+      if (json['companionPlanting'] is Map) {
+        final cp = Map<String, dynamic>.from(json['companionPlanting'] as Map);
+        final ben = cp['beneficial'];
+        if (ben is String) {
+          final parts = ben
+              .split(RegExp(r'[;\n]'))
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList();
+          final List<String> newBen = [];
+          final List<String> avoids = List<String>.from(cp['avoid'] ?? []);
+          final List<String> notesList = [];
+          for (final item in parts) {
+            if (item.toLowerCase().contains('éviter') ||
+                item.toLowerCase().contains('eviter')) {
+              // extraire les noms après 'éviter'
+              final after = item
+                  .replaceAll(RegExp(r'(?i)éviter'), '')
+                  .replaceAll(RegExp(r'[:,-]'), ' ')
+                  .split(RegExp(r'\s+'))
+                  .map((e) => e.trim())
+                  .where((e) => e.isNotEmpty)
+                  .toList();
+              avoids.addAll(after);
+              notesList.add(item);
+            } else {
+              newBen.add(item);
+            }
+          }
+          cp['beneficial'] = newBen;
+          cp['avoid'] = avoids;
+          if (notesList.isNotEmpty)
+            cp['notes'] = (cp['notes'] ?? '').toString().trim() +
+                (cp['notes'] != null && cp['notes'].toString().isNotEmpty
+                    ? '; '
+                    : '') +
+                notesList.join('; ');
+          json['companionPlanting'] = cp;
+        }
+      }
+
+      // 4) squelette notificationSettings si absent
+      if (!json.containsKey('notificationSettings') ||
+          json['notificationSettings'] == null) {
+        json['notificationSettings'] = {
+          'thinning': {},
+          'watering': {},
+          'harvest': {},
+          'general': {}
+        };
+      }
+
+      // FIN NORMALISATION
       // Si aucune clé d'image n'est présente, proposer automatiquement une image basée sur l'ID.
       // L'écran acceptera "tomato.jpg" et préfixera "assets/images/legumes/" si nécessaire.
       final hasImage = meta.containsKey('image') ||
