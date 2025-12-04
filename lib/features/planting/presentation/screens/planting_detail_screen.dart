@@ -17,6 +17,7 @@ import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
 import '../../../plant_intelligence/presentation/widgets/plant_health_degradation_banner.dart';
+import '../../../../shared/widgets/plant_lifecycle_widget.dart';
 
 class PlantingDetailScreen extends ConsumerWidget {
   final String plantingId;
