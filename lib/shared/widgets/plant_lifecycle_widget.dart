@@ -73,15 +73,41 @@ class PlantLifecycleWidget extends StatelessWidget {
 
   Widget _buildLifecycleCard(
       BuildContext context, Map<String, dynamic> lifecycle) {
-    final currentStage = lifecycle['currentStage'] as String;
+    // Récupérations robustes des valeurs (sécurise les conversions)
+    final String currentStage =
+        (lifecycle['currentStage'] as String?)?.toString() ?? 'germination';
 
-    final progress = lifecycle['progress'] as double;
+    final double progress = (() {
+      final raw = lifecycle['progress'];
+      if (raw is num) return raw.toDouble();
+      if (raw is String) return double.tryParse(raw) ?? 0.0;
+      return 0.0;
+    })();
 
-    final nextAction = lifecycle['nextAction'] as String;
+    final String nextAction =
+        (lifecycle['nextAction'] as String?)?.toString() ?? '';
 
-    final germinationDate = lifecycle['germinationDate'] as DateTime;
+    // germinationDate peut être absent / nullable
+    final DateTime? germinationDate = lifecycle['germinationDate'] is DateTime
+        ? lifecycle['germinationDate'] as DateTime
+        : null;
 
-    final expectedHarvestDate = lifecycle['expectedHarvestDate'] as DateTime;
+    final DateTime expectedHarvestDate =
+        lifecycle['expectedHarvestDate'] is DateTime
+            ? lifecycle['expectedHarvestDate'] as DateTime
+            : DateTime.now().add(const Duration(days: 60));
+
+    // initialProgress (0.0 .. 1.0) renvoyé par le service — par défaut 0.0
+    final double initialProgress = (() {
+      final raw = lifecycle['initialProgress'];
+      if (raw is num) return (raw).toDouble().clamp(0.0, 1.0);
+      if (raw is String) return (double.tryParse(raw) ?? 0.0).clamp(0.0, 1.0);
+      return 0.0;
+    })();
+
+    // Décision d'affichage : ne montrer la germination que si initialProgress == 0
+    final DateTime? germinationToShow =
+        (initialProgress <= 0.0) ? germinationDate : null;
 
     return Card(
       elevation: 4,
@@ -90,13 +116,20 @@ class PlantLifecycleWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Entête avec icône + progression
             _buildHeader(context, currentStage, progress),
+
             const SizedBox(height: 16),
-            final double initialProgress = (lifecycle['initialProgress'] as double? ?? 0.0);
-            final DateTime? germinationToShow = initialProgress > 0.0 ? null : germinationDate;
+
+            // Bloc dates (germination optionnelle + récolte)
             _buildDateInfo(context, germinationToShow, expectedHarvestDate),
+
             const SizedBox(height: 16),
+
+            // Prochaine action
             _buildNextAction(context, nextAction),
+
+            // Bouton optionnel pour forcer recalcul / mise à jour
             if (onUpdateLifecycle != null) ...[
               const SizedBox(height: 16),
               _buildActionButton(context),
@@ -146,46 +179,48 @@ class PlantLifecycleWidget extends StatelessWidget {
   }
 
   Widget _buildDateInfo(BuildContext context, DateTime? germinationDate,
-    DateTime expectedHarvestDate) {
-  final now = DateTime.now();
+      DateTime expectedHarvestDate) {
+    final now = DateTime.now();
 
-  final int? daysToGermination =
-      germinationDate != null ? germinationDate.difference(now).inDays : null;
+    final int? daysToGermination =
+        germinationDate != null ? germinationDate.difference(now).inDays : null;
 
-  final int daysToHarvest = expectedHarvestDate.difference(now).inDays;
+    final int daysToHarvest = expectedHarvestDate.difference(now).inDays;
 
-  return Container(
-    padding: const EdgeInsets.all(12),
-    decoration: BoxDecoration(
-      color: Colors.grey[50],
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: Colors.grey[300]!),
-    ),
-    child: Column(
-      children: [
-        if (germinationDate != null) ...[
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[300]!),
+      ),
+      child: Column(
+        children: [
+          if (germinationDate != null) ...[
+            _buildDateRow(
+              context,
+              Icons.eco,
+              'Germination',
+              germinationDate,
+              daysToGermination! > 0
+                  ? 'Dans $daysToGermination jours'
+                  : 'Passée',
+              daysToGermination <= 0 ? Colors.green : Colors.orange,
+            ),
+            const SizedBox(height: 8),
+          ],
           _buildDateRow(
             context,
-            Icons.eco,
-            'Germination',
-            germinationDate,
-            daysToGermination! > 0 ? 'Dans $daysToGermination jours' : 'Passée',
-            daysToGermination <= 0 ? Colors.green : Colors.orange,
+            Icons.agriculture,
+            'Récolte prévue',
+            expectedHarvestDate,
+            daysToHarvest > 0 ? 'Dans $daysToHarvest jours' : 'Maintenant !',
+            daysToHarvest <= 0 ? Colors.green : Colors.blue,
           ),
-          const SizedBox(height: 8),
         ],
-        _buildDateRow(
-          context,
-          Icons.agriculture,
-          'Récolte prévue',
-          expectedHarvestDate,
-          daysToHarvest > 0 ? 'Dans $daysToHarvest jours' : 'Maintenant !',
-          daysToHarvest <= 0 ? Colors.green : Colors.blue,
-        ),
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
 
   Widget _buildDateRow(BuildContext context, IconData icon, String label,
       DateTime date, String timeText, Color color) {

@@ -120,12 +120,12 @@ class PlantingCard extends StatelessWidget {
                         ),
                       ),
                     const PopupMenuItem(
-                      value: 'care',
+                      value: 'steps',
                       child: Row(
                         children: [
-                          Icon(Icons.healing),
+                          Icon(Icons.flag),
                           SizedBox(width: 8),
-                          Text('Ajouter soin'),
+                          Text('Ajouter étape'),
                         ],
                       ),
                     ),
@@ -150,7 +150,6 @@ class PlantingCard extends StatelessWidget {
           // DETAILS: plantation / récolte prévue / récolté
           Row(
             children: [
-              // Label dynamique : 'Semé le' si Semé sinon 'Planté le'
               Expanded(
                 child: _buildDetailItem(
                   Icons.calendar_today,
@@ -187,10 +186,11 @@ class PlantingCard extends StatelessWidget {
             _buildProgressIndicator(theme),
           ],
 
-          // Care Actions
-          if (planting.careActions.isNotEmpty) ...[
+          // Étapes (anciennement "Care Actions")
+          if (planting.careActions.isNotEmpty ||
+              planting.careActions.length == 0) ...[
             const SizedBox(height: 12),
-            _buildCareActions(theme),
+            _buildSteps(theme),
           ],
 
           // Notes
@@ -322,12 +322,15 @@ class PlantingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCareActions(ThemeData theme) {
+  Widget _buildSteps(ThemeData theme) {
+    // On conserve la structure de stockage existante : planting.careActions (compatibility)
+    // On affiche le compteur et la liste (les premières 5 valeurs) comme précédemment,
+    // mais on renomme l'intitulé en "Étapes".
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Actions de soin (${planting.careActions.length})',
+          'Étapes (${planting.careActions.length})',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w600,
@@ -338,6 +341,8 @@ class PlantingCard extends StatelessWidget {
           spacing: 4,
           runSpacing: 4,
           children: planting.careActions.take(5).map((action) {
+            // Action affichée en tant que texte (ex: "Arrosage - 2025-12-03T...")
+            final label = action.split(' - ').first;
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
@@ -345,7 +350,7 @@ class PlantingCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                action,
+                label,
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.onSecondaryContainer),
               ),
@@ -416,8 +421,11 @@ class PlantingCard extends StatelessWidget {
       case 'harvest':
         onHarvest?.call();
         break;
-      case 'care':
-        _showCareActionDialog(context);
+      case 'steps':
+        _showStepActionDialog(context);
+        break;
+      case 'care': // compatibilité ancienne valeur si elle existe ailleurs
+        _showStepActionDialog(context);
         break;
     }
   }
@@ -429,49 +437,76 @@ class PlantingCard extends StatelessWidget {
         title: const Text('Changer le statut'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: Planting.statusOptions.map((status) {
-            if (status == planting.status) return const SizedBox.shrink();
-
+          children: Planting.statusOptions.map((statusOption) {
+            if (statusOption == planting.status) return const SizedBox.shrink();
             return ListTile(
-              title: Text(status),
+              title: Text(statusOption),
               onTap: () {
                 Navigator.of(context).pop();
-                onStatusChange?.call(status);
+                // préférer le callback pour la persistance (notifier / provider)
+                if (onStatusChange != null) {
+                  onStatusChange!(statusOption);
+                }
               },
             );
           }).toList(),
+        ),
+      ),
+    );
+  }
+
+  void _showStepActionDialog(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Ajouter étape'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Liste d'actions communes (depuis Planting.commonCareActions)
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: Planting.commonCareActions.map((a) {
+                    return ListTile(
+                      title: Text(a),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        onAddCareAction?.call(a);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
+              const Divider(),
+              TextField(
+                controller: controller,
+                decoration: const InputDecoration(
+                  labelText: 'Autre étape',
+                  hintText: 'Ex: Paillage léger',
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Annuler'),
           ),
-        ],
-      ),
-    );
-  }
-
-  void _showCareActionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Ajouter une action de soin'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: Planting.commonCareActions.map((action) {
-            return ListTile(
-              title: Text(action),
-              onTap: () {
+          ElevatedButton(
+            onPressed: () {
+              final text = controller.text.trim();
+              if (text.isNotEmpty) {
                 Navigator.of(context).pop();
-                onAddCareAction?.call(action);
-              },
-            );
-          }).toList(),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+                onAddCareAction?.call(text);
+              }
+            },
+            child: const Text('Ajouter'),
           ),
         ],
       ),
