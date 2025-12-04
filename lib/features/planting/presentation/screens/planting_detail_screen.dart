@@ -188,7 +188,17 @@ class PlantingDetailScreen extends ConsumerWidget {
 
           // Timeline
 
-          _buildTimeline(planting, theme, ref),
+          PlantLifecycleWidget(
+            plant: plant,
+            plantingDate: planting.plantedDate,
+            initialProgressFromPlanting: (() {
+              final dynamic _v = planting.metadata?['initialGrowthPercent'];
+              if (_v is num) return _v.toDouble();
+              if (_v is String) return double.tryParse(_v);
+              return null;
+            })(),
+            plantingStatus: planting.status,
+          ),
 
           const SizedBox(height: 24),
 
