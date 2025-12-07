@@ -87,10 +87,15 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                   color: theme.colorScheme.primary,
                 ),
                 const SizedBox(width: 8),
-                Text(
-                  isEditing ? 'Modifier la parcelle' : 'Nouvelle parcelle',
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    isEditing ? 'Modifier la parcelle' : 'Nouvelle parcelle',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
                   ),
                 ),
                 const Spacer(),
