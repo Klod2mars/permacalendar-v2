@@ -212,82 +212,168 @@ class PlantingDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(Planting planting, PlantFreezed plant, ThemeData theme) {
+  Widget _buildCareEtapes(
+      Planting planting, ThemeData theme, WidgetRef ref, BuildContext context) {
+    final plantingNotifier = ref.read(plantingProvider.notifier);
+
     return CustomCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(30),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header : titre + bouton "Ajouter"
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Étapes (${planting.careActions.length})',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                child: Icon(
-                  Icons.eco,
-                  size: 30,
-                  color: theme.colorScheme.onPrimaryContainer,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      planting.plantName,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    if (plant.scientificName.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        plant.scientificName,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontStyle: FontStyle.italic,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        if (plant.family.isNotEmpty) ...[
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: theme.colorScheme.secondaryContainer
-                                  .withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              plant.family,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: theme.colorScheme.onSecondaryContainer,
+                TextButton.icon(
+                  onPressed: () {
+                    final TextEditingController controller =
+                        TextEditingController();
+                    showDialog(
+                      context: context,
+                      builder: (dialogCtx) => AlertDialog(
+                        title: const Text('Ajouter étape'),
+                        content: SizedBox(
+                          width: double.maxFinite,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  children: Planting.commonCareActions.map((a) {
+                                    return ListTile(
+                                      title: Text(a),
+                                      onTap: () async {
+                                        Navigator.of(dialogCtx).pop();
+                                        await plantingNotifier.addCareAction(
+                                          plantingId: planting.id,
+                                          actionType: a,
+                                          date: DateTime.now(),
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                        ],
-                        Text(
-                          'Quantité: ${planting.quantity}',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
+                              const Divider(),
+                              TextField(
+                                controller: controller,
+                                decoration: const InputDecoration(
+                                  labelText: 'Autre étape',
+                                  hintText: 'Ex: Paillage léger',
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.of(dialogCtx).pop(),
+                              child: const Text('Annuler')),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final text = controller.text.trim();
+                              if (text.isNotEmpty) {
+                                Navigator.of(dialogCtx).pop();
+                                await plantingNotifier.addCareAction(
+                                  plantingId: planting.id,
+                                  actionType: text,
+                                  date: DateTime.now(),
+                                );
+                              }
+                            },
+                            child: const Text('Ajouter'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.add, color: theme.colorScheme.primary),
+                  label: Text('Ajouter',
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(color: theme.colorScheme.primary)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+
+            // Contenu : vide ou liste compacte
+            if (planting.careActions.isEmpty) ...[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHighest
+                      .withOpacity(0.02),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  children: [
+                    Icon(Icons.flag,
+                        size: 48,
+                        color: theme.colorScheme.onSurfaceVariant
+                            .withOpacity(0.5)),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Aucune étape enregistrée',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant
+                              .withOpacity(0.7)),
                     ),
                   ],
                 ),
+              )
+            ] else ...[
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: planting.careActions.take(5).map((action) {
+                  final label = action.split(' - ').first;
+                  return Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color:
+                          theme.colorScheme.secondaryContainer.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.flag,
+                            size: 16,
+                            color: theme.colorScheme.onSecondaryContainer),
+                        const SizedBox(width: 6),
+                        Text(label,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSecondaryContainer)),
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
+              if (planting.careActions.length > 5) ...[
+                const SizedBox(height: 8),
+                Text(
+                  '+${planting.careActions.length - 5} autres...',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.outline,
+                    fontStyle: FontStyle.italic,
+                  ),
+                )
+              ]
             ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
