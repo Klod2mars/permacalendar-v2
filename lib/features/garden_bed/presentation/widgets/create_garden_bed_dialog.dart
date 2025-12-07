@@ -112,11 +112,11 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
             ),
 
             // taille / comportement du titre du dialog (modifiable)
-static const double _kDialogHeaderFontSize = 22.0;
-static const double _kDialogHeaderLineHeight = 1.05; // interligne
-static const int _kDialogHeaderMaxLines = 2;
-static const double _kDialogHeaderIconSize = 26.0;
-static const TextOverflow _kDialogHeaderOverflow = TextOverflow.ellipsis;
+            static const double _kDialogHeaderFontSize = 22.0;
+            static const double _kDialogHeaderLineHeight = 1.05; // interligne
+            static const int _kDialogHeaderMaxLines = 2;
+            static const double _kDialogHeaderIconSize = 26.0;
+            static const TextOverflow _kDialogHeaderOverflow = TextOverflow.ellipsis;
 
             const SizedBox(height: 24),
 
