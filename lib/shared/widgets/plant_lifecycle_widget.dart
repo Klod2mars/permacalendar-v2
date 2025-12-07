@@ -1,7 +1,7 @@
-﻿import 'package:flutter/material.dart';
+﻿// lib/shared/widgets/plant_lifecycle_widget.dart
+import 'package:flutter/material.dart';
 
 import '../../core/services/plant_lifecycle_service.dart';
-
 import '../../features/plant_catalog/domain/entities/plant_entity.dart';
 
 /// Widget simplifié pour afficher le cycle de vie d'une plante
@@ -9,14 +9,15 @@ import '../../features/plant_catalog/domain/entities/plant_entity.dart';
 /// Compatible avec la nouvelle architecture PlantLifecycleService
 class PlantLifecycleWidget extends StatelessWidget {
   final PlantFreezed plant;
-
   final DateTime plantingDate;
-
   final VoidCallback? onUpdateLifecycle;
 
   // NOUVEAU: champs optionnels pour permettre d'alimenter le calcul
   final double? initialProgressFromPlanting;
   final String? plantingStatus;
+
+  /// NOUVEAU: permet de masquer la "Prochaine action" lorsqu'elle est redondante
+  final bool showNextAction;
 
   const PlantLifecycleWidget({
     super.key,
@@ -25,6 +26,7 @@ class PlantLifecycleWidget extends StatelessWidget {
     this.onUpdateLifecycle,
     this.initialProgressFromPlanting,
     this.plantingStatus,
+    this.showNextAction = true,
   });
 
   @override
@@ -65,7 +67,6 @@ class PlantLifecycleWidget extends StatelessWidget {
         }
 
         final lifecycle = snapshot.data!;
-
         return _buildLifecycleCard(context, lifecycle);
       },
     );
@@ -126,8 +127,8 @@ class PlantLifecycleWidget extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Prochaine action
-            _buildNextAction(context, nextAction),
+            // Prochaine action (optionnel — peut être caché si showNextAction == false)
+            if (showNextAction) _buildNextAction(context, nextAction),
 
             // Bouton optionnel pour forcer recalcul / mise à jour
             if (onUpdateLifecycle != null) ...[
@@ -142,6 +143,7 @@ class PlantLifecycleWidget extends StatelessWidget {
 
   Widget _buildHeader(
       BuildContext context, String currentStage, double progress) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -155,24 +157,26 @@ class PlantLifecycleWidget extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               _getStageDisplayName(currentStage),
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: _getStageColor(currentStage),
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: _getStageColor(currentStage),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
         const SizedBox(height: 8),
         LinearProgressIndicator(
           value: progress,
-          backgroundColor: Colors.grey[300],
+          backgroundColor: theme.colorScheme.surfaceVariant,
           valueColor:
               AlwaysStoppedAnimation<Color>(_getStageColor(currentStage)),
         ),
         const SizedBox(height: 4),
         Text(
           '${(progress * 100).toInt()}% du cycle complété',
-          style: Theme.of(context).textTheme.bodySmall,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
       ],
     );
@@ -181,18 +185,18 @@ class PlantLifecycleWidget extends StatelessWidget {
   Widget _buildDateInfo(BuildContext context, DateTime? germinationDate,
       DateTime expectedHarvestDate) {
     final now = DateTime.now();
+    final theme = Theme.of(context);
 
     final int? daysToGermination =
         germinationDate != null ? germinationDate.difference(now).inDays : null;
-
     final int daysToHarvest = expectedHarvestDate.difference(now).inDays;
 
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: theme.colorScheme.surfaceVariant,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: theme.colorScheme.outline),
       ),
       child: Column(
         children: [
@@ -224,6 +228,7 @@ class PlantLifecycleWidget extends StatelessWidget {
 
   Widget _buildDateRow(BuildContext context, IconData icon, String label,
       DateTime date, String timeText, Color color) {
+    final theme = Theme.of(context);
     return Row(
       children: [
         Icon(icon, size: 20, color: color),
@@ -234,13 +239,16 @@ class PlantLifecycleWidget extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
               Text(
                 '${date.day}/${date.month}/${date.year}',
-                style: Theme.of(context).textTheme.bodySmall,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
@@ -248,15 +256,15 @@ class PlantLifecycleWidget extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withOpacity(0.12),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
             timeText,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.w500,
-                ),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
@@ -264,16 +272,18 @@ class PlantLifecycleWidget extends StatelessWidget {
   }
 
   Widget _buildNextAction(BuildContext context, String nextAction) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue[200]!),
+        border: Border.all(color: theme.colorScheme.primary.withOpacity(0.18)),
       ),
       child: Row(
         children: [
-          Icon(Icons.lightbulb_outline, color: Colors.blue[700], size: 20),
+          Icon(Icons.lightbulb_outline,
+              color: theme.colorScheme.primary, size: 20),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -281,15 +291,17 @@ class PlantLifecycleWidget extends StatelessWidget {
               children: [
                 Text(
                   'Prochaine action',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.blue[700],
-                      ),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   nextAction,
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
                 ),
               ],
             ),
@@ -317,16 +329,12 @@ class PlantLifecycleWidget extends StatelessWidget {
     switch (stage.toLowerCase()) {
       case 'germination':
         return Icons.eco;
-
       case 'croissance':
         return Icons.grass;
-
       case 'fructification':
         return Icons.local_florist;
-
       case 'récolte':
         return Icons.agriculture;
-
       default:
         return Icons.eco;
     }
@@ -336,16 +344,12 @@ class PlantLifecycleWidget extends StatelessWidget {
     switch (stage.toLowerCase()) {
       case 'germination':
         return Colors.green;
-
       case 'croissance':
         return Colors.lightGreen;
-
       case 'fructification':
         return Colors.orange;
-
       case 'récolte':
         return Colors.red;
-
       default:
         return Colors.green;
     }
@@ -355,16 +359,12 @@ class PlantLifecycleWidget extends StatelessWidget {
     switch (stage.toLowerCase()) {
       case 'germination':
         return 'Germination';
-
       case 'croissance':
         return 'Croissance';
-
       case 'fructification':
         return 'Fructification';
-
       case 'récolte':
         return 'Récolte';
-
       default:
         return 'Germination';
     }
