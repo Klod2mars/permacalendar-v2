@@ -3,7 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/planting.dart';
-import '../widgets/planting_header_widget.dart';
+
 import '../../../../shared/widgets/custom_app_bar.dart';
 
 import '../../../../shared/widgets/custom_card.dart';
@@ -17,7 +17,9 @@ import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
 import '../../../plant_intelligence/presentation/widgets/plant_health_degradation_banner.dart';
+import '../widgets/planting_header_widget.dart';
 import '../../../../shared/widgets/plant_lifecycle_widget.dart';
+
 
 class PlantingDetailScreen extends ConsumerWidget {
   final String plantingId;
