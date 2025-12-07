@@ -215,7 +215,7 @@ class PlantLifecycleWidget extends StatelessWidget {
           ],
           _buildDateRow(
             context,
-            Icons.agriculture,
+            Icons.shopping_basket,
             'Récolte prévue',
             expectedHarvestDate,
             daysToHarvest > 0 ? 'Dans $daysToHarvest jours' : 'Maintenant !',
@@ -334,7 +334,7 @@ class PlantLifecycleWidget extends StatelessWidget {
       case 'fructification':
         return Icons.local_florist;
       case 'récolte':
-        return Icons.agriculture;
+        return Icons.shopping_basket;
       default:
         return Icons.eco;
     }

@@ -23,36 +23,28 @@ class PlantingHeaderWidget extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _buildImage(),
-          const SizedBox(width: 12.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: usedTheme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (subtitle.isNotEmpty) ...[
-                  const SizedBox(height: 6.0),
-                  Text(
-                    subtitle,
-                    style: usedTheme.textTheme.titleMedium?.copyWith(
-                      color: usedTheme.colorScheme.onSurfaceVariant,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ],
+          Text(
+            title,
+            style: usedTheme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
             ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
+          if (subtitle.isNotEmpty) ...[
+            const SizedBox(height: 6.0),
+            Text(
+              subtitle,
+              style: usedTheme.textTheme.titleMedium?.copyWith(
+                color: usedTheme.colorScheme.onSurfaceVariant,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ],
       ),
     );
@@ -203,7 +195,32 @@ class PlantingHeaderWidget extends StatelessWidget {
       }
 
       if (d == null) return '';
+
+      final String status = _extractStatus().toLowerCase();
+      if (status == 'semé') return 'Semé le ${_formatDate(d)}';
+      if (status == 'planté') return 'Planté le ${_formatDate(d)}';
+      // fallback: present as planted
       return 'Planté le ${_formatDate(d)}';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  String _extractStatus() {
+    try {
+      if (planting == null) return '';
+      if (planting is Map<String, dynamic>) {
+        final Map<String, dynamic> m = planting as Map<String, dynamic>;
+        final dynamic possible = m['status'];
+        if (possible != null) return possible.toString();
+        return '';
+      }
+      final dynamic p = planting;
+      try {
+        final dynamic v = p.status;
+        if (v != null) return v.toString();
+      } catch (_) {}
+      return '';
     } catch (_) {
       return '';
     }

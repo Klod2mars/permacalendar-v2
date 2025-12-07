@@ -170,11 +170,6 @@ class PlantingDetailScreen extends ConsumerWidget {
 
         const SizedBox(height: 20),
 
-        // Statut & actions rapides
-        _buildStatusSection(planting, theme, context, ref),
-
-        const SizedBox(height: 20),
-
         // Informations botaniques
         if (plantSafe.scientificName.isNotEmpty) ...[
           PlantingInfoWidget(plant: plantSafe, theme: theme),
@@ -254,62 +249,6 @@ class PlantingDetailScreen extends ConsumerWidget {
     );
   }
 
-  // -------------------------
-  // Status / quick actions UI
-  // -------------------------
-  Widget _buildStatusSection(
-      Planting planting, ThemeData theme, BuildContext context, WidgetRef ref) {
-    return CustomCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Statut et progression',
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
-          Row(children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                  color: _getStatusColor(planting.status, theme),
-                  borderRadius: BorderRadius.circular(16)),
-              child: Text(planting.status,
-                  style: theme.textTheme.labelMedium?.copyWith(
-                      color: _getStatusTextColor(planting.status, theme),
-                      fontWeight: FontWeight.w600)),
-            ),
-          ]),
-          const SizedBox(height: 12),
-          Row(children: [
-            Expanded(
-              child: ElevatedButton.icon(
-                onPressed: () =>
-                    _showStatusChangeDialog(planting, context, ref),
-                icon: const Icon(Icons.update),
-                label: const Text('Changer statut'),
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12)),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ElevatedButton.icon(
-                onPressed: () => _showCareActionDialog(planting, context, ref),
-                icon: const Icon(Icons.healing),
-                label: const Text('Ajouter soin'),
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12)),
-              ),
-            ),
-          ]),
-        ],
-      ),
-    );
-  }
-
-  // -------------------------
-  // Notes
-  // -------------------------
   Widget _buildNotes(Planting planting, ThemeData theme) {
     return CustomCard(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
