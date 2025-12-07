@@ -106,37 +106,38 @@ class PlantingDetailScreen extends ConsumerWidget {
       plant = null;
     }
 
-    // Fallback recherche par nom
+    // Fallback recherche par nom (provider de recherche)
     if (plant == null ||
         (plant.scientificName.isEmpty && planting.plantName.isNotEmpty)) {
       final results = ref.read(plantSearchProvider(planting.plantName));
       if (results.isNotEmpty) plant = results.first;
     }
 
-    // Dernier fallback : PlantFreezed minimal
-    plant ??= PlantFreezed(
-      id: planting.plantId,
-      commonName: planting.plantName,
-      scientificName: '',
-      family: '',
-      plantingSeason: '',
-      harvestSeason: '',
-      daysToMaturity: 0,
-      spacing: 0,
-      depth: 0.0,
-      sunExposure: '',
-      waterNeeds: '',
-      description: '',
-      sowingMonths: [],
-      harvestMonths: [],
-      culturalTips: [],
-      biologicalControl: {},
-      harvestTime: '',
-      companionPlanting: {'beneficial': [], 'avoid': [], 'notes': ''},
-      notificationSettings: {},
-      varieties: {},
-      metadata: {},
-    );
+    // Dernier fallback : PlantFreezed minimal (garantit plant != null via plantSafe)
+    final PlantFreezed plantSafe = plant ??
+        PlantFreezed(
+          id: planting.plantId,
+          commonName: planting.plantName,
+          scientificName: '',
+          family: '',
+          plantingSeason: '',
+          harvestSeason: '',
+          daysToMaturity: 0,
+          spacing: 0,
+          depth: 0.0,
+          sunExposure: '',
+          waterNeeds: '',
+          description: '',
+          sowingMonths: [],
+          harvestMonths: [],
+          culturalTips: [],
+          biologicalControl: {},
+          harvestTime: '',
+          companionPlanting: {'beneficial': [], 'avoid': [], 'notes': ''},
+          notificationSettings: {},
+          varieties: {},
+          metadata: {},
+        );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -149,13 +150,13 @@ class PlantingDetailScreen extends ConsumerWidget {
 
         // Header
         PlantingHeaderWidget(
-            planting: planting, plant: plant, theme: Theme.of(context)),
+            planting: planting, plant: plantSafe, theme: Theme.of(context)),
 
         const SizedBox(height: 12),
 
         // Croissance (remontée haut de page pour visibilité)
         PlantLifecycleWidget(
-          plant: plant,
+          plant: plantSafe,
           plantingDate: planting.plantedDate,
           initialProgressFromPlanting: (() {
             final dynamic _v = planting.metadata?['initialGrowthPercent'];
@@ -175,14 +176,14 @@ class PlantingDetailScreen extends ConsumerWidget {
         const SizedBox(height: 20),
 
         // Informations botaniques
-        if (plant.scientificName.isNotEmpty) ...[
-          PlantingInfoWidget(plant: plant, theme: theme),
+        if (plantSafe.scientificName.isNotEmpty) ...[
+          PlantingInfoWidget(plant: plantSafe, theme: theme),
           const SizedBox(height: 20),
         ],
 
         // PAS-À-PAS : instant UI handled locally in widget; onMarkDone logs Activity V3
         PlantingStepsWidget(
-          plant: plant,
+          plant: plantSafe,
           planting: planting,
           onAddCareAction: (String action) async {
             await ref.read(plantingProvider.notifier).addCareAction(
@@ -192,8 +193,8 @@ class PlantingDetailScreen extends ConsumerWidget {
                 );
           },
           onMarkDone: (PlantStep step) async {
-            // Fire-and-forget background task:
-            Future(() async {
+            // Fire-and-forget background task to persist + log activity + refresh activities
+            Future.microtask(() async {
               try {
                 // 1) Persist care action
                 final actionLabel =
@@ -213,10 +214,10 @@ class PlantingDetailScreen extends ConsumerWidget {
                 await tracker.trackActivity(
                   type: 'maintenanceCompleted',
                   description:
-                      'Marqué fait: ${step.title} (${plant.commonName})',
+                      'Marqué fait: ${step.title} (${plantSafe.commonName})',
                   metadata: {
                     'plantingId': planting.id,
-                    'plantId': plant.id,
+                    'plantId': plantSafe.id,
                     'stepId': step.id,
                     'stepCategory': step.category,
                   },
@@ -240,7 +241,7 @@ class PlantingDetailScreen extends ConsumerWidget {
                   );
                 }
               }
-            }());
+            });
           },
         ),
 
