@@ -27,15 +27,20 @@ class CreateGardenBedDialog extends ConsumerStatefulWidget {
 }
 
 class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
+  // Controllers
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _sizeController = TextEditingController();
-  final _notesController = TextEditingController();
 
-  String _selectedSoilType = 'Argileux';
-  String _selectedExposure = 'Plein soleil';
-  bool _isActive = true;
+  // Header tuning: editable constants to control title rendering
+  static const double _kDialogHeaderFontSize = 22.0;
+  static const double _kDialogHeaderLineHeight = 1.05;
+  static const int _kDialogHeaderMaxLines = 2;
+  static const double _kDialogHeaderIconSize = 26.0;
+  static const TextOverflow _kDialogHeaderOverflow = TextOverflow.ellipsis;
+
+  // UI state
   bool _isLoading = false;
 
   @override
@@ -50,10 +55,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
       _nameController.text = bed.name;
       _descriptionController.text = bed.description;
       _sizeController.text = bed.sizeInSquareMeters.toString();
-      _notesController.text = bed.notes ?? '';
-      _selectedSoilType = bed.soilType;
-      _selectedExposure = bed.exposure;
-      _isActive = bed.isActive;
+      // We intentionally do NOT populate soil/exposure/notes/isActive in the UI.
     }
   }
 
@@ -62,7 +64,6 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
     _nameController.dispose();
     _descriptionController.dispose();
     _sizeController.dispose();
-    _notesController.dispose();
     super.dispose();
   }
 
@@ -81,8 +82,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           children: [
             // Header
             Row(
-              crossAxisAlignment: CrossAxisAlignment
-                  .center, // s'assurer d'un centrage vertical propre
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   isEditing ? Icons.edit : Icons.add,
@@ -92,7 +92,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
-                    isEditing ? 'Modifier la culture' : 'Nouvelle culture',
+                    isEditing ? 'Modifier la parcelle' : 'Nouvelle parcelle',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: _kDialogHeaderFontSize,
@@ -110,13 +110,6 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 ),
               ],
             ),
-
-            // taille / comportement du titre du dialog (modifiable)
-            static const double _kDialogHeaderFontSize = 22.0;
-            static const double _kDialogHeaderLineHeight = 1.05; // interligne
-            static const int _kDialogHeaderMaxLines = 2;
-            static const double _kDialogHeaderIconSize = 26.0;
-            static const TextOverflow _kDialogHeaderOverflow = TextOverflow.ellipsis;
 
             const SizedBox(height: 24),
 
@@ -187,7 +180,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                         controller: _descriptionController,
                         decoration: const InputDecoration(
                           labelText: 'Description',
-                          hintText: 'Description de la parcelle...',
+                          hintText: 'Description de la culture...',
                           border: OutlineInputBorder(),
                         ),
                         maxLines: 2,
@@ -195,11 +188,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
                       const SizedBox(height: 16),
 
-                      // (Soil type & Exposure UI removed as requested)
-
-                      // (Notes field removed - description is sufficient)
-
-                      // (Parcelle active control removed)
+                      // Notes / Soil / Exposure / Active controls intentionally removed
                     ],
                   ),
                 ),
@@ -246,21 +235,18 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
       bool success = false;
 
       if (widget.gardenBed != null) {
-        // Update existing garden bed
+        // Update existing garden bed: only update the fields captured by UI.
         final updatedBed = widget.gardenBed!.copyWith(
           name: _nameController.text.trim(),
           description: _descriptionController.text.trim(),
           sizeInSquareMeters: size,
-          soilType: _selectedSoilType,
-          exposure: _selectedExposure,
-          notes: _notesController.text.trim(),
-          isActive: _isActive,
+          // keep soilType, exposure, notes, isActive unchanged (model preserves them)
         );
 
-        // Persister dans Hive (sanctuaire)
+        // Persist in Hive (sanctuary)
         await GardenBoxes.saveGardenBed(updatedBed);
 
-        // Tracker
+        // Tracker (we still pass the model values as they exist)
         await ActivityObserverService().captureGardenBedUpdated(
           gardenBedId: updatedBed.id,
           gardenBedName: updatedBed.name,
@@ -270,7 +256,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           exposure: updatedBed.exposure,
         );
 
-        // Émettre event
+        // Emit event
         try {
           GardenEventBus().emit(
             GardenEvent.gardenContextUpdated(
@@ -285,24 +271,25 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           );
         } catch (_) {}
 
-        // Forcer refresh du provider global
+        // Force refresh global provider
         ref.invalidate(gardenBedProvider);
 
         success = true;
       } else {
-        // Create new garden bed
+        // Create new garden bed: UI no longer collects soil/exposure/notes/isActive,
+        // provide neutral readable defaults so downstream code doesn't see raw UI choices.
         final newBed = GardenBed(
           gardenId: widget.gardenId,
           name: _nameController.text.trim(),
           description: _descriptionController.text.trim(),
           sizeInSquareMeters: size,
-          soilType: _selectedSoilType,
-          exposure: _selectedExposure,
-          notes: _notesController.text.trim(),
-          isActive: _isActive,
+          soilType: 'Non spécifié',
+          exposure: 'Non spécifié',
+          // notes left null
+          // isActive left default (constructor default: true)
         );
 
-        // Persister
+        // Persist
         await GardenBoxes.saveGardenBed(newBed);
 
         // Tracker
@@ -315,7 +302,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           exposure: newBed.exposure,
         );
 
-        // Émettre event
+        // Emit event
         try {
           GardenEventBus().emit(
             GardenEvent.gardenContextUpdated(
@@ -330,7 +317,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           );
         } catch (_) {}
 
-        // Forcer refresh du provider global
+        // Force refresh global provider
         ref.invalidate(gardenBedProvider);
 
         success = true;
@@ -347,8 +334,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(widget.gardenBed != null
-                      ? 'Parcelle modifiée avec succès'
-                      : 'Parcelle créée avec succès'),
+                      ? 'Culture modifiée avec succès'
+                      : 'Culture créée avec succès'),
                 ),
               ],
             ),
