@@ -87,15 +87,15 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                   color: theme.colorScheme.primary,
                 ),
                 const SizedBox(width: 8),
-                Expanded(
+                Flexible(
                   child: Text(
                     isEditing ? 'Modifier la parcelle' : 'Nouvelle parcelle',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    softWrap: false,
+                    overflow: TextOverflow.visible,
+                    maxLines: 2,
+                    softWrap: true,
                   ),
                 ),
                 const Spacer(),
@@ -122,7 +122,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                         autofocus: true,
                         decoration: const InputDecoration(
                           labelText: 'Nom de la parcelle *',
-                          hintText: 'Ex: Parcelle Nord, Potager principal...',
+                          hintText: 'Ex:Planche 1, Parcelle Nord',
                           border: OutlineInputBorder(),
                         ),
                         validator: (value) {
@@ -183,62 +183,15 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
                       const SizedBox(height: 16),
 
-                      // Soil type dropdown
-                      DropdownButtonFormField<String>(
-                        value: _selectedSoilType,
+// Description field
+                      TextFormField(
+                        controller: _descriptionController,
                         decoration: const InputDecoration(
-                          labelText: 'Type de sol *',
+                          labelText: 'Description',
+                          hintText: 'Description de la parcelle...',
                           border: OutlineInputBorder(),
                         ),
-                        items: GardenBed.soilTypes.map((soilType) {
-                          return DropdownMenuItem(
-                            value: soilType,
-                            child: Row(
-                              children: [
-                                Icon(_getSoilTypeIcon(soilType), size: 20),
-                                const SizedBox(width: 8),
-                                Text(soilType),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          if (value != null) {
-                            setState(() {
-                              _selectedSoilType = value;
-                            });
-                          }
-                        },
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Exposure dropdown
-                      DropdownButtonFormField<String>(
-                        value: _selectedExposure,
-                        decoration: const InputDecoration(
-                          labelText: 'Exposition *',
-                          border: OutlineInputBorder(),
-                        ),
-                        items: GardenBed.exposureTypes.map((exposure) {
-                          return DropdownMenuItem(
-                            value: exposure,
-                            child: Row(
-                              children: [
-                                Icon(_getExposureIcon(exposure), size: 20),
-                                const SizedBox(width: 8),
-                                Text(exposure),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          if (value != null) {
-                            setState(() {
-                              _selectedExposure = value;
-                            });
-                          }
-                        },
+                        maxLines: 2,
                       ),
 
                       const SizedBox(height: 16),
