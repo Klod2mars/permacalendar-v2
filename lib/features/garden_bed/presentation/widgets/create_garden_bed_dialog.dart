@@ -81,20 +81,25 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           children: [
             // Header
             Row(
+              crossAxisAlignment: CrossAxisAlignment
+                  .center, // s'assurer d'un centrage vertical propre
               children: [
                 Icon(
                   isEditing ? Icons.edit : Icons.add,
                   color: theme.colorScheme.primary,
+                  size: _kDialogHeaderIconSize,
                 ),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
-                    isEditing ? 'Modifier la parcelle' : 'Nouvelle parcelle',
+                    isEditing ? 'Modifier la culture' : 'Nouvelle culture',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontSize: _kDialogHeaderFontSize,
+                      height: _kDialogHeaderLineHeight,
                     ),
-                    overflow: TextOverflow.visible,
-                    maxLines: 2,
+                    maxLines: _kDialogHeaderMaxLines,
+                    overflow: _kDialogHeaderOverflow,
                     softWrap: true,
                   ),
                 ),
@@ -105,6 +110,13 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 ),
               ],
             ),
+
+            // taille / comportement du titre du dialog (modifiable)
+static const double _kDialogHeaderFontSize = 22.0;
+static const double _kDialogHeaderLineHeight = 1.05; // interligne
+static const int _kDialogHeaderMaxLines = 2;
+static const double _kDialogHeaderIconSize = 26.0;
+static const TextOverflow _kDialogHeaderOverflow = TextOverflow.ellipsis;
 
             const SizedBox(height: 24),
 
