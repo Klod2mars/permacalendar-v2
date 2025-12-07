@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/planting.dart';
+import '../../../../core/models/activity_v3.dart';
+import '../../../../core/providers/activity_tracker_v3_provider.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../providers/planting_provider.dart';
@@ -18,8 +20,8 @@ import '../widgets/planting_steps_widget.dart';
 
 import '../../domain/plant_step.dart';
 
-/// Écran principal de détail d'une planting.
-/// This file is intentionally a single-file orchestrator: header + lifecycle + status + info + steps + notes
+/// Écran principal de détail d'une plantation.
+/// Orchestration : header + lifecycle + status + botanical info + steps + notes
 class PlantingDetailScreen extends ConsumerWidget {
   final String plantingId;
 
@@ -41,28 +43,37 @@ class PlantingDetailScreen extends ConsumerWidget {
             onSelected: (value) => _handleAction(value, context, ref),
             itemBuilder: (context) => [
               const PopupMenuItem(
-                  value: 'edit',
-                  child: Row(children: [
+                value: 'edit',
+                child: Row(
+                  children: [
                     Icon(Icons.edit),
                     SizedBox(width: 8),
-                    Text('Modifier')
-                  ])),
+                    Text('Modifier'),
+                  ],
+                ),
+              ),
               const PopupMenuItem(
-                  value: 'duplicate',
-                  child: Row(children: [
+                value: 'duplicate',
+                child: Row(
+                  children: [
                     Icon(Icons.copy),
                     SizedBox(width: 8),
-                    Text('Dupliquer')
-                  ])),
+                    Text('Dupliquer'),
+                  ],
+                ),
+              ),
               const PopupMenuItem(
-                  value: 'delete',
-                  child: Row(children: [
+                value: 'delete',
+                child: Row(
+                  children: [
                     Icon(Icons.delete, color: Colors.red),
                     SizedBox(width: 8),
-                    Text('Supprimer', style: TextStyle(color: Colors.red))
-                  ])),
+                    Text('Supprimer', style: TextStyle(color: Colors.red)),
+                  ],
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
       body: plantingAsync.when(
@@ -77,16 +88,16 @@ class PlantingDetailScreen extends ConsumerWidget {
 
   Widget _buildPlantingDetail(
       BuildContext context, WidgetRef ref, Planting planting, ThemeData theme) {
-    // Plant catalog
+    // Récupération catalogue plantes
     final plantCatalogState = ref.watch(plantCatalogProvider);
 
-    // Trigger load if empty (non-blocking)
+    // Si catalogue vide -> trigger load non-bloquant
     if (plantCatalogState.plants.isEmpty) {
       Future.microtask(
           () => ref.read(plantCatalogProvider.notifier).loadPlants());
     }
 
-    // Find plant in catalog (robust fallbacks)
+    // Recherche plant dans catalogue
     PlantFreezed? plant;
     try {
       plant =
@@ -95,12 +106,14 @@ class PlantingDetailScreen extends ConsumerWidget {
       plant = null;
     }
 
+    // Fallback recherche par nom
     if (plant == null ||
         (plant.scientificName.isEmpty && planting.plantName.isNotEmpty)) {
       final results = ref.read(plantSearchProvider(planting.plantName));
       if (results.isNotEmpty) plant = results.first;
     }
 
+    // Dernier fallback : PlantFreezed minimal
     plant ??= PlantFreezed(
       id: planting.plantId,
       commonName: planting.plantName,
@@ -128,19 +141,19 @@ class PlantingDetailScreen extends ConsumerWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        // health banner
+        // Banner santé
         PlantHealthDegradationBanner(
           plantId: planting.plantId,
           plantName: planting.plantName,
         ),
 
-        // Header: image + title (contains planted date)
+        // Header
         PlantingHeaderWidget(
             planting: planting, plant: plant, theme: Theme.of(context)),
 
         const SizedBox(height: 12),
 
-        // Growth / lifecycle (moved high for visibility)
+        // Croissance (remontée haut de page pour visibilité)
         PlantLifecycleWidget(
           plant: plant,
           plantingDate: planting.plantedDate,
@@ -151,24 +164,23 @@ class PlantingDetailScreen extends ConsumerWidget {
             return null;
           })(),
           plantingStatus: planting.status,
-          showNextAction:
-              false, // hide the "Prochaine action" (duplicate of steps)
+          showNextAction: false, // éviter doublon avec le pas-à-pas
         ),
 
         const SizedBox(height: 20),
 
-        // Status + quick actions
+        // Statut & actions rapides
         _buildStatusSection(planting, theme, context, ref),
 
         const SizedBox(height: 20),
 
-        // Botanical information
+        // Informations botaniques
         if (plant.scientificName.isNotEmpty) ...[
           PlantingInfoWidget(plant: plant, theme: theme),
           const SizedBox(height: 20),
         ],
 
-        // Pas-à-pas (steps)
+        // PAS-À-PAS : instant UI handled locally in widget; onMarkDone logs Activity V3
         PlantingStepsWidget(
           plant: plant,
           planting: planting,
@@ -180,13 +192,55 @@ class PlantingDetailScreen extends ConsumerWidget {
                 );
           },
           onMarkDone: (PlantStep step) async {
-            final actionLabel =
-                '${step.title} - ${DateTime.now().toIso8601String()}';
-            await ref.read(plantingProvider.notifier).addCareAction(
-                  plantingId: planting.id,
-                  actionType: actionLabel,
-                  date: DateTime.now(),
+            // Fire-and-forget background task:
+            Future(() async {
+              try {
+                // 1) Persist care action
+                final actionLabel =
+                    '${step.title} - ${DateTime.now().toIso8601String()}';
+                await ref.read(plantingProvider.notifier).addCareAction(
+                      plantingId: planting.id,
+                      actionType: actionLabel,
+                      date: DateTime.now(),
+                    );
+
+                // 2) Log to Activity V3
+                final tracker = ref.read(activityTrackerV3Provider);
+                if (!tracker.isInitialized) {
+                  await tracker.initialize();
+                }
+
+                await tracker.trackActivity(
+                  type: 'maintenanceCompleted',
+                  description:
+                      'Marqué fait: ${step.title} (${plant.commonName})',
+                  metadata: {
+                    'plantingId': planting.id,
+                    'plantId': plant.id,
+                    'stepId': step.id,
+                    'stepCategory': step.category,
+                  },
+                  priority: ActivityPriority.normal,
                 );
+
+                // 3) Refresh recent activities (so dashboard shows it fast)
+                try {
+                  await ref.read(recentActivitiesProvider.notifier).refresh();
+                } catch (_) {
+                  // ignore refresh errors
+                }
+              } catch (e) {
+                // Log and surface minimal feedback
+                // ignore: avoid_print
+                print('Erreur onMarkDone background task: $e');
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text('Erreur en enregistrant l\'action: $e')),
+                  );
+                }
+              }
+            }());
           },
         ),
 

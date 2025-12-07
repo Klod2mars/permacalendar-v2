@@ -31,6 +31,9 @@ class PlantingStepsWidget extends StatefulWidget {
 class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
   bool _expanded = false;
 
+  // Local cache of steps marked done in this UI session (instant feedback)
+  final Set<String> _locallyCompleted = {};
+
   List<PlantStep> get _computedSteps =>
       generateSteps(widget.plant, widget.planting);
 
@@ -129,9 +132,11 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
 
   Widget _buildStepTile(PlantStep step) {
     final theme = Theme.of(context);
+    // consider step done if it's in planting.careActions OR marked locally
     final completed = step.completed ||
         widget.planting.careActions
-            .any((a) => a.toLowerCase().contains(step.title.toLowerCase()));
+            .any((a) => a.toLowerCase().contains(step.title.toLowerCase())) ||
+        _locallyCompleted.contains(step.id);
 
     return ListTile(
       contentPadding: EdgeInsets.zero,
@@ -186,10 +191,26 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                   Text('Fait', style: TextStyle(color: Colors.green.shade700)),
             )
           : ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
+                // immediate UI update
+                setState(() {
+                  _locallyCompleted.add(step.id);
+                });
+
+                // fire-and-forget: call the provided callback in background
+                // do not await here so UI is instant; handle errors silently or log
                 if (widget.onMarkDone != null) {
-                  await widget.onMarkDone!(step);
-                  setState(() {});
+                  widget.onMarkDone!(step).catchError((e, st) {
+                    // If desired, we could remove local mark on failure:
+                    // setState(() => _locallyCompleted.remove(step.id));
+                    // For now, log the error.
+                    // ignore: avoid_print
+                    print('onMarkDone error: $e');
+                  }).whenComplete(() {
+                    // ensure any long-term refresh is reflected by parent/provider
+                    // Optionally refresh widget state
+                    if (mounted) setState(() {});
+                  });
                 }
               },
               child: const Text('Marquer fait'),
