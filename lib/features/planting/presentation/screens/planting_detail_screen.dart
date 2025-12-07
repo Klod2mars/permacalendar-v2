@@ -3,7 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/planting.dart';
-
+import '../widgets/planting_header_widget.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
 
 import '../../../../shared/widgets/custom_card.dart';
@@ -152,7 +152,7 @@ class PlantingDetailScreen extends ConsumerWidget {
 
           // Header with plant info
 
-          _buildHeader(planting, plant, theme),
+          PlantingHeaderWidget(planting: planting, plant: plant, theme: theme)
 
           const SizedBox(height: 24),
 
