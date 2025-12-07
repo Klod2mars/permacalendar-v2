@@ -122,7 +122,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                         autofocus: true,
                         decoration: const InputDecoration(
                           labelText: 'Nom de la parcelle *',
-                          hintText: 'Ex:Planche 1, Parcelle Nord',
+                          hintText: 'Ex: Parcelle Nord, Planche 1',
                           border: OutlineInputBorder(),
                         ),
                         validator: (value) {
@@ -134,19 +134,6 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                           }
                           return null;
                         },
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Description field
-                      TextFormField(
-                        controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          labelText: 'Description',
-                          hintText: 'Description de la parcelle...',
-                          border: OutlineInputBorder(),
-                        ),
-                        maxLines: 2,
                       ),
 
                       const SizedBox(height: 16),
@@ -183,7 +170,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
                       const SizedBox(height: 16),
 
-// Description field
+                      // Description field
                       TextFormField(
                         controller: _descriptionController,
                         decoration: const InputDecoration(
@@ -196,34 +183,11 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
                       const SizedBox(height: 16),
 
-                      // Notes field
-                      TextFormField(
-                        controller: _notesController,
-                        decoration: const InputDecoration(
-                          labelText: 'Notes',
-                          hintText: 'Notes additionnelles...',
-                          border: OutlineInputBorder(),
-                        ),
-                        maxLines: 3,
-                      ),
+                      // (Soil type & Exposure UI removed as requested)
 
-                      const SizedBox(height: 16),
+                      // (Notes field removed - description is sufficient)
 
-                      // Active status switch
-                      SwitchListTile(
-                        title: const Text('Parcelle active'),
-                        subtitle: Text(
-                          _isActive
-                              ? 'Cette parcelle est utilisée pour les plantations'
-                              : 'Cette parcelle est temporairement désactivée',
-                        ),
-                        value: _isActive,
-                        onChanged: (value) {
-                          setState(() {
-                            _isActive = value;
-                          });
-                        },
-                      ),
+                      // (Parcelle active control removed)
                     ],
                   ),
                 ),
@@ -253,36 +217,6 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
         ),
       ),
     );
-  }
-
-  IconData _getSoilTypeIcon(String soilType) {
-    switch (soilType) {
-      case 'Argileux':
-        return Icons.layers;
-      case 'Sableux':
-        return Icons.grain;
-      case 'Limoneux':
-        return Icons.water_drop;
-      case 'Humifère':
-        return Icons.eco;
-      default:
-        return Icons.terrain;
-    }
-  }
-
-  IconData _getExposureIcon(String exposure) {
-    switch (exposure) {
-      case 'Plein soleil':
-        return Icons.wb_sunny;
-      case 'Mi-soleil':
-        return Icons.wb_sunny_outlined;
-      case 'Mi-ombre':
-        return Icons.wb_cloudy;
-      case 'Ombre':
-        return Icons.cloud;
-      default:
-        return Icons.wb_sunny;
-    }
   }
 
   Future<void> _saveGardenBed() async {
