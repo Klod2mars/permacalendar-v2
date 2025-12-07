@@ -87,6 +87,135 @@ class PlantingDetailScreen extends ConsumerWidget {
     );
   }
 
+  Widget _buildCareRecommendations(
+      Planting planting, PlantFreezed plant, ThemeData theme) {
+    final now = DateTime.now();
+
+    final daysSincePlanting = now.difference(planting.plantedDate).inDays;
+
+    final recommendations = <String>[];
+
+    // Recommandations basées sur l'âge de la plantation
+    if (daysSincePlanting < 7) {
+      recommendations
+          .add('Maintenir le sol humide pour favoriser la germination');
+      recommendations
+          .add('Protéger des vents forts et du soleil direct intense');
+    } else if (daysSincePlanting < 30) {
+      recommendations
+          .add('Surveiller l\'apparition des premières vraies feuilles');
+      recommendations.add('Commencer un arrosage régulier mais modéré');
+      if (plant.thinning != null) {
+        recommendations.add('Préparer l\'éclaircissement si nécessaire');
+      }
+    } else if (daysSincePlanting < plant.daysToMaturity * 0.7) {
+      recommendations
+          .add('Phase de croissance active - maintenir un arrosage régulier');
+      recommendations.add('Surveiller les signes de maladies ou parasites');
+      if (plant.weeding != null) {
+        recommendations.add('Effectuer un désherbage régulier');
+      }
+    } else {
+      recommendations
+          .add('Approche de la maturité - surveiller les signes de récolte');
+      recommendations.add('Réduire progressivement l\'arrosage');
+    }
+
+    // Recommandations saisonnières
+    final currentMonth = now.month;
+    if (currentMonth >= 6 && currentMonth <= 8) {
+      recommendations
+          .add('Période estivale - arroser de préférence le matin ou le soir');
+      recommendations.add('Pailler pour conserver l\'humidité');
+    } else if (currentMonth >= 9 && currentMonth <= 11) {
+      recommendations
+          .add('Période automnale - réduire la fréquence d\'arrosage');
+      recommendations.add('Préparer la protection hivernale si nécessaire');
+    }
+
+    if (recommendations.isEmpty) {
+      recommendations
+          .add('Continuer les soins habituels selon les besoins de la plante');
+    }
+
+    return CustomCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.psychology,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Recommandations de soins',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue.shade200),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      size: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Jour ${daysSincePlanting + 1} après plantation',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: Colors.blue.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                ...recommendations
+                    .map((rec) => Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.check_circle_outline,
+                                size: 16,
+                                color: Colors.green.shade600,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  rec,
+                                  style: theme.textTheme.bodySmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                    .toList(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildPlantingDetail(
       Planting planting, ThemeData theme, WidgetRef ref, BuildContext context) {
     // Récupérer les informations de la plante depuis le catalogue
@@ -809,10 +938,11 @@ class PlantingDetailScreen extends ConsumerWidget {
               final text = controller.text.trim();
               if (text.isNotEmpty) {
                 Navigator.of(context).pop();
-                await ref.read(plantingProvider.notifier).addCareAction(
-                    plantingId: planting.id,
-                    actionType: text,
-                    date: DateTime.now());
+                await plantingNotifier.addCareAction(
+                  plantingId: planting.id,
+                  actionType: text,
+                  date: DateTime.now(),
+                );
               }
             },
             child: const Text('Ajouter'),
