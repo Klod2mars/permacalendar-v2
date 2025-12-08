@@ -21,6 +21,7 @@ import 'package:permacalendar/core/providers/active_garden_provider.dart';
 import 'package:permacalendar/core/providers/garden_awakening_registry.dart';
 import 'package:permacalendar/core/repositories/dashboard_slots_repository.dart';
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
+import 'package:permacalendar/shared/presentation/themes/organic_palettes.dart';
 
 /// Parent widget qui occupe une zone cliquable/long-pressable pour un garden.
 class InvisibleGardenZone extends ConsumerStatefulWidget {
@@ -158,6 +159,18 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
       } catch (_) {
         return null;
       }
+    } catch (_) {}
+    return null;
+  }
+
+  /// Helper: extract gardenName from dynamic or fallback
+  String? _gardenNameFromDynamic(dynamic g) {
+    if (g == null) return null;
+    if (g is Map && g.containsKey('name')) return g['name']?.toString();
+    try {
+      // ignore: avoid_dynamic_calls
+      final val = g.name;
+      return val?.toString();
     } catch (_) {}
     return null;
   }
@@ -347,6 +360,48 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
                 layerLink: _layerLink,
                 fallbackSize: widget.zoneRect.size.shortestSide,
               ),
+
+              // --- 3) Label text (Garden Name) ---
+              // Ajout dynamique du nom avec style Organic
+              Consumer(builder: (context, ref, child) {
+                final activeId = ref.watch(activeGardenIdProvider);
+                final gardenId = widget.garden?.id?.toString();
+                final isActive = (gardenId != null && activeId == gardenId);
+
+                final gardenName = _gardenNameFromDynamic(widget.garden) ??
+                    'Jardin ${widget.slotNumber}';
+
+                final targetOpacity = isActive
+                    ? GardenLabelStyle.activeOpacity
+                    : GardenLabelStyle.discreetOpacity;
+                final targetFontSize = isActive
+                    ? GardenLabelStyle.activeFontSize
+                    : GardenLabelStyle.discreetFontSize;
+                final targetWeight = isActive
+                    ? GardenLabelStyle.activeWeight
+                    : GardenLabelStyle.discreetWeight;
+
+                return Positioned.fill(
+                  child: Center(
+                    child: AnimatedOpacity(
+                      duration: GardenLabelStyle.transitionDuration,
+                      curve: GardenLabelStyle.transitionCurve,
+                      opacity: targetOpacity,
+                      child: Text(
+                        gardenName,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Outfit', // Theme default
+                          fontSize: targetFontSize,
+                          fontWeight: targetWeight,
+                          color: Colors.white,
+                          shadows: [GardenLabelStyle.textShadow],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),
