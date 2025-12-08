@@ -20,8 +20,84 @@ import '../../features/climate/presentation/providers/weather_providers.dart';
 import '../../core/utils/weather_icon_mapper.dart';
 import '../presentation/widgets/weather_bubble_widget.dart';
 
-// Nouveaux imports recommandés (à créer si pas encore présent)
+/// 1) Active/désactive l’affichage des cadres bleus (debug)
+const bool kShowTapZonesDebug = true;
 
+/// 2) Ici tu ajustes TES COTES (en % du canvas).
+class TapZonesSpec {
+  static const Rect activity = Rect.fromLTWH(0.12, 0.20, 0.30, 0.13);
+  static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.30, 0.14);
+  static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
+  static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
+
+  static const Rect garden1 = Rect.fromLTWH(0.33, 0.58, 0.13, 0.09);
+  static const Rect garden2 = Rect.fromLTWH(0.45, 0.58, 0.13, 0.09);
+  static const Rect garden3 = Rect.fromLTWH(0.57, 0.58, 0.13, 0.09);
+  static const Rect garden4 = Rect.fromLTWH(0.40, 0.66, 0.13, 0.09);
+  static const Rect garden5 = Rect.fromLTWH(0.52, 0.66, 0.13, 0.09);
+}
+
+/// Widget helper : place une zone tap en % du parent.
+class TapZone extends StatelessWidget {
+  const TapZone({
+    super.key,
+    required this.rect01,
+    required this.onTap,
+    this.label,
+  });
+
+  final Rect rect01; // Rect en 0..1
+  final VoidCallback onTap;
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, c) {
+        final w = c.maxWidth;
+        final h = c.maxHeight;
+
+        final left = rect01.left * w;
+        final top = rect01.top * h;
+        final width = rect01.width * w;
+        final height = rect01.height * h;
+
+        return Positioned(
+          left: left,
+          top: top,
+          width: width,
+          height: height,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque, // IMPORTANT
+            onTap: onTap,
+            child: kShowTapZonesDebug
+                ? DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: Colors.cyanAccent, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        (label ?? '').toLowerCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                          shadows: [
+                            Shadow(blurRadius: 10, color: Colors.black, offset: Offset(0, 2))
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.expand(),
+          ),
+        );
+      },
+    );
+  }
+}
 
 /// OrganicDashboardWidget
 class OrganicDashboardWidget extends ConsumerStatefulWidget {
@@ -136,27 +212,20 @@ class _OrganicDashboardWidgetState
   }
 
   Future<void> _loadDefaultsIfNeeded() async {
-    final defaultPositions = <String, Offset>{};
-    final defaultSizes = <String, double>{};
-    final defaultEnabled = <String, bool>{};
+    // Legacy loading logic disabled
+  }
 
-    for (final hs in OrganicDashboardWidget._hotspots) {
-      defaultPositions[hs.id] = Offset(hs.centerX, hs.centerY);
-      defaultSizes[hs.id] =
-          (hs.widthFrac > hs.heightFrac) ? hs.widthFrac : hs.heightFrac;
-      defaultEnabled[hs.id] = true;
-    }
-
+  Future<void> _onGardenTap(int slot) async {
     try {
-      await ref.read(organicZonesProvider.notifier).loadFromStorage(
-            defaultPositions: defaultPositions,
-            defaultSizes: defaultSizes,
-            defaultEnabled: defaultEnabled,
-          );
-    } catch (e) {
-      if (kDebugMode) {
-        debugPrint('🔧 [CALIBRATION] error loading defaults: $e');
+      final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
+      if (gardenId != null && mounted) {
+        ref.read(gardenProvider.notifier).selectGarden(gardenId);
+        context.push('/gardens/$gardenId?fromOrganic=1');
+      } else if (kDebugMode) {
+        debugPrint('No garden found for slot $slot');
       }
+    } catch (e) {
+      if (kDebugMode) debugPrint('Error resolving garden slot $slot: $e');
     }
   }
 
@@ -200,10 +269,6 @@ class _OrganicDashboardWidgetState
           : MediaQuery.of(context).size.width;
       final double height = (width * (9.0 / 5.0)).clamp(300.0, 1400.0);
 
-      final Map<String, String> _routeMap = {
-        for (final h in OrganicDashboardWidget._hotspots) h.id: h.route
-      };
-
       return SizedBox(
         width: double.infinity,
         height: height,
@@ -212,225 +277,69 @@ class _OrganicDashboardWidgetState
           child: Stack(
             key: _containerKey,
             children: [
+              // 1) Ton fond (image feuille + bulles organiques)
               Positioned.fill(
                 child: Image.asset(
                   widget.assetPath,
                   fit: BoxFit.fill,
                   alignment: Alignment.center,
                   isAntiAlias: true,
-                  errorBuilder: (context, error, stack) {
-                    if (kDebugMode)
-                      debugPrint(
-                          'OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
-                    return Container(
-                      color: Theme.of(context).colorScheme.surfaceVariant,
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.image_not_supported,
-                                size: 48, color: Colors.grey.shade300),
-                            const SizedBox(height: 8),
-                            Text('Visuel absent',
-                                style: Theme.of(context).textTheme.bodyMedium),
-                            if (kDebugMode) ...[
-                              const SizedBox(height: 8),
-                              Text(widget.assetPath,
-                                  style:
-                                      Theme.of(context).textTheme.labelSmall),
-                            ],
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                  errorBuilder: (context, error, stack) => const SizedBox(),
                 ),
               ),
 
-              // Zones : fallback defaults ou calibrées
-              ...((zones.isEmpty)
-                  ? (() {
-                      final defaultHotspots =
-                          List<_Hotspot>.from(OrganicDashboardWidget._hotspots)
-                            ..sort((a, b) {
-                              final asz = (a.widthFrac > a.heightFrac)
-                                  ? a.widthFrac
-                                  : a.heightFrac;
-                              final bsz = (b.widthFrac > b.heightFrac)
-                                  ? b.widthFrac
-                                  : b.heightFrac;
-                              return bsz.compareTo(asz); // larger first
-                            });
-
-                      return defaultHotspots.map((hs) {
-                        final double side = ((hs.widthFrac > hs.heightFrac)
-                                ? hs.widthFrac
-                                : hs.heightFrac) *
-                            (width < height ? width : height);
-                        final double left = (hs.centerX * width) - side / 2;
-                        final double top = (hs.centerY * height) - side / 2;
-
-                        return Positioned(
-                          left: left,
-                          top: top,
-                          width: side,
-                          height: side,
-                          child: _HotspotButton(
-                            onTap: () {
-                              if (kDebugMode)
-                                debugPrint(
-                                    'OrganicDashboard: tapped hotspot (${hs.id}) -> ${hs.route}');
-                              context.push(hs.route);
-                            },
-                            showDebugOutline:
-                                kDebugMode && widget.showDiagnostics,
-                            semanticLabel: hs.label,
-                            child: hs.id == 'weather'
-                                ? const WeatherBubbleWidget()
-                                : null,
-                          ),
-                        );
-                      }).toList();
-                    })()
-                  : (() {
-                      final sortedEntries = zones.entries.toList()
-                        ..sort((a, b) => b.value.size.compareTo(a.value.size));
-
-                      return sortedEntries.map((entry) {
-                        final id = entry.key;
-                        final cfg = entry.value;
-                        if (!cfg.enabled) return const SizedBox.shrink();
-
-                        final side =
-                            (cfg.size * (width < height ? width : height))
-                                .clamp(8.0, (width < height ? width : height));
-                        final left = (cfg.position.dx * width) - side / 2;
-                        final top = (cfg.position.dy * height) - side / 2;
-
-                        return Positioned(
-                          left: left,
-                          top: top,
-                          width: side,
-                          height: side,
-                          child: _CalibratableHotspot(
-                            id: id,
-                            cfg: cfg,
-                            isCalibrating: isCalibrating,
-                            onTapRoute: _routeMap[id],
-                            containerKey: _containerKey,
-                            ref: ref,
-                            showDebugOutline:
-                                kDebugMode && widget.showDiagnostics,
-                          ),
-                        );
-                      }).toList();
-                    })()),
-
-              if (kDebugMode && widget.showDiagnostics)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: FutureBuilder<_AssetDiagnostic>(
-                    future: _diagnoseAsset(widget.assetPath),
-                    builder: (context, snap) {
-                      Color bg = Colors.black.withOpacity(0.18);
-                      Widget body;
-                      if (snap.connectionState != ConnectionState.done) {
-                        body = Row(
-                          children: const [
-                            SizedBox(width: 8),
-                            SizedBox(
-                                width: 12,
-                                height: 12,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2)),
-                            SizedBox(width: 8),
-                            Text('Checking...',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12)),
-                          ],
-                        );
-                      } else if (snap.hasError) {
-                        body = Text('Diag failed: ${snap.error}',
-                            style: const TextStyle(
-                                color: Colors.redAccent, fontSize: 12));
-                      } else {
-                        final d = snap.data!;
-                        final declared = d.declared ? 'YES' : 'NO';
-                        final declaredColor = d.declared
-                            ? Colors.greenAccent
-                            : Colors.orangeAccent;
-                        final loadOk = d.loadOk
-                            ? 'OK (${d.sizeBytes ?? 0} bytes)'
-                            : 'FAILED';
-                        final loadColor =
-                            d.loadOk ? Colors.greenAccent : Colors.redAccent;
-                        body = Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text('asset:',
-                                    style: TextStyle(
-                                        color: Colors.white70, fontSize: 12)),
-                                const SizedBox(width: 6),
-                                Flexible(
-                                    child: Text(widget.assetPath,
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12))),
-                              ],
-                            ),
-                            const SizedBox(height: 6),
-                            Row(
-                              children: [
-                                Text('declared:',
-                                    style: const TextStyle(
-                                        color: Colors.white70, fontSize: 12)),
-                                const SizedBox(width: 6),
-                                Text(declared,
-                                    style: TextStyle(
-                                        color: declaredColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12)),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                Text('load:',
-                                    style: const TextStyle(
-                                        color: Colors.white70, fontSize: 12)),
-                                const SizedBox(width: 6),
-                                Text(loadOk,
-                                    style: TextStyle(
-                                        color: loadColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12)),
-                              ],
-                            ),
-                          ],
-                        );
-                        bg = d.declared && d.loadOk
-                            ? Colors.black.withOpacity(0.24)
-                            : Colors.black.withOpacity(0.38);
-                      }
-                      return Material(
-                        color: Colors.transparent,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          constraints: const BoxConstraints(maxWidth: 160),
-                          decoration: BoxDecoration(
-                            color: bg,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.white12),
-                          ),
-                          child: body,
-                        ),
-                      );
-                    },
-                  ),
+              // 2) Les zones TAP réglables (par-dessus)
+              Positioned.fill(
+                child: Stack(
+                  children: [
+                    TapZone(
+                      rect01: TapZonesSpec.activity,
+                      label: 'activities',
+                      onTap: () => context.push(AppRoutes.activities),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.weather,
+                      label: 'weather',
+                      onTap: () => context.push(AppRoutes.weather),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.settings,
+                      label: 'sett',
+                      onTap: () => context.push(AppRoutes.settings),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.calendar,
+                      label: 'calendar',
+                      onTap: () => context.push(AppRoutes.calendar),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.garden1,
+                      label: 'garden_1',
+                      onTap: () => _onGardenTap(1),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.garden2,
+                      label: 'garden_2',
+                      onTap: () => _onGardenTap(2),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.garden3,
+                      label: 'garden_3',
+                      onTap: () => _onGardenTap(3),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.garden4,
+                      label: 'garden_4',
+                      onTap: () => _onGardenTap(4),
+                    ),
+                    TapZone(
+                      rect01: TapZonesSpec.garden5,
+                      label: 'garden_5',
+                      onTap: () => _onGardenTap(5),
+                    ),
+                  ],
                 ),
+              ),
             ],
           ),
         ),
