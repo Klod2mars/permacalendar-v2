@@ -1,13 +1,4 @@
 // lib/shared/widgets/organic_dashboard.dart
-//
-// OrganicDashboardWidget - intégration propre de InsectAwakeningWidget
-// - Un seul jardin actif à la fois via activeGardenIdProvider
-// - Désactivation de l'active garden avant navigation (évite la persistance)
-// - InsectAwakeningWidget monté par hotspot jardin (useOverlay: true + layerLink)
-// - Registry central pour permettre l'arrêt / forçage synchrone via GlobalKey
-// - Réduction du flood de logs et usage de toggleActiveGarden pour toggle atomique
-//
-
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +14,11 @@ import '../../core/models/calibration_state.dart';
 import '../widgets/calibration_debug_overlay.dart';
 import '../../core/repositories/dashboard_slots_repository.dart';
 import '../../core/providers/active_garden_provider.dart';
+
+// Nouveaux imports pour affichage météo dans la bulle
+import '../../features/climate/presentation/providers/weather_providers.dart';
+import '../../core/utils/weather_icon_mapper.dart';
+import '../presentation/widgets/weather_bubble_widget.dart';
 
 // Nouveaux imports recommandés (à créer si pas encore présent)
 
@@ -281,6 +277,9 @@ class _OrganicDashboardWidgetState
                             showDebugOutline:
                                 kDebugMode && widget.showDiagnostics,
                             semanticLabel: hs.label,
+                            child: hs.id == 'weather'
+                                ? const WeatherBubbleWidget()
+                                : null,
                           ),
                         );
                       }).toList();
@@ -468,11 +467,13 @@ class _HotspotButton extends StatelessWidget {
     this.onLongPress,
     this.showDebugOutline = false,
     this.semanticLabel,
+    this.child,
   });
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
   final bool showDebugOutline;
   final String? semanticLabel;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -496,28 +497,29 @@ class _HotspotButton extends StatelessWidget {
                         width: 1.5),
                   )
                 : const BoxDecoration(color: Colors.transparent),
-            child: showDebugOutline
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                      child: Text(
-                        semanticLabel ?? 'hotspot',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.98),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          shadows: const [
-                            Shadow(
-                                blurRadius: 2,
-                                color: Colors.black87,
-                                offset: Offset(0, 1))
-                          ],
+            child: child ??
+                (showDebugOutline
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Text(
+                            semanticLabel ?? 'hotspot',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.98),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              shadows: const [
+                                Shadow(
+                                    blurRadius: 2,
+                                    color: Colors.black87,
+                                    offset: Offset(0, 1))
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                : null,
+                      )
+                    : null),
           ),
         ),
       ),
@@ -915,6 +917,9 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
           : null,
       semanticLabel: widget.cfg.id,
       showDebugOutline: widget.showDebugOutline,
+      child: (!isGardenHotspot && widget.id == 'weather')
+          ? const WeatherBubbleWidget()
+          : null,
     );
 
     if (isGardenHotspot) {
@@ -931,5 +936,50 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
     _activePointers.clear();
     super.dispose();
+  }
+}
+
+class WeatherBubbleContent extends ConsumerWidget {
+  const WeatherBubbleContent({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final weatherAsync = ref.watch(currentWeatherProvider);
+
+    return Center(
+      child: weatherAsync.when(
+        loading: () => const SizedBox(
+          width: 42,
+          height: 42,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        ),
+        error: (e, st) => Icon(Icons.cloud_off, color: theme.colorScheme.onSurface, size: 28),
+        data: (data) {
+          final tempVal = data.temperature ?? data.currentTemperatureC;
+          final temp = tempVal != null ? tempVal.toStringAsFixed(0) : '--';
+          final iconPath = data.icon ?? WeatherIconMapper.getFallbackIcon();
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 42,
+                height: 42,
+                child: Image.asset(iconPath, fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 6),
+              Text('$temp°C',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: const [Shadow(blurRadius: 2, color: Colors.black54, offset: Offset(0,1))],
+                  )),
+              if (data.description != null)
+                Text(data.description!, style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70)),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
