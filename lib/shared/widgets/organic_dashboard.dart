@@ -25,11 +25,7 @@ import '../../core/repositories/dashboard_slots_repository.dart';
 import '../../core/providers/active_garden_provider.dart';
 
 // Nouveaux imports recommandés (à créer si pas encore présent)
-import '../../core/providers/garden_awakening_registry.dart';
 
-// Insect awakening widget (assure path correct)
-// NOTE: InsectAwakeningWidget doit accepter désormais un paramètre `layerLink: LayerLink?`
-import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 
 /// OrganicDashboardWidget
 class OrganicDashboardWidget extends ConsumerStatefulWidget {
@@ -576,12 +572,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   final Map<int, Offset> _activePointers = {};
   bool _isPinchingInside = false;
 
-  // GlobalKey for InsectAwakeningWidget - IMPORTANT: field of State (not created in build)
-  final GlobalKey<InsectAwakeningWidgetState> _awakeningKey =
-      GlobalKey<InsectAwakeningWidgetState>();
+  // Awakening/LayerLink removed.
 
-  // LayerLink for CompositedTransformTarget/Follower so overlay follows the hotspot
-  final LayerLink _layerLink = LayerLink();
 
   // Resolved gardenId for this slot (may be null until async resolution)
   String? _gardenId;
@@ -599,34 +591,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       final gid = await DashboardSlotsRepository.getGardenIdForSlot(slot);
       if (!mounted) return;
 
-      // If gardenId changed, unregister old one from registry
-      if (_gardenId != null && _gardenId != gid) {
-        try {
-          widget.ref
-              .read(gardenAwakeningRegistryProvider)
-              .unregister(_gardenId!);
-        } catch (_) {}
-      }
+      // Awakening registry logic removed.
 
-      setState(() {
-        _gardenId = gid;
-      });
-
-      // If we have a gid, register this awakening key for it
-      if (gid != null) {
-        try {
-          widget.ref
-              .read(gardenAwakeningRegistryProvider)
-              .register(gid, _awakeningKey);
-          if (kDebugMode) {
-            debugPrint(
-                '[Insect][resolve] registered awakeningKey for ${widget.id} -> $gid');
-          }
-        } catch (e) {
-          if (kDebugMode)
-            debugPrint('[Insect][resolve] registry register error: $e');
-        }
-      }
 
       if (kDebugMode) {
         debugPrint(
@@ -793,13 +759,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
 
     if (gardenId != null) {
-      // 1) Stoppe synchroniquement toute lueur visible (ne touche pas aux providers).
-      try {
-        widget.ref.read(gardenAwakeningRegistryProvider).stopAllExcept(null);
-      } catch (e) {
-        if (kDebugMode)
-          debugPrint('[Insect][navigate] registry.stopAllExcept error: $e');
-      }
+      // Awakening stop logic removed.
+
 
       // 2) Planifier la modification du provider + navigation APRÈS la frame courante
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -875,17 +836,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
       if (nowActive == gardenId) {
         // Nous venons d'activer ce garden:
-        try {
-          // Feedback visuel léger : déclenche l'animation locale (ne force pas persistent,
-          // le provider a déjà demandé la mise en persistent via le registry).
-          final awakeningState = _awakeningKey.currentState;
-          awakeningState?.triggerAnimation();
-        } catch (e, st) {
-          if (kDebugMode)
-            debugPrint(
-                '[Insect][trigger] triggerAnimation error after activate: $e\n$st');
-        }
-
+          // Awakening triggering removed.
         // Message utilisateur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -893,16 +844,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
               duration: const Duration(seconds: 2)),
         );
       } else {
-        // Nous venons de désactiver ce garden :
-        try {
-          // Defensive: demander explicitement l'arrêt local si l'instance est montée.
-          _awakeningKey.currentState?.stopPersistent();
-        } catch (e, st) {
-          if (kDebugMode)
-            debugPrint(
-                '[Insect][activate] awakeningKey.stopPersistent error on deactivate: $e\n$st');
-        }
-
+        // Nous venons de désactiver ce garden.
         // Message utilisateur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -976,25 +918,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     );
 
     if (isGardenHotspot) {
-      // InsectAwakeningWidget will follow the hotspot via layerLink/follower
-      return Stack(
-        fit: StackFit.expand,
-        children: [
-          InsectAwakeningWidget(
-            key: _awakeningKey,
-            gardenId: _gardenId ?? ('unknown_' + widget.id),
-            useOverlay: true,
-            layerLink: _layerLink,
-            fallbackSize: 60.0,
-          ),
-
-          // The hotspotButton is wrapped with a CompositedTransformTarget so the overlay can follow it.
-          CompositedTransformTarget(
-            link: _layerLink,
-            child: hotspotButton,
-          ),
-        ],
-      );
+      // Awakening widget removed, just returning the hotspot button.
+      return hotspotButton;
     }
 
     return hotspotButton;
@@ -1002,12 +927,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
   @override
   void dispose() {
-    // Unregister from registry if registered
-    if (_gardenId != null) {
-      try {
-        widget.ref.read(gardenAwakeningRegistryProvider).unregister(_gardenId!);
-      } catch (_) {}
-    }
+    // Registry unregister removed.
+
     _activePointers.clear();
     super.dispose();
   }
