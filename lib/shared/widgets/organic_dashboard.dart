@@ -62,11 +62,30 @@ class TapZone extends StatelessWidget {
         final width = rect01.width * w;
         final height = rect01.height * h;
 
+        // Safety-clamp the computed geometry to avoid an accidental full-screen tap-zone
+        // (utile pour diagnostiquer/éviter le bug où le slot 5 couvre tout l'écran).
+        final computedLeft = left;
+        final computedTop = top;
+        final computedWidth = width;
+        final computedHeight = height;
+
+        final safeWidth = (computedWidth.clamp(0.0, w)) as double;
+        final safeHeight = (computedHeight.clamp(0.0, h)) as double;
+        final maxLeft = (w - safeWidth).clamp(0.0, w) as double;
+        final maxTop = (h - safeHeight).clamp(0.0, h) as double;
+        final safeLeft = (computedLeft.clamp(0.0, maxLeft)) as double;
+        final safeTop = (computedTop.clamp(0.0, maxTop)) as double;
+
+        if (kDebugMode) {
+          debugPrint(
+              'TapZone "${label ?? ''}" rect01=$rect01 -> left=$computedLeft top=$computedTop width=$computedWidth height=$computedHeight | safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
+        }
+
         return Positioned(
-          left: left,
-          top: top,
-          width: width,
-          height: height,
+          left: safeLeft,
+          top: safeTop,
+          width: safeWidth,
+          height: safeHeight,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque, // IMPORTANT
             onTap: onTap,
