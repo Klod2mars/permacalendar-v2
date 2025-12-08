@@ -1,10 +1,18 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:ui' show ImageFilter;
+
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../features/climate/presentation/providers/weather_providers.dart';
 import 'package:intl/intl.dart';
+
+import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 class WeatherBubbleWidget extends ConsumerWidget {
   const WeatherBubbleWidget({super.key});
+
+  String _capitalizeFirst(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -12,9 +20,13 @@ class WeatherBubbleWidget extends ConsumerWidget {
 
     return weatherAsync.when(
       loading: () => const Center(
-        child: CircularProgressIndicator(
-          color: Colors.white70,
-          strokeWidth: 2,
+        child: SizedBox(
+          width: 18,
+          height: 18,
+          child: CircularProgressIndicator(
+            color: Colors.white70,
+            strokeWidth: 2,
+          ),
         ),
       ),
       error: (e, _) => const Center(
@@ -23,126 +35,170 @@ class WeatherBubbleWidget extends ConsumerWidget {
           style: TextStyle(
             color: Colors.white70,
             fontSize: 14,
+            fontWeight: FontWeight.w500,
+            shadows: [Shadow(blurRadius: 6, color: Colors.black54, offset: Offset(0, 2))],
           ),
+          textAlign: TextAlign.center,
         ),
       ),
       data: (weather) {
-        // Formater la date au format français (ex: 'dimanche 2/11/25')
+        // Date FR lisible (pas collée au nuage, avec chip dédiée)
         final dateFormatter = DateFormat('EEEE d/M/yy', 'fr_FR');
-        final date = dateFormatter.format(DateTime.now());
+        final date = _capitalizeFirst(dateFormatter.format(DateTime.now()));
 
-        return FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.center,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Subtle dark rounded overlay behind text to ensure legibility
-              Container(
-                width: 180,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.32),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-              ),
+        final descriptionRaw = (weather.description?.trim().isNotEmpty ?? false)
+            ? weather.description!.trim()
+            : 'Données indisponibles';
 
-              // Content (date, icon, description, temps)
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Date
-                  Text(
-                    date,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w500,
-                      shadows: [
-                        Shadow(blurRadius: 2, color: Colors.black54, offset: Offset(0, 1))
+        // Tu aimais le rendu "AVERSE LÉGÈRE" => on harmonise en capitales + tracking léger.
+        final description = descriptionRaw.toUpperCase();
+
+        final hasMinMax = weather.minTemp != null && weather.maxTemp != null;
+        final tempNow = weather.temperature ?? weather.currentTemperatureC;
+
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 220,
+              minWidth: 170,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.white.withOpacity(0.14),
+                        Colors.black.withOpacity(0.18),
                       ],
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Icône météo (même fallback)
-                  Image.asset(
-                    weather.icon ?? 'assets/weather_icons/sunny.png',
-                    width: 64,
-                    height: 64,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(
-                        Icons.wb_cloudy,
-                        size: 64,
-                        color: Colors.white70,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Description — stroked outline + fill for strong legibility on bright backgrounds
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Text(
-                        weather.description ?? 'Données indisponibles',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 3
-                            ..color = Colors.black.withOpacity(0.7),
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        weather.description ?? 'Données indisponibles',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.22),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.28),
+                        blurRadius: 18,
+                        offset: const Offset(0, 10),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // DATE : chip dédiée => plus jamais illisible “au-dessus du nuage”
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.25),
+                          borderRadius: BorderRadius.circular(999),
+                          border: Border.all(color: Colors.white.withOpacity(0.14), width: 1),
+                        ),
+                        child: Text(
+                          date,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.2,
+                            shadows: [
+                              Shadow(blurRadius: 6, color: Colors.black54, offset: Offset(0, 2)),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
 
-                  // Températures min/max (ou température courante)
-                  if (weather.minTemp != null && weather.maxTemp != null)
-                    Text(
-                      'Min ${weather.minTemp!.toStringAsFixed(1)}° / Max ${weather.maxTemp!.toStringAsFixed(1)}°',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                        shadows: [
-                          Shadow(blurRadius: 2, color: Colors.black45, offset: Offset(0, 1))
-                        ],
+                      const SizedBox(height: 10),
+
+                      // ICÔNE : posée dans un “bubble ring” => plus harmonieux
+                      Container(
+                        width: 62,
+                        height: 62,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.18),
+                          border: Border.all(color: Colors.white.withOpacity(0.18), width: 1),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            weather.icon ?? 'assets/weather_icons/sunny.png',
+                            width: 40,
+                            height: 40,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.wb_cloudy, size: 40, color: Colors.white70);
+                            },
+                          ),
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    )
-                  else if (weather.temperature != null || weather.currentTemperatureC != null)
-                    Text(
-                      '${(weather.temperature ?? weather.currentTemperatureC ?? 0.0).toStringAsFixed(1)}°',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                        shadows: [
-                          Shadow(blurRadius: 2, color: Colors.black45, offset: Offset(0, 1))
-                        ],
+
+                      const SizedBox(height: 10),
+
+                      // DESCRIPTION : chip “verre fumé” => plus de barre rectangulaire chelou
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.22),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.white.withOpacity(0.14), width: 1),
+                        ),
+                        child: Text(
+                          description,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            letterSpacing: 0.9,
+                            height: 1.15,
+                            shadows: [
+                              Shadow(blurRadius: 10, color: Colors.black87, offset: Offset(0, 2)),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                ],
+
+                      const SizedBox(height: 8),
+
+                      // TEMPÉRATURES : chip bas => plus jamais illisible “en-dessous”
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.20),
+                          borderRadius: BorderRadius.circular(999),
+                          border: Border.all(color: Colors.white.withOpacity(0.12), width: 1),
+                        ),
+                        child: Text(
+                          hasMinMax
+                              ? 'Min ${weather.minTemp!.toStringAsFixed(1)}°  •  Max ${weather.maxTemp!.toStringAsFixed(1)}°'
+                              : (tempNow != null ? '${tempNow.toStringAsFixed(1)}°' : '—'),
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.2,
+                            shadows: [
+                              Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ],
+            ),
           ),
         );
       },
