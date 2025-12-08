@@ -16,9 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // InsectAwakeningWidget - assure-toi que ce chemin package: est correct
-import 'package:permacalendar/shared/widgets/animations/insect_awakening_widget.dart';
 import 'package:permacalendar/core/providers/active_garden_provider.dart';
-import 'package:permacalendar/core/providers/garden_awakening_registry.dart';
 import 'package:permacalendar/core/repositories/dashboard_slots_repository.dart';
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import 'package:permacalendar/shared/presentation/themes/organic_palettes.dart';
@@ -43,10 +41,7 @@ class InvisibleGardenZone extends ConsumerStatefulWidget {
 
 class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   // -------------------- IMPORTANT --------------------
-  // GlobalKey MUST be a field of State (not recreated in build()):
-  final GlobalKey<InsectAwakeningWidgetState> _awakeningKey =
-      GlobalKey<InsectAwakeningWidgetState>();
-  // LayerLink so the overlay created by InsectAwakeningWidget can follow this widget
+  // LayerLink (kept for layout / future use). Lueur/awakening logic removed.
   final LayerLink _layerLink = LayerLink();
 
   // Debounce to block rapid toggles
@@ -61,22 +56,8 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
           '[Audit] InvisibleGardenZone.initState slot=${widget.slotNumber} garden=${widget.garden?.id}');
     }
 
-    // Register if garden available at mount
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final gid = _gardenIdFromWidget();
-      if (gid != null) {
-        try {
-          ref
-              .read(gardenAwakeningRegistryProvider)
-              .register(gid, _awakeningKey);
-          if (kDebugMode)
-            debugPrint('[Audit] registered awakeningKey at init for $gid');
-        } catch (e) {
-          if (kDebugMode)
-            debugPrint('[Audit] registry register error at init: $e');
-        }
-      }
-    });
+    // NOTE: awakening/registry registration removed. InvisibleGardenZone no longer
+    // manages the insect awakening overlay or registry.
   }
 
   @override
@@ -87,58 +68,14 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
           '[Audit] InvisibleGardenZone.didUpdateWidget slot=${widget.slotNumber} oldGarden=${oldWidget.garden?.id} newGarden=${widget.garden?.id}');
     }
 
-    final oldGid = _gardenIdFromDynamic(oldWidget.garden);
-    final newGid = _gardenIdFromWidget();
-
-    if (oldGid != newGid) {
-      if (oldGid != null) {
-        try {
-          ref.read(gardenAwakeningRegistryProvider).unregister(oldGid);
-          if (kDebugMode)
-            debugPrint('[Audit] unregistered old awakeningKey for $oldGid');
-        } catch (e) {
-          if (kDebugMode) debugPrint('[Audit] registry unregister error: $e');
-        }
-      }
-      if (newGid != null) {
-        try {
-          ref
-              .read(gardenAwakeningRegistryProvider)
-              .register(newGid, _awakeningKey);
-          if (kDebugMode)
-            debugPrint('[Audit] registered awakeningKey for new $newGid');
-        } catch (e) {
-          if (kDebugMode) debugPrint('[Audit] registry register error: $e');
-        }
-      }
-    }
+    // Previously we updated the awakening registry here. That logic has been removed
+    // because garden activation / awakening is now handled elsewhere (in the
+    // cultural/plot code). We keep didUpdateWidget for potential future hooks.
   }
 
   @override
   void dispose() {
-    // Defensive: stop persistent if mounted
-    try {
-      _awakeningKey.currentState?.stopPersistent();
-      if (kDebugMode)
-        debugPrint(
-            '[Audit] dispose requested stopPersistent for garden=${widget.garden?.id}');
-    } catch (e, st) {
-      if (kDebugMode)
-        debugPrint('[Audit] dispose: stopPersistent error: $e\n$st');
-    }
-
-    // Unregister from registry if present
-    final gid = _gardenIdFromWidget();
-    if (gid != null) {
-      try {
-        ref.read(gardenAwakeningRegistryProvider).unregister(gid);
-        if (kDebugMode)
-          debugPrint('[Audit] dispose: unregistered awakeningKey for $gid');
-      } catch (e) {
-        if (kDebugMode)
-          debugPrint('[Audit] dispose: registry unregister error: $e');
-      }
-    }
+    // Awakening/registry cleanup removed. Nothing to stop here.
 
     super.dispose();
   }
@@ -242,14 +179,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
             duration: const Duration(seconds: 2)),
       );
     } else {
-      // Deactivated — ensure local awakening widget stops as defensive measure
-      try {
-        _awakeningKey.currentState?.stopPersistent();
-      } catch (e, st) {
-        if (kDebugMode)
-          debugPrint(
-              '[Insect][activate] awakeningKey.stopPersistent error: $e\n$st');
-      }
+      // Deactivated — no local awakening widget to stop.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('Jardin $gardenId désactivé'),
@@ -257,13 +187,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
       );
     }
 
-    // Trigger a short animation for immediate feedback (if mounted)
-    try {
-      _awakeningKey.currentState?.triggerAnimation();
-    } catch (e, st) {
-      if (kDebugMode)
-        debugPrint('[Insect][trigger] triggerAnimation error: $e\n$st');
-    }
+    // Awakening/trigger removed: the UI no longer triggers the insect overlay.
   }
 
   /// Small debug overlay to show an immediate circle when the widget is not mounted.
@@ -351,15 +275,9 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
                 ),
               ),
 
-              // --- 2) InsectAwakeningWidget monté avec la clé + layerLink --
-              InsectAwakeningWidget(
-                key: _awakeningKey,
-                gardenId: widget.garden?.id?.toString() ??
-                    'unknown_garden_${widget.slotNumber}',
-                useOverlay: true,
-                layerLink: _layerLink,
-                fallbackSize: widget.zoneRect.size.shortestSide,
-              ),
+              // --- 2) InsectAwakeningWidget supprimé ---
+              // Lueur / awakening supprimée : InsectAwakeningWidget retiré parce que
+              // le système d'activation a été déplacé dans les zones de culture.
 
               // --- 3) Label text (Garden Name) ---
               // Ajout dynamique du nom avec style Organic
