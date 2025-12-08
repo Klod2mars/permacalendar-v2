@@ -68,6 +68,14 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         route: AppRoutes.weather,
         label: 'Weather'),
     _Hotspot(
+        id: 'settings',
+        centerX: 0.92,
+        centerY: 0.06,
+        widthFrac: 0.07,
+        heightFrac: 0.07,
+        route: AppRoutes.settings,
+        label: 'Paramètres'),
+    _Hotspot(
         id: 'garden_1',
         centerX: 0.60,
         centerY: 0.52,

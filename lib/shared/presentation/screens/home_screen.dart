@@ -35,29 +35,8 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
 
-          // Petit carré bleu pour accéder aux paramètres (positionnable)
-          Positioned(
-            top: topPadding + 8,
-            right: 12,
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(8),
-                onTap: () => context.push(AppRoutes.settings),
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  alignment: Alignment.center,
-                  child:
-                      const Icon(Icons.settings, color: Colors.white, size: 20),
-                ),
-              ),
-            ),
-          ),
+          // Le bouton de paramètres statique a été remplacé par la zone TAP configurée
+          const SizedBox.shrink(),
         ],
       ),
       floatingActionButton: isCalibrating
