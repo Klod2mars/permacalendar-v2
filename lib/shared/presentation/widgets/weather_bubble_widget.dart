@@ -1,6 +1,4 @@
-﻿import 'dart:ui' show ImageFilter;
-
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -9,10 +7,7 @@ import '../../../features/climate/presentation/providers/weather_providers.dart'
 class WeatherBubbleWidget extends ConsumerWidget {
   const WeatherBubbleWidget({super.key});
 
-  String _capitalizeFirst(String s) {
-    if (s.isEmpty) return s;
-    return s[0].toUpperCase() + s.substring(1);
-  }
+  String _capFirst(String s) => s.isEmpty ? s : (s[0].toUpperCase() + s.substring(1));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,185 +18,184 @@ class WeatherBubbleWidget extends ConsumerWidget {
         child: SizedBox(
           width: 18,
           height: 18,
-          child: CircularProgressIndicator(
-            color: Colors.white70,
-            strokeWidth: 2,
-          ),
+          child: CircularProgressIndicator(color: Colors.white70, strokeWidth: 2),
         ),
       ),
       error: (e, _) => const Center(
-        child: Text(
-          'Météo indisponible',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            shadows: [Shadow(blurRadius: 6, color: Colors.black54, offset: Offset(0, 2))],
-          ),
-          textAlign: TextAlign.center,
+        child: _OutlinedText(
+          'MÉTÉO INDISPONIBLE',
+          fontSize: 13,
+          weight: FontWeight.w800,
+          align: TextAlign.center,
+          maxLines: 2,
         ),
       ),
       data: (weather) {
-        // Date FR lisible (pas collée au nuage, avec chip dédiée)
         final dateFormatter = DateFormat('EEEE d/M/yy', 'fr_FR');
-        final date = _capitalizeFirst(dateFormatter.format(DateTime.now()));
+        final date = _capFirst(dateFormatter.format(DateTime.now())); // ex: "Lundi 8/12/25"
 
-        final descriptionRaw = (weather.description?.trim().isNotEmpty ?? false)
-            ? weather.description!.trim()
-            : 'Données indisponibles';
-
-        // Tu aimais le rendu "AVERSE LÉGÈRE" => on harmonise en capitales + tracking léger.
-        final description = descriptionRaw.toUpperCase();
+        final desc = (weather.description?.trim().isNotEmpty ?? false)
+            ? weather.description!.trim().toUpperCase()
+            : 'DONNÉES INDISPONIBLES';
 
         final hasMinMax = weather.minTemp != null && weather.maxTemp != null;
         final tempNow = weather.temperature ?? weather.currentTemperatureC;
 
-        return Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 220,
-              minWidth: 170,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withOpacity(0.14),
-                        Colors.black.withOpacity(0.18),
-                      ],
-                    ),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.22),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.28),
-                        blurRadius: 18,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
+        final tempLine = hasMinMax
+            ? 'Min ${weather.minTemp!.toStringAsFixed(1)}° / Max ${weather.maxTemp!.toStringAsFixed(1)}°'
+            : (tempNow != null ? '${tempNow.toStringAsFixed(1)}°' : '');
+
+        // IMPORTANT : on n'ajoute aucun cadre/rectangle.
+        // On joue uniquement avec TYPO + contour + ombres pour rester organique sur ton fond.
+        return LayoutBuilder(
+          builder: (context, c) {
+            final w = c.maxWidth.isFinite ? c.maxWidth : 9999;
+            final h = c.maxHeight.isFinite ? c.maxHeight : 9999;
+            final s = (w < h ? w : h).clamp(80.0, 240.0);
+
+            // Ajuste typographie selon la taille réelle de la bulle (anti-overflow).
+            final dateSize = (s * 0.10).clamp(10.0, 14.0);
+            final iconSize = (s * 0.34).clamp(34.0, 60.0);
+            final descSize = (s * 0.14).clamp(12.0, 16.0);
+            final tempSize = (s * 0.10).clamp(10.0, 13.5);
+            final gap1 = (s * 0.06).clamp(4.0, 10.0);
+            final gap2 = (s * 0.04).clamp(3.0, 8.0);
+
+            return Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.center,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 220),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // DATE : chip dédiée => plus jamais illisible “au-dessus du nuage”
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.25),
-                          borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: Colors.white.withOpacity(0.14), width: 1),
-                        ),
-                        child: Text(
-                          date,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Colors.white70,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.2,
-                            shadows: [
-                              Shadow(blurRadius: 6, color: Colors.black54, offset: Offset(0, 2)),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
+                      // DATE (haut)
+                      _OutlinedText(
+                        date,
+                        fontSize: dateSize,
+                        weight: FontWeight.w700,
+                        letterSpacing: 0.2,
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
+                      SizedBox(height: gap1),
+
+                      // ICÔNE
+                      Image.asset(
+                        weather.icon ?? 'assets/weather_icons/sunny.png',
+                        width: iconSize,
+                        height: iconSize,
+                        errorBuilder: (context, error, stackTrace) => Icon(
+                          Icons.wb_cloudy,
+                          size: iconSize,
+                          color: Colors.white70,
                         ),
                       ),
+                      SizedBox(height: gap2),
 
-                      const SizedBox(height: 10),
-
-                      // ICÔNE : posée dans un “bubble ring” => plus harmonieux
-                      Container(
-                        width: 62,
-                        height: 62,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black.withOpacity(0.18),
-                          border: Border.all(color: Colors.white.withOpacity(0.18), width: 1),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            weather.icon ?? 'assets/weather_icons/sunny.png',
-                            width: 40,
-                            height: 40,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.wb_cloudy, size: 40, color: Colors.white70);
-                            },
-                          ),
-                        ),
+                      // DESCRIPTION (tu aimes "AVERSE LÉGÈRE" -> on garde le punch, sans cadre)
+                      _OutlinedText(
+                        desc,
+                        fontSize: descSize,
+                        weight: FontWeight.w900,
+                        letterSpacing: 1.0,
+                        height: 1.05,
+                        maxLines: 2,
                       ),
 
-                      const SizedBox(height: 10),
-
-                      // DESCRIPTION : chip “verre fumé” => plus de barre rectangulaire chelou
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.22),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.white.withOpacity(0.14), width: 1),
+                      if (tempLine.isNotEmpty) ...[
+                        SizedBox(height: (gap2 * 0.9).clamp(3.0, 7.0)),
+                        _OutlinedText(
+                          tempLine,
+                          fontSize: tempSize,
+                          weight: FontWeight.w700,
+                          letterSpacing: 0.2,
+                          maxLines: 1,
+                          softWrap: false,
                         ),
-                        child: Text(
-                          description,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                            letterSpacing: 0.9,
-                            height: 1.15,
-                            shadows: [
-                              Shadow(blurRadius: 10, color: Colors.black87, offset: Offset(0, 2)),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // TEMPÉRATURES : chip bas => plus jamais illisible “en-dessous”
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.20),
-                          borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: Colors.white.withOpacity(0.12), width: 1),
-                        ),
-                        child: Text(
-                          hasMinMax
-                              ? 'Min ${weather.minTemp!.toStringAsFixed(1)}°  •  Max ${weather.maxTemp!.toStringAsFixed(1)}°'
-                              : (tempNow != null ? '${tempNow.toStringAsFixed(1)}°' : '—'),
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Colors.white70,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.2,
-                            shadows: [
-                              Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
+    );
+  }
+}
+
+/// Texte très lisible sur n'importe quel fond (sans container).
+/// - contour (stroke) + fill
+/// - ombres douces pour s'intégrer dans les bulles organiques
+class _OutlinedText extends StatelessWidget {
+  const _OutlinedText(
+    this.text, {
+    this.fontSize = 14,
+    this.weight = FontWeight.w800,
+    this.letterSpacing = 0,
+    this.height,
+    this.align = TextAlign.center,
+    this.maxLines = 2,
+    this.softWrap = true,
+  });
+
+  final String text;
+  final double fontSize;
+  final FontWeight weight;
+  final double letterSpacing;
+  final double? height;
+  final TextAlign align;
+  final int maxLines;
+  final bool softWrap;
+
+  @override
+  Widget build(BuildContext context) {
+    // Contour adaptatif : assez fort pour rester lisible,
+    // mais pas énorme pour ne pas “casser” l’organique.
+    final stroke = (fontSize * 0.18).clamp(1.6, 3.2);
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Text(
+          text,
+          textAlign: align,
+          maxLines: maxLines,
+          softWrap: softWrap,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: weight,
+            letterSpacing: letterSpacing,
+            height: height,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = stroke
+              ..color = Colors.black.withOpacity(0.72),
+          ),
+        ),
+        Text(
+          text,
+          textAlign: align,
+          maxLines: maxLines,
+          softWrap: softWrap,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: weight,
+            letterSpacing: letterSpacing,
+            height: height,
+            color: Colors.white.withOpacity(0.92),
+            shadows: const [
+              Shadow(blurRadius: 10, color: Colors.black87, offset: Offset(0, 2)),
+              Shadow(blurRadius: 18, color: Colors.black54, offset: Offset(0, 6)),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
