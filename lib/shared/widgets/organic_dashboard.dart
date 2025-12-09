@@ -86,38 +86,47 @@ class TapZone extends StatelessWidget {
           top: safeTop,
           width: safeWidth,
           height: safeHeight,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque, // IMPORTANT
-            // NEW: log the exact tap position and which zone received it.
-            onTapDown: (details) {
-              if (kDebugMode) {
-                debugPrint(
-                    'TapDown "${label ?? ''}" global=${details.globalPosition} local=${details.localPosition} rect01=$rect01 -> safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
-              }
-            },
-            onTap: onTap,
-            child: kShowTapZonesDebug
-                ? DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(color: Colors.cyanAccent, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        (label ?? '').toLowerCase(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          shadows: [
-                            Shadow(blurRadius: 10, color: Colors.black, offset: Offset(0, 2))
-                          ],
+          child: SizedBox(
+            width: safeWidth,
+            height: safeHeight,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque, // IMPORTANT
+              // NEW: log the exact tap position and which zone received it.
+              onTapDown: (details) {
+                if (kDebugMode) {
+                  final renderBox = context.findRenderObject() as RenderBox?;
+                  final size = renderBox?.size;
+                  final globalPos = renderBox?.localToGlobal(Offset.zero);
+                  debugPrint(
+                      'TapDown "${label ?? ''}" global=${details.globalPosition} local=${details.localPosition} rect01=$rect01 -> safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
+                  debugPrint(
+                      'TapDownRenderBox "${label ?? ''}" renderBox.size=$size renderBox.topLeftGlobal=$globalPos');
+                }
+              },
+              onTap: onTap,
+              child: kShowTapZonesDebug
+                  ? DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.cyanAccent, width: 2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          (label ?? '').toLowerCase(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                            shadows: [
+                              Shadow(blurRadius: 10, color: Colors.black, offset: Offset(0, 2))
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                : const SizedBox.expand(),
+                    )
+                  : const SizedBox.expand(),
+            ),
           ),
         );
       },
