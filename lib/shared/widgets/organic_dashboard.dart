@@ -247,7 +247,51 @@ class _OrganicDashboardWidgetState
   }
 
   Future<void> _loadDefaultsIfNeeded() async {
-    // Legacy loading logic disabled
+    // Si le provider contient déjà des valeurs, ne rien faire.
+    final current = ref.read(organicZonesProvider);
+    if (current.isNotEmpty) {
+      if (kDebugMode) {
+        debugPrint('🔧 [CALIBRATION] defaults already loaded, skipping');
+      }
+      return;
+    }
+
+    // Construire des valeurs par défaut à partir de la liste statique _hotspots.
+    final defaultPositions = <String, Offset>{};
+    final defaultSizes = <String, double>{};
+    final defaultEnabled = <String, bool>{};
+
+    for (final h in OrganicDashboardWidget._hotspots) {
+      // position : centre normalisé (0..1)
+      defaultPositions[h.id] = Offset(h.centerX, h.centerY);
+
+      // size : valeur normalisée 0..1 (on prend la moyenne width/height frac comme heuristique)
+      final sizeFrac = ((h.widthFrac + h.heightFrac) / 2.0).clamp(0.05, 1.0);
+      defaultSizes[h.id] = sizeFrac;
+
+      // activer par défaut
+      defaultEnabled[h.id] = true;
+    }
+
+    try {
+      if (kDebugMode) {
+        debugPrint('🔧 [CALIBRATION] loading defaults into organicZonesProvider: ${defaultPositions.keys.toList()}');
+      }
+      await ref
+          .read(organicZonesProvider.notifier)
+          .loadFromStorage(
+            defaultPositions: defaultPositions,
+            defaultSizes: defaultSizes,
+            defaultEnabled: defaultEnabled,
+          );
+      if (kDebugMode) {
+        debugPrint('🔧 [CALIBRATION] defaults loaded successfully');
+      }
+    } catch (e, st) {
+      if (kDebugMode) {
+        debugPrint('⚠️ [CALIBRATION] failed loading defaults: $e\n$st');
+      }
+    }
   }
 
   Future<void> _onGardenTap(int slot) async {
