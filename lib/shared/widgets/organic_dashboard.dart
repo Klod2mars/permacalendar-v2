@@ -88,6 +88,13 @@ class TapZone extends StatelessWidget {
           height: safeHeight,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque, // IMPORTANT
+            // NEW: log the exact tap position and which zone received it.
+            onTapDown: (details) {
+              if (kDebugMode) {
+                debugPrint(
+                    'TapDown "${label ?? ''}" global=${details.globalPosition} local=${details.localPosition} rect01=$rect01 -> safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
+              }
+            },
             onTap: onTap,
             child: kShowTapZonesDebug
                 ? DecoratedBox(
