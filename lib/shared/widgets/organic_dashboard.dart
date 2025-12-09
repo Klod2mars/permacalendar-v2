@@ -449,7 +449,9 @@ class _OrganicDashboardWidgetState
                                 onTapRoute: route,
                                 containerKey: _containerKey,
                                 ref: ref,
-                                showDebugOutline: kShowTapZonesDebug,
+                                // En mode normal on veut que les hotspots restent interactifs
+                                // mais **non visibles** (pas d'outline de debug).
+                                showDebugOutline: false,
                               ),
                             );
                           })(),
