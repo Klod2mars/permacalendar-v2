@@ -27,7 +27,7 @@ const bool kShowTapZonesDebug = true;
 class TapZonesSpec {
   static const Rect activity = Rect.fromLTWH(0.12, 0.20, 0.30, 0.13);
   static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.30, 0.14);
-  static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
+  static const Rect settings = Rect.fromLTWH(0.75, 0.50, 0.10, 0.06);
   static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
 
   static const Rect garden1 = Rect.fromLTWH(0.33, 0.58, 0.13, 0.09);
