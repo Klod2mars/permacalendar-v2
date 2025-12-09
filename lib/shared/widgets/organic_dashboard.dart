@@ -27,7 +27,7 @@ const bool kShowTapZonesDebug = true;
 class TapZonesSpec {
   static const Rect activity = Rect.fromLTWH(0.12, 0.20, 0.30, 0.13);
   static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.30, 0.14);
-  static const Rect settings = Rect.fromLTWH(0.75, 0.50, 0.10, 0.06);
+  static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
   static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
 
   static const Rect garden1 = Rect.fromLTWH(0.33, 0.58, 0.13, 0.09);
@@ -323,57 +323,99 @@ class _OrganicDashboardWidgetState
                 ),
               ),
 
-              // 2) Les zones TAP réglables (par-dessus)
+              // 2) Les zones TAP : mode normal = TapZone statique ; mode calibration = hotspots dynamiques
               Positioned.fill(
-                child: Stack(
-                  children: [
-                    TapZone(
-                      rect01: TapZonesSpec.activity,
-                      label: 'activities',
-                      onTap: () => context.push(AppRoutes.activities),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.weather,
-                      label: 'weather',
-                      onTap: () => context.push(AppRoutes.weather),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.settings,
-                      label: 'sett',
-                      onTap: () => context.push(AppRoutes.settings),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.calendar,
-                      label: 'calendar',
-                      onTap: () => context.push(AppRoutes.calendar),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.garden1,
-                      label: 'garden_1',
-                      onTap: () => _onGardenTap(1),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.garden2,
-                      label: 'garden_2',
-                      onTap: () => _onGardenTap(2),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.garden3,
-                      label: 'garden_3',
-                      onTap: () => _onGardenTap(3),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.garden4,
-                      label: 'garden_4',
-                      onTap: () => _onGardenTap(4),
-                    ),
-                    TapZone(
-                      rect01: TapZonesSpec.garden5,
-                      label: 'garden_5',
-                      onTap: () => _onGardenTap(5),
-                    ),
-                  ],
-                ),
+                child: LayoutBuilder(builder: (ctx, c) {
+                  final w = c.maxWidth;
+                  final h = c.maxHeight;
+                  final shortest = w < h ? w : h;
+
+                  if (isCalibrating) {
+                    // En mode calibration, créer les hotspots interactifs à partir du provider `zones`
+                    return Stack(
+                      children: [
+                        for (final entry in zones.entries)
+                          if (entry.value.enabled)
+                            (() {
+                              final cfg = entry.value;
+                              final diameter = cfg.size * shortest;
+                              final dx = cfg.position.dx * w - diameter / 2;
+                              final dy = cfg.position.dy * h - diameter / 2;
+                              final maxLeft = (w - diameter).clamp(0.0, w);
+                              final maxTop = (h - diameter).clamp(0.0, h);
+                              final left = dx.clamp(0.0, maxLeft) as double;
+                              final top = dy.clamp(0.0, maxTop) as double;
+                              return Positioned(
+                                left: left,
+                                top: top,
+                                width: diameter,
+                                height: diameter,
+                                child: _CalibratableHotspot(
+                                  id: cfg.id,
+                                  cfg: cfg,
+                                  isCalibrating: true,
+                                  onTapRoute: null,
+                                  containerKey: _containerKey,
+                                  ref: ref,
+                                  showDebugOutline: true,
+                                ),
+                              );
+                            })(),
+                      ],
+                    );
+                  }
+
+                  // Mode normal (non-calibration) : préserver l'ancien comportement TapZone
+                  return Stack(
+                    children: [
+                      TapZone(
+                        rect01: TapZonesSpec.activity,
+                        label: 'activities',
+                        onTap: () => context.push(AppRoutes.activities),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.weather,
+                        label: 'weather',
+                        onTap: () => context.push(AppRoutes.weather),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.settings,
+                        label: 'sett',
+                        onTap: () => context.push(AppRoutes.settings),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.calendar,
+                        label: 'calendar',
+                        onTap: () => context.push(AppRoutes.calendar),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.garden1,
+                        label: 'garden_1',
+                        onTap: () => _onGardenTap(1),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.garden2,
+                        label: 'garden_2',
+                        onTap: () => _onGardenTap(2),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.garden3,
+                        label: 'garden_3',
+                        onTap: () => _onGardenTap(3),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.garden4,
+                        label: 'garden_4',
+                        onTap: () => _onGardenTap(4),
+                      ),
+                      TapZone(
+                        rect01: TapZonesSpec.garden5,
+                        label: 'garden_5',
+                        onTap: () => _onGardenTap(5),
+                      ),
+                    ],
+                  );
+                }),
               ),
             ],
           ),

@@ -35,6 +35,22 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
 
+          // Petit bouton d'accès rapide aux Paramètres (temporaire)
+          Positioned(
+            top: 12,
+            right: 12,
+            child: SafeArea(
+              child: Material(
+                color: Colors.transparent,
+                child: IconButton(
+                  icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onSurface),
+                  tooltip: 'Paramètres',
+                  onPressed: () => context.push(AppRoutes.settings),
+                ),
+              ),
+            ),
+          ),
+
           // Le bouton de paramètres statique a été remplacé par la zone TAP configurée
           const SizedBox.shrink(),
         ],
