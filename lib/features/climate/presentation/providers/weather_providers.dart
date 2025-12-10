@@ -775,8 +775,17 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
 
     // Utiliser les coordonnées de la commune sélectionnée (ou défaut)
 
-    final persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
-    final coords = persistedCoords ?? await ref.watch(selectedCommuneCoordinatesProvider.future);
+    // Utiliser en priorité les coordonnées persistées (Hive) si présentes (restore),
+    // sinon utiliser les coordonnées de la commune sélectionnée (ou défaut).
+    final om.Coordinates? persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
+
+    // Garantir que `coords` est non-nullable pour éviter les accès `.latitude` / `.longitude`
+    late final om.Coordinates coords;
+    if (persistedCoords != null) {
+      coords = persistedCoords;
+    } else {
+      coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
+    }
 
 
     final result = await svc.fetchPrecipitation(
