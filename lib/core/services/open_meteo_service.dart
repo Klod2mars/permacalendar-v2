@@ -84,8 +84,10 @@ class OpenMeteoService {
     final res = await _dio.get(url, queryParameters: {
       'latitude': latitude,
       'longitude': longitude,
-      'hourly': 'precipitation,temperature_2m',
-      'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode',
+      // hourly étendu : précip / temp / vent / direction / pression / visibilité si désiré
+      'hourly': 'precipitation,temperature_2m,windspeed_10m,winddirection_10m,pressure_msl,visibility',
+      // daily étendu : sunrise/sunset + moon
+      'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,moonrise,moonset,moon_phase',
       'past_days': pastDays,
       'forecast_days': forecastDays,
       'timezone': 'auto',
