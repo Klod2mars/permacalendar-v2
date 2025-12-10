@@ -70,18 +70,7 @@ class WeatherBubbleWidget extends ConsumerWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // DATE (haut)
-                      _OutlinedText(
-                        date,
-                        fontSize: dateSize,
-                        weight: FontWeight.w700,
-                        letterSpacing: 0.2,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                      SizedBox(height: gap1),
-
-                      // ICÔNE
+                      // ICÔNE (seule information visuelle immédiate)
                       Image.asset(
                         weather.icon ?? 'assets/weather_icons/sunny.png',
                         width: iconSize,
@@ -94,18 +83,8 @@ class WeatherBubbleWidget extends ConsumerWidget {
                       ),
                       SizedBox(height: gap2),
 
-                      // DESCRIPTION (tu aimes "AVERSE LÉGÈRE" -> on garde le punch, sans cadre)
-                      _OutlinedText(
-                        desc,
-                        fontSize: descSize,
-                        weight: FontWeight.w900,
-                        letterSpacing: 1.0,
-                        height: 1.05,
-                        maxLines: 2,
-                      ),
-
-                      if (tempLine.isNotEmpty) ...[
-                        SizedBox(height: (gap2 * 0.9).clamp(3.0, 7.0)),
+                      // Afficher uniquement Min/Max (ou température courante si pas de min/max)
+                      if (tempLine.isNotEmpty)
                         _OutlinedText(
                           tempLine,
                           fontSize: tempSize,
@@ -114,7 +93,6 @@ class WeatherBubbleWidget extends ConsumerWidget {
                           maxLines: 1,
                           softWrap: false,
                         ),
-                      ],
                     ],
                   ),
                 ),
