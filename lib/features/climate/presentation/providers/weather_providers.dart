@@ -775,8 +775,8 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
 
     // Utiliser les coordonnées de la commune sélectionnée (ou défaut)
 
-    final coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
-
+    final persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
+    final coords = persistedCoords ?? await ref.watch(selectedCommuneCoordinatesProvider.future);
 
 
     final result = await svc.fetchPrecipitation(
