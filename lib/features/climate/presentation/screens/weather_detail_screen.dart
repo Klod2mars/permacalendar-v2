@@ -74,7 +74,9 @@ class _DataWithDebug extends StatelessWidget {
         ],
       ));
       sb.add(const SizedBox(height: 8));
-      sb.add(Row(
+      sb.add(Wrap(
+        spacing: 8,
+        runSpacing: 8,
         children: [
           ElevatedButton.icon(
             onPressed: () {
@@ -87,7 +89,6 @@ class _DataWithDebug extends StatelessWidget {
             label: const Text('Rafraîchir (debug)'),
             style: ElevatedButton.styleFrom(elevation: 0),
           ),
-          const SizedBox(width: 8),
           ElevatedButton.icon(
             onPressed: () {
               // debug simple : imprime quelques infos dans la console (adb logcat / studio)
