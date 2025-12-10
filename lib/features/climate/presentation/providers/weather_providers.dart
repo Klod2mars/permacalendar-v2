@@ -542,9 +542,17 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
 
 
 
-    // Utiliser les coordonnées de la commune sélectionnée (ou défaut)
+    // Utiliser en priorité les coordonnées persistées (Hive) si présentes,
+    // sinon utiliser les coordonnées de la commune sélectionnée (ou défaut).
+    final om.Coordinates? persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
 
-    final coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
+    // Garantir que `coords` est non-nullable pour pouvoir accéder à .latitude/.longitude
+    late final om.Coordinates coords;
+    if (persistedCoords != null) {
+      coords = persistedCoords;
+    } else {
+      coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
+    }
 
 
 
