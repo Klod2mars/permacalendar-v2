@@ -155,7 +155,7 @@ class _OutlinedText extends StatelessWidget {
   Widget build(BuildContext context) {
     // Contour adaptatif : assez fort pour rester lisible,
     // mais pas énorme pour ne pas “casser” l’organique.
-    final stroke = (fontSize * 0.18).clamp(1.6, 3.2);
+    final stroke = (fontSize * 0.12).clamp(0.8, 2.0);
 
     return Stack(
       alignment: Alignment.center,
@@ -174,7 +174,7 @@ class _OutlinedText extends StatelessWidget {
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = stroke
-              ..color = Colors.black.withOpacity(0.72),
+              ..color = Colors.black.withOpacity(0.60),
           ),
         ),
         Text(
@@ -188,10 +188,9 @@ class _OutlinedText extends StatelessWidget {
             fontWeight: weight,
             letterSpacing: letterSpacing,
             height: height,
-            color: Colors.white.withOpacity(0.92),
+            color: const Color(0xFFF1FFF6),
             shadows: const [
-              Shadow(blurRadius: 10, color: Colors.black87, offset: Offset(0, 2)),
-              Shadow(blurRadius: 18, color: Colors.black54, offset: Offset(0, 6)),
+              Shadow(blurRadius: 6, color: Colors.black54, offset: Offset(0, 1)),            
             ],
           ),
         ),

@@ -26,7 +26,7 @@ const bool kShowTapZonesDebug = true;
 /// 2) Ici tu ajustes TES COTES (en % du canvas).
 class TapZonesSpec {
   static const Rect activity = Rect.fromLTWH(0.12, 0.20, 0.30, 0.13);
-  static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.30, 0.14);
+  static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.36, 0.20);
   static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
   static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
 
@@ -174,8 +174,8 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         id: 'weather',
         centerX: 0.50,
         centerY: 0.18,
-        widthFrac: 0.18,
-        heightFrac: 0.18,
+        widthFrac: 0.26,
+        heightFrac: 0.26,
         route: AppRoutes.weather,
         label: 'Weather'),
     _Hotspot(
