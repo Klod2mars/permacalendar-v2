@@ -55,7 +55,7 @@ class WeatherBubbleWidget extends ConsumerWidget {
 
             // Ajuste typographie selon la taille réelle de la bulle (anti-overflow).
             final dateSize = (s * 0.10).clamp(10.0, 14.0);
-            final iconSize = (s * 0.34).clamp(34.0, 60.0);
+            final iconSize = (s * 0.42).clamp(40.0, 84.0);
             final descSize = (s * 0.14).clamp(12.0, 16.0);
             final tempSize = (s * 0.10).clamp(10.0, 13.5);
             final gap1 = (s * 0.06).clamp(4.0, 10.0);
@@ -81,18 +81,49 @@ class WeatherBubbleWidget extends ConsumerWidget {
                           color: Colors.white70,
                         ),
                       ),
-                      SizedBox(height: gap2),
+                      if (tempLine.isNotEmpty) ...[
+                        SizedBox(height: (gap2 * 0.9).clamp(3.0, 7.0)),
 
-                      // Afficher uniquement Min/Max (ou température courante si pas de min/max)
-                      if (tempLine.isNotEmpty)
-                        _OutlinedText(
-                          tempLine,
-                          fontSize: tempSize,
-                          weight: FontWeight.w700,
-                          letterSpacing: 0.2,
-                          maxLines: 1,
-                          softWrap: false,
-                        ),
+                        // Affichage minimaliste : min / max sur deux lignes (ou temp courante si absente)
+                        if (hasMinMax) ...[
+                          _OutlinedText(
+                            '${weather.minTemp!.toStringAsFixed(1)}°',
+                            fontSize: tempSize,
+                            weight: FontWeight.w700,
+                            letterSpacing: 0.2,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                          SizedBox(height: 2),
+                          _OutlinedText(
+                            '${weather.maxTemp!.toStringAsFixed(1)}°',
+                            fontSize: tempSize,
+                            weight: FontWeight.w700,
+                            letterSpacing: 0.2,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                        ] else if (tempNow != null) ...[
+                          _OutlinedText(
+                            '${tempNow.toStringAsFixed(1)}°',
+                            fontSize: tempSize,
+                            weight: FontWeight.w700,
+                            letterSpacing: 0.2,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                        ] else ...[
+                          // Fallback conservateur : afficher la chaîne existante
+                          _OutlinedText(
+                            tempLine,
+                            fontSize: tempSize,
+                            weight: FontWeight.w700,
+                            letterSpacing: 0.2,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                        ],
+                      ],
                     ],
                   ),
                 ),
