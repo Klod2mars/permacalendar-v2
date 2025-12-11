@@ -541,9 +541,9 @@ class WeatherAlert {
 /// Provider for current weather data from OpenMeteo
 
 final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
-
+  om.Coordinates? effectiveCoords;
+  
   try {
-
     final svc = om.OpenMeteoService.instance;
 
 
@@ -552,13 +552,14 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     // sinon utiliser les coordonnées de la commune sélectionnée (ou défaut).
     final om.Coordinates? persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
 
-    // Garantir que `coords` est non-nullable pour pouvoir accéder à .latitude/.longitude
-    late final om.Coordinates coords;
     if (persistedCoords != null) {
-      coords = persistedCoords;
+      effectiveCoords = persistedCoords;
     } else {
-      coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
+      effectiveCoords = await ref.watch(selectedCommuneCoordinatesProvider.future);
     }
+    
+    // Garantir que `coords` est non-nullable pour la suite
+    final coords = effectiveCoords!;
 
     // DEBUG: indiquer quelles coordonnées sont réellement utilisées par le provider
     debugPrint('CURRENT PROVIDER: persistedCoords=${persistedCoords?.latitude},${persistedCoords?.longitude}, coords=${coords.latitude},${coords.longitude}, resolvedName=${coords.resolvedName}');
@@ -593,100 +594,22 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
 
       return enriched;
 
-    // Get current temperature from hourly data or daily data
-
-    final currentTemp = result.currentTemperatureC ??
-
-        (result.dailyWeather.isNotEmpty
-
-            ? (result.dailyWeather.first.tMaxC ?? 20.0)
-
-            : 20.0);
-
-
-
-    // Get current weather code
-
-    final currentWeatherCode = result.currentWeatherCode;
-
-
-
-    // Get today's min/max from daily data
-
-    final today =
-
-        result.dailyWeather.isNotEmpty ? result.dailyWeather.first : null;
-
-    final minTemp = today?.tMinC;
-
-    final maxTemp = today?.tMaxC;
-
-
-
-    // Determine weather condition and icon based on weather code or fallback to temperature/precipitation
-
-    final condition =
-
-        _determineWeatherCondition(currentTemp, today?.precipMm ?? 0.0);
-
-    final icon = currentWeatherCode != null
-
-        ? WeatherIconMapper.getIconPath(currentWeatherCode)
-
-        : _getWeatherIcon(condition);
-
-    final description = currentWeatherCode != null
-
-        ? WeatherIconMapper.getWeatherDescription(currentWeatherCode)
-
-        : _getWeatherDescription(condition);
-
-
-
-    return WeatherViewData.fromUI(
-
-      temperature: currentTemp,
-
-      minTemp: minTemp,
-
-      maxTemp: maxTemp,
-
-      icon: icon,
-
-      description: description,
-
-      timestamp: DateTime.now(),
-
-      condition: condition.toString(),
-
-      weatherCode: currentWeatherCode,
-
-    );
-
   } catch (e, st) {
     // DEBUG: log complet de l'erreur et de la stacktrace pour comprendre si fetch / parsing / autre a échoué
     debugPrint('CURRENT PROVIDER ERROR: $e\n$st');
 
-    // Fallback to default data on error
-
+    // Fallback à des données par défaut MAIS en essayant de préserver les coordonnées
     return WeatherViewData.fromUI(
-
       temperature: 22.5,
-
       icon: WeatherIconMapper.getIconPath(0), // Code 0 = ciel clair
-
-      description: 'Ensoleillé',
-
+      description: 'Ensoleillé (mode dégradé)', // Indication visuelle
       timestamp: DateTime.now(),
-
       condition: WeatherConditionType.sunny.toString(),
-
       weatherCode: 0,
-
+      coordinates: effectiveCoords, // Preservation des coordonnées !
+      errorMessage: e.toString(),   // Capture de l'erreur pour l'UI
     );
-
   }
-
 });
 
 

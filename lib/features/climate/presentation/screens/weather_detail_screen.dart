@@ -73,6 +73,17 @@ class _DataWithDebug extends StatelessWidget {
           Expanded(child: Text('${view.coordinates.resolvedName ?? '—'}  (${view.coordinates.latitude.toStringAsFixed(3)}, ${view.coordinates.longitude.toStringAsFixed(3)})')),
         ],
       ));
+
+      if (view.errorMessage != null) {
+        sb.add(const SizedBox(height: 6));
+        sb.add(Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('ERREUR: ', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.error)),
+            Expanded(child: Text(view.errorMessage!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.error))),
+          ],
+        ));
+      }
       sb.add(const SizedBox(height: 8));
       sb.add(Wrap(
         spacing: 8,
