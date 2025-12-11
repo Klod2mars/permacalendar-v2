@@ -259,7 +259,12 @@ final persistedCoordinatesProvider =
 
     FutureProvider<om.Coordinates?>((ref) async {
 
+  // DEBUG: verifier ce que retourne CommuneStorage au démarrage
+  debugPrint('PERSISTED PROVIDER: loading commune from CommuneStorage...');
+
   final (commune, lat, lon) = await CommuneStorage.loadCommune();
+
+  debugPrint('PERSISTED PROVIDER: CommuneStorage.loadCommune() -> commune=$commune, lat=$lat, lon=$lon');
 
   if (commune == null || lat == null || lon == null) return null;
 
