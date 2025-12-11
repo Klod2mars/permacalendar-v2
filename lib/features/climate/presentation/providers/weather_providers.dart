@@ -1,4 +1,5 @@
 ﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../domain/usecases/should_pulse_alert_usecase.dart';
 
@@ -554,7 +555,8 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
       coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
     }
 
-
+    // DEBUG: indiquer quelles coordonnées sont réellement utilisées par le provider
+    debugPrint('CURRENT PROVIDER: persistedCoords=${persistedCoords?.latitude},${persistedCoords?.longitude}, coords=${coords.latitude},${coords.longitude}, resolvedName=${coords.resolvedName}');
 
     final result = await svc.fetchPrecipitation(
 
@@ -567,6 +569,9 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
       forecastDays: 3,
 
     );
+
+    // DEBUG: indiquer ce que renvoie OpenMeteoService (taille des listes + température actuelle)
+    debugPrint('FETCH RESULT: hourlyPoints=${result.hourlyPrecipitation.length}, dailyPoints=${result.dailyWeather.length}, currentTemp=${result.currentTemperatureC}');
 
     // Construire WeatherViewData.fromDomain(...) et enrichir icon/description:
     final weatherView = WeatherViewData.fromDomain(
@@ -653,7 +658,9 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
 
     );
 
-  } catch (e) {
+  } catch (e, st) {
+    // DEBUG: log complet de l'erreur et de la stacktrace pour comprendre si fetch / parsing / autre a échoué
+    debugPrint('CURRENT PROVIDER ERROR: $e\n$st');
 
     // Fallback to default data on error
 
