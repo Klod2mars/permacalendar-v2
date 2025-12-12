@@ -1,6 +1,9 @@
 ﻿import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:permacalendar/core/models/daily_weather_point.dart';
+import 'package:permacalendar/core/models/hourly_weather_point.dart';
+// Export HourlyWeatherPoint and the alias for old code relying on PrecipPoint
+export 'package:permacalendar/core/models/hourly_weather_point.dart';
 
 /// Service d'intégration Open-Meteo (sans clé API)
 /// Fournit la récupération des précipitations historiques et des prévisions en mm
@@ -84,10 +87,10 @@ class OpenMeteoService {
     final res = await _dio.get(url, queryParameters: {
       'latitude': latitude,
       'longitude': longitude,
-      // hourly étendu : précip / temp / vent / direction / pression / visibilité si désiré
-      'hourly': 'precipitation,temperature_2m,windspeed_10m,winddirection_10m,pressure_msl,visibility',
-      // daily étendu : sunrise/sunset + moon
-      'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,moonrise,moonset,moon_phase',
+      // hourly étendu : précip / temp / vent / direction / pression / visibilité
+      'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,windspeed_10m,winddirection_10m,windgusts_10m,weathercode',
+      // daily étendu : sunrise/sunset + moon + wind max
+      'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,moonrise,moonset,moon_phase,windspeed_10m_max,windgusts_10m_max',
       'past_days': pastDays,
       'forecast_days': forecastDays,
       'timezone': 'auto',
@@ -100,74 +103,142 @@ class OpenMeteoService {
     final hourly = data['hourly'] as Map<String, dynamic>?;
     final daily = data['daily'] as Map<String, dynamic>?;
 
+    // --- Parsing Hourly ---
     final hourlyTimes = (hourly?['time'] as List?)?.cast<String>() ?? const [];
-    final hourlyPrecip = (hourly?['precipitation'] as List?)
-            ?.map((e) => (e as num?)?.toDouble() ?? 0.0)
-            .toList() ??
-        const <double>[];
-    final hourlyTemp = (hourly?['temperature_2m'] as List?)
-            ?.map((e) => (e as num?)?.toDouble() ?? 0.0)
-            .toList() ??
-        const <double>[];
-
-    final dailyTimes = (daily?['time'] as List?)?.cast<String>() ?? const [];
-    final dailyPrecip = (daily?['precipitation_sum'] as List?)
-            ?.map((e) => (e as num?)?.toDouble() ?? 0.0)
-            .toList() ??
-        const <double>[];
-    final dailyTMax = (daily?['temperature_2m_max'] as List?)
-            ?.map((e) => (e as num?)?.toDouble() ?? 0.0)
-            .toList() ??
-        const <double>[];
-    final dailyTMin = (daily?['temperature_2m_min'] as List?)
-            ?.map((e) => (e as num?)?.toDouble() ?? 0.0)
-            .toList() ??
-        const <double>[];
+    final hourlyPrecip = _toDoubleList(hourly?['precipitation']);
+    final hourlyPrecipProb = _toIntList(hourly?['precipitation_probability']);
+    final hourlyTemp = _toDoubleList(hourly?['temperature_2m']);
+    final hourlyApparentTemp = _toDoubleList(hourly?['apparent_temperature']);
+    final hourlyWindSpeed = _toDoubleList(hourly?['windspeed_10m']);
+    final hourlyWindDir = _toIntList(hourly?['winddirection_10m']);
+    final hourlyWindGusts = _toDoubleList(hourly?['windgusts_10m']);
+    final hourlyCodes = _toIntList(hourly?['weathercode']);
 
     // Construire les points horaires
-    final hourlyPoints = <PrecipPoint>[];
-    for (var i = 0; i < hourlyTimes.length && i < hourlyPrecip.length; i++) {
+    final hourlyPoints = <HourlyWeatherPoint>[];
+    final limit = hourlyTimes.length;
+    
+    for (var i = 0; i < limit; i++) {
+        // Robustesse sur les longueurs de listes
+        double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
+        int getInt(List<int> list) => i < list.length ? list[i] : 0;
+
       hourlyPoints.add(
-        PrecipPoint(
+        HourlyWeatherPoint(
           time: DateTime.parse(hourlyTimes[i]),
-          millimeters: hourlyPrecip[i],
+          precipitationMm: getVal(hourlyPrecip),
+          precipitationProbability: getInt(hourlyPrecipProb),
+          temperatureC: getVal(hourlyTemp),
+          apparentTemperatureC: getVal(hourlyApparentTemp),
+          windSpeedkmh: getVal(hourlyWindSpeed),
+          windDirection: getInt(hourlyWindDir),
+          windGustsKmh: getVal(hourlyWindGusts),
+          weatherCode: getInt(hourlyCodes),
         ),
       );
     }
 
-    // Construire les points journaliers
-    final dailyWeatherCodes = (daily?['weathercode'] as List?)
-            ?.map((e) => (e as num?)?.toInt())
-            .toList() ??
-        const <int>[];
+    // --- Parsing Daily ---
+    final dailyTimes = (daily?['time'] as List?)?.cast<String>() ?? const [];
+    final dailyPrecip = _toDoubleList(daily?['precipitation_sum']);
+    final dailyTMax = _toDoubleList(daily?['temperature_2m_max']);
+    final dailyTMin = _toDoubleList(daily?['temperature_2m_min']);
+    final dailyCodes = _toIntList(daily?['weathercode']);
+    
+    final dailySunrise = (daily?['sunrise'] as List?)?.cast<String?>() ?? const [];
+    final dailySunset = (daily?['sunset'] as List?)?.cast<String?>() ?? const [];
+    final dailyMoonrise = (daily?['moonrise'] as List?)?.cast<String?>() ?? const [];
+    final dailyMoonset = (daily?['moonset'] as List?)?.cast<String?>() ?? const [];
+    final dailyMoonPhase = _toDoubleList(daily?['moon_phase']);
+    final dailyWindSpeedMax = _toDoubleList(daily?['windspeed_10m_max']);
+    final dailyWindGustsMax = _toDoubleList(daily?['windgusts_10m_max']);
 
     final dailyPoints = <DailyWeatherPoint>[];
 
-    for (var i = 0; i < dailyTimes.length && i < dailyPrecip.length; i++) {
-      final code = i < dailyWeatherCodes.length ? dailyWeatherCodes[i] : null;
+    for (var i = 0; i < dailyTimes.length; i++) {
+       // Robustesse
+        double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
+        int? getIntNull(List<int> list) => i < list.length ? list[i] : null;
+        String? getStr(List<String?> list) => i < list.length ? list[i] : null;
+        double? getValNull(List<double> list) => i < list.length ? list[i] : null;
+
       dailyPoints.add(
         DailyWeatherPoint.fromRaw(
           date: DateTime.parse(dailyTimes[i]),
-          precipMm: dailyPrecip[i],
-          tMaxC: i < dailyTMax.length ? dailyTMax[i] : null,
-          tMinC: i < dailyTMin.length ? dailyTMin[i] : null,
-          weatherCode: code,
+          precipMm: getVal(dailyPrecip),
+          tMaxC: getValNull(dailyTMax),
+          tMinC: getValNull(dailyTMin),
+          weatherCode: getIntNull(dailyCodes),
+          sunrise: getStr(dailySunrise),
+          sunset: getStr(dailySunset),
+          moonrise: getStr(dailyMoonrise),
+          moonset: getStr(dailyMoonset),
+          moonPhase: getValNull(dailyMoonPhase),
+          windSpeedMax: getValNull(dailyWindSpeedMax),
+          windGustsMax: getValNull(dailyWindGustsMax),
         ),
       );
     }
 
-    // Température « actuelle » estimée par la dernière mesure horaire
-    final currentTemp = hourlyTemp.isNotEmpty ? hourlyTemp.last : null;
-    final currentWeatherCode = dailyPoints.isNotEmpty ? dailyPoints.first.weatherCode : null;
+    // Température « actuelle » estimée par la dernière mesure horaire du PASSÉ ou du PRÉSENT proche
+    // L'API renvoie ~24h/jour. On cherche l'élément le plus proche de maintenant.
+    final now = DateTime.now();
+    HourlyWeatherPoint? currentPoint;
+    // Trouver le point horaire le plus proche
+    if (hourlyPoints.isNotEmpty) {
+      // Trier par écart de temps avec now
+      // (Supposons que la liste est triée par temps, on peut chercher le premier dont le temps > now et prendre le précédent)
+      /* Simplification : on prend le dernier point qui est <= now + 1h */
+       try {
+         // On cherche le point dont l'heure est la plus proche de l'heure courante (arrondie à l'heure)
+         // api retourne ex: 12:00, 13:00. Si il est 12:40, on veut 13:00 ou 12:00 ? 
+         // OpenMeteo weather_code à 12:00 est la prévision pour 12:00.
+         // On va prendre l'heure courante arrondie.
+         final match = hourlyPoints.firstWhere((p) => p.time.isAfter(now), orElse: () => hourlyPoints.last);
+         final index = hourlyPoints.indexOf(match);
+         if (index > 0) {
+            // Check lequel est plus proche
+            final prev = hourlyPoints[index - 1];
+            if (now.difference(prev.time).abs() < match.time.difference(now).abs()) {
+               currentPoint = prev;
+            } else {
+               currentPoint = match;
+            }
+         } else {
+            currentPoint = match;
+         }
+       } catch (e) {
+          currentPoint = hourlyPoints.isNotEmpty ? hourlyPoints.last : null;
+       }
+    }
+
+    final currentTemp = currentPoint?.temperatureC;
+    final currentWeatherCode = currentPoint?.weatherCode ?? (dailyPoints.isNotEmpty ? dailyPoints.first.weatherCode : null);
 
     return OpenMeteoResult(
       latitude: latitude,
       longitude: longitude,
-      hourlyPrecipitation: hourlyPoints,
+      hourlyWeather: hourlyPoints, // Renommé de hourlyPrecipitation pour clarté, mais on garde getter pour compat
       dailyWeather: dailyPoints,
       currentTemperatureC: currentTemp,
       currentWeatherCode: currentWeatherCode,
+      currentWindSpeed: currentPoint?.windSpeedkmh,
+      currentWindDirection: currentPoint?.windDirection,
     );
+  }
+
+  // Helpers parsing
+  List<double> _toDoubleList(dynamic list) {
+    if (list is List) {
+      return list.map((e) => (e as num?)?.toDouble() ?? 0.0).toList();
+    }
+    return [];
+  }
+   List<int> _toIntList(dynamic list) {
+    if (list is List) {
+      return list.map((e) => (e as num?)?.toInt() ?? 0).toList();
+    }
+    return [];
   }
 }
 
@@ -182,27 +253,30 @@ class Coordinates {
   });
 }
 
-class PrecipPoint {
-  final DateTime time;
-  final double millimeters;
-  PrecipPoint({required this.time, required this.millimeters});
-}
-
 class OpenMeteoResult {
   final double latitude;
   final double longitude;
-  final List<PrecipPoint> hourlyPrecipitation;
+  final List<HourlyWeatherPoint> hourlyWeather;
   final List<DailyWeatherPoint> dailyWeather;
   final double? currentTemperatureC;
   final int? currentWeatherCode;
+  
+  // Extra fields for ease of access
+  final double? currentWindSpeed;
+  final int? currentWindDirection;
+
+  // Compatibilty Getter
+  List<HourlyWeatherPoint> get hourlyPrecipitation => hourlyWeather;
 
   OpenMeteoResult({
     required this.latitude,
     required this.longitude,
-    required this.hourlyPrecipitation,
+    required this.hourlyWeather,
     required this.dailyWeather,
     this.currentTemperatureC,
     this.currentWeatherCode,
+    this.currentWindSpeed,
+    this.currentWindDirection,
   });
 
   /// Découpe les points journaliers en deux listes: historique (dates passées) et prévisions (dates futures)

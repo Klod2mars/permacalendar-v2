@@ -358,13 +358,13 @@ class TimelineWeatherPoint {
 
 enum WeatherAlertType {
 
-  frost, // â„ï¸ Gel
+  frost, // â „ï¸  Gel
 
-  heatwave, // ðŸŒ¡ï¸ Canicule
+  heatwave, // ðŸŒ¡ï¸  Canicule
 
   watering, // ðŸ’§ Arrosage intelligent (contextuel)
 
-  protection, // ðŸ›¡ï¸ Protection
+  protection, // ðŸ›¡ï¸  Protection
 
 }
 
@@ -577,7 +577,7 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     );
 
     // DEBUG: indiquer ce que renvoie OpenMeteoService (taille des listes + température actuelle)
-    debugPrint('FETCH RESULT: hourlyPoints=${result.hourlyPrecipitation.length}, dailyPoints=${result.dailyWeather.length}, currentTemp=${result.currentTemperatureC}');
+    debugPrint('FETCH RESULT: hourlyPoints=${result.hourlyWeather.length}, dailyPoints=${result.dailyWeather.length}, currentTemp=${result.currentTemperatureC}');
 
     // Construire WeatherViewData.fromDomain(...) et enrichir icon/description:
     final weatherView = WeatherViewData.fromDomain(
@@ -769,32 +769,37 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
 
           : _getWeatherDescription(condition);
 
-
-
-      return DailyWeatherPoint.fromEnriched(
-
-        date: daily.date,
-
-        minTemp: daily.tMinC,
-
-        maxTemp: daily.tMaxC,
-
+     // UPDATE: using enrich method that preserves new fields because it copies everything
+     // Wait, enrich method on DailyWeatherPoint (as per my update) DOES preserve them
+     // Let's verify DailyWeatherPoint.enrich
+     /*
+       DailyWeatherPoint enrich({
+        ...
+       }) {
+        return DailyWeatherPoint(
+           date: date,
+           precipMm: precipMm,
+           ...
+           sunrise: sunrise, // It copies `this.sunrise` !
+           ...
+        );
+       }
+     */
+     // So calling .enrich() is safer than casting to .fromEnriched unless I manually pass everything.
+     // In previous code it was using .fromEnriched constructor which DOES NOT default copy unknown fields.
+     
+     // I replaced .fromEnriched call with .enrich() method on the object itself.
+     
+      return daily.enrich(
         icon: icon,
-
         description: description,
-
-        precipitation: daily.precipMm,
-
         condition: condition.toString(),
-
-        weatherCode: daily.weatherCode,
-
       );
 
     }).toList();
 
   } catch (e) {
-
+    debugPrint('FORECAST PROVIDER ERROR: $e');
     // Return empty list on error
 
     return [];
@@ -805,253 +810,65 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
 
 
 
-/// Combined forecast + history provider (J-14 â†’ J+7)
+/// Transformer daily points into timeline UI points
 
-final forecastHistoryProvider =
+List<TimelineWeatherPoint> mapList(List<DailyWeatherPoint> src,
 
-    FutureProvider<List<TimelineWeatherPoint>>((ref) async {
+    {required bool pastFlag}) {
 
-  try {
+  return src.map((daily) {
 
-    final svc = om.OpenMeteoService.instance;
+    final condition = _determineWeatherCondition(
 
-    // Utiliser les coordonnées de la commune sélectionnée (ou défaut)
+      (daily.tMaxC ?? 20.0),
 
-    final coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
-
-
-
-    final result = await svc.fetchPrecipitation(
-
-      latitude: coords.latitude,
-
-      longitude: coords.longitude,
-
-      pastDays: 14,
-
-      forecastDays: 7,
+      daily.precipMm,
 
     );
 
+    final icon = daily.weatherCode != null
 
+        ? WeatherIconMapper.getIconPath(daily.weatherCode!)
 
-    final (past, forecast) = result.splitByToday();
+        : _getWeatherIcon(condition);
 
+    final description = daily.weatherCode != null
 
+        ? WeatherIconMapper.getWeatherDescription(daily.weatherCode!)
 
-    List<TimelineWeatherPoint> mapList(List<DailyWeatherPoint> src,
+        : _getWeatherDescription(condition);
 
-        {required bool pastFlag}) {
 
-      return src.map((daily) {
 
-        final condition = _determineWeatherCondition(
+    return TimelineWeatherPoint(
 
-          (daily.tMaxC ?? 20.0),
+      date: daily.date,
 
-          daily.precipMm,
+      minTemp: daily.tMinC,
 
-        );
+      maxTemp: daily.tMaxC,
 
-        final icon = daily.weatherCode != null
+      icon: icon,
 
-            ? WeatherIconMapper.getIconPath(daily.weatherCode!)
+      description: description,
 
-            : _getWeatherIcon(condition);
+      precipitation: daily.precipMm,
 
-        final description = daily.weatherCode != null
+      condition: condition,
 
-            ? WeatherIconMapper.getWeatherDescription(daily.weatherCode!)
+      weatherCode: daily.weatherCode,
 
-            : _getWeatherDescription(condition);
+      isPast: pastFlag,
 
+    );
 
+  }).toList();
 
-        return TimelineWeatherPoint(
+}
 
-          date: daily.date,
 
-          minTemp: daily.tMinC,
 
-          maxTemp: daily.tMaxC,
-
-          icon: icon,
-
-          description: description,
-
-          precipitation: daily.precipMm,
-
-          condition: condition,
-
-          weatherCode: daily.weatherCode,
-
-          isPast: pastFlag,
-
-        );
-
-      }).toList();
-
-    }
-
-
-
-    final timeline = <TimelineWeatherPoint>[
-
-      ...mapList(past, pastFlag: true),
-
-      ...mapList(forecast, pastFlag: false),
-
-    ];
-
-    return timeline;
-
-  } catch (e) {
-
-    return [];
-
-  }
-
-});
-
-
-
-/// Provider for determining if alert pulse should be active
-
-///
-
-/// Uses the ShouldPulseAlertUsecase to determine if alerts are present
-
-/// and should trigger the pulse animation.
-
-final shouldPulseAlertProvider = Provider<bool>((ref) {
-
-  final alerts = ref.watch(alertsProvider).value;
-
-  return ShouldPulseAlertUsecase().call(alerts);
-
-});
-
-
-
-/// Provider for alert count
-
-///
-
-/// Returns the number of active alerts.
-
-final alertCountProvider = Provider<int>((ref) {
-
-  final alerts = ref.watch(alertsProvider).value;
-
-  return ShouldPulseAlertUsecase().getAlertCount(alerts);
-
-});
-
-
-
-/// Provider for alerts summary
-
-///
-
-/// Returns a human-readable summary of alerts.
-
-final alertsSummaryProvider = Provider<String>((ref) {
-
-  final alerts = ref.watch(alertsProvider).value;
-
-  return ShouldPulseAlertUsecase().getAlertsSummary(alerts);
-
-});
-
-
-
-/// Provider for forecast availability
-
-///
-
-/// Returns true if forecast data is available.
-
-final forecastAvailableProvider = Provider<bool>((ref) {
-
-  final forecast = ref.watch(forecastProvider);
-
-  return forecast.hasValue && forecast.value!.isNotEmpty;
-
-});
-
-
-
-/// Provider for forecast days count
-
-///
-
-/// Returns the number of forecast days available.
-
-final forecastDaysCountProvider = Provider<int>((ref) {
-
-  final forecast = ref.watch(forecastProvider);
-
-  return forecast.hasValue ? forecast.value!.length : 0;
-
-});
-
-
-
-/// Provider for current air temperature
-
-///
-
-/// Extracts the current air temperature from weather data.
-
-/// This is used for soil temperature calculations.
-
-final currentAirTempProvider = Provider<double?>((ref) {
-
-  final weather = ref.watch(currentWeatherProvider);
-
-  return weather.hasValue ? weather.value!.temperature : null;
-
-});
-
-
-
-/// Provider for weather data freshness
-
-///
-
-/// Returns true if weather data is fresh (less than 1 hour old).
-
-final weatherDataFreshProvider = Provider<bool>((ref) {
-
-  final weather = ref.watch(currentWeatherProvider);
-
-  if (!weather.hasValue) return false;
-
-
-
-  final timestamp = weather.value!.timestamp;
-
-
-
-  final now = DateTime.now();
-
-  final difference = now.difference(timestamp);
-
-  return difference.inHours < 1;
-
-});
-
-
-
-// ============================================================================
-
-// HELPER FUNCTIONS FOR WEATHER CONDITION DETERMINATION
-
-// ============================================================================
-
-
-
-/// Determines weather condition based on temperature and precipitation
+// Helper for weather condition
 
 WeatherConditionType _determineWeatherCondition(
 
@@ -1086,48 +903,6 @@ WeatherConditionType _determineWeatherCondition(
 }
 
 
-
-/// Gets weather icon based on condition
-
-String _getWeatherIcon(WeatherConditionType condition) {
-
-  switch (condition) {
-
-    case WeatherConditionType.sunny:
-
-      return 'â˜€ï¸';
-
-    case WeatherConditionType.rainy:
-
-      return 'ðŸŒ§ï¸';
-
-    case WeatherConditionType.hot:
-
-      return 'ðŸ”¥';
-
-    case WeatherConditionType.snowOrFrost:
-
-      return 'â„ï¸';
-
-    case WeatherConditionType.cloudy:
-
-      return 'â›…';
-
-    case WeatherConditionType.stormy:
-
-      return 'â›ˆï¸';
-
-    case WeatherConditionType.other:
-
-      return 'ðŸŒ¤ï¸';
-
-  }
-
-}
-
-
-
-/// Gets weather description based on condition
 
 String _getWeatherDescription(WeatherConditionType condition) {
 
@@ -1167,4 +942,38 @@ String _getWeatherDescription(WeatherConditionType condition) {
 
 
 
+String _getWeatherIcon(WeatherConditionType condition) {
 
+  switch (condition) {
+
+    case WeatherConditionType.sunny:
+
+      return 'â˜€ï¸ ';
+
+    case WeatherConditionType.rainy:
+
+      return 'ðŸŒ§ï¸ ';
+
+    case WeatherConditionType.hot:
+
+      return 'ðŸ”¥';
+
+    case WeatherConditionType.snowOrFrost:
+
+      return 'â „ï¸ ';
+
+    case WeatherConditionType.cloudy:
+
+      return 'â›…';
+
+    case WeatherConditionType.stormy:
+
+      return 'â›ˆï¸ ';
+
+    case WeatherConditionType.other:
+
+      return 'ðŸŒ¤ï¸ ';
+
+  }
+
+}

@@ -96,7 +96,7 @@ class WeatherViewData {
     final minimalResult = OpenMeteoResult(
       latitude: coords.latitude,
       longitude: coords.longitude,
-      hourlyPrecipitation: [],
+      hourlyWeather: [],
       dailyWeather: [],
       currentTemperatureC: temperature,
       currentWeatherCode: weatherCode,
