@@ -140,6 +140,8 @@ class PlantHiveRepository {
     try {
       developer.log('PlantHiveRepository: Début du chargement depuis JSON',
           name: 'PlantHiveRepository');
+      // Visible debug print to ensure startup is logged
+      print('PlantHiveRepository: initializeFromJson START');
 
       // Chargement du fichier JSON depuis les assets
       final String jsonString = await rootBundle.loadString(_jsonAssetPath);
@@ -219,6 +221,8 @@ class PlantHiveRepository {
           final plantId = plantJson is Map<String, dynamic>
               ? plantJson['id'] ?? 'unknown'
               : 'unknown';
+          // FORCE LOGGING FOR DEBUG: ensure visibility in flutter logs / adb logcat
+          print('!!! CRITICAL ERROR LOADING PLANT $plantId: $e');
           developer.log(
               'PlantHiveRepository: Erreur lors du traitement de la plante $plantId: $e',
               name: 'PlantHiveRepository',
@@ -230,6 +234,8 @@ class PlantHiveRepository {
       developer.log(
           'PlantHiveRepository: Chargement terminé [$detectedFormat] - $successCount succès, $errorCount erreurs',
           name: 'PlantHiveRepository');
+      print(
+          'PlantHiveRepository: initializeFromJson END - successCount=$successCount, errorCount=$errorCount, detectedFormat=$detectedFormat');
 
       _isInitialized = true;
     } catch (e) {
