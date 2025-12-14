@@ -342,8 +342,9 @@ class PlantHiveRepository {
       // 1) sowingMonths3 -> sowingMonths (si présent)
       if (json.containsKey('sowingMonths3') && json['sowingMonths3'] is List) {
         try {
-          json['sowingMonths'] =
-              List<String>.from(json['sowingMonths3'] as List);
+          json['sowingMonths'] = (json['sowingMonths3'] as List)
+              .map((e) => e.toString())
+              .toList();
         } catch (_) {}
       }
 
@@ -368,6 +369,7 @@ class PlantHiveRepository {
         if (bc['preparations'] is List) {
           final preparations = List.from(bc['preparations'] as List);
           for (var i = 0; i < preparations.length; i++) {
+            if (preparations[i] is! Map) continue;
             final p = Map<String, dynamic>.from(preparations[i] as Map);
             for (final k in ['temperature', 'temp']) {
               final v = p[k];
@@ -397,7 +399,8 @@ class PlantHiveRepository {
               .where((e) => e.isNotEmpty)
               .toList();
           final List<String> newBen = [];
-          final List<String> avoids = List<String>.from(cp['avoid'] ?? []);
+          final List<String> avoids =
+              (cp['avoid'] as List? ?? []).map((e) => e.toString()).toList();
           final List<String> notesList = [];
           for (final item in parts) {
             if (item.toLowerCase().contains('éviter') ||
