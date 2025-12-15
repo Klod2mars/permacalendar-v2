@@ -27,6 +27,7 @@ const bool kShowTapZonesDebug = true;
 class TapZonesSpec {
   static const Rect activity = Rect.fromLTWH(0.12, 0.20, 0.30, 0.13);
   static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.36, 0.20);
+  static const Rect weatherStats = Rect.fromLTWH(0.18, 0.22, 0.20, 0.20); // NEW: Zone tap gauche
   static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
   static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
 
@@ -155,6 +156,14 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         route: AppRoutes.intelligence,
         label: 'Intelligence'),
     _Hotspot(
+        id: 'weather_stats', // NEW: Zone pour stats météo (même position approx que intelligence)
+        centerX: 0.18,
+        centerY: 0.22,
+        widthFrac: 0.20,
+        heightFrac: 0.20,
+        route: AppRoutes.weather,
+        label: 'Weather Stats'),
+    _Hotspot(
         id: 'calendar',
         centerX: 0.18,
         centerY: 0.50,
@@ -176,7 +185,7 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         centerY: 0.18,
         widthFrac: 0.26,
         heightFrac: 0.26,
-        route: AppRoutes.weather,
+        route: null, // CHANGED: null means no navigation
         label: 'Weather'),
     _Hotspot(
         id: 'settings',
@@ -247,45 +256,74 @@ class _OrganicDashboardWidgetState
   }
 
   Future<void> _loadDefaultsIfNeeded() async {
-    // Si le provider contient déjà des valeurs, ne rien faire.
-    final current = ref.read(organicZonesProvider);
-    if (current.isNotEmpty) {
+    final currentMap = ref.read(organicZonesProvider);
+    
+    // On prépare les listes de ce qui manque potentiellement
+    final defaultPositions = <String, Offset>{};
+    final defaultSizes = <String, double>{};
+    final defaultEnabled = <String, bool>{};
+    
+    bool needsUpdate = false;
+
+    for (final h in OrganicDashboardWidget._hotspots) {
+      if (!currentMap.containsKey(h.id)) {
+        // Ce hotspot n'existe pas dans la config utilisateur -> on l'ajoute
+        needsUpdate = true;
+        defaultPositions[h.id] = Offset(h.centerX, h.centerY);
+        
+        final sizeFrac = ((h.widthFrac + h.heightFrac) / 2.0).clamp(0.05, 1.0);
+        defaultSizes[h.id] = sizeFrac;
+        
+        // Active par défaut, sauf si on décide autrement
+        defaultEnabled[h.id] = true;
+      }
+    }
+
+    if (!needsUpdate) {
       if (kDebugMode) {
-        debugPrint('🔧 [CALIBRATION] defaults already loaded, skipping');
+        debugPrint('🔧 [CALIBRATION] no new defaults to inject, skipping');
       }
       return;
     }
 
-    // Construire des valeurs par défaut à partir de la liste statique _hotspots.
-    final defaultPositions = <String, Offset>{};
-    final defaultSizes = <String, double>{};
-    final defaultEnabled = <String, bool>{};
-
-    for (final h in OrganicDashboardWidget._hotspots) {
-      // position : centre normalisé (0..1)
-      defaultPositions[h.id] = Offset(h.centerX, h.centerY);
-
-      // size : valeur normalisée 0..1 (on prend la moyenne width/height frac comme heuristique)
-      final sizeFrac = ((h.widthFrac + h.heightFrac) / 2.0).clamp(0.05, 1.0);
-      defaultSizes[h.id] = sizeFrac;
-
-      // activer par défaut
-      defaultEnabled[h.id] = true;
-    }
-
     try {
       if (kDebugMode) {
-        debugPrint('🔧 [CALIBRATION] loading defaults into organicZonesProvider: ${defaultPositions.keys.toList()}');
+        debugPrint('🔧 [CALIBRATION] injecting new defaults: ${defaultPositions.keys.toList()}');
       }
+      // On utilise loadFromStorage qui fait un merge dans le Notifier (s'il est bien foutu) 
+      // ou bien on doit s'assurer que le repository fait un "upsert".
+      // Note: OrganicZonesNotifier.loadFromStorage remplace souvent tout si on ne fait pas gaffe, 
+      // mais ici on suppose qu'on veut juste INIT si vide, ou PATCH.
+      // VERIFICATION: Le repository Hive fait souvent un put complet.
+      // SÉCURITÉ: On va lire l'existant, merger, et réécrire pour être sûr de ne rien perdre.
+      
+      // 1. Récupérer l'existant déjà chargé dans currentMap
+      final mergedPositions = <String, Offset>{};
+      final mergedSizes = <String, double>{};
+      final mergedEnabled = <String, bool>{};
+
+      // Copie existant
+      for (final kv in currentMap.entries) {
+        mergedPositions[kv.key] = kv.value.position;
+        mergedSizes[kv.key] = kv.value.size;
+        mergedEnabled[kv.key] = kv.value.enabled;
+      }
+
+      // Ajout des nouveaux
+      mergedPositions.addAll(defaultPositions);
+      mergedSizes.addAll(defaultSizes);
+      mergedEnabled.addAll(defaultEnabled);
+
       await ref
           .read(organicZonesProvider.notifier)
           .loadFromStorage(
-            defaultPositions: defaultPositions,
-            defaultSizes: defaultSizes,
-            defaultEnabled: defaultEnabled,
+            defaultPositions: mergedPositions,
+            defaultSizes: mergedSizes,
+            defaultEnabled: mergedEnabled,
           );
+          
       if (kDebugMode) {
-        debugPrint('🔧 [CALIBRATION] defaults loaded successfully');
+        debugPrint('🔧 [CALIBRATION] defaults injected and merged successfully');
       }
     } catch (e, st) {
       if (kDebugMode) {
@@ -493,7 +531,7 @@ class _Hotspot {
   final double centerY;
   final double widthFrac;
   final double heightFrac;
-  final String route;
+  final String? route; // Nullable -> if null, no navigation
   final String? label;
 }
 
