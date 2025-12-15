@@ -84,21 +84,31 @@ class OpenMeteoService {
     int forecastDays = 7,
   }) async {
     const url = 'https://api.open-meteo.com/v1/forecast';
-    final res = await _dio.get(url, queryParameters: {
-      'latitude': latitude,
-      'longitude': longitude,
-      // hourly étendu : précip / temp / vent / direction / pression / visibilité
-      'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,windspeed_10m,winddirection_10m,windgusts_10m,weathercode,pressure_msl',
-      // daily étendu : sunrise/sunset + moon + wind max
-      'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,moonrise,moonset,moon_phase,windspeed_10m_max,windgusts_10m_max',
-      'past_days': pastDays,
-      'forecast_days': forecastDays,
-      'timezone': 'auto',
-    });
+    try {
+      final res = await _dio.get(url, queryParameters: {
+        'latitude': latitude,
+        'longitude': longitude,
+        // hourly étendu : précip / temp / vent / direction / pression / visibilité
+        'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl',
+        // daily étendu : sunrise/sunset + moon + wind max
+        'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,moonrise,moonset,moon_phase,wind_speed_10m_max,wind_gusts_10m_max',
+        'past_days': pastDays,
+        'forecast_days': forecastDays,
+        'timezone': 'auto',
+      });
 
-    final data = res.data is Map<String, dynamic>
-        ? res.data as Map<String, dynamic>
-        : json.decode(res.data as String) as Map<String, dynamic>;
+      final data = res.data is Map<String, dynamic>
+          ? res.data as Map<String, dynamic>
+          : json.decode(res.data as String) as Map<String, dynamic>;
+
+      return _parseData(data, latitude, longitude);
+    } on DioException catch (e) {
+      print('PLEASE READ THIS ERROR: OpenMeteo 400 Error Body: ${e.response?.data}');
+      rethrow;
+    }
+  }
+
+  OpenMeteoResult _parseData(Map<String, dynamic> data, double latitude, double longitude) {
 
     final hourly = data['hourly'] as Map<String, dynamic>?;
     final daily = data['daily'] as Map<String, dynamic>?;
@@ -109,11 +119,11 @@ class OpenMeteoService {
     final hourlyPrecipProb = _toIntList(hourly?['precipitation_probability']);
     final hourlyTemp = _toDoubleList(hourly?['temperature_2m']);
     final hourlyApparentTemp = _toDoubleList(hourly?['apparent_temperature']);
-    final hourlyWindSpeed = _toDoubleList(hourly?['windspeed_10m']);
-    final hourlyWindDir = _toIntList(hourly?['winddirection_10m']);
-    final hourlyWindGusts = _toDoubleList(hourly?['windgusts_10m']);
+    final hourlyWindSpeed = _toDoubleList(hourly?['wind_speed_10m']);
+    final hourlyWindDir = _toIntList(hourly?['wind_direction_10m']);
+    final hourlyWindGusts = _toDoubleList(hourly?['wind_gusts_10m']);
     final hourlyPressure = _toDoubleList(hourly?['pressure_msl']);
-    final hourlyCodes = _toIntList(hourly?['weathercode']);
+    final hourlyCodes = _toIntList(hourly?['weather_code']);
 
     // Construire les points horaires
     final hourlyPoints = <HourlyWeatherPoint>[];
@@ -145,15 +155,15 @@ class OpenMeteoService {
     final dailyPrecip = _toDoubleList(daily?['precipitation_sum']);
     final dailyTMax = _toDoubleList(daily?['temperature_2m_max']);
     final dailyTMin = _toDoubleList(daily?['temperature_2m_min']);
-    final dailyCodes = _toIntList(daily?['weathercode']);
+    final dailyCodes = _toIntList(daily?['weather_code']);
     
     final dailySunrise = (daily?['sunrise'] as List?)?.cast<String?>() ?? const [];
     final dailySunset = (daily?['sunset'] as List?)?.cast<String?>() ?? const [];
     final dailyMoonrise = (daily?['moonrise'] as List?)?.cast<String?>() ?? const [];
     final dailyMoonset = (daily?['moonset'] as List?)?.cast<String?>() ?? const [];
     final dailyMoonPhase = _toDoubleList(daily?['moon_phase']);
-    final dailyWindSpeedMax = _toDoubleList(daily?['windspeed_10m_max']);
-    final dailyWindGustsMax = _toDoubleList(daily?['windgusts_10m_max']);
+    final dailyWindSpeedMax = _toDoubleList(daily?['wind_speed_10m_max']);
+    final dailyWindGustsMax = _toDoubleList(daily?['wind_gusts_10m_max']);
 
     final dailyPoints = <DailyWeatherPoint>[];
 
