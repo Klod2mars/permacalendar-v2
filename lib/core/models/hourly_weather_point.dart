@@ -9,6 +9,7 @@ class HourlyWeatherPoint {
   final int windDirection;   // winddirection_10m (degrés)
   final double windGustsKmh; // windgusts_10m
   final int weatherCode;
+  final double? pressureMsl; // pressure_msl (hPa)
 
   HourlyWeatherPoint({
     required this.time,
@@ -20,6 +21,7 @@ class HourlyWeatherPoint {
     required this.windDirection,
     required this.windGustsKmh,
     required this.weatherCode,
+    this.pressureMsl,
   });
 
   @override

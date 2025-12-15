@@ -88,7 +88,7 @@ class OpenMeteoService {
       'latitude': latitude,
       'longitude': longitude,
       // hourly étendu : précip / temp / vent / direction / pression / visibilité
-      'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,windspeed_10m,winddirection_10m,windgusts_10m,weathercode',
+      'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,windspeed_10m,winddirection_10m,windgusts_10m,weathercode,pressure_msl',
       // daily étendu : sunrise/sunset + moon + wind max
       'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,moonrise,moonset,moon_phase,windspeed_10m_max,windgusts_10m_max',
       'past_days': pastDays,
@@ -112,6 +112,7 @@ class OpenMeteoService {
     final hourlyWindSpeed = _toDoubleList(hourly?['windspeed_10m']);
     final hourlyWindDir = _toIntList(hourly?['winddirection_10m']);
     final hourlyWindGusts = _toDoubleList(hourly?['windgusts_10m']);
+    final hourlyPressure = _toDoubleList(hourly?['pressure_msl']);
     final hourlyCodes = _toIntList(hourly?['weathercode']);
 
     // Construire les points horaires
@@ -133,6 +134,7 @@ class OpenMeteoService {
           windSpeedkmh: getVal(hourlyWindSpeed),
           windDirection: getInt(hourlyWindDir),
           windGustsKmh: getVal(hourlyWindGusts),
+          pressureMsl: getVal(hourlyPressure),
           weatherCode: getInt(hourlyCodes),
         ),
       );
