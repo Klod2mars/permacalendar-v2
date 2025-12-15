@@ -76,7 +76,7 @@ class WeatherViewData {
 
   /// Constructeur depuis données UI uniquement (compatibilité)
   factory WeatherViewData.fromUI({
-    required double temperature,
+    double? temperature,
     double? minTemp,
     double? maxTemp,
     required String icon,

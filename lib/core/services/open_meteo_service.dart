@@ -186,30 +186,35 @@ class OpenMeteoService {
     HourlyWeatherPoint? currentPoint;
     // Trouver le point horaire le plus proche
     if (hourlyPoints.isNotEmpty) {
-      // Trier par écart de temps avec now
-      // (Supposons que la liste est triée par temps, on peut chercher le premier dont le temps > now et prendre le précédent)
-      /* Simplification : on prend le dernier point qui est <= now + 1h */
-       try {
-         // On cherche le point dont l'heure est la plus proche de l'heure courante (arrondie à l'heure)
-         // api retourne ex: 12:00, 13:00. Si il est 12:40, on veut 13:00 ou 12:00 ? 
-         // OpenMeteo weather_code à 12:00 est la prévision pour 12:00.
-         // On va prendre l'heure courante arrondie.
-         final match = hourlyPoints.firstWhere((p) => p.time.isAfter(now), orElse: () => hourlyPoints.last);
-         final index = hourlyPoints.indexOf(match);
-         if (index > 0) {
-            // Check lequel est plus proche
-            final prev = hourlyPoints[index - 1];
-            if (now.difference(prev.time).abs() < match.time.difference(now).abs()) {
-               currentPoint = prev;
-            } else {
-               currentPoint = match;
-            }
-         } else {
-            currentPoint = match;
-         }
-       } catch (e) {
-          currentPoint = hourlyPoints.isNotEmpty ? hourlyPoints.last : null;
-       }
+      try {
+        // On cherche le premier point dans le futur
+        final index = hourlyPoints.indexWhere((p) => p.time.isAfter(now));
+
+        if (index == -1) {
+          // Tous les points sont dans le passé, on prend le dernier
+          currentPoint = hourlyPoints.last;
+        } else if (index == 0) {
+          // Le premier point est déjà dans le futur, on le prend
+          currentPoint = hourlyPoints.first;
+        } else {
+          // On est entre deux points (index-1 et index)
+          final prev = hourlyPoints[index - 1];
+          final next = hourlyPoints[index];
+          
+          final diffPrev = now.difference(prev.time).abs();
+          final diffNext = next.time.difference(now).abs();
+
+          if (diffPrev < diffNext) {
+            currentPoint = prev;
+          } else {
+            currentPoint = next;
+          }
+        }
+      } catch (e) {
+        // En cas d'erreur imprévue, fallback sur null ou le dernier point connu
+        print('Error finding current point: $e');
+        currentPoint = null; 
+      }
     }
 
     final currentTemp = currentPoint?.temperatureC;

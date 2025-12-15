@@ -256,28 +256,24 @@ final selectedCommuneCoordinatesProvider =
 // When app starts, load the last commune from Hive and provide its coordinates.
 
 final persistedCoordinatesProvider =
-
     FutureProvider<om.Coordinates?>((ref) async {
-
   // DEBUG: verifier ce que retourne CommuneStorage au démarrage
-  debugPrint('PERSISTED PROVIDER: loading commune from CommuneStorage...');
+  // debugPrint('PERSISTED PROVIDER: loading commune from CommuneStorage...');
+  try {
+    final (commune, lat, lon) = await CommuneStorage.loadCommune();
+    // debugPrint('PERSISTED PROVIDER: CommuneStorage.loadCommune() -> commune=$commune, lat=$lat, lon=$lon');
 
-  final (commune, lat, lon) = await CommuneStorage.loadCommune();
+    if (commune == null || lat == null || lon == null) return null;
 
-  debugPrint('PERSISTED PROVIDER: CommuneStorage.loadCommune() -> commune=$commune, lat=$lat, lon=$lon');
-
-  if (commune == null || lat == null || lon == null) return null;
-
-  return om.Coordinates(
-
-    latitude: lat,
-
-    longitude: lon,
-
-    resolvedName: commune,
-
-  );
-
+    return om.Coordinates(
+      latitude: lat,
+      longitude: lon,
+      resolvedName: commune,
+    );
+  } catch (e, st) {
+    debugPrint('PERSISTED PROVIDER ERROR: $e\n$st');
+    return null; // Fail safe
+  }
 });
 
 
@@ -543,10 +539,9 @@ class WeatherAlert {
 final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
   om.Coordinates? effectiveCoords;
   
+  // 1. Résolution des coordonnées
   try {
     final svc = om.OpenMeteoService.instance;
-
-
 
     // Utiliser en priorité les coordonnées persistées (Hive) si présentes,
     // sinon utiliser les coordonnées de la commune sélectionnée (ou défaut).
@@ -558,56 +553,65 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
       effectiveCoords = await ref.watch(selectedCommuneCoordinatesProvider.future);
     }
     
-    // Garantir que `coords` est non-nullable pour la suite
-    final coords = effectiveCoords!;
+  } catch (e, st) {
+    debugPrint('CURRENT PROVIDER (COORDS) ERROR: $e\n$st');
+    
+    return WeatherViewData.fromUI(
+      temperature: null, 
+      icon: WeatherIconMapper.getFallbackIcon(),
+      description: 'Erreur localisation',
+      timestamp: DateTime.now(),
+      coordinates: null,
+      errorMessage: 'Erreur localisation: $e',
+    );
+  }
 
-    // DEBUG: indiquer quelles coordonnées sont réellement utilisées par le provider
-    debugPrint('CURRENT PROVIDER: persistedCoords=${persistedCoords?.latitude},${persistedCoords?.longitude}, coords=${coords.latitude},${coords.longitude}, resolvedName=${coords.resolvedName}');
+  // Garantir que `coords` est non-nullable pour la suite
+  final coords = effectiveCoords!;
 
+  // DEBUG: indiquer quelles coordonnées sont réellement utilisées par le provider
+  debugPrint('CURRENT PROVIDER: using coords=${coords.latitude},${coords.longitude} (${coords.resolvedName})');
+
+  // 2. Fetch Météo
+  try {
+    final svc = om.OpenMeteoService.instance;
     final result = await svc.fetchPrecipitation(
-
       latitude: coords.latitude,
-
       longitude: coords.longitude,
-
       pastDays: 1,
-
       forecastDays: 3,
-
     );
 
-    // DEBUG: indiquer ce que renvoie OpenMeteoService (taille des listes + température actuelle)
-    debugPrint('FETCH RESULT: hourlyPoints=${result.hourlyWeather.length}, dailyPoints=${result.dailyWeather.length}, currentTemp=${result.currentTemperatureC}');
+    // DEBUG: indiquer ce que renvoie OpenMeteoService
+    debugPrint('FETCH RESULT: hourly=${result.hourlyWeather.length}, currentTemp=${result.currentTemperatureC}');
 
-    // Construire WeatherViewData.fromDomain(...) et enrichir icon/description:
+    // Construire WeatherViewData
     final weatherView = WeatherViewData.fromDomain(
       locationLabel: coords.resolvedName ?? '—',
       coordinates: coords,
       result: result,
     );
 
-    // Enrichir l'UI fields (temperature/icon/description) si possible:
+    // Enrichir l'UI
     final enriched = weatherView.enrich(
       icon: WeatherIconMapper.getIconPath(result.currentWeatherCode),
       description: WeatherIconMapper.getWeatherDescription(result.currentWeatherCode),
     );
 
-      return enriched;
+    return enriched;
 
   } catch (e, st) {
-    // DEBUG: log complet de l'erreur et de la stacktrace pour comprendre si fetch / parsing / autre a échoué
-    debugPrint('CURRENT PROVIDER ERROR: $e\n$st');
+    debugPrint('CURRENT PROVIDER (FETCH) ERROR: $e\n$st');
 
-    // Fallback à des données par défaut MAIS en essayant de préserver les coordonnées
+    // PLUS DE FALSIFICATION DE DONNEES (22.5°C)
+    // On retourne un objet avec erreur et température null
     return WeatherViewData.fromUI(
-      temperature: 22.5,
-      icon: WeatherIconMapper.getIconPath(0), // Code 0 = ciel clair
-      description: 'Ensoleillé (mode dégradé)', // Indication visuelle
+      temperature: null,
+      icon: WeatherIconMapper.getFallbackIcon(),
+      description: 'Erreur météo',
       timestamp: DateTime.now(),
-      condition: WeatherConditionType.sunny.toString(),
-      weatherCode: 0,
-      coordinates: effectiveCoords, // Preservation des coordonnées !
-      errorMessage: e.toString(),   // Capture de l'erreur pour l'UI
+      coordinates: effectiveCoords,
+      errorMessage: e.toString(),
     );
   }
 });
