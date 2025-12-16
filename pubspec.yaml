@@ -98,6 +98,7 @@ flutter:
     - assets/images/backgrounds/
     - assets/images/social/
     - assets/images/legumes/
+    - assets/weather_icons/
     - .env
   
   fonts:
