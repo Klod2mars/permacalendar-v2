@@ -74,18 +74,17 @@ class WeatherBubbleWidget extends ConsumerWidget {
                       // ICÔNE (seule information visuelle immédiate)
                       FutureBuilder(
                         future: () async {
-                           // FORCE HARDCODED PATH FOR DIAGNOSIS
-                           const path = 'assets/weather_icons/thunderstorm.png'; 
+                           final path = weather.icon ?? 'assets/weather_icons/sunny.png';
                            try {
                              await rootBundle.load(path);
-                             debugPrint('WeatherBubble HARDCODED Asset FOUND: $path');
+                             debugPrint('WeatherBubble Asset FOUND: $path');
                            } catch (e) {
-                             debugPrint('WeatherBubble HARDCODED Asset MISSING: $path -> $e');
+                             debugPrint('WeatherBubble Asset MISSING: $path -> $e');
                            }
                            return true;
                         }(),
                         builder: (c, s) => Image.asset(
-                          'assets/weather_icons/thunderstorm.png', // HARDCODED
+                          weather.icon ?? 'assets/weather_icons/sunny.png',
                           width: iconSize,
                           height: iconSize,
                           errorBuilder: (context, error, stackTrace) => Icon(
