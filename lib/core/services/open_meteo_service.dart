@@ -90,8 +90,9 @@ class OpenMeteoService {
         'longitude': longitude,
         // hourly étendu : précip / temp / vent / direction / pression / visibilité
         'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl',
-        // daily étendu : sunrise/sunset + moon + wind max
-        'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,moonrise,moonset,moon_phase,wind_speed_10m_max,wind_gusts_10m_max',
+        // daily étendu : sunrise/sunset + wind max
+        // NOTE: Moon data removed as it seems to cause 400 errors (not in standard daily params?)
+        'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
         'past_days': pastDays,
         'forecast_days': forecastDays,
         'timezone': 'auto',
@@ -159,9 +160,12 @@ class OpenMeteoService {
     
     final dailySunrise = (daily?['sunrise'] as List?)?.cast<String?>() ?? const [];
     final dailySunset = (daily?['sunset'] as List?)?.cast<String?>() ?? const [];
+    
+    // Moon data retiré de la requête pour éviter erreur 400
     final dailyMoonrise = (daily?['moonrise'] as List?)?.cast<String?>() ?? const [];
     final dailyMoonset = (daily?['moonset'] as List?)?.cast<String?>() ?? const [];
     final dailyMoonPhase = _toDoubleList(daily?['moon_phase']);
+
     final dailyWindSpeedMax = _toDoubleList(daily?['wind_speed_10m_max']);
     final dailyWindGustsMax = _toDoubleList(daily?['wind_gusts_10m_max']);
 
