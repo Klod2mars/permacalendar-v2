@@ -1,7 +1,9 @@
 
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../../core/models/daily_weather_point.dart';
 import '../../../../core/models/hourly_weather_point.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
@@ -215,7 +217,21 @@ class DailyForecastListWidget extends StatelessWidget {
 
                   const Spacer(),
                   // Icon
-                  Image.asset(day.icon ?? 'assets/weather_icons/default.png', width: 32, height: 32, errorBuilder: (_,__,___) => const Icon(Icons.wb_sunny, color: Colors.orange)),
+                  FutureBuilder(
+                    future: () async {
+                      try {
+                        await rootBundle.load(day.icon ?? 'assets/weather_icons/default.png');
+                        debugPrint('Asset FOUND: ${day.icon}');
+                      } catch (e) {
+                        debugPrint('Asset MISSING: ${day.icon} -> $e');
+                      }
+                      debugPrint('Daily: date=${day.date}, weatherCode=${day.weatherCode}, icon=${day.icon}');
+                      return true;
+                    }(),
+                    builder: (context, snapshot) {
+                      return Image.asset(day.icon ?? 'assets/weather_icons/default.png', width: 32, height: 32, errorBuilder: (_,__,___) => const Icon(Icons.wb_sunny, color: Colors.orange));
+                    }
+                  ),
                   const Spacer(),
                   // Min / Max
                   Text('${day.minTemp?.round() ?? '-'}°', style: const TextStyle(color: Colors.white70, fontSize: 16)),

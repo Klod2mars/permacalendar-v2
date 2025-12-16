@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -71,14 +72,27 @@ class WeatherBubbleWidget extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // ICÔNE (seule information visuelle immédiate)
-                      Image.asset(
-                        weather.icon ?? 'assets/weather_icons/sunny.png',
-                        width: iconSize,
-                        height: iconSize,
-                        errorBuilder: (context, error, stackTrace) => Icon(
-                          Icons.wb_cloudy,
-                          size: iconSize,
-                          color: Colors.white70,
+                      FutureBuilder(
+                        future: () async {
+                           // FORCE HARDCODED PATH FOR DIAGNOSIS
+                           const path = 'assets/weather_icons/thunderstorm.png'; 
+                           try {
+                             await rootBundle.load(path);
+                             debugPrint('WeatherBubble HARDCODED Asset FOUND: $path');
+                           } catch (e) {
+                             debugPrint('WeatherBubble HARDCODED Asset MISSING: $path -> $e');
+                           }
+                           return true;
+                        }(),
+                        builder: (c, s) => Image.asset(
+                          'assets/weather_icons/thunderstorm.png', // HARDCODED
+                          width: iconSize,
+                          height: iconSize,
+                          errorBuilder: (context, error, stackTrace) => Icon(
+                            Icons.wb_cloudy,
+                            size: iconSize,
+                            color: Colors.white70,
+                          ),
                         ),
                       ),
                       if (tempLine.isNotEmpty) ...[
