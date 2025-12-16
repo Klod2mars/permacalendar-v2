@@ -949,18 +949,19 @@ String _getWeatherDescription(WeatherConditionType condition) {
 String _getWeatherIcon(WeatherConditionType condition) {
   switch (condition) {
     case WeatherConditionType.sunny:
-      return 'assets/weather_icons/clear_day.png';
+      return 'assets/weather_icons/clear_day.svg';
     case WeatherConditionType.rainy:
-      return 'assets/weather_icons/rain.png';
+      return 'assets/weather_icons/rain.svg';
     case WeatherConditionType.hot:
-      return 'assets/weather_icons/clear_day.png'; // Hot uses sun
+      return 'assets/weather_icons/clear_day.svg'; // Hot uses sun
     case WeatherConditionType.snowOrFrost:
-      return 'assets/weather_icons/snow.png';
+      return 'assets/weather_icons/snow.svg';
     case WeatherConditionType.cloudy:
-      return 'assets/weather_icons/partly_cloudy.png';
+      return 'assets/weather_icons/partly_cloudy.svg';
     case WeatherConditionType.stormy:
-      return 'assets/weather_icons/thunderstorm.png';
+      return 'assets/weather_icons/thunderstorm.svg';
     case WeatherConditionType.other:
-      return 'assets/weather_icons/default.png';
+      return 'assets/weather_icons/default.svg';
   }
 }
+

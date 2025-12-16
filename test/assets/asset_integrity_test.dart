@@ -31,18 +31,18 @@ void main() {
 
   test('All specific asset files required by README should exist', () {
     final requiredFiles = [
-      'assets/weather_icons/clear_day.png',
-      'assets/weather_icons/partly_cloudy.png',
-      'assets/weather_icons/fog.png',
-      'assets/weather_icons/drizzle.png',
-      'assets/weather_icons/rain.png',
-      'assets/weather_icons/freezing_rain.png',
-      'assets/weather_icons/showers.png',
-      'assets/weather_icons/snow.png',
-      'assets/weather_icons/snow_showers.png',
-      'assets/weather_icons/thunderstorm.png',
-      'assets/weather_icons/wind.png',
-      'assets/weather_icons/default.png',
+      'assets/weather_icons/clear_day.svg',
+      'assets/weather_icons/partly_cloudy.svg',
+      'assets/weather_icons/fog.svg',
+      'assets/weather_icons/drizzle.svg',
+      'assets/weather_icons/rain.svg',
+      'assets/weather_icons/freezing_rain.svg',
+      'assets/weather_icons/showers.svg',
+      'assets/weather_icons/snow.svg',
+      'assets/weather_icons/snow_showers.svg',
+      'assets/weather_icons/thunderstorm.svg',
+      'assets/weather_icons/wind.svg',
+      'assets/weather_icons/default.svg',
     ];
 
     for (final path in requiredFiles) {

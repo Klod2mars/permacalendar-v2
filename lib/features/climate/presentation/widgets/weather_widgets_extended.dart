@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/models/daily_weather_point.dart';
 import '../../../../core/models/hourly_weather_point.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
@@ -217,20 +218,12 @@ class DailyForecastListWidget extends StatelessWidget {
 
                   const Spacer(),
                   // Icon
-                  FutureBuilder(
-                    future: () async {
-                      try {
-                        await rootBundle.load(day.icon ?? 'assets/weather_icons/default.png');
-                        debugPrint('Asset FOUND: ${day.icon}');
-                      } catch (e) {
-                        debugPrint('Asset MISSING: ${day.icon} -> $e');
-                      }
-                      debugPrint('Daily: date=${day.date}, weatherCode=${day.weatherCode}, icon=${day.icon}');
-                      return true;
-                    }(),
-                    builder: (context, snapshot) {
-                      return Image.asset(day.icon ?? 'assets/weather_icons/default.png', width: 32, height: 32, errorBuilder: (_,__,___) => const Icon(Icons.wb_sunny, color: Colors.orange));
-                    }
+                  SvgPicture.asset(
+                    day.icon ?? 'assets/weather_icons/default.svg',
+                    width: 32,
+                    height: 32,
+                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    placeholderBuilder: (_) => const Icon(Icons.wb_sunny, color: Colors.white24, size: 32),
                   ),
                   const Spacer(),
                   // Min / Max

@@ -2,6 +2,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/climate/presentation/providers/weather_providers.dart';
 import 'package:permacalendar/features/climate/presentation/widgets/weather_widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:permacalendar/core/utils/weather_icon_mapper.dart';
 import 'package:permacalendar/features/climate/presentation/widgets/weather_widgets_extended.dart';
 import 'package:permacalendar/core/services/open_meteo_service.dart';
 import 'package:permacalendar/core/providers/app_settings_provider.dart';
@@ -73,11 +75,33 @@ class WeatherDetailScreen extends ConsumerWidget {
                   children: [
                     // A. En-tête (White text for contrast)
                      // Use a clean custom header or keep existing but force white style
-                     Column(children: [
-                        Text(data.locationLabel.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, shadows: [Shadow(blurRadius: 4, color: Colors.black26)])),
-                        Text('${current.currentTemperatureC?.toStringAsFixed(1)}°', style: const TextStyle(color: Colors.white, fontSize: 80, fontWeight: FontWeight.w200)),
-                        Text(data.description ?? '', style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500)),
-                     ]),
+                     // A. En-tête (White text for contrast)
+                     // Custom header with Watermark
+                     Stack(
+                       alignment: Alignment.center,
+                       children: [
+                          // Filigrane SVG behind the temperature
+                          if (current.currentWeatherCode != null)
+                             Padding(
+                               padding: const EdgeInsets.only(top: 20),
+                               child: SvgPicture.asset(
+                                 WeatherIconMapper.getIconPath(current.currentWeatherCode),
+                                 width: 200, // Large proportional size
+                                 height: 200,
+                                 colorFilter: ColorFilter.mode(
+                                   Colors.white.withOpacity(0.15), // 12-25% opacity
+                                   BlendMode.srcIn
+                                 ),
+                               ),
+                             ),
+
+                         Column(children: [
+                            Text(data.locationLabel.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, shadows: [Shadow(blurRadius: 4, color: Colors.black26)])),
+                            Text('${current.currentTemperatureC?.toStringAsFixed(1)}°', style: const TextStyle(color: Colors.white, fontSize: 80, fontWeight: FontWeight.w200, shadows: [Shadow(blurRadius: 10, color: Colors.black26)])),
+                            Text(data.description ?? '', style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, shadows: [Shadow(blurRadius: 4, color: Colors.black26)])),
+                         ]),
+                     ],
+                     ),
                     
                     const SizedBox(height: 32),
                     

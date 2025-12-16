@@ -2,6 +2,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 
@@ -72,26 +73,19 @@ class WeatherBubbleWidget extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // ICÔNE (seule information visuelle immédiate)
-                      FutureBuilder(
-                        future: () async {
-                           final path = weather.icon ?? 'assets/weather_icons/sunny.png';
-                           try {
-                             await rootBundle.load(path);
-                             debugPrint('WeatherBubble Asset FOUND: $path');
-                           } catch (e) {
-                             debugPrint('WeatherBubble Asset MISSING: $path -> $e');
-                           }
-                           return true;
-                        }(),
-                        builder: (c, s) => Image.asset(
-                          weather.icon ?? 'assets/weather_icons/sunny.png',
-                          width: iconSize,
-                          height: iconSize,
-                          errorBuilder: (context, error, stackTrace) => Icon(
-                            Icons.wb_cloudy,
-                            size: iconSize,
-                            color: Colors.white70,
-                          ),
+                      // Utilisation de SVG pour style néon
+                      SvgPicture.asset(
+                        weather.icon ?? 'assets/weather_icons/clear_day.svg',
+                        width: iconSize,
+                        height: iconSize,
+                        // Couleur Néon (cyan/vert) pour le trait
+                        colorFilter: const ColorFilter.mode(
+                           Color(0xFF39F7C6), // Neon Green/Cyan 
+                           BlendMode.srcIn
+                        ),
+                        placeholderBuilder: (BuildContext context) => Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: const CircularProgressIndicator()
                         ),
                       ),
                       if (tempLine.isNotEmpty) ...[

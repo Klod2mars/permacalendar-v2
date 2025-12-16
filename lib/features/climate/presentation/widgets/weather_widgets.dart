@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 import 'package:permacalendar/core/models/daily_weather_point.dart';
 import 'package:permacalendar/core/models/hourly_weather_point.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
 
 // 1. Header Widget
@@ -39,25 +40,32 @@ class WeatherHeader extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        // Watermark / Filigrane design
+        Stack(
+          alignment: Alignment.center,
           children: [
             if (weatherCode != null)
-              Image.asset(
+              SvgPicture.asset(
                 WeatherIconMapper.getIconPath(weatherCode!),
-                width: 64,
-                height: 64,
-                errorBuilder: (_, __, ___) => const Icon(Icons.wb_sunny, size: 64),
+                width: 140, // Large watermark
+                height: 140,
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.2), // Filigrane subtle
+                  BlendMode.srcIn,
+                ),
               ),
-            const SizedBox(width: 16),
             Text(
               temp != null ? '${temp!.toStringAsFixed(1)}°' : '--',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontWeight: FontWeight.w300,
+                    shadows: [
+                      const Shadow(blurRadius: 10, color: Colors.black26),
+                    ],
                   ),
             ),
           ],
         ),
+        const SizedBox(height: 8),
         Text(
           weatherCode != null ? WeatherIconMapper.getWeatherDescription(weatherCode!) : '',
           style: Theme.of(context).textTheme.bodyLarge,
