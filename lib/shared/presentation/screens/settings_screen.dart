@@ -278,14 +278,13 @@ class SettingsScreen extends ConsumerWidget {
                               await ref.read(appSettingsProvider.notifier).setSelectedCommune(p.name);
 
                               // Tenter de résoudre les coordonnées et les persister
+                              // PATCH: On utilise directement les coordonnées de la suggestion
+                              // au lieu de relancer une recherche par nom.
                               try {
-                                final coords = await svc.resolveCoordinates(p.name);
-                                if (coords != null) {
-                                  await ref.read(appSettingsProvider.notifier).setLastCoordinates(coords.latitude, coords.longitude);
-                                  await CommuneStorage.saveCommune(p.name, coords.latitude, coords.longitude);
-                                }
+                                await ref.read(appSettingsProvider.notifier).setLastCoordinates(p.latitude, p.longitude);
+                                await CommuneStorage.saveCommune(p.name, p.latitude, p.longitude);
                               } catch (_) {
-                                // Ne pas bloquer l'expérience en cas d'erreur réseau
+                                // Ne pas bloquer l'expérience
                               }
 
                               if (context.mounted) {

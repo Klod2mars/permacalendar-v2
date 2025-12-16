@@ -83,6 +83,9 @@ class OpenMeteoService {
     int pastDays = 14,
     int forecastDays = 7,
   }) async {
+    // DEBUG LOG requested by audit
+    print('DEBUG: fetchPrecipitation called with lat=$latitude, lon=$longitude');
+
     const url = 'https://api.open-meteo.com/v1/forecast';
     try {
       final res = await _dio.get(url, queryParameters: {
