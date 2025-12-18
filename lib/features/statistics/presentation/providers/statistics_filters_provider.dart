@@ -21,8 +21,11 @@ class StatisticsFiltersState {
   }
 }
 
-class StatisticsFiltersNotifier extends StateNotifier<StatisticsFiltersState> {
-  StatisticsFiltersNotifier() : super(const StatisticsFiltersState());
+class StatisticsFiltersNotifier extends Notifier<StatisticsFiltersState> {
+  @override
+  StatisticsFiltersState build() {
+    return const StatisticsFiltersState();
+  }
 
   void setGardenId(String? id) {
     state = state.copyWith(selectedGardenId: id);
@@ -30,7 +33,5 @@ class StatisticsFiltersNotifier extends StateNotifier<StatisticsFiltersState> {
 }
 
 final statisticsFiltersProvider =
-    StateNotifierProvider<StatisticsFiltersNotifier, StatisticsFiltersState>(
-        (ref) {
-  return StatisticsFiltersNotifier();
-});
+    NotifierProvider<StatisticsFiltersNotifier, StatisticsFiltersState>(
+        StatisticsFiltersNotifier.new);

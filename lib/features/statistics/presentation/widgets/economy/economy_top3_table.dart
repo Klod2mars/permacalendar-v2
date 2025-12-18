@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/models/plant_value_ranking.dart';
+import '../../../domain/models/plant_value_ranking.dart';
 
 class EconomyTop3Table extends StatelessWidget {
   final List<PlantValueRanking> rankings;

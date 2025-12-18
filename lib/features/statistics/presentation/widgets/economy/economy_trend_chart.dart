@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/models/economy_trend_point.dart';
+import '../../../domain/models/economy_trend_point.dart';
 import 'dart:math' as math;
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 
 class EconomyTrendChart extends StatelessWidget {
   final List<EconomyTrendPoint> points;
