@@ -75,12 +75,9 @@ class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen>
                     const SizedBox(height: 40),
 
                     // Ici : la liste de piliers (ou placeholder)
-                    const Center(
-                      child: CircularProgressIndicator(color: Colors.greenAccent),
-                    ),
-
-                    // Plus tard : StatisticsPillarsList(),
-                    // Expanded(child: StatisticsPillarsList()),
+                    const SizedBox(height: 24),
+                    // Injection : liste/pivot des 4 bulles
+                    const StatisticsPillarsList(),
                   ],
                 ),
               ),

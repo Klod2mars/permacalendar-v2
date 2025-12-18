@@ -25,6 +25,10 @@ import 'shared/presentation/screens/home_screen.dart';
 import 'shared/presentation/screens/settings_screen.dart';
 
 import 'features/statistics/presentation/screens/garden_statistics_screen.dart';
+import 'features/statistics/presentation/screens/garden_economy_screen.dart';
+import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
+import 'features/statistics/presentation/screens/garden_performance_screen.dart';
+import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
 
 import 'core/feature_flags.dart';
 
@@ -104,6 +108,40 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final id = state.pathParameters['id']!;
           return GardenStatisticsScreen(gardenId: id);
         },
+        routes: [
+           GoRoute(
+            path: 'economie',
+            name: 'garden-stats-economie',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return GardenEconomyScreen(gardenId: id);
+            },
+          ),
+          GoRoute(
+            path: 'sante',
+             name: 'garden-stats-sante',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return GardenNutritionScreen(gardenId: id);
+            },
+          ),
+          GoRoute(
+            path: 'performance',
+             name: 'garden-stats-performance',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return GardenPerformanceScreen(gardenId: id);
+            },
+          ),
+          GoRoute(
+            path: 'alignement',
+             name: 'garden-stats-alignement',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return GardenAlignmentScreen(gardenId: id);
+            },
+          ),
+        ],
       ),
 
       // --- Parcelles : fallback vers GardenDetailScreen, mais conserver le détail d'une parcelle
