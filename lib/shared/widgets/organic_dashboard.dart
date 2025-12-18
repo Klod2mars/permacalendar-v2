@@ -939,6 +939,17 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
   @override
   Widget build(BuildContext context) {
+    final isGardenHotspot = widget.id.startsWith('garden_');
+
+    // 1) Define content widget (Weather, Stats, or null) shared logic
+    final Widget? contentWidget = (!isGardenHotspot && widget.id == 'weather')
+        ? const WeatherBubbleWidget()
+        : (!isGardenHotspot && widget.id == 'weather_stats')
+            ? InvisibleStatsZone(
+                isCalibrationMode: widget.isCalibrating,
+                glowColor: Colors.greenAccent)
+            : null;
+
     if (widget.isCalibrating) {
       return Listener(
         behavior: HitTestBehavior.opaque,
@@ -959,21 +970,30 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
               border: Border.all(color: Colors.cyan.withOpacity(0.7), width: 2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Center(
-              child: Text(
-                widget.cfg.id,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
-              ),
+            // Show content AND ID when in calibration mode
+            child: Stack(
+              alignment: Alignment.center,
+              fit: StackFit.expand,
+              children: [
+                if (contentWidget != null) Center(child: contentWidget),
+                Center(
+                  child: Text(
+                    widget.cfg.id,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(blurRadius: 2, color: Colors.black)
+                        ]),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
       );
     }
-
-    final isGardenHotspot = widget.id.startsWith('garden_');
 
     final hotspotButton = _HotspotButton(
       onTap: isGardenHotspot
@@ -992,17 +1012,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
           : null,
       semanticLabel: widget.cfg.id,
       showDebugOutline: widget.showDebugOutline,
-      child: (!isGardenHotspot && widget.id == 'weather')
-          ? const WeatherBubbleWidget()
-          : (!isGardenHotspot && widget.id == 'weather_stats')
-              ? InvisibleStatsZone(
-                  isCalibrationMode: widget.isCalibrating,
-                  glowColor: Colors.greenAccent)
-              : null,
+      child: contentWidget,
     );
 
     if (isGardenHotspot) {
-      // Awakening widget removed, just returning the hotspot button.
       return hotspotButton;
     }
 
