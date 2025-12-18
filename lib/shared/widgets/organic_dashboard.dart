@@ -19,6 +19,7 @@ import '../../core/providers/active_garden_provider.dart';
 import '../../features/climate/presentation/providers/weather_providers.dart';
 import '../../core/utils/weather_icon_mapper.dart';
 import '../presentation/widgets/weather_bubble_widget.dart';
+import '../../features/home/widgets/invisible_stats_zone.dart';
 
 /// 1) Active/désactive l’affichage des cadres bleus (debug)
 const bool kShowTapZonesDebug = true;
@@ -161,7 +162,7 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         centerY: 0.22,
         widthFrac: 0.20,
         heightFrac: 0.20,
-        route: AppRoutes.weather,
+        route: null, // Géré par InvisibleStatsZone
         label: 'Weather Stats'),
     _Hotspot(
         id: 'calendar',
@@ -993,7 +994,11 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       showDebugOutline: widget.showDebugOutline,
       child: (!isGardenHotspot && widget.id == 'weather')
           ? const WeatherBubbleWidget()
-          : null,
+          : (!isGardenHotspot && widget.id == 'weather_stats')
+              ? InvisibleStatsZone(
+                  isCalibrationMode: widget.isCalibrating,
+                  glowColor: Colors.greenAccent)
+              : null,
     );
 
     if (isGardenHotspot) {

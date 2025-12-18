@@ -24,6 +24,8 @@ import 'features/home/screens/calendar_view_screen.dart';
 import 'shared/presentation/screens/home_screen.dart';
 import 'shared/presentation/screens/settings_screen.dart';
 
+import 'features/statistics/presentation/screens/garden_statistics_screen.dart';
+
 import 'core/feature_flags.dart';
 
 class AppRoutes {
@@ -92,6 +94,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             gardenId: id,
             openPlantingsOnBedTap: fromOrganic,
           );
+        },
+      ),
+
+      GoRoute(
+        path: '/gardens/:id/stats',
+        name: 'garden-stats',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return GardenStatisticsScreen(gardenId: id);
         },
       ),
 

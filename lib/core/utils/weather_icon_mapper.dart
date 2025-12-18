@@ -34,7 +34,9 @@ class WeatherIconMapper {
 
       case 3: // Couvert
 
-        return 'assets/weather_icons/partly_cloudy.svg';
+        return 'assets/weather_icons/cloudy.svg';
+
+      return 'assets/weather_icons/partly_cloudy.svg';
 
 
 

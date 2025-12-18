@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../features/climate/presentation/providers/weather_providers.dart';
+import 'weather_bio_container.dart';
 
 class WeatherBubbleWidget extends ConsumerWidget {
   const WeatherBubbleWidget({super.key});
@@ -13,135 +14,12 @@ class WeatherBubbleWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final weatherAsync = ref.watch(currentWeatherProvider);
-
-    return weatherAsync.when(
-      loading: () => const Center(
-        child: SizedBox(
-          width: 18,
-          height: 18,
-          child: CircularProgressIndicator(color: Colors.white70, strokeWidth: 2),
-        ),
-      ),
-      error: (e, _) => const Center(
-        child: _OutlinedText(
-          'MÉTÉO INDISPONIBLE',
-          fontSize: 13,
-          weight: FontWeight.w800,
-          align: TextAlign.center,
-          maxLines: 2,
-        ),
-      ),
-      data: (weather) {
-        final dateFormatter = DateFormat('EEEE d/M/yy', 'fr_FR');
-        final date = _capFirst(dateFormatter.format(DateTime.now())); // ex: "Lundi 8/12/25"
-
-        final desc = (weather.description?.trim().isNotEmpty ?? false)
-            ? weather.description!.trim().toUpperCase()
-            : 'DONNÉES INDISPONIBLES';
-
-        final hasMinMax = weather.minTemp != null && weather.maxTemp != null;
-        final tempNow = weather.temperature ?? weather.currentTemperatureC;
-
-        final tempLine = hasMinMax
-            ? 'Min ${weather.minTemp!.toStringAsFixed(1)}° / Max ${weather.maxTemp!.toStringAsFixed(1)}°'
-            : (tempNow != null ? '${tempNow.toStringAsFixed(1)}°' : '');
-
-        // IMPORTANT : on n'ajoute aucun cadre/rectangle.
-        // On joue uniquement avec TYPO + contour + ombres pour rester organique sur ton fond.
-        return LayoutBuilder(
-          builder: (context, c) {
-            final w = c.maxWidth.isFinite ? c.maxWidth : 9999;
-            final h = c.maxHeight.isFinite ? c.maxHeight : 9999;
-            final s = (w < h ? w : h).clamp(80.0, 240.0);
-
-            // Ajuste typographie selon la taille réelle de la bulle (anti-overflow).
-            final dateSize = (s * 0.10).clamp(10.0, 14.0);
-            final iconSize = (s * 0.42).clamp(40.0, 84.0);
-            final descSize = (s * 0.14).clamp(12.0, 16.0);
-            final tempSize = (s * 0.10).clamp(10.0, 13.5);
-            final gap1 = (s * 0.06).clamp(4.0, 10.0);
-            final gap2 = (s * 0.04).clamp(3.0, 8.0);
-
-            return Center(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 220),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // ICÔNE (seule information visuelle immédiate)
-                      // Utilisation de SVG pour style néon
-                      SvgPicture.asset(
-                        weather.icon ?? 'assets/weather_icons/clear_day.svg',
-                        width: iconSize,
-                        height: iconSize,
-                        // Couleur Néon (cyan/vert) pour le trait
-                        colorFilter: const ColorFilter.mode(
-                           Color(0xFF39F7C6), // Neon Green/Cyan 
-                           BlendMode.srcIn
-                        ),
-                        placeholderBuilder: (BuildContext context) => Container(
-                            padding: const EdgeInsets.all(10.0),
-                            child: const CircularProgressIndicator()
-                        ),
-                      ),
-                      if (tempLine.isNotEmpty) ...[
-                        SizedBox(height: (gap2 * 0.9).clamp(3.0, 7.0)),
-
-                        // Affichage minimaliste : min / max sur deux lignes (ou temp courante si absente)
-                        if (hasMinMax) ...[
-                          _OutlinedText(
-                            '${weather.minTemp!.toStringAsFixed(1)}°',
-                            fontSize: tempSize,
-                            weight: FontWeight.w700,
-                            letterSpacing: 0.2,
-                            maxLines: 1,
-                            softWrap: false,
-                          ),
-                          SizedBox(height: 2),
-                          _OutlinedText(
-                            '${weather.maxTemp!.toStringAsFixed(1)}°',
-                            fontSize: tempSize,
-                            weight: FontWeight.w700,
-                            letterSpacing: 0.2,
-                            maxLines: 1,
-                            softWrap: false,
-                          ),
-                        ] else if (tempNow != null) ...[
-                          _OutlinedText(
-                            '${tempNow.toStringAsFixed(1)}°',
-                            fontSize: tempSize,
-                            weight: FontWeight.w700,
-                            letterSpacing: 0.2,
-                            maxLines: 1,
-                            softWrap: false,
-                          ),
-                        ] else ...[
-                          // Fallback conservateur : afficher la chaîne existante
-                          _OutlinedText(
-                            tempLine,
-                            fontSize: tempSize,
-                            weight: FontWeight.w700,
-                            letterSpacing: 0.2,
-                            maxLines: 1,
-                            softWrap: false,
-                          ),
-                        ],
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
+    // Le conteneur s'adapte à la taille disponible
+    // Tout le rendu interne est géré par WeatherBioContainer
+    return const WeatherBioContainer();
   }
 }
+
 
 /// Texte très lisible sur n'importe quel fond (sans container).
 /// - contour (stroke) + fill
