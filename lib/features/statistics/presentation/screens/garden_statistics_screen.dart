@@ -4,17 +4,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/statistics_pillars_list.dart';
 import '../providers/statistics_filters_provider.dart';
 
-class GardenStatisticsScreen extends ConsumerWidget {
+class GardenStatisticsScreen extends ConsumerStatefulWidget {
   final String gardenId;
   const GardenStatisticsScreen({super.key, required this.gardenId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Initialiser le filtre gardenId
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(statisticsFiltersProvider.notifier).setGardenId(gardenId);
-    });
+  ConsumerState<GardenStatisticsScreen> createState() => _GardenStatisticsScreenState();
+}
 
+class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Initialisation unique au montage de l'écran
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(statisticsFiltersProvider.notifier).setGardenId(widget.gardenId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -46,7 +55,7 @@ class GardenStatisticsScreen extends ConsumerWidget {
                   children: [
                     const SizedBox(height: 20),
                     Hero(
-                      tag: 'stats-bubble-hero-$gardenId',
+                      tag: 'stats-bubble-hero-${widget.gardenId}',
                       child: Material(
                         color: Colors.transparent,
                         child: Text(
