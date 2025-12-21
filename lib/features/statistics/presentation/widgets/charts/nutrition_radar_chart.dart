@@ -4,8 +4,9 @@ import 'package:permacalendar/features/statistics/application/providers/nutritio
 
 class NutritionRadarChart extends StatelessWidget {
   final NutritionRadarData data;
+  final double? size;
 
-  const NutritionRadarChart({super.key, required this.data});
+  const NutritionRadarChart({super.key, required this.data, this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class NutritionRadarChart extends StatelessWidget {
     // Si toutes les valeurs sont 0, afficher un chart vide équilibré
     final safeMax = maxVal > 0 ? maxVal * 1.2 : 100.0; // 1.2 for padding
 
-    return RadarChart(
+    Widget chart = RadarChart(
       RadarChartData(
         radarTouchData: RadarTouchData(enabled: false), // Non interactif pour l'instant (petit widget)
         dataSets: [
@@ -66,5 +67,14 @@ class NutritionRadarChart extends StatelessWidget {
       swapAnimationDuration: const Duration(milliseconds: 400),
       swapAnimationCurve: Curves.easeInOut,
     );
+    
+    if (size != null) {
+      return SizedBox(
+        width: size,
+        height: size,
+        child: chart,
+      );
+    }
+    return chart;
   }
 }
