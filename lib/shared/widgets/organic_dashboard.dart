@@ -310,7 +310,29 @@ class _OrganicDashboardWidgetState
         mergedEnabled[kv.key] = kv.value.enabled;
       }
 
-      // Ajout des nouveaux
+      // [PATCH] Migration de compatibilité : weather_stat -> weather_stats
+      // Si l'utilisateur a une ancienne zone 'weather_stat', on la réutilise pour 'weather_stats'
+      if (mergedPositions.containsKey('weather_stat') && !mergedPositions.containsKey('weather_stats')) {
+        if (kDebugMode) {
+          debugPrint('🔧 [CALIBRATION] MIGRATION: found old "weather_stat", migrating to "weather_stats"');
+        }
+        // 1. Migrer les valeurs de l'ancienne clé vers la nouvelle
+        mergedPositions['weather_stats'] = mergedPositions['weather_stat']!;
+        mergedSizes['weather_stats'] = mergedSizes['weather_stat']!;
+        mergedEnabled['weather_stats'] = mergedEnabled['weather_stat']!;
+        
+        // 2. Supprimer l'ancienne clé pour ne plus la traîner
+        mergedPositions.remove('weather_stat');
+        mergedSizes.remove('weather_stat');
+        mergedEnabled.remove('weather_stat');
+
+        // 3. IMPORTANT : Retirer weather_stats des defaults pour ne pas écraser la migration par les valeurs par défaut
+        defaultPositions.remove('weather_stats');
+        defaultSizes.remove('weather_stats');
+        defaultEnabled.remove('weather_stats');
+      }
+
+      // Ajout des nouveaux (ceux qui restent dans default* après nettoyage éventuel)
       mergedPositions.addAll(defaultPositions);
       mergedSizes.addAll(defaultSizes);
       mergedEnabled.addAll(defaultEnabled);
