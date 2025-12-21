@@ -1,4 +1,5 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿import 'package:flutter/foundation.dart';
+import 'package:riverpod/riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
 import '../../domain/models/plant_value_ranking.dart';
