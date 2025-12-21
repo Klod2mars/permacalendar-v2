@@ -25,14 +25,14 @@ final totalEconomyKpiProvider = Provider<double>((ref) {
     filteredRecords = harvestRecordsState.records.where((record) {
       final inGarden = filters.selectedGardenIds.contains(record.gardenId);
       final inPeriod =
-          record.date.isAfter(startDate) && record.date.isBefore(endDate);
+          !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
       return inGarden && inPeriod;
     }).toList();
   } else {
     // Filtrer seulement par période (tous les jardins)
     filteredRecords = harvestRecordsState.records
         .where((record) =>
-            record.date.isAfter(startDate) && record.date.isBefore(endDate))
+            !record.date.isBefore(startDate) && !record.date.isAfter(endDate))
         .toList();
   }
 
@@ -72,14 +72,14 @@ final totalEconomyKpiAsyncProvider = FutureProvider<double>((ref) async {
     filteredRecords = harvestRecordsState.records.where((record) {
       final inGarden = filters.selectedGardenIds.contains(record.gardenId);
       final inPeriod =
-          record.date.isAfter(startDate) && record.date.isBefore(endDate);
+          !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
       return inGarden && inPeriod;
     }).toList();
   } else {
     // Filtrer seulement par période (tous les jardins)
     filteredRecords = harvestRecordsState.records
         .where((record) =>
-            record.date.isAfter(startDate) && record.date.isBefore(endDate))
+            !record.date.isBefore(startDate) && !record.date.isAfter(endDate))
         .toList();
   }
 
@@ -116,14 +116,14 @@ final top3PlantsValueRankingProvider = Provider<List<PlantValueRanking>>((ref) {
     filteredRecords = harvestRecordsState.records.where((record) {
       final inGarden = filters.selectedGardenIds.contains(record.gardenId);
       final inPeriod =
-          record.date.isAfter(startDate) && record.date.isBefore(endDate);
+          !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
       return inGarden && inPeriod;
     }).toList();
   } else {
     // Filtrer seulement par période (tous les jardins)
     filteredRecords = harvestRecordsState.records
         .where((record) =>
-            record.date.isAfter(startDate) && record.date.isBefore(endDate))
+            !record.date.isBefore(startDate) && !record.date.isAfter(endDate))
         .toList();
   }
 

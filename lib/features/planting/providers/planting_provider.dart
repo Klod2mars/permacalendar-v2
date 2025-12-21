@@ -9,6 +9,7 @@ import '../../../core/events/garden_events.dart';
 import '../../../core/utils/calibration_storage.dart';
 import '../../harvest/data/repositories/harvest_repository.dart';
 import '../../harvest/domain/models/harvest_record.dart'; // Import HarvestRecord
+import '../../harvest/application/harvest_records_provider.dart'; // Import HarvestRecordsProvider
 import 'package:uuid/uuid.dart'; // Import Uuid
 
 // Planting State
@@ -403,12 +404,14 @@ class PlantingNotifier extends Notifier<PlantingState> {
     debugPrint('[PlantingNotifier.recordHarvest] start plantingId=$plantingId weightKg=$weightKg price=$pricePerKg notes=${notes ?? ''}');
     try {
       // NOTE: Using firstWhere with orElse to avoid crash if not found
-      final planting = state.plantings.firstWhere((p) => p.id == plantingId, orElse: () => throw Exception('Planting not found'));
+      final planting = state.plantings.firstWhere((p) => p.id == plantingId,
+          orElse: () => throw Exception('Planting not found'));
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
+      final gardenId = bed?.gardenId ?? 'unknown';
 
       final record = HarvestRecord(
         id: const Uuid().v4(),
-        gardenId: bed?.gardenId ?? 'unknown',
+        gardenId: gardenId,
         plantId: planting.plantId,
         plantName: planting.plantName,
         quantityKg: weightKg,
@@ -417,9 +420,18 @@ class PlantingNotifier extends Notifier<PlantingState> {
         notes: notes,
       );
 
-      // Persistance via le repository
+      // 4) Persister
       await HarvestRepository().saveHarvest(record);
-      debugPrint('[PlantingNotifier.recordHarvest] saved harvest id=${record.id}');
+      debugPrint('[PlantingNotifier] recordHarvest saved id=${record.id} planting=$plantingId weight=$weightKg price=$pricePerKg');
+
+      // 5) Mémoriser le prix pour cette plante
+      try {
+        final prev = await CalibrationStorage.loadProfile('userHarvestPrices') ?? <String, dynamic>{};
+        prev[planting.plantId] = pricePerKg;
+        await CalibrationStorage.saveProfile('userHarvestPrices', prev);
+      } catch (e) {
+        debugPrint('Warning: unable to save userHarvestPrices: $e');
+      }
 
       // Tracking non bloquant + émission d'événement
       try {
@@ -434,23 +446,25 @@ class PlantingNotifier extends Notifier<PlantingState> {
           );
 
           GardenEventBus().emit(
-            GardenEvent.activityPerformed(
-              gardenId: bed.gardenId,
-              activityType: 'harvest',
-              targetId: record.id,
-              timestamp: DateTime.now(),
-              metadata: {
-                'plantingId': plantingId,
-                'plantId': planting.plantId,
-                'weightKg': weightKg,
-                'pricePerKg': pricePerKg,
-                'totalPrice': weightKg * pricePerKg,
-              },
+            GardenEvent.plantingHarvested(
+              gardenId: gardenId,
+              plantingId: plantingId,
+              harvestYield: weightKg,
+              timestamp: date,
+              metadata: {'pricePerKg': pricePerKg, 'harvestId': record.id},
             ),
           );
         }
       } catch (e) {
         debugPrint('[recordHarvest] tracking/event error: $e');
+      }
+
+      // 7) Rafraîchir provider de récoltes
+      try {
+        ref.read(harvestRecordsProvider.notifier).refresh();
+        debugPrint('[PlantingNotifier] triggered harvestRecordsProvider.refresh()');
+      } catch (e) {
+        debugPrint('Warning: failed to refresh harvestRecordsProvider: $e');
       }
 
       // Mise à jour minimaliste de la planting (last harvest date)
@@ -461,8 +475,8 @@ class PlantingNotifier extends Notifier<PlantingState> {
       state = state.copyWith(plantings: updatedPlantings, error: null);
 
       return true;
-    } catch (e) {
-      debugPrint('[recordHarvest] error: $e');
+    } catch (e, st) {
+      debugPrint('[recordHarvest] error: $e\n$st');
       state = state.copyWith(error: 'Erreur lors de la récolte: $e');
       return false;
     }

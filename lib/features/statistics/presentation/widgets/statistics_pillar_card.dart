@@ -76,10 +76,12 @@ class StatisticsPillarCard extends ConsumerWidget {
                           child: Padding(
                             padding: EdgeInsets.all(innerPadding),
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 // Header icon + title
                                 Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(iconAndTitle['icon']!, style: TextStyle(fontSize: diameter * 0.10, height: 1.0)),
                                     SizedBox(height: diameter * 0.02),
@@ -99,10 +101,12 @@ class StatisticsPillarCard extends ConsumerWidget {
                                 SizedBox(height: diameter * 0.04),
 
                                 // SUMMARY ZONE : voici l'élément central lisible
-                                SizedBox(
-                                  height: diameter * 0.30,
-                                  width: contentMaxWidth,
-                                  child: _buildSummaryContent(type, diameter, context, ref),
+                                Flexible(
+                                  fit: FlexFit.loose,
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(maxWidth: contentMaxWidth, maxHeight: diameter * 0.5),
+                                    child: _buildSummaryContent(type, diameter, context, ref),
+                                  ),
                                 ),
 
                                 SizedBox(height: diameter * 0.03),
