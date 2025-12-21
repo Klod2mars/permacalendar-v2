@@ -8,7 +8,9 @@ import '../../../features/climate/presentation/providers/weather_providers.dart'
 import 'weather_bio_container.dart';
 
 class WeatherBubbleWidget extends ConsumerWidget {
-  const WeatherBubbleWidget({super.key});
+  const WeatherBubbleWidget({super.key, this.showEffects = true});
+
+  final bool showEffects;
 
   String _capFirst(String s) => s.isEmpty ? s : (s[0].toUpperCase() + s.substring(1));
 
@@ -16,7 +18,7 @@ class WeatherBubbleWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Le conteneur s'adapte à la taille disponible
     // Tout le rendu interne est géré par WeatherBioContainer
-    return const WeatherBioContainer();
+    return WeatherBioContainer(showEffects: showEffects);
   }
 }
 

@@ -12,7 +12,9 @@ import '../../../../features/climate/presentation/providers/weather_providers.da
 /// - Zone Inférieure (65%) : Zone protégée pour le texte (Température).
 /// - Sol Invisible : Barrière physique élastique séparent les deux zones.
 class WeatherBioContainer extends ConsumerStatefulWidget {
-  const WeatherBioContainer({super.key});
+  const WeatherBioContainer({super.key, this.showEffects = true});
+
+  final bool showEffects;
 
   @override
   ConsumerState<WeatherBioContainer> createState() => _WeatherBioContainerState();
@@ -41,12 +43,16 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
   @override
   void initState() {
     super.initState();
-    _ticker = createTicker(_onTick)..start();
+    if (widget.showEffects) {
+      _ticker = createTicker(_onTick)..start();
+    }
   }
 
   @override
   void dispose() {
-    _ticker.dispose();
+    if (widget.showEffects) {
+      _ticker.dispose();
+    }
     super.dispose();
   }
 
@@ -291,14 +297,15 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
           clipBehavior: Clip.none, // Allow "Spill" visual overflow
           children: [
             // 1. Simulation Layer (Zone A Mainly)
-            Positioned.fill(
-              child: CustomPaint(
-                painter: _BioWeatherPainter(
-                  particles: _particles,
-                  windSpeed: _windSpeed,
+            if (widget.showEffects)
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _BioWeatherPainter(
+                    particles: _particles,
+                    windSpeed: _windSpeed,
+                  ),
                 ),
               ),
-            ),
             
             // 2. Clear Zone (Zone B - Text)
             // ANCRAGE BAS DANS LA ZONE PROTEGÉE (Top 35% -> Bottom 100%)

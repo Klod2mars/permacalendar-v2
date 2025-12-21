@@ -356,6 +356,7 @@ class _OrganicDashboardWidgetState
       if (kDebugMode) {
         debugPrint('🔧 [CALIBRATION] defaults injected and merged successfully');
       }
+    } catch (e, st) {
       if (kDebugMode) {
         debugPrint('⚠️ [CALIBRATION] failed loading defaults: $e\n$st');
       }
@@ -981,7 +982,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final Widget? contentWidget = (!isGardenHotspot && widget.id == 'weather')
         ? const WeatherBubbleWidget()
         : (!isGardenHotspot && widget.id == 'weather_stats')
-            ? const WeatherBubbleWidget() // Affiche la météo ici aussi ou une variante
+            ? const WeatherBubbleWidget(showEffects: false) // Effects DISABLED for stats
             : (!isGardenHotspot && widget.id == 'statistique')
                 ? InvisibleStatsZone(
                     isCalibrationMode: widget.isCalibrating,
