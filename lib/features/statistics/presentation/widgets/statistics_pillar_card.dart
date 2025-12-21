@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../enums/pillar_type.dart';
@@ -35,90 +36,112 @@ class StatisticsPillarCard extends ConsumerWidget {
       PillarType.economieVivante => {'icon': '🌾', 'title': 'Économie Vivante'},
       PillarType.sante => {'icon': '🩺', 'title': 'Santé'},
       PillarType.performance => {'icon': '📈', 'title': 'Performance'},
-      PillarType.alignement => {'icon': '⏳', 'title': 'Alignement'},
+      PillarType.patrimoine => {'icon': '📜', 'title': 'Patrimoine'},
     };
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: InkWell(
-          onTap: () {
-            final routeName = switch (type) {
-              PillarType.economieVivante => 'garden-stats-economie',
-              PillarType.sante => 'garden-stats-sante',
-              PillarType.performance => 'garden-stats-performance',
-              PillarType.alignement => 'garden-stats-alignement',
-            };
-            
-            final state = GoRouterState.of(context);
-            final gardenId = state.pathParameters['id'];
-            if (gardenId != null) {
-               context.pushNamed(routeName, pathParameters: {'id': gardenId});
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // HEADER
-                Text(
-                  '${iconAndTitle['icon']} ${iconAndTitle['title']}',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.7), // Fond noir avec légère transparence pour le flou
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.greenAccent.withOpacity(0.15), // Glow vert néon diffus
+              blurRadius: 40,
+              spreadRadius: 0,
+            ),
+          ],
+          border: Border.all(
+            color: Colors.white.withOpacity(0.1), // Légère bordure subtile
+            width: 0.5,
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Effet de flou "Membrane"
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  final routeName = switch (type) {
+                    PillarType.economieVivante => 'garden-stats-economie',
+                    PillarType.sante => 'garden-stats-sante',
+                    PillarType.performance => 'garden-stats-performance',
+                    PillarType.patrimoine => 'garden-stats-patrimoine',
+                  };
+                  
+                  final state = GoRouterState.of(context);
+                  final gardenId = state.pathParameters['id'];
+                  if (gardenId != null) {
+                     context.pushNamed(routeName, pathParameters: {'id': gardenId});
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // HEADER
+                      Text(
+                        '${iconAndTitle['icon']} ${iconAndTitle['title']}',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white, // Force white text on black background
+                            ),
                       ),
-                ),
-                const SizedBox(height: 20),
-
-                // PLACEHOLDER VISUEL
-                _buildPlaceholder(type),
-
-                const SizedBox(height: 20),
-
-                // VALEUR KPI
-                Center(
-                  child: _buildKpiValue(context, ref),
-                ),
-
-                const SizedBox(height: 6),
-
-                // LABEL DESCRIPTIF
-                Center(
-                  child: Text(
-                    _getKpiLabel(),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      const SizedBox(height: 20),
+      
+                      // PLACEHOLDER VISUEL
+                      _buildPlaceholder(type),
+      
+                      const SizedBox(height: 20),
+      
+                      // VALEUR KPI
+                      Center(
+                        child: _buildKpiValue(context, ref),
+                      ),
+      
+                      const SizedBox(height: 6),
+      
+                      // LABEL DESCRIPTIF
+                      Center(
+                        child: Text(
+                          _getKpiLabel(),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Colors.white70, // Adjusted for dark theme
+                              ),
                         ),
+                      ),
+      
+                      // TOP 3 DES PLANTES LES PLUS RENTABLES (uniquement pour Économie Vivante)
+                      if (type == PillarType.economieVivante) ...[
+                        const SizedBox(height: 16),
+                        _buildTop3PlantsBubbles(context, ref),
+                      ],
+      
+                      // SUGGESTIONS VITAMINIQUES (uniquement pour Santé)
+                      if (type == PillarType.sante) ...[
+                        const SizedBox(height: 16),
+                        _buildVitaminSuggestions(context, ref),
+                      ],
+      
+                      // MESSAGE D'ENCOURAGEMENT (uniquement pour Performance)
+                      if (type == PillarType.performance) ...[
+                        const SizedBox(height: 16),
+                        _buildPerformanceEncouragement(context, ref),
+                      ],
+      
+                      // MESSAGE D'ENCOURAGEMENT (uniquement pour Alignement)
+                      if (type == PillarType.patrimoine) ...[
+                        const SizedBox(height: 16),
+                        _buildPatrimoineActions(context, ref),
+                      ],
+                    ],
                   ),
                 ),
-
-                // TOP 3 DES PLANTES LES PLUS RENTABLES (uniquement pour Économie Vivante)
-                if (type == PillarType.economieVivante) ...[
-                  const SizedBox(height: 16),
-                  _buildTop3PlantsBubbles(context, ref),
-                ],
-
-                // SUGGESTIONS VITAMINIQUES (uniquement pour Santé)
-                if (type == PillarType.sante) ...[
-                  const SizedBox(height: 16),
-                  _buildVitaminSuggestions(context, ref),
-                ],
-
-                // MESSAGE D'ENCOURAGEMENT (uniquement pour Performance)
-                if (type == PillarType.performance) ...[
-                  const SizedBox(height: 16),
-                  _buildPerformanceEncouragement(context, ref),
-                ],
-
-                // MESSAGE D'ENCOURAGEMENT (uniquement pour Alignement)
-                if (type == PillarType.alignement) ...[
-                  const SizedBox(height: 16),
-                  _buildAlignmentEncouragement(context, ref),
-                ],
-              ],
+              ),
             ),
           ),
         ),
@@ -135,7 +158,8 @@ class StatisticsPillarCard extends ConsumerWidget {
         return _buildHealthChart();
       case PillarType.performance:
         return const PerformanceSeasonalPlaceholder();
-      case PillarType.alignement:
+      case PillarType.patrimoine:
+        // TODO: Replace with dedicated Patrimoine placeholder or widget
         return const AlignmentKpiCard();
     }
   }
@@ -155,8 +179,8 @@ class StatisticsPillarCard extends ConsumerWidget {
       return _buildHealthKpiValue(context, ref);
     } else if (type == PillarType.performance) {
       return _buildPerformanceKpiValue(context, ref);
-    } else if (type == PillarType.alignement) {
-      return _buildAlignmentKpiValue(context, ref);
+    } else if (type == PillarType.patrimoine) {
+      return _buildPatrimoineKpiValue(context, ref);
     } else {
       // Pour les autres piliers, afficher le placeholder
       return Text(
@@ -177,8 +201,8 @@ class StatisticsPillarCard extends ConsumerWidget {
         return 'Répartition vitaminique';
       case PillarType.performance:
         return 'Performance saisonnière';
-      case PillarType.alignement:
-        return 'Alignement au vivant';
+      case PillarType.patrimoine:
+        return 'Mémoire du jardin';
     }
   }
 
@@ -416,41 +440,30 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 
-  /// Construit la valeur KPI pour le pilier Alignement
-  Widget _buildAlignmentKpiValue(BuildContext context, WidgetRef ref) {
-    final insightAsync = ref.watch(alignmentInsightProvider);
+  /// Construit la valeur KPI pour le pilier Patrimoine
+  Widget _buildPatrimoineKpiValue(BuildContext context, WidgetRef ref) {
+    // Placeholder le temps de connecter le provider d'export
+    return Text(
+      'Export',
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
 
-    return insightAsync.when(
-      data: (insight) {
-        if (!insight.hasData) {
-          return Text(
-            '--',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          );
-        }
-
-        // Afficher le pourcentage d'alignement
-        final score = insight.score.round();
-        return Text(
-          '$score%',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        );
-      },
-      loading: () => Text(
-        '...',
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-      ),
-      error: (error, stack) => Text(
-        '--',
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+  /// Construit les actions pour le pilier Patrimoine (Bouton Export)
+  Widget _buildPatrimoineActions(BuildContext context, WidgetRef ref) {
+    return Center(
+      child: OutlinedButton.icon(
+        onPressed: () {
+          // TODO: Déclencher l'export
+        },
+        icon: const Icon(Icons.download_rounded),
+        label: const Text('Exporter les données'),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          side: BorderSide(color: Theme.of(context).colorScheme.primary),
+        ),
       ),
     );
   }
