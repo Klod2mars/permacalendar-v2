@@ -1,46 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-
-import '../../domain/models/plant_value_ranking.dart';
-
-
-
-/// Widget pour afficher le Top 3 des plantes les plus rentables sous forme de bulles colorées
-
-///
-
-/// Design :
-
-/// - 3 bulles de tailles proportionnelles aux valeurs
-
-/// - Couleurs pastel fixes : vert, bleu clair, ambre
-
-/// - Nom et valeur affichés sous chaque bulle
-
-/// - Disposition en Row avec espacement uniforme
-
-class TopEconomyBubbleChart extends StatelessWidget {
-
-  final List<PlantValueRanking> rankings;
-
-
-
-  const TopEconomyBubbleChart({required this.rankings, super.key});
-
-
-
-  @override
-
-  Widget build(BuildContext context) {
-
-    if (rankings.isEmpty) return const SizedBox.shrink();
-
-
-
-    final double maxValue = rankings.first.totalValue;
-
-
-
-import 'package:flutter/material.dart';
 import '../../domain/models/plant_value_ranking.dart';
 
 /// Widget pour afficher le Top 3 des plantes les plus rentables sous forme de bulles colorées

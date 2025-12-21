@@ -8,6 +8,7 @@ import '../../application/providers/vitamin_distribution_provider.dart';
 import '../../application/providers/intelligence_perma_provider.dart';
 import 'top_economy_bubble_chart.dart';
 import 'charts/nutrition_radar_chart.dart';
+import '../../application/providers/nutrition_radar_provider.dart';
 
 // 🔄 V4_UNIFIED_MEMBRANE: Import V4 unified membrane system if needed, 
 // though we use TopEconomyBubbleChart for economy now.
@@ -198,7 +199,8 @@ class StatisticsPillarCard extends ConsumerWidget {
                   fit: BoxFit.contain, 
                   child: Consumer(
                     builder: (context, ref, child) {
-                       return vitDist.maybeWhen(
+                       final radarDataAsync = ref.watch(nutritionRadarProvider);
+                       return radarDataAsync.maybeWhen(
                         data: (d) => NutritionRadarChart(data: d, size: diameter * 0.26),
                         orElse: () => const SizedBox(),
                        );
