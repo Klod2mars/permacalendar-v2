@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/statistics_pillars_list.dart';
 import '../providers/statistics_filters_provider.dart';
 
+import '../widgets/garden_multi_selector.dart';
+
 class GardenStatisticsScreen extends ConsumerStatefulWidget {
-  final String gardenId;
-  const GardenStatisticsScreen({super.key, required this.gardenId});
+  final String? gardenId;
+  const GardenStatisticsScreen({super.key, this.gardenId});
 
   @override
   ConsumerState<GardenStatisticsScreen> createState() => _GardenStatisticsScreenState();
@@ -16,10 +18,15 @@ class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen>
   @override
   void initState() {
     super.initState();
-    // Initialisation unique au montage de l'écran
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(statisticsFiltersProvider.notifier).setGardenId(widget.gardenId);
-    });
+    // Intialization logic
+    // If a gardenId is passed specifically (old route), we force-set it.
+    // If generic route (null), we leave the provider as is (or defaulted to empty).
+    if (widget.gardenId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // We use setGardens to set a single ID in the set
+        ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId!});
+      });
+    }
   }
 
   @override
@@ -47,6 +54,10 @@ class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen>
                 ),
               ),
             ),
+            // Multi-Garden Selector
+            const SliverToBoxAdapter(
+              child: GardenMultiSelector(),
+            ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -55,7 +66,8 @@ class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen>
                   children: [
                     const SizedBox(height: 20),
                     Hero(
-                      tag: 'stats-bubble-hero-${widget.gardenId}',
+                      // Using a global tag for the generic entry point
+                      tag: 'stats-bubble-hero-global',
                       child: Material(
                         color: Colors.transparent,
                         child: Text(

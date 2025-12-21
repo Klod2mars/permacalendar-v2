@@ -170,7 +170,7 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         centerY: 0.86,
         widthFrac: 0.20,
         heightFrac: 0.20,
-        route: null, // Placeholder pour futur module stats
+        route: 'statistics-global',
         label: 'Statistique'),
     _Hotspot(
         id: 'calendar',
@@ -984,9 +984,13 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
         : (!isGardenHotspot && widget.id == 'weather_stats')
             ? null // Transparent tap zone (background image provides the visual)
             : (!isGardenHotspot && widget.id == 'statistique')
-                ? InvisibleStatsZone(
-                    isCalibrationMode: widget.isCalibrating,
-                    glowColor: Colors.greenAccent)
+                ? Hero(
+                    tag: 'stats-bubble-hero-global',
+                    child: InvisibleStatsZone(
+                      isCalibrationMode: widget.isCalibrating,
+                      glowColor: Colors.greenAccent,
+                    ),
+                  )
                 : null;
 
     if (widget.isCalibrating) {
@@ -1043,7 +1047,14 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                     'OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
               }
               if (widget.onTapRoute != null) {
-                context.push(widget.onTapRoute!);
+                // Special handling for statistics default route if needed, 
+                // but now it is generic so we can just push.
+                // If specific handling is needed for others, keep the switch.
+                if (widget.id == 'statistique') {
+                   context.pushNamed('statistics-global');
+                } else {
+                  context.push(widget.onTapRoute!);
+                }
               }
             },
       onLongPress: isGardenHotspot && !widget.isCalibrating

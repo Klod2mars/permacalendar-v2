@@ -1,13 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class StatisticsFiltersState {
-  final String? selectedGardenId;
+  /// Ensemble des IDs de jardins sélectionnés.
+  /// Si vide, on considère que TOUS les jardins sont sélectionnés (ou aucun ? on va dire 'Tous' par défaut pour l'agrégation).
+  /// Alternative UX : Vide = Aucun, mais on peut avoir une méthode `isAllSelected`.
+  /// Pour simplifier : Vide = Aucun filtre actif => Agrégation de TOUT.
+  final Set<String> selectedGardenIds;
 
-  const StatisticsFiltersState({this.selectedGardenId});
+  const StatisticsFiltersState({this.selectedGardenIds = const {}});
 
-  StatisticsFiltersState copyWith({String? selectedGardenId}) {
+  StatisticsFiltersState copyWith({Set<String>? selectedGardenIds}) {
     return StatisticsFiltersState(
-      selectedGardenId: selectedGardenId ?? this.selectedGardenId,
+      selectedGardenIds: selectedGardenIds ?? this.selectedGardenIds,
     );
   }
 
@@ -27,8 +31,25 @@ class StatisticsFiltersNotifier extends Notifier<StatisticsFiltersState> {
     return const StatisticsFiltersState();
   }
 
-  void setGardenId(String? id) {
-    state = state.copyWith(selectedGardenId: id);
+  /// Bascule la sélection d'un jardin.
+  void toggleGarden(String id) {
+    final current = state.selectedGardenIds.toSet();
+    if (current.contains(id)) {
+      current.remove(id);
+    } else {
+      current.add(id);
+    }
+    state = state.copyWith(selectedGardenIds: current);
+  }
+
+  /// Sélectionne explicitement une liste de jardins (ou un seul).
+  void setGardens(Set<String> ids) {
+    state = state.copyWith(selectedGardenIds: ids);
+  }
+
+  /// Efface tous les filtres (implique une vue globale/agrégée par défaut dans la logique des consumers).
+  void clearAll() {
+    state = state.copyWith(selectedGardenIds: {});
   }
 }
 
