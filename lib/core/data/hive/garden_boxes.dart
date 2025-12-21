@@ -1,5 +1,6 @@
 ﻿// lib/core/data/hive/garden_boxes.dart
 import 'dart:developer' as developer;
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../models/garden.dart';
@@ -56,6 +57,7 @@ class GardenBoxes {
       _gardenBedsBox = await Hive.openBox<GardenBed>(_gardenBedsBoxName);
       _plantingsBox = await Hive.openBox<Planting>(_plantingsBoxName);
       _harvestsBox = await Hive.openBox(_harvestsBoxName);
+      debugPrint('[GardenBoxes] harvests box opened: ${_harvestsBox!.name}');
 
       if (verboseLogging)
         developer.log('[GardenBoxes] Boxes initialisées avec succès');

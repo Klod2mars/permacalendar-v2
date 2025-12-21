@@ -400,6 +400,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
     required double pricePerKg,
     String? notes,
   }) async {
+    debugPrint('[PlantingNotifier.recordHarvest] start plantingId=$plantingId weightKg=$weightKg price=$pricePerKg notes=${notes ?? ''}');
     try {
       // NOTE: Using firstWhere with orElse to avoid crash if not found
       final planting = state.plantings.firstWhere((p) => p.id == plantingId, orElse: () => throw Exception('Planting not found'));
@@ -418,7 +419,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       // Persistance via le repository
       await HarvestRepository().saveHarvest(record);
-      debugPrint('[recordHarvest] saved harvest id=${record.id} plant=${record.plantId} qty=${record.quantityKg}kg');
+      debugPrint('[PlantingNotifier.recordHarvest] saved harvest id=${record.id}');
 
       // Tracking non bloquant + émission d'événement
       try {
