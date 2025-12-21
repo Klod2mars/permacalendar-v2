@@ -12,12 +12,14 @@ import 'package:permacalendar/core/services/plant_catalog_service.dart';
 class PlantingPreview extends StatelessWidget {
   final Planting planting;
   final VoidCallback? onTap;
+  final VoidCallback? onHarvest;
   final double imageSize;
 
   const PlantingPreview({
     Key? key,
     required this.planting,
     this.onTap,
+    this.onHarvest,
     this.imageSize = 110,
   }) : super(key: key);
 
@@ -348,6 +350,29 @@ class PlantingPreview extends StatelessWidget {
                         ),
                       ),
                     ),
+                    if (onHarvest != null)
+                      Positioned(
+                        right: 8,
+                        bottom: 8,
+                        child: InkWell(
+                          onTap: onHarvest,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: const Icon(Icons.agriculture, color: Colors.white, size: 16),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),

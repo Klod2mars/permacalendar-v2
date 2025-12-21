@@ -1,6 +1,8 @@
 ﻿// lib/features/garden_bed/presentation/screens/garden_bed_detail_screen.dart
 import 'dart:convert';
 
+import '../../../planting/presentation/widgets/harvest_dialog.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -373,13 +375,31 @@ class GardenBedDetailScreen extends ConsumerWidget {
                           (horizontalCardPadding * 2);
                       final double imageSize =
                           fullWidth; // square occupying width
+                      
+                      final p = plantings.first;
+
                       return SizedBox(
                         width: double.infinity,
-                        child: PlantingPreview(
-                          planting: plantings.first,
-                          onTap: () =>
-                              context.push('/plantings/${plantings.first.id}'),
-                          imageSize: imageSize,
+                        child: Stack(
+                          children: [
+                            PlantingPreview(
+                              planting: p,
+                              onTap: () =>
+                                  context.push('/plantings/${p.id}'),
+                              imageSize: imageSize,
+                            ),
+                            // --- Overlay: bouton récolte
+                            Positioned(
+                              right: 16,
+                              bottom: 16,
+                              child: FloatingActionButton.small(
+                                heroTag: 'harvest_${p.id}',
+                                backgroundColor: Colors.green,
+                                onPressed: () => showHarvestDialog(context, ref, p),
+                                child: const Icon(Icons.agriculture, color: Colors.white),
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     }),
@@ -400,10 +420,10 @@ class GardenBedDetailScreen extends ConsumerWidget {
                           final double imageSize = fullWidth - innerMargin;
                           return SizedBox(
                             width: double.infinity,
-                            child: PlantingPreview(
+                            child: PlantingCard(
                               planting: p,
                               onTap: () => context.push('/plantings/${p.id}'),
-                              imageSize: imageSize,
+                              onHarvest: () => showHarvestDialog(context, ref, p),
                             ),
                           );
                         }),
@@ -422,6 +442,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                         .map((p) => PlantingPreview(
                               planting: p,
                               onTap: () => context.push('/plantings/${p.id}'),
+                              onHarvest: () => showHarvestDialog(context, ref, p),
                               imageSize: 160,
                             ))
                         .toList(),

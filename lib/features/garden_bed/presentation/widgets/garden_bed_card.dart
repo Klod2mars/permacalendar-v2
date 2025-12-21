@@ -9,6 +9,7 @@ import '../../../../core/utils/planting_utils.dart';
 import '../../../planting/providers/planting_provider.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../shared/utils/plant_image_resolver.dart';
+import '../../../planting/presentation/widgets/harvest_dialog.dart';
 
 class GardenBedCard extends ConsumerWidget {
   final GardenBed gardenBed;
@@ -209,81 +210,7 @@ class GardenBedCard extends ConsumerWidget {
 
   void _showQuickHarvestDialog(
       BuildContext context, WidgetRef ref, Planting planting) {
-    final _quantityController = TextEditingController();
-    final _notesController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
-
-    showDialog(
-      context: context,
-      builder: (dctx) => AlertDialog(
-        title: Text('Récolte: ${planting.plantName}'),
-        content: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                controller: _quantityController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration:
-                    const InputDecoration(labelText: 'Quantité (optionnel)'),
-                validator: (v) {
-                  if (v != null && v.trim().isNotEmpty) {
-                    final d = double.tryParse(v.trim().replaceAll(',', '.'));
-                    if (d == null || d < 0) return 'Quantité invalide';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _notesController,
-                decoration:
-                    const InputDecoration(labelText: 'Notes (optionnel)'),
-                maxLines: 2,
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(dctx).pop(),
-              child: const Text('Annuler')),
-          FilledButton(
-            onPressed: () async {
-              if (!_formKey.currentState!.validate()) return;
-              final raw = _quantityController.text.trim();
-              final double? qty = raw.isEmpty
-                  ? null
-                  : double.tryParse(raw.replaceAll(',', '.'));
-              final notes = _notesController.text.trim().isEmpty
-                  ? null
-                  : _notesController.text.trim();
-
-              Navigator.of(dctx).pop();
-
-              final success =
-                  await ref.read(plantingProvider.notifier).recordHarvest(
-                        planting.id,
-                        DateTime.now(),
-                        quantity: qty,
-                        notes: notes,
-                      );
-
-              if (success && context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Récolte enregistrée')));
-              } else if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Erreur lors de l\'enregistrement')));
-              }
-            },
-            child: const Text('Enregistrer'),
-          ),
-        ],
-      ),
-    );
+    showHarvestDialog(context, ref, planting);
   }
 
   Widget _buildFallbackImage(BuildContext ctx,
