@@ -37,11 +37,14 @@ final totalEconomyKpiProvider = Provider<double>((ref) {
   }
 
   // Calculer la somme totale
-  if (filteredRecords.isEmpty) return 0.0;
-
-  return filteredRecords
-      .map((record) => record.totalValue)
-      .fold(0.0, (sum, value) => sum + value);
+  final total = filteredRecords.isEmpty
+      ? 0.0
+      : filteredRecords
+          .map((record) => record.totalValue)
+          .fold(0.0, (sum, value) => sum + value);
+  
+  debugPrint('[totalEconomyKpi] computed total=$total from ${filteredRecords.length} records');
+  return total;
 });
 
 /// Provider pour le KPI "Valeur totale des récoltes (â‚¬)" avec gestion d'état de chargement

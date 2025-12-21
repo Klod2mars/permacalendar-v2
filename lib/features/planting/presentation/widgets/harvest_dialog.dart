@@ -50,61 +50,68 @@ Future<void> showHarvestDialog(
     context: context,
     builder: (dctx) => AlertDialog(
       title: Text('Récolte: ${planting.plantName}'),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Poids (Principal)
-            TextFormField(
-              controller: _weightController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                labelText: 'Poids récolté (kg) *',
-                suffixText: 'kg',
-                prefixIcon: Icon(Icons.scale),
-              ),
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'Requis';
-                final d = double.tryParse(v.trim().replaceAll(',', '.'));
-                if (d == null || d <= 0) return 'Invalide (> 0)';
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
+      content: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Poids (Principal)
+                TextFormField(
+                  controller: _weightController,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  decoration: const InputDecoration(
+                    labelText: 'Poids récolté (kg) *',
+                    suffixText: 'kg',
+                    prefixIcon: Icon(Icons.scale),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) return 'Requis';
+                    final d = double.tryParse(v.trim().replaceAll(',', '.'));
+                    if (d == null || d <= 0) return 'Invalide (> 0)';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
 
-            // Prix (Secondaire avec mémoire)
-            TextFormField(
-              controller: _priceController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                labelText: 'Prix estimé (€/kg)',
-                suffixText: '€/kg',
-                prefixIcon: Icon(Icons.euro),
-                helperText:
-                    'Sera mémorisé pour les prochaines récoltes de cette plante',
-              ),
-              validator: (v) {
-                if (v != null && v.trim().isNotEmpty) {
-                  final d = double.tryParse(v.trim().replaceAll(',', '.'));
-                  if (d == null || d < 0) return 'Invalide (>= 0)';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
+                // Prix (Secondaire avec mémoire)
+                TextFormField(
+                  controller: _priceController,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  decoration: const InputDecoration(
+                    labelText: 'Prix estimé (€/kg)',
+                    suffixText: '€/kg',
+                    prefixIcon: Icon(Icons.euro),
+                    helperText:
+                        'Sera mémorisé pour les prochaines récoltes de cette plante',
+                  ),
+                  validator: (v) {
+                    if (v != null && v.trim().isNotEmpty) {
+                      final d = double.tryParse(v.trim().replaceAll(',', '.'));
+                      if (d == null || d < 0) return 'Invalide (>= 0)';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
 
-            // Notes
-            TextFormField(
-              controller: _notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notes / Qualité',
-                prefixIcon: Icon(Icons.note),
-              ),
-              maxLines: 2,
+                // Notes
+                TextFormField(
+                  controller: _notesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Notes / Qualité',
+                    prefixIcon: Icon(Icons.note),
+                  ),
+                  maxLines: 2,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       actions: [
