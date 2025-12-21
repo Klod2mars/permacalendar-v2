@@ -157,13 +157,21 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         route: AppRoutes.intelligence,
         label: 'Intelligence'),
     _Hotspot(
-        id: 'weather_stats', // NEW: Zone pour stats météo (même position approx que intelligence)
-        centerX: 0.18,
+        id: 'weather_stats',
+        centerX: 0.12, // Décalé pour éviter collision avec intelligence
         centerY: 0.22,
         widthFrac: 0.20,
         heightFrac: 0.20,
-        route: null, // Géré par InvisibleStatsZone
+        route: AppRoutes.weather, // RESTAURE la navigation météo
         label: 'Weather Stats'),
+    _Hotspot(
+        id: 'statistique',
+        centerX: 0.50,
+        centerY: 0.86,
+        widthFrac: 0.20,
+        heightFrac: 0.20,
+        route: null, // Placeholder pour futur module stats
+        label: 'Statistique'),
     _Hotspot(
         id: 'calendar',
         centerX: 0.18,
@@ -348,10 +356,12 @@ class _OrganicDashboardWidgetState
       if (kDebugMode) {
         debugPrint('🔧 [CALIBRATION] defaults injected and merged successfully');
       }
-    } catch (e, st) {
       if (kDebugMode) {
         debugPrint('⚠️ [CALIBRATION] failed loading defaults: $e\n$st');
       }
+    }
+    if (kDebugMode) {
+      debugPrint('[CALIBRATION] after loadFromStorage zones: ${ref.read(organicZonesProvider).keys.toList()}');
     }
   }
 
@@ -402,6 +412,10 @@ class _OrganicDashboardWidgetState
     final zones = ref.watch(organicZonesProvider);
     final calibState = ref.watch(calibrationStateProvider);
     final isCalibrating = calibState.activeType == CalibrationType.organic;
+
+    if (kDebugMode) {
+      debugPrint('[CALIBRATION BUILD] zones keys: ${zones.keys.toList()}');
+    }
 
     return LayoutBuilder(builder: (context, constraints) {
       final double width = constraints.maxWidth.isFinite
@@ -967,10 +981,12 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final Widget? contentWidget = (!isGardenHotspot && widget.id == 'weather')
         ? const WeatherBubbleWidget()
         : (!isGardenHotspot && widget.id == 'weather_stats')
-            ? InvisibleStatsZone(
-                isCalibrationMode: widget.isCalibrating,
-                glowColor: Colors.greenAccent)
-            : null;
+            ? const WeatherBubbleWidget() // Affiche la météo ici aussi ou une variante
+            : (!isGardenHotspot && widget.id == 'statistique')
+                ? InvisibleStatsZone(
+                    isCalibrationMode: widget.isCalibrating,
+                    glowColor: Colors.greenAccent)
+                : null;
 
     if (widget.isCalibrating) {
       return Listener(
