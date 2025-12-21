@@ -43,126 +43,137 @@ class StatisticsPillarCard extends ConsumerWidget {
     };
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Center(
+      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0), // Espace entre les bulles + marge latérale
+      child: AspectRatio(
+        aspectRatio: 1.0, // FORCE la forme carrée pour que le cercle soit parfait
         child: Container(
-          // "Membrane" shape: Ovoid/Organic
-          // Using a high border radius to simulate an organic cell/egg shape.
+          // La décoration Néon/Verre
           decoration: BoxDecoration(
-             color: Colors.black.withOpacity(0.6), // Fond noir profond mais translucide
-            borderRadius: BorderRadius.all(Radius.elliptical(200, 160)), // Forme ovoïde
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFF00FF00).withOpacity(0.15), // Neon Green Glow
-                blurRadius: 40,
-                spreadRadius: 2,
-              ),
-              // Couche interne subtile pour le volume
-              BoxShadow(
-                color: Colors.white.withOpacity(0.05),
-                blurRadius: 10,
-                spreadRadius: -5,
-              )
-            ],
+            shape: BoxShape.circle, // FORCE la forme circulaire
+            color: Colors.black.withOpacity(0.3), // Fond semi-transparent
             border: Border.all(
-              color: Colors.white.withOpacity(0.15),
-              width: 0.8,
+              color: Colors.greenAccent.withOpacity(0.6), // Bordure néon fine
+              width: 2.0,
             ),
+            boxShadow: [
+              // Le grand halo lumineux externe
+              BoxShadow(
+                color: Colors.greenAccent.withOpacity(0.5), // Couleur intense
+                blurRadius: 60.0, // Flou très large
+                spreadRadius: 5.0, // Diffusion externe
+              ),
+              // Un deuxième halo plus petit pour le cœur lumineux
+              BoxShadow(
+                color: Colors.greenAccent.withOpacity(0.3),
+                blurRadius: 20.0,
+                spreadRadius: -5.0,
+              ),
+            ],
           ),
-          child: ClipRRect(
-             borderRadius: BorderRadius.all(Radius.elliptical(200, 160)), // Clip match decoration
+          // L'effet de flou (Glassmorphism)
+          child: ClipOval(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Glassmorphism
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    final routeName = switch (type) {
-                      PillarType.economieVivante => 'garden-stats-economie',
-                      PillarType.sante => 'garden-stats-sante',
-                      PillarType.performance => 'garden-stats-performance',
-                      PillarType.patrimoine => 'garden-stats-patrimoine',
-                    };
+              filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(12.0), // Padding interne réduit pour maximiser l'espace
+                color: Colors.white.withOpacity(0.05), // Légère teinte blanche pour l'effet verre
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(500), // Cercle pour l'effet ripple
+                    onTap: () {
+                      final routeName = switch (type) {
+                        PillarType.economieVivante => 'garden-stats-economie',
+                        PillarType.sante => 'garden-stats-sante',
+                        PillarType.performance => 'garden-stats-performance',
+                        PillarType.patrimoine => 'garden-stats-patrimoine',
+                      };
 
-                    final state = GoRouterState.of(context);
-                    final gardenId = state.pathParameters['id'];
-                    if (gardenId != null) {
-                      context.pushNamed(routeName, pathParameters: {'id': gardenId});
-                    }
-                  },
-                  child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: SingleChildScrollView( // Prevent overflow
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min, // S'adapte au contenu
-                      crossAxisAlignment: CrossAxisAlignment.center, // Centrage vital pour l'ovis
-                      children: [
-                        // HEADER CENTRÉ
-                        Column(
-                          children: [
-                            Text(
-                              iconAndTitle['icon']!,
-                              style: const TextStyle(fontSize: 32),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              iconAndTitle['title']!.toUpperCase(),
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.2,
-                                    color: Colors.white.withOpacity(0.9),
+                      final state = GoRouterState.of(context);
+                      final gardenId = state.pathParameters['id'];
+                      if (gardenId != null) {
+                        context.pushNamed(routeName, pathParameters: {'id': gardenId});
+                      }
+                    },
+                    child: Center(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min, // S'adapte au contenu
+                            crossAxisAlignment: CrossAxisAlignment.center, // Centrage vital
+                            children: [
+                              // HEADER CENTRÉ
+                              Column(
+                                children: [
+                                  Text(
+                                    iconAndTitle['icon']!,
+                                    style: const TextStyle(fontSize: 32),
                                   ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-
-                        // VALEUR KPI (Mise en avant majeure)
-                        _buildKpiValue(context, ref),
-
-                        const SizedBox(height: 8),
-
-                        // LABEL DESCRIPTIF
-                        Text(
-                          _getKpiLabel(),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.greenAccent.withOpacity(0.8),
-                                fontStyle: FontStyle.italic,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    iconAndTitle['title']!.toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.2,
+                                          color: Colors.white.withOpacity(0.9),
+                                          fontSize: 10, // Réduit pour tenir
+                                        ),
+                                  ),
+                                ],
                               ),
+                              const SizedBox(height: 16),
+
+                              // VALEUR KPI (Mise en avant majeure)
+                              _buildKpiValue(context, ref),
+
+                              const SizedBox(height: 4),
+
+                              // LABEL DESCRIPTIF
+                              Text(
+                                _getKpiLabel(),
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.greenAccent.withOpacity(0.8),
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 10,
+                                    ),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              // SECTION VISUELLE / GRAPHIQUE (Comprimée pour tenir dans le cercle)
+                              SizedBox(
+                                height: 100, // Hauteur réduite pour le cercle
+                                width: 100,  // Largeur contrainte
+                                child: _buildPlaceholder(type),
+                              ),
+
+                              // CONTENU SPÉCIFIQUE (Top 3, Suggestions...)
+                              if (type == PillarType.economieVivante) ...[
+                                const SizedBox(height: 8),
+                                _buildTop3PlantsBubbles(context, ref),
+                              ],
+                              if (type == PillarType.sante) ...[
+                                const SizedBox(height: 8),
+                                _buildVitaminSuggestions(context, ref),
+                              ],
+                              if (type == PillarType.performance) ...[
+                                const SizedBox(height: 8),
+                                _buildIntelligenceSuggestions(context, ref),
+                              ],
+                              if (type == PillarType.patrimoine) ...[
+                                const SizedBox(height: 8),
+                                _buildPatrimoineActions(context, ref),
+                              ]
+                            ],
+                          ),
                         ),
-
-                         const SizedBox(height: 20),
-
-                        // SECTION VISUELLE / GRAPHIQUE (Comprimée pour tenir dans l'ovale)
-                         SizedBox(
-                           height: 120, // Contrainte de hauteur pour éviter l'overflow
-                           child: _buildPlaceholder(type),
-                         ),
-
-
-                        // CONTENU SPÉCIFIQUE (Top 3, Suggestions...)
-                        if (type == PillarType.economieVivante) ...[
-                          const SizedBox(height: 16),
-                          _buildTop3PlantsBubbles(context, ref),
-                        ],
-                        if (type == PillarType.sante) ...[
-                          const SizedBox(height: 16),
-                          _buildVitaminSuggestions(context, ref),
-                        ],
-                         if (type == PillarType.performance) ...[
-                          const SizedBox(height: 16),
-                          _buildIntelligenceSuggestions(context, ref), // NEW
-                        ],
-                        if (type == PillarType.patrimoine) ...[
-                           const SizedBox(height: 16),
-                           _buildPatrimoineActions(context, ref),
-                        ],
-                      ],
+                      ),
                     ),
-                  ),
                   ),
                 ),
               ),
