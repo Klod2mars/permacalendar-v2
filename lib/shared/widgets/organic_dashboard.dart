@@ -982,7 +982,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final Widget? contentWidget = (!isGardenHotspot && widget.id == 'weather')
         ? const WeatherBubbleWidget()
         : (!isGardenHotspot && widget.id == 'weather_stats')
-            ? const WeatherBubbleWidget(showEffects: false) // Effects DISABLED for stats
+            ? null // Transparent tap zone (background image provides the visual)
             : (!isGardenHotspot && widget.id == 'statistique')
                 ? InvisibleStatsZone(
                     isCalibrationMode: widget.isCalibrating,
