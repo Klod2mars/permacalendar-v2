@@ -49,6 +49,8 @@ class AppRoutes {
   static const String calendar = '/calendar';
   static const String weather = '/weather';
 
+  static const String statistics = '/statistics';
+
   static const String intelligence = '/intelligence';
   static const String intelligenceDetail = '/intelligence/plant/:id';
   static const String recommendations = '/intelligence/recommendations';
@@ -142,6 +144,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             },
           ),
         ],
+      ),
+
+      GoRoute(
+        path: AppRoutes.statistics,
+        name: 'statistics-global',
+        builder: (context, state) {
+          return const GardenStatisticsScreen(gardenId: null);
+        },
       ),
 
       // --- Parcelles : fallback vers GardenDetailScreen, mais conserver le détail d'une parcelle

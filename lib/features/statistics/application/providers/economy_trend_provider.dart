@@ -15,10 +15,9 @@ final economyTrendProvider = Provider<List<EconomyTrendPoint>>((ref) {
 
   // Filtrage
   List<dynamic> filteredRecords;
-  if (filters.selectedGardenId != null &&
-      filters.selectedGardenId!.isNotEmpty) {
+  if (filters.selectedGardenIds.isNotEmpty) {
     filteredRecords = harvestRecordsState.records.where((record) {
-      final inGarden = record.gardenId == filters.selectedGardenId;
+      final inGarden = filters.selectedGardenIds.contains(record.gardenId);
       final inPeriod =
           record.date.isAfter(startDate) && record.date.isBefore(endDate);
       return inGarden && inPeriod;

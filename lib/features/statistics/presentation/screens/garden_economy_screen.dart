@@ -21,9 +21,7 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
   void initState() {
     super.initState();
     // Synchronize filter on init (in case we land here directly)
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(statisticsFiltersProvider.notifier).setGardenId(widget.gardenId);
-    });
+      ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId});
   }
 
   @override

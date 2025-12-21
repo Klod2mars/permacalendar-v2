@@ -2,8 +2,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../app_router.dart';
 
-import '../../../core/providers/active_garden_provider.dart';
+
 
 /// Zone invisible tappable qui ouvre les statistiques du jardin actif.
 /// Conçue pour être placée dans un Positioned (le dashboard gère left/top/width/height).
@@ -19,22 +20,17 @@ class InvisibleStatsZone extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeGardenId = ref.watch(activeGardenIdProvider);
-
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        debugPrint('[InvisibleStatsZone] onTap activeGardenId=$activeGardenId isCalibrationMode=$isCalibrationMode');
+        debugPrint('[InvisibleStatsZone] onTap isCalibrationMode=$isCalibrationMode');
 
         if (isCalibrationMode) return;
-        if (activeGardenId == null) {
-           return;
-        }
 
         HapticFeedback.lightImpact();
         try {
           if (!context.mounted) return;
-          context.push('/gardens/$activeGardenId/stats');
+          context.push(AppRoutes.statistics);
         } catch (e) {
           if (!context.mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
