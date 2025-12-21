@@ -1,4 +1,5 @@
-﻿import 'package:riverpod/riverpod.dart';
+﻿import 'package:flutter/foundation.dart';
+import 'package:riverpod/riverpod.dart';
 import '../../../core/services/plant_progress_service.dart';
 import '../../../core/models/planting.dart';
 import '../../../core/data/hive/garden_boxes.dart';
@@ -394,99 +395,74 @@ class PlantingNotifier extends Notifier<PlantingState> {
   /// Ne change PAS le statut de la plantation — on considère la récolte
   /// comme un événement (historique) attaché à la plantation.
   /// Enregistre une récolte complète (avec poids et prix) et met à jour le statut
-  Future<bool> recordHarvest({
-    required String plantingId,
-    required DateTime harvestDate,
-    required double quantityKg,
+  Future<bool> recordHarvest(String plantingId, DateTime date, {
+    required double weightKg,
     required double pricePerKg,
     String? notes,
   }) async {
     try {
-      Planting? planting;
-      for (final p in state.plantings) {
-        if (p.id == plantingId) {
-          planting = p;
-          break;
-        }
-      }
-
-      if (planting == null) {
-        state = state.copyWith(error: 'Plantation non trouvée');
-        return false;
-      }
-
+      // NOTE: Using firstWhere with orElse to avoid crash if not found
+      final planting = state.plantings.firstWhere((p) => p.id == plantingId, orElse: () => throw Exception('Planting not found'));
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
-      if (bed == null) {
-        state = state.copyWith(error: 'Parcelle non trouvée');
-        return false;
-      }
 
-      // 1. Créer et persister le HarvestRecord
       final record = HarvestRecord(
         id: const Uuid().v4(),
-        gardenId: bed.gardenId,
+        gardenId: bed?.gardenId ?? 'unknown',
         plantId: planting.plantId,
         plantName: planting.plantName,
-        quantityKg: quantityKg,
+        quantityKg: weightKg,
         pricePerKg: pricePerKg,
-        date: harvestDate,
+        date: date,
         notes: notes,
       );
 
-      final harvestRepo = HarvestRepository();
-      await harvestRepo.saveHarvest(record);
+      // Persistance via le repository
+      await HarvestRepository().saveHarvest(record);
+      debugPrint('[recordHarvest] saved harvest id=${record.id} plant=${record.plantId} qty=${record.quantityKg}kg');
 
-      // 2. Mettre à jour la plantation (Statut = Récolté)
-      final updatedPlanting = planting.copyWith(
-        status: 'Récolté',
-        actualHarvestDate: harvestDate,
-        // On pourrait aussi ajouter le recordId dans les métadonnées si besoin de lien direct
-      );
-
-      await GardenBoxes.savePlanting(updatedPlanting);
-
-      // 3. Track Activity
-      await ActivityObserverService().captureHarvestCompleted(
-        plantingId: plantingId,
-        plantName: planting.plantName,
-        gardenBedId: planting.gardenBedId,
-        gardenBedName: bed.name,
-        gardenId: bed.gardenId,
-        quantity: quantityKg,
-        unit: 'kg', // On force kg ici car c'est notre unité de référence
-      );
-
-      // 4. Emit Event
+      // Tracking non bloquant + émission d'événement
       try {
-        GardenEventBus().emit(
-          GardenEvent.plantingHarvested(
+        if (bed != null) {
+          await ActivityObserverService().captureHarvestCompleted(
+            gardenBedId: planting.gardenBedId,
+            gardenBedName: bed.name,
             gardenId: bed.gardenId,
             plantingId: plantingId,
-            harvestYield: quantityKg,
-            timestamp: harvestDate,
-            metadata: {
-              'plantName': planting.plantName,
-              'plantedDate': planting.plantedDate.toIso8601String(),
-              'notes': notes,
-              'pricePerKg': pricePerKg,
-              'totalValue': record.totalValue,
-            },
-          ),
-        );
+            plantName: planting.plantName,
+            quantity: weightKg,
+          );
+
+          GardenEventBus().emit(
+            GardenEvent.activityPerformed(
+              gardenId: bed.gardenId,
+              activityType: 'harvest',
+              targetId: record.id,
+              timestamp: DateTime.now(),
+              metadata: {
+                'plantingId': plantingId,
+                'plantId': planting.plantId,
+                'weightKg': weightKg,
+                'pricePerKg': pricePerKg,
+                'totalPrice': weightKg * pricePerKg,
+              },
+            ),
+          );
+        }
       } catch (e) {
-        print('Erreur emission event: $e');
+        debugPrint('[recordHarvest] tracking/event error: $e');
       }
 
-      // Mettre à jour l'état local
-      final updatedPlantings = state.plantings
-          .map((p) => p.id == updatedPlanting.id ? updatedPlanting : p)
-          .toList();
+      // Mise à jour minimaliste de la planting (last harvest date)
+      final updatedPlanting = planting.copyWith(actualHarvestDate: date);
+      await GardenBoxes.savePlanting(updatedPlanting);
 
+      final updatedPlantings = state.plantings.map((p) => p.id == plantingId ? updatedPlanting : p).toList();
       state = state.copyWith(plantings: updatedPlantings, error: null);
+
       return true;
     } catch (e) {
-      state = state.copyWith(
-          error: 'Erreur lors de l\'enregistrement de la récolte: $e');
+      debugPrint('[recordHarvest] error: $e');
+      state = state.copyWith(error: 'Erreur lors de la récolte: $e');
       return false;
     }
   }
@@ -516,9 +492,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
       // Fallback quantity: on utilise la quantité de la plantation (souvent en pièces)
       // comme estimation. Idéalement l'utilisateur devrait corriger via le dialogue.
       return await recordHarvest(
-        plantingId: plantingId,
-        harvestDate: harvestDate,
-        quantityKg: planting.quantity.toDouble(), 
+        plantingId,
+        harvestDate,
+        weightKg: planting.quantity.toDouble(), 
         pricePerKg: price,
         notes: 'Récolte rapide',
       );

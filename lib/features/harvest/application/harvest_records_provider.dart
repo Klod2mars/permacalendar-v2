@@ -25,15 +25,10 @@ class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
     try {
       final repo = HarvestRepository();
       final records = repo.getAllHarvests();
-      // On pourrait trier par date descendante
       records.sort((a, b) => b.date.compareTo(a.date));
-      state = HarvestRecordsState(records: records);
+      state = HarvestRecordsState(records: records, isLoading: false);
     } catch (e) {
-      state = HarvestRecordsState(
-        records: [], // Ou garder les anciens
-        isLoading: false,
-        error: e.toString(),
-      );
+      state = HarvestRecordsState(records: [], isLoading: false, error: e.toString());
     }
   }
 

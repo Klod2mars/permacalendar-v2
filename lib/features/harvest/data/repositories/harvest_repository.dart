@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../core/data/hive/garden_boxes.dart';
 import '../../domain/models/harvest_record.dart';
@@ -11,6 +12,7 @@ class HarvestRepository {
   /// Sauvegarder (ou écraser) un record
   Future<void> saveHarvest(HarvestRecord record) async {
     await _box().put(record.id, record.toJson());
+    debugPrint('[HarvestRepository] saveHarvest id=${record.id} plant=${record.plantId} qty=${record.quantityKg} price=${record.pricePerKg}');
   }
 
   /// Récupérer tous les records
