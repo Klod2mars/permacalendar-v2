@@ -14,6 +14,7 @@ import '../../../core/utils/calibration_storage.dart';
 
 import '../../../core/providers/organic_zones_provider.dart';
 import '../../../core/models/calibration_state.dart';
+import '../../../app_router.dart';
 
 
 
@@ -297,8 +298,12 @@ class _CalibrationSettingsScreenState
               icon: const Icon(Icons.tune),
               label: const Text('Calibrer maintenant'),
               onPressed: () {
+                // 1) Activer le mode calibration organique
                 ref.read(calibrationStateProvider.notifier).enableOrganicCalibration();
-                context.go('/'); 
+
+                // 2) Naviguer vers l'accueil (dashboard) qui lira le provider et affichera l'overlay
+                // Nous utilisons GoRouter afin de garantir l'affichage de HomeScreen (qui prend en compte calibrationStateProvider)
+                context.go(AppRoutes.home);
               },
             ),
             const SizedBox(height: 12),
