@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/models/harvest_record.dart';
+import '../data/repositories/harvest_repository.dart';
 
 class HarvestRecordsState {
   final List<HarvestRecord> records;
@@ -16,20 +17,28 @@ class HarvestRecordsState {
 class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
   @override
   HarvestRecordsState build() {
-    // Return dummy data for now
-    return HarvestRecordsState(records: _getDummyRecords());
+    loadRecords();
+    return const HarvestRecordsState(isLoading: true);
   }
-  
-  List<HarvestRecord> _getDummyRecords() {
-    // Generate some meaningful dummy data for economy testing
-    final now = DateTime.now();
-    return [
-      HarvestRecord(id: '1', gardenId: 'garden1', plantId: 'tomate_1', plantName: 'Tomate', quantityKg: 10, pricePerKg: 3.5, date: now.subtract(const Duration(days: 2))),
-      HarvestRecord(id: '2', gardenId: 'garden1', plantId: 'courgette_1', plantName: 'Courgette', quantityKg: 20, pricePerKg: 2.0, date: now.subtract(const Duration(days: 5))),
-      HarvestRecord(id: '3', gardenId: 'garden1', plantId: 'basilic_1', plantName: 'Basilic', quantityKg: 1, pricePerKg: 40.0, date: now.subtract(const Duration(days: 10))),
-      HarvestRecord(id: '4', gardenId: 'garden1', plantId: 'patate_1', plantName: 'Pomme de terre', quantityKg: 50, pricePerKg: 1.5, date: now.subtract(const Duration(days: 20))),
-       HarvestRecord(id: '5', gardenId: 'garden1', plantId: 'tomate_1', plantName: 'Tomate', quantityKg: 15, pricePerKg: 3.5, date: now.subtract(const Duration(days: 40))),
-    ];
+
+  Future<void> loadRecords() async {
+    try {
+      final repo = HarvestRepository();
+      final records = repo.getAllHarvests();
+      // On pourrait trier par date descendante
+      records.sort((a, b) => b.date.compareTo(a.date));
+      state = HarvestRecordsState(records: records);
+    } catch (e) {
+      state = HarvestRecordsState(
+        records: [], // Ou garder les anciens
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
+  Future<void> refresh() async {
+    await loadRecords();
   }
 }
 

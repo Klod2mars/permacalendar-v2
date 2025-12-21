@@ -13,10 +13,12 @@ class GardenBoxes {
   static const String _gardensBoxName = 'gardens';
   static const String _gardenBedsBoxName = 'garden_beds';
   static const String _plantingsBoxName = 'plantings';
+  static const String _harvestsBoxName = 'harvests';
 
   static Box<Garden>? _gardensBox;
   static Box<GardenBed>? _gardenBedsBox;
   static Box<Planting>? _plantingsBox;
+  static Box? _harvestsBox; // Stores Maps (JSON)
 
   // Getters pour les boxes
   static Box<Garden> get gardens {
@@ -40,12 +42,20 @@ class GardenBoxes {
     return _plantingsBox!;
   }
 
+  static Box get harvests {
+    if (_harvestsBox == null || !_harvestsBox!.isOpen) {
+      throw Exception('Harvests box n\'est pas initialisée');
+    }
+    return _harvestsBox!;
+  }
+
   static Future<void> initialize() async {
     try {
       // Ouvrir les boxes
       _gardensBox = await Hive.openBox<Garden>(_gardensBoxName);
       _gardenBedsBox = await Hive.openBox<GardenBed>(_gardenBedsBoxName);
       _plantingsBox = await Hive.openBox<Planting>(_plantingsBoxName);
+      _harvestsBox = await Hive.openBox(_harvestsBoxName);
 
       if (verboseLogging)
         developer.log('[GardenBoxes] Boxes initialisées avec succès');
@@ -60,10 +70,12 @@ class GardenBoxes {
     await _gardensBox?.close();
     await _gardenBedsBox?.close();
     await _plantingsBox?.close();
+    await _harvestsBox?.close();
 
     _gardensBox = null;
     _gardenBedsBox = null;
     _plantingsBox = null;
+    _harvestsBox = null;
   }
 
   // Méthodes utilitaires pour les jardins
@@ -71,6 +83,7 @@ class GardenBoxes {
     await gardens.clear();
     await gardenBeds.clear();
     await plantings.clear();
+    await harvests.clear();
   }
 
   static List<Garden> getAllGardens() {
