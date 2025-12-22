@@ -24,6 +24,7 @@ class PlantingPreview extends StatelessWidget {
   }) : super(key: key);
 
   static Map<String, String>? _assetManifestLowerToOriginal;
+  static final Map<String, String?> _resolvedAssetsCache = {};
 
   static Future<void> _ensureAssetManifest() async {
     if (_assetManifestLowerToOriginal != null) return;
@@ -227,9 +228,20 @@ class PlantingPreview extends StatelessWidget {
           // Otherwise resolve heuristically via manifest or rootBundle.load
           return FutureBuilder<String?>(
             future: () async {
+              // Check cache first
+              final cacheKey = '${planting.plantId}|${commonName}|${base}';
+              if (_resolvedAssetsCache.containsKey(cacheKey)) {
+                return _resolvedAssetsCache[cacheKey];
+              }
+
               final byManifest = await _searchManifestCandidates(candidates);
-              if (byManifest != null) return byManifest;
+              if (byManifest != null) {
+                _resolvedAssetsCache[cacheKey] = byManifest;
+                return byManifest;
+              }
+              
               final byLoad = await _tryRootBundleLoad(candidates);
+              _resolvedAssetsCache[cacheKey] = byLoad;
               return byLoad;
             }(),
             builder: (c2, snap2) {

@@ -401,11 +401,14 @@ class PlantingNotifier extends Notifier<PlantingState> {
     required double pricePerKg,
     String? notes,
   }) async {
-    debugPrint('[PlantingNotifier.recordHarvest] start plantingId=$plantingId weightKg=$weightKg price=$pricePerKg notes=${notes ?? ''}');
+    debugPrint('[PlantingNotifier.recordHarvest] START plantingId=$plantingId weightKg=$weightKg price=$pricePerKg notes=${notes ?? ''}');
     try {
-      // NOTE: Using firstWhere with orElse to avoid crash if not found
       final planting = state.plantings.firstWhere((p) => p.id == plantingId,
           orElse: () => throw Exception('Planting not found'));
+      
+      // LOG BEFORE
+      debugPrint('[recordHarvest] BEFORE update: plantName="${planting.plantName}" status="${planting.status}" metadata=${planting.metadata}');
+
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
       final gardenId = bed?.gardenId ?? 'unknown';
 
@@ -420,11 +423,11 @@ class PlantingNotifier extends Notifier<PlantingState> {
         notes: notes,
       );
 
-      // 4) Persister
+      // 4) Persister HarvestRecord
       await HarvestRepository().saveHarvest(record);
-      debugPrint('[PlantingNotifier] recordHarvest saved id=${record.id} planting=$plantingId weight=$weightKg price=$pricePerKg');
+      debugPrint('[PlantingNotifier] recordHarvest saved id=${record.id}');
 
-      // 5) Mémoriser le prix pour cette plante
+      // 5) Mémoriser le prix
       try {
         final prev = await CalibrationStorage.loadProfile('userHarvestPrices') ?? <String, dynamic>{};
         prev[planting.plantId] = pricePerKg;
@@ -433,7 +436,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         debugPrint('Warning: unable to save userHarvestPrices: $e');
       }
 
-      // Tracking non bloquant + émission d'événement
+      // Tracking + Events
       try {
         if (bed != null) {
           await ActivityObserverService().captureHarvestCompleted(
@@ -445,11 +448,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
             quantity: weightKg,
           );
 
-          // ✅ NOUVEAU : Refresh et Event
+          // Refresh harvest records
           try {
-              debugPrint('[PlantingNotifier] harvest saved id=${record.id} planting=$plantingId — refreshing harvestRecordsProvider');
               await ref.read(harvestRecordsProvider.notifier).refresh();
-              debugPrint('[PlantingNotifier] harvestRecordsProvider.refresh() done');
           } catch(e) {
              debugPrint('Warning: failed to refresh harvest records provider: $e');
           }
@@ -472,13 +473,19 @@ class PlantingNotifier extends Notifier<PlantingState> {
         debugPrint('[recordHarvest] tracking/event error: $e');
       }
 
-      // 7) Rafraîchir provider de récoltes (DEJA FAIT au dessus mais legacy clean up si besoin)
-      // La ligne ci-dessous était dans le code original, doublon possible si on l'a ajouté au dessus.
-      // On va la garder 'pour sureté' ou supprimer si redondant.
-      // => On l'a fait au dessus avec logs explicites, donc on peut continuer.
+      // 6) Mise à jour de la plantation (Status + Date)
+      // Force status to 'Récolté' and ensure plantName is preserved
+      final updatedPlanting = planting.copyWith(
+        actualHarvestDate: date,
+        status: 'Récolté',
+      );
 
-      // Mise à jour minimaliste de la planting (last harvest date)
-      final updatedPlanting = planting.copyWith(actualHarvestDate: date);
+      // CHECK INTEGRITY
+      if (updatedPlanting.plantName.trim().isEmpty) {
+         debugPrint('[recordHarvest] CRITICAL: plantName became empty! Original was "${planting.plantName}"');
+      }
+      debugPrint('[recordHarvest] AFTER update: plantName="${updatedPlanting.plantName}" status="${updatedPlanting.status}"');
+
       await GardenBoxes.savePlanting(updatedPlanting);
 
       final updatedPlantings = state.plantings.map((p) => p.id == plantingId ? updatedPlanting : p).toList();
