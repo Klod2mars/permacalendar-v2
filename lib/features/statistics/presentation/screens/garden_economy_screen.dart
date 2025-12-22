@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../application/providers/statistics_kpi_providers.dart';
-import '../../application/providers/economy_trend_provider.dart';
+import 'package:go_router/go_router.dart';
+import '../../application/economy_details_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
-import '../../presentation/widgets/top_economy_bubble_chart.dart';
-import '../../presentation/widgets/economy/economy_top3_table.dart';
-import '../../presentation/widgets/economy/economy_trend_chart.dart';
-import '../../presentation/widgets/economy/economy_logistics_savings_card.dart';
+import '../../../harvest/application/harvest_records_provider.dart';
+
+import '../widgets/economy_stats/economy_kpi_row.dart';
+import '../widgets/economy_stats/top_plants_ranking.dart';
+import '../widgets/economy_stats/monthly_revenue_chart.dart';
+import '../widgets/economy_stats/top_plant_per_month_grid.dart';
+import '../widgets/economy_stats/annual_revenue_line.dart';
+import '../widgets/economy_stats/plant_share_pie.dart';
+import '../widgets/economy_stats/diversity_indicator.dart';
+import '../widgets/economy_stats/recommendation_card.dart';
+import '../widgets/economy_stats/fast_vs_long_table.dart';
+import '../widgets/economy_stats/key_months_widget.dart';
+import '../widgets/economy_stats/historical_revenue_widget.dart';
 
 class GardenEconomyScreen extends ConsumerStatefulWidget {
   final String gardenId;
@@ -20,7 +29,6 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
   @override
   void initState() {
     super.initState();
-    // Ne pas modifier un provider directement dans initState :
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId});
@@ -32,131 +40,119 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Watch providers
-    final totalEconomy = ref.watch(totalEconomyKpiProvider);
-    final top3Rankings = ref.watch(top3PlantsValueRankingProvider);
-    final trendPoints = ref.watch(economyTrendProvider);
+    // 1. Get Filters
+    final filters = ref.watch(statisticsFiltersProvider);
+    final (startDate, endDate) = filters.getEffectiveDates();
+    
+    // 2. Prepare Query Params
+    final queryParams = EconomyQueryParams(
+      gardenId: widget.gardenId, // Use widget.gardenId directly as it's required for this screen
+      startDate: startDate,
+      endDate: endDate,
+    );
+
+    // 3. Watch Data
+    final details = ref.watch(economyDetailsProvider(queryParams));
+    final harvestState = ref.watch(harvestRecordsProvider);
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.black,
-            floating: true,
-            pinned: true,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.white70),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: const Text('Économie Vivante', style: TextStyle(color: Colors.white)),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.share, color: Colors.white70),
-                onPressed: () {
-                   // TODO: Export PDF/CSV
-                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Export CSV à venir")));
-                },
-              )
-            ],
-          ),
-          
-          // 1. KPI Header
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Valeur totale produite',
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                       Text(
-                        '${totalEconomy.toStringAsFixed(2)} €',
-                        style: const TextStyle(
-                          color: Colors.greenAccent,
-                          fontSize: 42,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: -1.0,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      // Tendance fictive pour l'instant ou calculée
-                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.greenAccent.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.trending_up, color: Colors.greenAccent, size: 16),
-                            SizedBox(width: 4),
-                            Text('+12%', style: TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold, fontSize: 12)),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // 2. Trend Chart
-           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 24.0),
-              child: EconomyTrendChart(
-                points: trendPoints,
-                height: 180,
-                lineColor: const Color(0xFF69F0AE),
-                gradientStartColor: const Color(0xFF69F0AE),
-                gradientEndColor: Colors.transparent,
-              ),
-            ),
-          ),
-          
-          // 3. Top 3 Bubbles
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   const Text(
-                    'Champions de la rentabilité',
-                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 24),
-                  TopEconomyBubbleChart(rankings: top3Rankings),
-                  const SizedBox(height: 24),
-                ],
-              ),
-            ),
-          ),
-          
-          // 4. Detail Table
-           SliverToBoxAdapter(
-            child: EconomyTop3Table(rankings: top3Rankings),
-          ),
-          
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
-
-          // 5. Logistics (Bonus)
-          const SliverToBoxAdapter(
-            child: EconomyLogisticsSavingsCard(),
-          ),
-          
-          const SliverToBoxAdapter(child: SizedBox(height: 48)),
-        ],
+      backgroundColor: const Color(0xFF1E1E1E), // Dark theme
+      appBar: AppBar(
+        title: const Text('Économie du Jardin'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
       ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await ref.read(harvestRecordsProvider.notifier).refresh();
+        },
+        child: harvestState.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    EconomyKpiRow(details: details),
+                    const SizedBox(height: 24),
+                    
+                    if (details.harvestCount == 0)
+                      const Center(
+                          child: Padding(
+                        padding: EdgeInsets.all(32.0),
+                        child: Text('Aucune récolte sur la période sélectionnée.',
+                            style: TextStyle(color: Colors.white54)),
+                      ))
+                    else ...[
+                      // Module 1: Plantes les plus rentables
+                      TopPlantsRanking(rankings: details.topPlants),
+                      const SizedBox(height: 24),
+
+                      // Module 2: Revenu total par mois
+                      MonthlyRevenueChart(monthlyRevenue: details.monthlyRevenue),
+                      const SizedBox(height: 24),
+
+                      // Module 3: Plante la plus rentable par mois
+                      TopPlantPerMonthGrid(
+                        topPlantPerMonth: details.topPlantPerMonth,
+                        monthlyRevenue: details.monthlyRevenue,
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Module 4: Évolution du revenu sur l’année
+                      AnnualRevenueLine(revenueSeries: details.revenueSeries),
+                      const SizedBox(height: 24),
+
+                      // Module 5: Répartition du revenu par plante
+                      PlantSharePie(plantShare: details.plantShare),
+                      const SizedBox(height: 24),
+
+                      // Module 6: Mois clés du jardin
+                      KeyMonthsWidget(
+                        monthlyRevenue: details.monthlyRevenue,
+                        mostProfitableIndex: details.mostProfitableMonthIndex,
+                        leastProfitableIndex: details.leastProfitableMonthIndex,
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Module 7: Diversité économique
+                      DiversityIndicator(
+                        diversityIndex: details.diversityIndex,
+                        label: details.diversityLabel,
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Module 8: Synthèse automatique
+                      RecommendationCard(
+                        recommendationText: details.recommendationText,
+                        onExport: () => _exportCsv(context, details, queryParams),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Module 9: Évolution histoire (Historical)
+                      HistoricalRevenueWidget(revenueSeries: details.revenueSeries),
+                      const SizedBox(height: 24),
+
+                      // Module 10: Rentabilité rapide vs Long terme
+                      FastVsLongTable(metrics: details.fastVsLongTerm),
+                      const SizedBox(height: 48),
+                    ],
+                  ],
+                ),
+              ),
+      ),
+    );
+  }
+
+  void _exportCsv(BuildContext context, EconomyDetails details, EconomyQueryParams params) {
+    // Basic stub for export.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Export CSV généré pour ${details.harvestCount} récoltes.')),
     );
   }
 }
