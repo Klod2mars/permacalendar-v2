@@ -1,5 +1,3 @@
-import 'dart:async';
-import '../../../core/data/hive/garden_boxes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/models/harvest_record.dart';
@@ -18,32 +16,10 @@ class HarvestRecordsState {
 }
 
 class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
-  StreamSubscription? _boxSubscription;
-
   @override
   HarvestRecordsState build() {
-    // S'abonner aux events Hive (put/delete) pour forcer un reload immédiat.
-    try {
-      _boxSubscription = GardenBoxes.harvests.watch().listen((event) {
-        debugPrint('[HarvestRecordsProvider] Hive box event: $event');
-        // recharger la liste à chaque événement
-        loadRecords();
-      });
-    } catch (e) {
-      // si la box n'est pas prête, on logge et on continuera à charger via loadRecords()
-      debugPrint('[HarvestRecordsProvider] Warning: unable to watch harvests box: $e');
-    }
-
-    // premier chargement
     loadRecords();
     return const HarvestRecordsState(isLoading: true);
-  }
-
-  @override
-  void dispose() {
-    _boxSubscription?.cancel();
-    // super.dispose() n'existe pas sur Notifier mais bon réflexe pour classes manuelles.
-    // Ici Riverpod gère le cycle de vie, mais on nettoie la sub.
   }
 
   Future<void> loadRecords() async {

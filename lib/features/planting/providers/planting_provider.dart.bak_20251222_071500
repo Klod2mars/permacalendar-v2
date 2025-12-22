@@ -445,26 +445,13 @@ class PlantingNotifier extends Notifier<PlantingState> {
             quantity: weightKg,
           );
 
-          // ✅ NOUVEAU : Refresh et Event
-          try {
-              debugPrint('[PlantingNotifier] harvest saved id=${record.id} planting=$plantingId — refreshing harvestRecordsProvider');
-              await ref.read(harvestRecordsProvider.notifier).refresh();
-              debugPrint('[PlantingNotifier] harvestRecordsProvider.refresh() done');
-          } catch(e) {
-             debugPrint('Warning: failed to refresh harvest records provider: $e');
-          }
-
           GardenEventBus().emit(
             GardenEvent.plantingHarvested(
               gardenId: gardenId,
               plantingId: plantingId,
               harvestYield: weightKg,
               timestamp: date,
-              metadata: {
-                'pricePerKg': pricePerKg,
-                'harvestId': record.id,
-                'notes': notes,
-              },
+              metadata: {'pricePerKg': pricePerKg, 'harvestId': record.id},
             ),
           );
         }
@@ -472,10 +459,13 @@ class PlantingNotifier extends Notifier<PlantingState> {
         debugPrint('[recordHarvest] tracking/event error: $e');
       }
 
-      // 7) Rafraîchir provider de récoltes (DEJA FAIT au dessus mais legacy clean up si besoin)
-      // La ligne ci-dessous était dans le code original, doublon possible si on l'a ajouté au dessus.
-      // On va la garder 'pour sureté' ou supprimer si redondant.
-      // => On l'a fait au dessus avec logs explicites, donc on peut continuer.
+      // 7) Rafraîchir provider de récoltes
+      try {
+        ref.read(harvestRecordsProvider.notifier).refresh();
+        debugPrint('[PlantingNotifier] triggered harvestRecordsProvider.refresh()');
+      } catch (e) {
+        debugPrint('Warning: failed to refresh harvestRecordsProvider: $e');
+      }
 
       // Mise à jour minimaliste de la planting (last harvest date)
       final updatedPlanting = planting.copyWith(actualHarvestDate: date);
