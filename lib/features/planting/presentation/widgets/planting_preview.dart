@@ -70,9 +70,38 @@ class PlantingPreview extends StatelessWidget {
 
   static String _toFilenameSafe(String s) {
     var out = s.trim();
+    // Normalize unicode to separate diacritics then remove them
+    // Simple manual mapping if 'diacritic' package not available/desired
+    out = _removeDiacritics(out);
     out = out.replaceAll(RegExp(r'[^\w\s\-]'), '');
     out = out.replaceAll(RegExp(r'\s+'), '_');
     return out.toLowerCase();
+  }
+
+  static String _removeDiacritics(String s) {
+    const Map<String, String> table = {
+      'à':'a','á':'a','â':'a','ã':'a','ä':'a','å':'a',
+      'ç':'c',
+      'è':'e','é':'e','ê':'e','ë':'e',
+      'ì':'i','í':'i','î':'i','ï':'i',
+      'ñ':'n',
+      'ò':'o','ó':'o','ô':'o','õ':'o','ö':'o',
+      'ù':'u','ú':'u','û':'u','ü':'u',
+      'ý':'y','ÿ':'y',
+      'À':'A','Á':'A','Â':'A','Ã':'A','Ä':'A','Å':'A',
+      'Ç':'C',
+      'È':'E','É':'E','Ê':'E','Ë':'E',
+      'Ì':'I','Í':'I','Î':'I','Ï':'I',
+      'Ñ':'N',
+      'Ò':'O','Ó':'O','Ô':'O','Õ':'O','Ö':'O',
+      'Ù':'U','Ú':'U','Û':'U','Ü':'U',
+      'Ý':'Y','Ÿ':'Y'
+    };
+    var out = s;
+    table.forEach((k, v) {
+      out = out.replaceAll(k, v);
+    });
+    return out;
   }
 
   static List<String> _buildCandidates(String base, String id, String commonName) {
@@ -241,7 +270,11 @@ class PlantingPreview extends StatelessWidget {
               }
               
               final byLoad = await _tryRootBundleLoad(candidates);
-              _resolvedAssetsCache[cacheKey] = byLoad;
+              // CRITICAL FIX: Do NOT cache null results. 
+              // This prevents permanent fallback if the first attempt fails due to race/timing.
+              if (byLoad != null) {
+                _resolvedAssetsCache[cacheKey] = byLoad;
+              }
               return byLoad;
             }(),
             builder: (c2, snap2) {
