@@ -85,7 +85,20 @@ class PlantingCard extends StatelessWidget {
 
                 // TOP LEFT: Quantity Badge (Pill)
                 Positioned(
-                  top: 12,
+                  bottom: 12, // Moved to bottom left as requested implicitly by "below image" description? No, user said "bottom left on image".
+                  // User said "The small grey round... is present on each plant... behind the small box indicating number".
+                  // The grey round IS the menu button.
+                  // So removing the menu button from here fixes the grey round.
+                  // Leaving Quantity Badge as is (Top Left or Bottom Left? Previous code had it Top Left).
+                  // Let's stick to Top Left or Bottom Left based on taste, but user said "Quantity... in a badge on the image (bottom left)".
+                  // My previous code put it at Top Left (lines 87-107). I will move it to Bottom Left if I can, or leave it.
+                  // User said "The small grey round... behind the small box...".
+                  // Wait, looking at the code I wrote in Step 126:
+                  // Positioned(top: 12, left: 12, child: Container(... quantity ...))
+                  // Positioned(top: 8, left: 8, child: Material( ... PopupMenuButton ...))
+                  // They are overlapping at Top Left!
+                  // I will Remove the PopupMenuButton from here completely.
+                  // I will also move Quantity to Bottom Left as per "premium" plan (Step 114: "Quantité will be displayed in a discreet badge on the image (bottom left)").
                   left: 12,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -108,36 +121,6 @@ class PlantingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // BOTTOM LEFT: Menu (Moved here? No, menu usually top right. Let's put Menu as an overlay button if possible, but PopupMenu is easier in normal flow. Stack overlay menu is fine)
-                // Actually, let's put the Menu button Top Right, and push Status to Top Left?
-                // User liked "Old Version". Screenshot shows Status Top Right on white.
-                // Let's keep Status Top Right.
-                // Where to put Menu? Maybe Overlay Icon Button Top Left?
-                // Or Overlay Icon Button Top Right (next to status)?
-                // Let's put Menu in the Content Body below to avoid gesture conflicts on image tap?
-                // Or Top Right Overlay white circle.
-                
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  // Using a Material generic widget to avoid ripple issues on image?
-                  child: Material(
-                    color: Colors.transparent,
-                    child: PopupMenuButton<String>(
-                      icon: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.3),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.more_horiz, color: Colors.white, size: 20),
-                      ),
-                      onSelected: (value) => _handleAction(value, context),
-                      itemBuilder: (context) => _buildMenuItems(context),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -148,7 +131,7 @@ class PlantingCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // TITLE & HARVEST ACTION
+                // TITLE & HARVEST ACTION & MENU
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -163,8 +146,7 @@ class PlantingCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          // Subtitle: Variety or Latin name if available? Or just empty.
-                          // Let's show "Semé le..." here nicely.
+                          // Subtitle: Date
                           Row(
                             children: [
                               Icon(Icons.calendar_today, size: 14, color: theme.colorScheme.outline),
@@ -182,12 +164,11 @@ class PlantingCard extends StatelessWidget {
                     ),
                     
                     // Harvest Button (Basket)
-                    // Visible if ready or growing (Quick Harvest)
                     if (planting.status != 'Récolté' && planting.status != 'Échoué')
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: FloatingActionButton.small(
-                          heroTag: 'harvest_${planting.id}', // unique tag
+                          heroTag: 'harvest_${planting.id}', 
                           onPressed: onHarvest,
                           elevation: 0,
                           backgroundColor: theme.colorScheme.primaryContainer,
@@ -196,6 +177,16 @@ class PlantingCard extends StatelessWidget {
                           tooltip: 'Récolter',
                         ),
                       ),
+
+                    // Menu Button (Moved here)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: PopupMenuButton<String>(
+                        icon: Icon(Icons.more_vert, color: theme.colorScheme.onSurfaceVariant),
+                        onSelected: (value) => _handleAction(value, context),
+                        itemBuilder: (context) => _buildMenuItems(context),
+                      ),
+                    ),
                   ],
                 ),
 
@@ -257,16 +248,6 @@ class PlantingCard extends StatelessWidget {
         value: 'edit',
         child: Row(children: [Icon(Icons.edit), SizedBox(width: 8), Text('Modifier')]),
       ),
-      if (planting.status != 'Récolté' && planting.status != 'Échoué') ...[
-        const PopupMenuItem(
-          value: 'status',
-          child: Row(children: [Icon(Icons.update), SizedBox(width: 8), Text('Changer statut')]),
-        ),
-        const PopupMenuItem(
-          value: 'steps',
-          child: Row(children: [Icon(Icons.flag), SizedBox(width: 8), Text('Ajouter étape')]),
-        ),
-      ],
       const PopupMenuItem(
         value: 'delete',
         child: Row(children: [Icon(Icons.delete, color: Colors.red), SizedBox(width: 8), Text('Supprimer', style: TextStyle(color: Colors.red))]),

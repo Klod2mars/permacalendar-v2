@@ -370,6 +370,33 @@ class GardenBedDetailScreen extends ConsumerWidget {
                         planting: p,
                         onTap: () => context.push('/plantings/${p.id}'),
                         onHarvest: () => showHarvestDialog(context, ref, p),
+                        onDelete: () => showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Supprimer la plantation ?'),
+                            content: const Text(
+                                'Cette action est irréversible. Voulez-vous vraiment supprimer cette plantation ?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('Annuler'),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                  await ref
+                                      .read(plantingProvider.notifier)
+                                      .deletePlanting(p.id);
+                                  // Refresh header / plantings
+                                  ref.read(gardenBedProvider.notifier).loadGardenBeds(gardenBed.gardenId);
+                                },
+                                style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red),
+                                child: const Text('Supprimer'),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   }),
