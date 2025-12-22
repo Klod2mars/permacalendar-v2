@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/models/planting.dart';
-import '../../../../core/utils/planting_utils.dart';
+import '../../../../core/utils/planting_utils.dart'; // Ensure this exists or use local helpers
 import '../../../../shared/widgets/custom_card.dart';
+import 'planting_image.dart';
 
 class PlantingCard extends StatelessWidget {
   final Planting planting;
@@ -28,378 +29,270 @@ class PlantingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final statusColor = _getStatusColor(planting.status, theme);
+    final statusTextColor = _getStatusTextColor(planting.status, theme);
 
     return CustomCard(
       onTap: onTap,
+      padding: EdgeInsets.zero, // Full bleed for image
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header: nom + quantité + statut + menu
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      planting.plantName,
-                      style: theme.textTheme.titleMedium?.copyWith(
+          // 1. HERO IMAGE HEADER (Stack)
+          SizedBox(
+            height: 160,
+            width: double.infinity,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Image
+                PlantingImage(
+                  planting: planting,
+                  width: double.infinity,
+                  height: 160,
+                  fit: BoxFit.cover,
+                  borderRadius: 0, // Top corners handled by Card
+                ),
+                
+                // Gradient Overlay (Bottom) for text readability? Not needed if using badges.
+                
+                // TOP RIGHT: Status Badge
+                Positioned(
+                  top: 12,
+                  right: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      planting.status,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: statusTextColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Row(
+                  ),
+                ),
+
+                // TOP LEFT: Quantity Badge (Pill)
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
                       children: [
-                        Icon(
-                          Icons.numbers,
-                          size: 16,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+                        const Icon(Icons.grid_view, size: 12, color: Colors.white),
                         const SizedBox(width: 4),
                         Text(
-                          'Quantité: ${planting.quantity}',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
+                          '${planting.quantity}',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              // Status indicator
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(planting.status, theme),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  planting.status,
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: _getStatusTextColor(planting.status, theme),
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-              // Actions menu
-              PopupMenuButton<String>(
-                onSelected: (value) => _handleAction(value, context),
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    value: 'edit',
-                    child: Row(
-                      children: [
-                        Icon(Icons.edit),
-                        SizedBox(width: 8),
-                        Text('Modifier'),
-                      ],
+
+                // BOTTOM LEFT: Menu (Moved here? No, menu usually top right. Let's put Menu as an overlay button if possible, but PopupMenu is easier in normal flow. Stack overlay menu is fine)
+                // Actually, let's put the Menu button Top Right, and push Status to Top Left?
+                // User liked "Old Version". Screenshot shows Status Top Right on white.
+                // Let's keep Status Top Right.
+                // Where to put Menu? Maybe Overlay Icon Button Top Left?
+                // Or Overlay Icon Button Top Right (next to status)?
+                // Let's put Menu in the Content Body below to avoid gesture conflicts on image tap?
+                // Or Top Right Overlay white circle.
+                
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  // Using a Material generic widget to avoid ripple issues on image?
+                  child: Material(
+                    color: Colors.transparent,
+                    child: PopupMenuButton<String>(
+                      icon: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.more_horiz, color: Colors.white, size: 20),
+                      ),
+                      onSelected: (value) => _handleAction(value, context),
+                      itemBuilder: (context) => _buildMenuItems(context),
                     ),
                   ),
-                  if (planting.status != 'Récolté' &&
-                      planting.status != 'Échoué') ...[
-                    const PopupMenuItem(
-                      value: 'status',
-                      child: Row(
+                ),
+              ],
+            ),
+          ),
+
+          // 2. CONTENT BODY
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // TITLE & HARVEST ACTION
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(Icons.update),
-                          SizedBox(width: 8),
-                          Text('Changer statut'),
+                          Text(
+                            planting.plantName,
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          // Subtitle: Variety or Latin name if available? Or just empty.
+                          // Let's show "Semé le..." here nicely.
+                          Row(
+                            children: [
+                              Icon(Icons.calendar_today, size: 14, color: theme.colorScheme.outline),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${planting.status == 'Semé' ? 'Semé' : 'Planté'} le ${_formatDate(planting.plantedDate)}',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.outline,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    if (planting.status == 'Prêt à récolter')
-                      const PopupMenuItem(
-                        value: 'harvest',
-                        child: Row(
-                          children: [
-                            Icon(Icons.agriculture, color: Colors.green),
-                            SizedBox(width: 8),
-                            Text('Récolter'),
-                          ],
+                    
+                    // Harvest Button (Basket)
+                    // Visible if ready or growing (Quick Harvest)
+                    if (planting.status != 'Récolté' && planting.status != 'Échoué')
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: FloatingActionButton.small(
+                          heroTag: 'harvest_${planting.id}', // unique tag
+                          onPressed: onHarvest,
+                          elevation: 0,
+                          backgroundColor: theme.colorScheme.primaryContainer,
+                          foregroundColor: theme.colorScheme.onPrimaryContainer,
+                          child: const Icon(Icons.shopping_basket_outlined),
+                          tooltip: 'Récolter',
                         ),
                       ),
-                    const PopupMenuItem(
-                      value: 'steps',
-                      child: Row(
-                        children: [
-                          Icon(Icons.flag),
-                          SizedBox(width: 8),
-                          Text('Ajouter étape'),
-                        ],
-                      ),
-                    ),
                   ],
-                  const PopupMenuItem(
-                    value: 'delete',
-                    child: Row(
-                      children: [
-                        Icon(Icons.delete, color: Colors.red),
-                        SizedBox(width: 8),
-                        Text('Supprimer', style: TextStyle(color: Colors.red)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 16),
-
-          // DETAILS: plantation / récolte prévue / récolté
-          Row(
-            children: [
-              Expanded(
-                child: _buildDetailItem(
-                  Icons.calendar_today,
-                  planting.status == 'Semé' ? 'Semé le' : 'Planté le',
-                  _formatDate(planting.plantedDate),
-                  theme,
                 ),
-              ),
-              if (planting.expectedHarvestStartDate != null)
-                Expanded(
-                  child: _buildDetailItem(
-                    Icons.schedule,
-                    'Récolte prévue',
-                    _formatDate(planting.expectedHarvestStartDate!),
-                    theme,
-                  ),
-                ),
-              if (planting.actualHarvestDate != null)
-                Expanded(
-                  child: _buildDetailItem(
-                    Icons.agriculture,
-                    'Récolté le',
-                    _formatDate(planting.actualHarvestDate!),
-                    theme,
-                  ),
-                ),
-            ],
-          ),
 
-          // Progression (uniquement pour 'Planté' et si dates existantes)
-          if (planting.status == 'Planté' &&
-              planting.expectedHarvestStartDate != null) ...[
-            const SizedBox(height: 12),
-            _buildProgressIndicator(theme),
-          ],
+                const SizedBox(height: 12),
 
-          // Étapes (anciennement "Care Actions")
-          if (planting.careActions.isNotEmpty ||
-              planting.careActions.length == 0) ...[
-            const SizedBox(height: 12),
-            _buildSteps(theme),
-          ],
-
-          // Notes
-          if (planting.notes != null && planting.notes!.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color:
-                    theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.note,
-                    size: 16,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      planting.notes!,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                // HARVEST ESTIMATE & STAGES
+                Row(
+                  children: [
+                   if (planting.expectedHarvestStartDate != null)
+                      _buildMiniInfo(
+                        theme,
+                        Icons.timer_outlined,
+                        'Récolte: ${_formatDate(planting.expectedHarvestStartDate!)}',
                       ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
+                    
+                   // Spacer
+                   if (planting.expectedHarvestStartDate != null)
+                     const SizedBox(width: 16),
+
+                   // Stage count or Next Stage?
+                   if (planting.careActions.isNotEmpty)
+                      _buildMiniInfo(
+                        theme,
+                        Icons.flag_outlined,
+                        '${planting.careActions.length} étapes',
+                      ),
+                  ],
+                ),
+              ],
             ),
-          ],
-
-          const SizedBox(height: 12),
-
-          // Footer: Créé / Modifié — n'affiche "Créé" que si différent de plantedDate
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (planting.createdAt != planting.plantedDate)
-                Text(
-                  'Créé le ${_formatDate(planting.createdAt)}',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.outline),
-                ),
-              if (planting.updatedAt != planting.createdAt)
-                Text(
-                  'Modifié le ${_formatDate(planting.updatedAt)}',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.outline),
-                ),
-            ],
           ),
+          
+          // No Footer. Clean.
         ],
       ),
     );
   }
 
-  Widget _buildDetailItem(
-      IconData icon, String label, String value, ThemeData theme) {
-    return Column(
+  Widget _buildMiniInfo(ThemeData theme, IconData icon, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: theme.colorScheme.primary,
-        ),
-        const SizedBox(height: 4),
+        Icon(icon, size: 16, color: theme.colorScheme.secondary),
+        const SizedBox(width: 6),
         Text(
-          value,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        Text(
-          label,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.outline,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProgressIndicator(ThemeData theme) {
-    final now = DateTime.now();
-    final totalDays = planting.expectedHarvestStartDate!
-        .difference(planting.plantedDate)
-        .inDays;
-    final elapsedDays = now.difference(planting.plantedDate).inDays;
-    final progress =
-        totalDays > 0 ? (elapsedDays / totalDays).clamp(0.0, 1.0) : 0.0;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Progression',
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-            ),
-            Text(
-              '${(progress * 100).toInt()}%',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        LinearProgressIndicator(
-          value: progress,
-          backgroundColor:
-              theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
-          valueColor: AlwaysStoppedAnimation<Color>(
-            progress >= 1.0 ? Colors.green : theme.colorScheme.primary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSteps(ThemeData theme) {
-    // On conserve la structure de stockage existante : planting.careActions (compatibility)
-    // On affiche le compteur et la liste (les premières 5 valeurs) comme précédemment,
-    // mais on renomme l'intitulé en "Étapes".
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Étapes (${planting.careActions.length})',
+          text,
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 4),
-        Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          children: planting.careActions.take(5).map((action) {
-            // Action affichée en tant que texte (ex: "Arrosage - 2025-12-03T...")
-            final label = action.split(' - ').first;
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.secondaryContainer.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                label,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.onSecondaryContainer),
-              ),
-            );
-          }).toList(),
-        ),
-        if (planting.careActions.length > 5)
-          Text(
-            '+${planting.careActions.length - 5} autres...',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.outline,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
       ],
     );
+  }
+
+  List<PopupMenuEntry<String>> _buildMenuItems(BuildContext context) {
+     return [
+      const PopupMenuItem(
+        value: 'edit',
+        child: Row(children: [Icon(Icons.edit), SizedBox(width: 8), Text('Modifier')]),
+      ),
+      if (planting.status != 'Récolté' && planting.status != 'Échoué') ...[
+        const PopupMenuItem(
+          value: 'status',
+          child: Row(children: [Icon(Icons.update), SizedBox(width: 8), Text('Changer statut')]),
+        ),
+        const PopupMenuItem(
+          value: 'steps',
+          child: Row(children: [Icon(Icons.flag), SizedBox(width: 8), Text('Ajouter étape')]),
+        ),
+      ],
+      const PopupMenuItem(
+        value: 'delete',
+        child: Row(children: [Icon(Icons.delete, color: Colors.red), SizedBox(width: 8), Text('Supprimer', style: TextStyle(color: Colors.red))]),
+      ),
+    ];
   }
 
   Color _getStatusColor(String status, ThemeData theme) {
     switch (status) {
-      case 'Planté':
-        return Colors.blue.withOpacity(0.2);
-      case 'En croissance':
-        return Colors.green.withOpacity(0.2);
-      case 'Prêt à récolter':
-        return Colors.orange.withOpacity(0.2);
-      case 'Récolté':
-        return Colors.green.withOpacity(0.3);
-      case 'Échoué':
-        return Colors.red.withOpacity(0.2);
-      default:
-        return theme.colorScheme.surfaceContainerHighest;
+      case 'Planté': return Colors.blue.withOpacity(0.1);
+      case 'En croissance': return Colors.green.withOpacity(0.1);
+      case 'Prêt à récolter': return Colors.orange.withOpacity(0.1);
+      case 'Récolté': return Colors.grey.withOpacity(0.1);
+      case 'Échoué': return Colors.red.withOpacity(0.1);
+      default: return theme.colorScheme.surfaceContainerHighest;
     }
   }
 
   Color _getStatusTextColor(String status, ThemeData theme) {
     switch (status) {
-      case 'Planté':
-        return Colors.blue.shade700;
-      case 'En croissance':
-        return Colors.green.shade700;
-      case 'Prêt à récolter':
-        return Colors.orange.shade700;
-      case 'Récolté':
-        return Colors.green.shade800;
-      case 'Échoué':
-        return Colors.red.shade700;
-      default:
-        return theme.colorScheme.onSurfaceVariant;
+      case 'Planté': return Colors.blue.shade700;
+      case 'En croissance': return Colors.green.shade700;
+      case 'Prêt à récolter': return Colors.orange.shade800; // Stronger for visibility
+      case 'Récolté': return Colors.grey.shade700;
+      case 'Échoué': return Colors.red.shade700;
+      default: return theme.colorScheme.onSurface;
     }
   }
 
@@ -409,27 +302,15 @@ class PlantingCard extends StatelessWidget {
 
   void _handleAction(String action, BuildContext context) {
     switch (action) {
-      case 'edit':
-        onEdit?.call();
-        break;
-      case 'delete':
-        onDelete?.call();
-        break;
-      case 'status':
-        _showStatusChangeDialog(context);
-        break;
-      case 'harvest':
-        onHarvest?.call();
-        break;
-      case 'steps':
-        _showStepActionDialog(context);
-        break;
-      case 'care': // compatibilité ancienne valeur si elle existe ailleurs
-        _showStepActionDialog(context);
-        break;
+      case 'edit': onEdit?.call(); break;
+      case 'delete': onDelete?.call(); break;
+      case 'status': _showStatusChangeDialog(context); break;
+      case 'harvest': onHarvest?.call(); break;
+      case 'steps': _showStepActionDialog(context); break;
     }
   }
-
+  
+  // Dialog helpers (kept identical to previous version, just moved inside class)
   void _showStatusChangeDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -443,10 +324,7 @@ class PlantingCard extends StatelessWidget {
               title: Text(statusOption),
               onTap: () {
                 Navigator.of(context).pop();
-                // préférer le callback pour la persistance (notifier / provider)
-                if (onStatusChange != null) {
-                  onStatusChange!(statusOption);
-                }
+                onStatusChange?.call(statusOption);
               },
             );
           }).toList(),
@@ -457,7 +335,6 @@ class PlantingCard extends StatelessWidget {
 
   void _showStepActionDialog(BuildContext context) {
     final TextEditingController controller = TextEditingController();
-
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -467,7 +344,6 @@ class PlantingCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Liste d'actions communes (depuis Planting.commonCareActions)
               Flexible(
                 child: ListView(
                   shrinkWrap: true,
@@ -494,10 +370,7 @@ class PlantingCard extends StatelessWidget {
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
-          ),
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Annuler')),
           ElevatedButton(
             onPressed: () {
               final text = controller.text.trim();
