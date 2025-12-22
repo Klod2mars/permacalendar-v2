@@ -84,21 +84,12 @@ class PlantingCard extends StatelessWidget {
                 ),
 
                 // TOP LEFT: Quantity Badge (Pill)
+                // Actually the screenshot shows it at Bottom Left (or close to it). 
+                // Let's ensure it is consistent. 
+                // New layout: Basket Bottom Right. Quantity Bottom Left.
+                
                 Positioned(
-                  bottom: 12, // Moved to bottom left as requested implicitly by "below image" description? No, user said "bottom left on image".
-                  // User said "The small grey round... is present on each plant... behind the small box indicating number".
-                  // The grey round IS the menu button.
-                  // So removing the menu button from here fixes the grey round.
-                  // Leaving Quantity Badge as is (Top Left or Bottom Left? Previous code had it Top Left).
-                  // Let's stick to Top Left or Bottom Left based on taste, but user said "Quantity... in a badge on the image (bottom left)".
-                  // My previous code put it at Top Left (lines 87-107). I will move it to Bottom Left if I can, or leave it.
-                  // User said "The small grey round... behind the small box...".
-                  // Wait, looking at the code I wrote in Step 126:
-                  // Positioned(top: 12, left: 12, child: Container(... quantity ...))
-                  // Positioned(top: 8, left: 8, child: Material( ... PopupMenuButton ...))
-                  // They are overlapping at Top Left!
-                  // I will Remove the PopupMenuButton from here completely.
-                  // I will also move Quantity to Bottom Left as per "premium" plan (Step 114: "Quantité will be displayed in a discreet badge on the image (bottom left)").
+                  bottom: 12,
                   left: 12,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -121,6 +112,22 @@ class PlantingCard extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // BOTTOM RIGHT: Harvest Button (Moved here)
+                if (planting.status != 'Récolté' && planting.status != 'Échoué')
+                  Positioned(
+                    bottom: 12,
+                    right: 12,
+                    child: FloatingActionButton.small(
+                      heroTag: 'harvest_${planting.id}', 
+                      onPressed: onHarvest,
+                      elevation: 2, // Slight elevation for overlay
+                      backgroundColor: theme.colorScheme.primaryContainer,
+                      foregroundColor: theme.colorScheme.onPrimaryContainer,
+                      child: const Icon(Icons.shopping_basket_outlined),
+                      tooltip: 'Récolter',
+                    ),
+                  ),
               ],
             ),
           ),
@@ -131,7 +138,7 @@ class PlantingCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // TITLE & HARVEST ACTION & MENU
+                // TITLE & MENU
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -163,22 +170,7 @@ class PlantingCard extends StatelessWidget {
                       ),
                     ),
                     
-                    // Harvest Button (Basket)
-                    if (planting.status != 'Récolté' && planting.status != 'Échoué')
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: FloatingActionButton.small(
-                          heroTag: 'harvest_${planting.id}', 
-                          onPressed: onHarvest,
-                          elevation: 0,
-                          backgroundColor: theme.colorScheme.primaryContainer,
-                          foregroundColor: theme.colorScheme.onPrimaryContainer,
-                          child: const Icon(Icons.shopping_basket_outlined),
-                          tooltip: 'Récolter',
-                        ),
-                      ),
-
-                    // Menu Button (Moved here)
+                    // Menu Button (The only item on the right now)
                     Padding(
                       padding: const EdgeInsets.only(left: 4),
                       child: PopupMenuButton<String>(
@@ -244,10 +236,6 @@ class PlantingCard extends StatelessWidget {
 
   List<PopupMenuEntry<String>> _buildMenuItems(BuildContext context) {
      return [
-      const PopupMenuItem(
-        value: 'edit',
-        child: Row(children: [Icon(Icons.edit), SizedBox(width: 8), Text('Modifier')]),
-      ),
       const PopupMenuItem(
         value: 'delete',
         child: Row(children: [Icon(Icons.delete, color: Colors.red), SizedBox(width: 8), Text('Supprimer', style: TextStyle(color: Colors.red))]),
