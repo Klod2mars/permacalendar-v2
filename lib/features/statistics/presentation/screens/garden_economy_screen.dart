@@ -20,8 +20,14 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
   @override
   void initState() {
     super.initState();
-    // Synchronize filter on init (in case we land here directly)
-      ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId});
+    // Ne pas modifier un provider directement dans initState :
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId});
+      } catch (e, st) {
+        debugPrint('[GardenEconomyScreen] Warning: failed to set default garden in postFrame: $e\n$st');
+      }
+    });
   }
 
   @override

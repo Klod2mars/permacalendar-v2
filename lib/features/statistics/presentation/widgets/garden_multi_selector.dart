@@ -12,6 +12,19 @@ class GardenMultiSelector extends ConsumerWidget {
     final filters = ref.watch(statisticsFiltersProvider);
     final notifier = ref.read(statisticsFiltersProvider.notifier);
 
+    // Si un seul jardin existe et aucun filtre actif -> sélectionner automatiquement.
+    // Faire l'opération via addPostFrameCallback pour ne pas modifier le provider
+    // pendant la phase de build (sinon Riverpod se plaint).
+    if (gardensState.gardens.length == 1 && filters.selectedGardenIds.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        try {
+          notifier.setGardens({gardensState.gardens.first.id});
+        } catch (e) {
+          debugPrint('[GardenMultiSelector] failed to auto-select single garden: $e');
+        }
+      });
+    }
+
     // Si on n'a pas encore chargé les jardins, ou s'il n'y en a pas
     if (gardensState.gardens.isEmpty) {
       return const SizedBox.shrink();

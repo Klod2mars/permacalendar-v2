@@ -1,5 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../garden/providers/garden_provider.dart';
+
+// ...
+
 class StatisticsFiltersState {
   /// Ensemble des IDs de jardins sélectionnés.
   /// Si vide, on considère que TOUS les jardins sont sélectionnés (ou aucun ? on va dire 'Tous' par défaut pour l'agrégation).
@@ -33,6 +37,14 @@ class StatisticsFiltersNotifier extends Notifier<StatisticsFiltersState> {
 
   /// Bascule la sélection d'un jardin.
   void toggleGarden(String id) {
+    // Si l'application ne contient qu'un jardin, on le garde toujours sélectionné.
+    final gardens = ref.read(gardenProvider).gardens;
+    if (gardens.length == 1) {
+      // forcer la sélection unique (empêche la désélection)
+      state = state.copyWith(selectedGardenIds: {gardens.first.id});
+      return;
+    }
+
     final current = state.selectedGardenIds.toSet();
     if (current.contains(id)) {
       current.remove(id);
