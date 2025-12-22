@@ -310,11 +310,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                     style: theme.textTheme.titleLarge
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ),
-              if (plantings.length > 3)
-                TextButton(
-                    onPressed: () => context.push(
-                        '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
-                    child: const Text('Voir tout')),
+              // "Voir tout" removed as requested for simple scroll
             ],
           ),
           const SizedBox(height: 16),
@@ -325,7 +321,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
               subtitle: 'Cette parcelle n\'a pas encore de plantations.',
               actionText: 'Ajouter une plantation',
               onAction: () async {
-                // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
+                 // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
                 final selectedPlantId =
                     await Navigator.of(context).push<String?>(
                   MaterialPageRoute(
@@ -362,102 +358,23 @@ class GardenBedDetailScreen extends ConsumerWidget {
               },
             )
           else
-            // Compact visual previews (1 / 2–3 / 4+)
+            // Unified Vertical List
             Column(
-              children: [
-                // 1 planting -> large full-width card
-                if (plantings.length == 1) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: Builder(builder: (ctx) {
-                      final double horizontalCardPadding = 16.0;
-                      final double fullWidth = MediaQuery.of(ctx).size.width -
-                          (horizontalCardPadding * 2);
-                      final double imageSize =
-                          fullWidth; // square occupying width
-                      
-                      final p = plantings.first;
-
-                      return SizedBox(
-                        width: double.infinity,
-                        child: Stack(
-                          children: [
-                            PlantingPreview(
-                              planting: p,
-                              onTap: () =>
-                                  context.push('/plantings/${p.id}'),
-                              imageSize: imageSize,
-                            ),
-                            // --- Overlay: bouton récolte
-                            Positioned(
-                              right: 16,
-                              bottom: 16,
-                              child: FloatingActionButton.small(
-                                heroTag: 'harvest_${p.id}',
-                                backgroundColor: Colors.green,
-                                onPressed: () => showHarvestDialog(context, ref, p),
-                                child: const Icon(Icons.agriculture, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                ]
-                // 2–3 plantings -> vertical stacked cards occupying width
-                else if (plantings.length <= 3) ...[
-                  Column(
-                    children: plantings.map((p) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: Builder(builder: (ctx) {
-                          final double horizontalCardPadding = 16.0;
-                          final double fullWidth =
-                              MediaQuery.of(ctx).size.width -
-                                  (horizontalCardPadding * 2);
-                          final double innerMargin = 12.0;
-                          final double imageSize = fullWidth - innerMargin;
-                          return SizedBox(
-                            width: double.infinity,
-                            child: PlantingCard(
-                              planting: p,
-                              onTap: () => context.push('/plantings/${p.id}'),
-                              onHarvest: () => showHarvestDialog(context, ref, p),
-                            ),
-                          );
-                        }),
-                      );
-                    }).toList(),
-                  ),
-                ]
-                // 4+ plantings -> compact 2x2 grid previews + "Voir tout"
-                else ...[
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    alignment: WrapAlignment.start,
-                    children: plantings
-                        .take(4)
-                        .map((p) => PlantingPreview(
-                              planting: p,
-                              onTap: () => context.push('/plantings/${p.id}'),
-                              onHarvest: () => showHarvestDialog(context, ref, p),
-                              imageSize: 160,
-                            ))
-                        .toList(),
-                  ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () => context.push(
-                          '/garden/${gardenBed.gardenId}/beds/${gardenBed.id}/plantings'),
-                      child: const Text('Voir tout'),
-                    ),
-                  ),
-                ],
-              ],
+              children: plantings.map((p) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Builder(builder: (ctx) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: PlantingCard(
+                        planting: p,
+                        onTap: () => context.push('/plantings/${p.id}'),
+                        onHarvest: () => showHarvestDialog(context, ref, p),
+                      ),
+                    );
+                  }),
+                );
+              }).toList(),
             ),
         ]),
       ),
