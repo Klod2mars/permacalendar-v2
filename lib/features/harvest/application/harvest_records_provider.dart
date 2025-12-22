@@ -30,13 +30,19 @@ class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
         loadRecords();
       });
     } catch (e) {
-      // si la box n'est pas prête, on logge et on continuera à charger via loadRecords()
       debugPrint('[HarvestRecordsProvider] Warning: unable to watch harvests box: $e');
     }
 
-    // premier chargement
-    loadRecords();
-    return const HarvestRecordsState(isLoading: true);
+    // Charger les données initiales de manière synchrone (Hive est rapide)
+    // pour éviter "modify provider during build" et éviter le flicker de loading.
+    try {
+      final repo = HarvestRepository();
+      final records = repo.getAllHarvests();
+      records.sort((a, b) => b.date.compareTo(a.date));
+      return HarvestRecordsState(records: records, isLoading: false);
+    } catch (e) {
+      return HarvestRecordsState(records: [], isLoading: false, error: e.toString());
+    }
   }
 
   @override
