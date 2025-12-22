@@ -28,10 +28,10 @@ class RecommendationCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb_outline, color: Colors.yellowAccent),
+              const Icon(Icons.auto_awesome, color: Colors.amberAccent),
               const SizedBox(width: 8),
               Text(
-                'Analyse',
+                'Synthèse Automatique',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
