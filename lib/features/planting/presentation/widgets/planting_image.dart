@@ -110,15 +110,16 @@ class PlantingImage extends StatelessWidget {
   }
 
   static List<String> _buildCandidates(
-      String base, String id, String commonName) {
+      String base, String id, String catalogName, String plantingName) {
     final candidates = <String>[];
 
-    // Primary: use commonName (from planting.plantName)
-    if (commonName.isNotEmpty) {
-      candidates.add('assets/images/legumes/$commonName');
-      candidates.add('assets/images/plants/$commonName');
+    // Helper to add candidates for a specific name
+    void addNameCandidates(String name) {
+      if (name.isEmpty) return;
+      candidates.add('assets/images/legumes/$name');
+      candidates.add('assets/images/plants/$name');
       // safe versions
-      final safe = _toFilenameSafe(commonName);
+      final safe = _toFilenameSafe(name);
       final altHyphen = safe.replaceAll('_', '-');
       for (final ext in ['.png', '.jpg', '.jpeg', '.webp']) {
         candidates.add('assets/images/legumes/$safe$ext');
@@ -126,6 +127,14 @@ class PlantingImage extends StatelessWidget {
         candidates.add('assets/images/plants/$safe$ext');
         candidates.add('assets/images/plants/$altHyphen$ext');
       }
+    }
+
+    // 1. Prioritize Catalog Name (Official)
+    addNameCandidates(catalogName);
+
+    // 2. Fallback to Planting Name (might be English or user-customized)
+    if (plantingName != catalogName) {
+      addNameCandidates(plantingName);
     }
 
     if (base.isNotEmpty) {
@@ -222,11 +231,12 @@ class PlantingImage extends StatelessWidget {
           final String commonNameFromPlanting = planting.plantName.trim();
           final base = raw ?? '';
           final id = (plant?.id ?? planting.plantId).toString();
-          final commonName = commonNameFromPlanting.isNotEmpty
-              ? commonNameFromPlanting
-              : (plant?.commonName ?? '');
-
-          final candidates = _buildCandidates(base, id, commonName);
+          
+          // Logic Change: Use BOTH names as candidates if they differ.
+          // Prioritize resolving via the Catalog Common Name if available.
+          final catalogName = plant?.commonName.trim() ?? '';
+          
+          final List<String> candidates = _buildCandidates(base, id, catalogName, commonNameFromPlanting);
 
           // Return Resolved Image
           if (raw != null &&
@@ -254,7 +264,7 @@ class PlantingImage extends StatelessWidget {
 
           return FutureBuilder<String?>(
             future: () async {
-              final cacheKey = '${planting.plantId}|${commonName}|${base}';
+              final cacheKey = '${planting.plantId}|${catalogName}|${base}';
               if (_resolvedAssetsCache.containsKey(cacheKey)) {
                 return _resolvedAssetsCache[cacheKey];
               }

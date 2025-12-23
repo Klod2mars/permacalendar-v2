@@ -1,12 +1,12 @@
-﻿// lib/features/planting/presentation/widgets/planting_card.dart
-import 'package:flutter/material.dart';
-
+﻿import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../features/plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../core/models/planting.dart';
 import '../../../../core/utils/planting_utils.dart'; // Ensure this exists or use local helpers
 import '../../../../shared/widgets/custom_card.dart';
 import 'planting_image.dart';
 
-class PlantingCard extends StatelessWidget {
+class PlantingCard extends ConsumerWidget {
   final Planting planting;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
@@ -27,10 +27,17 @@ class PlantingCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final statusColor = _getStatusColor(planting.status, theme);
     final statusTextColor = _getStatusTextColor(planting.status, theme);
+
+    // Resolve Plant Name from Catalog (French) if available
+    final allPlants = ref.watch(plantsListProvider);
+    final catalogPlant = allPlants
+        .where((p) => p.id == planting.plantId)
+        .firstOrNull;
+    final displayName = catalogPlant?.commonName ?? planting.plantName;
 
     return CustomCard(
       onTap: onTap,
@@ -147,7 +154,7 @@ class PlantingCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            planting.plantName,
+                            displayName,
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
