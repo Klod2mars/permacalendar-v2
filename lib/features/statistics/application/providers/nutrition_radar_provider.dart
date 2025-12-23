@@ -1,37 +1,54 @@
 import 'package:riverpod/riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
-import '../../../../core/services/plant_catalog_service.dart';
+import '../../../plant_catalog/providers/plant_catalog_provider.dart';
+import '../../../plant_catalog/domain/entities/plant_entity.dart';
 
-/// Modèle pour les données du Radar Chart
+/// Modèle pour les données du Radar Chart (6 axes)
 class NutritionRadarData {
-  final double proteinScore;
-  final double fiberScore;
-  final double vitaminScore;
-  final double mineralScore;
+  final double energyScore;     // Calories/Joules
+  final double proteinScore;    // Protéines
+  final double fiberScore;      // Fibres
+  final double vitaminScore;    // Moyenne Vitamines (A, C, E, K, B9)
+  final double mineralScore;    // Moyenne Minéraux (Ca, Mg, Fe, K)
+  final double antioxidantScore; // Score composite ou proxy (ex: Vit C + E + A)
 
   const NutritionRadarData({
+    required this.energyScore,
     required this.proteinScore,
     required this.fiberScore,
     required this.vitaminScore,
     required this.mineralScore,
+    required this.antioxidantScore,
   });
 
-  // Pour l'affichage, on peut normaliser sur 100 ou renvoyer les valeurs brutes (en % des AJR totaux sur la période)
-  // Ici on renverra le cumul des % AJR, ce qui signifie que 100 = 1 jour de besoins couverts
+  // Factory pour données vides
+  factory NutritionRadarData.empty() => const NutritionRadarData(
+    energyScore: 0,
+    proteinScore: 0, 
+    fiberScore: 0, 
+    vitaminScore: 0, 
+    mineralScore: 0, 
+    antioxidantScore: 0
+  );
 }
 
 /// Provider pour les données du Radar Chart Nutritionnel
-/// Calcule les apports en % des Apports Journaliers Recommandés (AJR) cumulés
+/// Calcule la "Couverture Moyenne des Besoins" sur la période.
+/// Score 100 = 100% des AJR couverts pour 1 personne sur toute la durée de la période selected.
+/// Ex: Sur 30 jours, il faut 30 * AJR. Si on a récolté ça, score = 100.
 final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
   final filters = ref.watch(statisticsFiltersProvider);
+  final plantsList = ref.watch(plantsListProvider); // Sync list from catalog
 
   if (harvestRecordsState.isLoading) throw Exception('Loading records...');
-  if (harvestRecordsState.error != null) throw Exception('Error loading records');
-
+  
+  // 1. Définir la période et le nombre de jours
   final (startDate, endDate) = filters.getEffectiveDates();
-
+  final durationInDays = endDate.difference(startDate).inDays + 1; // +1 car inclusif
+  
+  // 2. Filtrer les récoltes
   List<dynamic> filteredRecords;
   if (filters.selectedGardenIds.isNotEmpty) {
      filteredRecords = harvestRecordsState.records.where((record) {
@@ -45,90 +62,112 @@ final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
         .toList();
   }
 
-  if (filteredRecords.isEmpty) {
-    return const NutritionRadarData(proteinScore: 0, fiberScore: 0, vitaminScore: 0, mineralScore: 0);
-  }
+  if (filteredRecords.isEmpty) return NutritionRadarData.empty();
 
-  final plants = await PlantCatalogService.loadPlants();
-
-  // Accumulateurs de % AJR
-  double accProtein = 0.0;
-  double accFiber = 0.0;
-  double accVitamins = 0.0;
-  double accMinerals = 0.0;
-
-  // Références AJR (Adulte moyen)
-  const driProteinG = 50.0;
-  const driFiberG = 30.0;
+  // 3. Accumulateurs (Total récolté en mg/mcg/g)
+  double totalKcals = 0.0;
+  double totalProteinG = 0.0;
+  double totalFiberG = 0.0;
   
   // Vitamines
-  const driVitAmcg = 900.0;
-  const driVitCmg = 90.0;
-  const driVitEmg = 15.0;
-  const driVitKmcg = 120.0;
-  const driVitB9ug = 400.0;
-
+  double totalVitAmcg = 0.0;
+  double totalVitCmg = 0.0;
+  double totalVitEmg = 0.0;
+  double totalVitKmcg = 0.0;
+  double totalVitB9ug = 0.0;
+  
   // Minéraux
-  const driCalciumMg = 1000.0;
-  const driMagnesiumMg = 400.0;
-  const driIronMg = 18.0;
-  const driPotassiumMg = 4700.0;
-  // const driManganeseMg = 2.3; // Souvent manquant, on se concentre sur les majeurs
-
-  int vitaminCount = 0;
-  int mineralCount = 0;
+  double totalCaMg = 0.0;
+  double totalMgMg = 0.0;
+  double totalFeMg = 0.0;
+  double totalKMg = 0.0;
 
   for (final record in filteredRecords) {
-    final plant = plants.firstWhere((p) => p.id == record.plantId, orElse: () => throw Exception('Plant not found'));
-    final n = plant.nutritionPer100g;
-    if (n.isEmpty) continue;
-
-    // Poids en Hg (HectoGrammes = 100g units)
-    // record.quantityKg * 10 = nombre de portions de 100g
-    final portions = record.quantityKg * 10; 
-
-    // Macronutriments
-    final pG = (n['proteinG'] as num?)?.toDouble() ?? 0.0;
-    final fG = (n['fiberG'] as num?)?.toDouble() ?? 0.0;
+    // Retrouver la plante pour avoir ses datas nutri
+    final plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
     
-    accProtein += (pG * portions) / driProteinG * 100; // % AJR
-    accFiber += (fG * portions) / driFiberG * 100; // % AJR
+    if (plant == null || plant.nutritionPer100g == null) continue;
+    
+    final n = plant.nutritionPer100g!;
+    final portions = record.quantityKg * 10; // 1 kg = 10 portions de 100g
 
-    // Vitamines (Somme des % AJR pondérés ?)
-    // On additionne les contributions brutes en % AJR. 
-    // Si j'ai mangé 100% de mes Vit C et 0% de Vit A, mon score Vitamines total augmente.
-    // Pour éviter que l'un écrase l'autre dans un score unique, on fait la moyenne des % Cover ? 
-    // Non, "Apports" suggère la quantité totale. On va sommer les % de couverture de chaque vitamine.
+    // Accumulation
+    totalKcals += ((n['calories'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalProteinG += ((n['proteinG'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalFiberG += ((n['fiberG'] as num?)?.toDouble() ?? 0.0) * portions;
     
-    double vScore = 0.0;
-    vScore += ((n['vitaminAmcg'] as num?)?.toDouble() ?? 0.0) * portions / driVitAmcg;
-    vScore += ((n['vitaminCmg'] as num?)?.toDouble() ?? 0.0) * portions / driVitCmg;
-    vScore += ((n['vitaminEmg'] as num?)?.toDouble() ?? 0.0) * portions / driVitEmg;
-    vScore += ((n['vitaminK1mcg'] as num?)?.toDouble() ?? 0.0) * portions / driVitKmcg; // json uses vitaminK1mcg or vitaminKmcg? Checked json: lettuce has vitaminK1mcg, rocket vitaminKmcg. Need check both.
-    vScore += ((n['vitaminKmcg'] as num?)?.toDouble() ?? 0.0) * portions / driVitKmcg;
-    vScore += ((n['vitaminB9ug'] as num?)?.toDouble() ?? 0.0) * portions / driVitB9ug;
-    
-    // On normalise arbitrairement par le nombre de vitamines trackées (5) pour avoir une échelle comparables aux macros (qui sont 1 seule dimension) ?
-    // Non, Protein est 1 dimension. Vitamins sont 5. 100% Protein = 100. 100% de chaque Vitamine = 500.
-    // Pour le Radar, il vaut mieux ramener ça à "Equivalent jours de nutrition complète".
-    // Donc on divise par 5 pour les vitamines.
-    accVitamins += (vScore / 5.0) * 100;
+    totalVitAmcg += ((n['vitaminAmcg'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalVitCmg += ((n['vitaminCmg'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalVitEmg += ((n['vitaminEmg'] as num?)?.toDouble() ?? 0.0) * portions;
+    final k1 = (n['vitaminK1mcg'] as num?)?.toDouble() ?? 0.0;
+    final k = (n['vitaminKmcg'] as num?)?.toDouble() ?? 0.0; 
+    totalVitKmcg += (k1 > 0 ? k1 : k) * portions; // Fallback
+    totalVitB9ug += ((n['vitaminB9ug'] as num?)?.toDouble() ?? 0.0) * portions;
 
-    // Minéraux
-    double mScore = 0.0;
-    mScore += ((n['calciumMg'] as num?)?.toDouble() ?? 0.0) * portions / driCalciumMg;
-    mScore += ((n['magnesiumMg'] as num?)?.toDouble() ?? 0.0) * portions / driMagnesiumMg;
-    mScore += ((n['ironMg'] as num?)?.toDouble() ?? 0.0) * portions / driIronMg;
-    mScore += ((n['potassiumMg'] as num?)?.toDouble() ?? 0.0) * portions / driPotassiumMg;
-    
-    // Divisé par 4 minéraux trackés
-    accMinerals += (mScore / 4.0) * 100;
+    totalCaMg += ((n['calciumMg'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalMgMg += ((n['magnesiumMg'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalFeMg += ((n['ironMg'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalKMg += ((n['potassiumMg'] as num?)?.toDouble() ?? 0.0) * portions;
   }
 
+  // 4. Calcul des Besoins Totaux sur la Période (Reference: Adulte moyen)
+  // AJR * Nombre de jours
+  final needsFactor = durationInDays.toDouble();
+
+  // AJR standards
+  const driKcal = 2000.0;
+  const driProtein = 50.0;
+  const driFiber = 30.0;
+  const driVitA = 900.0;
+  const driVitC = 90.0;
+  const driVitE = 15.0;
+  const driVitK = 120.0;
+  const driVitB9 = 400.0;
+  const driCa = 1000.0;
+  const driMg = 400.0;
+  const driFe = 18.0; // Moyenne homme/femme fer
+  const driK = 4700.0;
+
+  // Calcul Scores (en %)
+  // Formule: (TotalRécolté / (AJR * Jours)) * 100
+  // On cap souvent à 100% ou plus pour montrer l'abondance. Ici on garde la vraie valeur.
+  
+  double calcScore(double total, double dri) {
+    if (needsFactor == 0) return 0;
+    return (total / (dri * needsFactor)) * 100;
+  }
+
+  final sEnergy = calcScore(totalKcals, driKcal);
+  final sProtein = calcScore(totalProteinG, driProtein);
+  final sFiber = calcScore(totalFiberG, driFiber);
+  
+  final sVitA = calcScore(totalVitAmcg, driVitA);
+  final sVitC = calcScore(totalVitCmg, driVitC);
+  final sVitE = calcScore(totalVitEmg, driVitE);
+  final sVitK = calcScore(totalVitKmcg, driVitK);
+  final sVitB9 = calcScore(totalVitB9ug, driVitB9);
+  
+  // Moyenne des vitamines pour l'axe "Vitamines"
+  final sVitamins = (sVitA + sVitC + sVitE + sVitK + sVitB9) / 5;
+
+  final sCa = calcScore(totalCaMg, driCa);
+  final sMg = calcScore(totalMgMg, driMg);
+  final sFe = calcScore(totalFeMg, driFe);
+  final sK = calcScore(totalKMg, driK);
+  
+  // Moyenne des minéraux pour l'axe "Minéraux"
+  final sMinerals = (sCa + sMg + sFe + sK) / 4;
+
+  // Antioxidants: Principalement Vit C, E, et A.
+  // On peut faire une moyenne pondérée ou simple de ces 3 là.
+  final sAntioxidants = (sVitC + sVitE + sVitA) / 3;
+
   return NutritionRadarData(
-    proteinScore: accProtein,
-    fiberScore: accFiber,
-    vitaminScore: accVitamins,
-    mineralScore: accMinerals,
+    energyScore: sEnergy,
+    proteinScore: sProtein,
+    fiberScore: sFiber,
+    vitaminScore: sVitamins,
+    mineralScore: sMinerals,
+    antioxidantScore: sAntioxidants,
   );
 });
