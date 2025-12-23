@@ -127,7 +127,7 @@ class GardenBedCard extends ConsumerWidget {
                         if (activePlanting != null) ...[
                           const SizedBox(height: 8),
                           Text(
-                            "${plant?.commonName ?? plant?.id ?? activePlanting.plantName} — Semé le ${activePlanting.plantedDate.day}/${activePlanting.plantedDate.month}",
+                            "${plant?.commonName ?? activePlanting.plantName} — Semé le ${activePlanting.plantedDate.day}/${activePlanting.plantedDate.month}",
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: 6),

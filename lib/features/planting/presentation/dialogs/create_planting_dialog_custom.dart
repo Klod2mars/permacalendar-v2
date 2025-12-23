@@ -435,9 +435,9 @@ class _CreatePlantingDialogCustomState
     setState(() => _isLoading = true);
 
     try {
-      final plantName = (_plantNameController.text.trim().isNotEmpty)
-          ? _plantNameController.text.trim()
-          : (_selectedPlantId != null ? _getPlantName(_selectedPlantId!) : '');
+      final plantName = (_selectedPlantId != null)
+          ? _getPlantName(_selectedPlantId!)
+          : _plantNameController.text.trim();
       final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
       final notes = _notesController.text.trim().isEmpty
           ? null
