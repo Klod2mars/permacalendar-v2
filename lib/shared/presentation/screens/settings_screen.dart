@@ -331,14 +331,6 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const Divider(height: 1),
           ListTile(
-            leading: const Icon(Icons.cleaning_services_outlined, color: Colors.orange),
-            title: const Text('Audit & Réparation'),
-            subtitle: const Text('Scanner et réparer les plantations'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push(AppRoutes.audit),
-          ),
-          const Divider(height: 1),
-          ListTile(
             leading: Icon(Icons.delete_forever, color: theme.colorScheme.error),
             title: Text('Effacer toutes les données', style: TextStyle(color: theme.colorScheme.error)),
             subtitle: const Text('Action irréversible'),

@@ -29,7 +29,6 @@ import 'features/statistics/presentation/screens/garden_economy_screen.dart';
 import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
 import 'features/statistics/presentation/screens/garden_performance_screen.dart';
 import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
-import 'features/debug/audit_dashboard.dart';
 
 
 import 'core/feature_flags.dart';
@@ -60,7 +59,6 @@ class AppRoutes {
   static const String pestObservation = '/intelligence/pest-observation';
   static const String bioControlRecommendations = '/intelligence/biocontrol';
   static const String notifications = '/intelligence/notifications';
-  static const String audit = '/audit';
 }
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -237,12 +235,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.settings,
         name: 'settings',
         builder: (context, state) => const SettingsScreen(),
-      ),
-
-      GoRoute(
-        path: AppRoutes.audit,
-        name: 'audit',
-        builder: (context, state) => const AuditDashboard(),
       ),
 
       if (flags.calendarView)
