@@ -42,18 +42,21 @@ class GardenBubbleWidget extends StatelessWidget {
           children: [
             // Background: Asset if available, else Fallback
             // Note: Since we know the asset is likely missing, this errorBuilder is efficient.
-            Image.asset(
-              assetPath,
-              width: radius * 2,
-              height: radius * 2,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: radius * 2,
-                  height: radius * 2,
-                  decoration: fallbackDecoration,
-                );
-              },
+            // Background: Asset wrapped in ClipOval to ensure circular shape
+            ClipOval(
+              child: Image.asset(
+                assetPath,
+                width: radius * 2,
+                height: radius * 2,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: radius * 2,
+                    height: radius * 2,
+                    decoration: fallbackDecoration,
+                  );
+                },
+              ),
             ),
 
             // Content: Garden Name
