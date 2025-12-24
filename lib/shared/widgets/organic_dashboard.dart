@@ -705,7 +705,7 @@ class _OrganicDashboardWidgetState
       );
     });
   }
-
+}
 
 
 class _AssetDiagnostic {
