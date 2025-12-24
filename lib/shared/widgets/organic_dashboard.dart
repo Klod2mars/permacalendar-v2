@@ -142,10 +142,19 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
     super.key,
     this.assetPath = 'assets/images/backgrounds/dashboard_organic_final.png',
     this.showDiagnostics = true,
+    this.imageZoom = 1.18, // zoom par défaut (ajuster ensuite)
+    this.imageAlignment = const Alignment(-0.15, -0.03),
   });
 
   final String assetPath;
   final bool showDiagnostics;
+
+  /// Zoom appliqué à l'image (1.0 = pas de zoom). Valeur par défaut : 1.18.
+  final double imageZoom;
+
+  /// Alignement de l'image agrandie dans le cadre.
+  /// Alignment(x,y) : x ∈ [-1..1] (gauche..droite), y ∈ [-1..1] (haut..bas).
+  final Alignment imageAlignment;
 
   static const List<_Hotspot> _hotspots = <_Hotspot>[
     _Hotspot(
@@ -428,20 +437,47 @@ class _OrganicDashboardWidgetState
         width: double.infinity,
         height: height,
         child: Material(
-          // Letterbox / marges haut/bas en noir pour éviter toute déformation
+          // Letterbox / marges haut/bas en noir pour éviter toute déformation visible
           color: Colors.black,
           child: Stack(
             key: _containerKey,
             children: [
-              // Utiliser BoxFit.contain pour préserver le ratio de l'image.
-              // L'image sera centrée et entourée d'un letterbox noir si nécessaire.
+              // VERSION ZOOM + ALIGN : on aligne et agrandit le conteneur de l'image pour
+              // réduire les marges latérales et verticales tout en conservant le ratio.
               Positioned.fill(
-                child: Image.asset(
-                  widget.assetPath,
-                  fit: BoxFit.contain,
-                  alignment: Alignment.center,
-                  isAntiAlias: true,
-                  errorBuilder: (context, error, stack) => const SizedBox(),
+                child: Align(
+                  alignment: widget.imageAlignment,
+                  child: SizedBox(
+                    width: width * widget.imageZoom,
+                    height: height * widget.imageZoom,
+                    child: Image.asset(
+                      widget.assetPath,
+                      // BoxFit.contain maintient le ratio ; l'image est agrandie par le SizedBox.
+                      fit: BoxFit.contain,
+                      alignment: Alignment.center,
+                      isAntiAlias: true,
+                      errorBuilder: (context, error, stack) {
+                        if (kDebugMode) debugPrint('OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
+                        return Container(
+                          color: Theme.of(context).colorScheme.surfaceVariant,
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.image_not_supported, size: 48, color: Colors.grey.shade300),
+                                const SizedBox(height: 8),
+                                Text('Visuel absent', style: Theme.of(context).textTheme.bodyMedium),
+                                if (kDebugMode) ...[
+                                  const SizedBox(height: 8),
+                                  Text(widget.assetPath, style: Theme.of(context).textTheme.labelSmall),
+                                ],
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
 
