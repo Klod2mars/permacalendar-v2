@@ -32,23 +32,26 @@ class GardenBubbleWidget extends StatelessWidget {
       border: Border.all(color: Colors.white.withOpacity(0.5), width: 1.5),
     );
 
+    // Transparent background to let the leaf show through (Organic look)
+    // The image itself (bubble) will provide the visual shape.
+    const glassDecoration = null;
+
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
+      child: Container(
         width: radius * 2,
         height: radius * 2,
-        child: Stack(
+        decoration: glassDecoration, 
+        child: Stack( // No decoration, fully transparent container
           alignment: Alignment.center,
           children: [
-            // Background: Asset if available, else Fallback
-            // Note: Since we know the asset is likely missing, this errorBuilder is efficient.
-            // Background: Asset wrapped in ClipOval to ensure circular shape
+            // Background: Asset wrapped in ClipOval
             ClipOval(
               child: Image.asset(
                 assetPath,
                 width: radius * 2,
                 height: radius * 2,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain, // Contain to avoid cropping/zooming on the transparent canvas
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     width: radius * 2,
@@ -61,20 +64,20 @@ class GardenBubbleWidget extends StatelessWidget {
 
             // Content: Garden Name
             Padding(
-              padding: EdgeInsets.all(radius * 0.3), // Padding based on size
+              padding: EdgeInsets.all(radius * 0.2), // Reduced padding for more space
               child: Center(
                 child: AutoSizeText(
                   gardenName,
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  minFontSize: 8,
+                  minFontSize: 10,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
-                        blurRadius: 2,
-                        color: Colors.black87,
+                        blurRadius: 3,
+                        color: Colors.black,
                         offset: Offset(0, 1),
                       ),
                     ],
