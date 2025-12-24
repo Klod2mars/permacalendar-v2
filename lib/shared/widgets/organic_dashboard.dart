@@ -20,6 +20,9 @@ import '../../features/climate/presentation/providers/weather_providers.dart';
 import '../../core/utils/weather_icon_mapper.dart';
 import '../presentation/widgets/weather_bubble_widget.dart';
 import '../../features/home/widgets/invisible_stats_zone.dart';
+import '../widgets/garden_bubble_widget.dart';
+import '../widgets/garden_creation_dialog.dart';
+import '../../core/models/garden_freezed.dart';
 
 /// 1) Active/désactive l’affichage des cadres bleus (debug)
 const bool kShowTapZonesDebug = true;
@@ -552,26 +555,6 @@ class _OrganicDashboardWidgetState
                     );
                   }
 
-                  // Mode normal (non-calibration) : utiliser les positions persistées depuis le provider
-                  return Stack(
-                    children: [
-                      // Construire dynamiquement à partir de `zones` pour garantir
-                      // que le dashboard reflète l'état persistant (post-redémarrage).
-                      for (final entry in zones.entries)
-                        if (entry.value.enabled)
-                          (() {
-                            final cfg = entry.value;
-                            // taille en pixels (diamètre) basée sur la plus petite dimension
-                            final diameter = cfg.size * shortest;
-                            final dx = cfg.position.dx * w - diameter / 2;
-                            final dy = cfg.position.dy * h - diameter / 2;
-                            final maxLeft =
-                                (w - diameter).clamp(0.0, w) as double;
-                            final maxTop =
-                                (h - diameter).clamp(0.0, h) as double;
-                            final left = dx.clamp(0.0, maxLeft) as double;
-                            final top = dy.clamp(0.0, maxTop) as double;
-
                             // Trouver la route correspondante si elle existe dans _hotspots
                             String? route;
                             try {
@@ -580,6 +563,26 @@ class _OrganicDashboardWidgetState
                                   .route;
                             } catch (e) {
                               route = null;
+                            }
+
+                            // [NEW] Logic to show GardenBubbleWidget
+                            Widget? childWidget;
+                            if (cfg.id.startsWith('garden_')) {
+                              final slot = int.tryParse(cfg.id.split('_')[1]) ?? 0;
+                              final gardenId = DashboardSlotsRepository
+                                  .getGardenIdForSlotSync(slot);
+                              if (gardenId != null) {
+                                final gardenState = ref.watch(gardenProvider);
+                                final garden =
+                                    gardenState.findGardenById(gardenId);
+                                if (garden != null) {
+                                  childWidget = GardenBubbleWidget(
+                                    gardenName: garden.name,
+                                    radius: diameter / 2,
+                                    onTap: () => _onGardenTap(slot),
+                                  );
+                                }
+                              }
                             }
 
                             return Positioned(
@@ -597,6 +600,7 @@ class _OrganicDashboardWidgetState
                                 // En mode normal on veut que les hotspots restent interactifs
                                 // mais **non visibles** (pas d'outline de debug).
                                 showDebugOutline: false,
+                                child: childWidget, // Pass the bubble widget here
                               ),
                             );
                           })(),
@@ -604,13 +608,59 @@ class _OrganicDashboardWidgetState
                   );
                 }),
               ),
+
+              // [NEW] Global "+" Button if no gardens exist
+              if (!isCalibrating &&
+                  ref.watch(activeGardensCountProvider) == 0)
+                Positioned(
+                  bottom: 30, // Safe distance from bottom
+                  right: 30, // Safe distance from right
+                  child: FloatingActionButton(
+                    mini: true,
+                    backgroundColor: const Color(0xFF4CAF50),
+                    onPressed: _createFirstGarden,
+                    child: const Icon(Icons.add, color: Colors.white),
+                  ),
+                ),
             ],
           ),
         ),
       );
     });
   }
-}
+
+  Future<void> _createFirstGarden() async {
+    final name = await showDialog<String>(
+      context: context,
+      builder: (_) => const GardenCreationDialog(),
+    );
+
+    if (name != null && name.isNotEmpty && mounted) {
+      // Create simple garden object
+      final newGarden = GardenFreezed.create(name: name);
+
+      // Create and assign to slot 1 (First Garden)
+      final success = await ref
+          .read(gardenProvider.notifier)
+          .createGardenForSlot(1, newGarden);
+
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Jardin "${newGarden.name}" créé avec succès !'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Erreur lors de la création du jardin.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
 class _AssetDiagnostic {
   bool manifestLoaded = false;
