@@ -72,8 +72,11 @@ class HomeScreen extends ConsumerWidget {
                     backgroundColor: Colors.green,
                   ));
 
-                  await Future.delayed(const Duration(milliseconds: 200));
-                  context.go(AppRoutes.settings);
+                  // Stay on dashboard after validation
+                  // await Future.delayed(const Duration(milliseconds: 200));
+                  // if (context.mounted) {
+                  //   context.push(AppRoutes.settings);
+                  // }
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text('Erreur sauvegarde calibration: $e'),
