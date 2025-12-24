@@ -428,15 +428,17 @@ class _OrganicDashboardWidgetState
         width: double.infinity,
         height: height,
         child: Material(
-          color: Colors.transparent,
+          // Letterbox / marges haut/bas en noir pour éviter toute déformation
+          color: Colors.black,
           child: Stack(
             key: _containerKey,
             children: [
-              // 1) Ton fond (image feuille + bulles organiques)
+              // Utiliser BoxFit.contain pour préserver le ratio de l'image.
+              // L'image sera centrée et entourée d'un letterbox noir si nécessaire.
               Positioned.fill(
                 child: Image.asset(
                   widget.assetPath,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                   alignment: Alignment.center,
                   isAntiAlias: true,
                   errorBuilder: (context, error, stack) => const SizedBox(),
