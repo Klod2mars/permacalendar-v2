@@ -815,6 +815,7 @@ class _CalibratableHotspot extends StatefulWidget {
     required this.containerKey,
     required this.ref,
     this.showDebugOutline = false,
+    this.child,
   }) : super(key: key);
 
   final String id;
@@ -824,6 +825,7 @@ class _CalibratableHotspot extends StatefulWidget {
   final GlobalKey containerKey;
   final WidgetRef ref;
   final bool showDebugOutline;
+  final Widget? child;
 
   @override
   State<_CalibratableHotspot> createState() => _CalibratableHotspotState();
@@ -1140,11 +1142,14 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   Widget build(BuildContext context) {
     final isGardenHotspot = widget.id.startsWith('garden_');
 
-    // 1) Define content widget (Weather, Stats, or null) shared logic
-    final Widget? contentWidget = (!isGardenHotspot && widget.id == 'weather')
+    // 1) Define content widget (Weather, Stats, or Widget passed as child)
+    Widget? contentWidget = widget.child;
+
+    if (contentWidget == null) {
+      contentWidget = (!isGardenHotspot && widget.id == 'weather')
         ? const WeatherBubbleWidget()
         : (!isGardenHotspot && widget.id == 'weather_stats')
-            ? null // Transparent tap zone (background image provides the visual)
+            ? null // Transparent tap zone
             : (!isGardenHotspot && widget.id == 'statistique')
                 ? Hero(
                     tag: 'stats-bubble-hero-global',
@@ -1154,6 +1159,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                     ),
                   )
                 : null;
+    }
 
     if (widget.isCalibrating) {
       return Listener(
