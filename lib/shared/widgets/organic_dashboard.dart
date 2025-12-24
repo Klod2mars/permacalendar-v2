@@ -28,7 +28,8 @@ const bool kShowTapZonesDebug = true;
 class TapZonesSpec {
   static const Rect activity = Rect.fromLTWH(0.12, 0.20, 0.30, 0.13);
   static const Rect weather = Rect.fromLTWH(0.38, 0.25, 0.36, 0.20);
-  static const Rect weatherStats = Rect.fromLTWH(0.18, 0.22, 0.20, 0.20); // NEW: Zone tap gauche
+  static const Rect weatherStats =
+      Rect.fromLTWH(0.18, 0.22, 0.20, 0.20); // NEW: Zone tap gauche
   static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
   static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
 
@@ -121,7 +122,10 @@ class TapZone extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                             shadows: [
-                              Shadow(blurRadius: 10, color: Colors.black, offset: Offset(0, 2))
+                              Shadow(
+                                  blurRadius: 10,
+                                  color: Colors.black,
+                                  offset: Offset(0, 2))
                             ],
                           ),
                         ),
@@ -275,12 +279,12 @@ class _OrganicDashboardWidgetState
 
   Future<void> _loadDefaultsIfNeeded() async {
     final currentMap = ref.read(organicZonesProvider);
-    
+
     // On prépare les listes de ce qui manque potentiellement
     final defaultPositions = <String, Offset>{};
     final defaultSizes = <String, double>{};
     final defaultEnabled = <String, bool>{};
-    
+
     bool needsUpdate = false;
 
     for (final h in OrganicDashboardWidget._hotspots) {
@@ -288,10 +292,10 @@ class _OrganicDashboardWidgetState
         // Ce hotspot n'existe pas dans la config utilisateur -> on l'ajoute
         needsUpdate = true;
         defaultPositions[h.id] = Offset(h.centerX, h.centerY);
-        
+
         final sizeFrac = ((h.widthFrac + h.heightFrac) / 2.0).clamp(0.05, 1.0);
         defaultSizes[h.id] = sizeFrac;
-        
+
         // Active par défaut, sauf si on décide autrement
         defaultEnabled[h.id] = true;
       }
@@ -306,15 +310,16 @@ class _OrganicDashboardWidgetState
 
     try {
       if (kDebugMode) {
-        debugPrint('🔧 [CALIBRATION] injecting new defaults: ${defaultPositions.keys.toList()}');
+        debugPrint(
+            '🔧 [CALIBRATION] injecting new defaults: ${defaultPositions.keys.toList()}');
       }
-      // On utilise loadFromStorage qui fait un merge dans le Notifier (s'il est bien foutu) 
+      // On utilise loadFromStorage qui fait un merge dans le Notifier (s'il est bien foutu)
       // ou bien on doit s'assurer que le repository fait un "upsert".
-      // Note: OrganicZonesNotifier.loadFromStorage remplace souvent tout si on ne fait pas gaffe, 
+      // Note: OrganicZonesNotifier.loadFromStorage remplace souvent tout si on ne fait pas gaffe,
       // mais ici on suppose qu'on veut juste INIT si vide, ou PATCH.
       // VERIFICATION: Le repository Hive fait souvent un put complet.
       // SÉCURITÉ: On va lire l'existant, merger, et réécrire pour être sûr de ne rien perdre.
-      
+
       // 1. Récupérer l'existant déjà chargé dans currentMap
       final mergedPositions = <String, Offset>{};
       final mergedSizes = <String, double>{};
@@ -329,15 +334,17 @@ class _OrganicDashboardWidgetState
 
       // [PATCH] Migration de compatibilité : weather_stat -> weather_stats
       // Si l'utilisateur a une ancienne zone 'weather_stat', on la réutilise pour 'weather_stats'
-      if (mergedPositions.containsKey('weather_stat') && !mergedPositions.containsKey('weather_stats')) {
+      if (mergedPositions.containsKey('weather_stat') &&
+          !mergedPositions.containsKey('weather_stats')) {
         if (kDebugMode) {
-          debugPrint('🔧 [CALIBRATION] MIGRATION: found old "weather_stat", migrating to "weather_stats"');
+          debugPrint(
+              '🔧 [CALIBRATION] MIGRATION: found old "weather_stat", migrating to "weather_stats"');
         }
         // 1. Migrer les valeurs de l'ancienne clé vers la nouvelle
         mergedPositions['weather_stats'] = mergedPositions['weather_stat']!;
         mergedSizes['weather_stats'] = mergedSizes['weather_stat']!;
         mergedEnabled['weather_stats'] = mergedEnabled['weather_stat']!;
-        
+
         // 2. Supprimer l'ancienne clé pour ne plus la traîner
         mergedPositions.remove('weather_stat');
         mergedSizes.remove('weather_stat');
@@ -354,16 +361,15 @@ class _OrganicDashboardWidgetState
       mergedSizes.addAll(defaultSizes);
       mergedEnabled.addAll(defaultEnabled);
 
-      await ref
-          .read(organicZonesProvider.notifier)
-          .loadFromStorage(
+      await ref.read(organicZonesProvider.notifier).loadFromStorage(
             defaultPositions: mergedPositions,
             defaultSizes: mergedSizes,
             defaultEnabled: mergedEnabled,
           );
-          
+
       if (kDebugMode) {
-        debugPrint('🔧 [CALIBRATION] defaults injected and merged successfully');
+        debugPrint(
+            '🔧 [CALIBRATION] defaults injected and merged successfully');
       }
     } catch (e, st) {
       if (kDebugMode) {
@@ -371,7 +377,8 @@ class _OrganicDashboardWidgetState
       }
     }
     if (kDebugMode) {
-      debugPrint('[CALIBRATION] after loadFromStorage zones: ${ref.read(organicZonesProvider).keys.toList()}');
+      debugPrint(
+          '[CALIBRATION] after loadFromStorage zones: ${ref.read(organicZonesProvider).keys.toList()}');
     }
   }
 
@@ -433,43 +440,65 @@ class _OrganicDashboardWidgetState
           : MediaQuery.of(context).size.width;
       final double height = (width * (9.0 / 5.0)).clamp(300.0, 1400.0);
 
+      if (kDebugMode) {
+        debugPrint(
+            'OrganicDashboard: Width=$width Height=$height Zoom=${widget.imageZoom}');
+        debugPrint('OrganicDashboard: Constraints=$constraints');
+      }
+
       return SizedBox(
         width: double.infinity,
         height: height,
-        child: Material(
+        child: Container(
           // Letterbox / marges haut/bas en noir pour éviter toute déformation visible
           color: Colors.black,
           child: Stack(
+            clipBehavior: Clip.none,
             key: _containerKey,
             children: [
               // VERSION ZOOM + ALIGN : on aligne et agrandit le conteneur de l'image pour
               // réduire les marges latérales et verticales tout en conservant le ratio.
-              Positioned.fill(
-                child: Align(
+              // VERSION ZOOM + ALIGN : utilisation de OverflowBox pour permettre le dépassement réel
+              Positioned(
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                child: OverflowBox(
+                  maxWidth: width * widget.imageZoom,
+                  maxHeight: height * widget.imageZoom,
                   alignment: widget.imageAlignment,
                   child: SizedBox(
                     width: width * widget.imageZoom,
                     height: height * widget.imageZoom,
                     child: Image.asset(
                       widget.assetPath,
-                      // BoxFit.contain maintient le ratio ; l'image est agrandie par le SizedBox.
-                      fit: BoxFit.contain,
+                      fit: BoxFit
+                          .fill, // Changé à fill car le SizedBox respecte déjà le ratio zoomé
                       alignment: Alignment.center,
                       isAntiAlias: true,
                       errorBuilder: (context, error, stack) {
-                        if (kDebugMode) debugPrint('OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
+                        if (kDebugMode)
+                          debugPrint(
+                              'OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
                         return Container(
                           color: Theme.of(context).colorScheme.surfaceVariant,
                           child: Center(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.image_not_supported, size: 48, color: Colors.grey.shade300),
+                                Icon(Icons.image_not_supported,
+                                    size: 48, color: Colors.grey.shade300),
                                 const SizedBox(height: 8),
-                                Text('Visuel absent', style: Theme.of(context).textTheme.bodyMedium),
+                                Text('Visuel absent',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium),
                                 if (kDebugMode) ...[
                                   const SizedBox(height: 8),
-                                  Text(widget.assetPath, style: Theme.of(context).textTheme.labelSmall),
+                                  Text(widget.assetPath,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall),
                                 ],
                               ],
                             ),
@@ -536,8 +565,10 @@ class _OrganicDashboardWidgetState
                             final diameter = cfg.size * shortest;
                             final dx = cfg.position.dx * w - diameter / 2;
                             final dy = cfg.position.dy * h - diameter / 2;
-                            final maxLeft = (w - diameter).clamp(0.0, w) as double;
-                            final maxTop = (h - diameter).clamp(0.0, h) as double;
+                            final maxLeft =
+                                (w - diameter).clamp(0.0, w) as double;
+                            final maxTop =
+                                (h - diameter).clamp(0.0, h) as double;
                             final left = dx.clamp(0.0, maxLeft) as double;
                             final top = dy.clamp(0.0, maxTop) as double;
 
@@ -726,7 +757,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
   // Awakening/LayerLink removed.
 
-
   // Resolved gardenId for this slot (may be null until async resolution)
   String? _gardenId;
 
@@ -744,7 +774,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       if (!mounted) return;
 
       // Awakening registry logic removed.
-
 
       if (kDebugMode) {
         debugPrint(
@@ -913,7 +942,6 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     if (gardenId != null) {
       // Awakening stop logic removed.
 
-
       // 2) Planifier la modification du provider + navigation APRÈS la frame courante
       WidgetsBinding.instance.addPostFrameCallback((_) {
         try {
@@ -988,7 +1016,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
       if (nowActive == gardenId) {
         // Nous venons d'activer ce garden:
-          // Awakening triggering removed.
+        // Awakening triggering removed.
         // Message utilisateur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -1064,9 +1092,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(blurRadius: 2, color: Colors.black)
-                        ]),
+                        shadows: [Shadow(blurRadius: 2, color: Colors.black)]),
                   ),
                 ),
               ],
@@ -1085,11 +1111,11 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                     'OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
               }
               if (widget.onTapRoute != null) {
-                // Special handling for statistics default route if needed, 
+                // Special handling for statistics default route if needed,
                 // but now it is generic so we can just push.
                 // If specific handling is needed for others, keep the switch.
                 if (widget.id == 'statistique') {
-                   context.pushNamed('statistics-global');
+                  context.pushNamed('statistics-global');
                 } else {
                   context.push(widget.onTapRoute!);
                 }
@@ -1134,7 +1160,8 @@ class WeatherBubbleContent extends ConsumerWidget {
           height: 42,
           child: CircularProgressIndicator(strokeWidth: 2),
         ),
-        error: (e, st) => Icon(Icons.cloud_off, color: theme.colorScheme.onSurface, size: 28),
+        error: (e, st) =>
+            Icon(Icons.cloud_off, color: theme.colorScheme.onSurface, size: 28),
         data: (data) {
           final tempVal = data.temperature ?? data.currentTemperatureC;
           final temp = tempVal != null ? tempVal.toStringAsFixed(0) : '--';
@@ -1152,10 +1179,17 @@ class WeatherBubbleContent extends ConsumerWidget {
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    shadows: const [Shadow(blurRadius: 2, color: Colors.black54, offset: Offset(0,1))],
+                    shadows: const [
+                      Shadow(
+                          blurRadius: 2,
+                          color: Colors.black54,
+                          offset: Offset(0, 1))
+                    ],
                   )),
               if (data.description != null)
-                Text(data.description!, style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70)),
+                Text(data.description!,
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: Colors.white70)),
             ],
           );
         },

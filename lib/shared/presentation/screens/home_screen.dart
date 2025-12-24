@@ -23,15 +23,14 @@ class HomeScreen extends ConsumerWidget {
         calibrationState.activeType == CalibrationType.organic;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
+        clipBehavior: Clip.none,
         children: [
           Center(
-            child: SizedBox(
-              width: double.infinity,
-              height: availableHeight,
-              child: const OrganicDashboardWidget(
-                showDiagnostics: false,
-              ),
+            child: OrganicDashboardWidget(
+              showDiagnostics: false,
+              imageZoom: 1.18,
             ),
           ),
 
@@ -43,7 +42,8 @@ class HomeScreen extends ConsumerWidget {
               child: Material(
                 color: Colors.transparent,
                 child: IconButton(
-                  icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onSurface),
+                  icon: Icon(Icons.settings,
+                      color: Theme.of(context).colorScheme.onSurface),
                   tooltip: 'Paramètres',
                   onPressed: () => context.push(AppRoutes.settings),
                 ),
