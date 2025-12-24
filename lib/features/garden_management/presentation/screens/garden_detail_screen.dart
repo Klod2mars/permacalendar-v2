@@ -663,12 +663,14 @@ class GardenDetailScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // Close dialog
 
               try {
                 final success = await ref
                     .read(gardenProvider.notifier)
                     .deleteGarden(gardenId);
+
+                if (!context.mounted) return;
 
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -677,7 +679,18 @@ class GardenDetailScreen extends ConsumerWidget {
                       backgroundColor: Colors.green,
                     ),
                   );
-                  context.pop(); // Return to garden list
+                  
+                  // Return to garden list first
+                  context.pop(); 
+
+                  // Check if we need to redirect to create
+                  if (!context.mounted) return;
+                  
+                  // Verification post-suppression
+                  final hasGardens = ref.read(gardenProvider).activeGardens.isNotEmpty;
+                  if (!hasGardens) {
+                    context.pushReplacement(AppRoutes.gardenCreate);
+                  }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -687,12 +700,14 @@ class GardenDetailScreen extends ConsumerWidget {
                   );
                 }
               } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Erreur: ${e.toString()}'),
-                    backgroundColor: Colors.red,
-                  ),
-                );
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Erreur: ${e.toString()}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               }
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
