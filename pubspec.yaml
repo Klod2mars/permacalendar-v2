@@ -96,6 +96,7 @@ flutter:
     - assets/images/plants/
     - assets/images/icons/
     - assets/images/backgrounds/
+    - assets/images/dashboard/bubbles/
     - assets/images/social/
     - assets/images/legumes/
     - assets/weather_icons/

@@ -8,7 +8,7 @@ class GardenBubbleWidget extends StatelessWidget {
     required this.onTap,
     required this.radius,
     // Asset path hardcoded here but can be injected if needed
-    this.assetPath = 'assets/images/dashboard/bubbles/bubble_garden_unit.png',
+    this.assetPath = 'assets/images/dashboard/bubbles/bubble_garden.png',
   });
 
   final String gardenName;
