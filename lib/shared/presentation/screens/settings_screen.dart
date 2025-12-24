@@ -75,13 +75,6 @@ class SettingsScreen extends ConsumerWidget {
           ),
           if (kDebugMode) ...[
             const Divider(height: 1),
-            ListTile(
-              leading: const Icon(Icons.developer_mode, color: Colors.amber),
-              title: const Text('Export Positions (Debug)'),
-              subtitle: const Text('Outil dev'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/debug/export_positions'),
-            ),
           ],
         ]),
       ),

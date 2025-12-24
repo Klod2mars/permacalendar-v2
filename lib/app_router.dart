@@ -29,7 +29,7 @@ import 'features/statistics/presentation/screens/garden_economy_screen.dart';
 import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
 import 'features/statistics/presentation/screens/garden_performance_screen.dart';
 import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
-import '../debug/export_positions.dart';
+
 
 
 import 'core/feature_flags.dart';
@@ -318,11 +318,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      GoRoute(
-        path: '/debug/export_positions',
-        name: 'debug-export-positions',
-        builder: (context, state) => const DebugExportPositionsPage(), 
-      ),
+
     ],
     errorBuilder: (context, state) => Scaffold(
       body: Center(
