@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/custom_input.dart';
+
 
 class GardenCreationDialog extends StatefulWidget {
   const GardenCreationDialog({super.key});
@@ -32,10 +32,12 @@ class _GardenCreationDialogState extends State<GardenCreationDialog> {
               style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 16),
-            CustomInput(
+            TextFormField(
               controller: _nameController,
-              label: 'Nom du jardin',
-              hint: 'Ex: Mon Potager',
+              decoration: const InputDecoration(
+                labelText: 'Nom du jardin',
+                hintText: 'Ex: Mon Potager',
+              ),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'Le nom est requis' : null,
             ),

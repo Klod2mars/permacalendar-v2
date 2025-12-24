@@ -386,16 +386,65 @@ class _OrganicDashboardWidgetState
   }
 
   Future<void> _onGardenTap(int slot) async {
-    try {
-      final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
-      if (gardenId != null && mounted) {
-        ref.read(gardenProvider.notifier).selectGarden(gardenId);
-        context.push('/gardens/$gardenId?fromOrganic=1');
-      } else if (kDebugMode) {
-        debugPrint('No garden found for slot $slot');
+    final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
+    if (gardenId != null && mounted) {
+      ref.read(gardenProvider.notifier).selectGarden(gardenId);
+      context.push('/gardens/$gardenId?fromOrganic=1');
+    } else if (mounted) {
+      // Slot libre : proposer la création
+      final name = await showDialog<String>(
+        context: context,
+        builder: (_) => const GardenCreationDialog(),
+      );
+
+      if (name != null && name.isNotEmpty) {
+        final newGarden = GardenFreezed.create(name: name);
+        final success = await ref
+            .read(gardenProvider.notifier)
+            .createGardenForSlot(slot, newGarden);
+
+        if (success && mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Jardin "${newGarden.name}" créé avec succès'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
       }
-    } catch (e) {
-      if (kDebugMode) debugPrint('Error resolving garden slot $slot: $e');
+    }
+  }
+
+  Future<void> _createFirstGarden() async {
+    final name = await showDialog<String>(
+      context: context,
+      builder: (_) => const GardenCreationDialog(),
+    );
+
+    if (name != null && name.isNotEmpty && mounted) {
+      // Create simple garden object
+      final newGarden = GardenFreezed.create(name: name);
+
+      // Create and assign to slot 1 (First Garden)
+      final success = await ref
+          .read(gardenProvider.notifier)
+          .createGardenForSlot(1, newGarden);
+
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Jardin "${newGarden.name}" créé avec succès'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Erreur lors de la création du jardin.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -555,6 +604,28 @@ class _OrganicDashboardWidgetState
                     );
                   }
 
+                  // Mode normal (non-calibration) : utiliser les positions persistées depuis le provider
+                  final gardenState = ref.watch(gardenProvider);
+
+                  return Stack(
+                    children: [
+                      // Construire dynamiquement à partir de `zones` pour garantir
+                      // que le dashboard reflète l'état persistant (post-redémarrage).
+                      for (final entry in zones.entries)
+                        if (entry.value.enabled)
+                          (() {
+                            final cfg = entry.value;
+                            // taille en pixels (diamètre) basée sur la plus petite dimension
+                            final diameter = cfg.size * shortest;
+                            final dx = cfg.position.dx * w - diameter / 2;
+                            final dy = cfg.position.dy * h - diameter / 2;
+                            final maxLeft =
+                                (w - diameter).clamp(0.0, w) as double;
+                            final maxTop =
+                                (h - diameter).clamp(0.0, h) as double;
+                            final left = dx.clamp(0.0, maxLeft) as double;
+                            final top = dy.clamp(0.0, maxTop) as double;
+
                             // Trouver la route correspondante si elle existe dans _hotspots
                             String? route;
                             try {
@@ -568,11 +639,17 @@ class _OrganicDashboardWidgetState
                             // [NEW] Logic to show GardenBubbleWidget
                             Widget? childWidget;
                             if (cfg.id.startsWith('garden_')) {
-                              final slot = int.tryParse(cfg.id.split('_')[1]) ?? 0;
-                              final gardenId = DashboardSlotsRepository
-                                  .getGardenIdForSlotSync(slot);
+                              final slot =
+                                  int.tryParse(cfg.id.split('_')[1]) ?? 0;
+                              
+                              // Robust read: check if box is open logic
+                              String? gardenId;
+                              if (DashboardSlotsRepository.isOpen()) {
+                                gardenId = DashboardSlotsRepository
+                                    .getGardenIdForSlotSync(slot);
+                              }
+
                               if (gardenId != null) {
-                                final gardenState = ref.watch(gardenProvider);
                                 final garden =
                                     gardenState.findGardenById(gardenId);
                                 if (garden != null) {
@@ -629,38 +706,7 @@ class _OrganicDashboardWidgetState
     });
   }
 
-  Future<void> _createFirstGarden() async {
-    final name = await showDialog<String>(
-      context: context,
-      builder: (_) => const GardenCreationDialog(),
-    );
 
-    if (name != null && name.isNotEmpty && mounted) {
-      // Create simple garden object
-      final newGarden = GardenFreezed.create(name: name);
-
-      // Create and assign to slot 1 (First Garden)
-      final success = await ref
-          .read(gardenProvider.notifier)
-          .createGardenForSlot(1, newGarden);
-
-      if (success && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Jardin "${newGarden.name}" créé avec succès !'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Erreur lors de la création du jardin.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
 
 class _AssetDiagnostic {
   bool manifestLoaded = false;
