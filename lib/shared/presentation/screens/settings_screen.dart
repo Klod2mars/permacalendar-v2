@@ -1,5 +1,6 @@
 ﻿// lib/shared/presentation/screens/settings_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -72,6 +73,16 @@ class SettingsScreen extends ConsumerWidget {
               color: EnvironmentService.isDebugMode ? Colors.green : Colors.grey,
             ),
           ),
+          if (kDebugMode) ...[
+            const Divider(height: 1),
+            ListTile(
+              leading: const Icon(Icons.developer_mode, color: Colors.amber),
+              title: const Text('Export Positions (Debug)'),
+              subtitle: const Text('Outil dev'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/debug/export_positions'),
+            ),
+          ],
         ]),
       ),
     ]);
