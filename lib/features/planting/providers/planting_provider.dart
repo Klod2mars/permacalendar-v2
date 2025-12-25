@@ -477,7 +477,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
       // Force status to 'Récolté' and ensure plantName is preserved
       final updatedPlanting = planting.copyWith(
         actualHarvestDate: date,
-        status: 'Récolté',
+        // status: 'Récolté', // REMOVED: Do not force status change
       );
 
       // CHECK INTEGRITY
