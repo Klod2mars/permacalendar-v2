@@ -12,7 +12,7 @@ import 'features/planting/presentation/screens/planting_list_screen.dart';
 import 'features/planting/presentation/screens/planting_detail_screen.dart';
 import 'features/plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import 'features/plant_catalog/presentation/screens/plant_detail_screen.dart';
-import 'features/export/presentation/screens/export_screen.dart';
+
 import 'features/activities/presentation/screens/activities_screen.dart';
 import 'features/plant_intelligence/presentation/screens/plant_intelligence_dashboard_screen.dart';
 import 'features/plant_intelligence/presentation/screens/recommendations_screen.dart';
@@ -45,7 +45,7 @@ class AppRoutes {
   static const String plantDetail = '/plants/:id';
   static const String plantingDetail = '/plantings/:id';
 
-  static const String export = '/export';
+
   static const String activities = '/activities';
   static const String settings = '/settings';
   static const String calendar = '/calendar';
@@ -226,11 +226,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
 
-      GoRoute(
-        path: AppRoutes.export,
-        name: 'export',
-        builder: (context, state) => const ExportScreen(),
-      ),
+
 
       GoRoute(
         path: AppRoutes.settings,

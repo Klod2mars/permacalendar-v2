@@ -1,6 +1,6 @@
 ﻿// lib/shared/presentation/screens/settings_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +15,7 @@ import '../../../core/services/open_meteo_service.dart';
 import '../widgets/settings/calibration_settings_section.dart';
 import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
+
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -35,8 +36,6 @@ class SettingsScreen extends ConsumerWidget {
           _buildScientificToolsSection(context, theme, ref),
           const SizedBox(height: 24),
           _buildQuickAccessSection(context, theme),
-          const SizedBox(height: 24),
-          _buildDataManagementSection(context, theme),
           const SizedBox(height: 24),
           const CalibrationSettingsSection(),
           const SizedBox(height: 24),
@@ -62,20 +61,6 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showVersionInfo(context),
           ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.bug_report_outlined),
-            title: const Text('Mode debug'),
-            subtitle:
-                Text(EnvironmentService.isDebugMode ? 'Activé' : 'Désactivé'),
-            trailing: Icon(
-              EnvironmentService.isDebugMode ? Icons.toggle_on : Icons.toggle_off,
-              color: EnvironmentService.isDebugMode ? Colors.green : Colors.grey,
-            ),
-          ),
-          if (kDebugMode) ...[
-            const Divider(height: 1),
-          ],
         ]),
       ),
     ]);
@@ -96,14 +81,6 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: const Text('Rechercher et consulter les plantes'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push(AppRoutes.plants),
-          ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.file_download),
-            title: const Text('Exporter les données'),
-            subtitle: const Text('CSV, JSON, PDF'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push(AppRoutes.export),
           ),
         ]),
       ),
@@ -155,16 +132,6 @@ class SettingsScreen extends ConsumerWidget {
       const SizedBox(height: 16),
       CustomCard(
         child: Column(children: [
-          ListTile(
-            leading: const Icon(Icons.cloud),
-            title: const Text('Données météo'),
-            subtitle: Text(EnvironmentService.isWeatherEnabled ? 'Activées' : 'Désactivées'),
-            trailing: Icon(
-              EnvironmentService.isWeatherEnabled ? Icons.toggle_on : Icons.toggle_off,
-              color: EnvironmentService.isWeatherEnabled ? Colors.green : Colors.grey,
-            ),
-          ),
-          const Divider(height: 1),
           Builder(builder: (ctx) {
             final selected = ref.watch(selectedCommuneProvider);
             final defaultLabel = EnvironmentService.defaultCommuneName;
@@ -177,24 +144,6 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => _showCommuneSelector(context, ref),
             );
           }),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.analytics),
-            title: const Text('Analyses avancées'),
-            subtitle: Text(EnvironmentService.isAnalyticsEnabled ? 'Activées' : 'Désactivées'),
-            trailing: Icon(
-              EnvironmentService.isAnalyticsEnabled ? Icons.toggle_on : Icons.toggle_off,
-              color: EnvironmentService.isAnalyticsEnabled ? Colors.green : Colors.grey,
-            ),
-          ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.file_download),
-            title: const Text('Export de données'),
-            subtitle: const Text('CSV, JSON, PDF disponibles'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showExportInfo(context),
-          ),
         ]),
       ),
     ]);
@@ -309,42 +258,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildDataManagementSection(BuildContext context, ThemeData theme) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        'Gestion des données',
-        style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 16),
-      CustomCard(
-        child: Column(children: [
-          ListTile(
-            leading: const Icon(Icons.backup),
-            title: const Text('Sauvegarde'),
-            subtitle: const Text('Exporter toutes les données'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showBackupOptions(context),
-          ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.restore),
-            title: const Text('Restauration'),
-            subtitle: const Text('Importer des données'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showRestoreOptions(context),
-          ),
-          const Divider(height: 1),
-          ListTile(
-            leading: Icon(Icons.delete_forever, color: theme.colorScheme.error),
-            title: Text('Effacer toutes les données', style: TextStyle(color: theme.colorScheme.error)),
-            subtitle: const Text('Action irréversible'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showDeleteAllDataDialog(context),
-          ),
-        ]),
-      ),
-    ]);
-  }
+
 
   Widget _buildAboutSection(BuildContext context, ThemeData theme) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -406,62 +320,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showExportInfo(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Export de données',
-        content: 'Vous pouvez exporter vos données dans plusieurs formats :\n\n'
-            '• CSV : Pour les tableurs\n'
-            '• JSON : Pour les développeurs\n'
-            '• PDF : Pour l\'impression\n\n'
-            'Accédez à cette fonctionnalité via le menu "Exporter" du tableau de bord.',
-      ),
-    );
-  }
 
-  void _showBackupOptions(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Sauvegarde',
-        content: 'La fonctionnalité de sauvegarde sera disponible dans une prochaine version. '
-            'En attendant, vous pouvez utiliser l\'export de données pour sauvegarder vos informations.',
-      ),
-    );
-  }
-
-  void _showRestoreOptions(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Restauration',
-        content: 'La fonctionnalité de restauration sera disponible dans une prochaine version.',
-      ),
-    );
-  }
-
-  void _showDeleteAllDataDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => ConfirmationDialog(
-        title: 'Effacer toutes les données',
-        content: 'Cette action supprimera définitivement tous vos jardins, plantations et données. '
-            'Cette action est irréversible.\n\n'
-            'Êtes-vous sûr de vouloir continuer ?',
-        confirmText: 'Effacer',
-        cancelText: 'Annuler',
-        isDestructive: true,
-        onConfirm: () {
-          // TODO: Implement data deletion
-          Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Fonctionnalité à implémenter')),
-          );
-        },
-      ),
-    );
-  }
 
   void _showHelp(BuildContext context) {
     showDialog(
