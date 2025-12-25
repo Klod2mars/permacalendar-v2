@@ -206,18 +206,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                             color: theme.colorScheme.primary, size: 26),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    // use Wrap instead of Row for chips to avoid overflow
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 6,
-                      children: [
-                        _buildSmallInfoChip(Icons.terrain,
-                            '${gardenBed.soilType} (est.)', theme),
-                        _buildSmallInfoChip(Icons.wb_sunny,
-                            '${gardenBed.exposure} (variable)', theme),
-                      ],
-                    ),
+
                     if (gardenBed.description.isNotEmpty ||
                         (gardenBed.notes != null &&
                             gardenBed.notes!.isNotEmpty)) ...[
@@ -258,21 +247,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSmallInfoChip(IconData icon, String text, ThemeData theme) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.08)),
-      ),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(icon, size: 16, color: theme.colorScheme.primary),
-        const SizedBox(width: 8),
-        Text(text, style: theme.textTheme.bodySmall),
-      ]),
-    );
-  }
+
 
   Widget _buildInfoRow(
       IconData icon, String label, String value, ThemeData theme) {
