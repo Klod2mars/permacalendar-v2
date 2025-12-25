@@ -85,8 +85,12 @@ class GardenDetailScreen extends ConsumerWidget {
             ),
           ),
           data: (gardenBeds) {
-            final double totalBedsArea = gardenBeds.fold<double>(
-                0, (sum, bed) => sum + (bed as GardenBed).sizeInSquareMeters);
+            // Tri alphabétique par défaut pour respecter l'ordre logique (Planche 1, Planche 2...)
+            final sortedBeds = List<GardenBed>.from(gardenBeds)
+              ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+            final double totalBedsArea = sortedBeds.fold<double>(
+                0, (sum, bed) => sum + bed.sizeInSquareMeters);
 
             return Scaffold(
               appBar: CustomAppBar(
@@ -206,7 +210,7 @@ class GardenDetailScreen extends ConsumerWidget {
 
                     // Garden Beds Section
                     _buildGardenBedsSection(
-                        context, ref, theme, garden, gardenBeds),
+                        context, ref, theme, garden, sortedBeds),
                   ],
                 ),
               ),
@@ -404,120 +408,104 @@ class GardenDetailScreen extends ConsumerWidget {
 
               // Parcelles listées
               ...gardenBeds.map((bed) {
-                final GardenBed bedTyped = bed as GardenBed;
+                final GardenBed bedTyped = bed;
 
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: CustomCard(
-                    child: Semantics(
-                      container: true,
-                      label:
-                          'Parcelle ${bedTyped.name}, ${bedTyped.formattedSize}. ${bedTyped.soilType}, ${bedTyped.exposure}.',
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Titre + actions
-                          ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            title: Text(
-                              bedTyped.name,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            subtitle: Text(
-                              bedTyped.formattedSize,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onBackground
-                                    .withOpacity(0.7),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            trailing: PopupMenuButton<String>(
-                              onSelected: (value) async {
-                                switch (value) {
-                                  case 'edit':
-                                    await _editBed(
-                                        context, ref, garden, bedTyped);
-                                    break;
-                                  case 'delete':
-                                    await _deleteBed(
-                                        context, ref, garden, bedTyped);
-                                    break;
-                                  case 'open':
-                                    context.push(
-                                      '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                                      extra: bedTyped.name,
-                                    );
-                                    break;
-                                }
-                              },
-                              itemBuilder: (_) => [
-                                const PopupMenuItem(
-                                    value: 'open', child: Text('Ouvrir')),
-                                const PopupMenuItem(
-                                    value: 'edit', child: Text('Modifier')),
-                                const PopupMenuItem(
-                                    value: 'delete', child: Text('Supprimer')),
-                              ],
-                            ),
-                            onTap: () {
-                              if (openPlantingsOnBedTap) {
-                                context.push(
-                                  '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
-                                  extra: bedTyped.name,
-                                );
-                              } else {
-                                context.push(
-                                  '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                                  extra: bedTyped.name,
-                                );
-                              }
-                            },
-                          ),
-
-                          // Preview + petites infos
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Card(
+                    elevation: 0, 
+                    color: theme.colorScheme.primaryContainer.withOpacity(0.2), // Teinte "Vert d'eau"
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(
+                        color: theme.colorScheme.primary.withOpacity(0.1), // Bordure subtile
+                        width: 1,
+                      ),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                         if (openPlantingsOnBedTap) {
+                            context.push(
+                              '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
+                              extra: bedTyped.name,
+                            );
+                          } else {
+                            context.push(
+                              '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                              extra: bedTyped.name,
+                            );
+                          }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Header : Nom ... Size >
+                            Row(
                               children: [
-                                // GerminationPreview (compact)
-                                GerminationPreview(
-                                  gardenBed: bedTyped,
-                                  gardenBedId: bedTyped.id,
-                                  plants: ref.watch(plantsListProvider),
-                                  forceRefresh: true,
-                                ),
-                                const SizedBox(height: 8),
-
-                                // Ligne d'information : sol • exposition
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.terrain,
-                                      size: 16,
-                                      color: theme.colorScheme.primary,
+                                Expanded(
+                                  child: Text(
+                                    bedTyped.name,
+                                    style: theme.textTheme.titleMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
                                     ),
-                                    const SizedBox(width: 8),
-                                    Flexible(
-                                      child: Text(
-                                        '${bedTyped.soilType} • ${bedTyped.exposure}',
-                                        style: theme.textTheme.labelSmall
-                                            ?.copyWith(
-                                          color: theme.colorScheme.onBackground
-                                              .withOpacity(0.7),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
+                                Text(
+                                  bedTyped.formattedSize,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: theme.colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                                // Optionnel : Menu 3 points (discret)
+                                SizedBox(
+                                  width: 24, 
+                                  height: 24,
+                                  child: PopupMenuButton<String>(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.more_vert, size: 20, color: theme.colorScheme.outline),
+                                    onSelected: (value) async {
+                                      switch (value) {
+                                        case 'edit':
+                                          await _editBed(
+                                              context, ref, garden, bedTyped);
+                                          break;
+                                        case 'delete':
+                                          await _deleteBed(
+                                              context, ref, garden, bedTyped);
+                                          break;
+                                      }
+                                    },
+                                    itemBuilder: (_) => [
+                                      const PopupMenuItem(
+                                          value: 'edit', child: Text('Modifier')),
+                                      const PopupMenuItem(
+                                          value: 'delete', child: Text('Supprimer')),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        ],
+                            
+                            const SizedBox(height: 12),
+
+                            // Preview + petites infos (Contenu direct)
+                            GerminationPreview(
+                              gardenBed: bedTyped,
+                              gardenBedId: bedTyped.id,
+                              plants: ref.watch(plantsListProvider),
+                              forceRefresh: true,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
