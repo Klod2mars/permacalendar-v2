@@ -281,6 +281,11 @@ class _OrganicDashboardWidgetState
   }
 
   Future<void> _loadDefaultsIfNeeded() async {
+    // [FIX] S'assurer que le repository des slots est prêt (boîte ouverte)
+    // pour que la lecture synchrone dans build() fonctionne.
+    await DashboardSlotsRepository.init();
+    if (mounted) setState(() {});
+
     final currentMap = ref.read(organicZonesProvider);
 
     // On prépare les listes de ce qui manque potentiellement

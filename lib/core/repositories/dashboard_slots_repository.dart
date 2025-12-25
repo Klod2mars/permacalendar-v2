@@ -29,20 +29,15 @@ class DashboardSlotsRepository {
 
 
   static Future<Box<String>> _ensureBox() async {
-
-
     if (_box == null || !_box!.isOpen) {
-
-
       _box = await Hive.openBox<String>(_boxName);
-
-
     }
-
-
     return _box!;
+  }
 
-
+  /// Initialise le repository (ouvre la box si nécessaire)
+  static Future<void> init() async {
+    await _ensureBox();
   }
 
 
