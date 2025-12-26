@@ -92,7 +92,7 @@ final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
     final portions = record.quantityKg * 10; // 1 kg = 10 portions de 100g
 
     // Accumulation
-    totalKcals += ((n['calories'] as num?)?.toDouble() ?? 0.0) * portions;
+    totalKcals += ((n['calories'] ?? n['energyKcal']) as num?)?.toDouble() ?? 0.0 * portions;
     totalProteinG += ((n['proteinG'] as num?)?.toDouble() ?? 0.0) * portions;
     totalFiberG += ((n['fiberG'] as num?)?.toDouble() ?? 0.0) * portions;
     
