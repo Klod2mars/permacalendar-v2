@@ -79,6 +79,9 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
               const SizedBox(height: 16),
               
               // NEW: DETAILED BAR LIST
+              // DEBUG OVERLAY (Temporary)
+
+              
               Consumer(builder: (context, ref, child) {
                   final detailedAsync = ref.watch(nutritionDetailedProvider);
                   

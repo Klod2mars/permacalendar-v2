@@ -41,9 +41,11 @@ class StatisticsFiltersNotifier extends Notifier<StatisticsFiltersState> {
       // On garde l'intersection
       final validIds = currentIds.intersection(availableIds);
 
-      // Si différence, on met à jour
-      if (validIds.length != currentIds.length) {
-        state = state.copyWith(selectedGardenIds: validIds);
+      // Si on ne trouve plus les jardins sélectionnés (ex: supprimés), on reset à "Tous les jardins" (vide)
+      if (validIds.isEmpty && currentIds.isNotEmpty) {
+         state = state.copyWith(selectedGardenIds: {});
+      } else if (validIds.length != currentIds.length) {
+         state = state.copyWith(selectedGardenIds: validIds);
       }
     });
 

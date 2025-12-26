@@ -49,8 +49,8 @@ class HarvestRecord {
       pricePerKg: (json['pricePerKg'] as num).toDouble(),
       date: DateTime.parse(json['date'] as String),
       notes: json['notes'] as String?,
-      nutritionSnapshot: (json['nutritionSnapshot'] as Map<String, dynamic>?)?.map(
-        (k, v) => MapEntry(k, (v as num).toDouble()),
+      nutritionSnapshot: (json['nutritionSnapshot'] as Map?)?.map(
+        (k, v) => MapEntry(k.toString(), (v as num).toDouble()),
       ),
     );
   }

@@ -416,12 +416,19 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       // FIX: If garden is unknown (orphaned planting), fallback to the first available garden
       // to ensure statistics are visible.
+      // FIX: Improved Orphan Handling
+      // If the bed is deleted or not found, we try to attach to the first available garden.
       if (gardenId == 'unknown') {
-        final allGardens = GardenBoxes.getAllGardens();
-        if (allGardens.isNotEmpty) {
-          gardenId = allGardens.first.id;
-          debugPrint('[recordHarvest] Warning: Bed ${planting.gardenBedId} not found. Defaulting to garden $gardenId (${allGardens.first.name})');
-        }
+         final allGardens = GardenBoxes.getAllGardens();
+         if (allGardens.isNotEmpty) {
+           gardenId = allGardens.first.id;
+           debugPrint('[recordHarvest] Warning: Bed ${planting.gardenBedId} not found. Re-attaching to garden $gardenId (${allGardens.first.name})');
+         } else {
+           // Extreme edge case: No gardens exist at all.
+           // We create a virtual "Lost & Found" garden ID to allow saving.
+           gardenId = 'orphaned_harvests_garden';
+           debugPrint('[recordHarvest] Critical: No gardens found. Saving to virtual garden "orphaned_harvests_garden".');
+         }
       }
 
       // 3.5) Compute Nutrition Snapshot
