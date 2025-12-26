@@ -412,7 +412,17 @@ class PlantingNotifier extends Notifier<PlantingState> {
       debugPrint('[recordHarvest] BEFORE update: plantName="${planting.plantName}" status="${planting.status}" metadata=${planting.metadata}');
 
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
-      final gardenId = bed?.gardenId ?? 'unknown';
+      String gardenId = bed?.gardenId ?? 'unknown';
+
+      // FIX: If garden is unknown (orphaned planting), fallback to the first available garden
+      // to ensure statistics are visible.
+      if (gardenId == 'unknown') {
+        final allGardens = GardenBoxes.getAllGardens();
+        if (allGardens.isNotEmpty) {
+          gardenId = allGardens.first.id;
+          debugPrint('[recordHarvest] Warning: Bed ${planting.gardenBedId} not found. Defaulting to garden $gardenId (${allGardens.first.name})');
+        }
+      }
 
       // 3.5) Compute Nutrition Snapshot
       Map<String, double>? nutritionSnapshot;
