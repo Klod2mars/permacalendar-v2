@@ -63,33 +63,56 @@ class StatisticsPillarCard extends ConsumerWidget {
                         color: Colors.white.withOpacity(0.06),
                         child: InkWell(
                           onTap: () {
-                            final routeName = switch (type) {
-                              PillarType.economieVivante => 'garden-stats-economie',
-                              PillarType.sante => 'garden-stats-sante',
-                              PillarType.performance => 'garden-stats-performance',
-                              PillarType.patrimoine => 'garden-stats-patrimoine',
-                            };
+                             final state = GoRouterState.of(context);
+                             final activeGardenId = state.pathParameters['id'];
 
-                            final state = GoRouterState.of(context);
-                            String? gardenId = state.pathParameters['id'];
+                             // 1. Nouvelle route globale pour l'Économie
+                             if (type == PillarType.economieVivante) {
+                               if (activeGardenId != null) {
+                                 context.pushNamed('garden-stats-economie', pathParameters: {'id': activeGardenId});
+                               } else {
+                                 context.pushNamed('statistics-global-economie');
+                               }
+                               return;
+                             }
+                             
+                             // 2. Nouvelle route globale pour la Santé / Nutrition
+                             if (type == PillarType.sante) {
+                               if (activeGardenId != null) {
+                                  context.pushNamed('garden-stats-sante', pathParameters: {'id': activeGardenId});
+                               } else {
+                                  context.pushNamed('statistics-global-sante');
+                               }
+                               return;
+                             }
+
+                             // 3. Comportement existant pour les autres piliers (en attendant le refactoring)
+                             final routeName = switch (type) {
+                               PillarType.economieVivante => 'garden-stats-economie',
+                               PillarType.sante => 'garden-stats-sante',
+                               PillarType.performance => 'garden-stats-performance',
+                               PillarType.patrimoine => 'garden-stats-patrimoine',
+                             };
+
+                            String? targetId = activeGardenId;
 
                             // fallback : premier jardin sélectionné dans le filtre de stats
-                            if (gardenId == null) {
+                            if (targetId == null) {
                               try {
                                 final filters = ref.read(statisticsFiltersProvider);
                                 if (filters.selectedGardenIds.isNotEmpty) {
-                                  gardenId = filters.selectedGardenIds.first;
+                                  targetId = filters.selectedGardenIds.first;
                                 }
                               } catch (_) {
-                                // mode silencieux : on ne doit pas planter l'UI
+                                // mode silencieux
                               }
                             }
 
-                            if (gardenId != null) {
-                              context.pushNamed(routeName, pathParameters: {'id': gardenId});
+                            if (targetId != null) {
+                              context.pushNamed(routeName, pathParameters: {'id': targetId});
                             } else {
-                              // aucun jardin sélectionné : ouvrir la vue agrégée (route sans id)
-                              context.pushNamed(routeName);
+                              // aucun jardin sélectionné : ouvrir la vue agrégée si route existe (sinon ça plantera pour l'instant)
+                              context.pushNamed(routeName); // Warning: routes expects :id usually
                             }
                           },
                           child: Padding(

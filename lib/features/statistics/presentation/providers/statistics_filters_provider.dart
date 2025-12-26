@@ -32,6 +32,21 @@ class StatisticsFiltersState {
 class StatisticsFiltersNotifier extends Notifier<StatisticsFiltersState> {
   @override
   StatisticsFiltersState build() {
+    // Écouter les changements dans la liste des jardins pour nettoyer la sélection
+    ref.listen(gardenProvider, (previous, next) {
+      final currentIds = state.selectedGardenIds;
+      if (currentIds.isEmpty) return;
+
+      final availableIds = next.gardens.map((g) => g.id).toSet();
+      // On garde l'intersection
+      final validIds = currentIds.intersection(availableIds);
+
+      // Si différence, on met à jour
+      if (validIds.length != currentIds.length) {
+        state = state.copyWith(selectedGardenIds: validIds);
+      }
+    });
+
     return const StatisticsFiltersState();
   }
 

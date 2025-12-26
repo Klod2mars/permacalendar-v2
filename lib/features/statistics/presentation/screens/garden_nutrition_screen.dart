@@ -6,13 +6,14 @@ import '../providers/statistics_filters_provider.dart';
 import '../../application/providers/nutrition_radar_provider.dart';
 import '../../application/providers/nutrition_kpi_providers.dart';
 
+import '../widgets/garden_multi_selector.dart';
 import '../widgets/nutrition_stats/vitality_radar_chart.dart';
 import '../widgets/nutrition_stats/top_healers_widget.dart';
 import '../widgets/nutrition_stats/deficiency_gauge.dart';
 
 class GardenNutritionScreen extends ConsumerStatefulWidget {
-  final String gardenId;
-  const GardenNutritionScreen({super.key, required this.gardenId});
+  final String? gardenId;
+  const GardenNutritionScreen({super.key, this.gardenId});
 
   @override
   ConsumerState<GardenNutritionScreen> createState() => _GardenNutritionScreenState();
@@ -22,9 +23,11 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId});
-    });
+    if (widget.gardenId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId!});
+      });
+    }
   }
 
   @override
@@ -51,15 +54,23 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. HEADER: RADAR CHART
-              const Text(
-                'Bilan de Production Réelle',
-                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+              // 0. SELECTOR
+              const GardenMultiSelector(),
+              const SizedBox(height: 16),
+              
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 1. HEADER: RADAR CHART
+                    const Text(
+                      'Bilan de Production Réelle',
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
               const SizedBox(height: 8),
               const Text(
                 'Couverture de vos besoins journaliers (AJR) basée sur les récoltes de la période.',
@@ -137,11 +148,14 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                     ),
                   ),
                 ),
-            ],
-          ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
 }

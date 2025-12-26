@@ -155,6 +155,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           return const GardenStatisticsScreen(gardenId: null);
         },
+        routes: [
+           GoRoute(
+            path: 'economie',
+            name: 'statistics-global-economie',
+            builder: (context, state) {
+              return const GardenEconomyScreen(gardenId: null);
+            },
+          ),
+          GoRoute(
+            path: 'sante',
+            name: 'statistics-global-sante',
+            builder: (context, state) {
+              return const GardenNutritionScreen(gardenId: null); // OK updated
+            },
+          ),
+          /* 
+          // TODO: Update other screens to support null gardenId before enabling these routes
+          ...
+          */
+        ],
       ),
 
       // --- Parcelles : fallback vers GardenDetailScreen, mais conserver le détail d'une parcelle

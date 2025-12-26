@@ -32,7 +32,7 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
   // Filter records
   final filteredRecords = harvestRecordsState.records.where((record) {
     bool matchGarden = filters.selectedGardenIds.isEmpty || filters.selectedGardenIds.contains(record.gardenId);
-    bool matchDate = record.date.isAfter(startDate) && record.date.isBefore(endDate);
+    bool matchDate = !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
     return matchGarden && matchDate;
   }).toList();
 
@@ -123,7 +123,7 @@ final deficiencyProvider = FutureProvider<List<NutrientDeficiency>>((ref) async 
   // Filtrer
    final filteredRecords = harvestRecordsState.records.where((record) {
       final inGarden = filters.selectedGardenIds.isEmpty || filters.selectedGardenIds.contains(record.gardenId);
-      final inPeriod = record.date.isAfter(startDate) && record.date.isBefore(endDate);
+      final inPeriod = !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
       return inGarden && inPeriod;
     }).toList();
 

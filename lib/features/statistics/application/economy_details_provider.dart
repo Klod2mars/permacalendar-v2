@@ -11,14 +11,14 @@ enum GroupBy { none, day, week, month, year }
 enum AggregationPeriod { day, week, month, year }
 
 class EconomyQueryParams {
-  final String? gardenId;
+  final Set<String> gardenIds;
   final DateTime startDate;
   final DateTime endDate;
   final GroupBy groupBy; // Optional, might be used for future drill-down
   final AggregationPeriod aggregationPeriod;
 
   EconomyQueryParams({
-     this.gardenId,
+     this.gardenIds = const {},
     required this.startDate,
     required this.endDate,
     this.groupBy = GroupBy.month,
@@ -30,7 +30,12 @@ class EconomyQueryParams {
       identical(this, other) ||
       other is EconomyQueryParams &&
           runtimeType == other.runtimeType &&
-          gardenId == other.gardenId &&
+          // Set equality check (naive but sufficient if order doesn't matter, usually setsEqual need deeper check)
+          // We assume usage of sets that are comparable or we construct them consistently.
+          // Better: use set equality helper if available, or simplified check.
+          // For now, checks length and contains.
+          gardenIds.length == other.gardenIds.length &&
+          gardenIds.containsAll(other.gardenIds) &&
           startDate == other.startDate &&
           endDate == other.endDate &&
           groupBy == other.groupBy &&
@@ -38,12 +43,14 @@ class EconomyQueryParams {
 
   @override
   int get hashCode =>
-      gardenId.hashCode ^
+      Object.hashAll(gardenIds) ^
       startDate.hashCode ^
       endDate.hashCode ^
       groupBy.hashCode ^
       aggregationPeriod.hashCode;
 }
+
+// ... (skipping unchanged classes) ...
 
 class PlantRanking {
   final String plantId;
@@ -161,14 +168,6 @@ final economyDetailsProvider =
   final harvestState = ref.watch(harvestRecordsProvider);
   // Need plantings for Fast vs Long term analysis
   final plantingsState = ref.watch(plantingProvider); 
-  // Assuming plantingStateProvider gives access to plantings. 
-  // If plantingStateProvider isn't the right one, I might need to adjust based on planting_provider.dart check.
-  // Actually, planting_provider.dart usually defines plantingNotifierProvider or similar.
-  // I will check planting_provider.dart later, but for now I assume standard naming or I'll fix imports.
-  // Let's assume we can get a list of plantings. If not provided directly as state, might be accessible via provider.
-  // Refactoring: I will access plantings via the appropriate provider. 
-  // Let's verify commonly used provider for plantings list. 
-  // Usually `plantingNotifierProvider` exposes state with `plantings`.
   
   final plantings = plantingsState.plantings; // List<Planting>
 
@@ -178,12 +177,10 @@ final economyDetailsProvider =
 
   // 1. Filtering
   final filteredRecords = harvestState.records.where((record) {
-    if (params.gardenId != null && record.gardenId != params.gardenId) {
+    if (params.gardenIds.isNotEmpty && !params.gardenIds.contains(record.gardenId)) {
       return false;
     }
     // Timezone normalization for inclusive comparison
-    // record.date itself is used. The prompt says: !record.date.isBefore(startDate) && !record.date.isAfter(endDate)
-    // We trust record.date is UTC or correctly comparable.
     return !record.date.isBefore(params.startDate) &&
            !record.date.isAfter(params.endDate);
   }).toList();

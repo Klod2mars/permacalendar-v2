@@ -49,18 +49,13 @@ final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
   final durationInDays = endDate.difference(startDate).inDays + 1; // +1 car inclusif
   
   // 2. Filtrer les récoltes
-  List<dynamic> filteredRecords;
-  if (filters.selectedGardenIds.isNotEmpty) {
-     filteredRecords = harvestRecordsState.records.where((record) {
-      final inGarden = filters.selectedGardenIds.contains(record.gardenId);
-      final inPeriod = record.date.isAfter(startDate) && record.date.isBefore(endDate);
-      return inGarden && inPeriod;
-    }).toList();
-  } else {
-    filteredRecords = harvestRecordsState.records
-        .where((record) => record.date.isAfter(startDate) && record.date.isBefore(endDate))
-        .toList();
-  }
+  final filteredRecords = harvestRecordsState.records.where((record) {
+    // Si la liste est vide => tous les jardins sont inclus (ou aucun ? En général en stats empty = all pour le dashboard, 
+    // mais dans la logique définie précédemment : si empty dans filters => All)
+    final inGarden = filters.selectedGardenIds.isEmpty || filters.selectedGardenIds.contains(record.gardenId);
+    final inPeriod = !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
+    return inGarden && inPeriod;
+  }).toList();
 
   if (filteredRecords.isEmpty) return NutritionRadarData.empty();
 
