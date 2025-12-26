@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 class RecommendationCard extends StatelessWidget {
   final String recommendationText;
-  final VoidCallback? onExport;
 
   const RecommendationCard({
     super.key,
     required this.recommendationText,
-    this.onExport,
   });
 
   @override
@@ -45,19 +43,6 @@ class RecommendationCard extends StatelessWidget {
             style: const TextStyle(color: Colors.white, height: 1.4),
           ),
           const SizedBox(height: 16),
-          if (onExport != null)
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: onExport,
-                icon: const Icon(Icons.download, size: 18),
-                label: const Text('Exporter les données (CSV)'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: BorderSide(color: Colors.white.withOpacity(0.3)),
-                ),
-              ),
-            ),
         ],
       ),
     );

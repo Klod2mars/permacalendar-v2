@@ -12,7 +12,7 @@ import '../widgets/economy_stats/monthly_revenue_chart.dart';
 import '../widgets/economy_stats/top_plant_per_month_grid.dart';
 import '../widgets/economy_stats/annual_revenue_line.dart';
 import '../widgets/economy_stats/plant_share_pie.dart';
-import '../widgets/economy_stats/diversity_indicator.dart';
+// import '../widgets/economy_stats/diversity_indicator.dart'; // Removing module as requested
 import '../widgets/economy_stats/recommendation_card.dart';
 import '../widgets/economy_stats/fast_vs_long_table.dart';
 import '../widgets/economy_stats/key_months_widget.dart';
@@ -131,17 +131,17 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Module 7: Diversité économique
-                      DiversityIndicator(
-                        diversityIndex: details.diversityIndex,
-                        label: details.diversityLabel,
-                      ),
-                      const SizedBox(height: 24),
+                      // Module 7: Diversité économique - REMOVED per user request
+                      // DiversityIndicator(
+                      //   diversityIndex: details.diversityIndex,
+                      //   label: details.diversityLabel,
+                      // ),
+                      // const SizedBox(height: 24),
 
                       // Module 8: Synthèse automatique
                       RecommendationCard(
                         recommendationText: details.recommendationText,
-                        onExport: () => _exportCsv(context, details, queryParams),
+                        // onExport removed
                       ),
                       const SizedBox(height: 24),
 
@@ -163,10 +163,4 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
     );
   }
 
-  void _exportCsv(BuildContext context, EconomyDetails details, EconomyQueryParams params) {
-    // Basic stub for export.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Export CSV généré pour ${details.harvestCount} récoltes.')),
-    );
-  }
 }

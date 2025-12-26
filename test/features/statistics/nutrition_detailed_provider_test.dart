@@ -5,11 +5,8 @@ import 'package:permacalendar/features/statistics/application/providers/nutritio
 import 'package:permacalendar/features/harvest/application/harvest_records_provider.dart';
 import 'package:permacalendar/features/harvest/domain/models/harvest_record.dart';
 import 'package:permacalendar/features/statistics/presentation/providers/statistics_filters_provider.dart';
-import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
-import 'package:mockito/mockito.dart';
 
-// Mocks simples via Override si possible, sinon Mockito
 class FakeHarvestNotifier extends HarvestRecordsNotifier {
   final HarvestRecordsState _initialState;
   FakeHarvestNotifier(this._initialState);
@@ -18,55 +15,73 @@ class FakeHarvestNotifier extends HarvestRecordsNotifier {
 }
 
 void main() {
-  test('NutritionDetailedProvider computes correct totals', () async {
+  test('SeasonalNutritionProvider aggregates by month correctly', () async {
+    final now = DateTime.now();
+    final currentMonth = now.month;
+    
     final container = ProviderContainer(
       overrides: [
-// Fix override: For NotifierProvider, use overrideWith(() => Notifier())
         harvestRecordsProvider.overrideWith(() {
-           // MockHarvestNotifier removed
            return FakeHarvestNotifier(HarvestRecordsState(
              records: [
+               // Record 1: Current Month
                HarvestRecord(
                  id: '1', gardenId: 'g1', plantId: 'p1', plantName: 'Tomato',
                  quantityKg: 10.0,
                  pricePerKg: 1.0, 
-                 date: DateTime.now(),
+                 date: now,
                  nutritionSnapshot: {
                    'vitamin_c_mg': 500.0,
-                   'protein_g': 100.0,
+                   'calcium_mg': 100.0,
                  }
                ),
+               // Record 2: Current Month (Aggregate)
                HarvestRecord(
-                 id: '2', gardenId: 'g1', plantId: 'p2', plantName: 'Carrot',
+                 id: '2', gardenId: 'g1', plantId: 'p2', plantName: 'Lettuce',
+                 quantityKg: 2.0, 
+                 pricePerKg: 1.0, 
+                 date: now,
+                 nutritionSnapshot: {
+                   'vitamin_c_mg': 50.0,
+                   'calcium_mg': 50.0,
+                 }
+               ),
+               // Record 3: Previous Month (Different Bucket)
+               HarvestRecord(
+                 id: '3', gardenId: 'g1', plantId: 'p3', plantName: 'Carrot',
                  quantityKg: 5.0, 
                  pricePerKg: 1.0, 
-                 date: DateTime.now(),
+                 date: now.subtract(const Duration(days: 40)), // ~Last month
                  nutritionSnapshot: {
                    'vitamin_c_mg': 100.0,
-                   'vitamin_a_mcg': 2000.0,
                  }
                )
              ]
            ));
         }),
-        // Filters: Default is usually "All time" or "This month", ensure range covers now
         statisticsFiltersProvider.overrideWith(() => StatisticsFiltersNotifier()),
-        plantsListProvider.overrideWithValue([]) // Pas besoin si snapshot présent
+        plantsListProvider.overrideWithValue([]) 
       ]
     );
 
-    final result = await container.read(nutritionDetailedProvider.future);
+    final result = await container.read(seasonalNutritionProvider.future);
     
-    // Vit C: 500 + 100 = 600
-    final vitC = result.vitamins.firstWhere((e) => e.label == 'Vitamine C');
-    expect(vitC.totalValue, 600.0);
-    
-    // Protein: 100
-    final protein = result.macros.firstWhere((e) => e.label == 'Protéines');
-    expect(protein.totalValue, 100.0);
-    
-    // Vit A: 2000
-    final vitA = result.vitamins.firstWhere((e) => e.label == 'Vitamine A');
-    expect(vitA.totalValue, 2000.0);
+    // Check Current Month Aggregation
+    final currentStats = result.monthlyStats[currentMonth]!;
+    expect(currentStats.contributionCount, 2);
+    expect(currentStats.getTotal('vitamin_c_mg'), 550.0); // 500 + 50
+    expect(currentStats.getTotal('calcium_mg'), 150.0); // 100 + 50
+
+    // Check Previous Month
+    final prevDate = now.subtract(const Duration(days: 40));
+    final prevMonth = prevDate.month;
+    final prevStats = result.monthlyStats[prevMonth]!;
+    expect(prevStats.contributionCount, 1);
+    expect(prevStats.getTotal('vitamin_c_mg'), 100.0);
+
+    // Check Annual Total
+    // Totals: Vit C = 550 + 100 = 650. Calcium = 150.
+    expect(result.annualTotals['vitamin_c_mg'], 650.0);
+    expect(result.annualTotals['calcium_mg'], 150.0);
   });
 }
