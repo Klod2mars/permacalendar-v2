@@ -79,8 +79,13 @@ final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
 
   for (final record in filteredRecords) {
     // Retrouver la plante pour avoir ses datas nutri
-    final plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+    var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
     
+    // Fallback: lookup by name if ID fails
+    if (plant == null && record.plantName != null) {
+      plant = plantsList.where((p) => p.commonName.toLowerCase() == record.plantName!.toLowerCase()).firstOrNull;
+    }
+
     if (plant == null || plant.nutritionPer100g == null) continue;
     
     final n = plant.nutritionPer100g!;

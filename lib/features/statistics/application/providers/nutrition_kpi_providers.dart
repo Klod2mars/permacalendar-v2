@@ -43,16 +43,26 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
   // User spec: "3 plantes récoltées ayant la plus forte densité nutritive". 
   // -> Focus on Intrinsic Density of harvested plants.
 
-  // 1. Identification unique des plantes récoltées
-  final harvestedPlantIds = filteredRecords.map((e) => e.plantId).toSet();
+  // 1. Identification unique des plantes récoltées (IDs or Names)
+  // We iterate over records instead of just IDs to handle the fallback matching logic properly
+  // But to be efficient, we can get unique plants from the records list
   
-  List<HealerPlant> healers = [];
+  final Map<String, HealerPlant> uniqueHealers = {};
 
-  for (final pid in harvestedPlantIds) {
-    final plant = plantsList.where((p) => p.id == pid).firstOrNull;
-    if (plant == null || plant.nutritionPer100g == null) continue;
+  for (final record in filteredRecords) {
+      if (uniqueHealers.containsKey(record.plantId)) continue;
+      
+      var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+      if (plant == null && record.plantName != null) {
+         plant = plantsList.where((p) => p.commonName.toLowerCase() == record.plantName!.toLowerCase()).firstOrNull;
+      }
+      
+      if (plant == null || plant.nutritionPer100g == null) continue;
 
-    final n = plant.nutritionPer100g!;
+      // Ensure we don't process the same plant catalog entry twice (if matched by name vs id)
+      if (uniqueHealers.containsKey(plant.id)) continue;
+      
+      final n = plant.nutritionPer100g!;
 
     // Calcul score densité simple : Somme des % AJR pour 100g
     // On prend quelques marqueurs clés
@@ -72,13 +82,15 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
     if (iron > maxVal) { maxVal = iron; benefit = 'Énergie (Fer)'; }
     if (fiber > maxVal) { maxVal = fiber; benefit = 'Digestion (Fibres)'; }
 
-    healers.add(HealerPlant(
+    uniqueHealers[plant.id] = HealerPlant(
       plantName: plant.commonName,
       plantId: plant.id,
       mainBenefit: benefit,
       densityScore: density,
-    ));
+    );
   }
+
+  List<HealerPlant> healers = uniqueHealers.values.toList();
 
   // Sort by Density Descending
   healers.sort((a, b) => b.densityScore.compareTo(a.densityScore));
@@ -132,11 +144,15 @@ final deficiencyProvider = FutureProvider<List<NutrientDeficiency>>((ref) async 
   double totalMg = 0;
 
   for (final record in filteredRecords) {
-    final plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+    var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+    if (plant == null && record.plantName != null) {
+      plant = plantsList.where((p) => p.commonName.toLowerCase() == record.plantName!.toLowerCase()).firstOrNull;
+    }
+    
     if (plant == null || plant.nutritionPer100g == null) continue;
     final n = plant.nutritionPer100g!;
     final portions = record.quantityKg * 10;
-
+    
     totalVitC += ((n['vitaminCmg'] as num?)?.toDouble() ?? 0) * portions;
     totalIron += ((n['ironMg'] as num?)?.toDouble() ?? 0) * portions;
     totalMg += ((n['magnesiumMg'] as num?)?.toDouble() ?? 0) * portions;
