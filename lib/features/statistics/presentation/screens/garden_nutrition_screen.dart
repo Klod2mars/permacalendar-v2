@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../providers/statistics_filters_provider.dart';
-import '../../application/providers/nutrition_radar_provider.dart';
-import '../../application/providers/nutrition_kpi_providers.dart';
+import '../providers/statistics_filters_provider.dart';
+import '../../application/providers/nutrition_detailed_provider.dart';
+import '../widgets/nutrition_bar_list.dart';
 
+import '../../application/providers/nutrition_kpi_providers.dart';
 import '../widgets/garden_multi_selector.dart';
-import '../widgets/nutrition_stats/vitality_radar_chart.dart';
 import '../widgets/nutrition_stats/top_healers_widget.dart';
 import '../widgets/nutrition_stats/deficiency_gauge.dart';
 
@@ -32,7 +33,6 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final radarAsync = ref.watch(nutritionRadarProvider);
     final healersAsync = ref.watch(topHealersProvider);
     final deficiencyAsync = ref.watch(deficiencyProvider);
     final harvestState = ref.watch(harvestRecordsProvider);
@@ -66,32 +66,87 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 1. HEADER: RADAR CHART
-                    const Text(
-                      'Bilan de Production Réelle',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
+              // 1. REPLACED: RADAR CHART -> DETAILED STATS
+              const Text(
+                'Bilan de Production Réelle',
+                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 8),
               const Text(
-                'Couverture de vos besoins journaliers (AJR) basée sur les récoltes de la période.',
+                'Détail des nutriments récoltés et couverture des besoins (AJR).',
                 style: TextStyle(color: Colors.white54, fontSize: 12),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               
-              Container(
-                height: 320,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.black26,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Colors.white.withOpacity(0.05)),
-                ),
-                child: radarAsync.when(
-                  data: (data) => VitalityRadarChart(data: data),
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (e, s) => Center(child: Text('Erreur: $e', style: const TextStyle(color: Colors.red))),
-                ),
-              ),
+              // NEW: DETAILED BAR LIST
+              Consumer(builder: (context, ref, child) {
+                  final detailedAsync = ref.watch(nutritionDetailedProvider);
+                  
+                  return detailedAsync.when(
+                    data: (stats) {
+                       if (stats.macros.isEmpty && stats.vitamins.isEmpty && stats.minerals.isEmpty) {
+                         return const SizedBox(
+                           height: 100, 
+                           child: Center(child: Text('Aucune donnée', style: TextStyle(color: Colors.white24)))
+                         );
+                       }
+                       
+                       return Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           // Macros
+                           Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF2A2A2A),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: Colors.white.withOpacity(0.05)),
+                              ),
+                              child: NutritionBarList(
+                                title: 'Macronutriments & Énergie',
+                                data: stats.macros,
+                                baseColor: const Color(0xFF00E676), // Green
+                              ),
+                           ),
+                           const SizedBox(height: 16),
+                           
+                           // Vitamines
+                           Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF2A2A2A),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: Colors.white.withOpacity(0.05)),
+                              ),
+                              child: NutritionBarList(
+                                title: 'Vitamines',
+                                data: stats.vitamins,
+                                baseColor: const Color(0xFFFFAB40), // Orange
+                              ),
+                           ),
+                           const SizedBox(height: 16),
+
+                           // Minéraux
+                           Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF2A2A2A),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: Colors.white.withOpacity(0.05)),
+                              ),
+                              child: NutritionBarList(
+                                title: 'Minéraux',
+                                data: stats.minerals,
+                                baseColor: const Color(0xFF40C4FF), // Blue
+                              ),
+                           ),
+                         ],
+                       );
+                    },
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    error: (e, s) => Text('Erreur: $e', style: const TextStyle(color: Colors.red)),
+                  );
+              }),
 
               const SizedBox(height: 32),
 

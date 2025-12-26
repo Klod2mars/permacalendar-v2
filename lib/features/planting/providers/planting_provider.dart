@@ -11,6 +11,8 @@ import '../../harvest/data/repositories/harvest_repository.dart';
 import '../../harvest/domain/models/harvest_record.dart'; // Import HarvestRecord
 import '../../harvest/application/harvest_records_provider.dart'; // Import HarvestRecordsProvider
 import 'package:uuid/uuid.dart'; // Import Uuid
+import '../../plant_catalog/providers/plant_catalog_provider.dart';
+import '../../../core/services/nutrition_normalizer.dart';
 
 // Planting State
 class PlantingState {
@@ -412,6 +414,27 @@ class PlantingNotifier extends Notifier<PlantingState> {
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
       final gardenId = bed?.gardenId ?? 'unknown';
 
+      // 3.5) Compute Nutrition Snapshot
+      Map<String, double>? nutritionSnapshot;
+      try {
+        final catalog = ref.read(plantCatalogProvider);
+        // Find plant safely. We iterate manually or use firstWhere with nullable return if possible, 
+        // but List.firstWhere throws if not found without orElse.
+        // We assume 'plants' is a List<Plant>.
+        final plant = catalog.plants.where((p) => p.id == planting.plantId).firstOrNull;
+        
+        if (plant != null) {
+           // We assume plant.nutritionPer100g exists and is Map<String, dynamic>
+           // If 'plant' logic is different, we might need adjustments.
+           nutritionSnapshot = NutritionNormalizer.computeSnapshot(plant.nutritionPer100g, weightKg);
+           debugPrint('[recordHarvest] Nutrition snapshot computed: ${nutritionSnapshot.keys.length} keys');
+        } else {
+           debugPrint('[recordHarvest] Warning: Plant ${planting.plantId} not found in catalog for nutrition snapshot');
+        }
+      } catch (e) {
+        debugPrint('[recordHarvest] Nutrition snapshot error: $e');
+      }
+
       final record = HarvestRecord(
         id: const Uuid().v4(),
         gardenId: gardenId,
@@ -421,6 +444,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         pricePerKg: pricePerKg,
         date: date,
         notes: notes,
+        nutritionSnapshot: nutritionSnapshot,
       );
 
       // 4) Persister HarvestRecord

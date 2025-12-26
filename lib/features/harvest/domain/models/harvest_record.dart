@@ -9,6 +9,7 @@ class HarvestRecord {
   final double pricePerKg;
   final DateTime date;
   final String? notes;
+  final Map<String, double>? nutritionSnapshot;
 
   const HarvestRecord({
     required this.id,
@@ -19,6 +20,7 @@ class HarvestRecord {
     required this.pricePerKg,
     required this.date,
     this.notes,
+    this.nutritionSnapshot,
   });
 
   double get totalValue => quantityKg * pricePerKg;
@@ -33,6 +35,7 @@ class HarvestRecord {
       'pricePerKg': pricePerKg,
       'date': date.toIso8601String(),
       'notes': notes,
+      'nutritionSnapshot': nutritionSnapshot,
     };
   }
 
@@ -46,6 +49,9 @@ class HarvestRecord {
       pricePerKg: (json['pricePerKg'] as num).toDouble(),
       date: DateTime.parse(json['date'] as String),
       notes: json['notes'] as String?,
+      nutritionSnapshot: (json['nutritionSnapshot'] as Map<String, dynamic>?)?.map(
+        (k, v) => MapEntry(k, (v as num).toDouble()),
+      ),
     );
   }
 }

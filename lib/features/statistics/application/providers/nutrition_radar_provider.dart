@@ -78,6 +78,27 @@ final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
   double totalKMg = 0.0;
 
   for (final record in filteredRecords) {
+    // A. Use Snapshot if available (Approach A)
+    if (record.nutritionSnapshot != null && record.nutritionSnapshot!.isNotEmpty) {
+      final s = record.nutritionSnapshot!;
+      totalKcals += s['calories_kcal'] ?? 0.0;
+      totalProteinG += s['protein_g'] ?? 0.0;
+      totalFiberG += s['fiber_g'] ?? 0.0;
+      
+      totalVitAmcg += s['vitamin_a_mcg'] ?? 0.0;
+      totalVitCmg += s['vitamin_c_mg'] ?? 0.0;
+      totalVitEmg += s['vitamin_e_mg'] ?? 0.0;
+      totalVitKmcg += s['vitamin_k_mcg'] ?? 0.0;
+      totalVitB9ug += s['vitamin_b9_mcg'] ?? 0.0;
+      
+      totalCaMg += s['calcium_mg'] ?? 0.0;
+      totalMgMg += s['magnesium_mg'] ?? 0.0;
+      totalFeMg += s['iron_mg'] ?? 0.0;
+      totalKMg += s['potassium_mg'] ?? 0.0;
+      continue;
+    }
+
+    // B. Fallback: Lookup plant manually
     // Retrouver la plante pour avoir ses datas nutri
     var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
     
