@@ -19,6 +19,7 @@ import '../../core/providers/active_garden_provider.dart';
 import '../../features/climate/presentation/providers/weather_providers.dart';
 import '../../core/utils/weather_icon_mapper.dart';
 import '../presentation/widgets/weather_bubble_widget.dart';
+import '../presentation/widgets/temperature_bubble_widget.dart';
 import '../../features/home/widgets/invisible_stats_zone.dart';
 import '../widgets/garden_bubble_widget.dart';
 import '../widgets/garden_creation_dialog.dart';
@@ -180,6 +181,14 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         heightFrac: 0.20,
         route: AppRoutes.weather,
         label: 'Weather Stats'),
+    _Hotspot(
+        id: 'temperature',
+        centerX: 0.25, // Position approximative "Haut Gauche" (à calibrer par user)
+        centerY: 0.18,
+        widthFrac: 0.15,
+        heightFrac: 0.15,
+        route: null, // Pas de navigation, affichage pur
+        label: 'Temperature'),
     _Hotspot(
         id: 'statistique',
         centerX: 0.51,
@@ -751,7 +760,7 @@ class _HotspotButton extends StatelessWidget {
     this.semanticLabel,
     this.child,
   });
-  final VoidCallback onTap;
+  final VoidCallback? onTap; // Nullable pour display-only
   final VoidCallback? onLongPress;
   final bool showDebugOutline;
   final String? semanticLabel;
@@ -1153,11 +1162,13 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     if (contentWidget == null) {
       contentWidget = (!isGardenHotspot && widget.id == 'weather')
         ? const WeatherBubbleWidget()
-        : (!isGardenHotspot && widget.id == 'weather_stats')
-            ? null // Transparent tap zone
-            : (!isGardenHotspot && widget.id == 'statistique')
-                ? Hero(
-                    tag: 'stats-bubble-hero-global',
+        : (!isGardenHotspot && widget.id == 'temperature')
+            ? const TemperatureBubbleWidget() // NEW: Slot dédié température
+            : (!isGardenHotspot && widget.id == 'weather_stats')
+                ? null // Revert: Transparent tap zone
+                : (!isGardenHotspot && widget.id == 'statistique')
+                    ? Hero(
+                        tag: 'stats-bubble-hero-global',
                     child: InvisibleStatsZone(
                       isCalibrationMode: widget.isCalibrating,
                       glowColor: Colors.greenAccent,
@@ -1212,22 +1223,24 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final hotspotButton = _HotspotButton(
       onTap: isGardenHotspot
           ? _handleGardenTap
-          : () {
-              if (kDebugMode) {
-                debugPrint(
-                    'OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
-              }
-              if (widget.onTapRoute != null) {
-                // Special handling for statistics default route if needed,
-                // but now it is generic so we can just push.
-                // If specific handling is needed for others, keep the switch.
-                if (widget.id == 'statistique') {
-                  context.pushNamed('statistics-global');
-                } else {
-                  context.push(widget.onTapRoute!);
-                }
-              }
-            },
+          : (widget.id == 'temperature' || widget.id == 'weather') 
+              ? null // Désactive le tap pour température (display) ET weather (interactive drag)
+              : () {
+                  if (kDebugMode) {
+                    debugPrint(
+                        'OrganicDashboard: tapped calibrated hotspot (${widget.id}) -> ${widget.onTapRoute}');
+                  }
+                  if (widget.onTapRoute != null) {
+                    // Special handling for statistics default route if needed,
+                    // but now it is generic so we can just push.
+                    // If specific handling is needed for others, keep the switch.
+                    if (widget.id == 'statistique') {
+                      context.pushNamed('statistics-global');
+                    } else {
+                      context.push(widget.onTapRoute!);
+                    }
+                  }
+                },
       onLongPress: isGardenHotspot && !widget.isCalibrating
           ? _handleGardenLongPress
           : null,

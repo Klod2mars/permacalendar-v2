@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../features/climate/domain/models/weather_view_data.dart';
-import '../../../../features/climate/presentation/providers/weather_providers.dart';
+import '../../../core/models/hourly_weather_point.dart';
+import '../../../features/climate/domain/models/weather_view_data.dart';
+import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 /// Un conteneur météo "Bio-Organique" avec simulation physique.
 /// Remplace l'ancien widget statique.
@@ -21,7 +22,7 @@ class WeatherBioContainer extends ConsumerStatefulWidget {
 }
 
 class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late Ticker _ticker;
   
   // -- Simulation State --
@@ -29,7 +30,6 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
   final Random _rng = Random();
   double _time = 0.0;
   
-
   // -- Physics Constants --
   static const double _floorY = 0.35; // Position du sol invisible
   
@@ -40,12 +40,29 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
   bool _isCloudy = false;
   bool _isSunny = false; // Add sunny/clear state
   
+  // -- Interaction State (Time Travel) --
+  late AnimationController _recoilController;
+  double _dragOffsetPixels = 0.0;
+  
+  // Sensibilité : ~12px pour 1 heure
+  // User request: "12h sur 3-4cm". 4cm ~ 150px. 150/12 ~ 12.5.
+  // On fixe à 12.0 pour garantir l'atteinte des 12h facilement.
+  static const double _pixelsPerHour = 12.0;
+  
   @override
   void initState() {
     super.initState();
     if (widget.showEffects) {
       _ticker = createTicker(_onTick)..start();
     }
+    _recoilController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 600));
+    _recoilController.addListener(() {
+      setState(() {
+         // L'animation va de 0 à 1, mais nous on veut animer _dragOffsetPixels
+         // On gère ça dans le listener de l'animation Tween créé au dragEnd
+      });
+    });
   }
 
   @override
@@ -53,8 +70,45 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     if (widget.showEffects) {
       _ticker.dispose();
     }
+    _recoilController.dispose();
     super.dispose();
   }
+
+  // --- Input Handling ---
+
+  void _onHorizontalDragUpdate(DragUpdateDetails details) {
+    if (_recoilController.isAnimating) {
+      _recoilController.stop();
+    }
+    setState(() {
+      _dragOffsetPixels += details.primaryDelta ?? 0.0;
+      // On ne permet pas d'aller dans le passé (offset < 0)
+      if (_dragOffsetPixels < 0) _dragOffsetPixels = 0;
+      // Max 12h de prévision (1200px) pour rester raisonnable
+      if (_dragOffsetPixels > 12 * _pixelsPerHour) _dragOffsetPixels = 12 * _pixelsPerHour;
+    });
+  }
+
+  void _onHorizontalDragEnd(DragEndDetails details) {
+    // Animation de retour à la réalité (Spring effect)
+    final start = _dragOffsetPixels;
+    
+    _recoilController.reset();
+    
+    final animation = Tween<double>(begin: start, end: 0.0).animate(
+      CurvedAnimation(parent: _recoilController, curve: Curves.elasticOut)
+    );
+    
+    animation.addListener(() {
+      setState(() {
+        _dragOffsetPixels = animation.value;
+      });
+    });
+    
+    _recoilController.forward();
+  }
+
+  // --- Simulation Logic ---
 
   void _onTick(Duration elapsed) {
     if (!mounted) return;
@@ -64,46 +118,89 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     _time += dt;
 
     // Mise à jour des données météo depuis le provider
-    // Note: Dans un cas réel optimisé, on ferait ça dans un `listen` ou `didUpdateWidget`
-    // mais ici on le fait à la volée pour simplicité.
     final weatherAsync = ref.read(currentWeatherProvider);
     weatherAsync.whenData((data) {
-      _updateWeatherParams(data);
+       // Calcul du décalage temporel en heures
+       final offsetHours = _dragOffsetPixels / _pixelsPerHour;
+       
+       // Récupérer la météo projetée (Maintenant + Offset)
+       final projected = _getProjectedWeather(data, offsetHours);
+       
+       if (projected != null) {
+          _updateWeatherParamsFromPoint(projected);
+       } else {
+          // Fallback sur data current si pas de projection
+          _updateWeatherParamsResults(data.result);
+       }
     });
 
     _updatePhysics(dt);
   }
-
-  void _updateWeatherParams(WeatherViewData data) {
-    _windSpeed = data.result.currentWindSpeed ?? 0.0;
-    
-    // Estimation précipitation courante depuis hourly
-    if (data.result.hourlyWeather.isNotEmpty) {
+  
+  HourlyWeatherPoint? _getProjectedWeather(WeatherViewData data, double offsetHours) {
+      if (data.result.hourlyWeather.isEmpty) return null;
+      
+      // Si offset procha de 0, on prend le current
+      if (offsetHours < 0.1) return null; // Use regular current logic fallback usually best
+      
       final now = DateTime.now();
-      // Simple lookup du point le plus proche
-      // (Optimisation possible : ne pas faire ce `firstWhere` à chaque frame)
-       try {
-        final currentPoint = data.result.hourlyWeather.firstWhere(
-            (p) => p.time.isAfter(now.subtract(const Duration(minutes: 30))),
-            orElse: () => data.result.hourlyWeather.last,
-        );
-         _precipIntensity = currentPoint.precipitationMm;
-      } catch (_) {
-        _precipIntensity = 0.0; 
+      final targetTime = now.add(Duration(minutes: (offsetHours * 60).round()));
+      
+      HourlyWeatherPoint? closest;
+      Duration minDiff = const Duration(days: 999);
+  
+      for (final p in data.result.hourlyWeather) {
+        final diff = p.time.difference(targetTime).abs();
+        if (diff < minDiff) {
+          minDiff = diff;
+          closest = p;
+        }
       }
-    } else {
-        _precipIntensity = 0.0;
-    }
+      return closest;
+  }
 
-    // Détection Type (Neige vs Pluie) basé sur weatherCode ou température
-    final code = data.weatherCode ?? 0;
-    // Codes WMO Neige: 71, 73, 75, 77, 85, 86
-    _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
-    // Codes WMO Nuageux: 1, 2, 3 (Partly cloudy), 45, 48 (Fog), 51-67 (Drizzle/Rain implies clouds)
-    _isCloudy = (code >= 1 && code <= 3) || (code >= 45); 
-    
-    // Codes WMO Soleil: 0 (Clear sky)
-    _isSunny = (code == 0) && !_isCloudy && !_isSnow && (_precipIntensity < 0.05);
+  void _updateWeatherParamsResults(dynamic result) { // Helper pour direct result objects
+      // Use existing logic for current weather
+      if (result == null) return;
+      
+      _windSpeed = result.currentWindSpeed ?? 0.0;
+      
+      // Check hourly for precip intensity if available (logic from original code)
+      // We assume result is OpenMeteoResult
+      final hourly = result.hourlyWeather as List<HourlyWeatherPoint>? ?? [];
+      
+      if (hourly.isNotEmpty) {
+          final now = DateTime.now();
+          try {
+             final currentPoint = hourly.firstWhere(
+                (p) => p.time.isAfter(now.subtract(const Duration(minutes: 30))),
+                orElse: () => hourly.last,
+             );
+             _precipIntensity = currentPoint.precipitationMm;
+          } catch (_) {
+             _precipIntensity = 0.0;
+          }
+      } else {
+          _precipIntensity = 0.0;
+      }
+
+      final code = result.currentWeatherCode ?? 0;
+      _deriveBooleans(code);
+  }
+
+  void _updateWeatherParamsFromPoint(HourlyWeatherPoint p) {
+      _windSpeed = p.windSpeedkmh;
+      _precipIntensity = p.precipitationMm;
+      _deriveBooleans(p.weatherCode);
+  }
+  
+  void _deriveBooleans(int code) {
+      // Codes WMO Neige: 71, 73, 75, 77, 85, 86
+      _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
+      // Codes WMO Nuageux: 1, 2, 3 (Partly cloudy), 45, 48 (Fog), 51-67 (Drizzle/Rain implies clouds)
+      _isCloudy = (code >= 1 && code <= 3) || (code >= 45); 
+      // Codes WMO Soleil: 0 (Clear sky)
+      _isSunny = (code == 0) && !_isCloudy && !_isSnow && (_precipIntensity < 0.05);
   }
 
   void _updatePhysics(double dt) {
@@ -112,26 +209,19 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     final gentleDt = dt * timeScale;
 
     // 1. Spawning (Création de particules)
-    // Seuil minimal pour afficher quelque chose (ex: 0.1mm)
     if (_precipIntensity > 0.05 && !_isSunny) {
-     // ... (precip spawn logic remains similar but uses gentleDt for probability if strictly tied to time, 
-     // but 'rate' is per second, so we check probability: rate * dt)
-     // On garde dt réel pour le taux d'apparition pour ne pas en avoir moins, 
-     // mais on ajuste la proba si on veut compenser le slow motion visuel.
-     // Ici on garde la logique existante.
-      final spawnRate = _isSnow 
-          ? (_precipIntensity * 2.0).clamp(0.0, 5.0) 
-          : (_precipIntensity * 10.0).clamp(0.0, 40.0);
-      
-      if (_rng.nextDouble() < spawnRate * dt * 5.0) { 
-         _spawnParticle();
-      }
+       final spawnRate = _isSnow 
+           ? (_precipIntensity * 2.0).clamp(0.0, 5.0) 
+           : (_precipIntensity * 10.0).clamp(0.0, 40.0);
+       
+       if (_rng.nextDouble() < spawnRate * dt * 5.0) { 
+          _spawnParticle();
+       }
     }
 
     // Spawn Nuages (Zen Mode: FADE IN)
     if (_isCloudy) {
        final currentClouds = _particles.where((p) => p.type == _ParticleType.cloud).length;
-       // Moins de nuages, plus significatifs
        if (currentClouds < 4 && _rng.nextDouble() < 0.005) { 
            _spawnCloud();
        }
@@ -146,44 +236,33 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     }
 
     // 2. Physics Update
-    // Gravité (pixels/s^2) - Ajustée pour le temps ralenti
+    // Gravité et Vent
     final gravity = _isSnow ? 30.0 : 350.0; 
-    // Vent drastiquement réduit pour l'effet Zen
     final windForce = _windSpeed * 2.0; 
     
     for (int i = _particles.length - 1; i >= 0; i--) {
       final p = _particles[i];
-      p.life -= dt; // La vie s'écoule en temps réel pour gérer les durées correctement, ou gentleDt si on veut rallonger
+      p.life -= dt; 
       
       if (p.type == _ParticleType.cloud) {
           // --- ÉTAT A : NUAGEUX (Zen / Flottaison) ---
-          
-          // Friction énorme (air visqueux)
           p.vx *= 0.95; 
           p.vy *= 0.95;
-
-          // Mouvement Brownien lent + Dérive vent très faible
           p.vx += (windForce * 0.005 * gentleDt) + (_rng.nextDouble() - 0.5) * 1.5 * gentleDt;
-          p.vy += (_rng.nextDouble() - 0.5) * 1.0 * gentleDt; // Flottement vertical pur (pas de gravité)
+          p.vy += (_rng.nextDouble() - 0.5) * 1.0 * gentleDt; 
           
-          // Doux clamp dans le dôme pour qu'ils ne sortent pas violemment
-          // Ils "existent" là.
           if (p.x < 0.05) p.vx += 2.0 * gentleDt;
           if (p.x > 0.95) p.vx -= 2.0 * gentleDt;
           if (p.y < 0.0) p.vy += 2.0 * gentleDt;
           if (p.y > 0.25) p.vy -= 2.0 * gentleDt;
           
-          // Mise à jour pos
           p.x += p.vx * gentleDt;
           p.y += p.vy * gentleDt;
 
       } else if (p.type == _ParticleType.glow) {
           // --- ÉTAT C : SOLEIL (Rayonnement) ---
-          // Pas de gravité, mouvement radial lent depuis le spawn (+ dérive légère)
           p.x += p.vx * gentleDt;
           p.y += p.vy * gentleDt;
-          
-          // Slow down
           p.vx *= 0.98;
           p.vy *= 0.98;
           
@@ -192,11 +271,8 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
         p.vy += gravity * gentleDt;
         p.vx += (windForce * 0.1 * gentleDt) + (_rng.nextDouble() - 0.5) * 5.0 * gentleDt;
         
-        // Update Position
         p.x += p.vx * gentleDt;
         p.y += p.vy * gentleDt;
-
-        // Friction air
         p.vx *= 0.99;
         
         // -- WALL COLLISION (Zone A) --
@@ -212,18 +288,10 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
 
         // -- COLLISION : SOL INVISIBLE --
         if (p.y > _floorY) {
-            // Impact !
             p.y = _floorY;
-            
-            // Rebond
             p.vy = -p.vy * (_isSnow ? 0.0 : 0.15); 
             p.vx += (_rng.nextDouble() - 0.5) * 40.0 * gentleDt;
-            
-            // Disparition : Elles meurent sur la ligne.
-            // On accélère grandement la fin de vie pour qu'elles ne s'accumulent pas trop longtemps
             p.life -= gentleDt * 4.0; 
-            
-            // Spill léger autorisé au sol, mais la vie baisse vite
             p.x += p.vx * gentleDt; 
         }
       }
@@ -233,29 +301,25 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
       }
     }
 
-    // Trigger repaint
     setState(() {});
   }
 
   void _spawnCloud() {
-      // Naissance aléatoire DANS le dôme (pas au bord)
-      // Fade in géré par le painter via l'opacité (1.0 au milieu de vie, 0 au début/fin)
       _particles.add(_BioParticle(
-      x: 0.3 + _rng.nextDouble() * 0.4, // Centre 0.3-0.7
+      x: 0.3 + _rng.nextDouble() * 0.4, 
       y: 0.1 + _rng.nextDouble() * 0.15,
-      vx: (_rng.nextDouble() - 0.5) * 0.05, // Vitesse minuscule
+      vx: (_rng.nextDouble() - 0.5) * 0.05, 
       vy: (_rng.nextDouble() - 0.5) * 0.05,
-      life: 8.0 + _rng.nextDouble() * 5.0, // Vie longue (8-13s)
-      maxLife: 10.0, // used for fade in/out
-      size: 30.0 + _rng.nextDouble() * 20.0, // Très gros soft bodies
+      life: 8.0 + _rng.nextDouble() * 5.0, 
+      maxLife: 10.0, 
+      size: 30.0 + _rng.nextDouble() * 20.0, 
       type: _ParticleType.cloud,
     ));
   }
   
   void _spawnSunGlow() {
-     // Émission radiale depuis le "centre" du ciel (~0.5, 0.15)
      final angle = _rng.nextDouble() * 2 * pi;
-     final speed = 0.5 + _rng.nextDouble() * 1.5; // Lent
+     final speed = 0.5 + _rng.nextDouble() * 1.5; 
      _particles.add(_BioParticle(
        x: 0.5, 
        y: 0.15,
@@ -274,8 +338,8 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
       x: 0.1 + _rng.nextDouble() * 0.8,
       y: -0.05,
       vx: 0.0,
-      vy: _isSnow ? 10.0 : 50.0, // Vitesse initiale vers le bas
-      life: 2.0 + _rng.nextDouble(), // Durée de vie max
+      vy: _isSnow ? 10.0 : 50.0, 
+      life: 2.0 + _rng.nextDouble(), 
       size: _isSnow ? (2.0 + _rng.nextDouble() * 3.0) : (1.0 + _rng.nextDouble()),
       type: _isSnow ? _ParticleType.snow : _ParticleType.rain,
       maxLife: 3.0,
@@ -284,91 +348,70 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
 
   @override
   Widget build(BuildContext context) {
-    // On utilise LayoutBuilder pour scaler la simulation à la taille réelle
     return LayoutBuilder(
       builder: (context, constraints) {
-        final w = constraints.maxWidth;
-        final h = constraints.maxHeight;
+        // final w = constraints.maxWidth;
+        // final h = constraints.maxHeight;
         
-        // Récupération des données pour l'affichage texte en bas
-        final weatherAsync = ref.watch(currentWeatherProvider);
+        final hoursOffset = _dragOffsetPixels / _pixelsPerHour;
+        final isTimeTraveling = hoursOffset > 0.1;
         
-        return Stack(
-          clipBehavior: Clip.none, // Allow "Spill" visual overflow
-          children: [
-            // 1. Simulation Layer (Zone A Mainly)
-            if (widget.showEffects)
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _BioWeatherPainter(
-                    particles: _particles,
-                    windSpeed: _windSpeed,
+        return GestureDetector(
+          onHorizontalDragUpdate: _onHorizontalDragUpdate,
+          onHorizontalDragEnd: _onHorizontalDragEnd,
+          behavior: HitTestBehavior.opaque, // Intercepter tout le conteneur
+          child: Stack(
+            clipBehavior: Clip.none, 
+            children: [
+              // 1. Simulation Layer
+              if (widget.showEffects)
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _BioWeatherPainter(
+                      particles: _particles,
+                      windSpeed: _windSpeed,
+                    ),
                   ),
                 ),
-              ),
-            
-            // 2. Clear Zone (Zone B - Text)
-            // ANCRAGE BAS DANS LA ZONE PROTEGÉE (Top 35% -> Bottom 100%)
-            Positioned(
-              top: h * 0.35, // Commence exactement sous le sol invisible
-              left: 20,
-              right: 20,
-              bottom: 10, // Marge du bas
-              child: Container(
-                // color: Colors.blue.withOpacity(0.1), // Debug Hitbox
-                alignment: Alignment.bottomCenter, // Ancrage bas demandé
-                child: weatherAsync.when(
-                  data: (data) => _buildWeatherInfo(data),
-                  loading: () => const SizedBox(),
-                  error: (_,__) => const Text('--', style: TextStyle(color: Colors.white)),
+              
+              // 2. Time Travel Indicator Layer
+              if (isTimeTraveling)
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.history_toggle_off, 
+                        color: Colors.white, 
+                        size: 28,
+                        shadows: [
+                          Shadow(color: Colors.black, blurRadius: 4, offset: Offset(0, 2))
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '+ ${hoursOffset.toStringAsFixed(1)} h',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(color: Colors.black, blurRadius: 8, offset: Offset(0, 2)),
+                            Shadow(color: Colors.black54, blurRadius: 16, offset: Offset(0, 4)), // Double shadow for legibility
+                          ]
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          ],
+
+              // Note: Plus d'affichage texte de température ici.
+              // La zone est maintenant purement visuelle et interactive.
+            ],
+          ),
         );
       },
     );
-  }
-
-  Widget _buildWeatherInfo(WeatherViewData data) {
-      final temp = data.currentTemperatureC?.toStringAsFixed(0) ?? '--';
-      
-      // Utilisation d'un FittedBox pour garantir zéro overflow
-      return FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-              // Température (Taille réduite 32 comme demandé)
-              Text(
-                  '$temp°',
-                  style: const TextStyle(
-                      fontSize: 32, 
-                      fontWeight: FontWeight.w300, 
-                      color: Colors.white,
-                      fontFamily: 'Roboto',
-                      height: 1.0, // Tight height
-                      shadows: [
-                          BoxShadow(color: Colors.black38, blurRadius: 12, offset: Offset(0, 4))
-                      ]
-                  ),
-              ),
-              const SizedBox(height: 4),
-              if (data.description != null)
-                   Text(
-                      data.description!.toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 10,
-                          letterSpacing: 1.2,
-                          color: Colors.white.withOpacity(0.8),
-                          fontWeight: FontWeight.w500
-                      ),
-                      maxLines: 1,
-                  ),
-          ],
-        ),
-      );
   }
 }
 
@@ -380,7 +423,7 @@ class _BioParticle {
   double vx; 
   double vy; 
   double life; 
-  double maxLife; // Pour le calcul d'opacité (Fade in/out)
+  double maxLife; 
   double size; 
   _ParticleType type;
 
@@ -390,7 +433,7 @@ class _BioParticle {
     required this.vx,
     required this.vy,
     required this.life,
-    this.maxLife = 1.0, // Default to 1.0 if not needed
+    this.maxLife = 1.0, 
     required this.size,
     required this.type,
   });
@@ -406,7 +449,7 @@ class _BioWeatherPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     
     final paintRain = Paint()
-      ..color = const Color(0xFF80D8FF).withOpacity(0.6) // Cyan clair
+      ..color = const Color(0xFF80D8FF).withOpacity(0.6) 
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -418,23 +461,20 @@ class _BioWeatherPainter extends CustomPainter {
     final paintCloud = Paint()
         ..color = Colors.white.withOpacity(0.3)
         ..style = PaintingStyle.fill
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10.0); // Soft body effect
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10.0); 
 
     final paintGlow = Paint()
-        ..color = const Color(0xFFFFE57F).withOpacity(0.4) // Jaune pâle
+        ..color = const Color(0xFFFFE57F).withOpacity(0.4) 
         ..style = PaintingStyle.fill
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 15.0);
 
     for (final p in particles) {
-        // Mapping espace 0..1 -> pixels
         final px = p.x * size.width;
         final py = p.y * size.height;
         
-        // Calcul opacité avec Fade-In et Fade-Out pour Clouds et Glow
         double opacity = (p.life).clamp(0.0, 1.0);
         if (p.type == _ParticleType.cloud || p.type == _ParticleType.glow) {
-             // Fade in sur le premier tiers, Fade out sur le dernier
-             double progress = 1.0 - (p.life / p.maxLife); // 0.0 (début) -> 1.0 (fin)
+             double progress = 1.0 - (p.life / p.maxLife); 
              if (progress < 0.2) {
                  opacity = progress / 0.2;
              } else if (progress > 0.8) {
@@ -447,19 +487,14 @@ class _BioWeatherPainter extends CustomPainter {
         
         if (p.type == _ParticleType.rain) {
             paintRain.color = paintRain.color.withOpacity(opacity * 0.6);
-            
-            // La goutte est allongée selon sa vitesse
             canvas.drawLine(Offset(px, py), Offset(px - (p.vx * 0.05), py - (p.vy * 0.05).clamp(2.0, 10.0)), paintRain);
         } else if (p.type == _ParticleType.snow) {
-            // Snow
             paintSnow.color = paintSnow.color.withOpacity(opacity * 0.8);
             canvas.drawCircle(Offset(px, py), p.size, paintSnow);
         } else if (p.type == _ParticleType.cloud) {
-             // Cloud Soft Body
              paintCloud.color = paintCloud.color.withOpacity(0.25 * opacity); 
              canvas.drawCircle(Offset(px, py), p.size, paintCloud);
         } else if (p.type == _ParticleType.glow) {
-             // Sun Glow
              paintGlow.color = paintGlow.color.withOpacity(0.3 * opacity);
              canvas.drawCircle(Offset(px, py), p.size, paintGlow);
         }
