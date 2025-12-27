@@ -1,4 +1,3 @@
-
 import 'package:excel/excel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -50,7 +49,7 @@ class ExcelGeneratorService {
     final dateEnd = config.scope.dateRange?.end;
 
     // Harvests
-    final allHarvestsRaw = GardenBoxes.harvests.values.toList(); 
+    final allHarvestsRaw = GardenBoxes.harvests.values.toList();
     final allHarvests = allHarvestsRaw.map((e) {
       if (e is HarvestRecord) return e;
       if (e is Map) {
@@ -119,25 +118,16 @@ class ExcelGeneratorService {
        if (config.isBlockEnabled(ExportBlockType.activity)) {
          _fillSheet(excel, 'Activites', ExportBlockType.activity, filteredActivities, config);
        }
-       // Plants...
     } else {
       // FLAT TABLE MODE
-      // We prioritize the "most detailed" block selected.
-      // E.g. If Harvests is selected, we iterate Harvests.
-      // If only Gardens selected, we iterate Gardens.
-      // This is complex. For now, we create ONE Master Sheet depending on primary selection.
-      // Usually "Flat Table" implies Transactional Data (Harvests or Activities).
-      
       if (config.isBlockEnabled(ExportBlockType.harvest)) {
          _fillSheet(excel, 'Global_Export', ExportBlockType.harvest, filteredHarvests, config, 
            extraData: {'beds': beds, 'plants': plantMap, 'activities': filteredActivities, 'flat': true}
          );
       } else if (config.isBlockEnabled(ExportBlockType.activity)) {
-         _fillSheet(excel, 'Global_Export', ExportBlockType.activity, filteredActivities, config,
+         _fillSheet(excel, 'Global_Export', ExportBlockType.activity, filteredActivities, config, 
            extraData: {'flat': true}
          );
-      } else {
-         // Fallback to separate sheets if no transactional data
       }
     }
 
@@ -160,7 +150,6 @@ class ExcelGeneratorService {
     sheet.appendRow([TextCellValue('Dictionary')]);
     sheet.appendRow([TextCellValue('Column ID'), TextCellValue('Label'), TextCellValue('Description')]);
     
-    // List all fields from enabled blocks
     for (var block in config.blocks) {
       if (!block.isEnabled) continue;
       for (var fieldId in block.selectedFieldIds) {
@@ -180,14 +169,12 @@ class ExcelGeneratorService {
     List<CellValue> headerRow = [];
     for (var fid in fieldIds) {
       final def = ExportSchema.getFieldById(type, fid);
-      headerRow.add(TextCellValue(def?.label ?? fid)); // Use Label for readability in Row 1
+      headerRow.add(TextCellValue(def?.label ?? fid)); 
     }
     sheet.appendRow(headerRow);
 
     // 2. Data Rows
-    // Map for fast lookups
     List<GardenBed> beds = (extraData?['beds'] as List<GardenBed>?) ?? [];
-    Map<String, Plant> plants = (extraData?['plants'] as Map<String, Plant>?) ?? {};
     List<model_activity.Activity> activities = (extraData?['activities'] as List<model_activity.Activity>?) ?? [];
 
     for (var item in data) {
@@ -198,26 +185,13 @@ class ExcelGeneratorService {
       String? resolvedBedId;
       
       if (type == ExportBlockType.harvest && item is HarvestRecord) {
-         // RESOLUTION STRATEGY
-         // 1. Try to find Activity with 'plantingHarvested' entityId that matches? 
-         // Actually, Activity.plantingHarvested has entityId = plantingId.
-         // But HarvestRecord doesn't have reference to activityId or plantingId.
-         // Correlation: Same date (to the minute?), same qty?
-         // This is heuristic.
-         
-         // Heuristic:
-         // Find activity where type=plantingHarvested, timestamp ~= harvest.date, metadata['quantity'] == harvest.quantityKg (approx)
-         // metadata['plantName'] == harvest.plantName
-         
          final match = activities.where((a) => 
            a.type == model_activity.ActivityType.plantingHarvested &&
            a.metadata['plantName'] == item.plantName &&
-           a.timestamp.difference(item.date).abs().inMinutes < 5 // 5 min tolerance
+           a.timestamp.difference(item.date).abs().inMinutes < 5 
          ).firstOrNull;
          
          if (match != null && match.entityId != null) {
-             // EntityId is plantingId.
-             // We need to find the planting inside boxes to get bedId.
              final planting = GardenBoxes.plantings.get(match.entityId!);
              if (planting != null) {
                resolvedBedId = planting.gardenBedId;
@@ -228,7 +202,6 @@ class ExcelGeneratorService {
       }
 
       for (var fid in fieldIds) {
-        // MAPPING LOGIC
         dynamic value;
         
         // --- HARVEST MAPPING ---
@@ -260,7 +233,7 @@ class ExcelGeneratorService {
            switch (fid) {
              case 'garden_name': value = item.name; break;
              case 'garden_id': value = item.id; break;
-             case 'garden_surface': value = 0; break; // Calculate?
+             case 'garden_surface': value = 0; break; 
              case 'garden_creation_date': value = item.createdAt; break;
            }
         }
@@ -283,8 +256,6 @@ class ExcelGeneratorService {
         } else if (value is num) {
           row.add(DoubleCellValue(value.toDouble()));
         } else if (value is DateTime) {
-          // Excel Date? Or String?
-          // Using ISO String for maximum compat
           row.add(TextCellValue(value.toIso8601String()));
         } else {
           row.add(TextCellValue(value.toString()));
