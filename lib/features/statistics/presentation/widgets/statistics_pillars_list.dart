@@ -18,7 +18,6 @@ class StatisticsPillarsList extends StatelessWidget {
     final pillars = [
       PillarType.economieVivante,
       PillarType.sante,
-      PillarType.performance,
       PillarType.patrimoine,
     ];
 

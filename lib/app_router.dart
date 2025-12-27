@@ -22,7 +22,7 @@ import 'shared/presentation/screens/settings_screen.dart';
 import 'features/statistics/presentation/screens/garden_statistics_screen.dart';
 import 'features/statistics/presentation/screens/garden_economy_screen.dart';
 import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
-import 'features/statistics/presentation/screens/garden_performance_screen.dart';
+
 import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
 
 
@@ -119,14 +119,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return GardenNutritionScreen(gardenId: id);
             },
           ),
-          GoRoute(
-            path: 'performance',
-             name: 'garden-stats-performance',
-            builder: (context, state) {
-              final id = state.pathParameters['id']!;
-              return GardenPerformanceScreen(gardenId: id);
-            },
-          ),
+
           GoRoute(
             path: 'alignement',
              name: 'garden-stats-alignement',

@@ -1,4 +1,4 @@
-﻿enum PillarType { economieVivante, sante, performance, patrimoine }
+﻿enum PillarType { economieVivante, sante, patrimoine }
 
 
 

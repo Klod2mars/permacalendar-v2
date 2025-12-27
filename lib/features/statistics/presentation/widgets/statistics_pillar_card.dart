@@ -26,7 +26,7 @@ class StatisticsPillarCard extends ConsumerWidget {
     final iconAndTitle = switch (type) {
       PillarType.economieVivante => {'icon': '🌾', 'title': 'Économie Vivante'},
       PillarType.sante => {'icon': '🥗', 'title': 'Équilibre Nutritionnel'},
-      PillarType.performance => {'icon': '⚡', 'title': 'Performance'},
+
       PillarType.patrimoine => {'icon': '📜', 'title': 'Patrimoine'},
     };
 
@@ -90,7 +90,7 @@ class StatisticsPillarCard extends ConsumerWidget {
                              final routeName = switch (type) {
                                PillarType.economieVivante => 'garden-stats-economie',
                                PillarType.sante => 'garden-stats-sante',
-                               PillarType.performance => 'garden-stats-performance',
+
                                PillarType.patrimoine => 'garden-stats-patrimoine',
                              };
 
@@ -286,14 +286,6 @@ class StatisticsPillarCard extends ConsumerWidget {
           ),
         );
 
-      case PillarType.performance:
-        return Center(
-          child: Text(
-            'Indisponible',
-            style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: diameter * 0.10),
-          ),
-        );
-
       case PillarType.patrimoine:
         return Center(
           child: Column(
@@ -329,8 +321,7 @@ class StatisticsPillarCard extends ConsumerWidget {
         return 'Valeur totale des récoltes';
       case PillarType.sante:
         return 'Contribution Nutritionnelle';
-      case PillarType.performance:
-        return 'Analyse de Performance';
+
       case PillarType.patrimoine:
         return 'Héritage & Transmission';
     }
