@@ -24,6 +24,7 @@ import 'features/statistics/presentation/screens/garden_economy_screen.dart';
 import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
 
 import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
+import 'package:permacalendar/features/export/presentation/screens/export_builder_screen.dart';
 
 
 
@@ -47,7 +48,7 @@ class AppRoutes {
   static const String weather = '/weather';
 
   static const String statistics = '/statistics';
-
+  static const String export = '/export';
 
 }
 
@@ -256,6 +257,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
 
 
+
+
+      GoRoute(
+        path: AppRoutes.export,
+        name: 'export',
+        builder: (context, state) => const ExportBuilderScreen(),
+      ),
 
     ],
     errorBuilder: (context, state) => Scaffold(

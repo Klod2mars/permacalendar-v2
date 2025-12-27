@@ -15,11 +15,15 @@ class GardenBoxes {
   static const String _gardenBedsBoxName = 'garden_beds';
   static const String _plantingsBoxName = 'plantings';
   static const String _harvestsBoxName = 'harvests';
+  static const String _activitiesBoxName = 'activities';
+  static const String _plantsBoxName = 'plants';
 
   static Box<Garden>? _gardensBox;
   static Box<GardenBed>? _gardenBedsBox;
   static Box<Planting>? _plantingsBox;
   static Box? _harvestsBox; // Stores Maps (JSON)
+  static Box? _activitiesBox; // Stores Activities
+  static Box? _plantsBox; // Stores Plants
 
   // Getters pour les boxes
   static Box<Garden> get gardens {
@@ -50,6 +54,20 @@ class GardenBoxes {
     return _harvestsBox!;
   }
 
+  static Box get activities {
+    if (_activitiesBox == null || !_activitiesBox!.isOpen) {
+      throw Exception('Activities box n\'est pas initialisée');
+    }
+    return _activitiesBox!;
+  }
+
+  static Box get plants {
+    if (_plantsBox == null || !_plantsBox!.isOpen) {
+      throw Exception('Plants box n\'est pas initialisée');
+    }
+    return _plantsBox!;
+  }
+
   static Future<void> initialize() async {
     try {
       // Ouvrir les boxes
@@ -57,6 +75,8 @@ class GardenBoxes {
       _gardenBedsBox = await Hive.openBox<GardenBed>(_gardenBedsBoxName);
       _plantingsBox = await Hive.openBox<Planting>(_plantingsBoxName);
       _harvestsBox = await Hive.openBox(_harvestsBoxName);
+      _activitiesBox = await Hive.openBox(_activitiesBoxName);
+      _plantsBox = await Hive.openBox(_plantsBoxName);
       debugPrint('[GardenBoxes] harvests box opened: ${_harvestsBox!.name}');
 
       if (verboseLogging)
@@ -73,11 +93,15 @@ class GardenBoxes {
     await _gardenBedsBox?.close();
     await _plantingsBox?.close();
     await _harvestsBox?.close();
+    await _activitiesBox?.close();
+    await _plantsBox?.close();
 
     _gardensBox = null;
     _gardenBedsBox = null;
     _plantingsBox = null;
     _harvestsBox = null;
+    _activitiesBox = null;
+    _plantsBox = null;
   }
 
   // Méthodes utilitaires pour les jardins

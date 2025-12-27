@@ -82,6 +82,14 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push(AppRoutes.plants),
           ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.download),
+            title: const Text('Export Builder'),
+            subtitle: const Text('Extraire vos données vers Excel'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(AppRoutes.export),
+          ),
         ]),
       ),
     ]);

@@ -85,6 +85,12 @@ class StatisticsPillarCard extends ConsumerWidget {
                                }
                                return;
                              }
+                             
+                             // 3. Route pour Patrimoine -> Export Builder
+                             if (type == PillarType.patrimoine) {
+                               context.pushNamed('export');
+                               return;
+                             }
 
                              // 3. Comportement existant pour les autres piliers (en attendant le refactoring)
                              final routeName = switch (type) {
@@ -300,8 +306,7 @@ class StatisticsPillarCard extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: InkWell(
                   onTap: () {
-                    // ouvrir page export (naviguer)
-                    // context.pushNamed('export'); // Placeholder
+                    context.pushNamed('export');
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: diameter * 0.05, vertical: diameter * 0.02),
