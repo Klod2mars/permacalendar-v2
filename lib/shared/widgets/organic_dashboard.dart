@@ -165,14 +165,7 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
   final Alignment imageAlignment;
 
   static const List<_Hotspot> _hotspots = <_Hotspot>[
-    _Hotspot(
-        id: 'intelligence',
-        centerX: 0.18,
-        centerY: 0.22,
-        widthFrac: 0.20,
-        heightFrac: 0.20,
-        route: AppRoutes.intelligence,
-        label: 'Intelligence'),
+
     _Hotspot(
         id: 'weather_stats',
         centerX: 0.12,

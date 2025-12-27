@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../enums/pillar_type.dart';
 import '../../application/providers/statistics_kpi_providers.dart';
 import '../../application/providers/vitamin_distribution_provider.dart';
-import '../../application/providers/intelligence_perma_provider.dart';
+
 import 'top_economy_bubble_chart.dart';
 import 'charts/nutrition_radar_chart.dart';
 import '../../application/providers/nutrition_radar_provider.dart';
@@ -26,7 +26,7 @@ class StatisticsPillarCard extends ConsumerWidget {
     final iconAndTitle = switch (type) {
       PillarType.economieVivante => {'icon': '🌾', 'title': 'Économie Vivante'},
       PillarType.sante => {'icon': '🥗', 'title': 'Équilibre Nutritionnel'},
-      PillarType.performance => {'icon': '🧠', 'title': 'Intelligence Perma'},
+      PillarType.performance => {'icon': '⚡', 'title': 'Performance'},
       PillarType.patrimoine => {'icon': '📜', 'title': 'Patrimoine'},
     };
 
@@ -287,44 +287,10 @@ class StatisticsPillarCard extends ConsumerWidget {
         );
 
       case PillarType.performance:
-        final suggestionsAsync = ref.watch(intelligencePermaProvider);
         return Center(
-          child: suggestionsAsync.when(
-            data: (suggestions) {
-              if (suggestions.isEmpty) {
-                return Text(
-                  'Équilibré',
-                  style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: diameter * 0.10),
-                );
-              }
-              final s = suggestions.first;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // icône plante
-                  Container(
-                    width: diameter * 0.12,
-                    height: diameter * 0.12,
-                    decoration: BoxDecoration(
-                      color: neon.withOpacity(0.18), shape: BoxShape.circle),
-                    child: Center(child: Text('🌱', style: TextStyle(fontSize: diameter * 0.06))),
-                  ),
-                  SizedBox(height: diameter * 0.02),
-                  SizedBox(
-                    width: diameter * 0.5,
-                    child: FittedBox(
-                      child: Text(
-                        s.plant.commonName, // Using plant name as summary
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: diameter * 0.08),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-            loading: () => const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
-            error: (_, __) => const Icon(Icons.error_outline, color: Colors.white24),
+          child: Text(
+            'Indisponible',
+            style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: diameter * 0.10),
           ),
         );
 
@@ -364,7 +330,7 @@ class StatisticsPillarCard extends ConsumerWidget {
       case PillarType.sante:
         return 'Contribution Nutritionnelle';
       case PillarType.performance:
-        return 'Intelligence Végétale';
+        return 'Analyse de Performance';
       case PillarType.patrimoine:
         return 'Héritage & Transmission';
     }

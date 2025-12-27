@@ -14,12 +14,7 @@ import 'features/plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import 'features/plant_catalog/presentation/screens/plant_detail_screen.dart';
 
 import 'features/activities/presentation/screens/activities_screen.dart';
-import 'features/plant_intelligence/presentation/screens/plant_intelligence_dashboard_screen.dart';
-import 'features/plant_intelligence/presentation/screens/recommendations_screen.dart';
-import 'features/plant_intelligence/presentation/screens/intelligence_settings_simple.dart';
-import 'features/plant_intelligence/presentation/screens/pest_observation_screen.dart';
-import 'features/plant_intelligence/presentation/screens/bio_control_recommendations_screen.dart';
-import 'features/plant_intelligence/presentation/screens/notifications_screen.dart';
+
 import 'features/home/screens/calendar_view_screen.dart';
 import 'shared/presentation/screens/home_screen.dart';
 import 'shared/presentation/screens/settings_screen.dart';
@@ -53,13 +48,7 @@ class AppRoutes {
 
   static const String statistics = '/statistics';
 
-  static const String intelligence = '/intelligence';
-  static const String intelligenceDetail = '/intelligence/plant/:id';
-  static const String recommendations = '/intelligence/recommendations';
-  static const String intelligenceSettings = '/intelligence/settings';
-  static const String pestObservation = '/intelligence/pest-observation';
-  static const String bioControlRecommendations = '/intelligence/biocontrol';
-  static const String notifications = '/intelligence/notifications';
+
 }
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -273,67 +262,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const ActivitiesScreen(),
       ),
 
-      GoRoute(
-        path: AppRoutes.intelligence,
-        name: 'intelligence',
-        builder: (context, state) {
-          return const PlantIntelligenceDashboardScreen();
-        },
-        routes: [
-          GoRoute(
-            path: 'plant/:id',
-            name: 'intelligence-detail',
-            builder: (context, state) {
-              final plantId = state.pathParameters['id']!;
-              return const Scaffold(
-                body: Center(
-                  child: Text('Détail de la plante (à implémenter)'),
-                ),
-              );
-            },
-          ),
-          GoRoute(
-            path: 'recommendations',
-            name: 'recommendations',
-            builder: (context, state) => const RecommendationsScreen(),
-          ),
-          GoRoute(
-            path: 'settings',
-            name: 'intelligence-settings',
-            builder: (context, state) => const IntelligenceSettingsSimple(),
-          ),
-          GoRoute(
-            path: 'pest-observation',
-            name: 'pest-observation',
-            builder: (context, state) {
-              final gardenId = state.uri.queryParameters['gardenId'] ?? '';
-              final plantId = state.uri.queryParameters['plantId'] ?? '';
-              final bedId = state.uri.queryParameters['bedId'];
 
-              return PestObservationScreen(
-                gardenId: gardenId,
-                plantId: plantId,
-                bedId: bedId,
-              );
-            },
-          ),
-          GoRoute(
-            path: 'biocontrol',
-            name: 'biocontrol-recommendations',
-            builder: (context, state) {
-              final gardenId = state.uri.queryParameters['gardenId'] ?? '';
-              return BioControlRecommendationsScreen(
-                gardenId: gardenId,
-              );
-            },
-          ),
-          GoRoute(
-            path: 'notifications',
-            name: 'notifications',
-            builder: (context, state) => const NotificationsScreen(),
-          ),
-        ],
-      ),
 
     ],
     errorBuilder: (context, state) => Scaffold(

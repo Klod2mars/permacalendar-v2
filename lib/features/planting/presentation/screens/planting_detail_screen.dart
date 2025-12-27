@@ -11,7 +11,6 @@ import '../../providers/planting_provider.dart';
 import '../dialogs/create_planting_dialog.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
-import '../../../plant_intelligence/presentation/widgets/plant_health_degradation_banner.dart';
 import '../../../../shared/widgets/plant_lifecycle_widget.dart';
 
 import '../widgets/planting_header_widget.dart';
@@ -142,12 +141,6 @@ class PlantingDetailScreen extends ConsumerWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        // Banner santé
-        PlantHealthDegradationBanner(
-          plantId: planting.plantId,
-          plantName: planting.plantName,
-        ),
-
         // Header
         PlantingHeaderWidget(
             planting: planting, plant: plantSafe, theme: Theme.of(context)),
