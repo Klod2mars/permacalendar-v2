@@ -165,7 +165,6 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
   final Alignment imageAlignment;
 
   static const List<_Hotspot> _hotspots = <_Hotspot>[
-
     _Hotspot(
         id: 'weather_stats',
         centerX: 0.12,
@@ -176,7 +175,8 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         label: 'Weather Stats'),
     _Hotspot(
         id: 'temperature',
-        centerX: 0.25, // Position approximative "Haut Gauche" (à calibrer par user)
+        centerX:
+            0.25, // Position approximative "Haut Gauche" (à calibrer par user)
         centerY: 0.18,
         widthFrac: 0.15,
         heightFrac: 0.15,
@@ -497,7 +497,7 @@ class _OrganicDashboardWidgetState
       final double width = constraints.maxWidth.isFinite
           ? constraints.maxWidth
           : MediaQuery.of(context).size.width;
-      final double height = (width * (9.0 / 5.0)).clamp(300.0, 1400.0);
+      final double height = (width * 1.7778).clamp(300.0, 1400.0);
 
       if (kDebugMode) {
         debugPrint(
@@ -533,7 +533,7 @@ class _OrganicDashboardWidgetState
                     child: Image.asset(
                       widget.assetPath,
                       fit: BoxFit
-                          .fill, // Changé à fill car le SizedBox respecte déjà le ratio zoomé
+                          .contain, // Changé à contain pour éviter la déformation (bulles ovales)
                       alignment: Alignment.center,
                       isAntiAlias: true,
                       errorBuilder: (context, error, stack) {
@@ -648,7 +648,7 @@ class _OrganicDashboardWidgetState
                             if (cfg.id.startsWith('garden_')) {
                               final slot =
                                   int.tryParse(cfg.id.split('_')[1]) ?? 0;
-                              
+
                               // Robust read: check if box is open logic
                               String? gardenId;
                               if (DashboardSlotsRepository.isOpen()) {
@@ -684,7 +684,8 @@ class _OrganicDashboardWidgetState
                                 // En mode normal on veut que les hotspots restent interactifs
                                 // mais **non visibles** (pas d'outline de debug).
                                 showDebugOutline: false,
-                                child: childWidget, // Pass the bubble widget here
+                                child:
+                                    childWidget, // Pass the bubble widget here
                               ),
                             );
                           })(),
@@ -694,8 +695,7 @@ class _OrganicDashboardWidgetState
               ),
 
               // [NEW] Global "+" Button if no gardens exist
-              if (!isCalibrating &&
-                  ref.watch(activeGardensCountProvider) == 0)
+              if (!isCalibrating && ref.watch(activeGardensCountProvider) == 0)
                 Positioned(
                   bottom: 30, // Safe distance from bottom
                   right: 30, // Safe distance from right
@@ -713,7 +713,6 @@ class _OrganicDashboardWidgetState
     });
   }
 }
-
 
 class _AssetDiagnostic {
   bool manifestLoaded = false;
@@ -1154,20 +1153,20 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
 
     if (contentWidget == null) {
       contentWidget = (!isGardenHotspot && widget.id == 'weather')
-        ? const WeatherBubbleWidget()
-        : (!isGardenHotspot && widget.id == 'temperature')
-            ? const TemperatureBubbleWidget() // NEW: Slot dédié température
-            : (!isGardenHotspot && widget.id == 'weather_stats')
-                ? null // Revert: Transparent tap zone
-                : (!isGardenHotspot && widget.id == 'statistique')
-                    ? Hero(
-                        tag: 'stats-bubble-hero-global',
-                    child: InvisibleStatsZone(
-                      isCalibrationMode: widget.isCalibrating,
-                      glowColor: Colors.greenAccent,
-                    ),
-                  )
-                : null;
+          ? const WeatherBubbleWidget()
+          : (!isGardenHotspot && widget.id == 'temperature')
+              ? const TemperatureBubbleWidget() // NEW: Slot dédié température
+              : (!isGardenHotspot && widget.id == 'weather_stats')
+                  ? null // Revert: Transparent tap zone
+                  : (!isGardenHotspot && widget.id == 'statistique')
+                      ? Hero(
+                          tag: 'stats-bubble-hero-global',
+                          child: InvisibleStatsZone(
+                            isCalibrationMode: widget.isCalibrating,
+                            glowColor: Colors.greenAccent,
+                          ),
+                        )
+                      : null;
     }
 
     if (widget.isCalibrating) {
@@ -1216,7 +1215,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final hotspotButton = _HotspotButton(
       onTap: isGardenHotspot
           ? _handleGardenTap
-          : (widget.id == 'temperature' || widget.id == 'weather') 
+          : (widget.id == 'temperature' || widget.id == 'weather')
               ? null // Désactive le tap pour température (display) ET weather (interactive drag)
               : () {
                   if (kDebugMode) {
