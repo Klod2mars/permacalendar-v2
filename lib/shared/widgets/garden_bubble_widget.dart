@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:permacalendar/shared/widgets/curved_text.dart';
 
 class GardenBubbleWidget extends StatelessWidget {
   const GardenBubbleWidget({
@@ -35,6 +35,46 @@ class GardenBubbleWidget extends StatelessWidget {
     // Transparent background to let the leaf show through (Organic look)
     // The image itself (bubble) will provide the visual shape.
     const glassDecoration = null;
+    
+    // Prepare text logic
+    final upperName = gardenName.toUpperCase();
+    final words = upperName.split(' ');
+    
+    String? topText;
+    String? bottomText;
+    
+    if (words.length > 1) {
+       // Heuristic: First word top, rest bottom (or balanced split)
+       // Simple split for now:
+       topText = words[0];
+       bottomText = words.sublist(1).join(' ');
+    } else {
+       topText = upperName;
+       bottomText = null;
+    }
+    
+    // Text style shared
+    final textStyle = TextStyle(
+      color: Colors.white.withOpacity(0.95),
+      fontWeight: FontWeight.w500,
+      fontSize: 11, // Fixed size for arc
+      letterSpacing: 2.0, // Wider spacing for arc to prevent overlapping characters
+      shadows: [
+        Shadow(
+          blurRadius: 2,
+          color: Colors.black.withOpacity(0.5),
+          offset: const Offset(0, 1),
+        ),
+        Shadow(
+          blurRadius: 4,
+          color: Colors.white.withOpacity(0.2),
+          offset: const Offset(0, 0),
+        ),
+      ],
+    );
+    
+    // Calculate radius for text (slightly inside the bubble edge)
+    final textRadius = radius * 0.65; 
 
     return GestureDetector(
       onTap: onTap,
@@ -62,29 +102,23 @@ class GardenBubbleWidget extends StatelessWidget {
               ),
             ),
 
-            // Content: Garden Name
-            Padding(
-              padding: EdgeInsets.all(radius * 0.2), // Reduced padding for more space
-              child: Center(
-                child: AutoSizeText(
-                  gardenName,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  minFontSize: 10,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 3,
-                        color: Colors.black,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                ),
+            // Content: Curved Text
+            // We use a Stack to layer text if needed (e.g. top and bottom)
+            if (topText != null)
+              CurvedText(
+                text: topText,
+                textStyle: textStyle,
+                radius: textRadius,
+                placement: CurvedTextPlacement.top,
               ),
-            ),
+              
+            if (bottomText != null)
+               CurvedText(
+                text: bottomText,
+                textStyle: textStyle,
+                radius: textRadius, // Same radius, but bottom placement
+                placement: CurvedTextPlacement.bottom,
+              ),
           ],
         ),
       ),
