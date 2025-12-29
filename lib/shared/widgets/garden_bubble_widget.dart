@@ -74,7 +74,7 @@ class GardenBubbleWidget extends StatelessWidget {
     );
     
     // Calculate radius for text (slightly inside the bubble edge)
-    final textRadius = radius * 0.65; 
+    final textRadius = radius * 0.60; 
 
     return GestureDetector(
       onTap: onTap,

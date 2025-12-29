@@ -89,12 +89,9 @@ class _CurvedTextPainter extends CustomPainter {
         // Start angle: -PI/2 - (half of total angle)
         currentAngle = -math.pi / 2 - (totalAngle / 2) + startAngle;
     } else {
-        // Bottom: PI/2 - (half of total angle)
-        // Note: For bottom text to be readable (not upside down), we draw it on the inside of the circle?
-        // Or outside? Usually outside but rotated.
-        // Let's assume standard "Badge" style:
-        // Top text curves over. Bottom text curves under but letters are upright.
-        currentAngle = math.pi / 2 - (totalAngle / 2) + startAngle;
+        // Bottom: Start at Left (Max Angle) = PI/2 + (half of total angle)
+        // We will decrement angle to go Left->Right visually
+        currentAngle = math.pi / 2 + (totalAngle / 2) + startAngle;
     }
 
     // 3. Draw characters
@@ -102,12 +99,17 @@ class _CurvedTextPainter extends CustomPainter {
         final char = text[i];
         final w = charWidths[i];
         
-        // The angle for this character's center
-        // Arc length for this char is w. Angle = w / r.
         final charAngle = w / radius;
         
-        // We position the character at the center of its slice
-        final drawAngle = currentAngle + (charAngle / 2);
+        // Calculate drawAngle (center of char) based on direction
+        double drawAngle;
+        
+        if (placement == CurvedTextPlacement.top) {
+           drawAngle = currentAngle + (charAngle / 2);
+        } else {
+           // Decreasing angle
+           drawAngle = currentAngle - (charAngle / 2);
+        }
 
         canvas.save();
         
@@ -119,12 +121,14 @@ class _CurvedTextPainter extends CustomPainter {
              // Move back half char width to center text paint
              canvas.translate(-w / 2, 0);
         } else {
-             // For bottom text, to appear upright:
-             // We need to rotate such that the baseline is inwards.
-             // Angle is around PI/2.
+             // For bottom text:
+             // 1. Rotate to position (drawAngle - pi/2)
              canvas.rotate(drawAngle - math.pi / 2);
+             // 2. Move out to radius
              canvas.translate(0, radius);
-              canvas.translate(-w / 2, 0);
+             // 3. Move back half char width AND Move UP by text height to be inside
+             // We use textPainter.height for the specific character/style
+             canvas.translate(-w / 2, -textPainter.height);
         }
 
         textPainter.text = TextSpan(text: char, style: textStyle);
@@ -133,7 +137,12 @@ class _CurvedTextPainter extends CustomPainter {
 
         canvas.restore();
         
-        currentAngle += charAngle;
+        // Update currentAngle
+        if (placement == CurvedTextPlacement.top) {
+           currentAngle += charAngle;
+        } else {
+           currentAngle -= charAngle;
+        }
     }
   }
 
