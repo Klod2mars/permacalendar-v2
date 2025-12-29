@@ -20,6 +20,9 @@ import '../../features/climate/presentation/providers/weather_providers.dart';
 import '../../core/utils/weather_icon_mapper.dart';
 import '../presentation/widgets/weather_bubble_widget.dart';
 import '../presentation/widgets/temperature_bubble_widget.dart';
+import '../presentation/widgets/sky_calibration_overlay.dart'; // [NEW]
+import '../presentation/widgets/weather_sky_background.dart'; // [NEW]
+import '../presentation/widgets/weather_bio_layer.dart'; // [NEW]
 import '../../features/home/widgets/invisible_stats_zone.dart';
 import '../widgets/garden_bubble_widget.dart';
 import '../widgets/garden_creation_dialog.dart';
@@ -569,6 +572,12 @@ class _OrganicDashboardWidgetState
                 ),
               ),
 
+              // 1.5) [NEW] Organic Sky Layer (Dessiné par-dessus le fond, sous les bulles)
+              const Positioned.fill(child: WeatherSkyBackground()),
+              
+              // 1.6) [NEW] Bio Weather Layer (Particles - Pluie/Neige/Nuages)
+              const Positioned.fill(child: WeatherBioLayer()),
+
               // 2) Les zones TAP : mode normal = TapZone statique ; mode calibration = hotspots dynamiques
               Positioned.fill(
                 child: LayoutBuilder(builder: (ctx, c) {
@@ -706,6 +715,10 @@ class _OrganicDashboardWidgetState
                     child: const Icon(Icons.add, color: Colors.white),
                   ),
                 ),
+
+              // [NEW] Sky Calibration Overlay logic
+              if (calibState.activeType == CalibrationType.sky)
+                const Positioned.fill(child: SkyCalibrationOverlay()),
             ],
           ),
         ),
@@ -1144,6 +1157,12 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     }
   }
 
+  Future<void> _handleWeatherLongPress() async {
+     // Active le mode calibration du ciel
+     if (kDebugMode) debugPrint('[CALIBRATION] Activating Sky Calibration via long press');
+     widget.ref.read(calibrationStateProvider.notifier).enableSkyCalibration();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isGardenHotspot = widget.id.startsWith('garden_');
@@ -1235,7 +1254,9 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                 },
       onLongPress: isGardenHotspot && !widget.isCalibrating
           ? _handleGardenLongPress
-          : null,
+          : (widget.id == 'weather' && !widget.isCalibrating) 
+              ? _handleWeatherLongPress 
+              : null,
       semanticLabel: widget.cfg.id,
       showDebugOutline: widget.showDebugOutline,
       child: contentWidget,

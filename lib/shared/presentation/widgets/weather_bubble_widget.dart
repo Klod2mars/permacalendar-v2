@@ -9,9 +9,7 @@ import 'weather_bio_container.dart';
 import 'weather_sky_background.dart';
 
 class WeatherBubbleWidget extends ConsumerWidget {
-  const WeatherBubbleWidget({super.key, this.showEffects = true});
-
-  final bool showEffects;
+  const WeatherBubbleWidget({super.key});
 
   String _capFirst(String s) => s.isEmpty ? s : (s[0].toUpperCase() + s.substring(1));
 
@@ -19,28 +17,14 @@ class WeatherBubbleWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Le conteneur s'adapte à la taille disponible
     // Tout le rendu interne est géré par WeatherBioContainer
-    // [MODIF] On ajoute le Ciel Dynamique en arrière-plan
-    // On doit utiliser un Stack et CLIPPER pour que le ciel reste dans la bulle (si la bulle a une forme)
-    // Mais WeatherBioContainer est rectangulaire dans l'espace alloué ?
-    // Le Dashboard crée des bulles RONDEN via le `GardenBubbleWidget` ou juste des slots ?
-    // Dans OrganicDashboard, les slots sont des Rect. S'il n'y a pas de clip, c'est carré.
-    // L'image de fond a des "trous" ou c'est juste transparent.
-    // WeatherBioContainer est probablement clippé par son parent ou pas.
-    // Vérifions OrganicDashboard : "Positioned ... SizedBox ... GestureDetector ... child"
-    // Il n'y a pas de ClipOval par défaut sur les slots "Weather".
-    // MAIS, l'image de fond a un *dessin* de bulle.
-    // Si on met un fond carré coloré, ça va dépasser du dessin de bulle de l'image de fond PNG.
-    // IL FAUT UN CLIPPER OVAL/CIRCLE pour que le ciel ne soit que dans "l'ovoïde".
+    // Le Ciel est maintenant géré globalement par WeatherSkyBackground dans OrganicDashboard
     
     return ClipOval(
       child: Stack(
         fit: StackFit.expand,
         children: [
-           // 1. Le Ciel (Fond)
-           const WeatherSkyBackground(),
-           
-           // 2. La Physique (Avant-plan)
-           WeatherBioContainer(showEffects: showEffects),
+           // La Physique (Avant-plan) - Mode Touch Pad
+           const WeatherBioContainer(),
         ],
       ),
     );

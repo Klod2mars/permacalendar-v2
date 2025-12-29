@@ -14,6 +14,7 @@ import 'core/models/planting_hive.dart';
 import 'core/repositories/garden_hive_repository.dart';
 import 'features/plant_catalog/data/models/plant_hive.dart';
 import 'features/plant_catalog/data/repositories/plant_hive_repository.dart';
+import 'core/models/sky_calibration_config.dart';
 
 class AppInitializer {
   static Future<void> initialize() async {
@@ -36,6 +37,9 @@ class AppInitializer {
       // Activity Adapters
       if (!Hive.isAdapterRegistered(16)) Hive.registerAdapter(ActivityAdapter());
       if (!Hive.isAdapterRegistered(17)) Hive.registerAdapter(ActivityTypeAdapter());
+      
+      // Sky Calibration Adapter
+      if (!Hive.isAdapterRegistered(44)) Hive.registerAdapter(SkyCalibrationConfigAdapter());
     } catch (e) {
       print('Warning: Error registering adapters: $e');
     }
