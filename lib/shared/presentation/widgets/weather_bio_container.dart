@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/hourly_weather_point.dart';
 import '../../../features/climate/domain/models/weather_view_data.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
+import '../../../features/climate/presentation/providers/weather_time_provider.dart';
 
 /// Un conteneur météo "Bio-Organique" avec simulation physique.
 /// Remplace l'ancien widget statique.
@@ -86,6 +87,9 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
       if (_dragOffsetPixels < 0) _dragOffsetPixels = 0;
       // Max 12h de prévision (1200px) pour rester raisonnable
       if (_dragOffsetPixels > 12 * _pixelsPerHour) _dragOffsetPixels = 12 * _pixelsPerHour;
+      
+      // Update Shared State for Sky
+      ref.read(weatherTimeOffsetProvider.notifier).setOffset(_dragOffsetPixels / _pixelsPerHour);
     });
   }
 
@@ -102,6 +106,8 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     animation.addListener(() {
       setState(() {
         _dragOffsetPixels = animation.value;
+        // Update Shared State for Sky during recoil
+        ref.read(weatherTimeOffsetProvider.notifier).setOffset(_dragOffsetPixels / _pixelsPerHour);
       });
     });
     
