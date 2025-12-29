@@ -141,9 +141,9 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
       if (data.result.hourlyWeather.isEmpty) return null;
       
       // Si offset procha de 0, on prend le current
-      if (offsetHours < 0.1) return null; // Use regular current logic fallback usually best
+      if (offsetHours < 0.02) return null; // Increased sensitivity: ~1.2 mins threshold
       
-      final now = DateTime.now();
+      final now = DateTime.now().toUtc();
       final targetTime = now.add(Duration(minutes: (offsetHours * 60).round()));
       
       HourlyWeatherPoint? closest;
@@ -170,7 +170,7 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
       final hourly = result.hourlyWeather as List<HourlyWeatherPoint>? ?? [];
       
       if (hourly.isNotEmpty) {
-          final now = DateTime.now();
+          final now = DateTime.now().toUtc();
           try {
              final currentPoint = hourly.firstWhere(
                 (p) => p.time.isAfter(now.subtract(const Duration(minutes: 30))),
@@ -208,13 +208,44 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     const timeScale = 0.5; // Tout va 2x plus lentement
     final gentleDt = dt * timeScale;
 
+    // 2. Physics Update
+    // Gravité et Vent (INTENSIFIED)
+    // Rain gravity increased 350 -> 500 for faster fall
+    final gravity = _isSnow ? 30.0 : 500.0; 
+    
+    // Wind force multiplier increased 2.0 -> 3.0
+    final windForce = _windSpeed * 3.0; 
+    
+    // Performance guard: Reduce motion or Low End Device check
+    // Using MediaQuery directly in build is best, but here we are in stored Ticker.
+    // We can infer context if mounted, or check a global provider if available.
+    // Ideally we pass this via constructor or `didChangeDependencies`. 
+    // For now, let's use a safe assumption or simple check if context available.
+    // But since we are in a State, we can access context (if mounted).
+    bool reduceMotion = false;
+    if (mounted) {
+       try {
+         // use disableAnimations which is widely supported
+         reduceMotion = MediaQuery.of(context).disableAnimations;
+       } catch(_) {}
+    }
+
     // 1. Spawning (Création de particules)
     if (_precipIntensity > 0.05 && !_isSunny) {
-       final spawnRate = _isSnow 
-           ? (_precipIntensity * 2.0).clamp(0.0, 5.0) 
-           : (_precipIntensity * 10.0).clamp(0.0, 40.0);
+       // INTENSIFIED SPAWN RATES
+       // Snow: 5.0 -> 20.0 max
+       // Rain: 40.0 -> 80.0 max
+       final baseSpawnRate = _isSnow 
+           ? (_precipIntensity * 4.0).clamp(0.0, 20.0) 
+           : (_precipIntensity * 20.0).clamp(0.0, 80.0);
        
-       if (_rng.nextDouble() < spawnRate * dt * 5.0) { 
+       // Apply reduction if needed
+       final effectiveSpawnRate = reduceMotion ? baseSpawnRate * 0.25 : baseSpawnRate;
+       
+       // Max Particles Guard caps
+       final maxParticles = reduceMotion ? 50 : (_isSnow ? 150 : 300);
+
+       if (_particles.length < maxParticles && _rng.nextDouble() < effectiveSpawnRate * dt * 5.0) { 
           _spawnParticle();
        }
     }
@@ -222,23 +253,11 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     // Spawn Nuages (Zen Mode: FADE IN)
     if (_isCloudy) {
        final currentClouds = _particles.where((p) => p.type == _ParticleType.cloud).length;
-       if (currentClouds < 4 && _rng.nextDouble() < 0.005) { 
+       // Spawn probability increased 0.005 -> 0.015
+       if (currentClouds < (reduceMotion ? 2 : 5) && _rng.nextDouble() < 0.015) { 
            _spawnCloud();
        }
-    }
-
-    // Spawn Soleil (Particules Glow)
-    if (_isSunny) {
-        final currentGlows = _particles.where((p) => p.type == _ParticleType.glow).length;
-        if (currentGlows < 8 && _rng.nextDouble() < 0.02) {
-            _spawnSunGlow();
-        }
-    }
-
-    // 2. Physics Update
-    // Gravité et Vent
-    final gravity = _isSnow ? 30.0 : 350.0; 
-    final windForce = _windSpeed * 2.0; 
+    } 
     
     for (int i = _particles.length - 1; i >= 0; i--) {
       final p = _particles[i];
@@ -248,6 +267,7 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
           // --- ÉTAT A : NUAGEUX (Zen / Flottaison) ---
           p.vx *= 0.95; 
           p.vy *= 0.95;
+          // Wind influence on clouds also slightly increased via windForce variable update
           p.vx += (windForce * 0.005 * gentleDt) + (_rng.nextDouble() - 0.5) * 1.5 * gentleDt;
           p.vy += (_rng.nextDouble() - 0.5) * 1.0 * gentleDt; 
           

@@ -97,8 +97,9 @@ class OpenMeteoService {
         // NOTE: Moon data removed as it seems to cause 400 errors (not in standard daily params?)
         'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
         'past_days': pastDays,
+// ... (inside fetchPrecipitation)
         'forecast_days': forecastDays,
-        'timezone': 'auto',
+        'timezone': 'UTC', // FORCE UTC for consistent absolute time comparison
       });
 
       final data = res.data is Map<String, dynamic>
@@ -138,9 +139,21 @@ class OpenMeteoService {
         double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
         int getInt(List<int> list) => i < list.length ? list[i] : 0;
 
+        // Parse time as strict UTC
+        // OpenMeteo returns ISO8601 strings. If we requested timezone=UTC, they look like "2023-01-01T00:00" (usually without Z if not explicitly requested as iso8601, but logic is safer with UTC suffix)
+        // We force .parse(s + 'Z') if missing, or use .utc constructor if needed. 
+        // Actually, best way if we requested UTC is to trust the string is GMT time.
+        // But Dart DateTime.parse defaults to local if no offset. 
+        // So we append 'Z' to be safe if it's missing.
+        var tStr = hourlyTimes[i];
+        if (!tStr.endsWith('Z') && !tStr.contains('+')) {
+           tStr += 'Z';
+        }
+        final parsedTime = DateTime.parse(tStr).toUtc();
+
       hourlyPoints.add(
         HourlyWeatherPoint(
-          time: DateTime.parse(hourlyTimes[i]),
+          time: parsedTime,
           precipitationMm: getVal(hourlyPrecip),
           precipitationProbability: getInt(hourlyPrecipProb),
           temperatureC: getVal(hourlyTemp),
@@ -154,6 +167,7 @@ class OpenMeteoService {
       );
     }
 
+    // ... (Daily parsing slightly less critical for hour-by-hour time travel but good to stick to UTC)
     // --- Parsing Daily ---
     final dailyTimes = (daily?['time'] as List?)?.cast<String>() ?? const [];
     final dailyPrecip = _toDoubleList(daily?['precipitation_sum']);
@@ -175,7 +189,7 @@ class OpenMeteoService {
     final dailyPoints = <DailyWeatherPoint>[];
 
     for (var i = 0; i < dailyTimes.length; i++) {
-       // Robustesse
+       // ... existing getters ...
         double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
         int? getIntNull(List<int> list) => i < list.length ? list[i] : null;
         String? getStr(List<String?> list) => i < list.length ? list[i] : null;
@@ -183,7 +197,7 @@ class OpenMeteoService {
 
       dailyPoints.add(
         DailyWeatherPoint.fromRaw(
-          date: DateTime.parse(dailyTimes[i]),
+          date: DateTime.parse(dailyTimes[i]), // Keep simple date parsing for daily
           precipMm: getVal(dailyPrecip),
           tMaxC: getValNull(dailyTMax),
           tMinC: getValNull(dailyTMin),
@@ -200,8 +214,8 @@ class OpenMeteoService {
     }
 
     // Température « actuelle » estimée par la dernière mesure horaire du PASSÉ ou du PRÉSENT proche
-    // L'API renvoie ~24h/jour. On cherche l'élément le plus proche de maintenant.
-    final now = DateTime.now();
+    // L'API renvoie ~24h/jour. On cherche l'élément le plus proche de maintenant (UTC).
+    final now = DateTime.now().toUtc();
     HourlyWeatherPoint? currentPoint;
     // Trouver le point horaire le plus proche
     if (hourlyPoints.isNotEmpty) {
