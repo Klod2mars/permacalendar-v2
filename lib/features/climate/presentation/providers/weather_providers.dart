@@ -10,6 +10,7 @@ import '../../../../core/services/environment_service.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
 
 import '../../../../core/models/daily_weather_point.dart';
+import '../../../../core/models/hourly_weather_point.dart';
 
 import '../../../../core/providers/app_settings_provider.dart';
 
@@ -23,7 +24,8 @@ import '../../data/commune_storage.dart';
 
 // Utilisez l'import au-dessus pour utiliser le modèle unifié
 
-
+import '../../domain/utils/weather_interpolation.dart';
+import 'weather_time_provider.dart';
 
 /// Provider dérivé pour obtenir des coordonnées depuis le nom de commune choisi
 
@@ -965,3 +967,28 @@ String _getWeatherIcon(WeatherConditionType condition) {
   }
 }
 
+
+/// Provider qui renvoie la météo interpolée pour l'heure sélectionnée (Maintenant + Drag).
+/// Permet à l'UI (Bulle, Graphiques) de suivre le curseur temporel en temps réel.
+final projectedWeatherProvider = Provider<HourlyWeatherPoint?>((ref) {
+  // 1. Écouter la météo brute
+  final weatherAsync = ref.watch(currentWeatherProvider);
+  
+  // 2. Écouter le décalage temporel (Drag)
+  final offsetHours = ref.watch(weatherTimeOffsetProvider);
+
+  // Si les données ne sont pas encore chargées, on retourne null
+  if (weatherAsync.value == null) return null;
+
+  // 3. Calculer le temps cible
+  // Note: offsetHours est un double (ex: 1.5 pour +1h30). On convertit en minutes.
+  final projectedTime = DateTime.now().toUtc().add(
+    Duration(minutes: (offsetHours * 60).round())
+  );
+
+  // 4. Utiliser l'utilitaire d'interpolation sur la liste horaire
+  return WeatherInterpolation.getInterpolatedWeather(
+    weatherAsync.value!.result.hourlyWeather, 
+    projectedTime
+  );
+});

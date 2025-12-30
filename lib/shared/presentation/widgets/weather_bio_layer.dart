@@ -7,6 +7,7 @@ import '../../../core/models/hourly_weather_point.dart';
 import '../../../core/models/sky_calibration_config.dart';
 import '../../../features/climate/domain/models/weather_view_data.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
+import '../../../features/climate/domain/utils/weather_interpolation.dart';
 import '../../../features/climate/presentation/providers/weather_time_provider.dart';
 
 /// Layer Global pour la simulation de particules (Pluie, Neige, Nuages, Brume).
@@ -71,7 +72,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer> with TickerPr
     weatherAsync.whenData((data) {
        // Interpolation logic
        final projectedTime = DateTime.now().toUtc().add(Duration(minutes: (timeOffset * 60).round()));
-       final interpolated = _getInterpolatedWeather(data, projectedTime);
+       final interpolated = WeatherInterpolation.getInterpolatedWeather(data.result.hourlyWeather, projectedTime);
        
        if (interpolated != null) {
           _updateParamsFromPoint(interpolated);
@@ -90,46 +91,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer> with TickerPr
       _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
   }
   
-  HourlyWeatherPoint? _getInterpolatedWeather(WeatherViewData data, DateTime target) {
-      final hourly = data.result.hourlyWeather;
-      if (hourly.isEmpty) return null;
-      
-      int idx = -1;
-      for (int i = 0; i < hourly.length; i++) {
-         if (hourly[i].time.isAfter(target)) {
-            idx = i;
-            break;
-         }
-      }
-      
-      if (idx == -1) return hourly.last; 
-      if (idx == 0) return hourly.first; 
-      
-      final p1 = hourly[idx - 1];
-      final p2 = hourly[idx];
-      
-      final t1 = p1.time.millisecondsSinceEpoch;
-      final t2 = p2.time.millisecondsSinceEpoch;
-      final tTarget = target.millisecondsSinceEpoch;
-      
-      final factor = (tTarget - t1) / (t2 - t1); 
-      
-      return HourlyWeatherPoint(
-         time: target,
-         precipitationMm: _lerp(p1.precipitationMm, p2.precipitationMm, factor),
-         precipitationProbability: (_lerp(p1.precipitationProbability.toDouble(), p2.precipitationProbability.toDouble(), factor)).round(),
-         temperatureC: _lerp(p1.temperatureC, p2.temperatureC, factor),
-         apparentTemperatureC: _lerp(p1.apparentTemperatureC, p2.apparentTemperatureC, factor),
-         windSpeedkmh: _lerp(p1.windSpeedkmh, p2.windSpeedkmh, factor),
-         windDirection: p1.windDirection,
-         windGustsKmh: _lerp(p1.windGustsKmh, p2.windGustsKmh, factor),
-         weatherCode: p1.weatherCode, 
-         cloudCover: (_lerp(p1.cloudCover.toDouble(), p2.cloudCover.toDouble(), factor)).round(),
-         visibility: _lerp(p1.visibility, p2.visibility, factor),
-      );
-  }
-  
-  double _lerp(double a, double b, double t) => a + (b - a) * t;
+
 
   void _spawnParticles(double dt, SkyCalibrationConfig calib) {
       // 1. Precipitations
