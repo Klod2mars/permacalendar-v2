@@ -10,6 +10,8 @@ class HourlyWeatherPoint {
   final double windGustsKmh; // windgusts_10m
   final int weatherCode;
   final double? pressureMsl; // pressure_msl (hPa)
+  final int cloudCover;      // cloudcover (%)
+  final double visibility;   // visibility (m)
 
   HourlyWeatherPoint({
     required this.time,
@@ -22,11 +24,13 @@ class HourlyWeatherPoint {
     required this.windGustsKmh,
     required this.weatherCode,
     this.pressureMsl,
+    this.cloudCover = 0,
+    this.visibility = 10000.0,
   });
 
   @override
   String toString() {
-    return 'HourlyWeatherPoint(time: $time, precip: ${precipitationMm}mm ($precipitationProbability%), temp: ${temperatureC}C, wind: ${windSpeedkmh}km/h)';
+    return 'HourlyWeatherPoint(time: $time, precip: ${precipitationMm}mm ($precipitationProbability%), temp: ${temperatureC}C, wind: ${windSpeedkmh}km/h, cloud: $cloudCover%, vis: ${visibility}m)';
   }
 }
 

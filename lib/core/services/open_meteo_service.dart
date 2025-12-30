@@ -91,8 +91,8 @@ class OpenMeteoService {
       final res = await _dio.get(url, queryParameters: {
         'latitude': latitude,
         'longitude': longitude,
-        // hourly étendu : précip / temp / vent / direction / pression / visibilité
-        'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl',
+        // hourly étendu : précip / temp / vent / direction / pression / visibilité / nuages
+        'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl,cloudcover,visibility',
         // daily étendu : sunrise/sunset + wind max
         // NOTE: Moon data removed as it seems to cause 400 errors (not in standard daily params?)
         'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
@@ -129,6 +129,8 @@ class OpenMeteoService {
     final hourlyWindGusts = _toDoubleList(hourly?['wind_gusts_10m']);
     final hourlyPressure = _toDoubleList(hourly?['pressure_msl']);
     final hourlyCodes = _toIntList(hourly?['weather_code']);
+    final hourlyCloudCover = _toIntList(hourly?['cloudcover']);
+    final hourlyVisibility = _toDoubleList(hourly?['visibility']);
 
     // Construire les points horaires
     final hourlyPoints = <HourlyWeatherPoint>[];
@@ -163,6 +165,8 @@ class OpenMeteoService {
           windGustsKmh: getVal(hourlyWindGusts),
           pressureMsl: getVal(hourlyPressure),
           weatherCode: getInt(hourlyCodes),
+          cloudCover: getInt(hourlyCloudCover),
+          visibility: getVal(hourlyVisibility),
         ),
       );
     }
@@ -195,9 +199,14 @@ class OpenMeteoService {
         String? getStr(List<String?> list) => i < list.length ? list[i] : null;
         double? getValNull(List<double> list) => i < list.length ? list[i] : null;
 
+        // MANUEL PARSING UTC pour éviter tout décalage locale
+        final rawDateStr = dailyTimes[i];
+        final parts = rawDateStr.split('-');
+        final dateUtc = DateTime.utc(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+
       dailyPoints.add(
         DailyWeatherPoint.fromRaw(
-          date: DateTime.parse(dailyTimes[i]), // Keep simple date parsing for daily
+          date: dateUtc, 
           precipMm: getVal(dailyPrecip),
           tMaxC: getValNull(dailyTMax),
           tMinC: getValNull(dailyTMin),

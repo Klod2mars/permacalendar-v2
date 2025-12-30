@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../features/climate/presentation/providers/weather_time_provider.dart';
+import '../../../features/climate/presentation/providers/weather_providers.dart';
+import '../../../core/models/hourly_weather_point.dart';
 
 /// Un conteneur météo "Bio-Organique" SIMPLIFIÉ.
-/// Ne gère plus que l'interaction (Drag) et l'affichage du texte "+X h".
-/// Le rendu des particules est désormais global (WeatherBioLayer).
+/// Ne gère plus que l'interaction (Drag) et l'affichage des infos projetées.
 class WeatherBioContainer extends ConsumerStatefulWidget {
   const WeatherBioContainer({super.key});
 
@@ -79,52 +81,103 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
     
     _recoilController.forward();
   }
+  
+  // Helper simple pour trouver le point le plus proche (pour l'affichage texte on n'a pas besoin de lerp parfait)
+  HourlyWeatherPoint? _findNearest(List<HourlyWeatherPoint> hourly, DateTime target) {
+    if (hourly.isEmpty) return null;
+    HourlyWeatherPoint? best;
+    Duration minD = const Duration(days: 9);
+    for(final p in hourly) {
+       final d = p.time.difference(target).abs();
+       if(d < minD) { minD = d; best = p; }
+    }
+    return best;
+  }
 
   @override
   Widget build(BuildContext context) {
     final hoursOffset = _dragOffsetPixels / _pixelsPerHour;
     final isTimeTraveling = hoursOffset > 0.1;
     
+    // Data access
+    final weatherAsync = ref.watch(currentWeatherProvider);
+    final projectedTime = DateTime.now().toUtc().add(Duration(minutes: (hoursOffset * 60).round()));
+    
     return GestureDetector(
           onHorizontalDragUpdate: _onHorizontalDragUpdate,
           onHorizontalDragEnd: _onHorizontalDragEnd,
-          behavior: HitTestBehavior.opaque, // Important pour capturer les touches sur la zone transparente
+          behavior: HitTestBehavior.opaque, 
           child: Stack(
             alignment: Alignment.center,
             children: [
-               // Debug/Dev or Nothing. Visible Particles are now GLOBAL.
-               // This widget is TRANSPARENT touch zone essentially.
-               
-               // But we show the Text Indicator when traveling
                if (isTimeTraveling)
-                 Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.history_toggle_off, 
-                        color: Colors.white, 
-                        size: 28,
-                        shadows: [
-                          Shadow(color: Colors.black, blurRadius: 4, offset: Offset(0, 2))
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '+ ${hoursOffset.toStringAsFixed(1)} h',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(color: Colors.black, blurRadius: 8, offset: Offset(0, 2)),
-                            Shadow(color: Colors.black54, blurRadius: 16, offset: Offset(0, 4)), // Double shadow for legibility
-                          ]
-                        ),
-                      ),
-                    ],
+                 weatherAsync.when(
+                    data: (data) {
+                       final point = _findNearest(data.result.hourlyWeather, projectedTime);
+                       final temp = point?.temperatureC ?? data.result.currentTemperatureC ?? 0;
+                       final precip = point?.precipitationMm ?? 0;
+                       final prob = point?.precipitationProbability ?? 0;
+                       final wind = point?.windSpeedkmh ?? 0;
+                       
+                       // Local time string
+                       final localTime = projectedTime.toLocal();
+                       final timeStr = DateFormat('HH:mm').format(localTime);
+                       final dayStr = DateFormat('EEEE d', 'fr_FR').format(localTime);
+
+                       return Center(
+                         child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.update, 
+                                color: Colors.cyanAccent, 
+                                size: 24,
+                                shadows: [Shadow(color: Colors.black, blurRadius: 4)],
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '+ ${hoursOffset.toStringAsFixed(1)} h',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: [
+                                    Shadow(color: Colors.black, blurRadius: 4, offset: Offset(0, 1)),
+                                    Shadow(color: Colors.black, blurRadius: 10, offset: Offset(0, 2)),
+                                  ]
+                                ),
+                              ),
+                            ],
+                         ),
+                       );
+                    },
+                    loading: () => const SizedBox(),
+                    error: (_, __) => const SizedBox(),
                  ),
             ],
           ),
+    );
+  }
+}
+
+class _StatBadge extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final String? sub;
+  const _StatBadge({required this.icon, required this.value, this.sub});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.white70, size: 16),
+        const SizedBox(width: 4),
+        Text(value, style: const TextStyle(color: Colors.white, fontSize: 14)),
+        if (sub != null) ...[
+          const SizedBox(width: 2),
+          Text('($sub)', style: const TextStyle(color: Colors.white54, fontSize: 12)),
+        ]
+      ],
     );
   }
 }

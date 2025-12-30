@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,8 +9,8 @@ import '../../../features/climate/domain/models/weather_view_data.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 import '../../../features/climate/presentation/providers/weather_time_provider.dart';
 
-/// Layer Global pour la simulation de particules (Pluie, Neige, Nuages).
-/// Respecte la calibration du ciel.
+/// Layer Global pour la simulation de particules (Pluie, Neige, Nuages, Brume).
+/// Respecte la calibration du ciel et inclut physique de collision avec l'ovoïde.
 class WeatherBioLayer extends ConsumerStatefulWidget {
   const WeatherBioLayer({super.key});
 
@@ -21,15 +21,18 @@ class WeatherBioLayer extends ConsumerStatefulWidget {
 class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer> with TickerProviderStateMixin {
   late Ticker _ticker;
   final List<_BioParticle> _particles = [];
-  final Random _rng = Random();
+  final math.Random _rng = math.Random();
   double _time = 0.0;
   
-  // Weather Params
+  // Weather Params Interpolated
   double _windSpeed = 0.0;
-  double _precipIntensity = 0.0;
-  bool _isSnow = false;
-  bool _isCloudy = false;
-  bool _isSunny = false;
+  double _precipIntensity = 0.0; // mm
+  // double _precipProb = 0.0; // Utilisation directe de l'intensité
+  // double _temperature = 0.0;
+  double _cloudCover = 0.0; // 0..100
+  double _visibility = 10000.0; // m
+  
+  bool _isSnow = false; 
 
   @override
   void initState() {
@@ -47,103 +50,174 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer> with TickerPr
     if (!mounted) return;
     
     // Time delta
-    final dt = (elapsed.inMicroseconds - _time * 1000000).clamp(0, 100000) / 1000000.0; // clamp jump
+    final dt = (elapsed.inMicroseconds - _time * 1000000).clamp(0, 50000) / 1000000.0; // clamp 50ms
     _time = elapsed.inMicroseconds / 1000000.0;
 
-    // Logic Rate Limit aka "ticks" if needed, but for particles 60fps is fine if optimized.
-    if (dt > 0.1) return; 
+    final calib = ref.read(skyCalibrationProvider);
 
-    // 1. Sync Weather Data
+    if (dt > 0.0) {
+      _updateWeatherState(dt);
+      _spawnParticles(dt, calib);
+      _updateParticles(dt, calib); // Physics collision
+    }
+    
+    setState(() {});
+  }
+  
+  void _updateWeatherState(double dt) {
     final weatherAsync = ref.read(currentWeatherProvider);
     final timeOffset = ref.read(weatherTimeOffsetProvider);
     
     weatherAsync.whenData((data) {
-       final projected = _getProjectedWeather(data, timeOffset);
-       if (projected != null) {
-          _updateParamsFromPoint(projected);
-       } else {
-          _updateParamsFromCurrent(data.result);
+       // Interpolation logic
+       final projectedTime = DateTime.now().toUtc().add(Duration(minutes: (timeOffset * 60).round()));
+       final interpolated = _getInterpolatedWeather(data, projectedTime);
+       
+       if (interpolated != null) {
+          _updateParamsFromPoint(interpolated);
        }
     });
+  }
 
-    // 2. Physics & Spawn
-    final calib = ref.read(skyCalibrationProvider);
-    _spawnParticles(dt, calib);
-    _updateParticles(dt);
-
-    setState(() {});
+  void _updateParamsFromPoint(HourlyWeatherPoint p) {
+      _windSpeed = p.windSpeedkmh;
+      _precipIntensity = p.precipitationMm;
+      _cloudCover = p.cloudCover.toDouble();
+      _visibility = p.visibility;
+      
+      final code = p.weatherCode;
+      // Logique Neige/Pluie
+      _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
   }
   
+  HourlyWeatherPoint? _getInterpolatedWeather(WeatherViewData data, DateTime target) {
+      final hourly = data.result.hourlyWeather;
+      if (hourly.isEmpty) return null;
+      
+      int idx = -1;
+      for (int i = 0; i < hourly.length; i++) {
+         if (hourly[i].time.isAfter(target)) {
+            idx = i;
+            break;
+         }
+      }
+      
+      if (idx == -1) return hourly.last; 
+      if (idx == 0) return hourly.first; 
+      
+      final p1 = hourly[idx - 1];
+      final p2 = hourly[idx];
+      
+      final t1 = p1.time.millisecondsSinceEpoch;
+      final t2 = p2.time.millisecondsSinceEpoch;
+      final tTarget = target.millisecondsSinceEpoch;
+      
+      final factor = (tTarget - t1) / (t2 - t1); 
+      
+      return HourlyWeatherPoint(
+         time: target,
+         precipitationMm: _lerp(p1.precipitationMm, p2.precipitationMm, factor),
+         precipitationProbability: (_lerp(p1.precipitationProbability.toDouble(), p2.precipitationProbability.toDouble(), factor)).round(),
+         temperatureC: _lerp(p1.temperatureC, p2.temperatureC, factor),
+         apparentTemperatureC: _lerp(p1.apparentTemperatureC, p2.apparentTemperatureC, factor),
+         windSpeedkmh: _lerp(p1.windSpeedkmh, p2.windSpeedkmh, factor),
+         windDirection: p1.windDirection,
+         windGustsKmh: _lerp(p1.windGustsKmh, p2.windGustsKmh, factor),
+         weatherCode: p1.weatherCode, 
+         cloudCover: (_lerp(p1.cloudCover.toDouble(), p2.cloudCover.toDouble(), factor)).round(),
+         visibility: _lerp(p1.visibility, p2.visibility, factor),
+      );
+  }
+  
+  double _lerp(double a, double b, double t) => a + (b - a) * t;
+
   void _spawnParticles(double dt, SkyCalibrationConfig calib) {
-    // Check global availability
-    // Note: We use calibration to determine spawn X relative to screen width 0..1
-    // Simplification: Spawn across the width of the bounding box of the ellipse
-    
-    if (_precipIntensity > 0.05 && !_isSunny) {
-         final spawnRate = _precipIntensity * 50 + (_isSnow ? 20 : 0);
+      // 1. Precipitations
+      if (_precipIntensity > 0.1) {
+         // Taux de spawn (particules / sec)
+         double spawnRate = _precipIntensity * 50; 
+         if (_isSnow) spawnRate *= 0.2; // Moins de flocons que de gouttes
+         
          final toSpawn = (spawnRate * dt).toInt();
          
-         // Bounding Box X
-         // Center X +/- Radius X (ignoring rotation for spawn area approximation, particles fall down anyway)
-         // Actually if rotated, gravity is still Down (screen Y).
-         
-         final minX = calib.cx - calib.rx;
-         final maxX = calib.cx + calib.rx;
-         final startY = calib.cy - calib.ry; // Top of oval
+         // Spawn zone: en haut de l'ellipse
+         final minX = calib.cx - calib.rx * 0.8; 
+         final maxX = calib.cx + calib.rx * 0.8;
+         final startY = calib.cy - calib.ry;
 
          for(int i=0; i<toSpawn; i++) {
-             // Random X in bounds
              final startX = minX + _rng.nextDouble() * (maxX - minX);
-             
              _particles.add(_BioParticle(
                x: startX, 
                y: startY,
                type: _isSnow ? _ParticleType.snow : _ParticleType.rain,
-               vx: _windSpeed * 0.01 + (_rng.nextDouble() - 0.5) * 0.005,
-               vy: _isSnow ? 0.05 : 0.2 + (_rng.nextDouble() * 0.1),
+               vx: _windSpeed * 0.005, // Vent influence X
+               vy: _isSnow ? (0.05 + _rng.nextDouble()*0.02) : (0.2 + _rng.nextDouble()*0.1), // Gravité
                life: 1.0,
                size: _rng.nextDouble() * 2 + 1,
              ));
          }
     }
-    
-    // Clouds
-    if (_isCloudy) {
-       final currentClouds = _particles.where((p) => p.type == _ParticleType.cloud).length;
-       if (currentClouds < 5 && _rng.nextDouble() < 0.01) {
-           _particles.add(_BioParticle(
-             x: calib.cx + (_rng.nextDouble()-0.5)*calib.rx*2,
-             y: calib.cy - calib.ry + _rng.nextDouble()*calib.ry,
-             type: _ParticleType.cloud,
-             vx: (_rng.nextDouble()-0.5)*0.02,
-             vy: 0,
-             life: 10.0,
-             maxLife: 10.0,
-             size: 30 + _rng.nextDouble()*20
-           ));
-       }
+    // Nuages (basé sur cloudCover)
+    if (_cloudCover > 30) {
+        final currentClouds = _particles.where((p) => p.type == _ParticleType.cloud).length;
+        if (currentClouds < 4 && _rng.nextDouble() < 0.02) {
+             _particles.add(_BioParticle(
+               x: calib.cx + (_rng.nextDouble()-0.5)*calib.rx*1.5,
+               y: calib.cy - calib.ry + _rng.nextDouble()*calib.ry*0.5,
+               type: _ParticleType.cloud,
+               vx: (_rng.nextDouble()-0.5)*0.01,
+               vy: 0,
+               life: 1.0,
+               maxLife: 1.0,
+               size: 40 + _rng.nextDouble()*30
+             ));
+        }
     }
   }
 
-  void _updateParticles(double dt) {
-     final gravity = _isSnow ? 0.05 : 0.5; // Scaled down for 0..1 coord system (1.0 = screen height)
+  void _updateParticles(double dt, SkyCalibrationConfig calib) {
+     // Gravité
+     final gravity = _isSnow ? 0.05 : 0.5; 
      
      for (int i = _particles.length - 1; i >= 0; i--) {
         final p = _particles[i];
         p.life -= dt;
         
+        // Physique
         if (p.type == _ParticleType.rain || p.type == _ParticleType.snow) {
            p.vy += gravity * dt;
            p.x += p.vx * dt;
            p.y += p.vy * dt;
            
-           // Floor Collision (Calibration dependent? No, let's keep floor simple or relative to oval bottom)
-           // Actually, "Floor" was 0.35 in old widget. In global overlay, floor is much lower.
-           // Let's say floor is proper bottom of screen (1.0) or simply kill if > 1.0
-           if (p.y > 1.0) p.life = -1;
+           // --- COLLISION OVÏDE RÉELLE ---
+           // 1. Transformer position particule dans repère local de l'ellipse
+           // Centre ellipse (cx, cy)
+           final dx = p.x - calib.cx;
+           final dy = p.y - calib.cy;
+           
+           // Rotation inverse (-rotation)
+           final angle = -calib.rotation;
+           final localX = dx * math.cos(angle) - dy * math.sin(angle);
+           final localY = dx * math.sin(angle) + dy * math.cos(angle);
+           
+           // 2. Équation ellipse: (x/rx)^2 + (y/ry)^2
+           // Si > 1, on est dehors
+           final rx = calib.rx;
+           final ry = calib.ry;
+           final eq = (localX*localX)/(rx*rx) + (localY*localY)/(ry*ry);
+           
+           if (eq >= 1.0) {
+              // COLLISION !
+              // Option A: Disparition (Splash)
+              p.life = -1; 
+              
+              // Option B (Avancé): Faire glisser ou rebondir. 
+              // Ici on se contente de tuer pour éviter la charge visuelle, 
+              // mais c'est BEAUCOUP plus propre que y > 1.0 car cela suit la forme.
+           }
         } else if (p.type == _ParticleType.cloud) {
            p.x += p.vx * dt;
-           // Cloud drift
         }
         
         if (p.life <= 0) {
@@ -152,47 +226,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer> with TickerPr
      }
   }
 
-  // --- Weather Helpers (duplicated from BioContainer but simplified) ---
-  HourlyWeatherPoint? _getProjectedWeather(WeatherViewData data, double offsetHours) {
-      if (data.result.hourlyWeather.isEmpty) return null;
-      if (offsetHours < 0.02) return null;
-      final target = DateTime.now().toUtc().add(Duration(minutes: (offsetHours * 60).round()));
-      // Simple loop search
-      HourlyWeatherPoint? best;
-      Duration minD = const Duration(days: 9);
-      for(final p in data.result.hourlyWeather) {
-         final d = p.time.difference(target).abs();
-         if(d < minD) { minD = d; best = p; }
-      }
-      return best;
-  }
-  
-  void _updateParamsFromCurrent(dynamic res) {
-      if (res == null) return;
-      _windSpeed = res.currentWindSpeed ?? 0.0;
-      // Precip? Check hourly or assume 0 if not provided in current
-      _precipIntensity = 0.0; // Simplification, ideally verify hourly like before
-      final code = res.currentWeatherCode ?? 0;
-      _deriveBooleans(code);
-  }
-  
-  void _updateParamsFromPoint(HourlyWeatherPoint p) {
-      _windSpeed = p.windSpeedkmh;
-      _precipIntensity = p.precipitationMm;
-      _deriveBooleans(p.weatherCode);
-  }
-
-  void _deriveBooleans(int code) {
-      _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
-      _isCloudy = (code >= 1 && code <= 3) || (code >= 45); 
-      _isSunny = (code == 0) && !_isCloudy && !_isSnow && (_precipIntensity < 0.05);
-  }
-
   @override
   Widget build(BuildContext context) {
     final calib = ref.watch(skyCalibrationProvider);
     
-    return IgnorePointer( // NON-INTERACTIVE : JUST VISUALS
+    return IgnorePointer(
       child: RepaintBoundary(
         child: ClipPath(
           clipper: _OrganicSkyClipper(calib),
@@ -206,7 +244,8 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer> with TickerPr
   }
 }
 
-enum _ParticleType { rain, snow, cloud }
+enum _ParticleType { rain, snow, cloud, mist }
+
 class _BioParticle {
   double x, y, vx, vy, life, maxLife, size;
   _ParticleType type;
@@ -220,24 +259,36 @@ class _BioParticlePainter extends CustomPainter {
   
   @override
   void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    
     final paintRain = Paint()..color = Colors.blueAccent.withOpacity(0.6)..strokeWidth=1.5..strokeCap=StrokeCap.round;
-    final paintSnow = Paint()..color = Colors.white.withOpacity(0.8)..style = PaintingStyle.fill;
-    final paintCloud = Paint()..color = Colors.white.withOpacity(0.3)..maskFilter=const MaskFilter.blur(BlurStyle.normal, 10);
+    final paintSnow = Paint()..color = Colors.white.withOpacity(0.8);
+    final paintCloud = Paint()..color = Colors.white.withOpacity(0.2)..maskFilter=const MaskFilter.blur(BlurStyle.normal, 15);
+    final paintMist = Paint()..color = Colors.white.withOpacity(0.15)..maskFilter=const MaskFilter.blur(BlurStyle.normal, 25);
     
     for(final p in particles) {
-       final px = p.x * size.width;
-       final py = p.y * size.height;
-       final alpha = (p.life / p.maxLife).clamp(0.0, 1.0);
+       final px = p.x * w;
+       final py = p.y * h;
+       // Fade in/out
+       double alpha = 1.0;
+       if (p.life < 0.5) alpha = p.life / 0.5;
+       if (p.maxLife - p.life < 0.5) alpha = (p.maxLife - p.life) / 0.5;
+       alpha = alpha.clamp(0.0, 1.0);
        
        if (p.type == _ParticleType.rain) {
           paintRain.color = paintRain.color.withOpacity(alpha * 0.6);
-          canvas.drawLine(Offset(px, py), Offset(px - p.vx*10, py - p.vy*10), paintRain);
+          // Stretch rain by velocity
+          canvas.drawLine(Offset(px, py), Offset(px - p.vx*15, py - p.vy*15), paintRain);
        } else if (p.type == _ParticleType.snow) {
-          paintSnow.color = paintSnow.color.withOpacity(alpha * 0.8);
+          paintSnow.color = paintSnow.color.withOpacity(alpha * 0.9);
           canvas.drawCircle(Offset(px, py), p.size, paintSnow);
        } else if (p.type == _ParticleType.cloud) {
           paintCloud.color = paintCloud.color.withOpacity(alpha * 0.3);
           canvas.drawCircle(Offset(px, py), p.size, paintCloud);
+       } else if (p.type == _ParticleType.mist) {
+          paintMist.color = paintMist.color.withOpacity(alpha * 0.2);
+          canvas.drawCircle(Offset(px, py), p.size, paintMist);
        }
     }
   }
@@ -251,7 +302,6 @@ class _OrganicSkyClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    // Replicate same logic as before
     final w = size.width;
     final h = size.height;
     final center = Offset(config.cx * w, config.cy * h);

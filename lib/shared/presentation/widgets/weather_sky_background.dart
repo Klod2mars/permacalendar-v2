@@ -2,11 +2,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/sky_calibration_config.dart';
+import '../../../core/models/daily_weather_point.dart';
 import '../../../../features/climate/presentation/providers/weather_providers.dart';
 import '../../../../features/climate/presentation/providers/weather_time_provider.dart';
-
-// Import for provider access if separate file
-import '../../../core/models/calibration_state.dart'; 
+import '../../../core/models/calibration_state.dart';
 
 class WeatherSkyBackground extends ConsumerWidget {
   const WeatherSkyBackground({super.key});
@@ -34,15 +33,46 @@ class WeatherSkyBackground extends ConsumerWidget {
          }
 
          // Accès safe aux données daily
-         final daily = weather.dailyWeather.isNotEmpty ? weather.dailyWeather.first : null;
+         // helper: find correct daily point
+         DailyWeatherPoint? findDailyForProjectedDate(List<DailyWeatherPoint> daily, DateTime projected) {
+            final pDate = DateTime.utc(projected.year, projected.month, projected.day);
+            for (final d in daily) {
+               // d.date is already utc thanks to OpenMeteoService fix
+               final dDate = DateTime.utc(d.date.year, d.date.month, d.date.day);
+               if (dDate == pDate) return d;
+            }
+            // Fallback: nearest
+            if (daily.isEmpty) return null;
+            
+            DailyWeatherPoint? best;
+            int minDiff = 9999;
+            for (final d in daily) {
+               final dDate = DateTime.utc(d.date.year, d.date.month, d.date.day);
+               final diff = dDate.difference(pDate).inDays.abs();
+               if (diff < minDiff) {
+                 minDiff = diff;
+                 best = d;
+               }
+            }
+            return best;
+         }
+
+         // 1. Troubles Daily selection logic
+         final daily = findDailyForProjectedDate(weather.dailyWeather, projectedTime);
+         
          final sunrise = parseUtc(daily?.sunrise);
          final sunset = parseUtc(daily?.sunset);
          
-         // Fallback safe
-         final safeSunrise = (sunrise.year == projectedTime.year) ? sunrise : DateTime(projectedTime.year, projectedTime.month, projectedTime.day, 6, 0).toUtc();
-         final safeSunset = (sunset.year == projectedTime.year) ? sunset : DateTime(projectedTime.year, projectedTime.month, projectedTime.day, 20, 0).toUtc();
-
-         final elevation = _calculateSolarElevation(projectedTime, safeSunrise, safeSunset);
+         // 2. Fallback safe
+         final safeSunrise = (daily != null && sunrise.year != 0) ? sunrise 
+              : DateTime.utc(projectedTime.year, projectedTime.month, projectedTime.day, 6, 0);
+         final safeSunset = (daily != null && sunset.year != 0) ? sunset 
+              : DateTime.utc(projectedTime.year, projectedTime.month, projectedTime.day, 20, 0);
+         
+         // On calcule 'progress' (0.0 Sunrise -> 1.0 Sunset) pour la position du soleil
+         final dayProgress = _calculateDayProgress(projectedTime, safeSunrise, safeSunset);
+         // On garde 'elevation' pour l'intensité du zénith (0.0 Horizon -> 1.0 Midi)
+         final elevation = _calculateSolarIntensity(dayProgress);
          
          return CustomPaint(
            painter: _OrganicSkyPainter(
@@ -59,28 +89,40 @@ class WeatherSkyBackground extends ConsumerWidget {
     );
   }
 
-  double _calculateSolarElevation(DateTime current, DateTime sunrise, DateTime sunset) {
-    if (current.isAfter(sunrise) && current.isBefore(sunset)) {
-      // JOUR : 0 -> 1 -> 0
-      final totalMinutes = sunset.difference(sunrise).inMinutes;
-      final currentMinutes = current.difference(sunrise).inMinutes;
-      final progress = currentMinutes / totalMinutes; 
-      return math.sin(progress * math.pi); 
+  double _calculateDayProgress(DateTime current, DateTime sunrise, DateTime sunset) {
+    // < 0.0 : Avant l'aube
+    // 0.0 .. 1.0 : Jour
+    // > 1.0 : Après crépuscule
+    
+    if (current.isBefore(sunrise)) {
+       // Nuit matin
+       final diff = current.difference(sunrise).inMinutes;
+       // On normalise sur 12h de nuit arbitraire (720min) pour avoir une pente
+       return diff / 720.0; 
+    } else if (current.isAfter(sunset)) {
+       final diff = current.difference(sunset).inMinutes;
+       return 1.0 + diff / 720.0; 
     } else {
-      // NUIT : 0 -> -1
-      final distSunrise = current.difference(sunrise).inMinutes.abs();
-      final distSunset = current.difference(sunset).inMinutes.abs();
-      final minDist = math.min(distSunrise, distSunset);
-      // Nuit profonde atteinte en 60min
-      final elevation = -(minDist / 60.0).clamp(0.0, 1.0);
-      return elevation;
+       final total = sunset.difference(sunrise).inMinutes;
+       final passed = current.difference(sunrise).inMinutes;
+       if (total == 0) return 0.5;
+       return passed / total; 
     }
+  }
+
+  double _calculateSolarIntensity(double progress) {
+    // Sinusoide qui va dans le négatif pour la nuit
+    // progress 0 (levere) -> sin(0) = 0
+    // progress 0.5 (midi) -> sin(PI/2) = 1
+    // progress 1 (coucher) -> sin(PI) = 0
+    // progress -0.5 -> sin(-PI/2) = -1
+    return math.sin(progress * math.pi);
   }
 }
 
 class _OrganicSkyPainter extends CustomPainter {
   final double cx, cy, rx, ry, rotation;
-  final double elevation; // -1.0 (Nuit) ... 0.0 (Horizon) ... 1.0 (Zénith)
+  final double elevation;
 
   _OrganicSkyPainter({
     required this.cx, required this.cy, 
@@ -91,7 +133,6 @@ class _OrganicSkyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // 1. Définir la zone (Masque)
     final w = size.width;
     final h = size.height;
     final center = Offset(cx * w, cy * h);
@@ -99,128 +140,75 @@ class _OrganicSkyPainter extends CustomPainter {
     final radiusY = ry * h;
 
     canvas.save();
-    
-    // Application de la transformation (Rotation autour du centre)
     canvas.translate(center.dx, center.dy);
     canvas.rotate(rotation);
-    // On dessine centré en 0,0 localement
     final ovalRect = Rect.fromCenter(center: Offset.zero, width: radiusX * 2, height: radiusY * 2);
     
-    // Clipping : Tout se passe DANS l'ovoïde
-    // Note: clipPath est plus coûteux que clipRect/RRect, mais pour une ellipse rotated c'est nécessaire ou bien scale/clipOval.
-    // Ici on a déjà transformé le canvas, donc un simple drawOval ou clipPath d'oval suffit.
-    // Cependant, pour appliquer les BlendModes correctement sur tout le reste, il vaut mieux dessiner la forme avec le BlendMode.
-    
-    // --- LOGIQUE LUMIÈRE ORGANIQUE ---
-    
-    if (elevation > 0) {
-       // === JOUR (ADDITIF) ===
-       // On ajoute de la lumière (BlendMode.screen ou plus)
-       // Intensité basée sur elevation
+    if (elevation > -0.05) { // Zone Jour + Crépuscule proche
+       // --- JOUR (Soleil organique, plus de "tache blanche") ---
        final intensity = elevation.clamp(0.0, 1.0);
        
-       // Couleur : Blanc chaud (Matin/Soir) -> Blanc pur (Zénith)
-       // On peut garder une teinte dorée légère.
-       final color = Color.lerp(
-         const Color(0xFFFFD5AB), // Doré
-         const Color(0xFFFFFFFF), // Blanc
+       // Correction : Utilisation d'une lumière ambrée/dorée au lieu du blanc pur
+       // On garde un léger jaune clair au zénith, mais majoritairement chaud
+       final sunColor = Color.lerp(
+         const Color(0xFFE6A35C), // Orange chaud (Soleil bas)
+         const Color(0xFFFFF8E0), // Blanc cassé très chaud (Zénith)
          intensity
-       )!.withOpacity(0.15 + 0.15 * intensity); // 15% -> 30% d'opacité max (subtil)
+       )!;
+       
+       // Opacité réduite pour plus de subtilité (max 15% au lieu de 30%)
+       final opacity = (0.05 + 0.10 * intensity).clamp(0.0, 0.15);
 
        final paint = Paint()
          ..shader = RadialGradient(
-           colors: [color, color.withOpacity(0.0)],
-           stops: const [0.2, 1.0], // Centre diffus
+           colors: [sunColor.withOpacity(opacity), sunColor.withOpacity(0.0)],
+           stops: const [0.0, 0.8], // Gradient plus doux
          ).createShader(ovalRect)
-         ..blendMode = BlendMode.screen; // ÉCLAIRCIR LA MATIÈRE
+         ..blendMode = BlendMode.srcOver; // On utilise srcOver ou un mode très léger pour ne pas "brûler" le fond
 
        canvas.drawOval(ovalRect, paint);
        
     } else {
-       // === NUIT (SOUSTRACTIF) ===
-       // On assombrit la matière (BlendMode.multiply)
+       // === NUIT ===
        final darkness = (-elevation).clamp(0.0, 1.0);
        
        if (darkness > 0.01) {
-          // --- TWILIGHT PAHSE (Heure Bleue / Chien et Loup) ---
-          // De 0.0 à 0.4 (approx 24min après coucher), on est dans le bleu profond.
-          // Au delà, on va vers le noir.
-          
+          // Crépuscule (0.0 à 0.4) -> Nuit (0.4+)
           Color nightColor;
           if (darkness < 0.4) {
-             // Phase Crépuscule : Transition Transparent -> Bleu Nuit
              final t = darkness / 0.4;
-             nightColor = Color.lerp(
-                Colors.transparent, 
-                const Color(0xFF101835), // Bleu nuit profond (Twilight)
-                t
-             )!;
+             nightColor = Color.lerp(Colors.transparent, const Color(0xFF0F172A), t)!; // Bleu nuit plus riche
           } else {
-             // Phase Nuit Noire : Transition Bleu Nuit -> Noir Abyssal
              final t = ((darkness - 0.4) / 0.6).clamp(0.0, 1.0);
-             nightColor = Color.lerp(
-                const Color(0xFF101835), // Start from Twilight
-                const Color(0xFF000208), // Noir quasi absolu
-                t
-             )!;
+             nightColor = Color.lerp(const Color(0xFF0F172A), const Color(0xFF020205), t)!; // Noir profond
           }
 
           final paint = Paint()
              ..color = nightColor
-             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20) // Bords flous (Feather)
-             ..blendMode = BlendMode.multiply; // ASSOMBRIR LA MATIÈRE
-
-          // On dessine l'ovale un tout petit peu plus grand pour le feather ? 
-          // Le feather est sur le masque, ou sur la forme peinte.
-          // Ici on peint une forme floue.
+             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 15) // Flou légèrement réduit
+             ..blendMode = BlendMode.multiply;
           canvas.drawOval(ovalRect, paint);
           
-          // === ÉTOILES (NOISE VIVANT) ===
-          // Seulement si nuit bien installée (après le crépuscule civil)
+          // Étoiles (inchangé, car fonctionnel)
           if (darkness > 0.4) {
-             // Opacité progressive des étoiles
              final starOpacity = ((darkness - 0.4) / 0.3).clamp(0.0, 1.0);
-             if (starOpacity > 0) {
-                 _drawLiveStars(canvas, ovalRect, starOpacity);
-             }
+             if (starOpacity > 0) _drawLiveStars(canvas, ovalRect, starOpacity);
           }
        }
     }
-    
     canvas.restore();
   }
   
   void _drawLiveStars(Canvas canvas, Rect rect, double opacity) {
-      // Génération déterministe pseudo-aléatoire pour que les étoiles soient fixes
-      // mais on veut qu'elles scintillent.
-      // On utilise le temps actuel pour l'animation (pas passé en paramètre ici pour simplifier, 
-      // mais idéalement il faudrait un ticker. Pour l'instant static noise ou based on elevation jitter?)
-      
-      // Hack: utiliser elevation comme seed de scintillement partiel ? 
-      // Non, ça ferait bouger les étoiles quand on drag.
-      // On veut des étoiles fixes en position.
-      
-      final rng = math.Random(42); // Seed fixe pour positions
-      final starPaint = Paint()..blendMode = BlendMode.srcOver; // Dessin normal par dessus l'ombre
-      
+      final rng = math.Random(42); 
+      final starPaint = Paint()..blendMode = BlendMode.srcOver;
       final count = 25;
       for(int i=0; i<count; i++) {
-        // Position relative dans le rect (-w/2 .. w/2)
         final x = (rng.nextDouble() - 0.5) * rect.width;
         final y = (rng.nextDouble() - 0.5) * rect.height;
-        
-        // Vérif si dans l'ellipse (x/rx)^2 + (y/ry)^2 <= 1
         if ((x*x)/((rect.width/2)*(rect.width/2)) + (y*y)/((rect.height/2)*(rect.height/2)) > 0.9) continue;
-        
-        // Taille
         final size = rng.nextDouble() * 1.2 + 0.5;
-        
-        // Opacité
-        // On veut qu'elles apparaissent progressivement avec darkness
-        // Et un peu de variation aléatoire.
-        // starOpacity est passé en paramètre (0..1)
         final starAlpha = (rng.nextDouble() * 0.5 + 0.5) * opacity;
-        
         starPaint.color = Colors.white.withOpacity(starAlpha.clamp(0.0, 0.8));
         canvas.drawCircle(Offset(x, y), size, starPaint);
       }
@@ -228,9 +216,6 @@ class _OrganicSkyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _OrganicSkyPainter old) {
-    return old.elevation != elevation || 
-           old.cx != cx || old.cy != cy || 
-           old.rx != rx || old.ry != ry || 
-           old.rotation != rotation;
+    return old.elevation != elevation || old.cx != cx || old.cy != cy || old.rx != rx || old.ry != ry || old.rotation != rotation;
   }
 }
