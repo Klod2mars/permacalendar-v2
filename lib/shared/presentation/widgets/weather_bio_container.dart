@@ -125,7 +125,9 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
                        final dayStr = DateFormat('EEEE d', 'fr_FR').format(localTime);
 
                        return Center(
-                         child: Row(
+                         child: FittedBox(
+                           fit: BoxFit.scaleDown,
+                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(
@@ -148,6 +150,7 @@ class _WeatherBioContainerState extends ConsumerState<WeatherBioContainer>
                                 ),
                               ),
                             ],
+                          ),
                          ),
                        );
                     },
