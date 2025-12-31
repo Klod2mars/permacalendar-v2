@@ -29,7 +29,7 @@ class PlantHiveException implements Exception {
 /// - Aucune validation stricte pour permettre l'ajout libre
 class PlantHiveRepository {
   static const String _boxName = 'plants_box';
-  static const String _jsonAssetPath = 'assets/data/plants_merged_clean.json';
+  static const String _jsonAssetPath = 'assets/data/plants.json';
 
   Box<PlantHive>? _box;
   bool _isInitialized = false;
