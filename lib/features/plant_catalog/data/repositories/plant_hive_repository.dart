@@ -1,4 +1,4 @@
-﻿// lib/features/plant_catalog/data/repositories/plant_hive_repository.dart
+// lib/features/plant_catalog/data/repositories/plant_hive_repository.dart
 
 import 'dart:convert';
 
@@ -29,7 +29,9 @@ class PlantHiveException implements Exception {
 /// - Aucune validation stricte pour permettre l'ajout libre
 class PlantHiveRepository {
   static const String _boxName = 'plants_box';
-  static const String _jsonAssetPath = 'assets/data/plants.json';
+  // Primary path kept for backward compatibility; fallback to canonical plants.json
+  static const String _jsonAssetPath = 'assets/data/plants_merged_clean.json';
+  static const String _jsonAssetFallback = 'assets/data/plants.json';
 
   Box<PlantHive>? _box;
   bool _isInitialized = false;
@@ -143,8 +145,35 @@ class PlantHiveRepository {
       // Visible debug print to ensure startup is logged
       print('PlantHiveRepository: initializeFromJson START');
 
-      // Chargement du fichier JSON depuis les assets
-      final String jsonString = await rootBundle.loadString(_jsonAssetPath);
+      // Try primary path first, then fallback path. Log clearly which path was used.
+      String jsonString;
+      String usedPath = _jsonAssetPath;
+      try {
+        jsonString = await rootBundle.loadString(_jsonAssetPath);
+        developer.log(
+            'PlantHiveRepository: Loaded plants JSON from $_jsonAssetPath',
+            name: 'PlantHiveRepository');
+      } catch (ePrimary) {
+        developer.log(
+            'PlantHiveRepository: Could not load $_jsonAssetPath: $ePrimary',
+            name: 'PlantHiveRepository',
+            level: 900);
+        try {
+          usedPath = _jsonAssetFallback;
+          jsonString = await rootBundle.loadString(_jsonAssetFallback);
+          developer.log(
+              'PlantHiveRepository: Loaded plants JSON from $_jsonAssetFallback',
+              name: 'PlantHiveRepository');
+        } catch (eFallback) {
+          developer.log(
+              'PlantHiveRepository: Could not load fallback $_jsonAssetFallback: $eFallback',
+              name: 'PlantHiveRepository',
+              level: 1000);
+          // Re-throw as a PlantHiveException so upstream can handle/log.
+          throw PlantHiveException(
+              'Impossible de charger le fichier JSON des plantes : $_jsonAssetPath et $_jsonAssetFallback');
+        }
+      }
       final dynamic jsonData = json.decode(jsonString);
 
       // Détection automatique du format
@@ -342,9 +371,8 @@ class PlantHiveRepository {
       // 1) sowingMonths3 -> sowingMonths (si présent)
       if (json.containsKey('sowingMonths3') && json['sowingMonths3'] is List) {
         try {
-          json['sowingMonths'] = (json['sowingMonths3'] as List)
-              .map((e) => e.toString())
-              .toList();
+          json['sowingMonths'] =
+              (json['sowingMonths3'] as List).map((e) => e.toString()).toList();
         } catch (_) {}
       }
 

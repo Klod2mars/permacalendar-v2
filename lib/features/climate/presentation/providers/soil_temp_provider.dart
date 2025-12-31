@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/soil_metrics_repository.dart';
 import '../../domain/usecases/compute_soil_temp_next_day_usecase.dart';
 import 'soil_metrics_repository_provider.dart';
@@ -68,17 +68,8 @@ class SoilTempController extends Notifier<SoilTempState> {
       updated[scopeKey] = const AsyncValue.loading();
       state = state.copyWith(temperatures: updated);
 
-      // Soft recalibration: Blend measured value with current value
-      final currentVal = state.temperatures[scopeKey]?.value ??
-          (await _repo.getSoilTempC(scopeKey));
-
-      late double finalTemp;
-      if (currentVal != null) {
-        // Linear interpolation/EWA: 90% new, 10% old
-        finalTemp = (tempC * 0.9) + (currentVal * 0.1);
-      } else {
-        finalTemp = tempC;
-      }
+      // Direct override with measured value (explicit user measurement).
+      final double finalTemp = tempC;
 
       await _repo.setSoilTempC(scopeKey, finalTemp);
       await _repo.setLastUpdated(scopeKey, DateTime.now());
@@ -229,7 +220,6 @@ final soilTempProviderByScope =
   return temp;
 });
 
-
 // --- Forecast & Advice Logic ---
 
 /// Data point for soil temperature forecast
@@ -265,15 +255,13 @@ final soilTempForecastProvider =
   // 3. Compute trajectory
   final computeUsecase = ComputeSoilTempNextDayUsecase();
   final result = <SoilTempForecastPoint>[];
-  
+
   // Initial point (Today/Now)
-  result.add(SoilTempForecastPoint(
-    date: DateTime.now(),
-    tempC: startSoilTemp
-  ));
+  result.add(SoilTempForecastPoint(date: DateTime.now(), tempC: startSoilTemp));
 
   double currentSoilC = startSoilTemp;
-  final sortedForecast = List.of(forecastPoints)..sort((a,b) => a.date.compareTo(b.date));
+  final sortedForecast = List.of(forecastPoints)
+    ..sort((a, b) => a.date.compareTo(b.date));
 
   for (final dayPoint in sortedForecast) {
     // Air temp for the day: arithmetic mean of min and max
@@ -288,10 +276,7 @@ final soilTempForecastProvider =
       alpha: 0.15, // Default for loam, TODO: Make dynamic
     );
 
-    result.add(SoilTempForecastPoint(
-      date: dayPoint.date,
-      tempC: currentSoilC
-    ));
+    result.add(SoilTempForecastPoint(date: dayPoint.date, tempC: currentSoilC));
   }
 
   return result;
@@ -329,9 +314,8 @@ final sowingAdviceProvider =
   final currentTemp = forecast.first.tempC;
   // Get 2-day min (Day 0, 1, 2)
   final nextDays = forecast.take(3).map((e) => e.tempC).toList();
-  final minNext2Days = nextDays.isEmpty
-      ? currentTemp
-      : nextDays.reduce((a, b) => a < b ? a : b);
+  final minNext2Days =
+      nextDays.isEmpty ? currentTemp : nextDays.reduce((a, b) => a < b ? a : b);
 
   final adviceList = <SowingAdvice>[];
 

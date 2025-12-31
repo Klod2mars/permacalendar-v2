@@ -17,7 +17,8 @@ class SoilTempPage extends ConsumerWidget {
     final adviceAsync = ref.watch(sowingAdviceProvider(scopeKey));
 
     return Scaffold(
-      backgroundColor: Colors.transparent, // Background handled by parent/stack usually? 
+      backgroundColor:
+          Colors.transparent, // Background handled by parent/stack usually?
       // If used as full page, we might need a background. Assuming standard app background.
       // Let's use a dark nice background if running standalone, but usually this app has a global background.
       // I'll put a container with gradient just in case.
@@ -26,7 +27,10 @@ class SoilTempPage extends ConsumerWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF1E3A2F), Color(0xFF0F1E19)], // Deep organic green
+            colors: [
+              Color(0xFF1E3A2F),
+              Color(0xFF0F1E19)
+            ], // Deep organic green
           ),
         ),
         child: SafeArea(
@@ -40,7 +44,8 @@ class SoilTempPage extends ConsumerWidget {
                   children: [
                     IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back, color: Colors.white)),
+                        icon:
+                            const Icon(Icons.arrow_back, color: Colors.white)),
                     const SizedBox(width: 8),
                     Text("Température du Sol",
                         style: theme.textTheme.headlineSmall?.copyWith(
@@ -55,55 +60,74 @@ class SoilTempPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: forecastAsync.when(
                   data: (data) => _buildChart(data, theme),
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (e, s) => Center(child: Text("Erreur chart: $e", style: const TextStyle(color: Colors.white))),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (e, s) => Center(
+                      child: Text("Erreur chart: $e",
+                          style: const TextStyle(color: Colors.white))),
                 ),
               ),
 
               const SizedBox(height: 24),
-              
-              // --- Affichage de la température mesurée + action modifier ---
-              Builder(
-                builder: (context) {
-                  final soilTempAsync = ref.watch(soilTempProviderByScope(scopeKey));
+
+              // --- Mesure du sol (affichage & bouton) ---
+              // Affichage du soilTempAsync et du bouton Modifier
+              Consumer(
+                builder: (context, ref, child) {
+                  final soilTempAsync =
+                      ref.watch(soilTempProviderByScope(scopeKey));
                   final double displayedTemp = soilTempAsync.value ?? 0.0;
-  
+
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12),
                     child: Row(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Température mesurée',
-                                style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
-                            const SizedBox(height: 4),
-                            Text('${displayedTemp.toStringAsFixed(1)}°C',
+                        // Left: labels
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Température mesurée',
+                                  style: theme.textTheme.titleMedium
+                                      ?.copyWith(color: Colors.white)),
+                              const SizedBox(height: 6),
+                              Text(
+                                '${displayedTemp.toStringAsFixed(1)}°C',
                                 style: theme.textTheme.headlineSmall?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                )),
-                          ],
-                        ),
-                        const Spacer(),
-                        ElevatedButton.icon(
-                          onPressed: () => showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => const SoilTempSheet(),
+                                ),
+                              ),
+                            ],
                           ),
-                          icon: const Icon(Icons.thermostat),
-                          label: const Text('Modifier / Mesurer'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            foregroundColor: Colors.black,
+                        ),
+                        // Right: constrained button to avoid overflow
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 240),
+                          child: ElevatedButton.icon(
+                            onPressed: () => showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (_) => const SoilTempSheet(),
+                            ),
+                            icon: const Icon(Icons.thermostat),
+                            label: const Text('Modifier / Mesurer'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amber,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32)),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   );
-                }
+                },
               ),
               // --- fin affichage température ---
               Padding(
@@ -118,7 +142,10 @@ class SoilTempPage extends ConsumerWidget {
               Expanded(
                 child: adviceAsync.when(
                   data: (adviceList) {
-                    if (adviceList.isEmpty) return const Center(child: Text("Aucune plante chargée", style: TextStyle(color: Colors.white70)));
+                    if (adviceList.isEmpty)
+                      return const Center(
+                          child: Text("Aucune plante chargée",
+                              style: TextStyle(color: Colors.white70)));
                     return ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: adviceList.length,
@@ -128,8 +155,11 @@ class SoilTempPage extends ConsumerWidget {
                       },
                     );
                   },
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (e, s) => Center(child: Text("Erreur conseils: $e", style: const TextStyle(color: Colors.white))),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (e, s) => Center(
+                      child: Text("Erreur conseils: $e",
+                          style: const TextStyle(color: Colors.white))),
                 ),
               ),
             ],
@@ -146,8 +176,10 @@ class SoilTempPage extends ConsumerWidget {
       return FlSpot(e.key.toDouble(), e.value.tempC);
     }).toList();
 
-    final maxY = (points.map((e) => e.y).reduce((a, b) => a > b ? a : b) + 5).roundToDouble();
-    final minY = (points.map((e) => e.y).reduce((a, b) => a < b ? a : b) - 5).roundToDouble();
+    final maxY = (points.map((e) => e.y).reduce((a, b) => a > b ? a : b) + 5)
+        .roundToDouble();
+    final minY = (points.map((e) => e.y).reduce((a, b) => a < b ? a : b) - 5)
+        .roundToDouble();
 
     return LineChart(
       LineChartData(
@@ -173,14 +205,14 @@ class SoilTempPage extends ConsumerWidget {
           leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           rightTitles: AxisTitles(
-             sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 30,
-                getTitlesWidget: (value, meta) {
-                  return Text("${value.toInt()}°", style: const TextStyle(color: Colors.white54, fontSize: 10));
-                }
-             )
-          ),
+              sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 30,
+                  getTitlesWidget: (value, meta) {
+                    return Text("${value.toInt()}°",
+                        style: const TextStyle(
+                            color: Colors.white54, fontSize: 10));
+                  })),
         ),
         borderData: FlBorderData(show: false),
         minY: minY,
@@ -240,8 +272,12 @@ class SoilTempPage extends ConsumerWidget {
           backgroundColor: color.withOpacity(0.2),
           child: Icon(icon, color: color, size: 20),
         ),
-        title: Text(item.plant.commonName, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        subtitle: Text(item.reason, style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12)),
+        title: Text(item.plant.commonName,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+        subtitle: Text(item.reason,
+            style:
+                TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12)),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
@@ -249,7 +285,9 @@ class SoilTempPage extends ConsumerWidget {
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: color.withOpacity(0.5)),
           ),
-          child: Text(statusText, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 12)),
+          child: Text(statusText,
+              style: TextStyle(
+                  color: color, fontWeight: FontWeight.bold, fontSize: 12)),
         ),
       ),
     );

@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/soil_temp_provider.dart';
@@ -23,6 +23,7 @@ class SoilTempSheet extends ConsumerStatefulWidget {
 
 class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
   double _temperature = 0.0;
+  bool _inputValid = true;
   final TextEditingController _controller = TextEditingController();
   late String _scopeKey;
 
@@ -37,7 +38,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
+
     // Resolve scope key from active garden
     final activeId = ref.read(activeGardenIdProvider);
     _scopeKey = activeId ?? "garden:demo";
@@ -73,7 +74,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
     final theme = Theme.of(context);
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.8, // More space
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.8),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
@@ -82,27 +83,21 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.only(
+              left: 24,
+              right: 24,
+              top: 24,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                // Header
+                // header row
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        Icons.thermostat,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,109 +105,86 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                           Text(
                             'Température du sol',
                             style: theme.textTheme.titleLarge?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
                           ),
+                          const SizedBox(height: 8),
                           Text(
-                            'Ajustez la température mesurée',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.white70,
-                            ),
+                            '${_temperature.toStringAsFixed(1)}°C',
+                            style: theme.textTheme.displayMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800),
                           ),
                         ],
                       ),
                     ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close, color: Colors.white),
-                    ),
+                    const Icon(Icons.thermostat,
+                        color: Colors.white54, size: 32),
                   ],
                 ),
+                const SizedBox(height: 16),
 
-                const SizedBox(height: 32),
-
-                // Temperature display
-                Center(
-                  child: Text(
-                    '${_temperature.toStringAsFixed(1)}°C',
-                    style: theme.textTheme.displayMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 24),
-
-                // Slider
+                // Slider (allow negative)
                 SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: Colors.amber,
                     inactiveTrackColor: Colors.white.withOpacity(0.3),
                     thumbColor: Colors.amber,
                     overlayColor: Colors.amber.withOpacity(0.2),
-                    valueIndicatorColor: Colors.amber,
-                    valueIndicatorTextStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
                   ),
                   child: Slider(
                     value: _temperature,
                     min: -50.0,
                     max: 60.0,
-                    divisions: 110,
+                    divisions: 1100, // approx 0.1°C step
                     label: '${_temperature.toStringAsFixed(1)}°C',
                     onChanged: (value) {
                       setState(() {
                         _temperature = value;
                         _controller.text = value.toStringAsFixed(1);
+                        _inputValid = true;
                       });
                     },
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
 
                 // Manual input
                 TextField(
                   controller: _controller,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Température (°C)',
+                    errorText:
+                        _inputValid ? null : 'Valeur invalide (-50.0 à 60.0)',
                     labelStyle: const TextStyle(color: Colors.white70),
                     hintText: '0.0',
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.amber, width: 2),
-                    ),
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.1),
+                    fillColor: Colors.white.withOpacity(0.06),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                   onChanged: (value) {
                     final parsed = double.tryParse(value.replaceAll(',', '.'));
                     if (parsed != null && parsed >= -50.0 && parsed <= 60.0) {
                       setState(() {
                         _temperature = parsed;
+                        _inputValid = true;
+                      });
+                    } else {
+                      setState(() {
+                        _inputValid = false;
                       });
                     }
                   },
                 ),
 
-                const Spacer(),
+                const SizedBox(height: 20),
 
-                // Actions
+                // Actions row — ensure buttons visible and not overflow
                 Row(
                   children: [
                     Expanded(
@@ -220,24 +192,41 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          side: BorderSide(
-                              color: Colors.white.withOpacity(0.3)),
+                          side:
+                              BorderSide(color: Colors.white.withOpacity(0.3)),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                              borderRadius: BorderRadius.circular(12)),
                         ),
                         child: const Text('Annuler'),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-                          // Save to provider with soft recalibration
-                          ref
-                              .read(soilTempProvider.notifier)
-                              .setManual(_scopeKey, _temperature);
+                        onPressed: () async {
+                          if (!_inputValid) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Valeur invalide. Entrez -50.0 à 60.0')),
+                            );
+                            return;
+                          }
+                          // Persist direct value (override)
+                          try {
+                            await ref
+                                .read(soilTempProvider.notifier)
+                                .setManual(_scopeKey, _temperature);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Température enregistrée')),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Erreur sauvegarde: $e')),
+                            );
+                          }
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -245,14 +234,14 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                           foregroundColor: Colors.black,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                              borderRadius: BorderRadius.circular(12)),
                         ),
                         child: const Text('Sauvegarder'),
                       ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
               ],
             ),
           ),
