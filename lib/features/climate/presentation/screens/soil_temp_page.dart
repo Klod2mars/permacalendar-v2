@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../providers/soil_temp_provider.dart';
+import 'soil_temp_sheet.dart';
 
 class SoilTempPage extends ConsumerWidget {
   final String scopeKey;
@@ -60,6 +61,51 @@ class SoilTempPage extends ConsumerWidget {
               ),
 
               const SizedBox(height: 24),
+              
+              // --- Affichage de la température mesurée + action modifier ---
+              Builder(
+                builder: (context) {
+                  final soilTempAsync = ref.watch(soilTempProviderByScope(scopeKey));
+                  final double displayedTemp = soilTempAsync.value ?? 0.0;
+  
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Température mesurée',
+                                style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
+                            const SizedBox(height: 4),
+                            Text('${displayedTemp.toStringAsFixed(1)}°C',
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
+                        const Spacer(),
+                        ElevatedButton.icon(
+                          onPressed: () => showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => const SoilTempSheet(),
+                          ),
+                          icon: const Icon(Icons.thermostat),
+                          label: const Text('Modifier / Mesurer'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber,
+                            foregroundColor: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              ),
+              // --- fin affichage température ---
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text("Conseils de Semis",

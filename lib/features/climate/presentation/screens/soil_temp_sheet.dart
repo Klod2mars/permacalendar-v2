@@ -22,7 +22,7 @@ class SoilTempSheet extends ConsumerStatefulWidget {
 }
 
 class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
-  double _temperature = 20.0;
+  double _temperature = 0.0;
   final TextEditingController _controller = TextEditingController();
   late String _scopeKey;
 
@@ -47,8 +47,15 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
     final soilTempAsync = ref.read(soilTempProviderByScope(_scopeKey));
     if (soilTempAsync.hasValue && soilTempAsync.value != null) {
       if (mounted) {
-         setState(() {
+        setState(() {
           _temperature = soilTempAsync.value!;
+          _controller.text = _temperature.toStringAsFixed(1);
+        });
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _temperature = 0.0;
           _controller.text = _temperature.toStringAsFixed(1);
         });
       }
@@ -153,9 +160,9 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                   ),
                   child: Slider(
                     value: _temperature,
-                    min: 0.0,
-                    max: 40.0,
-                    divisions: 80,
+                    min: -50.0,
+                    max: 60.0,
+                    divisions: 110,
                     label: '${_temperature.toStringAsFixed(1)}°C',
                     onChanged: (value) {
                       setState(() {
@@ -171,36 +178,31 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                 // Manual input
                 TextField(
                   controller: _controller,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Température (°C)',
                     labelStyle: const TextStyle(color: Colors.white70),
-                    hintText: '20.0',
-                    hintStyle:
-                        TextStyle(color: Colors.white.withOpacity(0.5)),
+                    hintText: '0.0',
+                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                          color: Colors.white.withOpacity(0.3)),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                          color: Colors.white.withOpacity(0.3)),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(color: Colors.amber, width: 2),
+                      borderSide: const BorderSide(color: Colors.amber, width: 2),
                     ),
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.1),
                   ),
                   onChanged: (value) {
-                    final parsed = double.tryParse(value);
-                    if (parsed != null && parsed >= 0 && parsed <= 40) {
+                    final parsed = double.tryParse(value.replaceAll(',', '.'));
+                    if (parsed != null && parsed >= -50.0 && parsed <= 60.0) {
                       setState(() {
                         _temperature = parsed;
                       });

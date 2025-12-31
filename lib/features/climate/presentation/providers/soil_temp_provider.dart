@@ -257,7 +257,7 @@ final soilTempForecastProvider =
     Future.microtask(() => ref.read(soilTempProvider.notifier).load(scopeKey));
   }
 
-  final startSoilTemp = tempAsync.value ?? 15.0;
+  final startSoilTemp = tempAsync.value ?? 0.0;
 
   // 2. Get air temperature forecast
   final forecastPoints = await ref.watch(forecastProvider.future);
