@@ -15,14 +15,12 @@ class TemperatureBubbleWidget extends ConsumerWidget {
     final activeGardenId = ref.watch(activeGardenIdProvider);
     
     // If no garden, show projected weather (Air Temp)
+    // If no garden, show Soil Temp placeholder
     if (activeGardenId == null) {
-       final projectedPoint = ref.watch(projectedWeatherProvider);
-       return _buildWrapper(
-         context, 
-         child: projectedPoint != null
-            ? _buildTemperatureContent(projectedPoint.temperatureC, null)
-            : _buildLoading(),
-       );
+      return _buildWrapper(
+        context,
+        child: _buildTemperatureContent(null, "T° Sol ?"),
+      );
     }
 
     // If garden active, show Soil Temp
@@ -66,7 +64,31 @@ class TemperatureBubbleWidget extends ConsumerWidget {
         width: constraints.maxWidth,
         height: constraints.maxHeight,
         alignment: Alignment.center,
-        child: child,
+        // Visual Ovoid / Bubble Effect
+        decoration: BoxDecoration(
+          shape: BoxShape.circle, // or BoxShape.circle if we assume 1:1, but bubbling fits
+          // We use a gradient to simulate the "Glass/Organic" bubble look
+          gradient: RadialGradient(
+            colors: [
+              Colors.white.withOpacity(0.15),
+              Colors.white.withOpacity(0.05),
+            ],
+            stops: const [0.3, 1.0],
+            center: const Alignment(-0.2, -0.2),
+          ),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.25),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(2, 4),
+            ),
+          ],
+        ),
+        child: ClipOval(child: child),
       );
     });
   }

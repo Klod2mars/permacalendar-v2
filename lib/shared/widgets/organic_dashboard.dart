@@ -39,6 +39,7 @@ class TapZonesSpec {
       Rect.fromLTWH(0.18, 0.22, 0.20, 0.20); // NEW: Zone tap gauche
   static const Rect settings = Rect.fromLTWH(0.60, 0.40, 0.10, 0.06);
   static const Rect calendar = Rect.fromLTWH(0.11, 0.44, 0.22, 0.14);
+  static const Rect temperature = Rect.fromLTWH(0.175, 0.105, 0.15, 0.15);
 
   static const Rect garden1 = Rect.fromLTWH(0.33, 0.58, 0.13, 0.09);
   static const Rect garden2 = Rect.fromLTWH(0.45, 0.58, 0.13, 0.09);
@@ -167,7 +168,7 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
   /// Alignment(x,y) : x ∈ [-1..1] (gauche..droite), y ∈ [-1..1] (haut..bas).
   final Alignment imageAlignment;
 
-  static const List<_Hotspot> _hotspots = <_Hotspot>[
+  static final List<_Hotspot> _hotspots = <_Hotspot>[
     _Hotspot(
         id: 'weather_stats',
         centerX: 0.12,
@@ -178,11 +179,10 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         label: 'Weather Stats'),
     _Hotspot(
         id: 'temperature',
-        centerX:
-            0.25, // Position approximative "Haut Gauche" (à calibrer par user)
-        centerY: 0.18,
-        widthFrac: 0.15,
-        heightFrac: 0.15,
+        centerX: TapZonesSpec.temperature.center.dx,
+        centerY: TapZonesSpec.temperature.center.dy,
+        widthFrac: TapZonesSpec.temperature.width,
+        heightFrac: TapZonesSpec.temperature.height,
         route: null, // Pas de navigation, affichage pur
         label: 'Temperature'),
     _Hotspot(
@@ -1234,8 +1234,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
     final hotspotButton = _HotspotButton(
       onTap: isGardenHotspot
           ? _handleGardenTap
-          : (widget.id == 'temperature' || widget.id == 'weather')
-              ? null // Désactive le tap pour température (display) ET weather (interactive drag)
+          : (widget.id == 'weather')
+              ? null // Désactive le tap pour weather (interactive drag), active pour temperature
               : () {
                   if (kDebugMode) {
                     debugPrint(
