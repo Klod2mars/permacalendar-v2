@@ -408,9 +408,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Légende
-          _buildLegend(theme),
-          const SizedBox(height: 16),
+
 
           // En-têtes des jours
           _buildWeekdayHeaders(theme),
@@ -433,66 +431,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     );
   }
 
-  Widget _buildLegend(ThemeData theme) {
-    return CustomCard(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildLegendItem(
-              'Plantation',
-              Colors.green,
-              Icons.eco,
-              theme,
-            ),
-            _buildLegendItem(
-              'Récolte',
-              Colors.orange,
-              Icons.shopping_basket,
-              theme,
-            ),
-             _buildLegendItem(
-              'Arrosage',
-              Colors.blue,
-              Icons.water_drop,
-              theme,
-            ),
-             _buildLegendItem(
-              'Gel',
-              Colors.lightBlue,
-              Icons.ac_unit,
-              theme,
-            ),
-            _buildLegendItem(
-              'En retard',
-              Colors.red,
-              Icons.warning,
-              theme,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _buildLegendItem(
-    String label,
-    Color color,
-    IconData icon,
-    ThemeData theme,
-  ) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: color),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: theme.textTheme.bodySmall,
-        ),
-      ],
-    );
-  }
 
   Widget _buildWeekdayHeaders(ThemeData theme) {
     const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
