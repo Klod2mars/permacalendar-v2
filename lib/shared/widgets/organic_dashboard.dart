@@ -624,7 +624,7 @@ class _OrganicDashboardWidgetState
                                   onTapRoute: null,
                                   containerKey: _containerKey,
                                   ref: ref,
-                                  showDebugOutline: true,
+                                  showDebugOutline: false,
                                 ),
                               );
                             })(),

@@ -29,10 +29,7 @@ class TemperatureBubbleWidget extends ConsumerWidget {
             stops: const [0.3, 1.0],
             center: const Alignment(-0.2, -0.2),
           ),
-          border: Border.all(
-            color: Colors.white.withOpacity(0.25),
-            width: 1.5,
-          ),
+
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
