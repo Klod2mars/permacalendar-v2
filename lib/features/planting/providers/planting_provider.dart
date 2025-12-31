@@ -15,6 +15,7 @@ import '../../../core/services/nutrition_normalizer.dart';
 import '../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../domain/plant_steps_generator.dart';
 import '../../../core/models/activity.dart';
+import '../../../core/models/plant.dart';
 import '../../../core/services/notification_service.dart';
 
 
@@ -178,7 +179,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
         final plant = catalog.plants.where((p) => p.id == plantId).firstOrNull;
         
         if (plant != null) {
-          final steps = generateSteps(plant, planting);
+          // Convert PlantFreezed to Plant for generateSteps
+          final plantModel = Plant.fromJson(plant.toJson());
+          final steps = generateSteps(plantModel, planting);
           
           for (final step in steps) {
              if (step.scheduledDate != null && step.scheduledDate!.isAfter(DateTime.now())) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/planting.dart';
+import '../../../../core/models/plant.dart';
 import '../../../../core/models/activity_v3.dart';
 import '../../../../core/providers/activity_tracker_v3_provider.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
@@ -171,7 +172,7 @@ class PlantingDetailScreen extends ConsumerWidget {
 
         // PAS-À-PAS : instant UI handled locally in widget; onMarkDone logs Activity V3
         PlantingStepsWidget(
-          plant: plantSafe,
+          plant: Plant.fromJson(plantSafe.toJson()),
           planting: planting,
           onAddCareAction: (String action) async {
             await ref.read(plantingProvider.notifier).addCareAction(

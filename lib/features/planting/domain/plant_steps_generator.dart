@@ -1,7 +1,7 @@
 // lib/features/planting/domain/plant_steps_generator.dart
 import 'package:flutter/foundation.dart';
 
-import '../../plant_catalog/domain/entities/plant_entity.dart';
+import '../../../core/models/plant.dart';
 import '../../../core/models/planting.dart';
 import 'plant_step.dart';
 
@@ -14,7 +14,7 @@ import 'plant_step.dart';
 /// - Weeding -> étape récurrente si fréquence
 /// - Biological control -> étapes pour chaque préparation
 /// - Harvest -> si planting.expectedHarvestStartDate ou plant.daysToMaturity
-List<PlantStep> generateSteps(PlantFreezed plant, Planting planting) {
+List<PlantStep> generateSteps(Plant plant, Planting planting) {
   final List<PlantStep> steps = [];
   final DateTime planted = planting.plantedDate;
   final now = DateTime.now();

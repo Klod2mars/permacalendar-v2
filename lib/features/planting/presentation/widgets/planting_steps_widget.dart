@@ -1,7 +1,7 @@
 // lib/features/planting/presentation/widgets/planting_steps_widget.dart
 import 'package:flutter/material.dart';
 
-import '../../../plant_catalog/domain/entities/plant_entity.dart';
+import '../../../../core/models/plant.dart';
 import '../../../../core/models/planting.dart';
 import '../../domain/plant_step.dart';
 import '../../domain/plant_steps_generator.dart';
@@ -11,7 +11,7 @@ typedef OnMarkDone = Future<void> Function(PlantStep step);
 
 /// Widget d'affichage du pas-à-pas (compact / détaillé).
 class PlantingStepsWidget extends StatefulWidget {
-  final PlantFreezed plant;
+  final Plant plant;
   final Planting planting;
   final OnAddCareAction? onAddCareAction;
   final OnMarkDone? onMarkDone;
