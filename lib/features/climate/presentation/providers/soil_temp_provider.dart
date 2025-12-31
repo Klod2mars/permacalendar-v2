@@ -245,12 +245,19 @@ final soilTempForecastProvider =
     FutureProvider.family<List<SoilTempForecastPoint>, String>(
         (ref, scopeKey) async {
   // 1. Get current soil temperature
-  final controller = ref.read(soilTempProvider.notifier);
-  // Ensure we have the latest data
-  await controller.load(scopeKey);
-  
+  // Lecture réactive de l'état du soilTempProvider.
+  // Si la donnée est en cours de chargement, on demande un load en arrière-plan
+  // via Future.microtask afin de ne pas modifier un autre provider pendant
+  // l'initialisation du présent provider (évite l'assertion Riverpod).
   final soilState = ref.watch(soilTempProvider);
-  final startSoilTemp = soilState.getTemp(scopeKey).value ?? 15.0;
+  final tempAsync = soilState.getTemp(scopeKey);
+
+  if (tempAsync.isLoading) {
+    // Demande asynchrone non bloquante du chargement.
+    Future.microtask(() => ref.read(soilTempProvider.notifier).load(scopeKey));
+  }
+
+  final startSoilTemp = tempAsync.value ?? 15.0;
 
   // 2. Get air temperature forecast
   final forecastPoints = await ref.watch(forecastProvider.future);
