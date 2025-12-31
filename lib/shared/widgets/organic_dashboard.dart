@@ -178,6 +178,14 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
         route: AppRoutes.weather,
         label: 'Weather Stats'),
     _Hotspot(
+        id: 'soil_temperature',
+        centerX: 0.25,
+        centerY: 0.22,
+        widthFrac: 0.15,
+        heightFrac: 0.12,
+        route: AppRoutes.soilTemperature,
+        label: 'Soil Temp'),
+    _Hotspot(
         id: 'temperature',
         centerX: TapZonesSpec.temperature.center.dx,
         centerY: TapZonesSpec.temperature.center.dy,

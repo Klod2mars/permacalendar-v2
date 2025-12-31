@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'features/climate/presentation/screens/weather_detail_screen.dart';
+import 'features/climate/presentation/screens/soil_temp_page.dart';
 import 'features/garden_management/presentation/screens/garden_list_screen.dart';
 import 'features/garden_management/presentation/screens/garden_detail_screen.dart';
 import 'features/garden_management/presentation/screens/garden_create_screen.dart';
@@ -49,7 +50,7 @@ class AppRoutes {
 
   static const String statistics = '/statistics';
   static const String export = '/export';
-
+  static const String soilTemperature = '/soil-temperature';
 }
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -263,6 +264,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.export,
         name: 'export',
         builder: (context, state) => const ExportBuilderScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.soilTemperature,
+        name: 'soil-temperature',
+        builder: (context, state) => const SoilTempPage(),
       ),
 
     ],
