@@ -9,14 +9,11 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/device_calibration_key.dart';
-
 import '../../../core/utils/calibration_storage.dart';
-
 import '../../../core/providers/organic_zones_provider.dart';
 import '../../../core/models/calibration_state.dart';
+import '../../../features/home/presentation/providers/dashboard_image_settings_provider.dart'; // [NEW]
 import '../../../app_router.dart';
-
-
 
 class CalibrationSettingsScreen extends ConsumerStatefulWidget {
 
@@ -293,6 +290,9 @@ class _CalibrationSettingsScreenState
               value: _autoApply,
               onChanged: _toggleAutoApply,
             ),
+            const Divider(),
+            _buildImageSettingsControls(ref, context),
+            const Divider(),
             const SizedBox(height: 12),
             ElevatedButton.icon(
               icon: const Icon(Icons.tune),
@@ -445,6 +445,92 @@ class _CalibrationSettingsScreenState
 
   }
 
+  Widget _buildImageSettingsControls(WidgetRef ref, BuildContext context) {
+    final settings = ref.watch(dashboardImageSettingsProvider);
+    final notifier = ref.read(dashboardImageSettingsProvider.notifier);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Réglages Image de Fond (Persistant)',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        // Align X
+        Row(
+          children: [
+            const SizedBox(width: 60, child: Text('Pos X')),
+            Expanded(
+              child: Slider(
+                value: settings.alignX,
+                min: -1.0,
+                max: 1.0,
+                divisions: 200,
+                label: settings.alignX.toStringAsFixed(2),
+                onChanged: (v) => notifier.setAlignX(v),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              child: Text(settings.alignX.toStringAsFixed(2),
+                  textAlign: TextAlign.end),
+            ),
+          ],
+        ),
+        // Align Y
+        Row(
+          children: [
+            const SizedBox(width: 60, child: Text('Pos Y')),
+            Expanded(
+              child: Slider(
+                value: settings.alignY,
+                min: -1.0,
+                max: 1.0,
+                divisions: 200,
+                label: settings.alignY.toStringAsFixed(2),
+                onChanged: (v) => notifier.setAlignY(v),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              child: Text(settings.alignY.toStringAsFixed(2),
+                  textAlign: TextAlign.end),
+            ),
+          ],
+        ),
+        // Zoom
+        Row(
+          children: [
+            const SizedBox(width: 60, child: Text('Zoom')),
+            Expanded(
+              child: Slider(
+                value: settings.zoom,
+                min: 1.0,
+                max: 1.6,
+                divisions: 60,
+                label: settings.zoom.toStringAsFixed(2),
+                onChanged: (v) => notifier.setZoom(v),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              child: Text(settings.zoom.toStringAsFixed(2),
+                  textAlign: TextAlign.end),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            icon: const Icon(Icons.restore),
+            label: const Text('Reset Image Defaults'),
+            onPressed: () => notifier.reset(),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 

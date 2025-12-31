@@ -27,6 +27,7 @@ import '../../features/home/widgets/invisible_stats_zone.dart';
 import '../widgets/garden_bubble_widget.dart';
 import '../widgets/garden_creation_dialog.dart';
 import '../../core/models/garden_freezed.dart';
+import '../../features/home/presentation/providers/dashboard_image_settings_provider.dart'; // [NEW]
 
 /// 1) Active/désactive l’affichage des cadres bleus (debug)
 const bool kShowTapZonesDebug = true;
@@ -499,6 +500,9 @@ class _OrganicDashboardWidgetState
     final zones = ref.watch(organicZonesProvider);
     final calibState = ref.watch(calibrationStateProvider);
     final isCalibrating = calibState.activeType == CalibrationType.organic;
+    
+    // [NEW] Read image settings from provider (handling persistence + live update)
+    final imageSettings = ref.watch(dashboardImageSettingsProvider);
 
     if (kDebugMode) {
       debugPrint('[CALIBRATION BUILD] zones keys: ${zones.keys.toList()}');
@@ -512,7 +516,7 @@ class _OrganicDashboardWidgetState
 
       if (kDebugMode) {
         debugPrint(
-            'OrganicDashboard: Width=$width Height=$height Zoom=${widget.imageZoom}');
+            'OrganicDashboard: Width=$width Height=$height Zoom=${imageSettings.zoom}');
         debugPrint('OrganicDashboard: Constraints=$constraints');
       }
 
@@ -535,12 +539,12 @@ class _OrganicDashboardWidgetState
                 right: 0,
                 bottom: 0,
                 child: OverflowBox(
-                  maxWidth: width * widget.imageZoom,
-                  maxHeight: height * widget.imageZoom,
-                  alignment: widget.imageAlignment,
+                  maxWidth: width * imageSettings.zoom,
+                  maxHeight: height * imageSettings.zoom,
+                  alignment: Alignment(imageSettings.alignX, imageSettings.alignY),
                   child: SizedBox(
-                    width: width * widget.imageZoom,
-                    height: height * widget.imageZoom,
+                    width: width * imageSettings.zoom,
+                    height: height * imageSettings.zoom,
                     child: Image.asset(
                       widget.assetPath,
                       fit: BoxFit
