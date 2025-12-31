@@ -63,10 +63,18 @@ class WeatherSkyBackground extends ConsumerWidget {
          final sunrise = parseUtc(daily?.sunrise);
          final sunset = parseUtc(daily?.sunset);
          
-         // 2. Fallback safe
-         final safeSunrise = (daily != null && sunrise.year != 0) ? sunrise 
+         // --- CORRECTION FALLBACK SÉCURISÉ ---
+         // Si les dates sunrise/sunset semblent invalides (ex: égales à projectedTime suite à un parse null),
+         // on force des valeurs par défaut (6h et 20h UTC).
+         final bool isSunriseValid = sunrise != projectedTime && sunrise.year > 2000;
+         final bool isSunsetValid = sunset != projectedTime && sunset.year > 2000;
+
+         final safeSunrise = isSunriseValid 
+              ? sunrise 
               : DateTime.utc(projectedTime.year, projectedTime.month, projectedTime.day, 6, 0);
-         final safeSunset = (daily != null && sunset.year != 0) ? sunset 
+         
+         final safeSunset = isSunsetValid 
+              ? sunset 
               : DateTime.utc(projectedTime.year, projectedTime.month, projectedTime.day, 20, 0);
          
          // On calcule 'progress' (0.0 Sunrise -> 1.0 Sunset) pour la position du soleil
