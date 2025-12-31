@@ -441,6 +441,12 @@ class PlantingPreview extends StatelessWidget {
                         'Récolte estimée: ${_formatDate(estimateDate)}',
                         style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
                       ),
+                    const SizedBox(height: 6),
+                    // Growth Progress Bar (Feature 2)
+                    if (estimateDate != null) ...[
+                      _buildProgressBar(context, planting.plantedDate, estimateDate),
+                    ],
+
                   ],
                 ),
               ),
@@ -448,6 +454,46 @@ class PlantingPreview extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildProgressBar(BuildContext context, DateTime start, DateTime end) {
+    final now = DateTime.now();
+    final totalDuration = end.difference(start).inSeconds;
+    final elapsed = now.difference(start).inSeconds;
+    
+    double progress = 0.0;
+    if (totalDuration > 0) {
+      progress = elapsed / totalDuration;
+    }
+    
+    // Clamp
+    if (progress < 0) progress = 0;
+    if (progress > 1) progress = 1;
+    
+    Color progressColor = Colors.green;
+    if (now.isAfter(end)) {
+        progressColor = Colors.orange; // Late
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+         ClipRRect(
+           borderRadius: BorderRadius.circular(4),
+           child: LinearProgressIndicator(
+             value: progress,
+             backgroundColor: Colors.grey.withOpacity(0.2),
+             valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+             minHeight: 4,
+           ),
+         ),
+         const SizedBox(height: 2),
+         Text(
+           '${(progress * 100).toInt()}%',
+           style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 10, color: Colors.grey),
+         ),
+      ],
     );
   }
 }

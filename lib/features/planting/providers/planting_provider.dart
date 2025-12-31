@@ -11,8 +11,13 @@ import '../../harvest/data/repositories/harvest_repository.dart';
 import '../../harvest/domain/models/harvest_record.dart'; // Import HarvestRecord
 import '../../harvest/application/harvest_records_provider.dart'; // Import HarvestRecordsProvider
 import 'package:uuid/uuid.dart'; // Import Uuid
-import '../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../core/services/nutrition_normalizer.dart';
+import '../../plant_catalog/providers/plant_catalog_provider.dart';
+import '../domain/plant_steps_generator.dart';
+import '../../../core/models/activity.dart';
+import '../../../core/services/notification_service.dart';
+
+
 
 // Planting State
 class PlantingState {
@@ -164,6 +169,54 @@ class PlantingNotifier extends Notifier<PlantingState> {
       } catch (e) {
         // Mode silencieux : ne pas faire échouer la Création
         print('Erreur émission événement GardenEventBus: $e');
+      }
+
+      // ✅ AUTOMATION (Feature 4 & 5): Générer Activités & Notifications
+      try {
+        final catalog = ref.read(plantCatalogProvider);
+        // On suppose que catalog.plants contient la liste complète ou on utilise une méthode de service
+        final plant = catalog.plants.where((p) => p.id == plantId).firstOrNull;
+        
+        if (plant != null) {
+          final steps = generateSteps(plant, planting);
+          
+          for (final step in steps) {
+             if (step.scheduledDate != null && step.scheduledDate!.isAfter(DateTime.now())) {
+                // Créer l'activité planifiée
+                final activity = Activity(
+                   id: const Uuid().v4(),
+                   type: ActivityType.careActionAdded, // Generic care/task
+                   title: step.title,
+                   description: step.description,
+                   entityId: planting.id,
+                   entityType: EntityType.planting,
+                   timestamp: DateTime.now(), // Created at
+                   metadata: {
+                     'status': 'planned',
+                     'scheduledDate': step.scheduledDate!.toIso8601String(),
+                     'isAutomated': true,
+                     'stepId': step.id,
+                     'category': step.category,
+                   }
+                );
+                
+                await GardenBoxes.activities.put(activity.id, activity);
+                
+                // Programmer Notification
+                // On utilise un ID unique int pour la notif (hashCode de l'ID activité)
+                final notifId = activity.id.hashCode.abs();
+                await NotificationService().scheduleNotification(
+                   id: notifId,
+                   title: 'Jardin: ${step.title}',
+                   body: '${plantName}: ${step.description}',
+                   scheduledDate: step.scheduledDate!,
+                   payload: '/plantings/${planting.id}', // Deep link payload logic if implemented
+                );
+             }
+          }
+        }
+      } catch (e) {
+         print('Erreur lors de la génération automatique des tâches: $e');
       }
 
       // Update state with new planting
