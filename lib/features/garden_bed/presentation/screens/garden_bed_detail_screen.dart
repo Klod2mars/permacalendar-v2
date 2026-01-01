@@ -39,7 +39,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gardenBedState = ref.watch(gardenBedProvider);
+    final gardenBedState = ref.watch(gardenBedNotifierProvider);
 
     final gardenBed =
         gardenBedState.gardenBeds.where((bed) => bed.id == bedId).firstOrNull;
@@ -48,7 +48,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
     // Charger les parcelles si nécessaire
     if (gardenBedState.gardenBeds.isEmpty && !gardenBedState.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(gardenBedProvider.notifier).loadGardenBeds(gardenId);
+        ref.read(gardenBedNotifierProvider.notifier).loadGardenBeds(gardenId);
       });
     }
 
@@ -67,7 +67,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                   title: 'Erreur',
                   subtitle: gardenBedState.error!,
                   onRetry: () => ref
-                      .read(gardenBedProvider.notifier)
+                      .read(gardenBedNotifierProvider.notifier)
                       .loadGardenBeds(gardenId),
                 )
               : gardenBed == null
@@ -363,7 +363,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                                       .read(plantingProvider.notifier)
                                       .deletePlanting(p.id);
                                   // Refresh header / plantings
-                                  ref.read(gardenBedProvider.notifier).loadGardenBeds(gardenBed.gardenId);
+                                  ref.read(gardenBedNotifierProvider.notifier).loadGardenBeds(gardenBed.gardenId);
                                 },
                                 style: TextButton.styleFrom(
                                     foregroundColor: Colors.red),

@@ -9,7 +9,8 @@ import '../../models/planting.dart';
 
 class GardenBoxes {
   /// Activer pour debug ponctuel. Par défaut false pour éviter le flood de logs.
-  static bool verboseLogging = false;
+  // TEMPORARY: Enabled for QA of Refactoring Option B1
+  static bool verboseLogging = true;
 
   static const String _gardensBoxName = 'gardens';
   static const String _gardenBedsBoxName = 'garden_beds';

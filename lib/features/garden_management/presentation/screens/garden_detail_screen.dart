@@ -36,7 +36,7 @@ class GardenDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gardenAsync = ref.watch(gardenDetailProvider(gardenId));
-    final gardenBedsAsync = ref.watch(gardenBedProvider(gardenId));
+    final gardenBedsAsync = ref.watch(gardenBedsForGardenProvider(gardenId));
     final theme = Theme.of(context);
 
     return gardenAsync.when(
@@ -80,7 +80,7 @@ class GardenDetailScreen extends ConsumerWidget {
             body: ErrorStateWidget(
               title: 'Erreur de chargement des planches',
               subtitle: 'Impossible de charger les planches: $error',
-              onRetry: () => ref.refresh(gardenBedProvider(gardenId)),
+              onRetry: () => ref.refresh(gardenBedsForGardenProvider(gardenId)),
               retryText: 'Réessayer',
             ),
           ),
@@ -530,7 +530,7 @@ class GardenDetailScreen extends ConsumerWidget {
     );
 
     if (result == true) {
-      ref.invalidate(gardenBedProvider(garden.id));
+      ref.invalidate(gardenBedsForGardenProvider(garden.id));
     }
   }
 
@@ -543,7 +543,7 @@ class GardenDetailScreen extends ConsumerWidget {
     );
 
     if (result == true) {
-      ref.invalidate(gardenBedProvider(garden.id));
+      ref.invalidate(gardenBedsForGardenProvider(garden.id));
     }
   }
 
@@ -596,7 +596,7 @@ class GardenDetailScreen extends ConsumerWidget {
         }
 
         // Forcer le refresh
-        ref.invalidate(gardenBedProvider(garden.id));
+        ref.invalidate(gardenBedsForGardenProvider(garden.id));
 
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

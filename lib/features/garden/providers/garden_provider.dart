@@ -208,7 +208,7 @@ class GardenNotifier extends Notifier<GardenState> {
         await loadGardens();
         
         // Invalider le cache des lits pour ce jardin (nettoyage Riverpod)
-        ref.invalidate(gardenBedProvider(gardenId));
+        ref.invalidate(gardenBedsForGardenProvider(gardenId));
 
         return true;
       } else {

@@ -10,6 +10,7 @@ import '../../../../core/services/activity_observer_service.dart';
 import '../../../../core/events/garden_event_bus.dart';
 import '../../../../core/events/garden_events.dart';
 import '../../../../core/data/hive/garden_boxes.dart';
+import '../../providers/garden_bed_scoped_provider.dart';
 
 class CreateGardenBedDialog extends ConsumerStatefulWidget {
   final String gardenId;
@@ -271,8 +272,10 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
           );
         } catch (_) {}
 
-        // Force refresh global provider
-        ref.invalidate(gardenBedProvider);
+        // Force refresh global provider (explicitly using notifier name)
+        ref.invalidate(gardenBedNotifierProvider);
+        // Force refresh scoped provider (Canonical Source of Truth)
+        ref.invalidate(gardenBedsForGardenProvider(updatedBed.gardenId));
 
         success = true;
       } else {
@@ -318,7 +321,9 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
         } catch (_) {}
 
         // Force refresh global provider
-        ref.invalidate(gardenBedProvider);
+        ref.invalidate(gardenBedNotifierProvider);
+        // Force refresh scoped provider (Canonical Source of Truth)
+        ref.invalidate(gardenBedsForGardenProvider(newBed.gardenId));
 
         success = true;
       }
