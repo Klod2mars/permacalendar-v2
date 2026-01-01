@@ -9,8 +9,7 @@ import '../../core/data/hive/garden_boxes.dart';
 import '../../core/models/activity.dart';
 import '../../core/models/garden.dart';
 import '../../core/models/garden_bed.dart';
-import '../../core/models/garden_freezed.dart';
-import '../../features/garden/providers/garden_provider.dart';
+import '../../garden/providers/garden_provider.dart';
 
 class CreateTaskDialog extends ConsumerStatefulWidget {
   final DateTime? initialDate;
@@ -471,9 +470,9 @@ class _GardenSelector extends ConsumerWidget {
     if (gardensState.gardens.isEmpty) {
       return const SizedBox.shrink();
     }
-
+    
     // Add "All Gardens" option (represented by null)
-    final List<GardenFreezed?> options = [null, ...gardensState.gardens];
+    final List<Garden?> options = [null, ...gardensState.gardens];
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
