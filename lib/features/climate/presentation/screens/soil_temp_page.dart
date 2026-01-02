@@ -68,10 +68,42 @@ class SoilTempPage extends ConsumerWidget {
                 ),
               ),
 
-              const SizedBox(height: 24),
+              // --- Info Section (Collapsed by default) ---
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Theme(
+                  data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    leading: const Icon(Icons.info_outline, color: Colors.white70, size: 20),
+                    title: Text(
+                      "À propos de la température du sol",
+                      style: theme.textTheme.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    children: [
+                       Text(
+                        "La température du sol affichée ici est estimée par l’application à partir de données climatiques et saisonnières, selon une formule de calcul intégrée.\n\nCette estimation permet de donner une tendance réaliste de la température du sol lorsque aucune mesure directe n’est disponible.",
+                        style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        "Formule de calcul utilisée :",
+                        style: theme.textTheme.bodySmall?.copyWith(
+                            color: Colors.amber, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Température du sol = f(température de l’air, saison, inertie du sol)\n(Formule exacte définie dans le code de l’application)",
+                         style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70, fontStyle: FontStyle.italic),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 4),
 
               // --- Mesure du sol (affichage & bouton) ---
-              // Affichage du soilTempAsync et du bouton Modifier
               Consumer(
                 builder: (context, ref, child) {
                   final soilTempAsync =
@@ -81,62 +113,65 @@ class SoilTempPage extends ConsumerWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 12),
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Left: labels
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Température mesurée',
-                                  style: theme.textTheme.titleMedium
-                                      ?.copyWith(color: Colors.white)),
-                              const SizedBox(height: 6),
-                              Text(
-                                '${displayedTemp.toStringAsFixed(1)}°C',
-                                style: theme.textTheme.headlineSmall?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Température actuelle',
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(color: Colors.white)),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    '${displayedTemp.toStringAsFixed(1)}°C',
+                                    style: theme.textTheme.headlineSmall?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 240),
+                              child: ElevatedButton.icon(
+                                onPressed: () => showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (_) => const SoilTempSheet(),
+                                ),
+                                icon: const Icon(Icons.thermostat),
+                                label: const Text('Modifier / Mesurer'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.amber,
+                                  foregroundColor: Colors.black,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32)),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        // Right: constrained button to avoid overflow
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 240),
-                          child: ElevatedButton.icon(
-                            onPressed: () => showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (_) => const SoilTempSheet(),
-                            ),
-                            icon: const Icon(Icons.thermostat),
-                            label: const Text('Modifier / Mesurer'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.amber,
-                              foregroundColor: Colors.black,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32)),
-                            ),
-                          ),
+                        const SizedBox(height: 8),
+                        // Concise instruction
+                         Text(
+                          "Vous pouvez renseigner manuellement la température du sol dans l’onglet “Modifier / Mesurer”.",
+                          style: theme.textTheme.bodySmall?.copyWith(color: Colors.white54, fontSize: 11),
                         ),
                       ],
                     ),
                   );
                 },
               ),
-              // --- fin affichage température ---
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text("Conseils de Semis",
-                    style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-              ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
+
 
               // Advice List
               Expanded(
