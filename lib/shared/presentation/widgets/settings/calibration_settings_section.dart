@@ -47,27 +47,11 @@ class CalibrationSettingsSection extends ConsumerWidget {
               ref: ref,
               icon: Icons.auto_fix_high,
               title: 'Calibration Organique',
-              subtitle: 'Activer le mode unifié pour ajuster les zones',
+              subtitle: 'Mode unifié : Image, Ciel, Modules',
               isActive: calibrationState.activeType == CalibrationType.organic,
               onTap: () => _toggleOrganicCalibration(context, ref),
             ),
 
-            const SizedBox(height: 16),
-
-            // Gestion des profils de calibration
-            ListTile(
-              leading: const Icon(Icons.tune, color: Colors.green),
-              title: const Text('Calibration organique'),
-              subtitle: const Text(
-                  'Ajuster et gérer les profils de calibration par appareil'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (_) => const CalibrationSettingsScreen()),
-                );
-              },
-            ),
 
             // Message d'avertissement si calibration active
             if (isCalibrating) ...[

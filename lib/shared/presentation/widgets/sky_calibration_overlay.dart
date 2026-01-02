@@ -5,7 +5,11 @@ import '../../../core/models/sky_calibration_config.dart';
 import '../../../core/models/calibration_state.dart';
 
 class SkyCalibrationOverlay extends ConsumerStatefulWidget {
-  const SkyCalibrationOverlay({super.key});
+  final bool showCloseButton;
+  const SkyCalibrationOverlay({
+    super.key,
+    this.showCloseButton = true,
+  });
 
   @override
   ConsumerState<SkyCalibrationOverlay> createState() =>
@@ -147,19 +151,20 @@ class _SkyCalibrationOverlayState extends ConsumerState<SkyCalibrationOverlay> {
           ),
 
           // 7. Close / Save Button
-          Positioned(
-            top: 40,
-            right: 20,
-            child: FloatingActionButton.small(
-              backgroundColor: Colors.green,
-              child: const Icon(Icons.check),
-              onPressed: () {
-                ref
-                    .read(calibrationStateProvider.notifier)
-                    .disableCalibration();
-              },
+          if (widget.showCloseButton)
+            Positioned(
+              top: 40,
+              right: 20,
+              child: FloatingActionButton.small(
+                backgroundColor: Colors.green,
+                child: const Icon(Icons.check),
+                onPressed: () {
+                  ref
+                      .read(calibrationStateProvider.notifier)
+                      .disableCalibration();
+                },
+              ),
             ),
-          ),
 
           // Instructions
           const Positioned(

@@ -27,7 +27,10 @@ import '../../features/home/widgets/invisible_stats_zone.dart';
 import '../widgets/garden_bubble_widget.dart';
 import '../widgets/garden_creation_dialog.dart';
 import '../../core/models/garden_freezed.dart';
+import '../../core/models/garden_freezed.dart';
 import '../../features/home/presentation/providers/dashboard_image_settings_provider.dart'; // [NEW]
+import '../../features/home/presentation/providers/unified_calibration_provider.dart'; // [NEW]
+import '../presentation/widgets/unified_calibration_overlay.dart'; // [NEW]
 
 /// 1) Active/désactive l’affichage des cadres bleus (debug)
 const bool kShowTapZonesDebug = true;
@@ -281,10 +284,25 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
       _OrganicDashboardWidgetState();
 }
 
+extension _WidgetExt on Widget {
+  Widget wrappedInIgnorePointer({required bool ignoring}) {
+    // If not ignoring, just return the widget to avoid unnecessary depth, 
+    // or return IgnorePointer(ignoring: false, child: this).
+    // IgnorePointer with ignoring:false allows hits.
+    return IgnorePointer(ignoring: ignoring, child: this);
+  }
+}
+
 class _OrganicDashboardWidgetState
     extends ConsumerState<OrganicDashboardWidget> {
   final GlobalKey _containerKey = GlobalKey();
   double? _initialSizeForScale;
+  
+  // [GESTURE STATE]
+  double _baseZoom = 1.0;
+  double _baseAlignX = 0.0;
+  double _baseAlignY = 0.0;
+  Offset? _lastFocalPoint;
 
   @override
   void initState() {
@@ -499,7 +517,10 @@ class _OrganicDashboardWidgetState
 
     final zones = ref.watch(organicZonesProvider);
     final calibState = ref.watch(calibrationStateProvider);
+    // [UNIFIED] Check if we are in the unified organic mode
     final isCalibrating = calibState.activeType == CalibrationType.organic;
+    final unifiedState = ref.watch(unifiedCalibrationProvider);
+    final activeTool = unifiedState.activeTool;
 
     // [NEW] Read image settings from provider (handling persistence + live update)
     final imageSettings = ref.watch(dashboardImageSettingsProvider);
@@ -533,62 +554,126 @@ class _OrganicDashboardWidgetState
               // VERSION ZOOM + ALIGN : on aligne et agrandit le conteneur de l'image pour
               // réduire les marges latérales et verticales tout en conservant le ratio.
               // VERSION ZOOM + ALIGN : utilisation de OverflowBox pour permettre le dépassement réel
-              Positioned(
-                left: 0,
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: OverflowBox(
-                  maxWidth: width * imageSettings.zoom,
-                  maxHeight: height * imageSettings.zoom,
-                  alignment:
-                      Alignment(imageSettings.alignX, imageSettings.alignY),
-                  child: SizedBox(
-                    width: width * imageSettings.zoom,
-                    height: height * imageSettings.zoom,
-                    child: Image.asset(
-                      widget.assetPath,
-                      fit: BoxFit
-                          .contain, // Changé à contain pour éviter la déformation (bulles ovales)
-                      alignment: Alignment.center,
-                      isAntiAlias: true,
-                      errorBuilder: (context, error, stack) {
-                        if (kDebugMode)
-                          debugPrint(
-                              'OrganicDashboard: asset not found -> ${widget.assetPath} : $error');
-                        return Container(
-                          color: Theme.of(context).colorScheme.surfaceVariant,
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.image_not_supported,
-                                    size: 48, color: Colors.grey.shade300),
-                                const SizedBox(height: 8),
-                                Text('Visuel absent',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium),
-                                if (kDebugMode) ...[
-                                  const SizedBox(height: 8),
-                                  Text(widget.assetPath,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall),
-                                ],
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+              // 1) Background Image Layer (with unified gestures)
+              Positioned.fill(
+                child: GestureDetector(
+                  onScaleStart: (details) {
+                    if (!isCalibrating || activeTool != CalibrationTool.image) return;
+                    
+                    final settings = ref.read(dashboardImageSettingsProvider);
+                    _baseZoom = settings.zoom;
+                    _baseAlignX = settings.alignX;
+                    _baseAlignY = settings.alignY;
+                    _lastFocalPoint = details.localFocalPoint;
+                  },
+                  onScaleUpdate: (details) {
+                    if (!isCalibrating || activeTool != CalibrationTool.image) return;
+
+                    final notifier = ref.read(dashboardImageSettingsProvider.notifier);
+                    
+                    // 1. ZOOM (Scale)
+                    // details.scale is the scale factor since the start of the gesture.
+                    // New zoom = base * current_scale_factor
+                    final newZoom = (_baseZoom * details.scale).clamp(0.5, 4.0);
+                    notifier.setZoom(newZoom);
+
+                    // 2. PAN (Translation)
+                    // We need to calculate how much the focal point moved in pixels
+                    if (_lastFocalPoint != null) {
+                      // Calculate delta in pixels since START of gesture? 
+                      // No, onScaleUpdate gives us the current focal point.
+                      // Relative to the start of gesture?
+                      // Actually, if we use details.focalPointDelta, it's the delta since the PREVIOUS update.
+                      // But since we are setting state every frame, relying on incremental updates might drift 
+                      // if we don't assume the base.
+                      // HOWEVER, Align is absolute.
+                      // Let's use the displacement from START.
+                      // details.localFocalPoint is the current position.
+                      // But we need the start position. We didn't store startFocalPoint?
+                      // Let's just use incremental delta provided by GestureDetector for simplicity 
+                      // IF we trust it, or use (current - last) if we track last.
+                      
+                      // Better approach with Aliases:
+                      // Delta in pixels = details.focalPointDelta (since last frame)
+                      // We can just apply this small delta to the CURRENT settings?
+                      // NO, because we are rewriting settings based on _base variables for Zoom.
+                      // If we mix "Base * Scale" for Zoom and "Current + Delta" for Pan, it works 
+                      // because Zoom is absolute-ish (relative to start), Pan is incremental.
+                      // Let's try incremental Pan.
+                      
+                      final dx = details.focalPointDelta.dx;
+                      final dy = details.focalPointDelta.dy;
+                      
+                      // Convert pixel delta to Alignment units (-1..1).
+                      // Total width represented by Align(-1) to Align(1) is "width - imageWidth"?
+                      // No, Alignment units are awkward.
+                      // Alignment(0,0) = center. Alignment(1,0) = right edge.
+                      // The distance from -1 to 1 corresponds to "width of container - width of child".
+                      // Wait, OverflowBox child size is: containerWidth * Zoom.
+                      // The "play area" for alignment is (ChildWidth - ContainerWidth).
+                      // If ChildWidth == ContainerWidth, Alignment has no effect (division by zero effectively).
+                      
+                      final childW = width * newZoom;
+                      final childH = height * newZoom;
+                      
+                      final playW = childW - width;
+                      final playH = childH - height;
+                      
+                      // If playW is 0, we can't pan.
+                      if (playW.abs() > 1.0) {
+                        // Movement of 1 pixel corresponds to what change in Align?
+                        // Total Range of Align (2.0) covers `playW` pixels.
+                        // So 1 pixel = 2.0 / playW;
+                        
+                        // Dragging content Right (+dx) means we want to see Left (Align decreases).
+                        // So Align -= dx * (2.0 / playW).
+                        
+                        final alignDeltaX = dx * (2.0 / playW);
+                        // However, we must apply this to the LATEST alignment state?
+                        // Or can we calculate from base? 
+                        // Since newZoom changes playW every frame, incremental is risky if we don't integrate perfectly.
+                        // Let's update the "current" align directly via the notifier, 
+                        // but we need to fetch the LATEST value, which might be `settings.alignX` 
+                        // from the closure? No, `ref.read` gets fresh value.
+                        final currentSettings = ref.read(dashboardImageSettingsProvider);
+                        notifier.setAlignX((currentSettings.alignX - alignDeltaX).clamp(-1.5, 1.5));
+                      }
+                      
+                      if (playH.abs() > 1.0) {
+                        final alignDeltaY = dy * (2.0 / playH);
+                        final currentSettings = ref.read(dashboardImageSettingsProvider);
+                        notifier.setAlignY((currentSettings.alignY - alignDeltaY).clamp(-1.5, 1.5));
+                      }
+                    }
+                  },
+                  child: OverflowBox(
+                    maxWidth: width * imageSettings.zoom,
+                    maxHeight: height * imageSettings.zoom,
+                    alignment:
+                        Alignment(imageSettings.alignX, imageSettings.alignY),
+                    child: SizedBox(
+                      width: width * imageSettings.zoom,
+                      height: height * imageSettings.zoom,
+                      child: Image.asset(
+                        widget.assetPath,
+                        fit: BoxFit.contain,
+                        alignment: Alignment.center,
+                        isAntiAlias: true,
+                        errorBuilder: (context, error, stack) =>
+                            const SizedBox(),
+                      ),
                     ),
                   ),
                 ),
               ),
 
               // 1.5) [NEW] Organic Sky Layer (Dessiné par-dessus le fond, sous les bulles)
-              const Positioned.fill(child: WeatherSkyBackground()),
+              // Always ignore pointers as this is just a visual layer
+              const Positioned.fill(
+                  child: IgnorePointer(child: WeatherSkyBackground())),
 
               // 1.6) [NEW] Bio Weather Layer (Particles - Pluie/Neige/Nuages)
+              // WeatherBioLayer already implements IgnorePointer internally, but we can be safe
               const Positioned.fill(child: WeatherBioLayer()),
 
               // 2) Les zones TAP : mode normal = TapZone statique ; mode calibration = hotspots dynamiques
@@ -599,7 +684,19 @@ class _OrganicDashboardWidgetState
                   final shortest = w < h ? w : h;
 
                   if (isCalibrating) {
-                    // En mode calibration, créer les hotspots interactifs à partir du provider `zones`
+                    // [UNIFIED] Only show interactive hotspots if Modules tool is active
+                    final areModulesEditable = activeTool == CalibrationTool.modules;
+                    
+                    if (!areModulesEditable) {
+                       // If not editing modules, we might want to show them as static or hidden?
+                       // If editing Image or Sky, modules usually distract or block view.
+                       // Let's show them but non-interactive? Or just hide them?
+                       // User request: "calibration des modules" is one mode.
+                       // Maybe show them semi-transparent if not active?
+                       // Let's keep them visible but not draggable.
+                       // ACTUALLY, checking current map logic below...
+                    }
+
                     return Stack(
                       children: [
                         for (final entry in zones.entries)
@@ -609,6 +706,7 @@ class _OrganicDashboardWidgetState
                               final diameter = cfg.size * shortest;
                               final dx = cfg.position.dx * w - diameter / 2;
                               final dy = cfg.position.dy * h - diameter / 2;
+                              // ... clamp logic ...
                               final maxLeft = (w - diameter).clamp(0.0, w);
                               final maxTop = (h - diameter).clamp(0.0, h);
                               final left = dx.clamp(0.0, maxLeft) as double;
@@ -621,11 +719,11 @@ class _OrganicDashboardWidgetState
                                 child: _CalibratableHotspot(
                                   id: cfg.id,
                                   cfg: cfg,
-                                  isCalibrating: true,
+                                  isCalibrating: areModulesEditable, // Only draggable if modules tool
                                   onTapRoute: null,
                                   containerKey: _containerKey,
                                   ref: ref,
-                                  showDebugOutline: false,
+                                  showDebugOutline: areModulesEditable, // Show outline only if editable
                                 ),
                               );
                             })(),
@@ -714,7 +812,8 @@ class _OrganicDashboardWidgetState
                     ],
                   );
                 }),
-              ),
+              ).wrappedInIgnorePointer(
+                  ignoring: isCalibrating && activeTool != CalibrationTool.modules),
 
               // [NEW] Global "+" Button if no gardens exist
               if (!isCalibrating && ref.watch(activeGardensCountProvider) == 0)
@@ -729,9 +828,14 @@ class _OrganicDashboardWidgetState
                   ),
                 ),
 
-              // [NEW] Sky Calibration Overlay logic
-              if (calibState.activeType == CalibrationType.sky)
-                const Positioned.fill(child: SkyCalibrationOverlay()),
+              // [UNIFIED] Sky Calibration Overlay
+              if (isCalibrating && activeTool == CalibrationTool.sky)
+                const Positioned.fill(
+                    child: SkyCalibrationOverlay(showCloseButton: false)),
+
+              // [UNIFIED] Main Unified Overlay (Bottom Bar)
+              if (isCalibrating)
+                const Positioned.fill(child: UnifiedCalibrationOverlay()),
             ],
           ),
         ),
