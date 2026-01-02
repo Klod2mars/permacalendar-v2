@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import '../../core/data/hive/garden_boxes.dart';
 import '../../core/models/activity.dart';
@@ -159,7 +160,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
     }
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
@@ -177,24 +178,36 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
           zoneGardenBedId: _selectedGardenBedId,
           urgent: _urgent,
           recurrence: _recurrenceMap,
-          nextRunDate: finalDate, // Using start date as next run date
+          nextRunDate: finalDate,
           metadata: {
             'isCustomTask': true,
             'durationMinutes': _durationMinutes,
             'priority': _priority,
             'assignee': _assignee,
-            'gardenId': _selectedGardenId, // Store garden scope explicitly
+            'gardenId': _selectedGardenId,
+            'zoneGardenBedId': _selectedGardenBedId, // redundant but requested
+            'taskKind': _taskKind,
+            'nextRunDate': finalDate.toIso8601String(),
           },
         );
 
-        GardenBoxes.activities.put(newTask.id, newTask);
-        Navigator.pop(context, true);
+        // write in legacy box for calendar
+        await GardenBoxes.activities.put(newTask.id, newTask);
+
+        // debug log for verification
+        developer.log('[CreateTask] written activity id=${newTask.id} nextRun=${newTask.metadata['nextRunDate']}');
+
+        if (mounted) {
+           Navigator.pop(context, true);
+        }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Erreur création tâche: $e'),
-              backgroundColor: Colors.red),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('Erreur création tâche: $e'),
+                backgroundColor: Colors.red),
+          );
+        }
       }
     }
   }

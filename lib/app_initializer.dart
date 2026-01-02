@@ -47,6 +47,8 @@ class AppInitializer {
         Hive.registerAdapter(ActivityAdapter());
       if (!Hive.isAdapterRegistered(17))
         Hive.registerAdapter(ActivityTypeAdapter());
+      if (!Hive.isAdapterRegistered(18))
+        Hive.registerAdapter(EntityTypeAdapter());
 
       // Modern ActivityV3 adapter (kTypeIdActivityV3 = 30)
       try {
