@@ -1,5 +1,7 @@
 // lib/shared/presentation/screens/settings_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart'; // pour debugPrint
+import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -257,6 +259,7 @@ class SettingsScreen extends ConsumerWidget {
                                       .read(appSettingsProvider.notifier)
                                       .setSelectedCommune(p.name);
 
+
                                   // Tenter de résoudre les coordonnées et les persister
                                   // PATCH: On utilise directement les coordonnées de la suggestion
                                   // au lieu de relancer une recherche par nom.
@@ -267,6 +270,17 @@ class SettingsScreen extends ConsumerWidget {
                                             p.latitude, p.longitude);
                                     await CommuneStorage.saveCommune(
                                         p.name, p.latitude, p.longitude);
+
+                                    try {
+                                      // Forcer Riverpod à relire la commune persistée et à rafraîchir la météo
+                                      ref.invalidate(persistedCoordinatesProvider);
+                                      ref.invalidate(currentWeatherProvider);
+                                    } catch (e, st) {
+                                      // Ne pas bloquer l'expérience utilisateur en cas d'erreur d'invalidation.
+                                      // Log en debug pour faciliter le diagnostic.
+                                      debugPrint(
+                                          'Failed to invalidate weather providers after commune save: $e\n$st');
+                                    }
                                   } catch (_) {
                                     // Ne pas bloquer l'expérience
                                   }

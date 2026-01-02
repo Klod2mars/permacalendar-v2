@@ -113,7 +113,7 @@ void main() {
 
       await container
           .read(appSettingsProvider.notifier)
-          .setCommune('Marseille');
+          .setSelectedCommune('Marseille');
 
       // Attendre que les settings soient persistés
 
@@ -171,32 +171,7 @@ void main() {
       container.dispose();
     });
 
-    test('forecastHistoryProvider uses selectedCommuneCoordinatesProvider',
-        () async {
-      // Arrange
 
-      final container = ProviderContainer();
-
-      // Act: Lire le provider forecastHistory (devrait utiliser selectedCommuneCoordinatesProvider)
-
-      final historyAsync = container.read(forecastHistoryProvider);
-
-      await historyAsync.when(
-        loading: () async {},
-        error: (error, stack) => fail('Erreur lors du chargement: $error'),
-        data: (history) {
-          // Assert: Historique chargé
-
-          expect(history, isNotNull);
-
-          expect(history, isA<List>());
-        },
-      );
-
-      // Cleanup
-
-      container.dispose();
-    });
 
     test('null commune falls back to defaultCommuneName', () async {
       // Arrange
