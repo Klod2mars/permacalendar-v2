@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/activity_tracker_v3_provider.dart';
 import '../../../../core/models/activity_v3.dart';
 import '../../../../shared/widgets/custom_card.dart';
+import '../../../garden/providers/garden_provider.dart';
 
 /// Écran pour afficher toutes les activités
 class ActivitiesScreen extends ConsumerStatefulWidget {
@@ -17,6 +18,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final activitiesAsync = ref.watch(recentActivitiesProvider);
+    final gardenState = ref.watch(gardenProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +56,21 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
                     itemCount: filteredActivities.length,
                     itemBuilder: (context, index) {
                       final activity = filteredActivities[index];
-                      return _buildActivityCard(activity, theme);
+                      // Résolution du nom du jardin si manquant
+                      String? gardenName = activity.metadata?['gardenName'];
+                      if (gardenName == null && activity.metadata?['gardenId'] != null) {
+                        final gardenId = activity.metadata!['gardenId'];
+                        final garden = gardenState.gardens.firstWhere(
+                          (g) => g.id == gardenId,
+                          orElse: () => gardenState.gardens.first, // Fallback safe
+                        );
+                        // On vérifie si garden contient vraiment l'ID (le fallback returns first element, check ID to be sure)
+                        if (garden.id == gardenId) {
+                           gardenName = garden.name;
+                        }
+                      }
+                      
+                      return _buildActivityCard(activity, theme, gardenName);
                     },
                   ),
                 );
@@ -68,33 +84,57 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
     );
   }
 
-  Widget _buildActivityCard(ActivityV3 activity, ThemeData theme) {
+  Widget _buildActivityCard(ActivityV3 activity, ThemeData theme, String? resolvedGardenName) {
     return CustomCard(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         leading: _buildActivityIcon(activity, theme),
         title: Text(
           activity.description,
-          style: theme.textTheme.bodyLarge?.copyWith(
-            fontWeight:
-                activity.priority > 0 ? FontWeight.w600 : FontWeight.normal,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: activity.priority > 0 ? FontWeight.w600 : FontWeight.w600,
           ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              _formatTimestamp(activity.timestamp),
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+            Row(
+              children: [
+                Text(
+                  _formatTimestamp(activity.timestamp),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                if (resolvedGardenName != null) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Text('•', style: theme.textTheme.bodySmall),
+                  ),
+                  Flexible(
+                    child: Text(
+                      resolvedGardenName,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ],
             ),
             if (activity.metadata != null && activity.metadata!.isNotEmpty)
-              Text(
-                _formatFriendlyMetadata(activity.metadata!),
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                  fontStyle: FontStyle.italic,
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  _formatFriendlyMetadata(activity.metadata!),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers/activity_tracker_v3_provider.dart';
 import '../../core/models/activity_v3.dart';
+import '../../features/garden/providers/garden_provider.dart';
 
 /// Widget pour afficher les activités récentes
 class RecentActivitiesWidget extends ConsumerWidget {
@@ -26,6 +27,7 @@ class RecentActivitiesWidget extends ConsumerWidget {
         : recentActivitiesProvider;
 
     final activitiesAsync = ref.watch(activitiesProvider);
+    final gardenState = ref.watch(gardenProvider);
 
     // Fonction de refresh
     void refreshActivities() {
@@ -67,7 +69,7 @@ class RecentActivitiesWidget extends ConsumerWidget {
                 if (activities.isEmpty) {
                   return _buildEmptyState(theme);
                 }
-                return _buildActivitiesList(activities, theme);
+                return _buildActivitiesList(activities, theme, gardenState);
               },
               loading: () => _buildLoadingState(theme),
               error: (error, stack) => _buildErrorState(error, theme),
@@ -144,7 +146,7 @@ class RecentActivitiesWidget extends ConsumerWidget {
     );
   }
 
-  Widget _buildActivitiesList(List<ActivityV3> activities, ThemeData theme) {
+  Widget _buildActivitiesList(List<ActivityV3> activities, ThemeData theme, dynamic gardenState) {
     final displayActivities = activities.take(maxItems).toList();
 
     return ListView.separated(
@@ -154,37 +156,73 @@ class RecentActivitiesWidget extends ConsumerWidget {
       separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
         final activity = displayActivities[index];
-        return _buildActivityItem(activity, theme);
+        // Résolution du nom du jardin si manquant
+        String? gardenName = activity.metadata?['gardenName'];
+        if (gardenName == null && activity.metadata?['gardenId'] != null) {
+          final gardenId = activity.metadata!['gardenId'];
+          final garden = gardenState.gardens.firstWhere(
+            (g) => g.id == gardenId,
+            orElse: () => gardenState.gardens.first, // Fallback safe
+          );
+          if (garden.id == gardenId) {
+             gardenName = garden.name;
+          }
+        }
+        return _buildActivityItem(activity, theme, gardenName);
       },
     );
   }
 
-  Widget _buildActivityItem(ActivityV3 activity, ThemeData theme) {
+  Widget _buildActivityItem(ActivityV3 activity, ThemeData theme, String? resolvedGardenName) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 4),
       leading: _buildActivityIcon(activity, theme),
       title: Text(
         activity.description,
         style: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight:
-              activity.priority > 0 ? FontWeight.w600 : FontWeight.normal,
+          fontWeight: activity.priority > 0 ? FontWeight.w600 : FontWeight.w600,
         ),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            _formatTimestamp(activity.timestamp),
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+          Row(
+            children: [
+              Text(
+                _formatTimestamp(activity.timestamp),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              if (resolvedGardenName != null) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Text('•', style: theme.textTheme.bodySmall),
+                ),
+                Flexible(
+                  child: Text(
+                    resolvedGardenName,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ],
           ),
           if (activity.metadata != null && activity.metadata!.isNotEmpty)
-            Text(
-              _formatFriendlyMetadata(activity.metadata!),
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontStyle: FontStyle.italic,
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(
+                _formatFriendlyMetadata(activity.metadata!),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
         ],
