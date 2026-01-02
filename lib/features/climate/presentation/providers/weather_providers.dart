@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../domain/usecases/should_pulse_alert_usecase.dart';
@@ -18,8 +18,6 @@ import '../../domain/models/weather_view_data.dart';
 
 import '../../data/commune_storage.dart';
 
-
-
 // WeatherViewData a été déplacé vers lib/features/climate/domain/models/weather_view_data.dart
 
 // Utilisez l'import au-dessus pour utiliser le modèle unifié
@@ -34,9 +32,7 @@ import 'weather_time_provider.dart';
 /// Fallback sur les coordonnées stockées si le géocodage échoue ou si le mode hors ligne est actif
 
 final selectedCommuneCoordinatesProvider =
-
     FutureProvider<om.Coordinates>((ref) async {
-
   final settings = ref.watch(appSettingsProvider);
 
   final name = settings.selectedCommune;
@@ -45,64 +41,41 @@ final selectedCommuneCoordinatesProvider =
 
   final notifier = ref.read(appSettingsProvider.notifier);
 
-
-
   // Si aucune commune n'est sélectionnée, utiliser les coordonnées stockées ou défaut
 
   if (name == null || name.isEmpty) {
-
     if (settings.lastLatitude != null && settings.lastLongitude != null) {
-
       return om.Coordinates(
-
         latitude: settings.lastLatitude!,
-
         longitude: settings.lastLongitude!,
-
         resolvedName: EnvironmentService.defaultCommuneName,
-
       );
-
     }
 
     return om.Coordinates(
-
       latitude: EnvironmentService.defaultLatitude,
-
       longitude: EnvironmentService.defaultLongitude,
-
       resolvedName: EnvironmentService.defaultCommuneName,
-
     );
-
   }
-
-
 
   // Si les coordonnées stockées correspondent à la commune actuelle, utiliser celles-ci en priorité
 
   // (optimisation pour mode hors ligne)
 
   if (settings.lastLatitude != null && settings.lastLongitude != null) {
-
     // Essayer d'abord le géocodage pour obtenir des coordonnées fraÃ®ches
 
     try {
-
       final results = await svc.searchPlaces(name, count: 1);
 
       if (results.isNotEmpty) {
-
         final p = results.first;
 
         final coords = om.Coordinates(
-
           latitude: p.latitude,
-
           longitude: p.longitude,
-
           resolvedName: p.name,
-
         );
 
         // âœ… FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
@@ -110,97 +83,63 @@ final selectedCommuneCoordinatesProvider =
         final latChanged = (settings.lastLatitude! - p.latitude).abs() > 0.001;
 
         final lonChanged =
-
             (settings.lastLongitude! - p.longitude).abs() > 0.001;
 
         if (latChanged || lonChanged) {
-
           await notifier.setLastCoordinates(p.latitude, p.longitude);
-
         }
 
         return coords;
-
       }
-
     } catch (e) {
-
       // En cas d'erreur réseau, utiliser les coordonnées stockées
 
       return om.Coordinates(
-
         latitude: settings.lastLatitude!,
-
         longitude: settings.lastLongitude!,
-
         resolvedName: name,
-
       );
-
     }
-
   }
-
-
 
   // Fallback: essayer le géocodage même sans coordonnées stockées
 
   try {
-
     final results = await svc.searchPlaces(name, count: 1);
 
     if (results.isEmpty) {
-
       // Si le géocodage ne trouve rien, utiliser les coordonnées stockées ou défaut
 
       if (settings.lastLatitude != null && settings.lastLongitude != null) {
-
         return om.Coordinates(
-
           latitude: settings.lastLatitude!,
-
           longitude: settings.lastLongitude!,
-
           resolvedName: name,
-
         );
-
       }
 
       return om.Coordinates(
-
         latitude: EnvironmentService.defaultLatitude,
-
         longitude: EnvironmentService.defaultLongitude,
-
         resolvedName: name,
-
       );
-
     }
 
     final p = results.first;
 
     final coords = om.Coordinates(
-
       latitude: p.latitude,
-
       longitude: p.longitude,
-
       resolvedName: p.name,
-
     );
 
     // âœ… FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
 
     if (settings.lastLatitude == null || settings.lastLongitude == null) {
-
       // Pas de coordonnées stockées, sauvegarder
 
       await notifier.setLastCoordinates(p.latitude, p.longitude);
-
     } else {
-
       // Vérifier si changement significatif (> 0.001 degré = ~100m)
 
       final latChanged = (settings.lastLatitude! - p.latitude).abs() > 0.001;
@@ -208,48 +147,29 @@ final selectedCommuneCoordinatesProvider =
       final lonChanged = (settings.lastLongitude! - p.longitude).abs() > 0.001;
 
       if (latChanged || lonChanged) {
-
         await notifier.setLastCoordinates(p.latitude, p.longitude);
-
       }
-
     }
 
     return coords;
-
   } catch (e) {
-
     // Fallback sur coordonnées stockées ou défaut en cas d'erreur de résolution
 
     if (settings.lastLatitude != null && settings.lastLongitude != null) {
-
       return om.Coordinates(
-
         latitude: settings.lastLatitude!,
-
         longitude: settings.lastLongitude!,
-
         resolvedName: name,
-
       );
-
     }
 
     return om.Coordinates(
-
       latitude: EnvironmentService.defaultLatitude,
-
       longitude: EnvironmentService.defaultLongitude,
-
       resolvedName: name,
-
     );
-
   }
-
 });
-
-
 
 // âœ… Patch v1.2 — ajout provider persistant via CommuneStorage
 
@@ -278,12 +198,9 @@ final persistedCoordinatesProvider =
   }
 });
 
-
-
 /// Weather condition types for halo mapping
 
 enum WeatherConditionType {
-
   sunny,
 
   rainy,
@@ -297,15 +214,11 @@ enum WeatherConditionType {
   stormy,
 
   other,
-
 }
-
-
 
 /// Timeline point with past/future flag for history + forecast
 
 class TimelineWeatherPoint {
-
   final DateTime date;
 
   final double? minTemp;
@@ -324,38 +237,22 @@ class TimelineWeatherPoint {
 
   final bool isPast; // true for history (J-), false for forecast (J0/J+)
 
-
-
   const TimelineWeatherPoint({
-
     required this.date,
-
     this.minTemp,
-
     this.maxTemp,
-
     required this.icon,
-
     required this.description,
-
     this.precipitation,
-
     this.condition,
-
     this.weatherCode,
-
     required this.isPast,
-
   });
-
 }
-
-
 
 /// Weather alert types for intelligent detection
 
 enum WeatherAlertType {
-
   frost, // â „ï¸  Gel
 
   heatwave, // ðŸŒ¡ï¸  Canicule
@@ -363,29 +260,21 @@ enum WeatherAlertType {
   watering, // ðŸ’§ Arrosage intelligent (contextuel)
 
   protection, // ðŸ›¡ï¸  Protection
-
 }
-
-
 
 /// Alert severity levels
 
 enum AlertSeverity {
-
   info, // Information
 
   warning, // Attention
 
   critical, // Critique
-
 }
-
-
 
 /// Enhanced weather alert model with intelligent recommendations
 
 class WeatherAlert {
-
   final String id;
 
   final WeatherAlertType type;
@@ -412,154 +301,94 @@ class WeatherAlert {
 
   final DateTime timestamp;
 
-
-
   const WeatherAlert({
-
     required this.id,
-
     required this.type,
-
     required this.severity,
-
     required this.title,
-
     required this.description,
-
     required this.validFrom,
-
     required this.validUntil,
-
     this.temperature,
-
     this.recommendations = const [],
-
     required this.iconPath,
-
     this.affectedPlants = const [],
-
     this.isMeteoDependent = false,
-
     required this.timestamp,
-
   });
 
-
-
   @override
-
   String toString() {
-
     return 'WeatherAlert(id: $id, type: $type, severity: $severity, title: $title, description: $description, validFrom: $validFrom, validUntil: $validUntil, temperature: $temperature, recommendations: $recommendations, iconPath: $iconPath, affectedPlants: $affectedPlants, isMeteoDependent: $isMeteoDependent, timestamp: $timestamp)';
-
   }
 
-
-
   @override
-
   bool operator ==(Object other) {
-
     if (identical(this, other)) return true;
 
     return other is WeatherAlert &&
-
         other.id == id &&
-
         other.type == type &&
-
         other.severity == severity &&
-
         other.title == title &&
-
         other.description == description &&
-
         other.validFrom == validFrom &&
-
         other.validUntil == validUntil &&
-
         other.temperature == temperature &&
-
         other.recommendations == recommendations &&
-
         other.iconPath == iconPath &&
-
         other.affectedPlants == affectedPlants &&
-
         other.isMeteoDependent == isMeteoDependent &&
-
         other.timestamp == timestamp;
-
   }
-
-
 
   @override
-
   int get hashCode {
-
     return id.hashCode ^
-
         type.hashCode ^
-
         severity.hashCode ^
-
         title.hashCode ^
-
         description.hashCode ^
-
         validFrom.hashCode ^
-
         validUntil.hashCode ^
-
         temperature.hashCode ^
-
         recommendations.hashCode ^
-
         iconPath.hashCode ^
-
         affectedPlants.hashCode ^
-
         isMeteoDependent.hashCode ^
-
         timestamp.hashCode;
-
   }
-
 }
-
-
 
 // DailyWeatherPoint a été déplacé vers lib/core/models/daily_weather_point.dart
 
 // Utilisez l'import au-dessus pour utiliser le modèle unifié
 
-
-
 /// Provider for current weather data from OpenMeteo
 
 final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
   om.Coordinates? effectiveCoords;
-  
+
   // 1. Résolution des coordonnées
   try {
     final svc = om.OpenMeteoService.instance;
 
     // Utiliser en priorité les coordonnées persistées (Hive) si présentes,
     // sinon utiliser les coordonnées de la commune sélectionnée (ou défaut).
-    final om.Coordinates? persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
+    final om.Coordinates? persistedCoords =
+        await ref.watch(persistedCoordinatesProvider.future);
 
     if (persistedCoords != null) {
       effectiveCoords = persistedCoords;
     } else {
-      effectiveCoords = await ref.watch(selectedCommuneCoordinatesProvider.future);
+      effectiveCoords =
+          await ref.watch(selectedCommuneCoordinatesProvider.future);
     }
-    
   } catch (e, st) {
     debugPrint('CURRENT PROVIDER (COORDS) ERROR: $e\n$st');
-    
+
     return WeatherViewData.fromUI(
-      temperature: null, 
+      temperature: null,
       icon: WeatherIconMapper.getFallbackIcon(),
       description: 'Erreur localisation',
       timestamp: DateTime.now(),
@@ -572,7 +401,8 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
   final coords = effectiveCoords!;
 
   // DEBUG: indiquer quelles coordonnées sont réellement utilisées par le provider
-  debugPrint('CURRENT PROVIDER: using coords=${coords.latitude},${coords.longitude} (${coords.resolvedName})');
+  debugPrint(
+      'CURRENT PROVIDER: using coords=${coords.latitude},${coords.longitude} (${coords.resolvedName})');
 
   // 2. Fetch Météo
   try {
@@ -585,7 +415,8 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     );
 
     // DEBUG: indiquer ce que renvoie OpenMeteoService
-    debugPrint('FETCH RESULT: hourly=${result.hourlyWeather.length}, currentTemp=${result.currentTemperatureC}');
+    debugPrint(
+        'FETCH RESULT: hourly=${result.hourlyWeather.length}, currentTemp=${result.currentTemperatureC}');
 
     // Construire WeatherViewData
     final weatherView = WeatherViewData.fromDomain(
@@ -597,11 +428,11 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     // Enrichir l'UI
     final enriched = weatherView.enrich(
       icon: WeatherIconMapper.getIconPath(result.currentWeatherCode),
-      description: WeatherIconMapper.getWeatherDescription(result.currentWeatherCode),
+      description:
+          WeatherIconMapper.getWeatherDescription(result.currentWeatherCode),
     );
 
     return enriched;
-
   } catch (e, st) {
     debugPrint('CURRENT PROVIDER (FETCH) ERROR: $e\n$st');
 
@@ -618,17 +449,11 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
   }
 });
 
-
-
 /// Provider for weather alerts from weather impact analyzer
 
 final alertsProvider = FutureProvider<List<WeatherAlert>>((ref) async {
-
   try {
-
     final weatherData = await ref.watch(currentWeatherProvider.future);
-
-
 
     // For now, create simple alerts based on temperature thresholds
 
@@ -636,97 +461,57 @@ final alertsProvider = FutureProvider<List<WeatherAlert>>((ref) async {
 
     final alerts = <WeatherAlert>[];
 
-
-
     final temp =
-
         weatherData.temperature ?? weatherData.currentTemperatureC ?? 20.0;
 
     if (temp < 5) {
-
       alerts.add(WeatherAlert(
-
         id: 'frost_${DateTime.now().millisecondsSinceEpoch}',
-
         type: WeatherAlertType.frost,
-
         severity: AlertSeverity.warning,
-
         title: 'Risque de gel',
-
         description: 'Température: ${temp.toStringAsFixed(1)}Â°C',
-
         validFrom: DateTime.now(),
-
         validUntil: DateTime.now().add(const Duration(hours: 12)),
-
         iconPath: 'assets/weather_icons/frost_alert.png',
-
         timestamp: DateTime.now(),
-
       ));
-
     }
-
-
 
     if (temp > 32) {
-
       alerts.add(WeatherAlert(
-
         id: 'heat_${DateTime.now().millisecondsSinceEpoch}',
-
         type: WeatherAlertType.heatwave,
-
         severity: AlertSeverity.critical,
-
         title: 'Canicule',
-
         description: 'Température: ${temp.toStringAsFixed(1)}Â°C',
-
         validFrom: DateTime.now(),
-
         validUntil: DateTime.now().add(const Duration(days: 1)),
-
         iconPath: 'assets/weather_icons/heat_alert.png',
-
         timestamp: DateTime.now(),
-
       ));
-
     }
 
-
-
     return alerts;
-
   } catch (e) {
-
     // Return empty list on error
 
     return [];
-
   }
-
 });
-
-
 
 /// Provider for weather forecast data from OpenMeteo
 
 final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
-
   try {
-
     final svc = om.OpenMeteoService.instance;
-
-
 
     // Utiliser les coordonnées de la commune sélectionnée (ou défaut)
 
     // Utiliser en priorité les coordonnées persistées (Hive) si présentes (restore),
     // sinon utiliser les coordonnées de la commune sélectionnée (ou défaut).
-    final om.Coordinates? persistedCoords = await ref.watch(persistedCoordinatesProvider.future);
+    final om.Coordinates? persistedCoords =
+        await ref.watch(persistedCoordinatesProvider.future);
 
     // Garantir que `coords` est non-nullable pour éviter les accès `.latitude` / `.longitude`
     late final om.Coordinates coords;
@@ -736,49 +521,33 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
       coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
     }
 
-
     final result = await svc.fetchPrecipitation(
-
       latitude: coords.latitude,
-
       longitude: coords.longitude,
-
       pastDays: 0,
-
       forecastDays: 7,
-
     );
-
-
 
     // Get forecast data (future days)
 
     final (_, forecastData) = result.splitByToday();
 
-
-
     return forecastData.map((daily) {
-
       final condition =
-
           _determineWeatherCondition((daily.tMaxC ?? 20.0), daily.precipMm);
 
       final icon = daily.weatherCode != null
-
           ? WeatherIconMapper.getIconPath(daily.weatherCode)
-
           : _getWeatherIcon(condition);
 
       final description = daily.weatherCode != null
-
           ? WeatherIconMapper.getWeatherDescription(daily.weatherCode)
-
           : _getWeatherDescription(condition);
 
-     // UPDATE: using enrich method that preserves new fields because it copies everything
-     // Wait, enrich method on DailyWeatherPoint (as per my update) DOES preserve them
-     // Let's verify DailyWeatherPoint.enrich
-     /*
+      // UPDATE: using enrich method that preserves new fields because it copies everything
+      // Wait, enrich method on DailyWeatherPoint (as per my update) DOES preserve them
+      // Let's verify DailyWeatherPoint.enrich
+      /*
        DailyWeatherPoint enrich({
         ...
        }) {
@@ -791,162 +560,100 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
         );
        }
      */
-     // So calling .enrich() is safer than casting to .fromEnriched unless I manually pass everything.
-     // In previous code it was using .fromEnriched constructor which DOES NOT default copy unknown fields.
-     
-     // I replaced .fromEnriched call with .enrich() method on the object itself.
-     
+      // So calling .enrich() is safer than casting to .fromEnriched unless I manually pass everything.
+      // In previous code it was using .fromEnriched constructor which DOES NOT default copy unknown fields.
+
+      // I replaced .fromEnriched call with .enrich() method on the object itself.
+
       return daily.enrich(
         icon: icon,
         description: description,
         condition: condition.toString(),
       );
-
     }).toList();
-
   } catch (e) {
     debugPrint('FORECAST PROVIDER ERROR: $e');
     // Return empty list on error
 
     return [];
-
   }
-
 });
-
-
 
 /// Transformer daily points into timeline UI points
 
 List<TimelineWeatherPoint> mapList(List<DailyWeatherPoint> src,
-
     {required bool pastFlag}) {
-
   return src.map((daily) {
-
     final condition = _determineWeatherCondition(
-
       (daily.tMaxC ?? 20.0),
-
       daily.precipMm,
-
     );
 
     final icon = daily.weatherCode != null
-
         ? WeatherIconMapper.getIconPath(daily.weatherCode!)
-
         : _getWeatherIcon(condition);
 
     final description = daily.weatherCode != null
-
         ? WeatherIconMapper.getWeatherDescription(daily.weatherCode!)
-
         : _getWeatherDescription(condition);
 
-
-
     return TimelineWeatherPoint(
-
       date: daily.date,
-
       minTemp: daily.tMinC,
-
       maxTemp: daily.tMaxC,
-
       icon: icon,
-
       description: description,
-
       precipitation: daily.precipMm,
-
       condition: condition,
-
       weatherCode: daily.weatherCode,
-
       isPast: pastFlag,
-
     );
-
   }).toList();
-
 }
-
-
 
 // Helper for weather condition
 
 WeatherConditionType _determineWeatherCondition(
-
     double temperature, double precipitation) {
-
   if (precipitation > 5.0) {
-
     return WeatherConditionType.rainy;
-
   } else if (temperature < 0) {
-
     return WeatherConditionType.snowOrFrost;
-
   } else if (temperature > 32) {
-
     return WeatherConditionType.hot;
-
   } else if (precipitation > 1.0) {
-
     return WeatherConditionType.cloudy;
-
   } else if (temperature > 25) {
-
     return WeatherConditionType.sunny;
-
   } else {
-
     return WeatherConditionType.other;
-
   }
-
 }
 
-
-
 String _getWeatherDescription(WeatherConditionType condition) {
-
   switch (condition) {
-
     case WeatherConditionType.sunny:
-
       return 'Ensoleillé';
 
     case WeatherConditionType.rainy:
-
       return 'Pluvieux';
 
     case WeatherConditionType.hot:
-
       return 'Canicule';
 
     case WeatherConditionType.snowOrFrost:
-
       return 'Gel/Neige';
 
     case WeatherConditionType.cloudy:
-
       return 'Nuageux';
 
     case WeatherConditionType.stormy:
-
       return 'Orageux';
 
     case WeatherConditionType.other:
-
       return 'Variable';
-
   }
-
 }
-
-
 
 String _getWeatherIcon(WeatherConditionType condition) {
   switch (condition) {
@@ -967,13 +674,12 @@ String _getWeatherIcon(WeatherConditionType condition) {
   }
 }
 
-
 /// Provider qui renvoie la météo interpolée pour l'heure sélectionnée (Maintenant + Drag).
 /// Permet à l'UI (Bulle, Graphiques) de suivre le curseur temporel en temps réel.
 final projectedWeatherProvider = Provider<HourlyWeatherPoint?>((ref) {
   // 1. Écouter la météo brute
   final weatherAsync = ref.watch(currentWeatherProvider);
-  
+
   // 2. Écouter le décalage temporel (Drag)
   final offsetHours = ref.watch(weatherTimeOffsetProvider);
 
@@ -982,13 +688,10 @@ final projectedWeatherProvider = Provider<HourlyWeatherPoint?>((ref) {
 
   // 3. Calculer le temps cible
   // Note: offsetHours est un double (ex: 1.5 pour +1h30). On convertit en minutes.
-  final projectedTime = DateTime.now().toUtc().add(
-    Duration(minutes: (offsetHours * 60).round())
-  );
+  final projectedTime =
+      DateTime.now().toUtc().add(Duration(minutes: (offsetHours * 60).round()));
 
   // 4. Utiliser l'utilitaire d'interpolation sur la liste horaire
   return WeatherInterpolation.getInterpolatedWeather(
-    weatherAsync.value!.result.hourlyWeather, 
-    projectedTime
-  );
+      weatherAsync.value!.result.hourlyWeather, projectedTime);
 });

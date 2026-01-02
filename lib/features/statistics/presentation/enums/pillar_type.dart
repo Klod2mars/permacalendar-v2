@@ -1,5 +1,1 @@
-﻿enum PillarType { economieVivante, sante, patrimoine }
-
-
-
-
+enum PillarType { economieVivante, sante, patrimoine }

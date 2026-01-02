@@ -14,7 +14,8 @@ class GardenNutritionScreen extends ConsumerStatefulWidget {
   const GardenNutritionScreen({super.key, this.gardenId});
 
   @override
-  ConsumerState<GardenNutritionScreen> createState() => _GardenNutritionScreenState();
+  ConsumerState<GardenNutritionScreen> createState() =>
+      _GardenNutritionScreenState();
 }
 
 class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
@@ -25,7 +26,9 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
     super.initState();
     if (widget.gardenId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId!});
+        ref
+            .read(statisticsFiltersProvider.notifier)
+            .setGardens({widget.gardenId!});
       });
     }
   }
@@ -35,7 +38,7 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
     final seasonalAsync = ref.watch(seasonalNutritionProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E), 
+      backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: const Text('Signature Nutritionnelle'),
         backgroundColor: Colors.transparent,
@@ -57,12 +60,15 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
               // 0. SELECTOR & HEADER
               const GardenMultiSelector(),
               const SizedBox(height: 16),
-              
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: const Text(
                   'Dynamique Saisonnière',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               const Padding(
@@ -99,7 +105,8 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                             alignment: Alignment.center,
                             child: Column(
                               children: [
-                                Icon(Icons.eco_outlined, size: 48, color: Colors.white24),
+                                Icon(Icons.eco_outlined,
+                                    size: 48, color: Colors.white24),
                                 SizedBox(height: 16),
                                 Text(
                                   "Aucune récolte en ce mois",
@@ -111,17 +118,18 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                         else ...[
                           // TRENDS
                           SeasonalTrendWidget(
-                            month: _selectedMonth, 
-                            monthlyData: monthlyStats.nutrientTotals,
-                            annualData: annualTotals
-                          ),
+                              month: _selectedMonth,
+                              monthlyData: monthlyStats.nutrientTotals,
+                              annualData: annualTotals),
                           const SizedBox(height: 24),
 
                           // PIE CHARTS
                           if (monthlyStats.contributionCount > 0) ...[
                             const Text(
                               'Structure & Minéraux Majeurs',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 16),
                             Container(
@@ -135,12 +143,12 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                                 isMajorMinerals: true,
                               ),
                             ),
-                            
                             const SizedBox(height: 24),
-                            
                             const Text(
                               'Vitalité & Oligo-éléments',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 16),
                             Container(
@@ -150,7 +158,7 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: MonthlyCompositionChart(
-                                data: monthlyStats.nutrientTotals, 
+                                data: monthlyStats.nutrientTotals,
                                 isMajorMinerals: false,
                               ),
                             ),
@@ -161,9 +169,11 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, s) => Center(child: Text('Erreur: $e', style: const TextStyle(color: Colors.red))),
+                error: (e, s) => Center(
+                    child: Text('Erreur: $e',
+                        style: const TextStyle(color: Colors.red))),
               ),
-              
+
               const SizedBox(height: 48),
             ],
           ),

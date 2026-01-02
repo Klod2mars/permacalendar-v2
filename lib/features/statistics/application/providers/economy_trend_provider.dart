@@ -33,10 +33,10 @@ final economyTrendProvider = Provider<List<EconomyTrendPoint>>((ref) {
 
   // Agrégation par mois (clé: YYYY-MM)
   final Map<String, double> monthlySums = {};
-  
+
   // Pour s'assurer d'avoir tous les mois dans l'ordre, on peut itérer ou trier après.
   // Ici on fait simple : on agrège tout, puis on trie les clés.
-  
+
   for (final record in filteredRecords) {
     final date = record.date as DateTime;
     final key = "${date.year}-${date.month.toString().padLeft(2, '0')}";
@@ -49,7 +49,7 @@ final economyTrendProvider = Provider<List<EconomyTrendPoint>>((ref) {
     final year = int.parse(parts[0]);
     final month = int.parse(parts[1]);
     // On met le point au 1er du mois ou milieu ? 15 du mois pour centrer visuellement si besoin
-    final date = DateTime(year, month, 15); 
+    final date = DateTime(year, month, 15);
     return EconomyTrendPoint(date: date, value: entry.value);
   }).toList();
 

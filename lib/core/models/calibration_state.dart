@@ -1,4 +1,4 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -58,7 +58,8 @@ class CalibrationStateNotifier extends Notifier<CalibrationState> {
   /// DÃƒÂ©sactiver toute calibration
   void disableCalibration() {
     if (kDebugMode) {
-      debugPrint('Ã°Å¸”Â§ disableCalibration() - ${state.activeType} ââ€ ’ none');
+      debugPrint(
+          'Ã°Å¸”Â§ disableCalibration() - ${state.activeType} ââ€ ’ none');
     }
     state = state.copyWith(
       activeType: CalibrationType.none,
@@ -76,7 +77,7 @@ class CalibrationStateNotifier extends Notifier<CalibrationState> {
 
   /// VÃƒÂ©rifier si calibration organique active
   bool get isOrganicCalibrating => state.activeType == CalibrationType.organic;
-  
+
   /// VÃƒÂ©rifier si calibration ciel active
   bool get isSkyCalibrating => state.activeType == CalibrationType.sky;
 }

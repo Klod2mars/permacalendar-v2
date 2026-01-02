@@ -500,7 +500,7 @@ class _OrganicDashboardWidgetState
     final zones = ref.watch(organicZonesProvider);
     final calibState = ref.watch(calibrationStateProvider);
     final isCalibrating = calibState.activeType == CalibrationType.organic;
-    
+
     // [NEW] Read image settings from provider (handling persistence + live update)
     final imageSettings = ref.watch(dashboardImageSettingsProvider);
 
@@ -541,7 +541,8 @@ class _OrganicDashboardWidgetState
                 child: OverflowBox(
                   maxWidth: width * imageSettings.zoom,
                   maxHeight: height * imageSettings.zoom,
-                  alignment: Alignment(imageSettings.alignX, imageSettings.alignY),
+                  alignment:
+                      Alignment(imageSettings.alignX, imageSettings.alignY),
                   child: SizedBox(
                     width: width * imageSettings.zoom,
                     height: height * imageSettings.zoom,
@@ -586,7 +587,7 @@ class _OrganicDashboardWidgetState
 
               // 1.5) [NEW] Organic Sky Layer (Dessiné par-dessus le fond, sous les bulles)
               const Positioned.fill(child: WeatherSkyBackground()),
-              
+
               // 1.6) [NEW] Bio Weather Layer (Particles - Pluie/Neige/Nuages)
               const Positioned.fill(child: WeatherBioLayer()),
 
@@ -1170,9 +1171,10 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
   }
 
   Future<void> _handleWeatherLongPress() async {
-     // Active le mode calibration du ciel
-     if (kDebugMode) debugPrint('[CALIBRATION] Activating Sky Calibration via long press');
-     widget.ref.read(calibrationStateProvider.notifier).enableSkyCalibration();
+    // Active le mode calibration du ciel
+    if (kDebugMode)
+      debugPrint('[CALIBRATION] Activating Sky Calibration via long press');
+    widget.ref.read(calibrationStateProvider.notifier).enableSkyCalibration();
   }
 
   @override
@@ -1266,8 +1268,8 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                 },
       onLongPress: isGardenHotspot && !widget.isCalibrating
           ? _handleGardenLongPress
-          : (widget.id == 'weather' && !widget.isCalibrating) 
-              ? _handleWeatherLongPress 
+          : (widget.id == 'weather' && !widget.isCalibrating)
+              ? _handleWeatherLongPress
               : null,
       semanticLabel: widget.cfg.id,
       showDebugOutline: widget.showDebugOutline,

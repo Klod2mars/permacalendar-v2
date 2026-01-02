@@ -64,7 +64,8 @@ Future<void> showHarvestDialog(
                 // Poids (Principal)
                 TextFormField(
                   controller: _weightController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   decoration: const InputDecoration(
                     labelText: 'Poids récolté (kg) *',
                     suffixText: 'kg',
@@ -82,7 +83,8 @@ Future<void> showHarvestDialog(
                 // Prix (Secondaire avec mémoire)
                 TextFormField(
                   controller: _priceController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   decoration: const InputDecoration(
                     labelText: 'Prix estimé (€/kg)',
                     suffixText: '€/kg',
@@ -119,27 +121,32 @@ Future<void> showHarvestDialog(
             onPressed: () => Navigator.of(dctx).pop(),
             child: const Text('Annuler')),
         FilledButton(
-onPressed: () async {
+          onPressed: () async {
             if (!_formKey.currentState!.validate()) return;
-            final weight = double.tryParse(_weightController.text.replaceAll(',', '.')) ?? 0.0;
-            final price = double.tryParse(_priceController.text.replaceAll(',', '.')) ?? 0.0;
-            final notes = _notesController.text.trim().isEmpty ? null : _notesController.text.trim();
+            final weight =
+                double.tryParse(_weightController.text.replaceAll(',', '.')) ??
+                    0.0;
+            final price =
+                double.tryParse(_priceController.text.replaceAll(',', '.')) ??
+                    0.0;
+            final notes = _notesController.text.trim().isEmpty
+                ? null
+                : _notesController.text.trim();
 
+            // Appel métier : recordHarvest (doit exister dans PlantingNotifier)
+            final notifier = ref.read(plantingProvider.notifier);
+            bool success = false;
+            try {
+              debugPrint(
+                  '[harvest_dialog] calling recordHarvest planting=${planting.id} weight=$weight price=$price');
 
-              // Appel métier : recordHarvest (doit exister dans PlantingNotifier)
-              final notifier = ref.read(plantingProvider.notifier);
-              bool success = false;
-              try {
-                debugPrint('[harvest_dialog] calling recordHarvest planting=${planting.id} weight=$weight price=$price');
-
-                success = await notifier.recordHarvest(
-                  planting.id,
-                  DateTime.now(),
-                  weightKg: weight,
-                  pricePerKg: price,
-                  notes: notes,
-                );
-              
+              success = await notifier.recordHarvest(
+                planting.id,
+                DateTime.now(),
+                weightKg: weight,
+                pricePerKg: price,
+                notes: notes,
+              );
             } catch (e) {
               success = false;
               debugPrint('Erreur recordHarvest: $e');
@@ -147,9 +154,11 @@ onPressed: () async {
 
             if (success && context.mounted) {
               Navigator.of(dctx).pop();
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Récolte enregistrée')));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Récolte enregistrée')));
             } else if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erreur lors de l\'enregistrement')));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Erreur lors de l\'enregistrement')));
             }
           },
           child: const Text('Enregistrer'),

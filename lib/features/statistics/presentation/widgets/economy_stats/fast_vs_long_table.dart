@@ -11,7 +11,8 @@ class FastVsLongTable extends StatelessWidget {
     if (metrics.isEmpty) return const SizedBox.shrink();
 
     // Sort by avgDays DESC
-    final sorted = List<FastLongMetrics>.from(metrics)..sort((a,b) => b.avgDaysToHarvest.compareTo(a.avgDaysToHarvest));
+    final sorted = List<FastLongMetrics>.from(metrics)
+      ..sort((a, b) => b.avgDaysToHarvest.compareTo(a.avgDaysToHarvest));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +33,8 @@ class FastVsLongTable extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              headingTextStyle: const TextStyle(color: Colors.white70, fontWeight: FontWeight.bold),
+              headingTextStyle: const TextStyle(
+                  color: Colors.white70, fontWeight: FontWeight.bold),
               dataTextStyle: const TextStyle(color: Colors.white),
               columns: const [
                 DataColumn(label: Text('Culture')),
@@ -42,14 +44,18 @@ class FastVsLongTable extends StatelessWidget {
               ],
               rows: sorted.map((m) {
                 Color typeColor = Colors.white;
-                if (m.classification == 'Rapide') typeColor = Colors.greenAccent;
-                if (m.classification == 'Long terme') typeColor = Colors.orangeAccent;
+                if (m.classification == 'Rapide')
+                  typeColor = Colors.greenAccent;
+                if (m.classification == 'Long terme')
+                  typeColor = Colors.orangeAccent;
 
                 return DataRow(cells: [
                   DataCell(Text(m.plantName)),
                   DataCell(Text('${m.avgDaysToHarvest.toStringAsFixed(0)}j')),
-                  DataCell(Text('${m.avgRevenuePerHarvest.toStringAsFixed(2)} €')),
-                  DataCell(Text(m.classification, style: TextStyle(color: typeColor))),
+                  DataCell(
+                      Text('${m.avgRevenuePerHarvest.toStringAsFixed(2)} €')),
+                  DataCell(Text(m.classification,
+                      style: TextStyle(color: typeColor))),
                 ]);
               }).toList(),
             ),

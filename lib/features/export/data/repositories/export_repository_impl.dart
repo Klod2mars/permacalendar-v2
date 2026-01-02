@@ -1,25 +1,27 @@
-
 import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/repositories/export_repository.dart';
 
 class ExportRepositoryImpl implements ExportRepository {
-  final Box _box; // Assume a generic settings box or specialized 'export_presets' box
+  final Box
+      _box; // Assume a generic settings box or specialized 'export_presets' box
 
   ExportRepositoryImpl(this._box);
 
   @override
   Future<List<ExportConfig>> getPresets() async {
-     try {
-       final rawList = _box.get('presets', defaultValue: []);
-       if (rawList is List) {
-         return rawList.map((e) => ExportConfig.fromJson(jsonDecode(e))).toList();
-       }
-       return [];
-     } catch (e) {
-       return [];
-     }
+    try {
+      final rawList = _box.get('presets', defaultValue: []);
+      if (rawList is List) {
+        return rawList
+            .map((e) => ExportConfig.fromJson(jsonDecode(e)))
+            .toList();
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
   }
 
   @override

@@ -28,12 +28,12 @@ class SkyCalibrationRepository {
   static const String _key = 'current_config';
 
   static Future<void> init() async {
-     // Register adapter handled by source gen usually, but manual check if needed
-     // Hive.registerAdapter(SkyCalibrationConfigAdapter()); 
-     // We assume generated adapter will be registered in main or we register it here if we can instantiate it.
-     // For now, let's assume auto-generated adapter file is included in main setup.
+    // Register adapter handled by source gen usually, but manual check if needed
+    // Hive.registerAdapter(SkyCalibrationConfigAdapter());
+    // We assume generated adapter will be registered in main or we register it here if we can instantiate it.
+    // For now, let's assume auto-generated adapter file is included in main setup.
   }
-  
+
   static Future<void> save(SkyCalibrationConfig config) async {
     final box = await Hive.openBox<SkyCalibrationConfig>(_boxName);
     await box.put(_key, config);
@@ -41,7 +41,7 @@ class SkyCalibrationRepository {
 
   static Future<SkyCalibrationConfig?> load() async {
     if (!Hive.isBoxOpen(_boxName)) {
-       await Hive.openBox<SkyCalibrationConfig>(_boxName);
+      await Hive.openBox<SkyCalibrationConfig>(_boxName);
     }
     final box = Hive.box<SkyCalibrationConfig>(_boxName);
     return box.get(_key);
@@ -66,19 +66,21 @@ class SkyCalibrationNotifier extends Notifier<SkyCalibrationConfig> {
     state = config;
     SkyCalibrationRepository.save(config);
   }
-  
-  void updatePartial({double? cx, double? cy, double? rx, double? ry, double? rotation}) {
-     final newState = state.copyWith(
-       cx: cx ?? state.cx,
-       cy: cy ?? state.cy,
-       rx: rx ?? state.rx,
-       ry: ry ?? state.ry,
-       rotation: rotation ?? state.rotation,
-     );
-     update(newState);
+
+  void updatePartial(
+      {double? cx, double? cy, double? rx, double? ry, double? rotation}) {
+    final newState = state.copyWith(
+      cx: cx ?? state.cx,
+      cy: cy ?? state.cy,
+      rx: rx ?? state.rx,
+      ry: ry ?? state.ry,
+      rotation: rotation ?? state.rotation,
+    );
+    update(newState);
   }
 }
 
-final skyCalibrationProvider = NotifierProvider<SkyCalibrationNotifier, SkyCalibrationConfig>(() {
+final skyCalibrationProvider =
+    NotifierProvider<SkyCalibrationNotifier, SkyCalibrationConfig>(() {
   return SkyCalibrationNotifier();
 });

@@ -6,12 +6,12 @@ class HourlyWeatherPoint {
   final double temperatureC;
   final double apparentTemperatureC;
   final double windSpeedkmh; // windspeed_10m
-  final int windDirection;   // winddirection_10m (degrés)
+  final int windDirection; // winddirection_10m (degrés)
   final double windGustsKmh; // windgusts_10m
   final int weatherCode;
   final double? pressureMsl; // pressure_msl (hPa)
-  final int cloudCover;      // cloudcover (%)
-  final double visibility;   // visibility (m)
+  final int cloudCover; // cloudcover (%)
+  final double visibility; // visibility (m)
 
   HourlyWeatherPoint({
     required this.time,

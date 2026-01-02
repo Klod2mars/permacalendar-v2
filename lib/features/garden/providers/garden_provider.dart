@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 
 import '../../../core/models/garden_state.dart';
 import '../../../core/models/garden_freezed.dart';
@@ -144,7 +144,7 @@ class GardenNotifier extends Notifier<GardenState> {
         }
       } else {
         // --- 2. Suppression Hybride Manuelle ---
-        
+
         // A. Suppression Modern (GardenHiveRepository)
         try {
           final repository = ref.read(gardenRepositoryProvider);
@@ -152,10 +152,11 @@ class GardenNotifier extends Notifier<GardenState> {
           modernSuccess = true;
         } catch (e) {
           if (e is GardenNotFoundException) {
-             // Idempotence : traité comme succès si déjà absent
+            // Idempotence : traité comme succès si déjà absent
             modernSuccess = true;
           } else {
-            print('[GardenNotifier] WARN: Modern delete failed for $gardenId: $e');
+            print(
+                '[GardenNotifier] WARN: Modern delete failed for $gardenId: $e');
             // TODO: Enregistrer pour retry ?
           }
         }
@@ -166,9 +167,10 @@ class GardenNotifier extends Notifier<GardenState> {
           legacySuccess = true;
         } catch (e) {
           // GardenBoxes ne throw pas forcément sur not found, mais si oui :
-          print('[GardenNotifier] WARN: Legacy delete failed for $gardenId: $e');
+          print(
+              '[GardenNotifier] WARN: Legacy delete failed for $gardenId: $e');
           // On considère que si ça fail, c'est pas bon, sauf si c'est "not found" (dur à catcher sans type précis)
-          // Pour l'instant on log juste. 
+          // Pour l'instant on log juste.
           // Si GardenBoxes.deleteGarden est robuste, il ne plante pas si l'ID manque.
           // On peut vérifier l'existence avant si on est puriste, mais ici on veut forcer la suppression.
         }
@@ -203,16 +205,17 @@ class GardenNotifier extends Notifier<GardenState> {
         );
 
         // --- 5. Rafraîchissement ---
-        
+
         // Recharger la liste des jardins
         await loadGardens();
-        
+
         // Invalider le cache des lits pour ce jardin (nettoyage Riverpod)
         ref.invalidate(gardenBedsForGardenProvider(gardenId));
 
         return true;
       } else {
-        state = GardenState.error('Échec de la suppression du jardin (Legacy & Modern failed)');
+        state = GardenState.error(
+            'Échec de la suppression du jardin (Legacy & Modern failed)');
         return false;
       }
     } catch (e) {

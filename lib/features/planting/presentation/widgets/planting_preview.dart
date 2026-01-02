@@ -34,25 +34,31 @@ class PlantingPreview extends StatelessWidget {
       final m = <String, String>{};
       for (final k in map.keys) m[k.toLowerCase()] = k;
       _assetManifestLowerToOriginal = m;
-      if (kDebugMode) debugPrint('PlantingPreview: loaded asset manifest (${m.length} entries)');
+      if (kDebugMode)
+        debugPrint(
+            'PlantingPreview: loaded asset manifest (${m.length} entries)');
     } catch (e) {
       _assetManifestLowerToOriginal = null;
-      if (kDebugMode) debugPrint('PlantingPreview: AssetManifest load failed: $e');
+      if (kDebugMode)
+        debugPrint('PlantingPreview: AssetManifest load failed: $e');
     }
   }
 
-  static Future<String?> _searchManifestCandidates(List<String> candidates) async {
+  static Future<String?> _searchManifestCandidates(
+      List<String> candidates) async {
     await _ensureAssetManifest();
     if (_assetManifestLowerToOriginal == null) return null;
     for (final c in candidates) {
       final lc = c.toLowerCase();
-      if (_assetManifestLowerToOriginal!.containsKey(lc)) return _assetManifestLowerToOriginal![lc];
+      if (_assetManifestLowerToOriginal!.containsKey(lc))
+        return _assetManifestLowerToOriginal![lc];
     }
     // try endsWith
     for (final c in candidates) {
       final lc = c.toLowerCase();
       for (final keyLower in _assetManifestLowerToOriginal!.keys) {
-        if (keyLower.endsWith(lc)) return _assetManifestLowerToOriginal![keyLower];
+        if (keyLower.endsWith(lc))
+          return _assetManifestLowerToOriginal![keyLower];
       }
     }
     return null;
@@ -80,22 +86,60 @@ class PlantingPreview extends StatelessWidget {
 
   static String _removeDiacritics(String s) {
     const Map<String, String> table = {
-      'à':'a','á':'a','â':'a','ã':'a','ä':'a','å':'a',
-      'ç':'c',
-      'è':'e','é':'e','ê':'e','ë':'e',
-      'ì':'i','í':'i','î':'i','ï':'i',
-      'ñ':'n',
-      'ò':'o','ó':'o','ô':'o','õ':'o','ö':'o',
-      'ù':'u','ú':'u','û':'u','ü':'u',
-      'ý':'y','ÿ':'y',
-      'À':'A','Á':'A','Â':'A','Ã':'A','Ä':'A','Å':'A',
-      'Ç':'C',
-      'È':'E','É':'E','Ê':'E','Ë':'E',
-      'Ì':'I','Í':'I','Î':'I','Ï':'I',
-      'Ñ':'N',
-      'Ò':'O','Ó':'O','Ô':'O','Õ':'O','Ö':'O',
-      'Ù':'U','Ú':'U','Û':'U','Ü':'U',
-      'Ý':'Y','Ÿ':'Y'
+      'à': 'a',
+      'á': 'a',
+      'â': 'a',
+      'ã': 'a',
+      'ä': 'a',
+      'å': 'a',
+      'ç': 'c',
+      'è': 'e',
+      'é': 'e',
+      'ê': 'e',
+      'ë': 'e',
+      'ì': 'i',
+      'í': 'i',
+      'î': 'i',
+      'ï': 'i',
+      'ñ': 'n',
+      'ò': 'o',
+      'ó': 'o',
+      'ô': 'o',
+      'õ': 'o',
+      'ö': 'o',
+      'ù': 'u',
+      'ú': 'u',
+      'û': 'u',
+      'ü': 'u',
+      'ý': 'y',
+      'ÿ': 'y',
+      'À': 'A',
+      'Á': 'A',
+      'Â': 'A',
+      'Ã': 'A',
+      'Ä': 'A',
+      'Å': 'A',
+      'Ç': 'C',
+      'È': 'E',
+      'É': 'E',
+      'Ê': 'E',
+      'Ë': 'E',
+      'Ì': 'I',
+      'Í': 'I',
+      'Î': 'I',
+      'Ï': 'I',
+      'Ñ': 'N',
+      'Ò': 'O',
+      'Ó': 'O',
+      'Ô': 'O',
+      'Õ': 'O',
+      'Ö': 'O',
+      'Ù': 'U',
+      'Ú': 'U',
+      'Û': 'U',
+      'Ü': 'U',
+      'Ý': 'Y',
+      'Ÿ': 'Y'
     };
     var out = s;
     table.forEach((k, v) {
@@ -104,7 +148,8 @@ class PlantingPreview extends StatelessWidget {
     return out;
   }
 
-  static List<String> _buildCandidates(String base, String id, String commonName) {
+  static List<String> _buildCandidates(
+      String base, String id, String commonName) {
     final candidates = <String>[];
 
     // Primary: use commonName (from planting.plantName) — this fixes mismatch where assets use French names
@@ -175,7 +220,8 @@ class PlantingPreview extends StatelessWidget {
       width: size,
       color: Colors.green.shade50,
       alignment: Alignment.center,
-      child: Icon(Icons.eco_outlined, size: size * 0.36, color: Colors.green.shade700),
+      child: Icon(Icons.eco_outlined,
+          size: size * 0.36, color: Colors.green.shade700),
     );
   }
 
@@ -221,18 +267,26 @@ class PlantingPreview extends StatelessWidget {
         // Build candidates: prefer commonNameFromPlanting, fallback to raw, fallback to plant.id / planting.plantId
         final base = raw ?? '';
         final id = (plant?.id ?? planting.plantId).toString();
-        final commonName = commonNameFromPlanting.isNotEmpty ? commonNameFromPlanting : (plant?.commonName ?? '');
+        final commonName = commonNameFromPlanting.isNotEmpty
+            ? commonNameFromPlanting
+            : (plant?.commonName ?? '');
 
         final candidates = _buildCandidates(base, id, commonName);
 
         if (kDebugMode) {
-          debugPrint('PlantingPreview: resolving image for ${planting.plantId} (plantName="${planting.plantName}") -> candidates(${candidates.length}) sample=${candidates.take(6).toList()}');
+          debugPrint(
+              'PlantingPreview: resolving image for ${planting.plantId} (plantName="${planting.plantName}") -> candidates(${candidates.length}) sample=${candidates.take(6).toList()}');
         }
 
         Widget imageArea() {
           // If raw is network URL
-          if (raw != null && raw.isNotEmpty && RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw)) {
-            if (kDebugMode) debugPrint('PlantingPreview: using network image for ${planting.plantId} -> $raw');
+          if (raw != null &&
+              raw.isNotEmpty &&
+              RegExp(r'^(http|https):\/\/', caseSensitive: false)
+                  .hasMatch(raw)) {
+            if (kDebugMode)
+              debugPrint(
+                  'PlantingPreview: using network image for ${planting.plantId} -> $raw');
             return Image.network(
               raw!,
               height: imageSize,
@@ -244,7 +298,9 @@ class PlantingPreview extends StatelessWidget {
 
           // If raw points to explicit asset path
           if (raw != null && raw.isNotEmpty && raw.startsWith('assets/')) {
-            if (kDebugMode) debugPrint('PlantingPreview: using explicit asset for ${planting.plantId} -> $raw');
+            if (kDebugMode)
+              debugPrint(
+                  'PlantingPreview: using explicit asset for ${planting.plantId} -> $raw');
             return Image.asset(
               raw,
               height: imageSize,
@@ -268,9 +324,9 @@ class PlantingPreview extends StatelessWidget {
                 _resolvedAssetsCache[cacheKey] = byManifest;
                 return byManifest;
               }
-              
+
               final byLoad = await _tryRootBundleLoad(candidates);
-              // CRITICAL FIX: Do NOT cache null results. 
+              // CRITICAL FIX: Do NOT cache null results.
               // This prevents permanent fallback if the first attempt fails due to race/timing.
               if (byLoad != null) {
                 _resolvedAssetsCache[cacheKey] = byLoad;
@@ -289,7 +345,9 @@ class PlantingPreview extends StatelessWidget {
               }
               final found = snap2.data;
               if (found != null) {
-                if (kDebugMode) debugPrint('PlantingPreview: found asset for ${planting.plantId} -> $found');
+                if (kDebugMode)
+                  debugPrint(
+                      'PlantingPreview: found asset for ${planting.plantId} -> $found');
                 return Image.asset(
                   found,
                   height: imageSize,
@@ -298,7 +356,9 @@ class PlantingPreview extends StatelessWidget {
                   errorBuilder: (_, __, ___) => _fallback(imageSize),
                 );
               } else {
-                if (kDebugMode) debugPrint('PlantingPreview: no asset found for ${planting.plantId} -> fallback');
+                if (kDebugMode)
+                  debugPrint(
+                      'PlantingPreview: no asset found for ${planting.plantId} -> fallback');
                 return _fallback(imageSize);
               }
             },
@@ -306,7 +366,9 @@ class PlantingPreview extends StatelessWidget {
         }
 
         final DateTime? estimateDate = planting.expectedHarvestStartDate ??
-            (plant != null ? planting.plantedDate.add(Duration(days: plant.daysToMaturity)) : null);
+            (plant != null
+                ? planting.plantedDate.add(Duration(days: plant.daysToMaturity))
+                : null);
 
         Color statusBg(String status) {
           switch (status) {
@@ -347,7 +409,8 @@ class PlantingPreview extends StatelessWidget {
         }
 
         return GestureDetector(
-          onTap: onTap ?? () => GoRouter.of(context).push('/plantings/${planting.id}'),
+          onTap: onTap ??
+              () => GoRouter.of(context).push('/plantings/${planting.id}'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -366,7 +429,8 @@ class PlantingPreview extends StatelessWidget {
                       top: 8,
                       right: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: statusBg(planting.status),
                           borderRadius: BorderRadius.circular(12),
@@ -384,14 +448,16 @@ class PlantingPreview extends StatelessWidget {
                       left: 8,
                       bottom: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.55),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           '${planting.quantity}',
-                          style: theme.textTheme.bodySmall?.copyWith(color: Colors.white),
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(color: Colors.white),
                         ),
                       ),
                     ),
@@ -414,7 +480,8 @@ class PlantingPreview extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Icon(Icons.agriculture, color: Colors.white, size: 16),
+                            child: const Icon(Icons.agriculture,
+                                color: Colors.white, size: 16),
                           ),
                         ),
                       ),
@@ -428,25 +495,28 @@ class PlantingPreview extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(planting.plantName,
-                        style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+                        style: theme.textTheme.bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 4),
                     Text(
                       planting.status == 'Semé'
                           ? 'Semé le ${_formatDate(planting.plantedDate)}'
                           : 'Planté le ${_formatDate(planting.plantedDate)}',
-                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(color: theme.colorScheme.outline),
                     ),
                     if (estimateDate != null)
                       Text(
                         'Récolte estimée: ${_formatDate(estimateDate)}',
-                        style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(color: theme.colorScheme.outline),
                       ),
                     const SizedBox(height: 6),
                     // Growth Progress Bar (Feature 2)
                     if (estimateDate != null) ...[
-                      _buildProgressBar(context, planting.plantedDate, estimateDate),
+                      _buildProgressBar(
+                          context, planting.plantedDate, estimateDate),
                     ],
-
                   ],
                 ),
               ),
@@ -461,38 +531,41 @@ class PlantingPreview extends StatelessWidget {
     final now = DateTime.now();
     final totalDuration = end.difference(start).inSeconds;
     final elapsed = now.difference(start).inSeconds;
-    
+
     double progress = 0.0;
     if (totalDuration > 0) {
       progress = elapsed / totalDuration;
     }
-    
+
     // Clamp
     if (progress < 0) progress = 0;
     if (progress > 1) progress = 1;
-    
+
     Color progressColor = Colors.green;
     if (now.isAfter(end)) {
-        progressColor = Colors.orange; // Late
+      progressColor = Colors.orange; // Late
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         ClipRRect(
-           borderRadius: BorderRadius.circular(4),
-           child: LinearProgressIndicator(
-             value: progress,
-             backgroundColor: Colors.grey.withOpacity(0.2),
-             valueColor: AlwaysStoppedAnimation<Color>(progressColor),
-             minHeight: 4,
-           ),
-         ),
-         const SizedBox(height: 2),
-         Text(
-           '${(progress * 100).toInt()}%',
-           style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 10, color: Colors.grey),
-         ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: LinearProgressIndicator(
+            value: progress,
+            backgroundColor: Colors.grey.withOpacity(0.2),
+            valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+            minHeight: 4,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          '${(progress * 100).toInt()}%',
+          style: Theme.of(context)
+              .textTheme
+              .labelSmall
+              ?.copyWith(fontSize: 10, color: Colors.grey),
+        ),
       ],
     );
   }

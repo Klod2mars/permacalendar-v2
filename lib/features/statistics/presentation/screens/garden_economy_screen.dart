@@ -23,7 +23,8 @@ class GardenEconomyScreen extends ConsumerStatefulWidget {
   const GardenEconomyScreen({super.key, this.gardenId});
 
   @override
-  ConsumerState<GardenEconomyScreen> createState() => _GardenEconomyScreenState();
+  ConsumerState<GardenEconomyScreen> createState() =>
+      _GardenEconomyScreenState();
 }
 
 class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
@@ -33,9 +34,12 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
     if (widget.gardenId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         try {
-          ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId!});
+          ref
+              .read(statisticsFiltersProvider.notifier)
+              .setGardens({widget.gardenId!});
         } catch (e, st) {
-          debugPrint('[GardenEconomyScreen] Warning: failed to set default garden in postFrame: $e\n$st');
+          debugPrint(
+              '[GardenEconomyScreen] Warning: failed to set default garden in postFrame: $e\n$st');
         }
       });
     }
@@ -46,7 +50,7 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
     // 1. Get Filters
     final filters = ref.watch(statisticsFiltersProvider);
     final (startDate, endDate) = filters.getEffectiveDates();
-    
+
     // 2. Prepare Query Params
     final queryParams = EconomyQueryParams(
       gardenIds: filters.selectedGardenIds, // Use the set from filters
@@ -83,84 +87,88 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
                     // Added MultiSelector
                     const GardenMultiSelector(),
                     const SizedBox(height: 16),
-                    
+
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           EconomyKpiRow(details: details),
-                    const SizedBox(height: 24),
-                    
-                    if (details.harvestCount == 0)
-                      const Center(
-                          child: Padding(
-                        padding: EdgeInsets.all(32.0),
-                        child: Text('Aucune récolte sur la période sélectionnée.',
-                            style: TextStyle(color: Colors.white54)),
-                      ))
-                    else ...[
-                      // Module 1: Plantes les plus rentables
-                      TopPlantsRanking(rankings: details.topPlants),
-                      const SizedBox(height: 24),
+                          const SizedBox(height: 24),
+                          if (details.harvestCount == 0)
+                            const Center(
+                                child: Padding(
+                              padding: EdgeInsets.all(32.0),
+                              child: Text(
+                                  'Aucune récolte sur la période sélectionnée.',
+                                  style: TextStyle(color: Colors.white54)),
+                            ))
+                          else ...[
+                            // Module 1: Plantes les plus rentables
+                            TopPlantsRanking(rankings: details.topPlants),
+                            const SizedBox(height: 24),
 
-                      // Module 2: Revenu total par mois
-                      MonthlyRevenueChart(monthlyRevenue: details.monthlyRevenue),
-                      const SizedBox(height: 24),
+                            // Module 2: Revenu total par mois
+                            MonthlyRevenueChart(
+                                monthlyRevenue: details.monthlyRevenue),
+                            const SizedBox(height: 24),
 
-                      // Module 3: Plante la plus rentable par mois
-                      TopPlantPerMonthGrid(
-                        topPlantPerMonth: details.topPlantPerMonth,
-                        monthlyRevenue: details.monthlyRevenue,
+                            // Module 3: Plante la plus rentable par mois
+                            TopPlantPerMonthGrid(
+                              topPlantPerMonth: details.topPlantPerMonth,
+                              monthlyRevenue: details.monthlyRevenue,
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Module 4: Évolution du revenu sur l’année
+                            AnnualRevenueLine(
+                                revenueSeries: details.revenueSeries),
+                            const SizedBox(height: 24),
+
+                            // Module 5: Répartition du revenu par plante
+                            PlantSharePie(plantShare: details.plantShare),
+                            const SizedBox(height: 24),
+
+                            // Module 6: Mois clés du jardin
+                            KeyMonthsWidget(
+                              monthlyRevenue: details.monthlyRevenue,
+                              mostProfitableIndex:
+                                  details.mostProfitableMonthIndex,
+                              leastProfitableIndex:
+                                  details.leastProfitableMonthIndex,
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Module 7: Diversité économique - REMOVED per user request
+                            // DiversityIndicator(
+                            //   diversityIndex: details.diversityIndex,
+                            //   label: details.diversityLabel,
+                            // ),
+                            // const SizedBox(height: 24),
+
+                            // Module 8: Synthèse automatique
+                            RecommendationCard(
+                              recommendationText: details.recommendationText,
+                              // onExport removed
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Module 9: Évolution histoire (Historical)
+                            HistoricalRevenueWidget(
+                                revenueSeries: details.revenueSeries),
+                            const SizedBox(height: 24),
+
+                            // Module 10: Rentabilité rapide vs Long terme
+                            FastVsLongTable(metrics: details.fastVsLongTerm),
+                            const SizedBox(height: 48),
+                          ],
+                        ],
                       ),
-                      const SizedBox(height: 24),
-
-                      // Module 4: Évolution du revenu sur l’année
-                      AnnualRevenueLine(revenueSeries: details.revenueSeries),
-                      const SizedBox(height: 24),
-
-                      // Module 5: Répartition du revenu par plante
-                      PlantSharePie(plantShare: details.plantShare),
-                      const SizedBox(height: 24),
-
-                      // Module 6: Mois clés du jardin
-                      KeyMonthsWidget(
-                        monthlyRevenue: details.monthlyRevenue,
-                        mostProfitableIndex: details.mostProfitableMonthIndex,
-                        leastProfitableIndex: details.leastProfitableMonthIndex,
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Module 7: Diversité économique - REMOVED per user request
-                      // DiversityIndicator(
-                      //   diversityIndex: details.diversityIndex,
-                      //   label: details.diversityLabel,
-                      // ),
-                      // const SizedBox(height: 24),
-
-                      // Module 8: Synthèse automatique
-                      RecommendationCard(
-                        recommendationText: details.recommendationText,
-                        // onExport removed
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Module 9: Évolution histoire (Historical)
-                      HistoricalRevenueWidget(revenueSeries: details.revenueSeries),
-                      const SizedBox(height: 24),
-
-                      // Module 10: Rentabilité rapide vs Long terme
-                      FastVsLongTable(metrics: details.fastVsLongTerm),
-                      const SizedBox(height: 48),
-                    ],
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
       ),
     );
   }
-
 }

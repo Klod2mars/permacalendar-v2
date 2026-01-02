@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 /// Define the available data blocks for export
@@ -33,20 +32,20 @@ class ExportField {
   });
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'label': label,
-    'description': description,
-    'isAdvanced': isAdvanced,
-    'isContext': isContext,
-  };
+        'id': id,
+        'label': label,
+        'description': description,
+        'isAdvanced': isAdvanced,
+        'isContext': isContext,
+      };
 
   factory ExportField.fromJson(Map<String, dynamic> json) => ExportField(
-    id: json['id'] as String,
-    label: json['label'] as String,
-    description: json['description'] as String,
-    isAdvanced: json['isAdvanced'] as bool? ?? false,
-    isContext: json['isContext'] as bool? ?? false,
-  );
+        id: json['id'] as String,
+        label: json['label'] as String,
+        description: json['description'] as String,
+        isAdvanced: json['isAdvanced'] as bool? ?? false,
+        isContext: json['isContext'] as bool? ?? false,
+      );
 }
 
 /// Selection state for a block
@@ -73,16 +72,17 @@ class ExportBlockSelection {
   }
 
   Map<String, dynamic> toJson() => {
-    'type': type.name,
-    'selectedFieldIds': selectedFieldIds,
-    'isEnabled': isEnabled,
-  };
+        'type': type.name,
+        'selectedFieldIds': selectedFieldIds,
+        'isEnabled': isEnabled,
+      };
 
-  factory ExportBlockSelection.fromJson(Map<String, dynamic> json) => ExportBlockSelection(
-    type: ExportBlockType.values.firstWhere((e) => e.name == json['type']),
-    selectedFieldIds: List<String>.from(json['selectedFieldIds'] ?? []),
-    isEnabled: json['isEnabled'] as bool? ?? false,
-  );
+  factory ExportBlockSelection.fromJson(Map<String, dynamic> json) =>
+      ExportBlockSelection(
+        type: ExportBlockType.values.firstWhere((e) => e.name == json['type']),
+        selectedFieldIds: List<String>.from(json['selectedFieldIds'] ?? []),
+        isEnabled: json['isEnabled'] as bool? ?? false,
+      );
 }
 
 /// Scope configuration (Filters)
@@ -110,11 +110,11 @@ class ExportScope {
   }
 
   Map<String, dynamic> toJson() => {
-    'start': dateRange?.start.toIso8601String(),
-    'end': dateRange?.end.toIso8601String(),
-    'gardenIds': gardenIds,
-    'gardenBedIds': gardenBedIds,
-  };
+        'start': dateRange?.start.toIso8601String(),
+        'end': dateRange?.end.toIso8601String(),
+        'gardenIds': gardenIds,
+        'gardenBedIds': gardenBedIds,
+      };
 
   factory ExportScope.fromJson(Map<String, dynamic> json) {
     DateTimeRange? range;
@@ -171,33 +171,41 @@ class ExportConfig {
       includeContextNames: includeContextNames ?? this.includeContextNames,
     );
   }
-  
+
   // Helpers
   bool isBlockEnabled(ExportBlockType type) {
-    return blocks.firstWhere((b) => b.type == type, orElse: () => ExportBlockSelection(type: type)).isEnabled;
+    return blocks
+        .firstWhere((b) => b.type == type,
+            orElse: () => ExportBlockSelection(type: type))
+        .isEnabled;
   }
-  
+
   List<String> getSelectedFieldsFor(ExportBlockType type) {
-    return blocks.firstWhere((b) => b.type == type, orElse: () => ExportBlockSelection(type: type)).selectedFieldIds;
+    return blocks
+        .firstWhere((b) => b.type == type,
+            orElse: () => ExportBlockSelection(type: type))
+        .selectedFieldIds;
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'scope': scope.toJson(),
-    'blocks': blocks.map((b) => b.toJson()).toList(),
-    'format': format.name,
-    'includeContextIds': includeContextIds,
-    'includeContextNames': includeContextNames,
-  };
+        'id': id,
+        'name': name,
+        'scope': scope.toJson(),
+        'blocks': blocks.map((b) => b.toJson()).toList(),
+        'format': format.name,
+        'includeContextIds': includeContextIds,
+        'includeContextNames': includeContextNames,
+      };
 
   factory ExportConfig.fromJson(Map<String, dynamic> json) => ExportConfig(
-    id: json['id'],
-    name: json['name'],
-    scope: ExportScope.fromJson(json['scope']),
-    blocks: (json['blocks'] as List).map((b) => ExportBlockSelection.fromJson(b)).toList(),
-    format: ExportFormat.values.firstWhere((e) => e.name == json['format']),
-    includeContextIds: json['includeContextIds'] as bool? ?? true,
-    includeContextNames: json['includeContextNames'] as bool? ?? true,
-  );
+        id: json['id'],
+        name: json['name'],
+        scope: ExportScope.fromJson(json['scope']),
+        blocks: (json['blocks'] as List)
+            .map((b) => ExportBlockSelection.fromJson(b))
+            .toList(),
+        format: ExportFormat.values.firstWhere((e) => e.name == json['format']),
+        includeContextIds: json['includeContextIds'] as bool? ?? true,
+        includeContextNames: json['includeContextNames'] as bool? ?? true,
+      );
 }

@@ -67,82 +67,83 @@ class _CurvedTextPainter extends CustomPainter {
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     for (var i = 0; i < text.length; i++) {
-        textPainter.text = TextSpan(text: text[i], style: textStyle);
-        textPainter.layout();
-        charWidths.add(textPainter.width);
-        totalArcLength += textPainter.width;
+      textPainter.text = TextSpan(text: text[i], style: textStyle);
+      textPainter.layout();
+      charWidths.add(textPainter.width);
+      totalArcLength += textPainter.width;
     }
 
     // Add some spacing? Letter spacing is already in TextStyle if provided.
-    
+
     // 2. Centralize the text around -PI/2 (top) or PI/2 (bottom)
     // For Top placement: Center is at -90 degrees (-pi/2)
     // For Bottom placement: Center is at +90 degrees (+pi/2)
-    
+
     final double circum = 2 * math.pi * radius;
     // Angle covered by text
-    final double totalAngle = (totalArcLength / circum) * 2 * math.pi; // s = r*theta => theta = s/r
+    final double totalAngle =
+        (totalArcLength / circum) * 2 * math.pi; // s = r*theta => theta = s/r
 
     double currentAngle = 0.0;
 
     if (placement == CurvedTextPlacement.top) {
-        // Start angle: -PI/2 - (half of total angle)
-        currentAngle = -math.pi / 2 - (totalAngle / 2) + startAngle;
+      // Start angle: -PI/2 - (half of total angle)
+      currentAngle = -math.pi / 2 - (totalAngle / 2) + startAngle;
     } else {
-        // Bottom: Start at Left (Max Angle) = PI/2 + (half of total angle)
-        // We will decrement angle to go Left->Right visually
-        currentAngle = math.pi / 2 + (totalAngle / 2) + startAngle;
+      // Bottom: Start at Left (Max Angle) = PI/2 + (half of total angle)
+      // We will decrement angle to go Left->Right visually
+      currentAngle = math.pi / 2 + (totalAngle / 2) + startAngle;
     }
 
     // 3. Draw characters
     for (var i = 0; i < text.length; i++) {
-        final char = text[i];
-        final w = charWidths[i];
-        
-        final charAngle = w / radius;
-        
-        // Calculate drawAngle (center of char) based on direction
-        double drawAngle;
-        
-        if (placement == CurvedTextPlacement.top) {
-           drawAngle = currentAngle + (charAngle / 2);
-        } else {
-           // Decreasing angle
-           drawAngle = currentAngle - (charAngle / 2);
-        }
+      final char = text[i];
+      final w = charWidths[i];
 
-        canvas.save();
-        
-        if (placement == CurvedTextPlacement.top) {
-             // Rotate to position
-             canvas.rotate(drawAngle + math.pi / 2); 
-             // Move out to radius
-             canvas.translate(0, -radius);
-             // Move back half char width to center text paint
-             canvas.translate(-w / 2, 0);
-        } else {
-             // For bottom text:
-             // 1. Rotate to position (drawAngle - pi/2)
-             canvas.rotate(drawAngle - math.pi / 2);
-             // 2. Move out to radius
-             canvas.translate(0, radius);
-             // 3. Move back half char width AND Move UP by text height to be inside
-             // We use textPainter.height for the specific character/style
-             canvas.translate(-w / 2, -textPainter.height);
-        }
+      final charAngle = w / radius;
 
-        textPainter.text = TextSpan(text: char, style: textStyle);
-        textPainter.layout();
-        textPainter.paint(canvas, Offset.zero);
+      // Calculate drawAngle (center of char) based on direction
+      double drawAngle;
 
-        canvas.restore();
-        
-        // Update currentAngle
-        if (placement == CurvedTextPlacement.top) {
-           currentAngle += charAngle;
-        } else {
-           currentAngle -= charAngle;
-        }
+      if (placement == CurvedTextPlacement.top) {
+        drawAngle = currentAngle + (charAngle / 2);
+      } else {
+        // Decreasing angle
+        drawAngle = currentAngle - (charAngle / 2);
+      }
+
+      canvas.save();
+
+      if (placement == CurvedTextPlacement.top) {
+        // Rotate to position
+        canvas.rotate(drawAngle + math.pi / 2);
+        // Move out to radius
+        canvas.translate(0, -radius);
+        // Move back half char width to center text paint
+        canvas.translate(-w / 2, 0);
+      } else {
+        // For bottom text:
+        // 1. Rotate to position (drawAngle - pi/2)
+        canvas.rotate(drawAngle - math.pi / 2);
+        // 2. Move out to radius
+        canvas.translate(0, radius);
+        // 3. Move back half char width AND Move UP by text height to be inside
+        // We use textPainter.height for the specific character/style
+        canvas.translate(-w / 2, -textPainter.height);
+      }
+
+      textPainter.text = TextSpan(text: char, style: textStyle);
+      textPainter.layout();
+      textPainter.paint(canvas, Offset.zero);
+
+      canvas.restore();
+
+      // Update currentAngle
+      if (placement == CurvedTextPlacement.top) {
+        currentAngle += charAngle;
+      } else {
+        currentAngle -= charAngle;
+      }
     }
   }
 

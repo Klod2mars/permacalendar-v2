@@ -7,7 +7,9 @@ import '../../../features/planting/domain/plant_steps_generator.dart';
 import '../../../core/providers/activity_tracker_v3_provider.dart';
 import '../../../core/services/activity_observer_service.dart';
 
-final calendarAggregationProvider = FutureProvider.family<Map<String, Map<String, dynamic>>, DateTime>((ref, month) async {
+final calendarAggregationProvider =
+    FutureProvider.family<Map<String, Map<String, dynamic>>, DateTime>(
+        (ref, month) async {
   // Audit préalable (lecture seule)
   try {
     GardenBoxes.plantings; // throw si non initialisée
@@ -20,7 +22,9 @@ final calendarAggregationProvider = FutureProvider.family<Map<String, Map<String
   final firstDay = DateTime(month.year, month.month, 1);
   final lastDay = DateTime(month.year, month.month + 1, 0);
 
-  for (DateTime d = firstDay; !d.isAfter(lastDay); d = d.add(const Duration(days: 1))) {
+  for (DateTime d = firstDay;
+      !d.isAfter(lastDay);
+      d = d.add(const Duration(days: 1))) {
     final key = dateFormat.format(d);
     agg[key] = {
       'plantingCount': 0,
@@ -67,7 +71,7 @@ final calendarAggregationProvider = FutureProvider.family<Map<String, Map<String
       if (hd != null && hd.isBefore(now) && p.status != 'Récolté') {
         final k = dateFormat.format(hd);
         if (agg.containsKey(k)) {
-           agg[k]!['overdueCount'] = (agg[k]!['overdueCount'] as int) + 1;
+          agg[k]!['overdueCount'] = (agg[k]!['overdueCount'] as int) + 1;
         }
       }
     } catch (_) {}
@@ -77,7 +81,8 @@ final calendarAggregationProvider = FutureProvider.family<Map<String, Map<String
       final plant = await PlantCatalogService.getPlantById(p.plantId);
       if (plant != null) {
         resolvedPlants++;
-        final steps = generateSteps(plant as dynamic, p); // assume dynamic cast or implicit works
+        final steps = generateSteps(
+            plant as dynamic, p); // assume dynamic cast or implicit works
         for (final s in steps) {
           if (s.scheduledDate != null) {
             final sd = s.scheduledDate!;
@@ -85,9 +90,11 @@ final calendarAggregationProvider = FutureProvider.family<Map<String, Map<String
               final k = dateFormat.format(sd);
               if (agg.containsKey(k)) {
                 if (s.category == 'watering' && !(s.completed)) {
-                  agg[k]!['wateringCount'] = (agg[k]!['wateringCount'] as int) + 1;
+                  agg[k]!['wateringCount'] =
+                      (agg[k]!['wateringCount'] as int) + 1;
                 } else if (s.category == 'harvest' && !(s.completed)) {
-                  agg[k]!['harvestCount'] = (agg[k]!['harvestCount'] as int) + 1;
+                  agg[k]!['harvestCount'] =
+                      (agg[k]!['harvestCount'] as int) + 1;
                 }
               }
             }
@@ -113,13 +120,17 @@ final calendarAggregationProvider = FutureProvider.family<Map<String, Map<String
     }
     final tracker = ref.read(activityTrackerV3Provider);
     if (tracker.isInitialized) {
-      final weatherActivities = await tracker.getActivitiesByType('weatherAlert');
+      final weatherActivities =
+          await tracker.getActivitiesByType('weatherAlert');
       for (final a in weatherActivities) {
         final ts = a.timestamp;
         if (ts.year == month.year && ts.month == month.month) {
           final meta = a.metadata ?? {};
           final desc = (meta['description']?.toString() ?? '').toLowerCase();
-          final isFrost = (meta['type'] == 'frost') || (meta['alert'] == 'frost') || desc.contains('gel') || desc.contains('frost');
+          final isFrost = (meta['type'] == 'frost') ||
+              (meta['alert'] == 'frost') ||
+              desc.contains('gel') ||
+              desc.contains('frost');
           if (isFrost) {
             final k = dateFormat.format(ts);
             if (agg.containsKey(k)) agg[k]!['frost'] = true;

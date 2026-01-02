@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../core/models/planting.dart';
@@ -34,9 +34,8 @@ class PlantingCard extends ConsumerWidget {
 
     // Resolve Plant Name from Catalog (French) if available
     final allPlants = ref.watch(plantsListProvider);
-    final catalogPlant = allPlants
-        .where((p) => p.id == planting.plantId)
-        .firstOrNull;
+    final catalogPlant =
+        allPlants.where((p) => p.id == planting.plantId).firstOrNull;
     final displayName = catalogPlant?.commonName ?? planting.plantName;
 
     return CustomCard(
@@ -60,15 +59,16 @@ class PlantingCard extends ConsumerWidget {
                   fit: BoxFit.cover,
                   borderRadius: 0, // Top corners handled by Card
                 ),
-                
+
                 // Gradient Overlay (Bottom) for text readability? Not needed if using badges.
-                
+
                 // TOP RIGHT: Status Badge
                 Positioned(
                   top: 12,
                   right: 12,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.surface.withOpacity(0.9),
                       borderRadius: BorderRadius.circular(20),
@@ -91,22 +91,24 @@ class PlantingCard extends ConsumerWidget {
                 ),
 
                 // TOP LEFT: Quantity Badge (Pill)
-                // Actually the screenshot shows it at Bottom Left (or close to it). 
-                // Let's ensure it is consistent. 
+                // Actually the screenshot shows it at Bottom Left (or close to it).
+                // Let's ensure it is consistent.
                 // New layout: Basket Bottom Right. Quantity Bottom Left.
-                
+
                 Positioned(
                   bottom: 12,
                   left: 12,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.6),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.grid_view, size: 12, color: Colors.white),
+                        const Icon(Icons.grid_view,
+                            size: 12, color: Colors.white),
                         const SizedBox(width: 4),
                         Text(
                           '${planting.quantity}',
@@ -126,7 +128,7 @@ class PlantingCard extends ConsumerWidget {
                     bottom: 12,
                     right: 12,
                     child: FloatingActionButton.small(
-                      heroTag: 'harvest_${planting.id}', 
+                      heroTag: 'harvest_${planting.id}',
                       onPressed: onHarvest,
                       elevation: 2, // Slight elevation for overlay
                       backgroundColor: theme.colorScheme.primaryContainer,
@@ -163,7 +165,8 @@ class PlantingCard extends ConsumerWidget {
                           // Subtitle: Date
                           Row(
                             children: [
-                              Icon(Icons.calendar_today, size: 14, color: theme.colorScheme.outline),
+                              Icon(Icons.calendar_today,
+                                  size: 14, color: theme.colorScheme.outline),
                               const SizedBox(width: 4),
                               Text(
                                 '${planting.status == 'Semé' ? 'Semé' : 'Planté'} le ${_formatDate(planting.plantedDate)}',
@@ -176,12 +179,13 @@ class PlantingCard extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    
+
                     // Menu Button (The only item on the right now)
                     Padding(
                       padding: const EdgeInsets.only(left: 4),
                       child: PopupMenuButton<String>(
-                        icon: Icon(Icons.more_vert, color: theme.colorScheme.onSurfaceVariant),
+                        icon: Icon(Icons.more_vert,
+                            color: theme.colorScheme.onSurfaceVariant),
                         onSelected: (value) => _handleAction(value, context),
                         itemBuilder: (context) => _buildMenuItems(context),
                       ),
@@ -194,19 +198,19 @@ class PlantingCard extends ConsumerWidget {
                 // HARVEST ESTIMATE & STAGES
                 Row(
                   children: [
-                   if (planting.expectedHarvestStartDate != null)
+                    if (planting.expectedHarvestStartDate != null)
                       _buildMiniInfo(
                         theme,
                         Icons.timer_outlined,
                         'Récolte: ${_formatDate(planting.expectedHarvestStartDate!)}',
                       ),
-                    
-                   // Spacer
-                   if (planting.expectedHarvestStartDate != null)
-                     const SizedBox(width: 16),
 
-                   // Stage count or Next Stage?
-                   if (planting.careActions.isNotEmpty)
+                    // Spacer
+                    if (planting.expectedHarvestStartDate != null)
+                      const SizedBox(width: 16),
+
+                    // Stage count or Next Stage?
+                    if (planting.careActions.isNotEmpty)
                       _buildMiniInfo(
                         theme,
                         Icons.flag_outlined,
@@ -217,7 +221,7 @@ class PlantingCard extends ConsumerWidget {
               ],
             ),
           ),
-          
+
           // No Footer. Clean.
         ],
       ),
@@ -242,33 +246,49 @@ class PlantingCard extends ConsumerWidget {
   }
 
   List<PopupMenuEntry<String>> _buildMenuItems(BuildContext context) {
-     return [
+    return [
       const PopupMenuItem(
         value: 'delete',
-        child: Row(children: [Icon(Icons.delete, color: Colors.red), SizedBox(width: 8), Text('Supprimer', style: TextStyle(color: Colors.red))]),
+        child: Row(children: [
+          Icon(Icons.delete, color: Colors.red),
+          SizedBox(width: 8),
+          Text('Supprimer', style: TextStyle(color: Colors.red))
+        ]),
       ),
     ];
   }
 
   Color _getStatusColor(String status, ThemeData theme) {
     switch (status) {
-      case 'Planté': return Colors.blue.withOpacity(0.1);
-      case 'En croissance': return Colors.green.withOpacity(0.1);
-      case 'Prêt à récolter': return Colors.orange.withOpacity(0.1);
-      case 'Récolté': return Colors.grey.withOpacity(0.1);
-      case 'Échoué': return Colors.red.withOpacity(0.1);
-      default: return theme.colorScheme.surfaceContainerHighest;
+      case 'Planté':
+        return Colors.blue.withOpacity(0.1);
+      case 'En croissance':
+        return Colors.green.withOpacity(0.1);
+      case 'Prêt à récolter':
+        return Colors.orange.withOpacity(0.1);
+      case 'Récolté':
+        return Colors.grey.withOpacity(0.1);
+      case 'Échoué':
+        return Colors.red.withOpacity(0.1);
+      default:
+        return theme.colorScheme.surfaceContainerHighest;
     }
   }
 
   Color _getStatusTextColor(String status, ThemeData theme) {
     switch (status) {
-      case 'Planté': return Colors.blue.shade700;
-      case 'En croissance': return Colors.green.shade700;
-      case 'Prêt à récolter': return Colors.orange.shade800; // Stronger for visibility
-      case 'Récolté': return Colors.grey.shade700;
-      case 'Échoué': return Colors.red.shade700;
-      default: return theme.colorScheme.onSurface;
+      case 'Planté':
+        return Colors.blue.shade700;
+      case 'En croissance':
+        return Colors.green.shade700;
+      case 'Prêt à récolter':
+        return Colors.orange.shade800; // Stronger for visibility
+      case 'Récolté':
+        return Colors.grey.shade700;
+      case 'Échoué':
+        return Colors.red.shade700;
+      default:
+        return theme.colorScheme.onSurface;
     }
   }
 
@@ -278,14 +298,24 @@ class PlantingCard extends ConsumerWidget {
 
   void _handleAction(String action, BuildContext context) {
     switch (action) {
-      case 'edit': onEdit?.call(); break;
-      case 'delete': onDelete?.call(); break;
-      case 'status': _showStatusChangeDialog(context); break;
-      case 'harvest': onHarvest?.call(); break;
-      case 'steps': _showStepActionDialog(context); break;
+      case 'edit':
+        onEdit?.call();
+        break;
+      case 'delete':
+        onDelete?.call();
+        break;
+      case 'status':
+        _showStatusChangeDialog(context);
+        break;
+      case 'harvest':
+        onHarvest?.call();
+        break;
+      case 'steps':
+        _showStepActionDialog(context);
+        break;
     }
   }
-  
+
   // Dialog helpers (kept identical to previous version, just moved inside class)
   void _showStatusChangeDialog(BuildContext context) {
     showDialog(
@@ -346,7 +376,9 @@ class PlantingCard extends ConsumerWidget {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Annuler')),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Annuler')),
           ElevatedButton(
             onPressed: () {
               final text = controller.text.trim();

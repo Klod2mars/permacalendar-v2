@@ -107,13 +107,16 @@ class PlantProgressService {
 
     if (M <= 0) return refProgress;
 
-    final int daysSinceRef = now.isBefore(refDate) ? 0 : now.difference(refDate).inDays;
-    final double progress = (refProgress + (daysSinceRef / M)).clamp(0.0, 1.0).toDouble();
+    final int daysSinceRef =
+        now.isBefore(refDate) ? 0 : now.difference(refDate).inDays;
+    final double progress =
+        (refProgress + (daysSinceRef / M)).clamp(0.0, 1.0).toDouble();
     return progress;
   }
 
   /// Calcule la date de récolte attendue à partir de la référence.
-  static DateTime computeExpectedHarvestDate(Planting planting, PlantFreezed? plant) {
+  static DateTime computeExpectedHarvestDate(
+      Planting planting, PlantFreezed? plant) {
     final int M = (plant?.daysToMaturity ?? 60);
     final ref = getProgressReference(planting, plant);
     final DateTime refDate = ref['date'] as DateTime;
@@ -121,13 +124,18 @@ class PlantProgressService {
 
     if (M <= 0) return refDate;
 
-    final int effectiveMaturityDays = (M * (1.0 - refProgress)).ceil().clamp(1, M);
+    final int effectiveMaturityDays =
+        (M * (1.0 - refProgress)).ceil().clamp(1, M);
     return refDate.add(Duration(days: effectiveMaturityDays));
   }
 
   /// Construit un objet progressReference JSON-friendly pour stockage.
-  static Map<String, dynamic> buildProgressReferenceMap(DateTime date, double progress) {
-    return {'date': date.toIso8601String(), 'progress': progress.clamp(0.0, 1.0)};
+  static Map<String, dynamic> buildProgressReferenceMap(
+      DateTime date, double progress) {
+    return {
+      'date': date.toIso8601String(),
+      'progress': progress.clamp(0.0, 1.0)
+    };
   }
 
   /// Ajoute une observation dans les métadonnées (renvoie une nouvelle map).
@@ -142,11 +150,10 @@ class PlantProgressService {
     String? notes,
   }) {
     final Map<String, dynamic> newMeta = Map<String, dynamic>.from(meta ?? {});
-    final List<Map<String, dynamic>> obs =
-        (newMeta['observations'] as List?)
-                ?.map((e) => Map<String, dynamic>.from(e as Map))
-                .toList() ??
-            <Map<String, dynamic>>[];
+    final List<Map<String, dynamic>> obs = (newMeta['observations'] as List?)
+            ?.map((e) => Map<String, dynamic>.from(e as Map))
+            .toList() ??
+        <Map<String, dynamic>>[];
     obs.add({
       'type': type,
       'date': date.toIso8601String(),

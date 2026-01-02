@@ -19,13 +19,14 @@ class NutritionRadarChart extends StatelessWidget {
       data.fiberScore,
       data.proteinScore
     ].reduce((curr, next) => curr > next ? curr : next);
-    
+
     // Si toutes les valeurs sont 0, afficher un chart vide équilibré
     final safeMax = maxVal > 0 ? maxVal * 1.2 : 100.0; // 1.2 for padding
 
     Widget chart = RadarChart(
       RadarChartData(
-        radarTouchData: RadarTouchData(enabled: false), // Non interactif pour l'instant (petit widget)
+        radarTouchData: RadarTouchData(
+            enabled: false), // Non interactif pour l'instant (petit widget)
         dataSets: [
           RadarDataSet(
             fillColor: Colors.greenAccent.withOpacity(0.2),
@@ -60,14 +61,16 @@ class NutritionRadarChart extends StatelessWidget {
           }
         },
         tickCount: 3,
-        ticksTextStyle: const TextStyle(color: Colors.transparent, fontSize: 0), // Masquer les ticks internes
+        ticksTextStyle: const TextStyle(
+            color: Colors.transparent,
+            fontSize: 0), // Masquer les ticks internes
         tickBorderData: const BorderSide(color: Colors.white10),
         gridBorderData: const BorderSide(color: Colors.white24, width: 1),
       ),
       swapAnimationDuration: const Duration(milliseconds: 400),
       swapAnimationCurve: Curves.easeInOut,
     );
-    
+
     if (size != null) {
       return SizedBox(
         width: size,

@@ -21,13 +21,13 @@ class MockPlantingAdapter extends TypeAdapter<Planting> {
     // Hive memory box stores objects directly if not compacted? No, it serializes.
     // For unit tests with hive_test, usually valid objects are needed.
     // If we can't use real adapter, we might struggle with openBox checks.
-    // But setUpTestHive uses in-memory backend? 
+    // But setUpTestHive uses in-memory backend?
     throw UnimplementedError();
   }
 
   @override
   void write(BinaryWriter writer, Planting obj) {
-     throw UnimplementedError();
+    throw UnimplementedError();
   }
 }
 
@@ -38,17 +38,17 @@ void main() {
     setUp(() async {
       print('Setting up test hive...');
       await setUpTestHive();
-      
+
       try {
         if (!Hive.isAdapterRegistered(3)) {
-           print('Registering PlantingAdapter...');
-           Hive.registerAdapter(PlantingAdapter()); 
+          print('Registering PlantingAdapter...');
+          Hive.registerAdapter(PlantingAdapter());
         }
         if (!Hive.isAdapterRegistered(30)) {
-           print('Registering ActivityV3Adapter...');
-           Hive.registerAdapter(ActivityV3Adapter());
+          print('Registering ActivityV3Adapter...');
+          Hive.registerAdapter(ActivityV3Adapter());
         }
-      
+
         print('Initializing GardenBoxes...');
         await GardenBoxes.initialize();
         print('GardenBoxes initialized.');
@@ -57,17 +57,17 @@ void main() {
         print(st);
         rethrow;
       }
-      
+
       container = ProviderContainer(
         overrides: [
-           activityTrackerInitializedProvider.overrideWithValue(true),
-           activityTrackerV3Provider.overrideWithValue(ActivityTrackerV3()),
+          activityTrackerInitializedProvider.overrideWithValue(true),
+          activityTrackerV3Provider.overrideWithValue(ActivityTrackerV3()),
         ],
       );
-      
+
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMessageHandler('flutter/assets', (message) async {
-         return null;
+        return null;
       });
     });
 
@@ -79,29 +79,31 @@ void main() {
 
     test('should return empty zeros map for empty month', () async {
       final month = DateTime(2025, 5, 1);
-      final result = await container.read(calendarAggregationProvider(month).future);
+      final result =
+          await container.read(calendarAggregationProvider(month).future);
       expect(result['2025-05-01']!['plantingCount'], 0);
     });
-    
+
     test('should count plantings correctly', () async {
-       final month = DateTime(2025, 6, 1);
-       final box = GardenBoxes.plantings;
-       
-       final p1 = Planting(
-          id: '1',
-          gardenBedId: 'b1',
-          plantId: 'tomate',
-          plantName: 'Tomate',
-          plantedDate: DateTime(2025, 6, 15),
-          quantity: 10,
-          status: 'Planté',
-          metadata: {}, // Fix for potential null check issues depending on constructor
-       );
-       
-       await box.put('1', p1);
-       
-       final result = await container.read(calendarAggregationProvider(month).future);
-       expect(result['2025-06-15']!['plantingCount'], 1);
+      final month = DateTime(2025, 6, 1);
+      final box = GardenBoxes.plantings;
+
+      final p1 = Planting(
+        id: '1',
+        gardenBedId: 'b1',
+        plantId: 'tomate',
+        plantName: 'Tomate',
+        plantedDate: DateTime(2025, 6, 15),
+        quantity: 10,
+        status: 'Planté',
+        metadata: {}, // Fix for potential null check issues depending on constructor
+      );
+
+      await box.put('1', p1);
+
+      final result =
+          await container.read(calendarAggregationProvider(month).future);
+      expect(result['2025-06-15']!['plantingCount'], 1);
     });
   });
 }

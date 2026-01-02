@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class GardenCreationDialog extends StatefulWidget {
   const GardenCreationDialog({super.key});
 

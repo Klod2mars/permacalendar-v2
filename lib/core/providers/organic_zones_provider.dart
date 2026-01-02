@@ -1,4 +1,4 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import '../models/organic_zone_config.dart';
@@ -31,7 +31,7 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
     for (final key in defaultPositions.keys) {
       final pos = positions[key] ?? defaultPositions[key]!;
       final size = sizes[key] ?? defaultSizes[key]!;
-      
+
       // FIX (Audit): Clamp values to safe ranges
       final safePos = Offset(pos.dx.clamp(0.0, 1.0), pos.dy.clamp(0.0, 1.0));
       final safeSize = size.clamp(0.05, 1.0);
@@ -40,7 +40,7 @@ class OrganicZonesNotifier extends Notifier<Map<String, OrganicZoneConfig>> {
         id: key,
         name: key,
         position: safePos, // Use safePos
-        size: safeSize,    // Use safeSize
+        size: safeSize, // Use safeSize
         enabled: flags[key] ?? defaultEnabled[key]!,
       );
     }

@@ -71,7 +71,7 @@ class DashboardImageSettingsNotifier extends Notifier<DashboardImageSettings> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble(_keyZoom, value);
   }
-  
+
   /// Reset to defaults
   Future<void> reset() async {
     state = const DashboardImageSettings();

@@ -10,9 +10,10 @@ class HistoricalRevenueWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     if (revenueSeries.isEmpty) return const SizedBox.shrink();
-     
-     final maxY = revenueSeries.fold(0.0, (m, e) => e.value > m ? e.value : m) * 1.2;
+    if (revenueSeries.isEmpty) return const SizedBox.shrink();
+
+    final maxY =
+        revenueSeries.fold(0.0, (m, e) => e.value > m ? e.value : m) * 1.2;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,24 +51,29 @@ class HistoricalRevenueWidget extends StatelessWidget {
                     reservedSize: 22,
                     interval: _calculateInterval(revenueSeries.length),
                     getTitlesWidget: (value, meta) {
-                      if (value.toInt() >= 0 && value.toInt() < revenueSeries.length) {
-                         final date = revenueSeries[value.toInt()].date;
-                         // If spanning years, show Year, else show Month
-                         return Padding(
-                           padding: const EdgeInsets.only(top: 4.0),
-                           child: Text(
-                             _formatDate(date, revenueSeries.length > 12), 
-                             style: const TextStyle(color: Colors.white54, fontSize: 10),
-                           ),
-                         );
+                      if (value.toInt() >= 0 &&
+                          value.toInt() < revenueSeries.length) {
+                        final date = revenueSeries[value.toInt()].date;
+                        // If spanning years, show Year, else show Month
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            _formatDate(date, revenueSeries.length > 12),
+                            style: const TextStyle(
+                                color: Colors.white54, fontSize: 10),
+                          ),
+                        );
                       }
                       return const SizedBox.shrink();
                     },
                   ),
                 ),
-                leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                leftTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
               ),
               borderData: FlBorderData(show: false),
               minX: 0,
@@ -97,7 +103,7 @@ class HistoricalRevenueWidget extends StatelessWidget {
                   ),
                 ),
               ],
-               lineTouchData: LineTouchData(
+              lineTouchData: LineTouchData(
                 touchTooltipData: LineTouchTooltipData(
                   getTooltipColor: (_) => Colors.black87,
                   getTooltipItems: (touchedSpots) {
@@ -105,7 +111,8 @@ class HistoricalRevenueWidget extends StatelessWidget {
                       final point = revenueSeries[touchedSpot.x.toInt()];
                       return LineTooltipItem(
                         '${DateFormat('MMMM yyyy', 'fr_FR').format(point.date)}\n',
-                        const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                         children: [
                           TextSpan(
                             text: '${point.value.toStringAsFixed(0)} €',

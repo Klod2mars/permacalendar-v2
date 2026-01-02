@@ -15,7 +15,10 @@ void main() {
     test('weekly recurrence - next occurrence in same week', () {
       final fromDate = DateTime.utc(2025, 1, 1); // Wednesday
       // Recurrence: Monday (1) and Friday (5)
-      final recurrence = {'type': 'weekly', 'days': [1, 5]};
+      final recurrence = {
+        'type': 'weekly',
+        'days': [1, 5]
+      };
 
       // Expect Friday (Jan 3rd)
       final next = RecurrenceService.computeNextRunDate(recurrence, fromDate);
@@ -25,7 +28,10 @@ void main() {
     test('weekly recurrence - next occurrence in next week', () {
       final fromDate = DateTime.utc(2025, 1, 3); // Friday
       // Recurrence: Monday (1) and Friday (5)
-      final recurrence = {'type': 'weekly', 'days': [1, 5]};
+      final recurrence = {
+        'type': 'weekly',
+        'days': [1, 5]
+      };
 
       // Expect Monday next week (Jan 6th)
       final next = RecurrenceService.computeNextRunDate(recurrence, fromDate);
@@ -47,7 +53,7 @@ void main() {
       final next = RecurrenceService.computeNextRunDate(recurrence, fromDate);
       expect(next, DateTime.utc(2025, 2, 28)); // 2025 is not leap year
     });
-    
+
     test('monthlyByDay recurrence - year wrap', () {
       final fromDate = DateTime.utc(2025, 12, 15);
       final recurrence = {'type': 'monthlyByDay', 'day': 15};
@@ -60,7 +66,8 @@ void main() {
       final fromDate = DateTime.utc(2025, 1, 1);
       final recurrence = {'type': 'interval', 'every': 1};
 
-      final dates = RecurrenceService.computeOccurrences(recurrence, fromDate, 3);
+      final dates =
+          RecurrenceService.computeOccurrences(recurrence, fromDate, 3);
       expect(dates.length, 3);
       expect(dates[0], DateTime.utc(2025, 1, 2));
       expect(dates[1], DateTime.utc(2025, 1, 3));

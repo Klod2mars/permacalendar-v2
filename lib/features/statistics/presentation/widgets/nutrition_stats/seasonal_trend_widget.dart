@@ -21,7 +21,7 @@ class SeasonalTrendWidget extends StatelessWidget {
     // 1. Identify Top Contributors for this month
     final sortedEntries = monthlyData.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
-    
+
     final top3 = sortedEntries.take(3).map((e) => _formatKey(e.key)).join(", ");
 
     // 2. Calculate "Intensity" of this month vs Annual Average (Simple approach)
@@ -31,8 +31,19 @@ class SeasonalTrendWidget extends StatelessWidget {
     // Let's stick to qualitative.
 
     final monthNames = [
-      '', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      '',
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre'
     ];
 
     return Container(
@@ -47,7 +58,8 @@ class SeasonalTrendWidget extends StatelessWidget {
         children: [
           Text(
             "Dynamique de ${monthNames[month]}",
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
           Text(
@@ -57,7 +69,10 @@ class SeasonalTrendWidget extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             "Ces nutriments proviennent de vos récoltes du mois.",
-            style: const TextStyle(color: Colors.white38, fontSize: 12, fontStyle: FontStyle.italic),
+            style: const TextStyle(
+                color: Colors.white38,
+                fontSize: 12,
+                fontStyle: FontStyle.italic),
           ),
         ],
       ),
@@ -66,20 +81,28 @@ class SeasonalTrendWidget extends StatelessWidget {
 
   String _formatKey(String key) {
     switch (key) {
-      case 'calcium_mg': return 'Calcium';
-      case 'potassium_mg': return 'Potassium';
-      case 'magnesium_mg': return 'Magnésium';
-      case 'iron_mg': return 'Fer';
-      case 'vitamin_c_mg': return 'Vitamine C';
-      case 'fiber_g': return 'Fibres';
-      case 'protein_g': return 'Protéines';
-      default: return key.split('_')[0].capitalize();
+      case 'calcium_mg':
+        return 'Calcium';
+      case 'potassium_mg':
+        return 'Potassium';
+      case 'magnesium_mg':
+        return 'Magnésium';
+      case 'iron_mg':
+        return 'Fer';
+      case 'vitamin_c_mg':
+        return 'Vitamine C';
+      case 'fiber_g':
+        return 'Fibres';
+      case 'protein_g':
+        return 'Protéines';
+      default:
+        return key.split('_')[0].capitalize();
     }
   }
 }
 
 extension StringExtension on String {
-    String capitalize() {
-      return "${this[0].toUpperCase()}${substring(1)}";
-    }
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1)}";
+  }
 }

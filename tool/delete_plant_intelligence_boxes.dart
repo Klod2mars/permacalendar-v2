@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 Future<void> main() async {
   print('ðŸ§¹ Starting Hive box cleanup for Plant Intelligence...');
   await Hive.initFlutter();
-  
+
   final boxes = [
     'plant_conditions',
     'weather_conditions',
@@ -31,6 +31,6 @@ Future<void> main() async {
       print('â Œ Error deleting $boxName: $e');
     }
   }
-  
+
   print('ðŸ   Cleanup finished. Deleted $deletedCount boxes.');
 }

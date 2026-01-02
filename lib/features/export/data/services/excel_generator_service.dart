@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 import 'package:permacalendar/core/data/hive/garden_boxes.dart';
-import 'package:permacalendar/core/models/activity.dart' as model_activity; 
+import 'package:permacalendar/core/models/activity.dart' as model_activity;
 import 'package:permacalendar/core/models/garden.dart';
 import 'package:permacalendar/core/models/garden_bed.dart';
 import 'package:permacalendar/core/models/planting.dart';
@@ -13,7 +13,6 @@ import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/models/export_schema.dart';
 
 class ExcelGeneratorService {
-  
   /// Main Entry Point
   Future<List<int>> generateExport(ExportConfig config) async {
     // Run in main isolate because we need Hive access
@@ -35,33 +34,44 @@ class ExcelGeneratorService {
     }
 
     // 1. Fetch Data
-    final gardens = GardenBoxes.gardens.values.where((g) => 
-      config.scope.gardenIds.isEmpty || config.scope.gardenIds.contains(g.id)
-    ).toList();
-    
-    final beds = GardenBoxes.gardenBeds.values.where((b) => 
-      (config.scope.gardenIds.isEmpty || config.scope.gardenIds.contains(b.gardenId)) &&
-      (config.scope.gardenBedIds.isEmpty || config.scope.gardenBedIds.contains(b.id))
-    ).toList();
-    
+    final gardens = GardenBoxes.gardens.values
+        .where((g) =>
+            config.scope.gardenIds.isEmpty ||
+            config.scope.gardenIds.contains(g.id))
+        .toList();
+
+    final beds = GardenBoxes.gardenBeds.values
+        .where((b) =>
+            (config.scope.gardenIds.isEmpty ||
+                config.scope.gardenIds.contains(b.gardenId)) &&
+            (config.scope.gardenBedIds.isEmpty ||
+                config.scope.gardenBedIds.contains(b.id)))
+        .toList();
+
     // Filter Plantings/Activities/Harvests based on Scope (Garden/Bed/Date)
     final dateStart = config.scope.dateRange?.start;
     final dateEnd = config.scope.dateRange?.end;
 
     // Harvests
     final allHarvestsRaw = GardenBoxes.harvests.values.toList();
-    final allHarvests = allHarvestsRaw.map((e) {
-      if (e is HarvestRecord) return e;
-      if (e is Map) {
-        try {
-           return HarvestRecord.fromJson(Map<String, dynamic>.from(e));
-        } catch (_) { return null; }
-      }
-      return null;
-    }).whereType<HarvestRecord>().toList();
+    final allHarvests = allHarvestsRaw
+        .map((e) {
+          if (e is HarvestRecord) return e;
+          if (e is Map) {
+            try {
+              return HarvestRecord.fromJson(Map<String, dynamic>.from(e));
+            } catch (_) {
+              return null;
+            }
+          }
+          return null;
+        })
+        .whereType<HarvestRecord>()
+        .toList();
 
     final filteredHarvests = allHarvests.where((h) {
-      if (config.scope.gardenIds.isNotEmpty && !config.scope.gardenIds.contains(h.gardenId)) return false;
+      if (config.scope.gardenIds.isNotEmpty &&
+          !config.scope.gardenIds.contains(h.gardenId)) return false;
       if (dateStart != null && h.date.isBefore(dateStart)) return false;
       if (dateEnd != null && h.date.isAfter(dateEnd)) return false;
       return true;
@@ -69,33 +79,39 @@ class ExcelGeneratorService {
 
     // Activities
     final allActivitiesRaw = GardenBoxes.activities.values.toList();
-    final allActivities = allActivitiesRaw.map((e) {
-       if (e is model_activity.Activity) return e;
-       // If stored as JSON map?
-       if (e is Map) {
-         try {
-           return model_activity.Activity.fromJson(Map<String, dynamic>.from(e));
-         } catch (_) { return null; }
-       }
-       return null;
-    }).whereType<model_activity.Activity>().toList();
-    
+    final allActivities = allActivitiesRaw
+        .map((e) {
+          if (e is model_activity.Activity) return e;
+          // If stored as JSON map?
+          if (e is Map) {
+            try {
+              return model_activity.Activity.fromJson(
+                  Map<String, dynamic>.from(e));
+            } catch (_) {
+              return null;
+            }
+          }
+          return null;
+        })
+        .whereType<model_activity.Activity>()
+        .toList();
+
     final filteredActivities = allActivities.where((a) {
       if (dateStart != null && a.timestamp.isBefore(dateStart)) return false;
       if (dateEnd != null && a.timestamp.isAfter(dateEnd)) return false;
-      return true; 
+      return true;
     }).toList();
 
     // Plants (Reference)
     final plantMap = <String, Plant>{};
     for (var p in GardenBoxes.plants.values) {
       if (p is Plant) {
-         plantMap[p.id] = p;
+        plantMap[p.id] = p;
       } else if (p is Map) {
-         try {
-            final plantObj = Plant.fromJson(Map<String,dynamic>.from(p));
-            plantMap[plantObj.id] = plantObj;
-         } catch (_) {}
+        try {
+          final plantObj = Plant.fromJson(Map<String, dynamic>.from(p));
+          plantMap[plantObj.id] = plantObj;
+        } catch (_) {}
       }
     }
 
@@ -104,30 +120,38 @@ class ExcelGeneratorService {
 
     // 3. Generate Content Sheets
     if (config.format == ExportFormat.separateSheets) {
-       if (config.isBlockEnabled(ExportBlockType.garden)) {
-         _fillSheet(excel, 'Gardens', ExportBlockType.garden, gardens, config);
-       }
-       if (config.isBlockEnabled(ExportBlockType.gardenBed)) {
-         _fillSheet(excel, 'Parcelles', ExportBlockType.gardenBed, beds, config);
-       }
-       if (config.isBlockEnabled(ExportBlockType.harvest)) {
-         _fillSheet(excel, 'Recoltes', ExportBlockType.harvest, filteredHarvests, config, 
-           extraData: {'beds': beds, 'plants': plantMap, 'activities': filteredActivities}
-         );
-       }
-       if (config.isBlockEnabled(ExportBlockType.activity)) {
-         _fillSheet(excel, 'Activites', ExportBlockType.activity, filteredActivities, config);
-       }
+      if (config.isBlockEnabled(ExportBlockType.garden)) {
+        _fillSheet(excel, 'Gardens', ExportBlockType.garden, gardens, config);
+      }
+      if (config.isBlockEnabled(ExportBlockType.gardenBed)) {
+        _fillSheet(excel, 'Parcelles', ExportBlockType.gardenBed, beds, config);
+      }
+      if (config.isBlockEnabled(ExportBlockType.harvest)) {
+        _fillSheet(excel, 'Recoltes', ExportBlockType.harvest, filteredHarvests,
+            config, extraData: {
+          'beds': beds,
+          'plants': plantMap,
+          'activities': filteredActivities
+        });
+      }
+      if (config.isBlockEnabled(ExportBlockType.activity)) {
+        _fillSheet(excel, 'Activites', ExportBlockType.activity,
+            filteredActivities, config);
+      }
     } else {
       // FLAT TABLE MODE
       if (config.isBlockEnabled(ExportBlockType.harvest)) {
-         _fillSheet(excel, 'Global_Export', ExportBlockType.harvest, filteredHarvests, config, 
-           extraData: {'beds': beds, 'plants': plantMap, 'activities': filteredActivities, 'flat': true}
-         );
+        _fillSheet(excel, 'Global_Export', ExportBlockType.harvest,
+            filteredHarvests, config, extraData: {
+          'beds': beds,
+          'plants': plantMap,
+          'activities': filteredActivities,
+          'flat': true
+        });
       } else if (config.isBlockEnabled(ExportBlockType.activity)) {
-         _fillSheet(excel, 'Global_Export', ExportBlockType.activity, filteredActivities, config, 
-           extraData: {'flat': true}
-         );
+        _fillSheet(excel, 'Global_Export', ExportBlockType.activity,
+            filteredActivities, config,
+            extraData: {'flat': true});
       }
     }
 
@@ -137,119 +161,193 @@ class ExcelGeneratorService {
   void _generateMetaSheet(Excel excel, ExportConfig config) {
     var sheet = excel['META'];
     sheet.appendRow([TextCellValue('Export Metrics Application')]);
-    sheet.appendRow([TextCellValue('Version Schema'), TextCellValue(ExportSchema.version)]);
-    sheet.appendRow([TextCellValue('Date Export'), TextCellValue(DateTime.now().toIso8601String())]);
+    sheet.appendRow(
+        [TextCellValue('Version Schema'), TextCellValue(ExportSchema.version)]);
+    sheet.appendRow([
+      TextCellValue('Date Export'),
+      TextCellValue(DateTime.now().toIso8601String())
+    ]);
     sheet.appendRow([TextCellValue('Preset'), TextCellValue(config.name)]);
     sheet.appendRow([TextCellValue('')]);
     sheet.appendRow([TextCellValue('Scope')]);
-    sheet.appendRow([TextCellValue('Gardens'), IntCellValue(config.scope.gardenIds.length)]);
-    sheet.appendRow([TextCellValue('Start Date'), TextCellValue(config.scope.dateRange?.start.toString() ?? 'All')]);
-    sheet.appendRow([TextCellValue('End Date'), TextCellValue(config.scope.dateRange?.end.toString() ?? 'All')]);
-    
+    sheet.appendRow([
+      TextCellValue('Gardens'),
+      IntCellValue(config.scope.gardenIds.length)
+    ]);
+    sheet.appendRow([
+      TextCellValue('Start Date'),
+      TextCellValue(config.scope.dateRange?.start.toString() ?? 'All')
+    ]);
+    sheet.appendRow([
+      TextCellValue('End Date'),
+      TextCellValue(config.scope.dateRange?.end.toString() ?? 'All')
+    ]);
+
     sheet.appendRow([TextCellValue('')]);
     sheet.appendRow([TextCellValue('Dictionary')]);
-    sheet.appendRow([TextCellValue('Column ID'), TextCellValue('Label'), TextCellValue('Description')]);
-    
+    sheet.appendRow([
+      TextCellValue('Column ID'),
+      TextCellValue('Label'),
+      TextCellValue('Description')
+    ]);
+
     for (var block in config.blocks) {
       if (!block.isEnabled) continue;
       for (var fieldId in block.selectedFieldIds) {
         final def = ExportSchema.getFieldById(block.type, fieldId);
         if (def != null) {
-          sheet.appendRow([TextCellValue(def.id), TextCellValue(def.label), TextCellValue(def.description)]);
+          sheet.appendRow([
+            TextCellValue(def.id),
+            TextCellValue(def.label),
+            TextCellValue(def.description)
+          ]);
         }
       }
     }
   }
 
-  void _fillSheet(Excel excel, String sheetName, ExportBlockType type, List<dynamic> data, ExportConfig config, {Map<String, dynamic>? extraData}) {
+  void _fillSheet(Excel excel, String sheetName, ExportBlockType type,
+      List<dynamic> data, ExportConfig config,
+      {Map<String, dynamic>? extraData}) {
     var sheet = excel[sheetName];
-    
+
     // 1. Headers
     List<String> fieldIds = config.getSelectedFieldsFor(type);
     List<CellValue> headerRow = [];
     for (var fid in fieldIds) {
       final def = ExportSchema.getFieldById(type, fid);
-      headerRow.add(TextCellValue(def?.label ?? fid)); 
+      headerRow.add(TextCellValue(def?.label ?? fid));
     }
     sheet.appendRow(headerRow);
 
     // 2. Data Rows
     List<GardenBed> beds = (extraData?['beds'] as List<GardenBed>?) ?? [];
-    List<model_activity.Activity> activities = (extraData?['activities'] as List<model_activity.Activity>?) ?? [];
+    List<model_activity.Activity> activities =
+        (extraData?['activities'] as List<model_activity.Activity>?) ?? [];
 
     for (var item in data) {
       List<CellValue> row = [];
-      
+
       // Context Resolution (Harvest specific)
       String? resolvedBedName;
       String? resolvedBedId;
-      
+
       if (type == ExportBlockType.harvest && item is HarvestRecord) {
-         final match = activities.where((a) => 
-           a.type == model_activity.ActivityType.plantingHarvested &&
-           a.metadata['plantName'] == item.plantName &&
-           a.timestamp.difference(item.date).abs().inMinutes < 5 
-         ).firstOrNull;
-         
-         if (match != null && match.entityId != null) {
-             final planting = GardenBoxes.plantings.get(match.entityId!);
-             if (planting != null) {
-               resolvedBedId = planting.gardenBedId;
-               final bed = beds.where((b) => b.id == resolvedBedId).firstOrNull;
-               resolvedBedName = bed?.name;
-             }
-         }
+        final match = activities
+            .where((a) =>
+                a.type == model_activity.ActivityType.plantingHarvested &&
+                a.metadata['plantName'] == item.plantName &&
+                a.timestamp.difference(item.date).abs().inMinutes < 5)
+            .firstOrNull;
+
+        if (match != null && match.entityId != null) {
+          final planting = GardenBoxes.plantings.get(match.entityId!);
+          if (planting != null) {
+            resolvedBedId = planting.gardenBedId;
+            final bed = beds.where((b) => b.id == resolvedBedId).firstOrNull;
+            resolvedBedName = bed?.name;
+          }
+        }
       }
 
       for (var fid in fieldIds) {
         dynamic value;
-        
+
         // --- HARVEST MAPPING ---
         if (type == ExportBlockType.harvest && item is HarvestRecord) {
-           switch (fid) {
-             case 'harvest_date': value = item.date; break;
-             case 'harvest_qty': value = item.quantityKg; break;
-             case 'harvest_plant_name': value = item.plantName; break;
-             case 'harvest_price': value = item.pricePerKg; break;
-             case 'harvest_value': value = item.totalValue; break;
-             case 'harvest_notes': value = item.notes; break;
-             case 'harvest_bed_name': value = resolvedBedName; break;
-             case 'harvest_bed_id': value = resolvedBedId; break;
-           }
+          switch (fid) {
+            case 'harvest_date':
+              value = item.date;
+              break;
+            case 'harvest_qty':
+              value = item.quantityKg;
+              break;
+            case 'harvest_plant_name':
+              value = item.plantName;
+              break;
+            case 'harvest_price':
+              value = item.pricePerKg;
+              break;
+            case 'harvest_value':
+              value = item.totalValue;
+              break;
+            case 'harvest_notes':
+              value = item.notes;
+              break;
+            case 'harvest_bed_name':
+              value = resolvedBedName;
+              break;
+            case 'harvest_bed_id':
+              value = resolvedBedId;
+              break;
+          }
         }
-        
+
         // --- GARDEN BED MAPPING ---
         else if (type == ExportBlockType.gardenBed && item is GardenBed) {
-           switch (fid) {
-             case 'bed_name': value = item.name; break;
-             case 'bed_id': value = item.id; break;
-             case 'bed_surface': value = item.sizeInSquareMeters; break;
-             case 'bed_plant_count': value = GardenBoxes.getPlantings(item.id).where((p) => p.isActive).length; break;
-           }
+          switch (fid) {
+            case 'bed_name':
+              value = item.name;
+              break;
+            case 'bed_id':
+              value = item.id;
+              break;
+            case 'bed_surface':
+              value = item.sizeInSquareMeters;
+              break;
+            case 'bed_plant_count':
+              value = GardenBoxes.getPlantings(item.id)
+                  .where((p) => p.isActive)
+                  .length;
+              break;
+          }
         }
-        
+
         // --- GARDEN MAPPING ---
         else if (type == ExportBlockType.garden && item is Garden) {
-           switch (fid) {
-             case 'garden_name': value = item.name; break;
-             case 'garden_id': value = item.id; break;
-             case 'garden_surface': value = 0; break; 
-             case 'garden_creation_date': value = item.createdAt; break;
-           }
+          switch (fid) {
+            case 'garden_name':
+              value = item.name;
+              break;
+            case 'garden_id':
+              value = item.id;
+              break;
+            case 'garden_surface':
+              value = 0;
+              break;
+            case 'garden_creation_date':
+              value = item.createdAt;
+              break;
+          }
         }
-        
+
         // --- ACTIVITY MAPPING ---
-        else if (type == ExportBlockType.activity && item is model_activity.Activity) {
-           switch (fid) {
-             case 'activity_date': value = item.timestamp; break;
-             case 'activity_type': value = item.type.name; break;
-             case 'activity_title': value = item.title; break;
-             case 'activity_desc': value = item.description; break;
-             case 'activity_entity': value = item.metadata['plantName'] ?? item.metadata['bedName'] ?? item.metadata['gardenName']; break;
-             case 'activity_entity_id': value = item.entityId; break;
-           }
+        else if (type == ExportBlockType.activity &&
+            item is model_activity.Activity) {
+          switch (fid) {
+            case 'activity_date':
+              value = item.timestamp;
+              break;
+            case 'activity_type':
+              value = item.type.name;
+              break;
+            case 'activity_title':
+              value = item.title;
+              break;
+            case 'activity_desc':
+              value = item.description;
+              break;
+            case 'activity_entity':
+              value = item.metadata['plantName'] ??
+                  item.metadata['bedName'] ??
+                  item.metadata['gardenName'];
+              break;
+            case 'activity_entity_id':
+              value = item.entityId;
+              break;
+          }
         }
-        
+
         // Convert to CellValue
         if (value == null) {
           row.add(TextCellValue(''));
@@ -264,5 +362,4 @@ class ExcelGeneratorService {
       sheet.appendRow(row);
     }
   }
-
 }

@@ -28,11 +28,13 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
   if (harvestRecordsState.isLoading) return [];
 
   final (startDate, endDate) = filters.getEffectiveDates();
-  
+
   // Filter records
   final filteredRecords = harvestRecordsState.records.where((record) {
-    bool matchGarden = filters.selectedGardenIds.isEmpty || filters.selectedGardenIds.contains(record.gardenId);
-    bool matchDate = !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
+    bool matchGarden = filters.selectedGardenIds.isEmpty ||
+        filters.selectedGardenIds.contains(record.gardenId);
+    bool matchDate =
+        !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
     return matchGarden && matchDate;
   }).toList();
 
@@ -40,29 +42,32 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
 
   // Group by plant to aggregate quantity (optional: here we just need to know WHICH plants were harvested to rank them by intrinsic quality)
   // OR: Rank based on what was harvested the most yielding the most nutrients?
-  // User spec: "3 plantes récoltées ayant la plus forte densité nutritive". 
+  // User spec: "3 plantes récoltées ayant la plus forte densité nutritive".
   // -> Focus on Intrinsic Density of harvested plants.
 
   // 1. Identification unique des plantes récoltées (IDs or Names)
   // We iterate over records instead of just IDs to handle the fallback matching logic properly
   // But to be efficient, we can get unique plants from the records list
-  
+
   final Map<String, HealerPlant> uniqueHealers = {};
 
   for (final record in filteredRecords) {
-      if (uniqueHealers.containsKey(record.plantId)) continue;
-      
-      var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
-      if (plant == null && record.plantName != null) {
-         plant = plantsList.where((p) => p.commonName.toLowerCase() == record.plantName!.toLowerCase()).firstOrNull;
-      }
-      
-      if (plant == null || plant.nutritionPer100g == null) continue;
+    if (uniqueHealers.containsKey(record.plantId)) continue;
 
-      // Ensure we don't process the same plant catalog entry twice (if matched by name vs id)
-      if (uniqueHealers.containsKey(plant.id)) continue;
-      
-      final n = plant.nutritionPer100g!;
+    var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+    if (plant == null && record.plantName != null) {
+      plant = plantsList
+          .where((p) =>
+              p.commonName.toLowerCase() == record.plantName!.toLowerCase())
+          .firstOrNull;
+    }
+
+    if (plant == null || plant.nutritionPer100g == null) continue;
+
+    // Ensure we don't process the same plant catalog entry twice (if matched by name vs id)
+    if (uniqueHealers.containsKey(plant.id)) continue;
+
+    final n = plant.nutritionPer100g!;
 
     // Calcul score densité simple : Somme des % AJR pour 100g
     // On prend quelques marqueurs clés
@@ -72,15 +77,27 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
     double fiber = ((n['fiberG'] as num?)?.toDouble() ?? 0) / 30.0 * 100;
 
     double density = vitC + vitA + iron + fiber;
-    
+
     // Déterminer le bénéfice principal
     String benefit = 'Vitalité';
     double maxVal = 0;
-    
-    if (vitC > maxVal) { maxVal = vitC; benefit = 'Immunité (Vit C)'; }
-    if (vitA > maxVal) { maxVal = vitA; benefit = 'Vision & Peau (Vit A)'; }
-    if (iron > maxVal) { maxVal = iron; benefit = 'Énergie (Fer)'; }
-    if (fiber > maxVal) { maxVal = fiber; benefit = 'Digestion (Fibres)'; }
+
+    if (vitC > maxVal) {
+      maxVal = vitC;
+      benefit = 'Immunité (Vit C)';
+    }
+    if (vitA > maxVal) {
+      maxVal = vitA;
+      benefit = 'Vision & Peau (Vit A)';
+    }
+    if (iron > maxVal) {
+      maxVal = iron;
+      benefit = 'Énergie (Fer)';
+    }
+    if (fiber > maxVal) {
+      maxVal = fiber;
+      benefit = 'Digestion (Fibres)';
+    }
 
     uniqueHealers[plant.id] = HealerPlant(
       plantName: plant.commonName,
@@ -98,29 +115,32 @@ final topHealersProvider = FutureProvider<List<HealerPlant>>((ref) async {
   return healers.take(3).toList();
 });
 
-
 // --- DEFICIENCY DETECTOR ---
 
 class NutrientDeficiency {
   final String nutrientName;
   final double currentCoveragePercent; // 0 to ... 100+
-  final String suggestedCrop; 
+  final String suggestedCrop;
 
-  NutrientDeficiency({required this.nutrientName, required this.currentCoveragePercent, required this.suggestedCrop});
+  NutrientDeficiency(
+      {required this.nutrientName,
+      required this.currentCoveragePercent,
+      required this.suggestedCrop});
 }
 
-final deficiencyProvider = FutureProvider<List<NutrientDeficiency>>((ref) async {
-  // Reuse logic from Radar to get detailed breakdowns? 
+final deficiencyProvider =
+    FutureProvider<List<NutrientDeficiency>>((ref) async {
+  // Reuse logic from Radar to get detailed breakdowns?
   // Or simpler: just check specific critical nutrients computed in Radar Logic is a bit circular.
   // For now, let's keep it simple and independent, or we could expose an intermediate "NutrientStats" object from the radar provider.
   // But Radar provider returns aggregated scores. We need granular scores here.
 
   // NOTE: In a real app, I'd refactor the calculation logic into a Service or Reposiotrya to avoid duplication.
   // Due to time constraints, I will duplicate the aggregation logic briefly or assume we want just a few generic checks.
-  
+
   // Let's assume we want to check: Vit C, Iron, Omega-3 (if available, usually not in standard veggies except purslane), Magnesium.
   // Let's stick to Vit C, Iron, Magnesium.
-  
+
   // ... (Aggregation Logic same as Radar to get totals) ...
   // For brevity in this specific file, I'll return mock/calculated data if time permits full re-implementation.
   // Let's do a fast re-calc.
@@ -133,11 +153,13 @@ final deficiencyProvider = FutureProvider<List<NutrientDeficiency>>((ref) async 
   final duration = endDate.difference(startDate).inDays + 1;
 
   // Filtrer
-   final filteredRecords = harvestRecordsState.records.where((record) {
-      final inGarden = filters.selectedGardenIds.isEmpty || filters.selectedGardenIds.contains(record.gardenId);
-      final inPeriod = !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
-      return inGarden && inPeriod;
-    }).toList();
+  final filteredRecords = harvestRecordsState.records.where((record) {
+    final inGarden = filters.selectedGardenIds.isEmpty ||
+        filters.selectedGardenIds.contains(record.gardenId);
+    final inPeriod =
+        !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
+    return inGarden && inPeriod;
+  }).toList();
 
   double totalVitC = 0;
   double totalIron = 0;
@@ -146,13 +168,16 @@ final deficiencyProvider = FutureProvider<List<NutrientDeficiency>>((ref) async 
   for (final record in filteredRecords) {
     var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
     if (plant == null && record.plantName != null) {
-      plant = plantsList.where((p) => p.commonName.toLowerCase() == record.plantName!.toLowerCase()).firstOrNull;
+      plant = plantsList
+          .where((p) =>
+              p.commonName.toLowerCase() == record.plantName!.toLowerCase())
+          .firstOrNull;
     }
-    
+
     if (plant == null || plant.nutritionPer100g == null) continue;
     final n = plant.nutritionPer100g!;
     final portions = record.quantityKg * 10;
-    
+
     totalVitC += ((n['vitaminCmg'] as num?)?.toDouble() ?? 0) * portions;
     totalIron += ((n['ironMg'] as num?)?.toDouble() ?? 0) * portions;
     totalMg += ((n['magnesiumMg'] as num?)?.toDouble() ?? 0) * portions;
@@ -164,9 +189,21 @@ final deficiencyProvider = FutureProvider<List<NutrientDeficiency>>((ref) async 
 
   List<NutrientDeficiency> defs = [];
 
-  if (covC < 50) defs.add(NutrientDeficiency(nutrientName: 'Vitamine C', currentCoveragePercent: covC, suggestedCrop: 'Ciboulette, Persil'));
-  if (covFe < 50) defs.add(NutrientDeficiency(nutrientName: 'Fer', currentCoveragePercent: covFe, suggestedCrop: 'Épinards, Lentilles'));
-  if (covMg < 50) defs.add(NutrientDeficiency(nutrientName: 'Magnésium', currentCoveragePercent: covMg, suggestedCrop: 'Bettes, Épinards'));
+  if (covC < 50)
+    defs.add(NutrientDeficiency(
+        nutrientName: 'Vitamine C',
+        currentCoveragePercent: covC,
+        suggestedCrop: 'Ciboulette, Persil'));
+  if (covFe < 50)
+    defs.add(NutrientDeficiency(
+        nutrientName: 'Fer',
+        currentCoveragePercent: covFe,
+        suggestedCrop: 'Épinards, Lentilles'));
+  if (covMg < 50)
+    defs.add(NutrientDeficiency(
+        nutrientName: 'Magnésium',
+        currentCoveragePercent: covMg,
+        suggestedCrop: 'Bettes, Épinards'));
 
   return defs;
 });

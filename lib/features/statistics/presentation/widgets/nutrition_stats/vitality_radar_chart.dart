@@ -20,7 +20,8 @@ class VitalityRadarChart extends StatelessWidget {
         RadarChartData(
           dataSets: [
             RadarDataSet(
-              fillColor: primaryColor.withAlpha((0.4 * 255).toInt()), // 40% opacity for Silhouette effect
+              fillColor: primaryColor.withAlpha(
+                  (0.4 * 255).toInt()), // 40% opacity for Silhouette effect
               borderColor: primaryColor,
               entryRadius: 3,
               borderWidth: 2,
@@ -38,24 +39,32 @@ class VitalityRadarChart extends StatelessWidget {
           borderData: FlBorderData(show: false),
           radarBorderData: const BorderSide(color: Colors.transparent),
           titlePositionPercentageOffset: 0.15, // Distance titles from center
-          titleTextStyle: const TextStyle(color: textColor, fontSize: 11, fontWeight: FontWeight.bold),
+          titleTextStyle: const TextStyle(
+              color: textColor, fontSize: 11, fontWeight: FontWeight.bold),
           getTitle: (index, angle) {
             switch (index) {
-              case 0: return const RadarChartTitle(text: 'Énergie', angle: 0);
-              case 1: return const RadarChartTitle(text: 'Protéines', angle: 0);
-              case 2: return const RadarChartTitle(text: 'Fibres', angle: 0);
-              case 3: return const RadarChartTitle(text: 'Vitamines', angle: 0);
-              case 4: return const RadarChartTitle(text: 'Minéraux', angle: 0);
-              case 5: return const RadarChartTitle(text: 'Antiox', angle: 0);
-              default: return const RadarChartTitle(text: '');
+              case 0:
+                return const RadarChartTitle(text: 'Énergie', angle: 0);
+              case 1:
+                return const RadarChartTitle(text: 'Protéines', angle: 0);
+              case 2:
+                return const RadarChartTitle(text: 'Fibres', angle: 0);
+              case 3:
+                return const RadarChartTitle(text: 'Vitamines', angle: 0);
+              case 4:
+                return const RadarChartTitle(text: 'Minéraux', angle: 0);
+              case 5:
+                return const RadarChartTitle(text: 'Antiox', angle: 0);
+              default:
+                return const RadarChartTitle(text: '');
             }
           },
           tickCount: 3,
-          ticksTextStyle: const TextStyle(color: Colors.transparent), // Hide ticks text
+          ticksTextStyle:
+              const TextStyle(color: Colors.transparent), // Hide ticks text
           tickBorderData: const BorderSide(color: gridColor, width: 1),
           gridBorderData: const BorderSide(color: gridColor, width: 1),
         ),
-
       ),
     );
   }

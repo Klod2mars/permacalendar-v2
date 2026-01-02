@@ -13,19 +13,20 @@ void main() {
 
     // Check mapping and existence
     for (final code in codes) {
-      // Use null for default if code is "unknown" for test purposes 
+      // Use null for default if code is "unknown" for test purposes
       // But getIconPath takes nullable int.
       final path = WeatherIconMapper.getIconPath(code == 999 ? null : code);
-      
+
       // The path returned is like 'assets/weather_icons/thunderstorm.png'
       // We need to resolve this relative to the project root for the test to see it.
       // Tests run from project root usually.
       final file = File(path);
-      
+
       // Print for debugging
       print('Checking code $code -> $path');
-      
-      expect(file.existsSync(), isTrue, reason: 'Icon for code $code ($path) does not exist');
+
+      expect(file.existsSync(), isTrue,
+          reason: 'Icon for code $code ($path) does not exist');
     }
   });
 

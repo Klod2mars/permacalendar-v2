@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-// import 'package:file_saver/file_saver.dart'; 
+// import 'package:file_saver/file_saver.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -16,7 +15,8 @@ class ExportBuilderScreen extends ConsumerStatefulWidget {
   const ExportBuilderScreen({super.key});
 
   @override
-  ConsumerState<ExportBuilderScreen> createState() => _ExportBuilderScreenState();
+  ConsumerState<ExportBuilderScreen> createState() =>
+      _ExportBuilderScreenState();
 }
 
 class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
@@ -32,7 +32,11 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         title: const Text('Export Builder'),
         actions: [
           if (state.isGenerating)
-            const Center(child: Padding(padding: EdgeInsets.all(16.0), child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)))
+            const Center(
+                child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CircularProgressIndicator(
+                        color: Colors.white, strokeWidth: 2)))
         ],
       ),
       body: Stepper(
@@ -49,15 +53,21 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
             child: Row(
               children: [
                 if (_currentStep < 3)
-                  ElevatedButton(onPressed: details.onStepContinue, child: const Text('Suivant')),
+                  ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      child: const Text('Suivant')),
                 if (_currentStep == 3)
                   ElevatedButton.icon(
-                      onPressed: state.isGenerating ? null : () => _generateExport(notifier, context),
+                      onPressed: state.isGenerating
+                          ? null
+                          : () => _generateExport(notifier, context),
                       icon: const Icon(Icons.download),
                       label: const Text('Générer Export Excel')),
                 const SizedBox(width: 12),
                 if (_currentStep > 0)
-                  TextButton(onPressed: details.onStepCancel, child: const Text('Retour')),
+                  TextButton(
+                      onPressed: details.onStepCancel,
+                      child: const Text('Retour')),
               ],
             ),
           );
@@ -88,7 +98,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
     );
   }
 
-  Widget _buildScopeStep(ExportBuilderState state, ExportBuilderNotifier notifier) {
+  Widget _buildScopeStep(
+      ExportBuilderState state, ExportBuilderNotifier notifier) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,14 +107,18 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         const SizedBox(height: 10),
         ListTile(
           title: const Text("Période"),
-          subtitle: Text(state.config.scope.dateRange == null 
-             ? "Tout l'historique" 
-             : "${DateFormat('dd/MM/yyyy').format(state.config.scope.dateRange!.start)} - ${DateFormat('dd/MM/yyyy').format(state.config.scope.dateRange!.end)}"),
+          subtitle: Text(state.config.scope.dateRange == null
+              ? "Tout l'historique"
+              : "${DateFormat('dd/MM/yyyy').format(state.config.scope.dateRange!.start)} - ${DateFormat('dd/MM/yyyy').format(state.config.scope.dateRange!.end)}"),
           trailing: const Icon(Icons.calendar_today),
           onTap: () async {
-            final picked = await showDateRangePicker(context: context, firstDate: DateTime(2020), lastDate: DateTime(2030));
+            final picked = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2030));
             if (picked != null) {
-              notifier.updateScope(state.config.scope.copyWith(dateRange: picked));
+              notifier
+                  .updateScope(state.config.scope.copyWith(dateRange: picked));
             }
           },
         ),
@@ -113,22 +128,24 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
           subtitle: const Text("Actuellement: Tous les jardins"),
           value: state.config.scope.gardenIds.isNotEmpty,
           onChanged: (val) {
-             // Logic to open garden selector dialog would go here
-             // For now just toggle 'all' or 'none' (demo)
-             if (!val) notifier.updateScope(state.config.scope.copyWith(gardenIds: []));
+            // Logic to open garden selector dialog would go here
+            // For now just toggle 'all' or 'none' (demo)
+            if (!val)
+              notifier.updateScope(state.config.scope.copyWith(gardenIds: []));
           },
         ),
       ],
     );
   }
 
-  Widget _buildBlocksStep(ExportBuilderState state, ExportBuilderNotifier notifier) {
+  Widget _buildBlocksStep(
+      ExportBuilderState state, ExportBuilderNotifier notifier) {
     return Column(
       children: ExportSchema.blockLabels.entries.map((entry) {
         final type = entry.key;
         final label = entry.value;
         final isEnabled = state.config.isBlockEnabled(type);
-        
+
         return CheckboxListTile(
           title: Text(label),
           subtitle: Text(ExportSchema.blockDescriptions[type] ?? ''),
@@ -139,11 +156,12 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
     );
   }
 
-  Widget _buildColumnsStep(ExportBuilderState state, ExportBuilderNotifier notifier) {
+  Widget _buildColumnsStep(
+      ExportBuilderState state, ExportBuilderNotifier notifier) {
     return Column(
       children: state.config.blocks.where((b) => b.isEnabled).map((block) {
         final schemaFields = ExportSchema.getFieldsFor(block.type);
-        
+
         return ExpansionTile(
           title: Text(ExportSchema.blockLabels[block.type] ?? ''),
           children: schemaFields.map((field) {
@@ -154,7 +172,9 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
               subtitle: Text(field.description),
               value: isSelected,
               onChanged: (val) => notifier.toggleField(block.type, field.id),
-              secondary: field.isAdvanced ? const Icon(Icons.build_circle_outlined, size: 16) : null,
+              secondary: field.isAdvanced
+                  ? const Icon(Icons.build_circle_outlined, size: 16)
+                  : null,
             );
           }).toList(),
         );
@@ -162,7 +182,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
     );
   }
 
-  Widget _buildFormatStep(ExportBuilderState state, ExportBuilderNotifier notifier) {
+  Widget _buildFormatStep(
+      ExportBuilderState state, ExportBuilderNotifier notifier) {
     return Column(
       children: [
         RadioListTile<ExportFormat>(
@@ -174,7 +195,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         ),
         RadioListTile<ExportFormat>(
           title: const Text("Table Unique (Flat / BI)"),
-          subtitle: const Text("Une seule grande table pour Tableaux Croisés Dynamiques"),
+          subtitle: const Text(
+              "Une seule grande table pour Tableaux Croisés Dynamiques"),
           value: ExportFormat.flatTable,
           groupValue: state.config.format,
           onChanged: (val) => notifier.updateFormat(val!),
@@ -187,21 +209,24 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
     );
   }
 
-  Future<void> _generateExport(ExportBuilderNotifier notifier, BuildContext context) async {
+  Future<void> _generateExport(
+      ExportBuilderNotifier notifier, BuildContext context) async {
     try {
       final bytes = await notifier.generate();
-      
+
       // Save file
       final tempDir = await getTemporaryDirectory();
-      final file = File('${tempDir.path}/export_permacalendar_${DateTime.now().millisecondsSinceEpoch}.xlsx');
+      final file = File(
+          '${tempDir.path}/export_permacalendar_${DateTime.now().millisecondsSinceEpoch}.xlsx');
       await file.writeAsBytes(bytes);
-      
+
       // Share
-      await Share.shareXFiles([XFile(file.path)], text: 'Voici votre export PermaCalendar');
-      
+      await Share.shareXFiles([XFile(file.path)],
+          text: 'Voici votre export PermaCalendar');
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erreur: $e")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Erreur: $e")));
       }
     }
   }

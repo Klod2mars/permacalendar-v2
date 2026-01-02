@@ -20,8 +20,7 @@ class GardenCreateScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<GardenCreateScreen> createState() =>
-      _GardenCreateScreenState();
+  ConsumerState<GardenCreateScreen> createState() => _GardenCreateScreenState();
 }
 
 class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
@@ -72,9 +71,8 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
         }
       } else {
         // Sinon → simple création normale
-        success = await ref
-            .read(gardenProvider.notifier)
-            .createGarden(newGarden);
+        success =
+            await ref.read(gardenProvider.notifier).createGarden(newGarden);
       }
 
       if (!mounted) return;
@@ -125,30 +123,23 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextField(
-                    controller: _nameController,
-                    label: 'Nom du jardin',
-                    prefixIcon: const Icon(Icons.eco),
-                    validator: (v) => Validators.validateName(v)
-                  ),
-
+                      controller: _nameController,
+                      label: 'Nom du jardin',
+                      prefixIcon: const Icon(Icons.eco),
+                      validator: (v) => Validators.validateName(v)),
                   const SizedBox(height: 16),
-
                   CustomTextField(
                     controller: _descriptionController,
                     label: 'Description',
                     prefixIcon: const Icon(Icons.description),
                     maxLines: 3,
                   ),
-
                   const SizedBox(height: 24),
-
                   Text(
                     'Image du jardin (optionnel)',
                     style: theme.textTheme.titleMedium,
                   ),
-
                   const SizedBox(height: 12),
-
                   CustomTextField(
                     controller: _imageUrlController,
                     label: "URL de l'image",
@@ -156,16 +147,13 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                     prefixIcon: const Icon(Icons.image),
                     onChanged: (_) => setState(() {}),
                   ),
-
                   const SizedBox(height: 16),
-
                   if (_imageUrlController.text.isNotEmpty)
                     _buildImagePreview(theme),
                 ],
               ),
             ),
           ),
-
           if (_isSubmitting)
             const Positioned.fill(
               child: ColoredBox(
@@ -175,7 +163,6 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
             ),
         ],
       ),
-
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: CustomButton(

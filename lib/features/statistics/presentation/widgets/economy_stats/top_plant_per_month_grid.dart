@@ -6,7 +6,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
   final List<MonthRevenue> monthlyRevenue; // Needed for indexing month order
 
   const TopPlantPerMonthGrid({
-    super.key, 
+    super.key,
     required this.topPlantPerMonth,
     required this.monthlyRevenue,
   });
@@ -40,7 +40,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
             final monthRev = monthlyRevenue[index];
             final yearMonth = monthRev.year * 100 + monthRev.month;
             final ranking = topPlantPerMonth[yearMonth];
-            
+
             return _buildMonthCell(context, monthRev.month, ranking);
           },
         ),
@@ -48,8 +48,22 @@ class TopPlantPerMonthGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildMonthCell(BuildContext context, int month, PlantRanking? ranking) {
-    const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+  Widget _buildMonthCell(
+      BuildContext context, int month, PlantRanking? ranking) {
+    const months = [
+      'Jan',
+      'Fév',
+      'Mar',
+      'Avr',
+      'Mai',
+      'Juin',
+      'Juil',
+      'Août',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Déc'
+    ];
     final monthName = (month >= 1 && month <= 12) ? months[month - 1] : '';
 
     return Container(
@@ -70,7 +84,10 @@ class TopPlantPerMonthGrid extends StatelessWidget {
           if (ranking != null) ...[
             Text(
               ranking.plantName,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12),
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

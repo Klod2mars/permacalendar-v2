@@ -3,19 +3,16 @@ import '../../../../../core/models/hourly_weather_point.dart';
 
 /// Utilitaire pour interpoler les données météo entre deux points horaires.
 class WeatherInterpolation {
-  
   /// Retourne un point météo interpolé pour un temps cible donné.
   /// Si la cible est hors range, retourne le point le plus proche (first ou last).
   static HourlyWeatherPoint? getInterpolatedWeather(
-    List<HourlyWeatherPoint> points, 
-    DateTime target
-  ) {
+      List<HourlyWeatherPoint> points, DateTime target) {
     if (points.isEmpty) return null;
 
     // Assurons-nous que la liste est triée (sécurité)
     // Note: l'API renvoie généralement une liste triée, mais on ne sait jamais.
     // Pour la performance, on pourrait trier une seule fois ailleurs, mais ici c'est OK.
-    // points.sort((a, b) => a.time.compareTo(b.time)); 
+    // points.sort((a, b) => a.time.compareTo(b.time));
 
     // 1. Trouver le point suivant (Index)
     int nextIdx = points.indexWhere((p) => p.time.isAfter(target));
@@ -33,7 +30,7 @@ class WeatherInterpolation {
     // Calcul du facteur d'interpolation (0.0 à 1.0)
     final totalDuration = next.time.difference(prev.time).inMicroseconds;
     final currentDuration = target.difference(prev.time).inMicroseconds;
-    
+
     // Éviter division par zéro
     double t = 0.0;
     if (totalDuration != 0) {
@@ -44,18 +41,23 @@ class WeatherInterpolation {
     return HourlyWeatherPoint(
       time: target,
       temperatureC: _lerpDouble(prev.temperatureC, next.temperatureC, t),
-      precipitationMm: _lerpDouble(prev.precipitationMm, next.precipitationMm, t),
-      precipitationProbability: _lerpInt(prev.precipitationProbability, next.precipitationProbability, t),
+      precipitationMm:
+          _lerpDouble(prev.precipitationMm, next.precipitationMm, t),
+      precipitationProbability: _lerpInt(
+          prev.precipitationProbability, next.precipitationProbability, t),
       windSpeedkmh: _lerpDouble(prev.windSpeedkmh, next.windSpeedkmh, t),
       windDirection: _lerpInt(prev.windDirection, next.windDirection, t),
       windGustsKmh: _lerpDouble(prev.windGustsKmh, next.windGustsKmh, t),
       pressureMsl: _lerpDouble(prev.pressureMsl, next.pressureMsl, t),
-      cloudCover: _lerpInt(prev.cloudCover ?? 0, next.cloudCover ?? 0, t), // Gestion des nulls si modèle non mis à jour
-      visibility: _lerpDouble(prev.visibility ?? 10000, next.visibility ?? 10000, t),
+      cloudCover: _lerpInt(prev.cloudCover ?? 0, next.cloudCover ?? 0,
+          t), // Gestion des nulls si modèle non mis à jour
+      visibility:
+          _lerpDouble(prev.visibility ?? 10000, next.visibility ?? 10000, t),
       // Weather Code : on "snap" au code le plus proche plutôt que d'interpoler un nombre entier
       weatherCode: t < 0.5 ? prev.weatherCode : next.weatherCode,
       // Apparent temp est calculable, mais on l'interpole aussi pour fluidité
-      apparentTemperatureC: _lerpDouble(prev.apparentTemperatureC, next.apparentTemperatureC, t),
+      apparentTemperatureC:
+          _lerpDouble(prev.apparentTemperatureC, next.apparentTemperatureC, t),
     );
   }
 
@@ -68,7 +70,7 @@ class WeatherInterpolation {
   }
 
   static int _lerpInt(int? a, int? b, double t) {
-     if (a == null && b == null) return 0;
+    if (a == null && b == null) return 0;
     if (a == null) return b!;
     if (b == null) return a;
     return (a + (b - a) * t).round();

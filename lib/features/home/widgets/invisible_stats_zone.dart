@@ -1,10 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app_router.dart';
-
-
 
 /// Zone invisible tappable qui ouvre les statistiques du jardin actif.
 /// Conçue pour être placée dans un Positioned (le dashboard gère left/top/width/height).
@@ -23,7 +21,8 @@ class InvisibleStatsZone extends ConsumerWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        debugPrint('[InvisibleStatsZone] onTap isCalibrationMode=$isCalibrationMode');
+        debugPrint(
+            '[InvisibleStatsZone] onTap isCalibrationMode=$isCalibrationMode');
 
         if (isCalibrationMode) return;
 
@@ -45,7 +44,9 @@ class InvisibleStatsZone extends ConsumerWidget {
       child: Container(
         // Visible en mode calibration pour aider le dev / QA
         decoration: BoxDecoration(
-          color: isCalibrationMode ? Colors.cyan.withOpacity(0.08) : Colors.transparent,
+          color: isCalibrationMode
+              ? Colors.cyan.withOpacity(0.08)
+              : Colors.transparent,
           shape: BoxShape.circle,
           border: isCalibrationMode
               ? Border.all(color: Colors.cyanAccent.withOpacity(0.6), width: 2)
@@ -53,7 +54,8 @@ class InvisibleStatsZone extends ConsumerWidget {
         ),
         child: Center(
           child: isCalibrationMode
-              ? const Text('Stats', style: TextStyle(fontSize: 10, color: Colors.white))
+              ? const Text('Stats',
+                  style: TextStyle(fontSize: 10, color: Colors.white))
               : const SizedBox.shrink(),
         ),
       ),

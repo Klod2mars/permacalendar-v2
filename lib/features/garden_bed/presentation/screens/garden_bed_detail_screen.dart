@@ -1,4 +1,4 @@
-﻿// lib/features/garden_bed/presentation/screens/garden_bed_detail_screen.dart
+// lib/features/garden_bed/presentation/screens/garden_bed_detail_screen.dart
 import 'dart:convert';
 
 import '../../../planting/presentation/widgets/harvest_dialog.dart';
@@ -17,6 +17,7 @@ import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../../shared/widgets/loading_widgets.dart';
 import '../../providers/garden_bed_provider.dart';
+import '../../providers/garden_bed_scoped_provider.dart';
 import 'package:permacalendar/features/planting/providers/planting_provider.dart';
 import 'package:permacalendar/core/models/planting.dart';
 import 'package:permacalendar/features/planting/presentation/widgets/planting_card.dart';
@@ -39,54 +40,49 @@ class GardenBedDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gardenBedState = ref.watch(gardenBedNotifierProvider);
-
-    final gardenBed =
-        gardenBedState.gardenBeds.where((bed) => bed.id == bedId).firstOrNull;
+    // Use scoped provider for detail to avoid global state syncing issues
+    final gardenBedAsync =
+        ref.watch(gardenBedDetailProvider((gardenId: gardenId, bedId: bedId)));
     final theme = Theme.of(context);
 
-    // Charger les parcelles si nécessaire
-    if (gardenBedState.gardenBeds.isEmpty && !gardenBedState.isLoading) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(gardenBedNotifierProvider.notifier).loadGardenBeds(gardenId);
-      });
-    }
+    // No need for imperative loading or checking global state
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: gardenBed?.name ?? 'Détail de la parcelle',
+        title: gardenBedAsync.asData?.value?.name ?? 'Détail de la parcelle',
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: onPop ?? () => context.pop(),
         ),
       ),
-      body: gardenBedState.isLoading
-          ? const Center(child: LoadingWidget())
-          : gardenBedState.error != null
-              ? ErrorStateWidget(
-                  title: 'Erreur',
-                  subtitle: gardenBedState.error!,
-                  onRetry: () => ref
-                      .read(gardenBedNotifierProvider.notifier)
-                      .loadGardenBeds(gardenId),
-                )
-              : gardenBed == null
-                  ? const EmptyStateWidget(
-                      icon: Icons.grid_view,
-                      title: 'Parcelle non trouvée',
-                      subtitle:
-                          'Cette parcelle n\'existe pas ou a été supprimée.',
-                    )
-                  : _buildGardenBedDetail(context, ref, gardenBed, theme),
+      body: gardenBedAsync.when(
+        loading: () => const Center(child: LoadingWidget()),
+        error: (error, stack) => ErrorStateWidget(
+          title: 'Erreur',
+          subtitle: error.toString(),
+          onRetry: () => ref.refresh(
+              gardenBedDetailProvider((gardenId: gardenId, bedId: bedId))),
+        ),
+        data: (gardenBed) {
+          if (gardenBed == null) {
+            return const EmptyStateWidget(
+              icon: Icons.grid_view,
+              title: 'Parcelle non trouvée',
+              subtitle: 'Cette parcelle n\'existe pas ou a été supprimée.',
+            );
+          }
+          return _buildGardenBedDetail(context, ref, gardenBed, theme);
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: gardenBed != null
+      floatingActionButton: gardenBedAsync.asData?.value != null
           ? Padding(
               padding: const EdgeInsets.only(bottom: 16.0, right: 8.0),
               child: FloatingActionButton(
                 tooltip: 'Ajouter une plantation',
                 child: const Icon(Icons.add),
                 onPressed: () async {
-                  final bed = gardenBed; // safe
+                  final bed = gardenBedAsync.asData!.value!; // safe
                   // Ouvre le catalogue en mode sélection
                   final selectedPlantId =
                       await Navigator.of(context).push<String?>(
@@ -119,7 +115,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                   }
 
                   final preset = Planting(
-                    gardenBedId: bed!.id,
+                    gardenBedId: bed.id,
                     plantId: selectedPlantId,
                     plantName: plantObj?.commonName ?? 'Plante',
                     plantedDate: DateTime.now(),
@@ -206,7 +202,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
                             color: theme.colorScheme.primary, size: 26),
                       ],
                     ),
-
                     if (gardenBed.description.isNotEmpty ||
                         (gardenBed.notes != null &&
                             gardenBed.notes!.isNotEmpty)) ...[
@@ -246,8 +241,6 @@ class GardenBedDetailScreen extends ConsumerWidget {
       ),
     );
   }
-
-
 
   Widget _buildInfoRow(
       IconData icon, String label, String value, ThemeData theme) {
@@ -296,7 +289,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
               subtitle: 'Cette parcelle n\'a pas encore de plantations.',
               actionText: 'Ajouter une plantation',
               onAction: () async {
-                 // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
+                // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
                 final selectedPlantId =
                     await Navigator.of(context).push<String?>(
                   MaterialPageRoute(
@@ -363,7 +356,9 @@ class GardenBedDetailScreen extends ConsumerWidget {
                                       .read(plantingProvider.notifier)
                                       .deletePlanting(p.id);
                                   // Refresh header / plantings
-                                  ref.read(gardenBedNotifierProvider.notifier).loadGardenBeds(gardenBed.gardenId);
+                                  ref
+                                      .read(gardenBedNotifierProvider.notifier)
+                                      .loadGardenBeds(gardenBed.gardenId);
                                 },
                                 style: TextButton.styleFrom(
                                     foregroundColor: Colors.red),

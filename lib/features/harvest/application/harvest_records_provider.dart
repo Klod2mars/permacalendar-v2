@@ -30,7 +30,8 @@ class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
         loadRecords();
       });
     } catch (e) {
-      debugPrint('[HarvestRecordsProvider] Warning: unable to watch harvests box: $e');
+      debugPrint(
+          '[HarvestRecordsProvider] Warning: unable to watch harvests box: $e');
     }
 
     // Charger les données initiales de manière synchrone (Hive est rapide)
@@ -41,7 +42,8 @@ class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
       records.sort((a, b) => b.date.compareTo(a.date));
       return HarvestRecordsState(records: records, isLoading: false);
     } catch (e) {
-      return HarvestRecordsState(records: [], isLoading: false, error: e.toString());
+      return HarvestRecordsState(
+          records: [], isLoading: false, error: e.toString());
     }
   }
 
@@ -58,10 +60,16 @@ class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
       final records = repo.getAllHarvests();
       records.sort((a, b) => b.date.compareTo(a.date));
       debugPrint('[HarvestRecordsProvider] loaded ${records.length} records');
-      debugPrint('[HarvestRecordsProvider] details: ${records.map((r) => {'id': r.id, 'gardenId': r.gardenId, 'date': r.date.toIso8601String(), 'total': r.totalValue}).toList()}');
+      debugPrint('[HarvestRecordsProvider] details: ${records.map((r) => {
+            'id': r.id,
+            'gardenId': r.gardenId,
+            'date': r.date.toIso8601String(),
+            'total': r.totalValue
+          }).toList()}');
       state = HarvestRecordsState(records: records, isLoading: false);
     } catch (e) {
-      state = HarvestRecordsState(records: [], isLoading: false, error: e.toString());
+      state = HarvestRecordsState(
+          records: [], isLoading: false, error: e.toString());
     }
   }
 
@@ -70,4 +78,6 @@ class HarvestRecordsNotifier extends Notifier<HarvestRecordsState> {
   }
 }
 
-final harvestRecordsProvider = NotifierProvider<HarvestRecordsNotifier, HarvestRecordsState>(HarvestRecordsNotifier.new);
+final harvestRecordsProvider =
+    NotifierProvider<HarvestRecordsNotifier, HarvestRecordsState>(
+        HarvestRecordsNotifier.new);

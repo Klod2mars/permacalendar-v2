@@ -35,30 +35,31 @@ class GardenBubbleWidget extends StatelessWidget {
     // Transparent background to let the leaf show through (Organic look)
     // The image itself (bubble) will provide the visual shape.
     const glassDecoration = null;
-    
+
     // Prepare text logic
     final upperName = gardenName.toUpperCase();
     final words = upperName.split(' ');
-    
+
     String? topText;
     String? bottomText;
-    
+
     if (words.length > 1) {
-       // Heuristic: First word top, rest bottom (or balanced split)
-       // Simple split for now:
-       topText = words[0];
-       bottomText = words.sublist(1).join(' ');
+      // Heuristic: First word top, rest bottom (or balanced split)
+      // Simple split for now:
+      topText = words[0];
+      bottomText = words.sublist(1).join(' ');
     } else {
-       topText = upperName;
-       bottomText = null;
+      topText = upperName;
+      bottomText = null;
     }
-    
+
     // Text style shared
     final textStyle = TextStyle(
       color: Colors.white.withOpacity(0.95),
       fontWeight: FontWeight.w500,
       fontSize: 11, // Fixed size for arc
-      letterSpacing: 2.0, // Wider spacing for arc to prevent overlapping characters
+      letterSpacing:
+          2.0, // Wider spacing for arc to prevent overlapping characters
       shadows: [
         Shadow(
           blurRadius: 2,
@@ -72,17 +73,18 @@ class GardenBubbleWidget extends StatelessWidget {
         ),
       ],
     );
-    
+
     // Calculate radius for text (slightly inside the bubble edge)
-    final textRadius = radius * 0.60; 
+    final textRadius = radius * 0.60;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: radius * 2,
         height: radius * 2,
-        decoration: glassDecoration, 
-        child: Stack( // No decoration, fully transparent container
+        decoration: glassDecoration,
+        child: Stack(
+          // No decoration, fully transparent container
           alignment: Alignment.center,
           children: [
             // Background: Asset wrapped in ClipOval
@@ -91,7 +93,8 @@ class GardenBubbleWidget extends StatelessWidget {
                 assetPath,
                 width: radius * 2,
                 height: radius * 2,
-                fit: BoxFit.contain, // Contain to avoid cropping/zooming on the transparent canvas
+                fit: BoxFit
+                    .contain, // Contain to avoid cropping/zooming on the transparent canvas
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     width: radius * 2,
@@ -111,9 +114,9 @@ class GardenBubbleWidget extends StatelessWidget {
                 radius: textRadius,
                 placement: CurvedTextPlacement.top,
               ),
-              
+
             if (bottomText != null)
-               CurvedText(
+              CurvedText(
                 text: bottomText,
                 textStyle: textStyle,
                 radius: textRadius, // Same radius, but bottom placement

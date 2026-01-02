@@ -30,18 +30,18 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   String _taskKind = 'generic';
   String? _selectedGardenId; // Null means "All Gardens"
   String? _selectedGardenBedId;
-  
+
   bool _urgent = false;
   String _priority = 'Medium'; // Low, Medium, High
   String _assignee = '';
-  
+
   late DateTime _startDate;
   TimeOfDay? _startTime;
   int _durationMinutes = 60;
-  
+
   // Recurrence
   Map<String, dynamic>? _recurrenceMap;
-  
+
   // Available Task Kinds
   final Map<String, String> _taskKinds = {
     'generic': 'Générique',
@@ -64,11 +64,11 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   void initState() {
     super.initState();
     _startDate = widget.initialDate ?? DateTime.now();
-    
+
     // Auto-select garden if provider has one
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final gardenState = ref.read(gardenProvider);
-      // We don't have direct access to 'selectedGarden' in the basic state usually, 
+      // We don't have direct access to 'selectedGarden' in the basic state usually,
       // but let's assume we want to start with 'All' unless logic dictates otherwise.
       // If the user requirement said "Read via ref.read(gardenProvider)", we do so.
       // However, usually gardenProvider State is AsyncValue<List<Garden>> or similar.
@@ -84,7 +84,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   Future<void> _shareTask() async {
     final sb = StringBuffer();
     sb.writeln('Tâche: $_title');
-    
+
     // Resolve Garden Name
     String gardenName = 'Tous les jardins';
     if (_selectedGardenId != null) {
@@ -92,7 +92,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       if (g != null) gardenName = g.name;
     }
     sb.writeln('Jardin: $gardenName');
-    
+
     // Resolve Bed Name
     String bedName = 'Aucune';
     if (_selectedGardenBedId != null) {
@@ -100,13 +100,13 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       if (b != null) bedName = b.name;
     }
     sb.writeln('Parcelle: $bedName');
-    
+
     sb.writeln('Description: ${_description.isEmpty ? "-" : _description}');
-    
+
     final dateStr = DateFormat('yyyy-MM-dd').format(_startDate);
     final timeStr = _startTime != null ? ' ${_startTime!.format(context)}' : '';
     sb.writeln('Début: $dateStr$timeStr');
-    
+
     sb.writeln('Durée: $_durationMinutes minutes');
     sb.writeln('Type: ${_taskKinds[_taskKind] ?? _taskKind}');
     sb.writeln('Urgent: ${_urgent ? "Oui" : "Non"}');
@@ -115,10 +115,11 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
     await Share.share(sb.toString());
   }
-  
+
   Future<void> _saveTemplate() async {
     if (_title.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Titre requis pour le template')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Titre requis pour le template')));
       return;
     }
     final prefs = await SharedPreferences.getInstance();
@@ -131,7 +132,9 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       'recurrence': _recurrenceMap,
     };
     await prefs.setString('task_template', jsonEncode(templateData));
-    if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Template sauvegardé')));
+    if (mounted)
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Template sauvegardé')));
   }
 
   Future<void> _loadTemplate() async {
@@ -147,27 +150,24 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
         _priority = data['priority'] ?? _priority;
         // Recurrence loading might be complex due to map structure, careful here.
         if (data['recurrence'] != null) {
-             _recurrenceMap = Map<String, dynamic>.from(data['recurrence']);
+          _recurrenceMap = Map<String, dynamic>.from(data['recurrence']);
         }
       });
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Template chargé')));
+      if (mounted)
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Template chargé')));
     }
   }
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      
+
       try {
         DateTime finalDate = _startDate;
         if (_startTime != null) {
-          finalDate = DateTime(
-            _startDate.year, 
-            _startDate.month, 
-            _startDate.day, 
-            _startTime!.hour, 
-            _startTime!.minute
-          );
+          finalDate = DateTime(_startDate.year, _startDate.month,
+              _startDate.day, _startTime!.hour, _startTime!.minute);
         }
 
         final newTask = Activity.customTask(
@@ -189,10 +189,11 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
         GardenBoxes.activities.put(newTask.id, newTask);
         Navigator.pop(context, true);
-      
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur création tâche: $e'), backgroundColor: Colors.red),
+          SnackBar(
+              content: Text('Erreur création tâche: $e'),
+              backgroundColor: Colors.red),
         );
       }
     }
@@ -204,12 +205,12 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       appBar: AppBar(
         title: const Text('Nouvelle Tâche'),
         actions: [
-           IconButton(
+          IconButton(
             icon: const Icon(Icons.share),
             tooltip: 'Partager (brouillon)',
             onPressed: () {
-               _formKey.currentState?.save();
-               _shareTask();
+              _formKey.currentState?.save();
+              _shareTask();
             },
           ),
           PopupMenuButton<String>(
@@ -218,8 +219,10 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               if (v == 'load') _loadTemplate();
             },
             itemBuilder: (ctx) => [
-              const PopupMenuItem(value: 'save', child: Text('Sauvegarder comme template')),
-              const PopupMenuItem(value: 'load', child: Text('Charger le dernier template')),
+              const PopupMenuItem(
+                  value: 'save', child: Text('Sauvegarder comme template')),
+              const PopupMenuItem(
+                  value: 'load', child: Text('Charger le dernier template')),
             ],
           )
         ],
@@ -256,7 +259,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               // Title
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Titre *', 
+                  labelText: 'Titre *',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.title),
                 ),
@@ -266,7 +269,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                 onChanged: (v) => _title = v, // update for share
               ),
               const SizedBox(height: 16),
-              
+
               // Garden & Bed Selectors
               _GardenSelector(
                 selectedGardenId: _selectedGardenId,
@@ -278,13 +281,13 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                 },
               ),
               const SizedBox(height: 12),
-              
+
               _BedSelector(
                 gardenId: _selectedGardenId,
                 selectedBedId: _selectedGardenBedId,
                 onChanged: (v) => setState(() => _selectedGardenBedId = v),
               ),
-               const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Description
               TextFormField(
@@ -296,10 +299,10 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                 maxLines: 3,
                 initialValue: _description,
                 onSaved: (v) => _description = v ?? '',
-                 onChanged: (v) => _description = v,
+                onChanged: (v) => _description = v,
               ),
               const SizedBox(height: 16),
-              
+
               // Date & Time
               Row(
                 children: [
@@ -320,7 +323,8 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                           prefixIcon: Icon(Icons.calendar_today),
                           border: OutlineInputBorder(),
                         ),
-                        child: Text(DateFormat('dd/MM/yyyy').format(_startDate)),
+                        child:
+                            Text(DateFormat('dd/MM/yyyy').format(_startDate)),
                       ),
                     ),
                   ),
@@ -346,10 +350,11 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                   ),
                 ],
               ),
-               const SizedBox(height: 16),
-               
+              const SizedBox(height: 16),
+
               // Duration
-              Text('Durée estimée', style: Theme.of(context).textTheme.titleSmall),
+              Text('Durée estimée',
+                  style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
@@ -359,24 +364,26 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                     label: Text('${m}m'),
                     selected: isSelected,
                     onSelected: (s) {
-                       if (s) setState(() => _durationMinutes = m);
+                      if (s) setState(() => _durationMinutes = m);
                     },
                   );
                 }).toList()
-                ..add(ChoiceChip(
-                  label: const Text('Autre'),
-                   selected: ![15, 30, 60, 120, 240].contains(_durationMinutes),
-                   onSelected: (s) async {
-                     // Simple dialog for custom duration
-                     // For brevity we just focus logic; in a real app showDialog
-                   },
-                )),
+                  ..add(ChoiceChip(
+                    label: const Text('Autre'),
+                    selected:
+                        ![15, 30, 60, 120, 240].contains(_durationMinutes),
+                    onSelected: (s) async {
+                      // Simple dialog for custom duration
+                      // For brevity we just focus logic; in a real app showDialog
+                    },
+                  )),
               ),
               const SizedBox(height: 16),
 
               // Task Kind
               DropdownButtonFormField<String>(
-                value: _taskKinds.containsKey(_taskKind) ? _taskKind : 'generic',
+                value:
+                    _taskKinds.containsKey(_taskKind) ? _taskKind : 'generic',
                 decoration: const InputDecoration(
                   labelText: 'Type de tâche',
                   border: OutlineInputBorder(),
@@ -388,7 +395,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                 onChanged: (v) => setState(() => _taskKind = v!),
               ),
               const SizedBox(height: 16),
-              
+
               // Recurrence
               _RecurrenceEditor(
                 initialValue: _recurrenceMap,
@@ -401,47 +408,52 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               // Priority & Urgent
               Row(
                 children: [
-                   Expanded(
-                     child: DropdownButtonFormField<String>(
-                      value: _priority,
-                      decoration: const InputDecoration(
-                        labelText: 'Priorité',
-                         border: OutlineInputBorder(),
-                      ),
-                      items: _priorities.map((p) => DropdownMenuItem(value: p, child: Text(p))).toList(),
-                      onChanged: (v) => setState(() => _priority = v!),
-                   )),
-                   const SizedBox(width: 16),
-                   Expanded(
-                     child: CheckboxListTile(
-                      title: const Text('Urgent', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange)),
-                      value: _urgent,
-                      contentPadding: EdgeInsets.zero,
-                      onChanged: (v) => setState(() => _urgent = v!),
-                   )),
+                  Expanded(
+                      child: DropdownButtonFormField<String>(
+                    value: _priority,
+                    decoration: const InputDecoration(
+                      labelText: 'Priorité',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: _priorities
+                        .map((p) => DropdownMenuItem(value: p, child: Text(p)))
+                        .toList(),
+                    onChanged: (v) => setState(() => _priority = v!),
+                  )),
+                  const SizedBox(width: 16),
+                  Expanded(
+                      child: CheckboxListTile(
+                    title: const Text('Urgent',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.orange)),
+                    value: _urgent,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) => setState(() => _urgent = v!),
+                  )),
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               // Assignee & Attachments
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Assigné à',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.person),
-                  suffixIcon: Icon(Icons.contacts, color: Colors.grey), // Placeholder
+                  suffixIcon:
+                      Icon(Icons.contacts, color: Colors.grey), // Placeholder
                 ),
                 initialValue: _assignee,
                 onChanged: (v) => _assignee = v,
               ),
               const SizedBox(height: 16),
-               
+
               OutlinedButton.icon(
                 onPressed: null, // Disabled as per requirements (placeholder)
                 icon: const Icon(Icons.camera_alt),
                 label: const Text('Ajouter une photo (Bientôt disponible)'),
               ),
-              
+
               const SizedBox(height: 50), // Spacing for FAB/BottomBar
             ],
           ),
@@ -482,7 +494,7 @@ class _GardenSelector extends ConsumerWidget {
         children: options.map((garden) {
           final isSelected = selectedGardenId == garden?.id;
           final label = garden?.name ?? 'Tous les jardins';
-          
+
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilterChip(
@@ -527,21 +539,22 @@ class _BedSelector extends ConsumerWidget {
     // Logic:
     // If gardenId != null -> getGardenBeds(gardenId)
     // If gardenId == null -> getAllGardens -> map getGardenBeds -> flat list with prefix
-    
+
     List<DropdownMenuItem<String>> items = [];
-    
+
     if (gardenId != null) {
       final beds = GardenBoxes.getGardenBeds(gardenId!);
       if (beds.isEmpty) {
-         return const InputDecorator(
-             decoration: InputDecoration(
-               labelText: 'Zone (Parcelle)',
-               border: OutlineInputBorder(),
-             ),
-             child: Text('Aucune parcelle pour ce jardin', style: TextStyle(color: Colors.grey)),
-         );
+        return const InputDecorator(
+          decoration: InputDecoration(
+            labelText: 'Zone (Parcelle)',
+            border: OutlineInputBorder(),
+          ),
+          child: Text('Aucune parcelle pour ce jardin',
+              style: TextStyle(color: Colors.grey)),
+        );
       }
-      
+
       items = beds.map((bed) {
         return DropdownMenuItem(value: bed.id, child: Text(bed.name));
       }).toList();
@@ -551,15 +564,18 @@ class _BedSelector extends ConsumerWidget {
       for (final g in allGardens) {
         final beds = GardenBoxes.getGardenBeds(g.id);
         for (final b in beds) {
-           items.add(DropdownMenuItem(
-             value: b.id,
-             child: Text('${g.name} — ${b.name}'),
-           ));
+          items.add(DropdownMenuItem(
+            value: b.id,
+            child: Text('${g.name} — ${b.name}'),
+          ));
         }
       }
     }
-    
-    items.insert(0, const DropdownMenuItem(value: null, child: Text('Aucune zone spécifique')));
+
+    items.insert(
+        0,
+        const DropdownMenuItem(
+            value: null, child: Text('Aucune zone spécifique')));
 
     return DropdownButtonFormField<String>(
       value: selectedBedId,
@@ -610,7 +626,7 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
       if (_type == 'interval') map['every'] = _intervalEvery;
       if (_type == 'weekly') map['days'] = _selectedDays;
       if (_type == 'monthlyByDay') {
-        // usually needs day of month, implied from start date in logic? 
+        // usually needs day of month, implied from start date in logic?
         // For now just marking type for logic to pick up.
         // Or we can store 'day': DateTime.now().day if needed, but let's keep simple.
       }
@@ -627,21 +643,23 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
           value: _type,
           decoration: const InputDecoration(
             labelText: 'Récurrence',
-             border: OutlineInputBorder(),
-             prefixIcon: Icon(Icons.repeat),
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.repeat),
           ),
           items: const [
             DropdownMenuItem(value: 'none', child: Text('Aucune')),
-            DropdownMenuItem(value: 'interval', child: Text('Tous les X jours')),
-            DropdownMenuItem(value: 'weekly', child: Text('Hebdomadaire (Jours)')),
-            DropdownMenuItem(value: 'monthlyByDay', child: Text('Mensuel (Même jour)')),
+            DropdownMenuItem(
+                value: 'interval', child: Text('Tous les X jours')),
+            DropdownMenuItem(
+                value: 'weekly', child: Text('Hebdomadaire (Jours)')),
+            DropdownMenuItem(
+                value: 'monthlyByDay', child: Text('Mensuel (Même jour)')),
           ],
           onChanged: (v) {
             setState(() => _type = v!);
             _update();
           },
         ),
-        
         if (_type == 'interval')
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
@@ -655,44 +673,44 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(suffixText: ' j'),
                     onChanged: (v) {
-                       final val = int.tryParse(v);
-                       if (val != null) {
-                         _intervalEvery = val;
-                         _update();
-                       }
+                      final val = int.tryParse(v);
+                      if (val != null) {
+                        _intervalEvery = val;
+                        _update();
+                      }
                     },
                   ),
                 ),
               ],
             ),
           ),
-          
         if (_type == 'weekly')
-           Padding(
-             padding: const EdgeInsets.only(top: 12.0),
-             child: Wrap(
-               spacing: 4,
-               children: ['L', 'M', 'M', 'J', 'V', 'S', 'D'].asMap().entries.map((e) {
-                  final dayIndex = e.key + 1; // 1-based
-                  final isSelected = _selectedDays.contains(dayIndex);
-                  return FilterChip(
-                    label: Text(e.value),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                       setState(() {
-                         if (selected) {
-                           _selectedDays.add(dayIndex);
-                           _selectedDays.sort();
-                         } else {
-                           _selectedDays.remove(dayIndex);
-                         }
-                       });
-                       _update();
-                    },
-                  );
-               }).toList(),
-             ),
-           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: Wrap(
+              spacing: 4,
+              children:
+                  ['L', 'M', 'M', 'J', 'V', 'S', 'D'].asMap().entries.map((e) {
+                final dayIndex = e.key + 1; // 1-based
+                final isSelected = _selectedDays.contains(dayIndex);
+                return FilterChip(
+                  label: Text(e.value),
+                  selected: isSelected,
+                  onSelected: (selected) {
+                    setState(() {
+                      if (selected) {
+                        _selectedDays.add(dayIndex);
+                        _selectedDays.sort();
+                      } else {
+                        _selectedDays.remove(dayIndex);
+                      }
+                    });
+                    _update();
+                  },
+                );
+              }).toList(),
+            ),
+          ),
       ],
     );
   }

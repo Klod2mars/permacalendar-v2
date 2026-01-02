@@ -1,4 +1,4 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
 import '../../../core/services/plant_progress_service.dart';
 import '../../../core/models/planting.dart';
@@ -17,8 +17,6 @@ import '../domain/plant_steps_generator.dart';
 import '../../../core/models/activity.dart';
 import '../../../core/models/plant.dart';
 import '../../../core/services/notification_service.dart';
-
-
 
 // Planting State
 class PlantingState {
@@ -177,49 +175,50 @@ class PlantingNotifier extends Notifier<PlantingState> {
         final catalog = ref.read(plantCatalogProvider);
         // On suppose que catalog.plants contient la liste complète ou on utilise une méthode de service
         final plant = catalog.plants.where((p) => p.id == plantId).firstOrNull;
-        
+
         if (plant != null) {
           // Convert PlantFreezed to Plant for generateSteps
           final plantModel = Plant.fromJson(plant.toJson());
           final steps = generateSteps(plantModel, planting);
-          
+
           for (final step in steps) {
-             if (step.scheduledDate != null && step.scheduledDate!.isAfter(DateTime.now())) {
-                // Créer l'activité planifiée
-                final activity = Activity(
-                   id: const Uuid().v4(),
-                   type: ActivityType.careActionAdded, // Generic care/task
-                   title: step.title,
-                   description: step.description,
-                   entityId: planting.id,
-                   entityType: EntityType.planting,
-                   timestamp: DateTime.now(), // Created at
-                   metadata: {
-                     'status': 'planned',
-                     'scheduledDate': step.scheduledDate!.toIso8601String(),
-                     'isAutomated': true,
-                     'stepId': step.id,
-                     'category': step.category,
-                   }
-                );
-                
-                await GardenBoxes.activities.put(activity.id, activity);
-                
-                // Programmer Notification
-                // On utilise un ID unique int pour la notif (hashCode de l'ID activité)
-                final notifId = activity.id.hashCode.abs();
-                await NotificationService().scheduleNotification(
-                   id: notifId,
-                   title: 'Jardin: ${step.title}',
-                   body: '${plantName}: ${step.description}',
-                   scheduledDate: step.scheduledDate!,
-                   payload: '/plantings/${planting.id}', // Deep link payload logic if implemented
-                );
-             }
+            if (step.scheduledDate != null &&
+                step.scheduledDate!.isAfter(DateTime.now())) {
+              // Créer l'activité planifiée
+              final activity = Activity(
+                  id: const Uuid().v4(),
+                  type: ActivityType.careActionAdded, // Generic care/task
+                  title: step.title,
+                  description: step.description,
+                  entityId: planting.id,
+                  entityType: EntityType.planting,
+                  timestamp: DateTime.now(), // Created at
+                  metadata: {
+                    'status': 'planned',
+                    'scheduledDate': step.scheduledDate!.toIso8601String(),
+                    'isAutomated': true,
+                    'stepId': step.id,
+                    'category': step.category,
+                  });
+
+              await GardenBoxes.activities.put(activity.id, activity);
+
+              // Programmer Notification
+              // On utilise un ID unique int pour la notif (hashCode de l'ID activité)
+              final notifId = activity.id.hashCode.abs();
+              await NotificationService().scheduleNotification(
+                id: notifId,
+                title: 'Jardin: ${step.title}',
+                body: '${plantName}: ${step.description}',
+                scheduledDate: step.scheduledDate!,
+                payload:
+                    '/plantings/${planting.id}', // Deep link payload logic if implemented
+              );
+            }
           }
         }
       } catch (e) {
-         print('Erreur lors de la génération automatique des tâches: $e');
+        print('Erreur lors de la génération automatique des tâches: $e');
       }
 
       // Update state with new planting
@@ -454,18 +453,22 @@ class PlantingNotifier extends Notifier<PlantingState> {
   /// Ne change PAS le statut de la plantation — on considère la récolte
   /// comme un événement (historique) attaché à la plantation.
   /// Enregistre une récolte complète (avec poids et prix) et met à jour le statut
-  Future<bool> recordHarvest(String plantingId, DateTime date, {
+  Future<bool> recordHarvest(
+    String plantingId,
+    DateTime date, {
     required double weightKg,
     required double pricePerKg,
     String? notes,
   }) async {
-    debugPrint('[PlantingNotifier.recordHarvest] START plantingId=$plantingId weightKg=$weightKg price=$pricePerKg notes=${notes ?? ''}');
+    debugPrint(
+        '[PlantingNotifier.recordHarvest] START plantingId=$plantingId weightKg=$weightKg price=$pricePerKg notes=${notes ?? ''}');
     try {
       final planting = state.plantings.firstWhere((p) => p.id == plantingId,
           orElse: () => throw Exception('Planting not found'));
-      
+
       // LOG BEFORE
-      debugPrint('[recordHarvest] BEFORE update: plantName="${planting.plantName}" status="${planting.status}" metadata=${planting.metadata}');
+      debugPrint(
+          '[recordHarvest] BEFORE update: plantName="${planting.plantName}" status="${planting.status}" metadata=${planting.metadata}');
 
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
       String gardenId = bed?.gardenId ?? 'unknown';
@@ -475,34 +478,40 @@ class PlantingNotifier extends Notifier<PlantingState> {
       // FIX: Improved Orphan Handling
       // If the bed is deleted or not found, we try to attach to the first available garden.
       if (gardenId == 'unknown') {
-         final allGardens = GardenBoxes.getAllGardens();
-         if (allGardens.isNotEmpty) {
-           gardenId = allGardens.first.id;
-           debugPrint('[recordHarvest] Warning: Bed ${planting.gardenBedId} not found. Re-attaching to garden $gardenId (${allGardens.first.name})');
-         } else {
-           // Extreme edge case: No gardens exist at all.
-           // We create a virtual "Lost & Found" garden ID to allow saving.
-           gardenId = 'orphaned_harvests_garden';
-           debugPrint('[recordHarvest] Critical: No gardens found. Saving to virtual garden "orphaned_harvests_garden".');
-         }
+        final allGardens = GardenBoxes.getAllGardens();
+        if (allGardens.isNotEmpty) {
+          gardenId = allGardens.first.id;
+          debugPrint(
+              '[recordHarvest] Warning: Bed ${planting.gardenBedId} not found. Re-attaching to garden $gardenId (${allGardens.first.name})');
+        } else {
+          // Extreme edge case: No gardens exist at all.
+          // We create a virtual "Lost & Found" garden ID to allow saving.
+          gardenId = 'orphaned_harvests_garden';
+          debugPrint(
+              '[recordHarvest] Critical: No gardens found. Saving to virtual garden "orphaned_harvests_garden".');
+        }
       }
 
       // 3.5) Compute Nutrition Snapshot
       Map<String, double>? nutritionSnapshot;
       try {
         final catalog = ref.read(plantCatalogProvider);
-        // Find plant safely. We iterate manually or use firstWhere with nullable return if possible, 
+        // Find plant safely. We iterate manually or use firstWhere with nullable return if possible,
         // but List.firstWhere throws if not found without orElse.
         // We assume 'plants' is a List<Plant>.
-        final plant = catalog.plants.where((p) => p.id == planting.plantId).firstOrNull;
-        
+        final plant =
+            catalog.plants.where((p) => p.id == planting.plantId).firstOrNull;
+
         if (plant != null) {
-           // We assume plant.nutritionPer100g exists and is Map<String, dynamic>
-           // If 'plant' logic is different, we might need adjustments.
-           nutritionSnapshot = NutritionNormalizer.computeSnapshot(plant.nutritionPer100g, weightKg);
-           debugPrint('[recordHarvest] Nutrition snapshot computed: ${nutritionSnapshot.keys.length} keys');
+          // We assume plant.nutritionPer100g exists and is Map<String, dynamic>
+          // If 'plant' logic is different, we might need adjustments.
+          nutritionSnapshot = NutritionNormalizer.computeSnapshot(
+              plant.nutritionPer100g, weightKg);
+          debugPrint(
+              '[recordHarvest] Nutrition snapshot computed: ${nutritionSnapshot.keys.length} keys');
         } else {
-           debugPrint('[recordHarvest] Warning: Plant ${planting.plantId} not found in catalog for nutrition snapshot');
+          debugPrint(
+              '[recordHarvest] Warning: Plant ${planting.plantId} not found in catalog for nutrition snapshot');
         }
       } catch (e) {
         debugPrint('[recordHarvest] Nutrition snapshot error: $e');
@@ -526,7 +535,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       // 5) Mémoriser le prix
       try {
-        final prev = await CalibrationStorage.loadProfile('userHarvestPrices') ?? <String, dynamic>{};
+        final prev =
+            await CalibrationStorage.loadProfile('userHarvestPrices') ??
+                <String, dynamic>{};
         prev[planting.plantId] = pricePerKg;
         await CalibrationStorage.saveProfile('userHarvestPrices', prev);
       } catch (e) {
@@ -547,9 +558,10 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
           // Refresh harvest records
           try {
-              await ref.read(harvestRecordsProvider.notifier).refresh();
-          } catch(e) {
-             debugPrint('Warning: failed to refresh harvest records provider: $e');
+            await ref.read(harvestRecordsProvider.notifier).refresh();
+          } catch (e) {
+            debugPrint(
+                'Warning: failed to refresh harvest records provider: $e');
           }
 
           GardenEventBus().emit(
@@ -579,13 +591,17 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
       // CHECK INTEGRITY
       if (updatedPlanting.plantName.trim().isEmpty) {
-         debugPrint('[recordHarvest] CRITICAL: plantName became empty! Original was "${planting.plantName}"');
+        debugPrint(
+            '[recordHarvest] CRITICAL: plantName became empty! Original was "${planting.plantName}"');
       }
-      debugPrint('[recordHarvest] AFTER update: plantName="${updatedPlanting.plantName}" status="${updatedPlanting.status}"');
+      debugPrint(
+          '[recordHarvest] AFTER update: plantName="${updatedPlanting.plantName}" status="${updatedPlanting.status}"');
 
       await GardenBoxes.savePlanting(updatedPlanting);
 
-      final updatedPlantings = state.plantings.map((p) => p.id == plantingId ? updatedPlanting : p).toList();
+      final updatedPlantings = state.plantings
+          .map((p) => p.id == plantingId ? updatedPlanting : p)
+          .toList();
       state = state.copyWith(plantings: updatedPlantings, error: null);
 
       return true;
@@ -623,7 +639,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
       return await recordHarvest(
         plantingId,
         harvestDate,
-        weightKg: planting.quantity.toDouble(), 
+        weightKg: planting.quantity.toDouble(),
         pricePerKg: price,
         notes: 'Récolte rapide',
       );

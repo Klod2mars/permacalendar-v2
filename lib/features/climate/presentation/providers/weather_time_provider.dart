@@ -21,6 +21,7 @@ class WeatherTimeOffsetNotifier extends Notifier<double> {
   }
 }
 
-final weatherTimeOffsetProvider = NotifierProvider<WeatherTimeOffsetNotifier, double>(() {
+final weatherTimeOffsetProvider =
+    NotifierProvider<WeatherTimeOffsetNotifier, double>(() {
   return WeatherTimeOffsetNotifier();
 });

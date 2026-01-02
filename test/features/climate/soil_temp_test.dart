@@ -27,7 +27,7 @@ void main() {
 
       // Change = 15 * 0.15 = 2.25 degrees
       final change = next - soil;
-      
+
       expect(change, 2.25);
       expect(change, lessThan(10.0)); // Much less than the air jump of 15
     });
@@ -35,11 +35,12 @@ void main() {
     test('should simulate 7-day forecast with smoothing', () {
       double currentSoil = 10.0;
       final airTemps = [15.0, 18.0, 20.0, 22.0, 20.0, 18.0, 15.0];
-      
+
       final soilTemps = <double>[currentSoil];
 
       for (final air in airTemps) {
-        currentSoil = usecase(soilTempC: currentSoil, airTempC: air, alpha: 0.15);
+        currentSoil =
+            usecase(soilTempC: currentSoil, airTempC: air, alpha: 0.15);
         soilTemps.add(currentSoil);
       }
 
@@ -47,24 +48,21 @@ void main() {
       // Air range: 15-22 (7 degrees diff)
       // Soil check
       print('Soil Temps: $soilTemps');
-      
+
       // Expect last temp to be higher than start
       expect(soilTemps.last > 10.0, true);
-      
+
       // Verify no abrupt jumps > 5 degrees
-      for (int i=0; i<soilTemps.length-1; i++) {
-        final diff = (soilTemps[i+1] - soilTemps[i]).abs();
+      for (int i = 0; i < soilTemps.length - 1; i++) {
+        final diff = (soilTemps[i + 1] - soilTemps[i]).abs();
         expect(diff, lessThan(3.0));
       }
     });
 
     test('daysToEquilibrium returns reasonable value', () {
-      final days = usecase.daysToEquilibrium(
-        soilTempC: 10,
-        airTempC: 20,
-        alpha: 0.15
-      );
-      
+      final days =
+          usecase.daysToEquilibrium(soilTempC: 10, airTempC: 20, alpha: 0.15);
+
       // Should take some days to reach 95% of gap
       expect(days, greaterThan(5));
       expect(days, lessThan(30));

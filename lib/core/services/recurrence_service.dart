@@ -26,18 +26,18 @@ class RecurrenceService {
       case 'weekly':
         final days = (recurrence['days'] as List<dynamic>?)?.cast<int>() ?? [];
         if (days.isEmpty) return null;
-        
+
         // Trier les jours pour être sûr
         days.sort();
-        
+
         // Chercher le prochain jour dans la semaine en cours
         // 1 = Lundi, 7 = Dimanche
         int currentDay = utcFromDate.weekday;
-        
+
         // Trouver le prochain jour valide dans la liste qui est > currentDay
         // Ou si aucun, prendre le premier de la liste pour la semaine prochaine
         int? nextDay = days.firstWhere((d) => d > currentDay, orElse: () => -1);
-        
+
         if (nextDay != -1) {
           // C'est cette semaine
           final daysToAdd = nextDay - currentDay;
@@ -60,23 +60,23 @@ class RecurrenceService {
           nextMonth = 1;
           nextYear++;
         }
-        
+
         // Clamp du jour si le mois suivant a moins de jours
         final daysInNextMonth = _getDaysInMonth(nextYear, nextMonth);
         final actualDay = day > daysInNextMonth ? daysInNextMonth : day;
-        
+
         nextDate = DateTime.utc(nextYear, nextMonth, actualDay);
-        
+
         // Si la date calculée est avant ou égale à fromDate (cas limite ou erreur), on avance d'un mois encore
         if (!nextDate.isAfter(utcFromDate)) {
-           nextMonth++;
-           if (nextMonth > 12) {
-             nextMonth = 1;
-             nextYear++;
-           }
-           final daysInNext2Month = _getDaysInMonth(nextYear, nextMonth);
-           final actualDay2 = day > daysInNext2Month ? daysInNext2Month : day;
-           nextDate = DateTime.utc(nextYear, nextMonth, actualDay2);
+          nextMonth++;
+          if (nextMonth > 12) {
+            nextMonth = 1;
+            nextYear++;
+          }
+          final daysInNext2Month = _getDaysInMonth(nextYear, nextMonth);
+          final actualDay2 = day > daysInNext2Month ? daysInNext2Month : day;
+          nextDate = DateTime.utc(nextYear, nextMonth, actualDay2);
         }
         break;
 

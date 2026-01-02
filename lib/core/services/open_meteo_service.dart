@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:permacalendar/core/models/daily_weather_point.dart';
 import 'package:permacalendar/core/models/hourly_weather_point.dart';
@@ -84,7 +84,8 @@ class OpenMeteoService {
     int forecastDays = 7,
   }) async {
     // DEBUG LOG requested by audit
-    print('DEBUG: fetchPrecipitation called with lat=$latitude, lon=$longitude');
+    print(
+        'DEBUG: fetchPrecipitation called with lat=$latitude, lon=$longitude');
 
     const url = 'https://api.open-meteo.com/v1/forecast';
     try {
@@ -92,10 +93,12 @@ class OpenMeteoService {
         'latitude': latitude,
         'longitude': longitude,
         // hourly étendu : précip / temp / vent / direction / pression / visibilité / nuages
-        'hourly': 'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl,cloudcover,visibility',
+        'hourly':
+            'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl,cloudcover,visibility',
         // daily étendu : sunrise/sunset + wind max
         // NOTE: Moon data removed as it seems to cause 400 errors (not in standard daily params?)
-        'daily': 'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
+        'daily':
+            'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
         'past_days': pastDays,
 // ... (inside fetchPrecipitation)
         'forecast_days': forecastDays,
@@ -108,13 +111,14 @@ class OpenMeteoService {
 
       return _parseData(data, latitude, longitude);
     } on DioException catch (e) {
-      print('PLEASE READ THIS ERROR: OpenMeteo 400 Error Body: ${e.response?.data}');
+      print(
+          'PLEASE READ THIS ERROR: OpenMeteo 400 Error Body: ${e.response?.data}');
       rethrow;
     }
   }
 
-  OpenMeteoResult _parseData(Map<String, dynamic> data, double latitude, double longitude) {
-
+  OpenMeteoResult _parseData(
+      Map<String, dynamic> data, double latitude, double longitude) {
     final hourly = data['hourly'] as Map<String, dynamic>?;
     final daily = data['daily'] as Map<String, dynamic>?;
 
@@ -135,23 +139,23 @@ class OpenMeteoService {
     // Construire les points horaires
     final hourlyPoints = <HourlyWeatherPoint>[];
     final limit = hourlyTimes.length;
-    
-    for (var i = 0; i < limit; i++) {
-        // Robustesse sur les longueurs de listes
-        double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
-        int getInt(List<int> list) => i < list.length ? list[i] : 0;
 
-        // Parse time as strict UTC
-        // OpenMeteo returns ISO8601 strings. If we requested timezone=UTC, they look like "2023-01-01T00:00" (usually without Z if not explicitly requested as iso8601, but logic is safer with UTC suffix)
-        // We force .parse(s + 'Z') if missing, or use .utc constructor if needed. 
-        // Actually, best way if we requested UTC is to trust the string is GMT time.
-        // But Dart DateTime.parse defaults to local if no offset. 
-        // So we append 'Z' to be safe if it's missing.
-        var tStr = hourlyTimes[i];
-        if (!tStr.endsWith('Z') && !tStr.contains('+')) {
-           tStr += 'Z';
-        }
-        final parsedTime = DateTime.parse(tStr).toUtc();
+    for (var i = 0; i < limit; i++) {
+      // Robustesse sur les longueurs de listes
+      double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
+      int getInt(List<int> list) => i < list.length ? list[i] : 0;
+
+      // Parse time as strict UTC
+      // OpenMeteo returns ISO8601 strings. If we requested timezone=UTC, they look like "2023-01-01T00:00" (usually without Z if not explicitly requested as iso8601, but logic is safer with UTC suffix)
+      // We force .parse(s + 'Z') if missing, or use .utc constructor if needed.
+      // Actually, best way if we requested UTC is to trust the string is GMT time.
+      // But Dart DateTime.parse defaults to local if no offset.
+      // So we append 'Z' to be safe if it's missing.
+      var tStr = hourlyTimes[i];
+      if (!tStr.endsWith('Z') && !tStr.contains('+')) {
+        tStr += 'Z';
+      }
+      final parsedTime = DateTime.parse(tStr).toUtc();
 
       hourlyPoints.add(
         HourlyWeatherPoint(
@@ -178,13 +182,17 @@ class OpenMeteoService {
     final dailyTMax = _toDoubleList(daily?['temperature_2m_max']);
     final dailyTMin = _toDoubleList(daily?['temperature_2m_min']);
     final dailyCodes = _toIntList(daily?['weather_code']);
-    
-    final dailySunrise = (daily?['sunrise'] as List?)?.cast<String?>() ?? const [];
-    final dailySunset = (daily?['sunset'] as List?)?.cast<String?>() ?? const [];
-    
+
+    final dailySunrise =
+        (daily?['sunrise'] as List?)?.cast<String?>() ?? const [];
+    final dailySunset =
+        (daily?['sunset'] as List?)?.cast<String?>() ?? const [];
+
     // Moon data retiré de la requête pour éviter erreur 400
-    final dailyMoonrise = (daily?['moonrise'] as List?)?.cast<String?>() ?? const [];
-    final dailyMoonset = (daily?['moonset'] as List?)?.cast<String?>() ?? const [];
+    final dailyMoonrise =
+        (daily?['moonrise'] as List?)?.cast<String?>() ?? const [];
+    final dailyMoonset =
+        (daily?['moonset'] as List?)?.cast<String?>() ?? const [];
     final dailyMoonPhase = _toDoubleList(daily?['moon_phase']);
 
     final dailyWindSpeedMax = _toDoubleList(daily?['wind_speed_10m_max']);
@@ -193,20 +201,21 @@ class OpenMeteoService {
     final dailyPoints = <DailyWeatherPoint>[];
 
     for (var i = 0; i < dailyTimes.length; i++) {
-       // ... existing getters ...
-        double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
-        int? getIntNull(List<int> list) => i < list.length ? list[i] : null;
-        String? getStr(List<String?> list) => i < list.length ? list[i] : null;
-        double? getValNull(List<double> list) => i < list.length ? list[i] : null;
+      // ... existing getters ...
+      double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
+      int? getIntNull(List<int> list) => i < list.length ? list[i] : null;
+      String? getStr(List<String?> list) => i < list.length ? list[i] : null;
+      double? getValNull(List<double> list) => i < list.length ? list[i] : null;
 
-        // MANUEL PARSING UTC pour éviter tout décalage locale
-        final rawDateStr = dailyTimes[i];
-        final parts = rawDateStr.split('-');
-        final dateUtc = DateTime.utc(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+      // MANUEL PARSING UTC pour éviter tout décalage locale
+      final rawDateStr = dailyTimes[i];
+      final parts = rawDateStr.split('-');
+      final dateUtc = DateTime.utc(
+          int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
 
       dailyPoints.add(
         DailyWeatherPoint.fromRaw(
-          date: dateUtc, 
+          date: dateUtc,
           precipMm: getVal(dailyPrecip),
           tMaxC: getValNull(dailyTMax),
           tMinC: getValNull(dailyTMin),
@@ -242,7 +251,7 @@ class OpenMeteoService {
           // On est entre deux points (index-1 et index)
           final prev = hourlyPoints[index - 1];
           final next = hourlyPoints[index];
-          
+
           final diffPrev = now.difference(prev.time).abs();
           final diffNext = next.time.difference(now).abs();
 
@@ -255,17 +264,19 @@ class OpenMeteoService {
       } catch (e) {
         // En cas d'erreur imprévue, fallback sur null ou le dernier point connu
         print('Error finding current point: $e');
-        currentPoint = null; 
+        currentPoint = null;
       }
     }
 
     final currentTemp = currentPoint?.temperatureC;
-    final currentWeatherCode = currentPoint?.weatherCode ?? (dailyPoints.isNotEmpty ? dailyPoints.first.weatherCode : null);
+    final currentWeatherCode = currentPoint?.weatherCode ??
+        (dailyPoints.isNotEmpty ? dailyPoints.first.weatherCode : null);
 
     return OpenMeteoResult(
       latitude: latitude,
       longitude: longitude,
-      hourlyWeather: hourlyPoints, // Renommé de hourlyPrecipitation pour clarté, mais on garde getter pour compat
+      hourlyWeather:
+          hourlyPoints, // Renommé de hourlyPrecipitation pour clarté, mais on garde getter pour compat
       dailyWeather: dailyPoints,
       currentTemperatureC: currentTemp,
       currentWeatherCode: currentWeatherCode,
@@ -281,7 +292,8 @@ class OpenMeteoService {
     }
     return [];
   }
-   List<int> _toIntList(dynamic list) {
+
+  List<int> _toIntList(dynamic list) {
     if (list is List) {
       return list.map((e) => (e as num?)?.toInt() ?? 0).toList();
     }
@@ -307,7 +319,7 @@ class OpenMeteoResult {
   final List<DailyWeatherPoint> dailyWeather;
   final double? currentTemperatureC;
   final int? currentWeatherCode;
-  
+
   // Extra fields for ease of access
   final double? currentWindSpeed;
   final int? currentWindDirection;

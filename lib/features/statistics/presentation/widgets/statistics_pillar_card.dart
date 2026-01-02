@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +10,7 @@ import 'top_economy_bubble_chart.dart';
 import 'charts/nutrition_radar_chart.dart';
 import '../../application/providers/nutrition_radar_provider.dart';
 
-// 🔄 V4_UNIFIED_MEMBRANE: Import V4 unified membrane system if needed, 
+// 🔄 V4_UNIFIED_MEMBRANE: Import V4 unified membrane system if needed,
 // though we use TopEconomyBubbleChart for economy now.
 
 import '../providers/statistics_filters_provider.dart';
@@ -26,7 +26,6 @@ class StatisticsPillarCard extends ConsumerWidget {
     final iconAndTitle = switch (type) {
       PillarType.economieVivante => {'icon': '🌾', 'title': 'Économie Vivante'},
       PillarType.sante => {'icon': '🥗', 'title': 'Équilibre Nutritionnel'},
-
       PillarType.patrimoine => {'icon': '📜', 'title': 'Patrimoine'},
     };
 
@@ -47,7 +46,8 @@ class StatisticsPillarCard extends ConsumerWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.black,
-                    border: Border.all(color: Colors.white.withOpacity(0.12), width: 0.8),
+                    border: Border.all(
+                        color: Colors.white.withOpacity(0.12), width: 0.8),
                     boxShadow: [
                       BoxShadow(
                         color: const Color(0xFF00FF88).withOpacity(0.18),
@@ -63,49 +63,53 @@ class StatisticsPillarCard extends ConsumerWidget {
                         color: Colors.white.withOpacity(0.06),
                         child: InkWell(
                           onTap: () {
-                             final state = GoRouterState.of(context);
-                             final activeGardenId = state.pathParameters['id'];
+                            final state = GoRouterState.of(context);
+                            final activeGardenId = state.pathParameters['id'];
 
-                             // 1. Nouvelle route globale pour l'Économie
-                             if (type == PillarType.economieVivante) {
-                               if (activeGardenId != null) {
-                                 context.pushNamed('garden-stats-economie', pathParameters: {'id': activeGardenId});
-                               } else {
-                                 context.pushNamed('statistics-global-economie');
-                               }
-                               return;
-                             }
-                             
-                             // 2. Nouvelle route globale pour la Santé / Nutrition
-                             if (type == PillarType.sante) {
-                               if (activeGardenId != null) {
-                                  context.pushNamed('garden-stats-sante', pathParameters: {'id': activeGardenId});
-                               } else {
-                                  context.pushNamed('statistics-global-sante');
-                               }
-                               return;
-                             }
-                             
-                             // 3. Route pour Patrimoine -> Export Builder
-                             if (type == PillarType.patrimoine) {
-                               context.pushNamed('export');
-                               return;
-                             }
+                            // 1. Nouvelle route globale pour l'Économie
+                            if (type == PillarType.economieVivante) {
+                              if (activeGardenId != null) {
+                                context.pushNamed('garden-stats-economie',
+                                    pathParameters: {'id': activeGardenId});
+                              } else {
+                                context.pushNamed('statistics-global-economie');
+                              }
+                              return;
+                            }
 
-                             // 3. Comportement existant pour les autres piliers (en attendant le refactoring)
-                             final routeName = switch (type) {
-                               PillarType.economieVivante => 'garden-stats-economie',
-                               PillarType.sante => 'garden-stats-sante',
+                            // 2. Nouvelle route globale pour la Santé / Nutrition
+                            if (type == PillarType.sante) {
+                              if (activeGardenId != null) {
+                                context.pushNamed('garden-stats-sante',
+                                    pathParameters: {'id': activeGardenId});
+                              } else {
+                                context.pushNamed('statistics-global-sante');
+                              }
+                              return;
+                            }
 
-                               PillarType.patrimoine => 'garden-stats-patrimoine',
-                             };
+                            // 3. Route pour Patrimoine -> Export Builder
+                            if (type == PillarType.patrimoine) {
+                              context.pushNamed('export');
+                              return;
+                            }
+
+                            // 3. Comportement existant pour les autres piliers (en attendant le refactoring)
+                            final routeName = switch (type) {
+                              PillarType.economieVivante =>
+                                'garden-stats-economie',
+                              PillarType.sante => 'garden-stats-sante',
+                              PillarType.patrimoine =>
+                                'garden-stats-patrimoine',
+                            };
 
                             String? targetId = activeGardenId;
 
                             // fallback : premier jardin sélectionné dans le filtre de stats
                             if (targetId == null) {
                               try {
-                                final filters = ref.read(statisticsFiltersProvider);
+                                final filters =
+                                    ref.read(statisticsFiltersProvider);
                                 if (filters.selectedGardenIds.isNotEmpty) {
                                   targetId = filters.selectedGardenIds.first;
                                 }
@@ -115,10 +119,12 @@ class StatisticsPillarCard extends ConsumerWidget {
                             }
 
                             if (targetId != null) {
-                              context.pushNamed(routeName, pathParameters: {'id': targetId});
+                              context.pushNamed(routeName,
+                                  pathParameters: {'id': targetId});
                             } else {
                               // aucun jardin sélectionné : ouvrir la vue agrégée si route existe (sinon ça plantera pour l'instant)
-                              context.pushNamed(routeName); // Warning: routes expects :id usually
+                              context.pushNamed(
+                                  routeName); // Warning: routes expects :id usually
                             }
                           },
                           child: Padding(
@@ -131,15 +137,22 @@ class StatisticsPillarCard extends ConsumerWidget {
                                 Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(iconAndTitle['icon']!, style: TextStyle(fontSize: diameter * 0.10, height: 1.0)),
+                                    Text(iconAndTitle['icon']!,
+                                        style: TextStyle(
+                                            fontSize: diameter * 0.10,
+                                            height: 1.0)),
                                     SizedBox(height: diameter * 0.02),
                                     FittedBox(
                                       child: Text(
                                         iconAndTitle['title']!.toUpperCase(),
-                                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.copyWith(
                                               fontWeight: FontWeight.bold,
                                               letterSpacing: 1.2,
-                                              color: Colors.white.withOpacity(0.95),
+                                              color: Colors.white
+                                                  .withOpacity(0.95),
                                             ),
                                       ),
                                     ),
@@ -152,8 +165,11 @@ class StatisticsPillarCard extends ConsumerWidget {
                                 Flexible(
                                   fit: FlexFit.loose,
                                   child: ConstrainedBox(
-                                    constraints: BoxConstraints(maxWidth: contentMaxWidth, maxHeight: diameter * 0.5),
-                                    child: _buildSummaryContent(type, diameter, context, ref),
+                                    constraints: BoxConstraints(
+                                        maxWidth: contentMaxWidth,
+                                        maxHeight: diameter * 0.5),
+                                    child: _buildSummaryContent(
+                                        type, diameter, context, ref),
                                   ),
                                 ),
 
@@ -163,11 +179,15 @@ class StatisticsPillarCard extends ConsumerWidget {
                                 Text(
                                   _getKpiLabel(),
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.greenAccent.withOpacity(0.8),
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: diameter * 0.03,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color:
+                                            Colors.greenAccent.withOpacity(0.8),
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: diameter * 0.03,
+                                      ),
                                 ),
                               ],
                             ),
@@ -185,7 +205,8 @@ class StatisticsPillarCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildSummaryContent(PillarType type, double diameter, BuildContext context, WidgetRef ref) {
+  Widget _buildSummaryContent(
+      PillarType type, double diameter, BuildContext context, WidgetRef ref) {
     final neon = const Color(0xFF00FF88);
 
     switch (type) {
@@ -212,7 +233,8 @@ class StatisticsPillarCard extends ConsumerWidget {
                 SizedBox(height: diameter * 0.02),
                 SizedBox(
                   height: diameter * 0.10,
-                  child: TopEconomyBubbleChart(rankings: ref.watch(top3PlantsValueRankingProvider)),
+                  child: TopEconomyBubbleChart(
+                      rankings: ref.watch(top3PlantsValueRankingProvider)),
                 )
               ],
             ),
@@ -239,7 +261,8 @@ class StatisticsPillarCard extends ConsumerWidget {
               SizedBox(height: diameter * 0.02),
               SizedBox(
                 height: diameter * 0.10,
-                child: TopEconomyBubbleChart(rankings: ref.watch(top3PlantsValueRankingProvider)),
+                child: TopEconomyBubbleChart(
+                    rankings: ref.watch(top3PlantsValueRankingProvider)),
               )
             ],
           ),
@@ -256,7 +279,8 @@ class StatisticsPillarCard extends ConsumerWidget {
               FittedBox(
                 child: vitDist.maybeWhen(
                   data: (distribution) {
-                    final detected = distribution.values.where((v) => v > 0).length;
+                    final detected =
+                        distribution.values.where((v) => v > 0).length;
                     return Text(
                       '$detected/5',
                       style: TextStyle(
@@ -267,7 +291,8 @@ class StatisticsPillarCard extends ConsumerWidget {
                     );
                   },
                   orElse: () => Text('...',
-                      style: TextStyle(color: Colors.white, fontSize: diameter * 0.12)),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: diameter * 0.12)),
                 ),
               ),
               SizedBox(height: diameter * 0.02),
@@ -276,17 +301,15 @@ class StatisticsPillarCard extends ConsumerWidget {
                 width: diameter * 0.26,
                 height: diameter * 0.26,
                 child: FittedBox(
-                  fit: BoxFit.contain, 
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                       final radarDataAsync = ref.watch(nutritionRadarProvider);
-                       return radarDataAsync.maybeWhen(
-                        data: (d) => NutritionRadarChart(data: d, size: diameter * 0.26),
+                    fit: BoxFit.contain,
+                    child: Consumer(builder: (context, ref, child) {
+                      final radarDataAsync = ref.watch(nutritionRadarProvider);
+                      return radarDataAsync.maybeWhen(
+                        data: (d) =>
+                            NutritionRadarChart(data: d, size: diameter * 0.26),
                         orElse: () => const SizedBox(),
-                       );
-                    }
-                  )
-                ),
+                      );
+                    })),
               )
             ],
           ),
@@ -298,7 +321,11 @@ class StatisticsPillarCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FittedBox(
-                child: Text('0%', style: TextStyle(color: Colors.white70, fontSize: diameter * 0.16, fontWeight: FontWeight.bold)),
+                child: Text('0%',
+                    style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: diameter * 0.16,
+                        fontWeight: FontWeight.bold)),
               ),
               SizedBox(height: diameter * 0.02),
               Material(
@@ -309,8 +336,11 @@ class StatisticsPillarCard extends ConsumerWidget {
                     context.pushNamed('export');
                   },
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: diameter * 0.05, vertical: diameter * 0.02),
-                    child: Text('Exporter', style: TextStyle(color: Colors.white, fontSize: diameter * 0.04)),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: diameter * 0.05, vertical: diameter * 0.02),
+                    child: Text('Exporter',
+                        style: TextStyle(
+                            color: Colors.white, fontSize: diameter * 0.04)),
                   ),
                 ),
               )

@@ -13,7 +13,7 @@ class PlantSharePie extends StatelessWidget {
     // Limit to top 5 + "Autres" for readability
     final entries = plantShare.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
-    
+
     final topEntries = entries.take(5).toList();
     double otherShare = 0;
     if (entries.length > 5) {
@@ -90,13 +90,17 @@ class PlantSharePie extends StatelessWidget {
                         Expanded(
                           child: Text(
                             entry.key,
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 12),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Text(
                           '${entry.value.toStringAsFixed(1)}%',
-                          style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

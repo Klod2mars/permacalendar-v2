@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:developer' as developer;
 
 import '../../models/unified_garden_context.dart';
@@ -19,7 +19,7 @@ class GardenAggregationHub {
   bool _isCacheValid(String gardenId) {
     final cacheKey = 'garden_$gardenId';
     final timestampKey = '${cacheKey}_timestamp';
-    
+
     if (!_cache.containsKey(cacheKey) || !_cache.containsKey(timestampKey)) {
       return false;
     }

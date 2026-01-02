@@ -11,10 +11,12 @@ class GardenStatisticsScreen extends ConsumerStatefulWidget {
   const GardenStatisticsScreen({super.key, this.gardenId});
 
   @override
-  ConsumerState<GardenStatisticsScreen> createState() => _GardenStatisticsScreenState();
+  ConsumerState<GardenStatisticsScreen> createState() =>
+      _GardenStatisticsScreenState();
 }
 
-class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen> {
+class _GardenStatisticsScreenState
+    extends ConsumerState<GardenStatisticsScreen> {
   @override
   void initState() {
     super.initState();
@@ -24,7 +26,9 @@ class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen>
     if (widget.gardenId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // We use setGardens to set a single ID in the set
-        ref.read(statisticsFiltersProvider.notifier).setGardens({widget.gardenId!});
+        ref
+            .read(statisticsFiltersProvider.notifier)
+            .setGardens({widget.gardenId!});
       });
     }
   }
@@ -72,10 +76,13 @@ class _GardenStatisticsScreenState extends ConsumerState<GardenStatisticsScreen>
                         color: Colors.transparent,
                         child: Text(
                           'Statistiques de résilience',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                     ),

@@ -66,8 +66,11 @@ class TopPlantsRanking extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                ranking.plantName.isNotEmpty ? ranking.plantName[0].toUpperCase() : '?',
-                style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                ranking.plantName.isNotEmpty
+                    ? ranking.plantName[0].toUpperCase()
+                    : '?',
+                style: const TextStyle(
+                    color: Colors.green, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(width: 12),

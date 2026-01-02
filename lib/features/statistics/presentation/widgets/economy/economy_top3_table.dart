@@ -13,7 +13,7 @@ class EconomyTop3Table extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
-         decoration: BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.05),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.white10),
@@ -25,35 +25,42 @@ class EconomyTop3Table extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 children: [
-                   Expanded(
+                  Expanded(
                     flex: 4,
-                     child: Text(
+                    child: Text(
                       'Plante',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white54),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.white54),
                     ),
                   ),
                   Expanded(
                     flex: 3,
                     child: Text(
                       'Valeur',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white54),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.white54),
                       textAlign: TextAlign.right,
                     ),
                   ),
-                   const Expanded(
+                  const Expanded(
                     flex: 2,
                     child: SizedBox(), // % column or actions?
                   ),
                 ],
               ),
             ),
-             const Divider(height: 1, color: Colors.white10),
-             // Rows
+            const Divider(height: 1, color: Colors.white10),
+            // Rows
             ...rankings.asMap().entries.map((entry) {
               final index = entry.key;
               final r = entry.value;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 12.0, horizontal: 12.0),
                 child: Row(
                   children: [
                     // Rank badge
@@ -67,7 +74,10 @@ class EconomyTop3Table extends StatelessWidget {
                       child: Center(
                         child: Text(
                           '${index + 1}',
-                          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
                         ),
                       ),
                     ),
@@ -76,14 +86,17 @@ class EconomyTop3Table extends StatelessWidget {
                       flex: 4,
                       child: Text(
                         r.plantName,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w500),
                       ),
                     ),
                     Expanded(
                       flex: 3,
                       child: Text(
                         '${r.totalValue.toStringAsFixed(2)} €',
-                        style: const TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            color: Colors.greenAccent,
+                            fontWeight: FontWeight.bold),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -97,13 +110,17 @@ class EconomyTop3Table extends StatelessWidget {
       ),
     );
   }
-  
+
   Color _getRankColor(int index) {
-      switch(index) {
-        case 0: return const Color(0xFFFFD700); // Gold
-        case 1: return const Color(0xFFC0C0C0); // Silver
-        case 2: return const Color(0xFFCD7F32); // Bronze
-        default: return Colors.white24;
-      }
+    switch (index) {
+      case 0:
+        return const Color(0xFFFFD700); // Gold
+      case 1:
+        return const Color(0xFFC0C0C0); // Silver
+      case 2:
+        return const Color(0xFFCD7F32); // Bronze
+      default:
+        return Colors.white24;
+    }
   }
 }

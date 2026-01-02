@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 
-
 class TemperatureBubbleWidget extends ConsumerWidget {
   const TemperatureBubbleWidget({super.key});
 
@@ -29,7 +28,6 @@ class TemperatureBubbleWidget extends ConsumerWidget {
             stops: const [0.3, 1.0],
             center: const Alignment(-0.2, -0.2),
           ),
-
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),

@@ -12,12 +12,16 @@ class MonthlyRevenueChart extends StatelessWidget {
     if (monthlyRevenue.isEmpty) {
       return const SizedBox(
         height: 200,
-        child: Center(child: Text('Pas de données mensuelles', style: TextStyle(color: Colors.white54))),
+        child: Center(
+            child: Text('Pas de données mensuelles',
+                style: TextStyle(color: Colors.white54))),
       );
     }
 
-    final maxY = monthlyRevenue.fold(0.0, (m, e) => e.totalValue > m ? e.totalValue : m) * 1.2;
-    
+    final maxY = monthlyRevenue.fold(
+            0.0, (m, e) => e.totalValue > m ? e.totalValue : m) *
+        1.2;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +41,7 @@ class MonthlyRevenueChart extends StatelessWidget {
               maxY: maxY == 0 ? 100 : maxY,
               barTouchData: BarTouchData(
                 touchTooltipData: BarTouchTooltipData(
-                 getTooltipColor: (group) => Colors.black87,
+                  getTooltipColor: (group) => Colors.black87,
                   getTooltipItem: (group, groupIndex, rod, rodIndex) {
                     final monthData = monthlyRevenue[group.x.toInt()];
                     return BarTooltipItem(
@@ -66,26 +70,31 @@ class MonthlyRevenueChart extends StatelessWidget {
                   sideTitles: SideTitles(
                     showTitles: true,
                     getTitlesWidget: (double value, TitleMeta meta) {
-                      if (value.toInt() >= 0 && value.toInt() < monthlyRevenue.length) {
-                         // Show only if not too crowded?
-                         // For 12 months, usually ok.
-                         // Use simplified month letter 
-                         final m = monthlyRevenue[value.toInt()].month;
-                         return Padding(
-                           padding: const EdgeInsets.only(top: 8.0),
-                           child: Text(
-                             _monthShortName(m), 
-                             style: const TextStyle(color: Colors.white54, fontSize: 10),
-                           ),
-                         );
+                      if (value.toInt() >= 0 &&
+                          value.toInt() < monthlyRevenue.length) {
+                        // Show only if not too crowded?
+                        // For 12 months, usually ok.
+                        // Use simplified month letter
+                        final m = monthlyRevenue[value.toInt()].month;
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            _monthShortName(m),
+                            style: const TextStyle(
+                                color: Colors.white54, fontSize: 10),
+                          ),
+                        );
                       }
                       return const SizedBox.shrink();
                     },
                   ),
                 ),
-                leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                leftTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
               ),
               gridData: FlGridData(
                 show: true,
@@ -106,7 +115,8 @@ class MonthlyRevenueChart extends StatelessWidget {
                       toY: data.totalValue,
                       color: Colors.lightGreen,
                       width: 14,
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(4)),
                     ),
                   ],
                 );
@@ -120,8 +130,18 @@ class MonthlyRevenueChart extends StatelessWidget {
 
   String _monthName(int month) {
     const months = [
-      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre'
     ];
     if (month >= 1 && month <= 12) return months[month - 1];
     return '';

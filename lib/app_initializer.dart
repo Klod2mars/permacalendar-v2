@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,6 +15,9 @@ import 'core/repositories/garden_hive_repository.dart';
 import 'features/plant_catalog/data/models/plant_hive.dart';
 import 'features/plant_catalog/data/repositories/plant_hive_repository.dart';
 import 'core/models/sky_calibration_config.dart';
+import 'core/models/activity_v3.dart';
+import 'core/services/activity_observer_service.dart';
+import 'core/hive/type_ids.dart';
 
 class AppInitializer {
   static Future<void> initialize() async {
@@ -25,21 +28,42 @@ class AppInitializer {
     try {
       // Legacy Adapters (Required for GardenBoxes/UI)
       if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(GardenAdapter());
-      if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(GardenBedAdapter());
+      if (!Hive.isAdapterRegistered(1))
+        Hive.registerAdapter(GardenBedAdapter());
       if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(PlantingAdapter());
 
       // Modern Adapters (Required for Repositories) - IDs verified from *.g.dart files
-      if (!Hive.isAdapterRegistered(25)) Hive.registerAdapter(GardenHiveAdapter());
-      if (!Hive.isAdapterRegistered(26)) Hive.registerAdapter(GardenBedHiveAdapter());
-      if (!Hive.isAdapterRegistered(27)) Hive.registerAdapter(PlantingHiveAdapter());
-      if (!Hive.isAdapterRegistered(29)) Hive.registerAdapter(PlantHiveAdapter());
-      
+      if (!Hive.isAdapterRegistered(25))
+        Hive.registerAdapter(GardenHiveAdapter());
+      if (!Hive.isAdapterRegistered(26))
+        Hive.registerAdapter(GardenBedHiveAdapter());
+      if (!Hive.isAdapterRegistered(27))
+        Hive.registerAdapter(PlantingHiveAdapter());
+      if (!Hive.isAdapterRegistered(29))
+        Hive.registerAdapter(PlantHiveAdapter());
+
       // Activity Adapters
-      if (!Hive.isAdapterRegistered(16)) Hive.registerAdapter(ActivityAdapter());
-      if (!Hive.isAdapterRegistered(17)) Hive.registerAdapter(ActivityTypeAdapter());
-      
+      if (!Hive.isAdapterRegistered(16))
+        Hive.registerAdapter(ActivityAdapter());
+      if (!Hive.isAdapterRegistered(17))
+        Hive.registerAdapter(ActivityTypeAdapter());
+
+      // Modern ActivityV3 adapter (kTypeIdActivityV3 = 30)
+      try {
+        if (!Hive.isAdapterRegistered(kTypeIdActivityV3)) {
+          Hive.registerAdapter(ActivityV3Adapter());
+          print('✅ ActivityV3Adapter registered (typeId=$kTypeIdActivityV3)');
+        } else {
+          print(
+              'ℹ️ ActivityV3Adapter already registered (typeId=$kTypeIdActivityV3)');
+        }
+      } catch (e) {
+        print('⚠️ Error registering ActivityV3Adapter: $e');
+      }
+
       // Sky Calibration Adapter
-      if (!Hive.isAdapterRegistered(44)) Hive.registerAdapter(SkyCalibrationConfigAdapter());
+      if (!Hive.isAdapterRegistered(44))
+        Hive.registerAdapter(SkyCalibrationConfigAdapter());
     } catch (e) {
       print('Warning: Error registering adapters: $e');
     }
@@ -48,19 +72,29 @@ class AppInitializer {
     await GardenHiveRepository.initialize();
     await GardenBoxes.initialize(); // Helper boxes for legacy/beds
     await PlantHiveRepository.initialize();
-    
+
     // Seed Plant Data if empty
     try {
       final plantRepo = PlantHiveRepository();
       if ((await plantRepo.getAllPlants()).isEmpty) {
-        print('â🌱 Seeding Plant Catalog from JSON...');
+        print('🌱 Seeding Plant Catalog from JSON...');
         await plantRepo.initializeFromJson();
       }
     } catch (e) {
       print('⚠️ Error seeding plant data: $e');
     }
-    
+
     // await WeatherService.initialize(); // Uncomment if needed
+
+    // Initialiser l’observateur/trackers d'activités (ActivityObserverService -> ActivityTrackerV3)
+    try {
+      print('🔔 Initialisation ActivityObserverService / ActivityTrackerV3...');
+      await ActivityObserverService().initialize();
+      print('✅ ActivityObserverService / ActivityTrackerV3 initialisés');
+    } catch (e) {
+      print('❌ Erreur initialisation ActivityObserverService: $e');
+      // Do not rethrow to avoid blocking the app initialization
+    }
 
     // Validation des données
     await _validatePlantData();
@@ -116,7 +150,8 @@ class AppInitializer {
               print('   ⚠️  INCOHÉRENCE détectée !');
               print('      - Attendu : $expectedTotal plantes');
               print('      - Trouvé  : $actualTotal plantes');
-              print('      - Écart   : ${(actualTotal - expectedTotal).abs()} plante(s)');
+              print(
+                  '      - Écart   : ${(actualTotal - expectedTotal).abs()} plante(s)');
             }
           } else {
             print('   ⚠️  Champ total_plants manquant dans les métadonnées');

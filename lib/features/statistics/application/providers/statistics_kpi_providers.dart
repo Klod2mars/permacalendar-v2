@@ -1,4 +1,4 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
@@ -43,8 +43,9 @@ final totalEconomyKpiProvider = Provider<double>((ref) {
       : filteredRecords
           .map((record) => record.totalValue)
           .fold(0.0, (sum, value) => sum + value);
-  
-  debugPrint('[totalEconomyKpi] computed total=$total from ${filteredRecords.length} records');
+
+  debugPrint(
+      '[totalEconomyKpi] computed total=$total from ${filteredRecords.length} records');
   return total;
 });
 

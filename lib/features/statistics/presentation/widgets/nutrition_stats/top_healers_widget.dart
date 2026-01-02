@@ -36,7 +36,8 @@ class TopHealersWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-             Icon(Icons.medical_services_outlined, color: Colors.greenAccent.shade100, size: 18),
+            Icon(Icons.medical_services_outlined,
+                color: Colors.greenAccent.shade100, size: 18),
           ],
         ),
         const SizedBox(height: 16),
@@ -71,7 +72,8 @@ class TopHealersWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withAlpha((0.3 * 255).toInt()), width: 1),
+        border:
+            Border.all(color: color.withAlpha((0.3 * 255).toInt()), width: 1),
         boxShadow: [
           BoxShadow(
             color: color.withAlpha((0.1 * 255).toInt()),
@@ -92,7 +94,8 @@ class TopHealersWidget extends StatelessWidget {
             ),
             child: Text(
               '#${index + 1}',
-              style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w900),
+              style: TextStyle(
+                  color: color, fontSize: 10, fontWeight: FontWeight.w900),
             ),
           ),
           const Spacer(),

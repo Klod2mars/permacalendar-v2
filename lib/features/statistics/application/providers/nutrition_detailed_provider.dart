@@ -7,10 +7,10 @@ import '../../../../core/services/nutrition_normalizer.dart';
 /// Statistique Mensuelle Pure (Masse brute)
 class MonthlyNutritionStats {
   final int month; // 1..12
-  
+
   // Totaux en masse pour ce mois (accumulateurs)
   final Map<String, double> nutrientTotals;
-  
+
   // Nombre de récoltes ayant contribué
   final int contributionCount;
 
@@ -25,7 +25,7 @@ class MonthlyNutritionStats {
         nutrientTotals: {},
         contributionCount: 0,
       );
-  
+
   double getTotal(String key) => nutrientTotals[key] ?? 0.0;
 }
 
@@ -38,18 +38,20 @@ class SeasonalNutritionState {
     required this.monthlyStats,
     required this.annualTotals,
   });
-  
+
   factory SeasonalNutritionState.empty() {
     return SeasonalNutritionState(
       monthlyStats: Map.fromEntries(
-        List.generate(12, (i) => MapEntry(i + 1, MonthlyNutritionStats.empty(i + 1))),
+        List.generate(
+            12, (i) => MapEntry(i + 1, MonthlyNutritionStats.empty(i + 1))),
       ),
       annualTotals: {},
     );
   }
 }
 
-final seasonalNutritionProvider = FutureProvider<SeasonalNutritionState>((ref) async {
+final seasonalNutritionProvider =
+    FutureProvider<SeasonalNutritionState>((ref) async {
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
   final filters = ref.watch(statisticsFiltersProvider);
   final plantsList = ref.watch(plantsListProvider);
@@ -57,11 +59,13 @@ final seasonalNutritionProvider = FutureProvider<SeasonalNutritionState>((ref) a
   if (harvestRecordsState.isLoading) throw Exception('Loading records...');
 
   final (startDate, endDate) = filters.getEffectiveDates();
-  
+
   // Filtrer les récoltes
   final filteredRecords = harvestRecordsState.records.where((record) {
-    final inGarden = filters.selectedGardenIds.isEmpty || filters.selectedGardenIds.contains(record.gardenId);
-    final inPeriod = !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
+    final inGarden = filters.selectedGardenIds.isEmpty ||
+        filters.selectedGardenIds.contains(record.gardenId);
+    final inPeriod =
+        !record.date.isBefore(startDate) && !record.date.isAfter(endDate);
     return inGarden && inPeriod;
   }).toList();
 
@@ -70,7 +74,7 @@ final seasonalNutritionProvider = FutureProvider<SeasonalNutritionState>((ref) a
   final monthlyData = <int, Map<String, double>>{};
   final monthlyCounts = <int, int>{};
   final annualTotals = <String, double>{};
-  
+
   for (var m = 1; m <= 12; m++) {
     monthlyData[m] = {};
     monthlyCounts[m] = 0;
@@ -79,31 +83,36 @@ final seasonalNutritionProvider = FutureProvider<SeasonalNutritionState>((ref) a
   for (final record in filteredRecords) {
     final month = record.date.month;
     monthlyCounts[month] = (monthlyCounts[month] ?? 0) + 1;
-    
+
     // Récup nutrition
     Map<String, double> nutris = {};
-    
+
     // A. Snapshot
-    if (record.nutritionSnapshot != null && record.nutritionSnapshot!.isNotEmpty) {
+    if (record.nutritionSnapshot != null &&
+        record.nutritionSnapshot!.isNotEmpty) {
       nutris = record.nutritionSnapshot!;
     } else {
       // B. Fallback Catalog
       var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
       if (plant == null && record.plantName != null) {
-        plant = plantsList.where((p) => p.commonName.toLowerCase() == record.plantName!.toLowerCase()).firstOrNull;
+        plant = plantsList
+            .where((p) =>
+                p.commonName.toLowerCase() == record.plantName!.toLowerCase())
+            .firstOrNull;
       }
-      
+
       if (plant != null && plant.nutritionPer100g != null) {
-        nutris = NutritionNormalizer.computeSnapshot(plant.nutritionPer100g, record.quantityKg);
+        nutris = NutritionNormalizer.computeSnapshot(
+            plant.nutritionPer100g, record.quantityKg);
       }
     }
-    
+
     // Accumuler
     nutris.forEach((key, val) {
       // Mensuel
       final mStats = monthlyData[month]!;
       mStats[key] = (mStats[key] ?? 0.0) + val;
-      
+
       // Annuel
       annualTotals[key] = (annualTotals[key] ?? 0.0) + val;
     });

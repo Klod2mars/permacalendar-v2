@@ -1,4 +1,4 @@
-﻿import 'package:riverpod/riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import '../../domain/models/vitamin_suggestion.dart';
 import 'vitamin_distribution_provider.dart';
 import '../../../../core/services/plant_catalog_service.dart';
@@ -17,22 +17,23 @@ final vitaminRecommendationProvider =
 
   // Charger le catalogue de plantes
   final plants = await PlantCatalogService.loadPlants();
-  
+
   // Récupérer l'historique des récoltes pour identifier le contexte du jardin
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
   final Set<String> gardenPlantCommonNames = {};
 
-  if (!harvestRecordsState.isLoading && harvestRecordsState.records.isNotEmpty) {
-     for (final record in harvestRecordsState.records) {
-       if (record.plantName != null) {
-         gardenPlantCommonNames.add(record.plantName!);
-       } else {
-          final plant = plants.where((p) => p.id == record.plantId).firstOrNull;
-          if (plant != null) {
-            gardenPlantCommonNames.add(plant.commonName);
-          }
-       }
-     }
+  if (!harvestRecordsState.isLoading &&
+      harvestRecordsState.records.isNotEmpty) {
+    for (final record in harvestRecordsState.records) {
+      if (record.plantName != null) {
+        gardenPlantCommonNames.add(record.plantName!);
+      } else {
+        final plant = plants.where((p) => p.id == record.plantId).firstOrNull;
+        if (plant != null) {
+          gardenPlantCommonNames.add(plant.commonName);
+        }
+      }
+    }
   }
 
   // Créer une liste des vitamines avec leurs valeurs
@@ -73,11 +74,11 @@ final vitaminRecommendationProvider =
   final suggestions = <VitaminSuggestion>[];
 
   // --- LOGIQUE DE SCORING INTERNE ---
-  
+
   double _getVitaminValue(Plant plant, String vitamin) {
     final nutrition = plant.nutritionPer100g;
     if (nutrition.isEmpty) return 0.0;
-  
+
     switch (vitamin) {
       case 'A':
         return (nutrition['vitaminAmcg'] as num?)?.toDouble() ?? 0.0;
@@ -96,7 +97,7 @@ final vitaminRecommendationProvider =
 
   double scorePlant(Plant plant, String vitamin) {
     double score = _getVitaminValue(plant, vitamin);
-    
+
     // Bonus si la plante est compagne d'une plante du jardin
     bool isCompanion = false;
     for (final gardenPlantName in gardenPlantCommonNames) {
@@ -109,22 +110,22 @@ final vitaminRecommendationProvider =
     if (isCompanion) {
       score *= 1.5; // Bonus de +50% pour les compagnons
     }
-    
+
     return score;
   }
 
   List<Plant> getRichPlants(String vitamin) {
-      final candidates = <Plant>[];
-      for (final plant in plants) {
-        if (_getVitaminValue(plant, vitamin) > 0) {
-          candidates.add(plant);
-        }
+    final candidates = <Plant>[];
+    for (final plant in plants) {
+      if (_getVitaminValue(plant, vitamin) > 0) {
+        candidates.add(plant);
       }
-      // Tri par score (Nutriments + Bonus Compagnon)
-      candidates.sort((a, b) {
-        return scorePlant(b, vitamin).compareTo(scorePlant(a, vitamin));
-      });
-      return candidates;
+    }
+    // Tri par score (Nutriments + Bonus Compagnon)
+    candidates.sort((a, b) {
+      return scorePlant(b, vitamin).compareTo(scorePlant(a, vitamin));
+    });
+    return candidates;
   }
 
   // --- GENERATION DES SUGGESTIONS ---

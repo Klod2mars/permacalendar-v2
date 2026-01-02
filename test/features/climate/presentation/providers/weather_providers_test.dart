@@ -8,31 +8,32 @@ import 'package:mockito/mockito.dart';
 // effectively testing the "offline" or "error" path if we mock the service.
 
 void main() {
-  test('currentWeatherProvider should return valid state or handle errors', () async {
+  test('currentWeatherProvider should return valid state or handle errors',
+      () async {
     final container = ProviderContainer(
       overrides: [
         // Mock persisted coordinates to avoid Hive
         persistedCoordinatesProvider.overrideWith((ref) => Future.value(null)),
         // Mock selected coordinates
         selectedCommuneCoordinatesProvider.overrideWith((ref) => Future.value(
-          Coordinates(latitude: 48.85, longitude: 2.35, resolvedName: 'Paris')
-        )),
+            Coordinates(
+                latitude: 48.85, longitude: 2.35, resolvedName: 'Paris'))),
       ],
     );
     addTearDown(container.dispose);
 
     // Read the provider
-    // Note: This will trigger OpenMeteoService network call. 
-    // If we want to strictly test error handling without network, we'd need to mock the service, 
+    // Note: This will trigger OpenMeteoService network call.
+    // If we want to strictly test error handling without network, we'd need to mock the service,
     // but the service is a static singleton.
     // For now, we assume network might fail or succeed, but we shouldn't crash.
-    
+
     try {
       final result = await container.read(currentWeatherProvider.future);
       // If it succeeds, great.
       expect(result.coordinates.latitude, 48.85);
     } catch (e) {
-      // If it fails (network), it should be handled? 
+      // If it fails (network), it should be handled?
       // Actually currentWeatherProvider catches errors and returns valid object with null temp.
       // So it should NOT throw.
       fail('Provider threw an exception instead of returning error object: $e');

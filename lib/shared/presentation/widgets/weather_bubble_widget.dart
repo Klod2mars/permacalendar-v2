@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -11,26 +11,26 @@ import 'weather_sky_background.dart';
 class WeatherBubbleWidget extends ConsumerWidget {
   const WeatherBubbleWidget({super.key});
 
-  String _capFirst(String s) => s.isEmpty ? s : (s[0].toUpperCase() + s.substring(1));
+  String _capFirst(String s) =>
+      s.isEmpty ? s : (s[0].toUpperCase() + s.substring(1));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Le conteneur s'adapte à la taille disponible
     // Tout le rendu interne est géré par WeatherBioContainer
     // Le Ciel est maintenant géré globalement par WeatherSkyBackground dans OrganicDashboard
-    
+
     return ClipOval(
       child: Stack(
         fit: StackFit.expand,
         children: [
-           // La Physique (Avant-plan) - Mode Touch Pad
-           const WeatherBioContainer(),
+          // La Physique (Avant-plan) - Mode Touch Pad
+          const WeatherBioContainer(),
         ],
       ),
     );
   }
 }
-
 
 /// Texte très lisible sur n'importe quel fond (sans container).
 /// - contour (stroke) + fill
@@ -95,7 +95,8 @@ class _OutlinedText extends StatelessWidget {
             height: height,
             color: const Color(0xFFF1FFF6),
             shadows: const [
-              Shadow(blurRadius: 6, color: Colors.black54, offset: Offset(0, 1)),            
+              Shadow(
+                  blurRadius: 6, color: Colors.black54, offset: Offset(0, 1)),
             ],
           ),
         ),

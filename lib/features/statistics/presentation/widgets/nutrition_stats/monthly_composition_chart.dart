@@ -12,7 +12,8 @@ class MonthlyCompositionChart extends StatefulWidget {
   });
 
   @override
-  State<MonthlyCompositionChart> createState() => _MonthlyCompositionChartState();
+  State<MonthlyCompositionChart> createState() =>
+      _MonthlyCompositionChartState();
 }
 
 class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
@@ -23,7 +24,9 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
     if (widget.data.isEmpty) {
       return SizedBox(
         height: 200,
-        child: Center(child: Text("Pas de données cette période", style: TextStyle(color: Colors.white24))),
+        child: Center(
+            child: Text("Pas de données cette période",
+                style: TextStyle(color: Colors.white24))),
       );
     }
 
@@ -38,18 +41,16 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
 
     if (filteredData.isEmpty) {
       return SizedBox(
-         height: 200,
-         child: Center(
-           child: Text(
-             widget.isMajorMinerals 
-               ? "Aucun minéral majeur" 
-               : "Aucun oligo-élément", 
-             style: const TextStyle(color: Colors.white24)
-           )
-         ),
+        height: 200,
+        child: Center(
+            child: Text(
+                widget.isMajorMinerals
+                    ? "Aucun minéral majeur"
+                    : "Aucun oligo-élément",
+                style: const TextStyle(color: Colors.white24))),
       );
     }
-    
+
     final totalMass = filteredData.values.fold(0.0, (sum, val) => sum + val);
 
     return AspectRatio(
@@ -70,7 +71,8 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
                           touchedIndex = -1;
                           return;
                         }
-                        touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!.touchedSectionIndex;
                       });
                     },
                   ),
@@ -96,7 +98,9 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
                   children: [
                     Container(width: 12, height: 12, color: color),
                     const SizedBox(width: 8),
-                    Text('$label ($pct%)', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                    Text('$label ($pct%)',
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 12)),
                   ],
                 ),
               );
@@ -107,11 +111,13 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
     );
   }
 
-  List<PieChartSectionData> _buildSections(Map<String, double> data, double total) {
+  List<PieChartSectionData> _buildSections(
+      Map<String, double> data, double total) {
     int i = 0;
     return data.entries.map((e) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 16.0 : 0.0; // Hide labels logic on chart, use legend
+      final fontSize =
+          isTouched ? 16.0 : 0.0; // Hide labels logic on chart, use legend
       final radius = isTouched ? 60.0 : 50.0;
       final section = PieChartSectionData(
         color: _getColor(e.key),
@@ -131,25 +137,39 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
 
   Color _getColor(String key) {
     switch (key) {
-      case 'calcium_mg': return Colors.blueAccent;
-      case 'potassium_mg': return Colors.purpleAccent;
-      case 'magnesium_mg': return Colors.tealAccent;
-      case 'iron_mg': return Colors.redAccent;
-      case 'zinc_mg': return Colors.orangeAccent;
-      case 'manganese_mg': return Colors.amber;
-      default: return Colors.grey;
+      case 'calcium_mg':
+        return Colors.blueAccent;
+      case 'potassium_mg':
+        return Colors.purpleAccent;
+      case 'magnesium_mg':
+        return Colors.tealAccent;
+      case 'iron_mg':
+        return Colors.redAccent;
+      case 'zinc_mg':
+        return Colors.orangeAccent;
+      case 'manganese_mg':
+        return Colors.amber;
+      default:
+        return Colors.grey;
     }
   }
 
   String _getLabel(String key) {
     switch (key) {
-      case 'calcium_mg': return 'Calcium';
-      case 'potassium_mg': return 'Potassium';
-      case 'magnesium_mg': return 'Magnésium';
-      case 'iron_mg': return 'Fer';
-      case 'zinc_mg': return 'Zinc';
-      case 'manganese_mg': return 'Manganèse';
-      default: return key;
+      case 'calcium_mg':
+        return 'Calcium';
+      case 'potassium_mg':
+        return 'Potassium';
+      case 'magnesium_mg':
+        return 'Magnésium';
+      case 'iron_mg':
+        return 'Fer';
+      case 'zinc_mg':
+        return 'Zinc';
+      case 'manganese_mg':
+        return 'Manganèse';
+      default:
+        return key;
     }
   }
 }

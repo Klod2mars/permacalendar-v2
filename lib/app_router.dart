@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,8 +27,6 @@ import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
 import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
 import 'package:permacalendar/features/export/presentation/screens/export_builder_screen.dart';
 
-
-
 import 'core/feature_flags.dart';
 
 class AppRoutes {
@@ -41,7 +39,6 @@ class AppRoutes {
   static const String plants = '/plants';
   static const String plantDetail = '/plants/:id';
   static const String plantingDetail = '/plantings/:id';
-
 
   static const String activities = '/activities';
   static const String settings = '/settings';
@@ -104,27 +101,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return GardenStatisticsScreen(gardenId: id);
         },
         routes: [
-           GoRoute(
+          GoRoute(
             path: 'economie',
             name: 'garden-stats-economie',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return GardenEconomyScreen(gardenId: id);
             },
-
           ),
           GoRoute(
             path: 'sante',
-             name: 'garden-stats-sante',
+            name: 'garden-stats-sante',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return GardenNutritionScreen(gardenId: id);
             },
           ),
-
           GoRoute(
             path: 'alignement',
-             name: 'garden-stats-alignement',
+            name: 'garden-stats-alignement',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return GardenAlignmentScreen(gardenId: id);
@@ -140,7 +135,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return const GardenStatisticsScreen(gardenId: null);
         },
         routes: [
-           GoRoute(
+          GoRoute(
             path: 'economie',
             name: 'statistics-global-economie',
             builder: (context, state) {
@@ -230,8 +225,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
 
-
-
       GoRoute(
         path: AppRoutes.settings,
         name: 'settings',
@@ -257,9 +250,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const ActivitiesScreen(),
       ),
 
-
-
-
       GoRoute(
         path: AppRoutes.export,
         name: 'export',
@@ -271,7 +261,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'soil-temperature',
         builder: (context, state) => const SoilTempPage(),
       ),
-
     ],
     errorBuilder: (context, state) => Scaffold(
       body: Center(

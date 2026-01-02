@@ -1,4 +1,4 @@
-﻿// lib/features/garden_bed/presentation/widgets/germination_preview.dart
+// lib/features/garden_bed/presentation/widgets/germination_preview.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -74,7 +74,8 @@ class GerminationPreview extends ConsumerWidget {
 
           final planted = planting.plantedDate;
           // Format: dd/MM
-          final dateStr = '${planted.day.toString().padLeft(2, '0')}/${planted.month.toString().padLeft(2, '0')}';
+          final dateStr =
+              '${planted.day.toString().padLeft(2, '0')}/${planted.month.toString().padLeft(2, '0')}';
 
           final theme = Theme.of(context);
           final statusColor = _getStatusColor(planting.status);
@@ -87,8 +88,8 @@ class GerminationPreview extends ConsumerWidget {
               children: [
                 // Badge Statut (ex: Planté)
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(12),
@@ -122,7 +123,8 @@ class GerminationPreview extends ConsumerWidget {
                         TextSpan(
                           text: '  $dateStr',
                           style: TextStyle(
-                            color: theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
+                            color: theme.colorScheme.onSurfaceVariant
+                                .withOpacity(0.8),
                             fontSize: 13,
                           ),
                         ),
@@ -130,28 +132,28 @@ class GerminationPreview extends ConsumerWidget {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(width: 8),
 
                 // Badge Pourcentage
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: percent > 0
-                            ? Colors.green.withOpacity(0.12)
-                            : Colors.grey.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        '$percent%',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: percent > 0 ? Colors.green : Colors.grey[700],
-                        ),
-                      ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: percent > 0
+                        ? Colors.green.withOpacity(0.12)
+                        : Colors.grey.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '$percent%',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: percent > 0 ? Colors.green : Colors.grey[700],
                     ),
+                  ),
+                ),
               ],
             ),
           );

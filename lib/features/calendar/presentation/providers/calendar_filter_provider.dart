@@ -55,7 +55,7 @@ class CalendarFilterNotifier extends Notifier<CalendarFilterState> {
   void setGardenBedId(String? id) {
     state = state.copyWith(selectedGardenBedId: id);
   }
-  
+
   void clearFilters() {
     state = const CalendarFilterState();
   }

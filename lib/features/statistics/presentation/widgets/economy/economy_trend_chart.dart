@@ -32,21 +32,24 @@ class EconomyTrendChart extends StatelessWidget {
         ),
       );
     }
-    
+
     // Si un seul point, on ne peut pas tracer de ligne, on affiche juste un point ou un message
     if (points.length < 2) {
-       return SizedBox(
+      return SizedBox(
         height: height,
-         child: Center(
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               Text('${points.first.value.toStringAsFixed(2)} €', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-               const Text('Données insuffisantes pour une courbe', style: TextStyle(color: Colors.white54, fontSize: 10)),
-             ],
-           ),
-         ),
-       );
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('${points.first.value.toStringAsFixed(2)} €',
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
+              const Text('Données insuffisantes pour une courbe',
+                  style: TextStyle(color: Colors.white54, fontSize: 10)),
+            ],
+          ),
+        ),
+      );
     }
 
     return Container(
@@ -97,17 +100,17 @@ class _TrendPainter extends CustomPainter {
       if (p.value > maxY) maxY = p.value;
       if (p.value < minY) minY = p.value;
     }
-    
+
     // Marge visuelle pour ne pas coller aux bords (en haut et bas)
     if (maxY == 0) maxY = 100; // éviter div/0
     if (maxY == minY) {
-       maxY += 10;
-       minY -= 10;
+      maxY += 10;
+      minY -= 10;
     }
-    
+
     final double rangeY = maxY - minY;
     // On ajoute 20% de marge en haut pour respirer
-    final double scaleY = height / (rangeY * 1.2); 
+    final double scaleY = height / (rangeY * 1.2);
     final double offsetY = minY;
 
     // 2. Construire le path
@@ -122,9 +125,11 @@ class _TrendPainter extends CustomPainter {
       // Inverser Y car canvas 0 est en haut.
       // value = minY -> y = height
       // value = maxY -> y = height - (maxY - minY)*scaleY
-      // On veut mapping: 
+      // On veut mapping:
       // y = height - (point.value - offsetY) * scaleY
-      final double y = height - (points[i].value - offsetY) * scaleY - (height * 0.1); // petit offset bas pour centrer
+      final double y = height -
+          (points[i].value - offsetY) * scaleY -
+          (height * 0.1); // petit offset bas pour centrer
 
       if (i == 0) {
         path.moveTo(x, y);
@@ -133,18 +138,19 @@ class _TrendPainter extends CustomPainter {
       } else {
         // Lissage simple (cubic bezier)
         final double prevX = (i - 1) * stepX;
-        final double prevY = height - (points[i - 1].value - offsetY) * scaleY - (height * 0.1);
-        
+        final double prevY =
+            height - (points[i - 1].value - offsetY) * scaleY - (height * 0.1);
+
         final double midX = (prevX + x) / 2;
         path.cubicTo(midX, prevY, midX, y, x, y);
         fillPath.cubicTo(midX, prevY, midX, y, x, y);
       }
-      
+
       if (i == points.length - 1) {
         fillPath.lineTo(x, height); // bas droite
         fillPath.close();
       }
-      
+
       // Points d'intérêts (cercles)
       canvas.drawCircle(Offset(x, y), 4, Paint()..color = lineColor);
       // Fond du cercle (pour "trouer" la ligne si on voulait, ici juste overlay blanc)
@@ -161,23 +167,26 @@ class _TrendPainter extends CustomPainter {
     final paintFill = Paint()
       ..shader = gradient.createShader(rect)
       ..style = PaintingStyle.fill;
-      
+
     canvas.drawPath(fillPath, paintFill);
 
     // 4. Dessiner la ligne
     canvas.drawPath(path, paintLine);
-    
+
     // 5. Labels (Min/Max/Dernier) -- optionnel, on le fait simple
     // Juste afficher la date du premier et dernier point en bas
     final textStyle = const TextStyle(color: Colors.white54, fontSize: 10);
-    final dateFmt = DateFormat('MMM yyyy', 'fr_FR'); // suppose locale fr dispo, sinon 'MM/yy'
-    
+    final dateFmt = DateFormat(
+        'MMM yyyy', 'fr_FR'); // suppose locale fr dispo, sinon 'MM/yy'
+
     // Label gauche (start date)
-    _drawText(canvas, _formatDate(points.first.date), Offset(0, height + 5), textStyle);
+    _drawText(canvas, _formatDate(points.first.date), Offset(0, height + 5),
+        textStyle);
     // Label droite (end date)
-    _drawText(canvas, _formatDate(points.last.date), Offset(width - 30, height + 5), textStyle); // ajuster x
+    _drawText(canvas, _formatDate(points.last.date),
+        Offset(width - 30, height + 5), textStyle); // ajuster x
   }
-  
+
   String _formatDate(DateTime d) {
     return "${d.day}/${d.month}";
   }

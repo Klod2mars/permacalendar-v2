@@ -45,7 +45,8 @@ void main() {
     // 2. Setup Container with Overrides
     final container = ProviderContainer(
       overrides: [
-        harvestRecordsProvider.overrideWith(() => MockHarvestRecordsNotifier(allRecords)),
+        harvestRecordsProvider
+            .overrideWith(() => MockHarvestRecordsNotifier(allRecords)),
       ],
     );
 
@@ -73,11 +74,12 @@ void main() {
       pricePerKg: record2.pricePerKg,
       date: now.add(const Duration(hours: 1)),
     );
-    
+
     // Re-create container with correct dates
     final containerNow = ProviderContainer(
       overrides: [
-         harvestRecordsProvider.overrideWith(() => MockHarvestRecordsNotifier([r1, r2])),
+        harvestRecordsProvider
+            .overrideWith(() => MockHarvestRecordsNotifier([r1, r2])),
       ],
     );
 
@@ -95,7 +97,7 @@ void main() {
     final avg = containerNow.read(weightedAvgPriceProvider);
     // 28.1 / 13.0 = 2.161538...
     expect(avg, closeTo(2.161538, 0.00001));
-    
+
     addTearDown(container.dispose);
     addTearDown(containerNow.dispose);
   });

@@ -68,11 +68,14 @@ class PlantStep {
           ? DateTime.tryParse(json['scheduledDate'].toString())
           : null,
       category: json['category']?.toString() ?? '',
-      recommended: json['recommended'] == null ? true : (json['recommended'] == true),
+      recommended:
+          json['recommended'] == null ? true : (json['recommended'] == true),
       completed: json['completed'] == true,
       meta: json['meta'] is Map<String, dynamic>
           ? json['meta']
-          : (json['meta'] != null ? Map<String, dynamic>.from(json['meta']) : null),
+          : (json['meta'] != null
+              ? Map<String, dynamic>.from(json['meta'])
+              : null),
     );
   }
 }

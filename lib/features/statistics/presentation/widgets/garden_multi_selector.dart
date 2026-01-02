@@ -20,7 +20,8 @@ class GardenMultiSelector extends ConsumerWidget {
         try {
           notifier.setGardens({gardensState.gardens.first.id});
         } catch (e) {
-          debugPrint('[GardenMultiSelector] failed to auto-select single garden: $e');
+          debugPrint(
+              '[GardenMultiSelector] failed to auto-select single garden: $e');
         }
       });
     }
@@ -37,7 +38,7 @@ class GardenMultiSelector extends ConsumerWidget {
       child: Row(
         children: gardensState.gardens.map((garden) {
           final isSelected = filters.selectedGardenIds.contains(garden.id);
-          
+
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilterChip(

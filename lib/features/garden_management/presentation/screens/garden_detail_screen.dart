@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permacalendar/app_router.dart';
@@ -87,7 +87,8 @@ class GardenDetailScreen extends ConsumerWidget {
           data: (gardenBeds) {
             // Tri alphabétique par défaut pour respecter l'ordre logique (Planche 1, Planche 2...)
             final sortedBeds = List<GardenBed>.from(gardenBeds)
-              ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+              ..sort((a, b) =>
+                  a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
             final double totalBedsArea = sortedBeds.fold<double>(
                 0, (sum, bed) => sum + bed.sizeInSquareMeters);
@@ -413,29 +414,31 @@ class GardenDetailScreen extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Card(
-                    elevation: 0, 
-                    color: theme.colorScheme.primaryContainer.withOpacity(0.2), // Teinte "Vert d'eau"
+                    elevation: 0,
+                    color: theme.colorScheme.primaryContainer
+                        .withOpacity(0.2), // Teinte "Vert d'eau"
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                       side: BorderSide(
-                        color: theme.colorScheme.primary.withOpacity(0.1), // Bordure subtile
+                        color: theme.colorScheme.primary
+                            .withOpacity(0.1), // Bordure subtile
                         width: 1,
                       ),
                     ),
                     child: InkWell(
                       onTap: () {
-                         if (openPlantingsOnBedTap) {
-                            context.push(
-                              '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
-                              extra: bedTyped.name,
-                            );
-                          } else {
-                            context.push(
-                              '/garden/${garden.id}/beds/${bedTyped.id}/detail',
-                              extra: bedTyped.name,
-                            );
-                          }
+                        if (openPlantingsOnBedTap) {
+                          context.push(
+                            '/garden/${garden.id}/beds/${bedTyped.id}/plantings',
+                            extra: bedTyped.name,
+                          );
+                        } else {
+                          context.push(
+                            '/garden/${garden.id}/beds/${bedTyped.id}/detail',
+                            extra: bedTyped.name,
+                          );
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -448,7 +451,8 @@ class GardenDetailScreen extends ConsumerWidget {
                                 Expanded(
                                   child: Text(
                                     bedTyped.name,
-                                    style: theme.textTheme.titleMedium?.copyWith(
+                                    style:
+                                        theme.textTheme.titleMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                     ),
@@ -467,11 +471,13 @@ class GardenDetailScreen extends ConsumerWidget {
                                 ),
                                 // Optionnel : Menu 3 points (discret)
                                 SizedBox(
-                                  width: 24, 
+                                  width: 24,
                                   height: 24,
                                   child: PopupMenuButton<String>(
                                     padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.more_vert, size: 20, color: theme.colorScheme.outline),
+                                    icon: Icon(Icons.more_vert,
+                                        size: 20,
+                                        color: theme.colorScheme.outline),
                                     onSelected: (value) async {
                                       switch (value) {
                                         case 'edit':
@@ -486,15 +492,17 @@ class GardenDetailScreen extends ConsumerWidget {
                                     },
                                     itemBuilder: (_) => [
                                       const PopupMenuItem(
-                                          value: 'edit', child: Text('Modifier')),
+                                          value: 'edit',
+                                          child: Text('Modifier')),
                                       const PopupMenuItem(
-                                          value: 'delete', child: Text('Supprimer')),
+                                          value: 'delete',
+                                          child: Text('Supprimer')),
                                     ],
                                   ),
                                 )
                               ],
                             ),
-                            
+
                             const SizedBox(height: 12),
 
                             // Preview + petites infos (Contenu direct)
@@ -667,15 +675,16 @@ class GardenDetailScreen extends ConsumerWidget {
                       backgroundColor: Colors.green,
                     ),
                   );
-                  
+
                   // Return to garden list first
-                  context.pop(); 
+                  context.pop();
 
                   // Check if we need to redirect to create
                   if (!context.mounted) return;
-                  
+
                   // Verification post-suppression
-                  final hasGardens = ref.read(gardenProvider).activeGardens.isNotEmpty;
+                  final hasGardens =
+                      ref.read(gardenProvider).activeGardens.isNotEmpty;
                   if (!hasGardens) {
                     context.pushReplacement(AppRoutes.gardenCreate);
                   }

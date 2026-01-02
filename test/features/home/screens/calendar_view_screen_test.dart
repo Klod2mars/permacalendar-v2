@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +12,7 @@ import 'package:permacalendar/features/calendar/presentation/providers/calendar_
 // Mock Notifier
 class MockPlantingNotifier extends PlantingNotifier {
   MockPlantingNotifier() : super();
-  
+
   @override
   Future<PlantingState> build() async {
     return PlantingState(
@@ -30,11 +30,12 @@ class MockPlantingNotifier extends PlantingNotifier {
 }
 
 void main() {
-  testWidgets('CalendarViewScreen displays aggregated icons correctly', (WidgetTester tester) async {
+  testWidgets('CalendarViewScreen displays aggregated icons correctly',
+      (WidgetTester tester) async {
     // Current month for test
     final now = DateTime.now();
     final testMonth = DateTime(now.year, now.month);
-    
+
     // Mock Aggregated Data
     final Map<String, Map<String, dynamic>> mockAggData = {};
     // Populate for today
@@ -46,13 +47,14 @@ void main() {
       'overdueCount': 0,
       'frost': false,
     };
-    
+
     // Test App
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           // Override aggregation provider for current month
-          calendarAggregationProvider(testMonth).overrideWith((ref) => Future.value(mockAggData)),
+          calendarAggregationProvider(testMonth)
+              .overrideWith((ref) => Future.value(mockAggData)),
           // Override planting provider to avoid real logic
           plantingProvider.overrideWith(() => MockPlantingNotifier()),
           plantingsListProvider.overrideWithValue([]),
@@ -60,21 +62,21 @@ void main() {
         child: MaterialApp(
           home: const CalendarViewScreen(),
           theme: ThemeData(
-             colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           ),
         ),
       ),
     );
-    
+
     // Pump frames to resolve future
     await tester.pumpAndSettle();
-    
-    // Verify 
+
+    // Verify
     // Find text '2'
     expect(find.text('2'), findsOneWidget);
     // Find Eco icon
     expect(find.byIcon(Icons.eco), findsWidgets);
-    
+
     // Find text '1'
     expect(find.text('1'), findsOneWidget);
     // Find Water icon

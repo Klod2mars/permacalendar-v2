@@ -1,10 +1,7 @@
-﻿import '../../../../core/services/open_meteo_service.dart'
-
+import '../../../../core/services/open_meteo_service.dart'
     show Coordinates, OpenMeteoResult;
 
 import '../../../../core/models/daily_weather_point.dart';
-
-
 
 /// Modèle unifié WeatherViewData
 
@@ -34,7 +31,7 @@ class WeatherViewData {
   final DateTime timestamp;
   final String? condition; // WeatherConditionType en string
   final int? weatherCode;
-  
+
   // Champ erreur (pour debug UI)
   final String? errorMessage;
 
@@ -88,10 +85,11 @@ class WeatherViewData {
     String? errorMessage,
   }) {
     // Créer des coordonnées par défaut et un résultat minimal
-    final coords = coordinates ?? Coordinates(
-      latitude: 0.0,
-      longitude: 0.0,
-    );
+    final coords = coordinates ??
+        Coordinates(
+          latitude: 0.0,
+          longitude: 0.0,
+        );
 
     final minimalResult = OpenMeteoResult(
       latitude: coords.latitude,

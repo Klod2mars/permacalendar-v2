@@ -43,9 +43,9 @@ class StatisticsFiltersNotifier extends Notifier<StatisticsFiltersState> {
 
       // Si on ne trouve plus les jardins sélectionnés (ex: supprimés), on reset à "Tous les jardins" (vide)
       if (validIds.isEmpty && currentIds.isNotEmpty) {
-         state = state.copyWith(selectedGardenIds: {});
+        state = state.copyWith(selectedGardenIds: {});
       } else if (validIds.length != currentIds.length) {
-         state = state.copyWith(selectedGardenIds: validIds);
+        state = state.copyWith(selectedGardenIds: validIds);
       }
     });
 

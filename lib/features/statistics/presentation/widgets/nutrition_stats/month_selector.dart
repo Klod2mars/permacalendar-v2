@@ -13,8 +13,18 @@ class MonthSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final months = [
-      'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin',
-      'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'
+      'Jan',
+      'Fév',
+      'Mar',
+      'Avr',
+      'Mai',
+      'Juin',
+      'Juil',
+      'Août',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Déc'
     ];
 
     return SizedBox(
@@ -26,7 +36,7 @@ class MonthSelector extends StatelessWidget {
         itemBuilder: (context, index) {
           final monthIndex = index + 1;
           final isSelected = monthIndex == selectedMonth;
-          
+
           return GestureDetector(
             onTap: () => onMonthSelected(monthIndex),
             child: Container(
@@ -34,7 +44,9 @@ class MonthSelector extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFF00E676) : const Color(0xFF2A2A2A),
+                color: isSelected
+                    ? const Color(0xFF00E676)
+                    : const Color(0xFF2A2A2A),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isSelected ? Colors.transparent : Colors.white12,

@@ -8,8 +8,9 @@ import 'package:permacalendar/features/statistics/presentation/providers/statist
 
 // Mocks
 class MockHarvestRecordsNotifier extends HarvestRecordsNotifier {
-   @override
-  HarvestRecordsState build() => const HarvestRecordsState(isLoading: false, records: []);
+  @override
+  HarvestRecordsState build() =>
+      const HarvestRecordsState(isLoading: false, records: []);
 
   @override
   Future<void> refresh() async {}
@@ -23,15 +24,17 @@ class MockStatisticsFiltersNotifier extends StatisticsFiltersNotifier {
 }
 
 void main() {
-  testWidgets('GardenEconomyDetailScreen smoke test', (WidgetTester tester) async {
+  testWidgets('GardenEconomyDetailScreen smoke test',
+      (WidgetTester tester) async {
     // Override providers
     final mockDetails = EconomyDetails.empty();
-    
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           harvestRecordsProvider.overrideWith(MockHarvestRecordsNotifier.new),
-          statisticsFiltersProvider.overrideWith(MockStatisticsFiltersNotifier.new),
+          statisticsFiltersProvider
+              .overrideWith(MockStatisticsFiltersNotifier.new),
           // We override the family provider to return empty details for ANY params
           economyDetailsProvider.overrideWith((ref, params) => mockDetails),
         ],
@@ -44,7 +47,7 @@ void main() {
     // Verify initial state
     expect(find.text('Économie du Jardin'), findsOneWidget);
     expect(find.text('Revenu Total'), findsOneWidget);
-    
+
     // Check if refresh indicator can be pulled
     await tester.drag(find.byType(SingleChildScrollView), const Offset(0, 300));
     await tester.pumpAndSettle();

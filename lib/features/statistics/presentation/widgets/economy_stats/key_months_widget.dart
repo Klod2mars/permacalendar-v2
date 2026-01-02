@@ -20,8 +20,9 @@ class KeyMonthsWidget extends StatelessWidget {
     }
 
     final best = monthlyRevenue[mostProfitableIndex];
-    final worst = (leastProfitableIndex != -1 && leastProfitableIndex < monthlyRevenue.length) 
-        ? monthlyRevenue[leastProfitableIndex] 
+    final worst = (leastProfitableIndex != -1 &&
+            leastProfitableIndex < monthlyRevenue.length)
+        ? monthlyRevenue[leastProfitableIndex]
         : null;
 
     return Column(
@@ -129,8 +130,18 @@ class KeyMonthsWidget extends StatelessWidget {
 
   String _monthName(int month) {
     const months = [
-      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre'
     ];
     if (month >= 1 && month <= 12) return months[month - 1];
     return '';

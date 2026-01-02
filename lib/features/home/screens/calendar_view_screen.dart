@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +29,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   bool _isLoading = true;
   String? _errorMessage;
   List<Activity> _activities = [];
-  Map<DateTime, List<Activity>> _dailyTasks = {}; // Cache pour les tâches du mois
+  Map<DateTime, List<Activity>> _dailyTasks =
+      {}; // Cache pour les tâches du mois
 
   @override
   void initState() {
@@ -59,15 +60,16 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       await UIAnalytics.measureOperation(
         'calendar_load',
         () async {
-           await ref.read(plantingProvider.notifier).loadAllPlantings();
-           // Load activities
-           try {
-             _activities = GardenBoxes.activities.values.cast<Activity>().toList();
-             _updateDailyTasks();
-           } catch (e) {
-             print('Error loading activities: $e');
-             _activities = [];
-           }
+          await ref.read(plantingProvider.notifier).loadAllPlantings();
+          // Load activities
+          try {
+            _activities =
+                GardenBoxes.activities.values.cast<Activity>().toList();
+            _updateDailyTasks();
+          } catch (e) {
+            print('Error loading activities: $e');
+            _activities = [];
+          }
         },
       );
 
@@ -88,9 +90,10 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
   void _updateDailyTasks() {
     _dailyTasks.clear();
-    
+
     final startOfMonth = DateTime(_selectedMonth.year, _selectedMonth.month, 1);
-    final endOfMonth = DateTime(_selectedMonth.year, _selectedMonth.month + 1, 0);
+    final endOfMonth =
+        DateTime(_selectedMonth.year, _selectedMonth.month + 1, 0);
 
     for (var activity in _activities) {
       // Filter only custom tasks
@@ -98,37 +101,39 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       if (!isCustom) continue; // Or handle other activity types if needed
 
       // 1. Check Recurrence
-      final recurrence = activity.metadata['recurrence'] as Map<String, dynamic>?;
-      
+      final recurrence =
+          activity.metadata['recurrence'] as Map<String, dynamic>?;
+
       if (recurrence != null) {
         // Project occurrences for the month
         // Start projection from CreatedAt or NextRunDate?
-        // Let's start from a reasonable point relative to the month. 
+        // Let's start from a reasonable point relative to the month.
         // We need to find the first occurrence >= startOfMonth.
-        
+
         // Strategy: Start from activity.createdAt (or metadata['nextRunDate'] if closer?)
         // and project forward until we pass endOfMonth.
-        
+
         DateTime current = activity.createdAt;
-        // Optimization: if createdAt is far in past, we could jump closer? 
-        // But RecurrenceService doesn't have "jump to". 
+        // Optimization: if createdAt is far in past, we could jump closer?
+        // But RecurrenceService doesn't have "jump to".
         // For Phase 1, basic loop is fine as N is small.
-        
+
         // Safety cap
         int safety = 0;
         while (current.isBefore(endOfMonth) && safety < 1000) {
           safety++;
           // Calc next
-          final next = RecurrenceService.computeNextRunDate(recurrence, current);
+          final next =
+              RecurrenceService.computeNextRunDate(recurrence, current);
           if (next == null) break;
-          
+
           current = next;
-          
+
           if (current.isAfter(endOfMonth)) break;
-          
-          if (current.isAfter(startOfMonth.subtract(const Duration(days: 1))) && 
+
+          if (current.isAfter(startOfMonth.subtract(const Duration(days: 1))) &&
               current.isBefore(endOfMonth.add(const Duration(days: 1)))) {
-             final k = DateTime(current.year, current.month, current.day);
+            final k = DateTime(current.year, current.month, current.day);
             _dailyTasks.putIfAbsent(k, () => []).add(activity);
           }
         }
@@ -142,12 +147,12 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           // Fallback to timestamp if no nextRunDate
           date = activity.timestamp;
         }
-        
-        if (date != null && 
-            date.year == _selectedMonth.year && 
+
+        if (date != null &&
+            date.year == _selectedMonth.year &&
             date.month == _selectedMonth.month) {
-             final k = DateTime(date.year, date.month, date.day);
-            _dailyTasks.putIfAbsent(k, () => []).add(activity);
+          final k = DateTime(date.year, date.month, date.day);
+          _dailyTasks.putIfAbsent(k, () => []).add(activity);
         }
       }
     }
@@ -158,7 +163,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     final theme = Theme.of(context);
     final plantingState = ref.watch(plantingProvider);
     final allPlantings = ref.watch(plantingsListProvider);
-    final calendarAggAsync = ref.watch(calendarAggregationProvider(_selectedMonth));
+    final calendarAggAsync =
+        ref.watch(calendarAggregationProvider(_selectedMonth));
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -205,7 +211,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             },
           ),
         ],
-
       ),
       body: Column(
         children: [
@@ -221,7 +226,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 : (_isLoading || plantingState.isLoading)
                     ? const Center(child: LoadingWidget())
                     : calendarAggAsync.when(
-                        data: (calendarAgg) => _buildCalendar(theme, allPlantings, calendarAgg),
+                        data: (calendarAgg) =>
+                            _buildCalendar(theme, allPlantings, calendarAgg),
                         loading: () => const Center(child: LoadingWidget()),
                         error: (err, st) => _buildErrorState(theme),
                       ),
@@ -361,7 +367,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     );
   }
 
-  Widget _buildCalendar(ThemeData theme, List plantings, Map<String, Map<String, dynamic>> calendarAgg) {
+  Widget _buildCalendar(ThemeData theme, List plantings,
+      Map<String, Map<String, dynamic>> calendarAgg) {
     // Calculer les dates du mois
     final firstDayOfMonth =
         DateTime(_selectedMonth.year, _selectedMonth.month, 1);
@@ -371,15 +378,16 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
     // Calculer le premier jour de la semaine (lundi = 1)
     final firstWeekday = firstDayOfMonth.weekday;
-    
+
     final filterState = ref.watch(calendarFilterProvider);
 
     // Filtrer les plantations pour le mois sélectionné (Detail view only)
     var monthPlantings = plantings.where((p) {
-      if (filterState.selectedGardenBedId != null && p.gardenBedId != filterState.selectedGardenBedId) {
+      if (filterState.selectedGardenBedId != null &&
+          p.gardenBedId != filterState.selectedGardenBedId) {
         return false;
       }
-    
+
       final plantedDate = p.plantedDate;
       final harvestStart = p.expectedHarvestStartDate;
 
@@ -389,18 +397,20 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
               harvestStart.year == _selectedMonth.year &&
               harvestStart.month == _selectedMonth.month);
     }).toList();
-    
+
     // Filtres avancés
     if (filterState.showHarvestsOnly) {
-       monthPlantings = monthPlantings.where((p) => p.expectedHarvestStartDate != null).toList();
+      monthPlantings = monthPlantings
+          .where((p) => p.expectedHarvestStartDate != null)
+          .toList();
     }
-    
-     if (filterState.showUrgentOnly) {
-       final now = DateTime.now();
-       monthPlantings = monthPlantings.where((p) {
-          final end = p.expectedHarvestEndDate;
-           return end != null && end.isBefore(now) && p.status != 'Récolté';
-       }).toList();
+
+    if (filterState.showUrgentOnly) {
+      final now = DateTime.now();
+      monthPlantings = monthPlantings.where((p) {
+        final end = p.expectedHarvestEndDate;
+        return end != null && end.isBefore(now) && p.status != 'Récolté';
+      }).toList();
     }
 
     return SingleChildScrollView(
@@ -408,8 +418,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-
           // En-têtes des jours
           _buildWeekdayHeaders(theme),
           const SizedBox(height: 8),
@@ -430,8 +438,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       ),
     );
   }
-
-
 
   Widget _buildWeekdayHeaders(ThemeData theme) {
     const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
@@ -510,33 +516,40 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     Map<String, Map<String, dynamic>> calendarAgg,
   ) {
     final key = DateFormat('yyyy-MM-dd').format(date);
-    final dayInfo = calendarAgg[key] ?? {
-      'plantingCount': 0, 'wateringCount': 0, 'harvestCount': 0, 'overdueCount': 0, 'frost': false
-    };
+    final dayInfo = calendarAgg[key] ??
+        {
+          'plantingCount': 0,
+          'wateringCount': 0,
+          'harvestCount': 0,
+          'overdueCount': 0,
+          'frost': false
+        };
     final plantingCount = dayInfo['plantingCount'] as int;
     final wateringCount = dayInfo['wateringCount'] as int;
     final harvestCount = dayInfo['harvestCount'] as int;
     final overdueCount = dayInfo['overdueCount'] as int;
     final frost = dayInfo['frost'] as bool;
-    
+
     // Tâches personnalisées (filtrage)
     final filterState = ref.watch(calendarFilterProvider);
-    final tasksForDay = _dailyTasks[DateTime(date.year, date.month, date.day)] ?? [];
-    
-    // Si showTasksOnly -> on cache les indicateurs classiques sauf s'ils sont pertinents ? 
+    final tasksForDay =
+        _dailyTasks[DateTime(date.year, date.month, date.day)] ?? [];
+
+    // Si showTasksOnly -> on cache les indicateurs classiques sauf s'ils sont pertinents ?
     // Le prompt dit "ne montrer que tasks".
-    final bool showStd = !filterState.showTasksOnly && !filterState.showMaintenanceOnly;
-    
+    final bool showStd =
+        !filterState.showTasksOnly && !filterState.showMaintenanceOnly;
+
     // Filtrer les tâches à afficher (Maintenance vs Generic)
     final visibleTasks = tasksForDay.where((t) {
-        if (filterState.showMaintenanceOnly) {
-           // maintenance actions
-           final k = t.metadata['taskKind'];
-           return k != 'generic' && k != 'buy' && k != 'harvest'; 
-        }
-        return true;
+      if (filterState.showMaintenanceOnly) {
+        // maintenance actions
+        final k = t.metadata['taskKind'];
+        return k != 'generic' && k != 'buy' && k != 'harvest';
+      }
+      return true;
     }).toList();
-    
+
     final hasTasks = visibleTasks.isNotEmpty;
 
     return InkWell(
@@ -579,48 +592,61 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                     : theme.colorScheme.onSurface,
               ),
             ),
-            
-             // Indicateurs d'événements
-             Column(
+
+            // Indicateurs d'événements
+            Column(
               children: [
-                if (showStd && plantingCount > 0) Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.eco, size: 12, color: Colors.green),
-                    const SizedBox(width: 4),
-                    Text('$plantingCount', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: Colors.green)),
-                  ],
-                ),
-                if (showStd && wateringCount > 0) Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.water_drop, size: 12, color: Colors.blue),
-                    const SizedBox(width: 4),
-                    Text('$wateringCount', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: Colors.blue)),
-                  ],
-                ),
-                if (showStd && harvestCount > 0) Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.shopping_basket, size: 12, color: Colors.orange),
-                    const SizedBox(width: 4),
-                    Text('$harvestCount', style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: Colors.orange)),
-                  ],
-                ),
-                if (showStd && frost) const Icon(Icons.ac_unit, size: 12, color: Colors.lightBlue),
-                if (showStd && overdueCount > 0) const Icon(Icons.warning, size: 12, color: Colors.red),
-                
+                if (showStd && plantingCount > 0)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.eco, size: 12, color: Colors.green),
+                      const SizedBox(width: 4),
+                      Text('$plantingCount',
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(fontSize: 10, color: Colors.green)),
+                    ],
+                  ),
+                if (showStd && wateringCount > 0)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.water_drop,
+                          size: 12, color: Colors.blue),
+                      const SizedBox(width: 4),
+                      Text('$wateringCount',
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(fontSize: 10, color: Colors.blue)),
+                    ],
+                  ),
+                if (showStd && harvestCount > 0)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.shopping_basket,
+                          size: 12, color: Colors.orange),
+                      const SizedBox(width: 4),
+                      Text('$harvestCount',
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(fontSize: 10, color: Colors.orange)),
+                    ],
+                  ),
+                if (showStd && frost)
+                  const Icon(Icons.ac_unit, size: 12, color: Colors.lightBlue),
+                if (showStd && overdueCount > 0)
+                  const Icon(Icons.warning, size: 12, color: Colors.red),
+
                 // Tâches
-                if (hasTasks) 
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: visibleTasks.take(3).map((t) {
-                       return Padding(
-                         padding: const EdgeInsets.symmetric(horizontal: 1),
-                         child: _buildTaskIcon(t.metadata['taskKind']),
-                       );
-                     }).toList(),
-                   )
+                if (hasTasks)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: visibleTasks.take(3).map((t) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 1),
+                        child: _buildTaskIcon(t.metadata['taskKind']),
+                      );
+                    }).toList(),
+                  )
               ],
             )
           ],
@@ -631,7 +657,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
   Widget _buildDayDetails(ThemeData theme, List plantings) {
     if (_selectedDate == null) return Container();
-    
+
     final date = _selectedDate!;
 
     final dayPlantings = plantings.where((p) {
@@ -648,33 +674,33 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           harvestDate.month == date.month &&
           harvestDate.day == date.day;
     }).toList();
-    
+
     // Activities
-    // final dayActivities = _activities.where((a) { ... }) 
+    // final dayActivities = _activities.where((a) { ... })
     // REMPLACÉ par l'utilisation de _dailyTasks calculé
     final dateKey = DateTime(date.year, date.month, date.day);
     var dayActivities = _dailyTasks[dateKey] ?? [];
 
     final filterState = ref.watch(calendarFilterProvider);
-    
+
     // Filtrage contextuel
     if (filterState.showTasksOnly || filterState.showMaintenanceOnly) {
-       // Si mode Tâches, on cache les plantings/harvests
-       if (filterState.showTasksOnly) {
-         // dayPlantings et dayHarvests devraient être vides ou ignorés ici ?
-         // Mais _buildDayDetails reçoit `List plantings` déjà filtré dans _buildCalendar.
-         // On doit juste s'assurer que si showTasksOnly est actif, plantings est vide.
-         // C'est déjà fait dans _buildCalendar (lignes 291+) ? 
-         // Non, _buildCalendar filtre plantings mais pas ici.
-       }
+      // Si mode Tâches, on cache les plantings/harvests
+      if (filterState.showTasksOnly) {
+        // dayPlantings et dayHarvests devraient être vides ou ignorés ici ?
+        // Mais _buildDayDetails reçoit `List plantings` déjà filtré dans _buildCalendar.
+        // On doit juste s'assurer que si showTasksOnly est actif, plantings est vide.
+        // C'est déjà fait dans _buildCalendar (lignes 291+) ?
+        // Non, _buildCalendar filtre plantings mais pas ici.
+      }
     }
-    
+
     // Filtrage local des tâches pour MaintenanceOnly
-     if (filterState.showMaintenanceOnly) {
-       dayActivities = dayActivities.where((t) {
-           final k = t.metadata['taskKind'];
-           return k != 'generic' && k != 'buy' && k != 'harvest'; 
-       }).toList();
+    if (filterState.showMaintenanceOnly) {
+      dayActivities = dayActivities.where((t) {
+        final k = t.metadata['taskKind'];
+        return k != 'generic' && k != 'buy' && k != 'harvest';
+      }).toList();
     }
 
     if (dayPlantings.isEmpty && dayHarvests.isEmpty && dayActivities.isEmpty) {
@@ -757,10 +783,10 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 Colors.blueGrey,
                 () {
                   // TODO: Edit Task Dialog
-                }, 
+                },
                 theme,
               )),
-         ],
+        ],
       ],
     );
   }
@@ -823,72 +849,82 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       ),
     );
   }
-  
+
   Widget _buildTaskIcon(String? kind) {
-    return Icon(
-      _getIconForKind(kind), 
-      size: 10, 
-      color: Colors.blueGrey.shade700
-    );
+    return Icon(_getIconForKind(kind),
+        size: 10, color: Colors.blueGrey.shade700);
   }
-  
+
   IconData _getIconForKind(String? kind) {
     switch (kind) {
-      case 'seeding': return Icons.eco;
-      case 'watering': return Icons.water_drop;
-      case 'pruning': return Icons.content_cut;
-      case 'weeding': return Icons.grass;
-      case 'amendment': return Icons.spa;
-      case 'treatment': return Icons.science;
-      case 'harvest': return Icons.agriculture;
-      case 'winter_protection': return Icons.ac_unit;
-      case 'repair': return Icons.build;
-      case 'clean': return Icons.cleaning_services; // ou Icons.brush
-      case 'buy': return Icons.shopping_cart;
-      default: return Icons.task_alt;
+      case 'seeding':
+        return Icons.eco;
+      case 'watering':
+        return Icons.water_drop;
+      case 'pruning':
+        return Icons.content_cut;
+      case 'weeding':
+        return Icons.grass;
+      case 'amendment':
+        return Icons.spa;
+      case 'treatment':
+        return Icons.science;
+      case 'harvest':
+        return Icons.agriculture;
+      case 'winter_protection':
+        return Icons.ac_unit;
+      case 'repair':
+        return Icons.build;
+      case 'clean':
+        return Icons.cleaning_services; // ou Icons.brush
+      case 'buy':
+        return Icons.shopping_cart;
+      default:
+        return Icons.task_alt;
     }
   }
 
   Widget _buildFilterBar(ThemeData theme) {
-      final filter = ref.watch(calendarFilterProvider);
-      final notifier = ref.read(calendarFilterProvider.notifier);
-      
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-           children: [
-              FilterChip(
-                label: const Text('Tâches'),
-                selected: filter.showTasksOnly,
-                onSelected: (_) => notifier.toggleTasksOnly(),
-                avatar: const Icon(Icons.task_alt, size: 16),
-              ),
-              const SizedBox(width: 8),
-              FilterChip(
-                label: const Text('Entretien'),
-                selected: filter.showMaintenanceOnly,
-                onSelected: (_) => notifier.toggleMaintenanceOnly(),
-                avatar: const Icon(Icons.build, size: 16),
-              ),
-              const SizedBox(width: 8),
-              FilterChip(
-                label: const Text('Récoltes'),
-                selected: filter.showHarvestsOnly,
-                onSelected: (_) => notifier.toggleHarvestsOnly(),
-                avatar: const Icon(Icons.agriculture, size: 16),
-              ),
-              const SizedBox(width: 8),
-              FilterChip(
-                label: const Text('Urgences'),
-                selected: filter.showUrgentOnly,
-                onSelected: (_) => notifier.toggleUrgentOnly(),
-                backgroundColor: filter.showUrgentOnly ? Colors.red.withOpacity(0.2) : null,
-                selectedColor: Colors.red.withOpacity(0.4),
-                avatar: const Icon(Icons.warning, size: 16, color: Colors.red),
-              ),
-           ],
-        ),
-      );
+    final filter = ref.watch(calendarFilterProvider);
+    final notifier = ref.read(calendarFilterProvider.notifier);
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          FilterChip(
+            label: const Text('Tâches'),
+            selected: filter.showTasksOnly,
+            onSelected: (_) => notifier.toggleTasksOnly(),
+            avatar: const Icon(Icons.task_alt, size: 16),
+          ),
+          const SizedBox(width: 8),
+          FilterChip(
+            label: const Text('Entretien'),
+            selected: filter.showMaintenanceOnly,
+            onSelected: (_) => notifier.toggleMaintenanceOnly(),
+            avatar: const Icon(Icons.build, size: 16),
+          ),
+          const SizedBox(width: 8),
+          FilterChip(
+            label: const Text('Récoltes'),
+            selected: filter.showHarvestsOnly,
+            onSelected: (_) => notifier.toggleHarvestsOnly(),
+            avatar: const Icon(Icons.agriculture, size: 16),
+          ),
+          const SizedBox(width: 8),
+          FilterChip(
+            label: const Text('Urgences'),
+            selected: filter.showUrgentOnly,
+            onSelected: (_) => notifier.toggleUrgentOnly(),
+            backgroundColor:
+                filter.showUrgentOnly ? Colors.red.withOpacity(0.2) : null,
+            selectedColor: Colors.red.withOpacity(0.4),
+            avatar: const Icon(Icons.warning, size: 16, color: Colors.red),
+          ),
+        ],
+      ),
+    );
   }
 }

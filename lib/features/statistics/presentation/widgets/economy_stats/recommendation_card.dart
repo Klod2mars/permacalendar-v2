@@ -14,7 +14,10 @@ class RecommendationCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.blueAccent.withOpacity(0.2), Colors.purpleAccent.withOpacity(0.1)],
+          colors: [
+            Colors.blueAccent.withOpacity(0.2),
+            Colors.purpleAccent.withOpacity(0.1)
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

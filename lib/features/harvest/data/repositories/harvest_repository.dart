@@ -12,7 +12,8 @@ class HarvestRepository {
   /// Sauvegarder (ou écraser) un record
   Future<void> saveHarvest(HarvestRecord record) async {
     await _box().put(record.id, record.toJson());
-    debugPrint('[HarvestRepository] saveHarvest id=${record.id} plant=${record.plantId} qty=${record.quantityKg} price=${record.pricePerKg}');
+    debugPrint(
+        '[HarvestRepository] saveHarvest id=${record.id} plant=${record.plantId} qty=${record.quantityKg} price=${record.pricePerKg}');
   }
 
   /// Récupérer tous les records
@@ -28,7 +29,7 @@ class HarvestRepository {
   List<HarvestRecord> getHarvestsByGarden(String gardenId) {
     return getAllHarvests().where((r) => r.gardenId == gardenId).toList();
   }
-  
+
   /// Récupérer les records d'une plante spécifique
   List<HarvestRecord> getHarvestsByPlant(String plantId) {
     return getAllHarvests().where((r) => r.plantId == plantId).toList();
