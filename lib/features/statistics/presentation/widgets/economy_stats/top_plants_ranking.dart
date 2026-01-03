@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/utils/formatters.dart';
 
 class TopPlantsRanking extends StatelessWidget {
   final List<PlantRanking> rankings;
@@ -86,7 +87,7 @@ class TopPlantsRanking extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${ranking.totalKg.toStringAsFixed(1)} kg • ${ranking.percentShare.toStringAsFixed(1)}% du total',
+                    '${ranking.totalKg.toStringAsFixed(1)} kg • ${ranking.percentShare.toStringAsFixed(1)}% du revenu',
                     style: const TextStyle(color: Colors.white54, fontSize: 12),
                   ),
                 ],
@@ -96,14 +97,14 @@ class TopPlantsRanking extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${ranking.totalValue.toStringAsFixed(0)} €',
+                  formatCurrency(ranking.totalValue),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '${ranking.avgPricePerKg.toStringAsFixed(2)} €/kg',
+                  formatPricePerKg(ranking.avgPricePerKg),
                   style: const TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],

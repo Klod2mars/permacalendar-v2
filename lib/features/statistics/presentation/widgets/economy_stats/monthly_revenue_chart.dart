@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
+import '../../../../../core/utils/formatters.dart';
 
 class MonthlyRevenueChart extends StatelessWidget {
   final List<MonthRevenue> monthlyRevenue;
@@ -52,7 +53,7 @@ class MonthlyRevenueChart extends StatelessWidget {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: '${rod.toY.toStringAsFixed(0)} €',
+                          text: formatCurrency(rod.toY),
                           style: const TextStyle(
                             color: Colors.lightGreenAccent,
                             fontSize: 14,

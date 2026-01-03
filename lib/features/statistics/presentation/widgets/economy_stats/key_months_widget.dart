@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
+import '../../../../../core/utils/formatters.dart';
 
 class KeyMonthsWidget extends StatelessWidget {
   final List<MonthRevenue> monthlyRevenue;
@@ -108,7 +109,7 @@ class KeyMonthsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '${data.totalValue.toStringAsFixed(0)} €',
+            formatCurrency(data.totalValue),
             style: TextStyle(
               color: color,
               fontSize: 20,

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
 import 'package:intl/intl.dart';
+import '../../../../../core/utils/formatters.dart';
 
 class AnnualRevenueLine extends StatelessWidget {
   final List<SeriesPoint> revenueSeries;
@@ -103,7 +104,7 @@ class AnnualRevenueLine extends StatelessWidget {
                             color: Colors.white, fontWeight: FontWeight.bold),
                         children: [
                           TextSpan(
-                            text: '${point.value.toStringAsFixed(0)} €',
+                            text: formatCurrency(point.value),
                             style: const TextStyle(
                               color: Colors.greenAccent,
                               fontWeight: FontWeight.w500,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
+import '../../../../../core/utils/formatters.dart';
 
 class TopPlantPerMonthGrid extends StatelessWidget {
   final Map<int, PlantRanking> topPlantPerMonth;
@@ -94,7 +95,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
             ),
             const SizedBox(height: 2),
             Text(
-              '${ranking.totalValue.toStringAsFixed(0)} €',
+              formatCurrency(ranking.totalValue),
               style: const TextStyle(color: Colors.greenAccent, fontSize: 10),
             ),
           ] else

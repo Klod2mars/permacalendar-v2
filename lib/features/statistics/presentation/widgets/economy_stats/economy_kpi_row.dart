@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
+import '../../../../../core/utils/formatters.dart';
 
 class EconomyKpiRow extends StatelessWidget {
   final EconomyDetails details;
@@ -14,7 +15,7 @@ class EconomyKpiRow extends StatelessWidget {
           child: _buildKpiCard(
             context,
             'Revenu Total',
-            '${details.totalValue.toStringAsFixed(0)} €',
+            formatCurrency(details.totalValue),
             Icons.euro,
             Colors.green,
           ),
@@ -34,7 +35,7 @@ class EconomyKpiRow extends StatelessWidget {
           child: _buildKpiCard(
             context,
             'Prix Moyen',
-            '${details.weightedAvgPrice.toStringAsFixed(2)} €/kg',
+            formatPricePerKg(details.weightedAvgPrice),
             Icons.price_change,
             Colors.orange,
           ),
