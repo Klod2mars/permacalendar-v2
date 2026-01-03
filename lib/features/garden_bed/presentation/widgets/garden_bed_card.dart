@@ -1,4 +1,5 @@
 // lib/features/garden_bed/presentation/widgets/garden_bed_card.dart
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -66,10 +67,30 @@ class GardenBedCard extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  // Image (vignette) ou icône - resolved via plant_image_resolver
+                   // Image (vignette) ou icône - resolved via plant_image_resolver
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: FutureBuilder<String?>(
+                    child: Builder(builder: (ctx) {
+                       // 1. Try Local File first (Sync check)
+                       if (plant != null) {
+                          String? raw = plant.metadata?['image'];
+                          if (raw != null && raw.isNotEmpty && !raw.startsWith('assets/') && !raw.startsWith('http')) {
+                              final f = File(raw);
+                              // We can allow Image.file to handle errors
+                              if (raw.startsWith('/') || raw.contains(Platform.pathSeparator)) {
+                                 return Image.file(
+                                    f, 
+                                    width: 64, 
+                                    height: 64, 
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_,__,___) => _buildFallbackImage(context, width:64, height:64)
+                                 );
+                              }
+                          }
+                       }
+                       
+                       // 2. Fallback to Asset Resolver
+                       return FutureBuilder<String?>(
                       future: findPlantImageAsset(plant),
                       builder: (ctx, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done) {
@@ -103,7 +124,8 @@ class GardenBedCard extends ConsumerWidget {
                               width: 64, height: 64, fit: BoxFit.cover);
                         }
                       },
-                    ),
+                    );
+                    }),
                   ),
                   const SizedBox(width: 12),
                   // Texte principal + progression si présente

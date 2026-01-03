@@ -1,6 +1,7 @@
 import 'package:riverpod/riverpod.dart';
 
 import '../data/repositories/plant_hive_repository.dart';
+import '../data/repositories/custom_plant_repository.dart'; // Import du nouveau repository
 
 import '../domain/entities/plant_entity.dart';
 
@@ -52,20 +53,38 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     return const PlantCatalogState();
   }
 
-  // Chargement SIMPLIFIÉ avec le nouveau repository
+  // Chargement UNIFIÉ (Standard + Custom)
 
   Future<void> loadPlants() async {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
-      // UTILISATION DIRECTE du nouveau repository
+      // 1. Charger le catalogue standard
+      final stdRepo = PlantHiveRepository();
+      final stdPlants = await stdRepo.getAllPlants();
 
-      final repository = PlantHiveRepository();
+      // 2. Charger le catalogue personnalisé
+      final customRepo = CustomPlantRepository();
+      List<PlantFreezed> customPlants = [];
+      try {
+        customPlants = await customRepo.getAllPlants();
+      } catch (e) {
+        print('PlantCatalogNotifier: Error loading custom plants: $e');
+        // On continue même si erreur sur custom
+      }
 
-      final plants = await repository.getAllPlants();
+      // 3. Marquer les plantes personnalisées (si nécessaire) et fusionner
+      // Note: On pourrait modifier le metadata ici si ce n'est pas déjà fait en amont,
+      // mais idéalement c'est fait à la création.
+      // Pour l'affichage, on fusionne simplement.
+
+      final allPlants = [...stdPlants, ...customPlants];
+
+      // Optionnel : trier par nom
+      allPlants.sort((a, b) => a.commonName.compareTo(b.commonName));
 
       state = state.copyWith(
-        plants: plants,
+        plants: allPlants,
         isLoading: false,
       );
     } catch (e) {
@@ -76,80 +95,159 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     }
   }
 
-  // Ajouter une nouvelle plante avec tracking
-
+  // Ajouter une nouvelle plante STANDARD (legacy / admin)
   Future<void> addPlant(PlantHive plant) async {
+    // Cette méthode reste pour le catalogue standard si besoin,
+    // mais pour l'utilisateur on préférera addCustomPlant.
     try {
       state = state.copyWith(isLoading: true, error: null);
-
-      // Ajouter la plante au repository
-
       final repository = PlantHiveRepository();
-
       await repository.addPlant(plant);
-
-      // Tracker l'activité de Création
-
+      
       final activityTracker = ActivityTrackerV3();
-
       await activityTracker.trackActivity(
         type: 'plantCreated',
-        description: 'Plante "${plant.commonName}" ajoutée au catalogue',
-        metadata: {
-          'plantId': plant.id,
-          'commonName': plant.commonName,
-          'scientificName': plant.scientificName,
-          'family': plant.family,
-          'plantingSeason': plant.plantingSeason,
-        },
+        description: 'Plante standard "${plant.commonName}" ajoutée',
+        metadata: {'plantId': plant.id},
         priority: ActivityPriority.normal,
       );
 
-      // Recharger la liste des plantes
+      await loadPlants();
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: 'Erreur ajout standard: $e');
+    }
+  }
+
+  // === GESTION DES PLANTES PERSONNALISÉES ===
+
+  Future<void> addCustomPlant(PlantHive plant) async {
+    try {
+      state = state.copyWith(isLoading: true, error: null);
+
+      final repository = CustomPlantRepository();
+      
+      // S'assurer que le metadata est initialisé
+      if (plant.metadata == null) {
+        plant.metadata = <String, dynamic>{};
+      }
+      
+      // S'assurer que le flag isCustom est bien mis
+      if (!plant.metadata!.containsKey('isCustom')) {
+        plant.metadata!['isCustom'] = true;
+      }
+      if (!plant.metadata!.containsKey('origin')) {
+        plant.metadata!['origin'] = 'user';
+      }
+
+      await repository.addPlant(plant);
+
+      final activityTracker = ActivityTrackerV3();
+      await activityTracker.trackActivity(
+        type: 'customPlantCreated',
+        description: 'Plante personnalisée "${plant.commonName}" créée',
+        metadata: {
+          'plantId': plant.id,
+          'commonName': plant.commonName,
+          'isCustom': true
+        },
+        priority: ActivityPriority.normal,
+      );
 
       await loadPlants();
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: 'Erreur lors de l\'ajout de la plante: $e',
+        error: 'Erreur lors de la création de la plante personnalisée: $e',
       );
     }
   }
 
-  // Mettre à jour une plante avec tracking
-
-  Future<void> updatePlant(PlantHive plant) async {
+  Future<void> updateCustomPlant(PlantHive plant) async {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
-      // Mettre à jour la plante dans le repository
-
-      final repository = PlantHiveRepository();
-
+      final repository = CustomPlantRepository();
       await repository.updatePlant(plant);
 
-      // Tracker l'activité de mise à jour
-
       final activityTracker = ActivityTrackerV3();
-
       await activityTracker.trackActivity(
-        type: 'plantUpdated',
-        description: 'Plante "${plant.commonName}" mise à jour',
+        type: 'customPlantUpdated',
+        description: 'Plante personnalisée "${plant.commonName}" modifiée',
         metadata: {
           'plantId': plant.id,
-          'commonName': plant.commonName,
-          'scientificName': plant.scientificName,
-          'family': plant.family,
-          'plantingSeason': plant.plantingSeason,
-          'updatedAt': plant.updatedAt?.toIso8601String(),
+          'updatedAt': DateTime.now().toIso8601String(),
         },
         priority: ActivityPriority.normal,
       );
 
-      // Recharger la liste des plantes
+      await loadPlants();
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: 'Erreur modifications plante personnalisée: $e',
+      );
+    }
+  }
+
+  Future<void> deleteCustomPlant(String plantId) async {
+    try {
+      state = state.copyWith(isLoading: true, error: null);
+
+      final repository = CustomPlantRepository();
+      // On vérifie d'abord
+      if (await repository.plantExists(plantId)) {
+        await repository.deletePlant(plantId);
+        
+        final activityTracker = ActivityTrackerV3();
+        await activityTracker.trackActivity(
+          type: 'customPlantDeleted',
+          description: 'Plante personnalisée supprimée',
+          metadata: {'plantId': plantId},
+          priority: ActivityPriority.normal,
+        );
+      } else {
+        throw Exception('Plante personnalisée introuvable');
+      }
 
       await loadPlants();
     } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: 'Erreur suppression plante personnalisée: $e',
+      );
+    }
+  }
+
+
+  // Mettre à jour une plante (Méthode générique qui déduit le repo ?)
+  // Pour l'instant on garde les méthodes séparées pour être explicite,
+  // ou on pourrait vérifier l'ID/metadata. 
+  // Gardons la compatibilité avec l'existant :
+  Future<void> updatePlant(PlantHive plant) async {
+    // Si c'est une custom, on redirige
+    if (plant.metadata != null && plant.metadata!['isCustom'] == true) {
+      await updateCustomPlant(plant);
+      return;
+    }
+    
+    // Sinon comportement standard (update dans plants_box)
+    try {
+      state = state.copyWith(isLoading: true, error: null);
+      final repository = PlantHiveRepository();
+      await repository.updatePlant(plant);
+      
+      final activityTracker = ActivityTrackerV3();
+      await activityTracker.trackActivity(
+        type: 'plantUpdated',
+        description: 'Plante "${plant.commonName}" mise à jour',
+        metadata: {'plantId': plant.id},
+        priority: ActivityPriority.normal,
+      );
+
+      await loadPlants();
+    } catch (e) {
+       // Si échoue, peut-être qu'elle est dans custom par erreur ?
+       // On log juste l'erreur standard.
       state = state.copyWith(
         isLoading: false,
         error: 'Erreur lors de la mise à jour de la plante: $e',
@@ -157,44 +255,30 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     }
   }
 
-  // Supprimer une plante avec tracking
-
+  // Supprimer une plante (Générique)
   Future<void> deletePlant(String plantId) async {
+    // On essaie de savoir d'où elle vient.
+    // Le plus simple est de regarder dans la liste chargée en mémoire.
+    final target = state.plants.firstWhere((p) => p.id == plantId, orElse: () => throw Exception('Plante non trouvée dans la liste'));
+    
+    if (target.metadata != null && target.metadata['isCustom'] == true) {
+      await deleteCustomPlant(plantId);
+      return;
+    }
+
+    // Standard delete
     try {
       state = state.copyWith(isLoading: true, error: null);
-
-      // Récupérer les informations de la plante avant suppression
-
       final repository = PlantHiveRepository();
-
-      final plant = await repository.getPlantById(plantId);
-
-      if (plant == null) {
-        throw Exception('Plante non trouvée');
-      }
-
-      // Supprimer la plante du repository
-
       await repository.deletePlant(plantId);
 
-      // Tracker l'activité de suppression
-
       final activityTracker = ActivityTrackerV3();
-
       await activityTracker.trackActivity(
         type: 'plantDeleted',
-        description: 'Plante "${plant.commonName}" supprimée du catalogue',
-        metadata: {
-          'plantId': plantId,
-          'commonName': plant.commonName,
-          'scientificName': plant.scientificName,
-          'family': plant.family,
-          'deletedAt': DateTime.now().toIso8601String(),
-        },
+        description: 'Plante "${target.commonName}" supprimée',
+        metadata: {'plantId': plantId},
         priority: ActivityPriority.normal,
       );
-
-      // Recharger la liste des plantes
 
       await loadPlants();
     } catch (e) {
@@ -205,16 +289,16 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     }
   }
 
-  // Vérifier si une plante existe
-
+  // Vérifier si une plante existe (dans l'un ou l'autre)
   Future<bool> plantExists(String plantId) async {
-    try {
-      final repository = PlantHiveRepository();
-
-      return await repository.plantExists(plantId);
-    } catch (e) {
-      return false;
-    }
+     // Check memory first
+     if (state.plants.any((p) => p.id == plantId)) return true;
+     
+     // Check repos
+     if (await PlantHiveRepository().plantExists(plantId)) return true;
+     if (await CustomPlantRepository().plantExists(plantId)) return true;
+     
+     return false;
   }
 
   // Recherche SIMPLIFIÉE
@@ -268,18 +352,12 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     }
   }
 
-  // Supprimer toutes les plantes (pour le debug/nettoyage)
+  // Supprimer toutes les plantes
+  // Attention : Ne devrait supprimer que les standards ou tout ?
+  // Pour le debug "Nuke", on peut vouloir tout supprimer.
   Future<void> deleteAllPlants() async {
-    try {
-      state = state.copyWith(isLoading: true, error: null);
-      final repository = PlantHiveRepository();
-      // Ceci est un peu dangereux, on supprime tout !
-      // Mais dans le cas d'un reload, on peut vouloir nettoyer avant.
-      // Le repository n'a pas de clearAll simple exposé publiquement safest way is recreate box but let's just re-init from JSON over it.
-      // For now, let's just rely on seedDefaultPlants merging/updating.
-    } catch (e) {
-      // ignore
-    }
+    // Implémentation conservative : on ne touche pas au custom ici sauf si explicitement demandé.
+    // Laisons vide pour l'instant comme avant.
   }
 
   void clearError() {

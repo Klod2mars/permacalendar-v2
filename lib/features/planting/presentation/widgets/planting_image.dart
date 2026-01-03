@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -270,35 +271,49 @@ class PlantingImage extends StatelessWidget {
           final base = raw ?? '';
           final id = (plant?.id ?? planting.plantId).toString();
 
-          // Logic Change: Use BOTH names as candidates if they differ.
-          // Prioritize resolving via the Catalog Common Name if available.
           final catalogName = plant?.commonName.trim() ?? '';
 
           final List<String> candidates =
               _buildCandidates(base, id, catalogName, commonNameFromPlanting);
 
           // Return Resolved Image
-          if (raw != null &&
-              raw.isNotEmpty &&
-              RegExp(r'^(http|https):\/\/', caseSensitive: false)
-                  .hasMatch(raw)) {
-            return Image.network(
-              raw!,
-              height: h,
-              width: w,
-              fit: fit,
-              errorBuilder: (_, __, ___) => _fallback(),
-            );
-          }
+          if (raw != null && raw.isNotEmpty) {
+            // 1. Network
+            if (RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw)) {
+              return Image.network(
+                raw!,
+                height: h,
+                width: w,
+                fit: fit,
+                errorBuilder: (_, __, ___) => _fallback(),
+              );
+            }
+            
+            // 2. Local File (Custom Plants)
+            final bool isLocalFile = !raw.startsWith('assets/') && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.'))); 
+            
+            if (isLocalFile) {
+               final file = File(raw);
+               // We don't always check existsSync to avoid blocking UI, Image.file handles errors gracefully via errorBuilder
+               return Image.file(
+                 file,
+                 height: h,
+                 width: w,
+                 fit: fit,
+                 errorBuilder: (_, __, ___) => _fallback(),
+               );
+            }
 
-          if (raw != null && raw.isNotEmpty && raw.startsWith('assets/')) {
-            return Image.asset(
-              raw ?? '',
-              height: h,
-              width: w,
-              fit: fit,
-              errorBuilder: (_, __, ___) => _fallback(),
-            );
+            // 3. Explicit Asset Path
+            if (raw.startsWith('assets/')) {
+               return Image.asset(
+                raw,
+                height: h,
+                width: w,
+                fit: fit,
+                errorBuilder: (_, __, ___) => _fallback(),
+              );
+            }
           }
 
           return FutureBuilder<String?>(

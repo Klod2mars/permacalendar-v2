@@ -1,17 +1,22 @@
 // lib/features/plant_catalog/presentation/screens/plant_catalog_screen.dart
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 // Modèle PlantFreezed
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 
 // Provider (source des plantes)
 import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
+
+// Formulaire
+import 'custom_plant_form_screen.dart';
 
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -48,6 +53,10 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         final current = ref.read(plantsListProvider);
         if (kDebugMode) {
           debugPrint('DEBUG_INIT: providerPlants.count = ${current.length}');
+          if (current.isNotEmpty) {
+             // Debug debug
+             // debugPrint('First plant: ${current.first.toJson()}');
+          }
         }
         if (current.isEmpty) {
           if (kDebugMode) debugPrint('DEBUG_INIT: triggering loadPlants()...');
@@ -73,35 +82,15 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     var s = input.toLowerCase().trim();
 
     const diacritics = {
-      'à': 'a',
-      'á': 'a',
-      'â': 'a',
-      'ã': 'a',
-      'ä': 'a',
-      'å': 'a',
+      'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a',
       'ç': 'c',
-      'è': 'e',
-      'é': 'e',
-      'ê': 'e',
-      'ë': 'e',
-      'ì': 'i',
-      'í': 'i',
-      'î': 'i',
-      'ï': 'i',
+      'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
+      'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
       'ñ': 'n',
-      'ò': 'o',
-      'ó': 'o',
-      'ô': 'o',
-      'õ': 'o',
-      'ö': 'o',
-      'ù': 'u',
-      'ú': 'u',
-      'û': 'u',
-      'ü': 'u',
-      'ý': 'y',
-      'ÿ': 'y',
-      'œ': 'oe',
-      'æ': 'ae',
+      'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
+      'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u',
+      'ý': 'y', 'ÿ': 'y',
+      'œ': 'oe', 'æ': 'ae',
     };
 
     diacritics.forEach((k, v) {
@@ -150,12 +139,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         mapLower[k.toLowerCase()] = k;
       }
       _assetManifestLowerToOriginal = mapLower;
-      if (kDebugMode)
-        debugPrint('DEBUG_MANIFEST: loaded ${keys.length} assets');
     } catch (e) {
       _assetManifestKeys = null;
       _assetManifestLowerToOriginal = null;
-      if (kDebugMode) debugPrint('DEBUG_MANIFEST ERROR: $e');
     }
   }
 
@@ -228,137 +214,157 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   }
 
   // Build Plant Card
-  Widget _buildPlantCard(PlantFreezed plant) {
+  Widget _buildPlantCard(PlantFreezed plant, [int index = -1]) {
     final raw = _resolveImagePathFromPlant(plant);
     const imageHeight = 180.0;
     Widget imageWidget;
+    
+    // Détection plante perso pour badge (optionnel)
+    final isCustom = plant.metadata['isCustom'] == true;
 
-    if (kDebugMode) {
-      debugPrint('DEBUG_PLANT: id=${plant.id}, commonName=${plant.commonName}');
-      debugPrint('DEBUG_METADATA: ${plant.metadata}');
-    }
 
     if (raw != null && raw.isNotEmpty) {
-      if (kDebugMode) debugPrint('DEBUG_RAWPATH: "$raw" for plant ${plant.id}');
+      if (kDebugMode) debugPrint('[DEBUG_IMG] Plant ${plant.commonName} raw="$raw"');
+      
       final isNetwork =
           RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
+          
+      // Check for local file path using basic heuristic
+      // We are more restrictive to avoid false positives with simple filenames like "brocoli"
+      final bool isLocalFile = !isNetwork && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.'))); 
+      
+      if (kDebugMode) debugPrint('[DEBUG_IMG] isNetwork=$isNetwork, isLocalFile=$isLocalFile');
+
       if (isNetwork) {
-        if (kDebugMode)
-          debugPrint('DEBUG_IMAGE network for ${plant.id} -> $raw');
         imageWidget = Image.network(
           raw,
           height: imageHeight,
           width: double.infinity,
           fit: BoxFit.cover,
+          errorBuilder: (c, e, st) => _fallbackImage(height: imageHeight),
+        );
+      } else if (isLocalFile) {
+        final file = File(raw);
+        // On affiche l'image fichier si elle existe
+        imageWidget = Image.file(
+          file,
+          height: imageHeight,
+          width: double.infinity,
+          fit: BoxFit.cover,
           errorBuilder: (c, e, st) {
-            if (kDebugMode) debugPrint('DEBUG_NETWORK_ERROR: $e for $raw');
-            return _fallbackImage(height: imageHeight);
+             if (kDebugMode) debugPrint('Error loading file image $raw: $e');
+             return _fallbackImage(height: imageHeight);
           },
         );
       } else {
+        // Asset logic
         final List<String> candidates = <String>[];
-
         final base = raw;
+        if (kDebugMode) debugPrint('[DEBUG_IMG] Entering Asset Logic for $base');
+
+        // Extract stem (remove extension if present) for flexible matching
+        final List<String> stems = [];
+        
+        // 1. Base stem from ID/Metadata
+        String stem1 = base;
+        final extRegex = RegExp(r'\.(png|jpg|jpeg|webp)$', caseSensitive: false);
+        if (extRegex.hasMatch(base)) {
+           stem1 = base.replaceAll(extRegex, '');
+        }
+        stems.add(stem1);
+        
+        // 2. Stem from Common Name (normalized) to handle French filenames vs English IDs
+        // e.g. ID="tomato" -> "tomato.jpg", but file is "tomate.png"
+        final commonNameSafe = _normalize(plant.commonName);
+        if (commonNameSafe.isNotEmpty && commonNameSafe != stem1 && commonNameSafe != stem1.toLowerCase()) {
+           stems.add(commonNameSafe);
+           // Try replacing spaces with underscores (e.g. "chou fleur" -> "chou_fleur")
+           final withUnderscores = commonNameSafe.replaceAll(' ', '_');
+           if (withUnderscores != commonNameSafe) {
+             stems.add(withUnderscores);
+           }
+        }
+        
+        // 3. Stem from Raw Common Name (for accents)
+        // e.g. "Maïs doux" -> "maïs_doux.png" (if file has accent)
+        final commonNameRaw = plant.commonName.toLowerCase().trim();
+        if (commonNameRaw.isNotEmpty && commonNameRaw != stem1 && commonNameRaw != commonNameSafe) {
+           stems.add(commonNameRaw);
+           final rawUnderscores = commonNameRaw.replaceAll(' ', '_');
+           if (rawUnderscores != commonNameRaw) {
+              stems.add(rawUnderscores);
+           }
+        }
+        
+        // Remove potentially duplicates
+        final uniqueStems = stems.toSet().toList(); // requires import 'dart:collection' or just use toSet logic
+
         if (base.startsWith('assets/')) {
           candidates.add(base);
           candidates.add(base.toLowerCase());
-        } else {
-          candidates.add('assets/images/legumes/$base');
-          candidates.add('assets/images/legumes/${base.toLowerCase()}');
-          candidates.add('assets/images/plants/$base');
-          candidates.add('assets/images/plants/${base.toLowerCase()}');
-          candidates.add('assets/$base');
-          candidates.add('assets/${base.toLowerCase()}');
-
-          if (!RegExp(r'\.\w+$').hasMatch(base)) {
-            final exts = ['.png', '.jpg', '.jpeg', '.webp'];
-            for (final ext in exts) {
-              candidates.add('assets/images/legumes/${base}$ext');
-              candidates.add('assets/images/legumes/${base.toLowerCase()}$ext');
-              candidates.add('assets/images/plants/${base}$ext');
-              candidates.add('assets/images/plants/${base.toLowerCase()}$ext');
-            }
-          } else {
-            candidates.add('assets/images/legumes/${base.toLowerCase()}');
-            candidates.add('assets/images/plants/${base.toLowerCase()}');
-          }
         }
 
+        // Generate combinations
+        final prefixes = [
+          'assets/images/legumes/',
+          'assets/images/plants/',
+          'assets/'
+        ];
+        final exts = ['.png', '.jpg', '.jpeg', '.webp'];
+
+        for (final stem in uniqueStems) {
+          for (final prefix in prefixes) {
+            // Add stem 
+            candidates.add('$prefix$stem');
+            candidates.add('$prefix${stem.toLowerCase()}');
+            
+            // Add stem + extensions
+            for (final ext in exts) {
+              candidates.add('$prefix$stem$ext');
+              candidates.add('$prefix${stem.toLowerCase()}$ext');
+            }
+          }
+        }
+        
+        // Also add original base just in case
+        candidates.add('assets/images/legumes/$base');
+        candidates.add('assets/images/plants/$base');
+        candidates.add('assets/$base');
+        
         final id = plant.id;
         if (id.isNotEmpty) {
-          candidates.add('assets/images/legumes/$id.jpg');
-          candidates.add('assets/images/legumes/$id.png');
-          candidates.add('assets/images/legumes/$id.webp');
-          candidates.add('assets/images/plants/$id.jpg');
-          candidates.add('assets/images/plants/$id.png');
+           candidates.add('assets/images/legumes/$id.jpg');
+           candidates.add('assets/images/plants/$id.jpg');
         }
-
-        final cn = plant.commonName;
-        if (cn.isNotEmpty) {
-          final safe = _toFilenameSafe(cn);
-          final alt1 = safe;
-          final alt2 = safe.replaceAll('_', '-');
-          final exts = ['.png', '.jpg', '.jpeg', '.webp'];
-          for (final ext in exts) {
-            candidates.add('assets/images/legumes/${alt1}$ext');
-            candidates.add('assets/images/legumes/${alt2}$ext');
-            candidates.add('assets/images/plants/${alt1}$ext');
-            candidates.add('assets/images/plants/${alt2}$ext');
-          }
-          candidates.add('assets/images/legumes/${cn}');
-          candidates.add('assets/images/plants/${cn}');
-        }
-
+        
+        // seen/final logic
         final seen = <String>{};
         final finalCandidates = <String>[];
         for (final c in candidates) {
-          if (!seen.contains(c)) {
-            seen.add(c);
-            finalCandidates.add(c);
-          }
+          if (!seen.contains(c)) { seen.add(c); finalCandidates.add(c); }
         }
-
-        if (kDebugMode)
-          debugPrint('DEBUG_CANDIDATES for ${plant.id}: $finalCandidates');
+        
+        // if (kDebugMode) debugPrint('[DEBUG_IMG] Candidates: $finalCandidates');
 
         imageWidget = FutureBuilder<String?>(
           future: _findExistingAsset(finalCandidates),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
-              return Container(
-                height: imageHeight,
-                color: Colors.green.shade50,
-                alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
-              );
+               return Container(height: imageHeight, color: Colors.green.shade50);
             }
             final found = snapshot.data;
             if (found != null) {
-              if (kDebugMode)
-                debugPrint('DEBUG_FOUND_ASSET for ${plant.id} -> $found');
-              return Image.asset(
-                found,
-                height: imageHeight,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                errorBuilder: (c, e, st) {
-                  if (kDebugMode)
-                    debugPrint('DEBUG_ASSET_ERROR: $e for $found');
-                  return _fallbackImage(height: imageHeight);
-                },
-              );
+              if (kDebugMode && index < 3) debugPrint('[DEBUG_IMG] Found asset: $found'); // log only first few
+              return Image.asset(found, height: imageHeight, width: double.infinity, fit: BoxFit.cover, errorBuilder: (_,err,stack)=> _fallbackImage(height: imageHeight));
             } else {
-              if (kDebugMode)
-                debugPrint(
-                    'DEBUG_ASSET_MISSING for ${plant.id}, tried: $finalCandidates');
+              if (kDebugMode) debugPrint('[DEBUG_IMG] No asset found for $base');
               return _fallbackImage(height: imageHeight);
             }
           },
         );
       }
     } else {
-      if (kDebugMode)
-        debugPrint('DEBUG_NO_RAWPATH for plant ${plant.id} - using fallback');
+      if (kDebugMode) debugPrint('[DEBUG_IMG] No raw path for ${plant.commonName}');
       imageWidget = _fallbackImage(height: imageHeight);
     }
 
@@ -368,106 +374,83 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           widget.onPlantSelected!(plant);
         } else if (widget.isSelectionMode) {
           Navigator.of(context).pop(plant.id);
+        } else {
+          // Si c'est une plante custom, on permet l'édition
+          if (isCustom) {
+             Navigator.of(context).push(
+               MaterialPageRoute(builder: (_) => CustomPlantFormScreen(plantToEdit: plant))
+             );
+          } else {
+             // Afficher les détails ou rien si pas selection mode
+             // Pour l'instant rien ou snackbar
+          }
         }
       },
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         clipBehavior: Clip.hardEdge,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
-            SizedBox(height: 180.0, child: imageWidget),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    plant.commonName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w600),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if ((plant.scientificName).isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6.0),
-                      child: Text(
-                        plant.scientificName,
-                        style: Theme.of(context).textTheme.bodySmall,
-                        maxLines: 1,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 180.0, child: imageWidget),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        plant.commonName,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                ],
-              ),
+                      if ((plant.scientificName).isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6.0),
+                          child: Text(
+                            plant.scientificName,
+                            style: Theme.of(context).textTheme.bodySmall,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
+            if (isCustom)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text('Perso', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black)),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
 
-  // helper to produce ascii-safe filename
-  String _toFilenameSafe(String input) {
-    var s = input.toLowerCase();
-    const diacritics = {
-      'à': 'a',
-      'á': 'a',
-      'â': 'a',
-      'ã': 'a',
-      'ä': 'a',
-      'å': 'a',
-      'ç': 'c',
-      'è': 'e',
-      'é': 'e',
-      'ê': 'e',
-      'ë': 'e',
-      'ì': 'i',
-      'í': 'i',
-      'î': 'i',
-      'ï': 'i',
-      'ñ': 'n',
-      'ò': 'o',
-      'ó': 'o',
-      'ô': 'o',
-      'õ': 'o',
-      'ö': 'o',
-      'ù': 'u',
-      'ú': 'u',
-      'û': 'u',
-      'ü': 'u',
-      'ý': 'y',
-      'ÿ': 'y',
-      'œ': 'oe',
-      'æ': 'ae',
-    };
-    diacritics.forEach((k, v) {
-      s = s.replaceAll(k, v);
-    });
-    s = s.replaceAll(RegExp(r'[^a-z0-9\s_\-]'), '');
-    s = s.replaceAll(RegExp(r'\s+'), '_');
-    return s;
-  }
+
 
   @override
   Widget build(BuildContext context) {
     final providerPlants = ref.watch(plantsListProvider);
     final sourcePlants =
         widget.plants.isNotEmpty ? widget.plants : providerPlants;
-
-    if (kDebugMode) {
-      if (providerPlants.isNotEmpty) {
-        try {
-          debugPrint('DEBUG_PLANT_SAMPLE: ${providerPlants.first.toJson()}');
-        } catch (_) {}
-      } else {
-        debugPrint('DEBUG_PROVIDER_EMPTY');
-      }
-    }
 
     final filteredPlants =
         _filterPlantsList(sourcePlants, _searchController.text);
@@ -479,6 +462,15 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CustomPlantFormScreen())
+          );
+        },
+        child: const Icon(Icons.add),
+        tooltip: 'Ajouter une plante personnalisée',
+      ),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, constraints) {
           final crossAxisCount = constraints.maxWidth >= 1000
@@ -488,7 +480,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                   : (constraints.maxWidth >= 500 ? 2 : 1));
 
           final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-          final bottomPadding = bottomInset + 20.0;
+          // Add extra padding for FAB
+          final bottomPadding = bottomInset + 80.0;
 
           final double desiredTileHeight =
               constraints.maxWidth >= 700 ? 300.0 : 320.0;
@@ -503,7 +496,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
                     hintText:
-                        'Rechercher une plante (nom, scientifique, description...)',
+                        'Rechercher une plante...',
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
@@ -560,7 +553,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                           itemCount: filteredPlants.length,
                           itemBuilder: (context, index) {
                             final plant = filteredPlants[index];
-                            return _buildPlantCard(plant);
+                            return _buildPlantCard(plant, index);
                           },
                         ),
                 ),
