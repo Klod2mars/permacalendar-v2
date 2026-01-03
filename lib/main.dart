@@ -16,7 +16,7 @@ void main() async {
   // âœ… NOUVEAU : Utiliser AppInitializer pour une initialisation complète
   await AppInitializer.initialize();
 
-  // Initialiser les données locales pour les dates
+  // Initialires les données locales pour les dates
   await initializeDateFormatting('fr_FR', null);
 
   runApp(const ProviderScope(child: MyApp()));

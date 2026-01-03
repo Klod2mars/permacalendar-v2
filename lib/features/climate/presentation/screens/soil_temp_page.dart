@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../providers/soil_temp_provider.dart';
 import 'soil_temp_sheet.dart';
+import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 
 class SoilTempPage extends ConsumerWidget {
   final String scopeKey;
@@ -177,10 +178,71 @@ class SoilTempPage extends ConsumerWidget {
               Expanded(
                 child: adviceAsync.when(
                   data: (adviceList) {
-                    if (adviceList.isEmpty)
+                    // 1. Vérifier si erreurs dans catalogue
+                    final catalogError = ref.watch(plantCatalogErrorProvider);
+                    if (catalogError != null) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text("Erreur catalogue: $catalogError",
+                              style: const TextStyle(color: Colors.redAccent),
+                              textAlign: TextAlign.center),
+                        ),
+                      );
+                    }
+
+                    // 2. Vérifier si DB vide
+                    final allPlants = ref.watch(plantsListProvider);
+                    final isLoading = ref.watch(plantCatalogLoadingProvider);
+
+                    if (allPlants.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.inventory_2_outlined,
+                                color: Colors.white24, size: 64),
+                            const SizedBox(height: 16),
+                            const Text(
+                              "Base de données de plantes vide.",
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                            const SizedBox(height: 16),
+                            isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.amber)
+                                : ElevatedButton.icon(
+                                    onPressed: () {
+                                      ref
+                                          .read(plantCatalogProvider.notifier)
+                                          .seedDefaultPlants();
+                                    },
+                                    icon: const Icon(Icons.refresh),
+                                    label: const Text("Recharger les plantes"),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white24,
+                                      foregroundColor: Colors.white,
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    // 3. Si liste conseils vide mais plantes existent -> Aucune correspondance
+                    if (adviceList.isEmpty) {
                       return const Center(
-                          child: Text("Aucune plante chargée",
-                              style: TextStyle(color: Colors.white70)));
+                        child:Padding(
+                          padding: EdgeInsets.all(32.0),
+                          child: Text(
+                            "Aucune plante avec données de germination trouvée.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white54),
+                          ),
+                        ),
+                      );
+                    }
+
                     return ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: adviceList.length,

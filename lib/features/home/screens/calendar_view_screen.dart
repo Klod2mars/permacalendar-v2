@@ -870,7 +870,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       case 'treatment':
         return Icons.science;
       case 'harvest':
-        return Icons.agriculture;
+        return Icons.shopping_basket;
       case 'winter_protection':
         return Icons.ac_unit;
       case 'repair':
@@ -911,7 +911,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             label: const Text('Récoltes'),
             selected: filter.showHarvestsOnly,
             onSelected: (_) => notifier.toggleHarvestsOnly(),
-            avatar: const Icon(Icons.agriculture, size: 16),
+            avatar: const Icon(Icons.shopping_basket, size: 16),
           ),
           const SizedBox(width: 8),
           FilterChip(

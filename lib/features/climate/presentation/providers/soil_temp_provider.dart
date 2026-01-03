@@ -320,9 +320,16 @@ final sowingAdviceProvider =
   final adviceList = <SowingAdvice>[];
 
   for (final plant in plants) {
-    if (plant.germination == null) continue;
+    if (plant.germination == null) {
+      // DEBUG: Inclure quand meme pour voir si la plante existe
+      adviceList.add(SowingAdvice(plant: plant, status: SowingStatus.wait, reason: "Données de germination manquantes"));
+      continue;
+    }
     final minGerm = plant.minGerminationTemperature;
-    if (minGerm == null) continue;
+    if (minGerm == null) {
+       adviceList.add(SowingAdvice(plant: plant, status: SowingStatus.wait, reason: "Température min. non définie"));
+       continue;
+    }
 
     // Logic rules
     final optimalRange = plant.germination!['optimalTemperature'];

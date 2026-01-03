@@ -30,8 +30,8 @@ class PlantHiveException implements Exception {
 class PlantHiveRepository {
   static const String _boxName = 'plants_box';
   // Primary path kept for backward compatibility; fallback to canonical plants.json
-  static const String _jsonAssetPath = 'assets/data/plants_merged_clean.json';
-  static const String _jsonAssetFallback = 'assets/data/plants.json';
+  static const String _jsonAssetPath = 'assets/data/plants.json';
+  static const String _jsonAssetFallback = 'assets/data/plants_merged_clean.json';
 
   Box<PlantHive>? _box;
   bool _isInitialized = false;
@@ -138,12 +138,17 @@ class PlantHiveRepository {
   }
 
   /// Initialise la base de données depuis le fichier JSON des assets
-  Future<void> initializeFromJson() async {
+  Future<void> initializeFromJson({bool clearBefore = false}) async {
     try {
       developer.log('PlantHiveRepository: Début du chargement depuis JSON',
           name: 'PlantHiveRepository');
       // Visible debug print to ensure startup is logged
-      print('PlantHiveRepository: initializeFromJson START');
+      print('PlantHiveRepository: initializeFromJson START (clearBefore=$clearBefore)');
+
+      if (clearBefore) {
+        await clearAllPlants();
+        print('PlantHiveRepository: Box cleared before initialization');
+      }
 
       // Try primary path first, then fallback path. Log clearly which path was used.
       String jsonString;
@@ -191,30 +196,25 @@ class PlantHiveRepository {
       } else if (jsonData is Map<String, dynamic>) {
         // Format v2.1.0+ (structured avec schema_version)
         final schemaVersion = jsonData['schema_version'] as String?;
+        // Relax check to allow simple maps if needed, but warnings usually good
+        if (schemaVersion == null && !jsonData.containsKey('plants')) {
+             // fallback or throw? let's iterate if 'plants' exists
+             if (jsonData.containsKey('plants')) {
+                 detectedFormat = 'Unknown (has plants)';
+                 plantsList = jsonData['plants'] as List? ?? [];
+             } else {
+                 throw const PlantHiveException(
+                  'Format JSON invalide : Object sans schema_version ni clé plants');
+             }
+        } else {
+            detectedFormat = 'v$schemaVersion (structured)';
+            metadata = jsonData['metadata'] as Map<String, dynamic>?;
 
-        if (schemaVersion == null) {
-          throw const PlantHiveException(
-              'Format JSON invalide : Object sans schema_version (attendu: array ou object avec schema_version)');
+            developer.log('PlantHiveRepository: Format détecté : v$schemaVersion',
+                name: 'PlantHiveRepository');
+
+            plantsList = jsonData['plants'] as List? ?? [];
         }
-
-        detectedFormat = 'v$schemaVersion (structured)';
-        metadata = jsonData['metadata'] as Map<String, dynamic>?;
-
-        developer.log('PlantHiveRepository: Format détecté : v$schemaVersion',
-            name: 'PlantHiveRepository');
-
-        if (metadata != null) {
-          final version = metadata['version'];
-          final totalPlants = metadata['total_plants'];
-          final source = metadata['source'];
-          final updatedAt = metadata['updated_at'];
-
-          developer.log(
-              'PlantHiveRepository: Métadonnées - version: $version, plantes: $totalPlants, source: $source, màj: $updatedAt',
-              name: 'PlantHiveRepository');
-        }
-
-        plantsList = jsonData['plants'] as List? ?? [];
 
         if (plantsList.isEmpty) {
           developer.log(
@@ -268,12 +268,24 @@ class PlantHiveRepository {
 
       _isInitialized = true;
     } catch (e) {
+      print('!!! CRITICAL EXCEPTION initializeFromJson: $e');
       developer.log(
           'PlantHiveRepository: Erreur critique lors du chargement JSON: $e',
           name: 'PlantHiveRepository',
           level: 1000);
       throw PlantHiveException(
           'Impossible de charger les plantes depuis JSON: $e');
+    }
+  }
+
+  /// Vide complétement la box (pour rechargement propre)
+  Future<void> clearAllPlants() async {
+    try {
+      final box = await _getBox();
+      await box.clear();
+      print('PlantHiveRepository: Box cleared.');
+    } catch (e) {
+      developer.log('PlantHiveRepository: Erreur lors du vidage de la box: $e', level: 1000);
     }
   }
 
@@ -557,23 +569,29 @@ class PlantHiveRepository {
       harvestMonths: hiveModel.harvestMonths,
       marketPricePerKg: hiveModel.marketPricePerKg,
       defaultUnit: hiveModel.defaultUnit,
-      nutritionPer100g: hiveModel.nutritionPer100g,
-      germination: hiveModel.germination,
-      growth: hiveModel.growth,
-      watering: hiveModel.watering,
-      thinning: hiveModel.thinning,
-      weeding: hiveModel.weeding,
+      nutritionPer100g: _castMap(hiveModel.nutritionPer100g),
+      germination: _castMap(hiveModel.germination),
+      growth: _castMap(hiveModel.growth),
+      watering: _castMap(hiveModel.watering),
+      thinning: _castMap(hiveModel.thinning),
+      weeding: _castMap(hiveModel.weeding),
       culturalTips: hiveModel.culturalTips,
-      biologicalControl: hiveModel.biologicalControl,
+      biologicalControl: _castMap(hiveModel.biologicalControl),
       harvestTime: hiveModel.harvestTime,
-      companionPlanting: hiveModel.companionPlanting,
-      notificationSettings: hiveModel.notificationSettings,
-      varieties: hiveModel.varieties,
-      metadata: hiveModel.metadata ?? {},
+      companionPlanting: _castMap(hiveModel.companionPlanting),
+      notificationSettings: _castMap(hiveModel.notificationSettings),
+      varieties: _castMap(hiveModel.varieties),
+      metadata: _castMap(hiveModel.metadata) ?? {},
       createdAt: hiveModel.createdAt,
       updatedAt: hiveModel.updatedAt,
       isActive: hiveModel.isActive,
     );
+  }
+
+  /// Helper safe cast Hive Map<dynamic, dynamic> to Map<String, dynamic>
+  Map<String, dynamic>? _castMap(Map? map) {
+    if (map == null) return null;
+    return Map<String, dynamic>.from(map);
   }
 
   // === MÉTHODES UTILITAIRES POUR LA CONVERSION FLEXIBLE ===
