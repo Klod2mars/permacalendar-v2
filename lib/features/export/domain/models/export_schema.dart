@@ -125,7 +125,17 @@ class ExportSchema {
           id: 'harvest_notes',
           label: 'Notes',
           description: 'Observations saisies lors de la récolte'),
-      // Context fields (populated via join)
+      const ExportField(
+          id: 'harvest_garden_name',
+          label: 'Jardin',
+          description: 'Nom du jardin d\'origine (si disponible)',
+          isContext: true),
+      const ExportField(
+          id: 'harvest_garden_id',
+          label: 'ID Jardin',
+          description: 'Identifiant unique du jardin',
+          isContext: true,
+          isAdvanced: true),
       const ExportField(
           id: 'harvest_bed_name',
           label: 'Parcelle',

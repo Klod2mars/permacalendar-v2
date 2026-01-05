@@ -49,7 +49,11 @@ class PlantCatalogState {
 class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
   @override
   PlantCatalogState build() {
-    loadPlants();
+    // Ne pas lancer d'effets de bord ici.
+    // L'initialisation doit être différée ou gérée autrement si nécessaire,
+    // mais pour un Notifier, state initial est synchrone.
+    // On lance le chargement en asynchrone après le build.
+    Future.microtask(() => loadPlants());
     return const PlantCatalogState();
   }
 

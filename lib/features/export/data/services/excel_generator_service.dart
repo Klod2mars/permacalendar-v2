@@ -1,7 +1,11 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
 
+// NEW IMPORTS
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:permacalendar/core/models/garden_hive.dart'; // Ensure this model is available
 import 'package:permacalendar/core/data/hive/garden_boxes.dart';
 import 'package:permacalendar/core/models/activity.dart' as model_activity;
 import 'package:permacalendar/core/models/garden.dart';
@@ -34,11 +38,54 @@ class ExcelGeneratorService {
     }
 
     // 1. Fetch Data
-    final gardens = GardenBoxes.gardens.values
-        .where((g) =>
-            config.scope.gardenIds.isEmpty ||
-            config.scope.gardenIds.contains(g.id))
-        .toList();
+    // FIX: Read from the correct 'gardens_hive' box instead of legacy GardenBoxes
+    var gardens = <Garden>[];
+    try {
+      final box = await Hive.openBox<GardenHive>('gardens_hive');
+      gardens = box.values
+          .where((gh) =>
+              config.scope.gardenIds.isEmpty ||
+              config.scope.gardenIds.contains(gh.id))
+          .map((gh) {
+            // Convert GardenHive to Garden
+             // Calculate minimal area from beds if possible, or default
+            double totalArea = 10.0;
+            if (gh.gardenBeds.isNotEmpty) {
+                 totalArea = gh.gardenBeds.fold(0.0, (sum, bed) => sum + bed.sizeInSquareMeters);
+            }
+            
+            return Garden(
+              id: gh.id,
+              name: gh.name, // The crucial part
+              description: gh.description ?? '',
+              totalAreaInSquareMeters: totalArea,
+              location: 'Jardin ${gh.name}',
+              createdAt: gh.createdDate,
+              updatedAt: gh.createdDate,
+              metadata: {},
+              isActive: true
+            );
+          })
+          .toList();
+          
+          print('[Export] Loaded ${gardens.length} gardens from "gardens_hive".');
+    } catch (e) {
+      print('[Export] Error loading gardens from gardens_hive: $e');
+      // Fallback to GardenBoxes if new way fails (unlikely)
+      gardens = GardenBoxes.gardens.values
+          .where((g) =>
+              config.scope.gardenIds.isEmpty ||
+              config.scope.gardenIds.contains(g.id))
+          .toList();
+    }
+    
+    // DEBUG LOGS (Using print for visibility)
+    print('[Export] Final Filtered Gardens: ${gardens.length}');
+    
+    // Dump all available garden IDs for debugging
+    for (var g in gardens) {
+      print('[Export] Garden available: id="${g.id}" name="${g.name}"');
+    }
 
     final beds = GardenBoxes.gardenBeds.values
         .where((b) =>
@@ -130,6 +177,7 @@ class ExcelGeneratorService {
         _fillSheet(excel, 'Recoltes', ExportBlockType.harvest, filteredHarvests,
             config, extraData: {
           'beds': beds,
+          'gardens': gardens,
           'plants': plantMap,
           'activities': filteredActivities
         });
@@ -144,6 +192,7 @@ class ExcelGeneratorService {
         _fillSheet(excel, 'Global_Export', ExportBlockType.harvest,
             filteredHarvests, config, extraData: {
           'beds': beds,
+          'gardens': gardens,
           'plants': plantMap,
           'activities': filteredActivities,
           'flat': true
@@ -193,7 +242,19 @@ class ExcelGeneratorService {
 
     for (var block in config.blocks) {
       if (!block.isEnabled) continue;
-      for (var fieldId in block.selectedFieldIds) {
+
+      // Include forced fields for Harvest block in Dictionary
+      List<String> effectiveFieldIds = List.from(block.selectedFieldIds);
+      if (block.type == ExportBlockType.harvest) {
+        final required = ['harvest_garden_name', 'harvest_bed_name'];
+        for (var req in required) {
+          if (!effectiveFieldIds.contains(req)) {
+            effectiveFieldIds.add(req);
+          }
+        }
+      }
+
+      for (var fieldId in effectiveFieldIds) {
         final def = ExportSchema.getFieldById(block.type, fieldId);
         if (def != null) {
           sheet.appendRow([
@@ -210,9 +271,22 @@ class ExcelGeneratorService {
       List<dynamic> data, ExportConfig config,
       {Map<String, dynamic>? extraData}) {
     var sheet = excel[sheetName];
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm', 'fr_FR');
 
     // 1. Headers
     List<String> fieldIds = config.getSelectedFieldsFor(type);
+
+    // Forcer l'ajout des colonnes Jardin + Parcelle uniquement pour Recoltes
+    if (type == ExportBlockType.harvest) {
+      final required = ['harvest_garden_name', 'harvest_bed_name'];
+      // Insérer dans l'ordre requis au début en évitant les doublons
+      for (var req in required.reversed) {
+        if (fieldIds.contains(req)) {
+          fieldIds.remove(req);
+        }
+        fieldIds.insert(0, req);
+      }
+    }
     List<CellValue> headerRow = [];
     for (var fid in fieldIds) {
       final def = ExportSchema.getFieldById(type, fid);
@@ -222,6 +296,7 @@ class ExcelGeneratorService {
 
     // 2. Data Rows
     List<GardenBed> beds = (extraData?['beds'] as List<GardenBed>?) ?? [];
+    List<Garden> gardens = (extraData?['gardens'] as List<Garden>?) ?? [];
     List<model_activity.Activity> activities =
         (extraData?['activities'] as List<model_activity.Activity>?) ?? [];
 
@@ -229,23 +304,81 @@ class ExcelGeneratorService {
       List<CellValue> row = [];
 
       // Context Resolution (Harvest specific)
+      String? resolvedGardenName;
+      String? resolvedGardenId;
       String? resolvedBedName;
       String? resolvedBedId;
 
       if (type == ExportBlockType.harvest && item is HarvestRecord) {
-        final match = activities
-            .where((a) =>
-                a.type == model_activity.ActivityType.plantingHarvested &&
-                a.metadata['plantName'] == item.plantName &&
-                a.timestamp.difference(item.date).abs().inMinutes < 5)
-            .firstOrNull;
+        // Résolution jardin
+        // 1. Try from filtered list
+        var garden = gardens.where((g) => g.id == item.gardenId).firstOrNull;
+        
+        // 2. Fallback: Scan ALL gardens in DB (Robust lookup)
+        if (garden == null) {
+           print('[Export] Resolution failed for gardenId="${item.gardenId}" in filtered list. Scanning DB...');
+           try {
+             // Use the 'gardens' list which is now correctly populated from hives
+             garden = gardens.firstWhere(
+               (g) => g.id.toString() == item.gardenId.toString(),
+               orElse: () => gardens.firstWhere(
+                  (g) => g.id.trim() == item.gardenId.trim(),
+                  orElse: () => throw Exception('Not found') 
+               )
+             );
+           } catch (_) {
+             print('[Export] CRITICAL: Could not find garden with id="${item.gardenId}" in pre-loaded list.');
+           }
+        }
+        
+        resolvedGardenName = garden?.name;
+        // FALLBACK: If name not found, show ID to prove we tried
+        if (resolvedGardenName == null || resolvedGardenName.isEmpty) {
+          resolvedGardenName = 'Unknown (${item.gardenId})';
+        }
+        
+        resolvedGardenId = item.gardenId;
 
-        if (match != null && match.entityId != null) {
-          final planting = GardenBoxes.plantings.get(match.entityId!);
-          if (planting != null) {
-            resolvedBedId = planting.gardenBedId;
-            final bed = beds.where((b) => b.id == resolvedBedId).firstOrNull;
-            resolvedBedName = bed?.name;
+        // 1) Chercher plantation pertinente dans le même jardin
+        try {
+          final candidatePlantings =
+              GardenBoxes.getActivePlantingsForGarden(item.gardenId)
+                  .where((p) => p.plantId == item.plantId)
+                  .toList();
+
+          if (candidatePlantings.isNotEmpty) {
+            candidatePlantings
+                .sort((a, b) => b.plantedDate.compareTo(a.plantedDate));
+            final Planting? chosen = candidatePlantings.firstWhere(
+              (p) => !p.plantedDate.isAfter(item.date),
+              orElse: () => candidatePlantings.first,
+            );
+            if (chosen != null) {
+              resolvedBedId = chosen.gardenBedId;
+              resolvedBedName =
+                  GardenBoxes.getGardenBedById(resolvedBedId!)?.name;
+            }
+          }
+        } catch (_) {
+          /* fallback plus bas */
+        }
+
+        // 2) Si non trouvé, fallback heuristique existante (activité)
+        if (resolvedBedId == null) {
+          final match = activities
+              .where((a) =>
+                  a.type == model_activity.ActivityType.plantingHarvested &&
+                  a.metadata['plantName'] == item.plantName &&
+                  a.timestamp.difference(item.date).abs().inMinutes < 5)
+              .firstOrNull;
+
+          if (match != null && match.entityId != null) {
+            final planting = GardenBoxes.plantings.get(match.entityId!);
+            if (planting != null) {
+              resolvedBedId = planting.gardenBedId;
+              resolvedBedName =
+                  GardenBoxes.getGardenBedById(resolvedBedId!)?.name;
+            }
           }
         }
       }
@@ -279,6 +412,12 @@ class ExcelGeneratorService {
               break;
             case 'harvest_bed_id':
               value = resolvedBedId;
+              break;
+            case 'harvest_garden_name':
+              value = resolvedGardenName;
+              break;
+            case 'harvest_garden_id':
+              value = resolvedGardenId;
               break;
           }
         }
@@ -354,7 +493,7 @@ class ExcelGeneratorService {
         } else if (value is num) {
           row.add(DoubleCellValue(value.toDouble()));
         } else if (value is DateTime) {
-          row.add(TextCellValue(value.toIso8601String()));
+          row.add(TextCellValue(dateFormat.format(value)));
         } else {
           row.add(TextCellValue(value.toString()));
         }
