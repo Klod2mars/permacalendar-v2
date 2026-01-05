@@ -326,16 +326,30 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         ],
       ),
       child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: FilledButton.icon(
-            onPressed: state.isGenerating
-                ? null
-                : () => _generateExport(notifier, context),
-            icon: const Icon(Icons.download),
-            label: const Text('Générer Export Excel', style: TextStyle(fontSize: 16)),
-          ),
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: FilledButton.icon(
+                onPressed: state.isGenerating
+                    ? null
+                    : () => _generateExport(notifier, context),
+                icon: const Icon(Icons.download),
+                label: const Text('Générer Export Excel',
+                    style: TextStyle(fontSize: 16)),
+              ),
+            ),
+            if (state.persistenceStatus != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  state.persistenceStatus!,
+                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+          ],
         ),
       ),
     );

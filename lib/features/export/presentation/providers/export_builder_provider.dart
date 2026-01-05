@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:permacalendar/core/data/hive/garden_boxes.dart';
@@ -12,19 +13,25 @@ class ExportBuilderState {
   final ExportConfig config;
   final bool isGenerating;
   final List<ExportConfig> presets;
+  final String? persistenceStatus; // DEBUG: To show status/errors in UI
 
   ExportBuilderState({
     required this.config,
     this.isGenerating = false,
     this.presets = const [],
+    this.persistenceStatus,
   });
 
   ExportBuilderState copyWith(
-      {ExportConfig? config, bool? isGenerating, List<ExportConfig>? presets}) {
+      {ExportConfig? config,
+      bool? isGenerating,
+      List<ExportConfig>? presets,
+      String? persistenceStatus}) {
     return ExportBuilderState(
       config: config ?? this.config,
       isGenerating: isGenerating ?? this.isGenerating,
       presets: presets ?? this.presets,
+      persistenceStatus: persistenceStatus ?? this.persistenceStatus,
     );
   }
 }
@@ -32,6 +39,13 @@ class ExportBuilderState {
 class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
   late final ExcelGeneratorService _service;
   // ExportRepositoryImpl? _repository;
+
+  // Helper to sanitize Hive data (LinkedMap<dynamic, dynamic> -> Map<String, dynamic>)
+  Map<String, dynamic> _sanitizeHiveMap(dynamic map) {
+    // Determine the most robust way: round-trip through JSON
+    // This handles nested maps (e.g. inside blocks) which are also dynamic
+    return json.decode(json.encode(map)) as Map<String, dynamic>;
+  }
 
   @override
   ExportBuilderState build() {
@@ -46,46 +60,50 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
         format: ExportFormat.separateSheets,
       );
 
+    String status = "Initializing...";
     print('[ExportPersistence] build() called');
     try {
       final box = GardenBoxes.exportPreferences;
       print('[ExportPersistence] Box open? ${box.isOpen}');
       final savedMap = box.get('current_config');
       print('[ExportPersistence] Type of savedMap: ${savedMap.runtimeType}');
-      print('[ExportPersistence] Raw savedMap: $savedMap');
       
       if (savedMap != null) {
-        // Cast to Map<String, dynamic> safely
-        // Hive returns LinkedMap<dynamic, dynamic> sometimes
-        final map = Map<String, dynamic>.from(savedMap as Map); 
+        // Robust sanitization
+        final map = _sanitizeHiveMap(savedMap); 
         initialConfig = ExportConfig.fromJson(map);
-        print('[ExportPersistence] Config loaded successfully with ID: ${initialConfig.id}');
-        print('[ExportPersistence] Loaded scope gardens: ${initialConfig.scope.gardenIds}');
-        print('[ExportPersistence] Loaded blocks count: ${initialConfig.blocks.length}');
+        status = "Loaded saved config (${initialConfig.blocks.length} blocks)";
       } else {
-        print('[ExportPersistence] No saved config found (savedMap is null)');
+        // Checking if box is really empty or failed
+        if (box.isOpen) {
+             status = "No saved config found (New)";
+        } else {
+             status = "Error: Box not open";
+        }
       }
     } catch (e, stack) {
+      status = "Error loading: $e";
       print('Error loading export config: $e');
       print(stack);
     }
 
     return ExportBuilderState(
       config: initialConfig,
+      persistenceStatus: status,
     );
   }
 
   Future<void> _save(ExportConfig config) async {
     try {
       final box = GardenBoxes.exportPreferences;
-      print('[ExportPersistence] Saving config... ID: ${config.id}');
-      print('[ExportPersistence] Saving blocks: ${config.blocks.length}, Scope gardens: ${config.scope.gardenIds}');
+      // Convert to pure JSON-compatible map to avoid any custom object issues
+      final data = json.decode(json.encode(config.toJson()));
+      await box.put('current_config', data);
       
-      await box.put('current_config', config.toJson());
-      // Optional: await box.flush(); // To force write to disk immediately if crucial
-      print('[ExportPersistence] Saved to box.');
+      state = state.copyWith(persistenceStatus: "Saved at ${DateTime.now().toIso8601String().split('T')[1].split('.')[0]}");
     } catch (e) {
       print('Error saving export config: $e');
+      state = state.copyWith(persistenceStatus: "Save Error: $e");
     }
   }
 
