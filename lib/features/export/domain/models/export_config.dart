@@ -201,10 +201,13 @@ class ExportConfig {
         id: json['id'],
         name: json['name'],
         scope: ExportScope.fromJson(json['scope']),
-        blocks: (json['blocks'] as List)
-            .map((b) => ExportBlockSelection.fromJson(b))
+        blocks: ((json['blocks'] as List?) ?? [])
+            .map((b) => ExportBlockSelection.fromJson(Map<String, dynamic>.from(b as Map)))
             .toList(),
-        format: ExportFormat.values.firstWhere((e) => e.name == json['format']),
+        format: ExportFormat.values.firstWhere(
+          (e) => e.name == json['format'],
+          orElse: () => ExportFormat.separateSheets,
+        ),
         includeContextIds: json['includeContextIds'] as bool? ?? true,
         includeContextNames: json['includeContextNames'] as bool? ?? true,
       );

@@ -46,16 +46,28 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
         format: ExportFormat.separateSheets,
       );
 
+    print('[ExportPersistence] build() called');
     try {
       final box = GardenBoxes.exportPreferences;
+      print('[ExportPersistence] Box open? ${box.isOpen}');
       final savedMap = box.get('current_config');
+      print('[ExportPersistence] Type of savedMap: ${savedMap.runtimeType}');
+      print('[ExportPersistence] Raw savedMap: $savedMap');
+      
       if (savedMap != null) {
         // Cast to Map<String, dynamic> safely
-        final map = Map<String, dynamic>.from(savedMap as Map);
+        // Hive returns LinkedMap<dynamic, dynamic> sometimes
+        final map = Map<String, dynamic>.from(savedMap as Map); 
         initialConfig = ExportConfig.fromJson(map);
+        print('[ExportPersistence] Config loaded successfully with ID: ${initialConfig.id}');
+        print('[ExportPersistence] Loaded scope gardens: ${initialConfig.scope.gardenIds}');
+        print('[ExportPersistence] Loaded blocks count: ${initialConfig.blocks.length}');
+      } else {
+        print('[ExportPersistence] No saved config found (savedMap is null)');
       }
-    } catch (e) {
+    } catch (e, stack) {
       print('Error loading export config: $e');
+      print(stack);
     }
 
     return ExportBuilderState(
@@ -63,22 +75,27 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
     );
   }
 
-  void _save(ExportConfig config) {
+  Future<void> _save(ExportConfig config) async {
     try {
       final box = GardenBoxes.exportPreferences;
-      box.put('current_config', config.toJson());
+      print('[ExportPersistence] Saving config... ID: ${config.id}');
+      print('[ExportPersistence] Saving blocks: ${config.blocks.length}, Scope gardens: ${config.scope.gardenIds}');
+      
+      await box.put('current_config', config.toJson());
+      // Optional: await box.flush(); // To force write to disk immediately if crucial
+      print('[ExportPersistence] Saved to box.');
     } catch (e) {
       print('Error saving export config: $e');
     }
   }
 
-  void updateScope(ExportScope newScope) {
+  Future<void> updateScope(ExportScope newScope) async {
     final newConfig = state.config.copyWith(scope: newScope);
     state = state.copyWith(config: newConfig);
-    _save(newConfig);
+    await _save(newConfig);
   }
 
-  void toggleBlock(ExportBlockType type, bool enabled) {
+  Future<void> toggleBlock(ExportBlockType type, bool enabled) async {
     final blocks = List<ExportBlockSelection>.from(state.config.blocks);
     final index = blocks.indexWhere((b) => b.type == type);
 
@@ -96,10 +113,10 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
     }
     final newConfig = state.config.copyWith(blocks: blocks);
     state = state.copyWith(config: newConfig);
-    _save(newConfig);
+    await _save(newConfig);
   }
 
-  void toggleField(ExportBlockType type, String fieldId) {
+  Future<void> toggleField(ExportBlockType type, String fieldId) async {
     final blocks = List<ExportBlockSelection>.from(state.config.blocks);
     final index = blocks.indexWhere((b) => b.type == type);
     if (index >= 0) {
@@ -112,14 +129,14 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
       blocks[index] = blocks[index].copyWith(selectedFieldIds: currentIds);
       final newConfig = state.config.copyWith(blocks: blocks);
       state = state.copyWith(config: newConfig);
-      _save(newConfig);
+      await _save(newConfig);
     }
   }
 
-  void updateFormat(ExportFormat format) {
+  Future<void> updateFormat(ExportFormat format) async {
     final newConfig = state.config.copyWith(format: format);
     state = state.copyWith(config: newConfig);
-    _save(newConfig);
+    await _save(newConfig);
   }
 
   Future<List<int>> generate() async {
