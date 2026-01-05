@@ -340,15 +340,6 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                     style: TextStyle(fontSize: 16)),
               ),
             ),
-            if (state.persistenceStatus != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(
-                  state.persistenceStatus!,
-                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                  textAlign: TextAlign.center,
-                ),
-              ),
           ],
         ),
       ),

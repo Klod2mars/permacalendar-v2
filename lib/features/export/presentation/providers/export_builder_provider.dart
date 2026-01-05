@@ -60,36 +60,22 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
         format: ExportFormat.separateSheets,
       );
 
-    String status = "Initializing...";
-    print('[ExportPersistence] build() called');
     try {
       final box = GardenBoxes.exportPreferences;
-      print('[ExportPersistence] Box open? ${box.isOpen}');
       final savedMap = box.get('current_config');
-      print('[ExportPersistence] Type of savedMap: ${savedMap.runtimeType}');
       
       if (savedMap != null) {
         // Robust sanitization
         final map = _sanitizeHiveMap(savedMap); 
         initialConfig = ExportConfig.fromJson(map);
-        status = "Loaded saved config (${initialConfig.blocks.length} blocks)";
-      } else {
-        // Checking if box is really empty or failed
-        if (box.isOpen) {
-             status = "No saved config found (New)";
-        } else {
-             status = "Error: Box not open";
-        }
       }
     } catch (e, stack) {
-      status = "Error loading: $e";
       print('Error loading export config: $e');
       print(stack);
     }
 
     return ExportBuilderState(
       config: initialConfig,
-      persistenceStatus: status,
     );
   }
 
@@ -99,11 +85,8 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
       // Convert to pure JSON-compatible map to avoid any custom object issues
       final data = json.decode(json.encode(config.toJson()));
       await box.put('current_config', data);
-      
-      state = state.copyWith(persistenceStatus: "Saved at ${DateTime.now().toIso8601String().split('T')[1].split('.')[0]}");
     } catch (e) {
       print('Error saving export config: $e');
-      state = state.copyWith(persistenceStatus: "Save Error: $e");
     }
   }
 
