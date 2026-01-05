@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/models/export_schema.dart';
 import 'package:permacalendar/features/export/presentation/providers/export_builder_provider.dart';
+import 'package:permacalendar/features/garden/providers/garden_provider.dart';
+import 'package:permacalendar/core/models/garden_freezed.dart';
 
 class ExportBuilderScreen extends ConsumerStatefulWidget {
   const ExportBuilderScreen({super.key});
@@ -82,6 +84,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
 
   Widget _buildScopeSection(
       ExportBuilderState state, ExportBuilderNotifier notifier) {
+    final gardens = ref.watch(activeGardensProvider);
+
     return Card(
       elevation: 0,
       color: Theme.of(context).colorScheme.surfaceContainerLow,
@@ -115,22 +119,96 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                 : "${state.config.scope.gardenIds.length} jardin(s) sélectionné(s)"),
             value: state.config.scope.gardenIds.isNotEmpty,
             onChanged: (val) {
-              // Logic to open garden selector dialog would go here
-              // For now just toggle 'all' or 'none' (demo)
               if (!val) {
                 notifier
                     .updateScope(state.config.scope.copyWith(gardenIds: []));
               } else {
-                // Mock selection
-                notifier.updateScope(
-                    state.config.scope.copyWith(gardenIds: ['mock_id']));
+                _showGardenSelector(context, gardens, state.config.scope.gardenIds, notifier);
               }
             },
           ),
+          // Link to open selector if filter is active
+          if (state.config.scope.gardenIds.isNotEmpty)
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 72, bottom: 12), // Align with title
+              child: TextButton.icon(
+                onPressed: () => _showGardenSelector(context, gardens, state.config.scope.gardenIds, notifier),
+                icon: const Icon(Icons.edit, size: 16),
+                label: const Text("Modifier la sélection"),
+                style: TextButton.styleFrom(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap, 
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero
+                ),
+              ),
+            )
         ],
       ),
     );
   }
+
+  void _showGardenSelector(BuildContext context, List<GardenFreezed> gardens,
+      List<String> currentSelection, ExportBuilderNotifier notifier) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        // StatefulBuilder to handle local checkbox updates
+        List<String> tempSelection = List.from(currentSelection);
+        // If empty init with all? No, empty means 'All' in logic, but if opening selector we want to select specific.
+        // If coming from "Off" state, maybe preselect all? Use passed currentSelection.
+        
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text("Sélectionner les jardins"),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: gardens.length,
+                  itemBuilder: (context, index) {
+                    final garden = gardens[index];
+                    final isSelected = tempSelection.contains(garden.id);
+                    return CheckboxListTile(
+                      title: Text(garden.name),
+                      subtitle: Text(garden.location.isEmpty ? 'Sans lieu' : garden.location),
+                      value: isSelected,
+                      onChanged: (val) {
+                        setState(() {
+                          if (val == true) {
+                            tempSelection.add(garden.id);
+                          } else {
+                            tempSelection.remove(garden.id);
+                          }
+                        });
+                      },
+                    );
+                  },
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Annuler"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Update global state
+                    notifier.updateScope(notifier.state.config.scope.copyWith(gardenIds: tempSelection));
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Valider"),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+
 
   Widget _buildBlocksSection(
       ExportBuilderState state, ExportBuilderNotifier notifier) {

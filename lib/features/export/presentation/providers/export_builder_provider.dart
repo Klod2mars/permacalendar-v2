@@ -5,6 +5,7 @@ import '../../data/repositories/export_repository_impl.dart';
 import '../../data/services/excel_generator_service.dart';
 import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/models/export_schema.dart';
+import 'package:permacalendar/core/data/hive/garden_boxes.dart';
 
 /// State of the Export Builder
 class ExportBuilderState {
@@ -30,34 +31,51 @@ class ExportBuilderState {
 
 class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
   late final ExcelGeneratorService _service;
-  ExportRepositoryImpl? _repository;
+  // ExportRepositoryImpl? _repository;
 
   @override
   ExportBuilderState build() {
     _service = ExcelGeneratorService();
-    // Use a basic box or shared prefs for presets. Using 'settings' box if available or create one.
-    // For now, assuming we can use a temporary box or just the main settings box if accessible.
-    // We will use existing 'settings' box from GardenBoxes if wrapped?
-    // Just instantiating repo with the settings box.
-    // Assuming GardenBoxes has a settings box or similar. If not, using a standalone simple check.
-
-    // Quick fix: we need a box.
-    // _repository = ExportRepositoryImpl(Hive.box('settings'));
-    // Skipping repo init logic in build, will do lazy load or mock for now.
-
-    return ExportBuilderState(
-      config: ExportConfig(
+    
+    // Try calculate initial config from persistence
+    ExportConfig initialConfig = ExportConfig(
         id: const Uuid().v4(),
         name: 'Custom Export',
         scope: const ExportScope(),
         blocks: [],
         format: ExportFormat.separateSheets,
-      ),
+      );
+
+    try {
+      final box = GardenBoxes.exportPreferences;
+      final savedMap = box.get('current_config');
+      if (savedMap != null) {
+        // Cast to Map<String, dynamic> safely
+        final map = Map<String, dynamic>.from(savedMap as Map);
+        initialConfig = ExportConfig.fromJson(map);
+      }
+    } catch (e) {
+      print('Error loading export config: $e');
+    }
+
+    return ExportBuilderState(
+      config: initialConfig,
     );
   }
 
+  void _save(ExportConfig config) {
+    try {
+      final box = GardenBoxes.exportPreferences;
+      box.put('current_config', config.toJson());
+    } catch (e) {
+      print('Error saving export config: $e');
+    }
+  }
+
   void updateScope(ExportScope newScope) {
-    state = state.copyWith(config: state.config.copyWith(scope: newScope));
+    final newConfig = state.config.copyWith(scope: newScope);
+    state = state.copyWith(config: newConfig);
+    _save(newConfig);
   }
 
   void toggleBlock(ExportBlockType type, bool enabled) {
@@ -76,7 +94,9 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
       blocks.add(ExportBlockSelection(
           type: type, isEnabled: enabled, selectedFieldIds: defaultFields));
     }
-    state = state.copyWith(config: state.config.copyWith(blocks: blocks));
+    final newConfig = state.config.copyWith(blocks: blocks);
+    state = state.copyWith(config: newConfig);
+    _save(newConfig);
   }
 
   void toggleField(ExportBlockType type, String fieldId) {
@@ -90,12 +110,16 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
         currentIds.add(fieldId);
       }
       blocks[index] = blocks[index].copyWith(selectedFieldIds: currentIds);
-      state = state.copyWith(config: state.config.copyWith(blocks: blocks));
+      final newConfig = state.config.copyWith(blocks: blocks);
+      state = state.copyWith(config: newConfig);
+      _save(newConfig);
     }
   }
 
   void updateFormat(ExportFormat format) {
-    state = state.copyWith(config: state.config.copyWith(format: format));
+    final newConfig = state.config.copyWith(format: format);
+    state = state.copyWith(config: newConfig);
+    _save(newConfig);
   }
 
   Future<List<int>> generate() async {

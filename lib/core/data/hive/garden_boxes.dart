@@ -18,6 +18,7 @@ class GardenBoxes {
   static const String _harvestsBoxName = 'harvests';
   static const String _activitiesBoxName = 'activities';
   static const String _plantsBoxName = 'plants';
+  static const String _exportPreferencesBoxName = 'export_preferences';
 
   static Box<Garden>? _gardensBox;
   static Box<GardenBed>? _gardenBedsBox;
@@ -25,6 +26,7 @@ class GardenBoxes {
   static Box? _harvestsBox; // Stores Maps (JSON)
   static Box? _activitiesBox; // Stores Activities
   static Box? _plantsBox; // Stores Plants
+  static Box? _exportPreferencesBox; // Stores Export Config (Maps)
 
   // Getters pour les boxes
   static Box<Garden> get gardens {
@@ -69,6 +71,13 @@ class GardenBoxes {
     return _plantsBox!;
   }
 
+  static Box get exportPreferences {
+    if (_exportPreferencesBox == null || !_exportPreferencesBox!.isOpen) {
+      throw Exception('Export preferences box n\'est pas initialisée');
+    }
+    return _exportPreferencesBox!;
+  }
+
   static Future<void> initialize() async {
     try {
       // Ouvrir les boxes
@@ -78,6 +87,7 @@ class GardenBoxes {
       _harvestsBox = await Hive.openBox(_harvestsBoxName);
       _activitiesBox = await Hive.openBox(_activitiesBoxName);
       _plantsBox = await Hive.openBox(_plantsBoxName);
+      _exportPreferencesBox = await Hive.openBox(_exportPreferencesBoxName);
       debugPrint('[GardenBoxes] harvests box opened: ${_harvestsBox!.name}');
 
       if (verboseLogging)
@@ -96,6 +106,7 @@ class GardenBoxes {
     await _harvestsBox?.close();
     await _activitiesBox?.close();
     await _plantsBox?.close();
+    await _exportPreferencesBox?.close();
 
     _gardensBox = null;
     _gardenBedsBox = null;
@@ -103,6 +114,7 @@ class GardenBoxes {
     _harvestsBox = null;
     _activitiesBox = null;
     _plantsBox = null;
+    _exportPreferencesBox = null;
   }
 
   // Méthodes utilitaires pour les jardins
