@@ -353,7 +353,12 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
       await file.writeAsBytes(bytes);
 
       // Share
-      await Share.shareXFiles([XFile(file.path)],
+      await Share.shareXFiles(
+          [
+            XFile(file.path,
+                mimeType:
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+          ],
           text: 'Voici votre export PermaCalendar');
     } catch (e) {
       if (context.mounted) {
