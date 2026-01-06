@@ -4,14 +4,19 @@ import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:developer' as developer;
 
 import '../../core/data/hive/garden_boxes.dart';
+import '../../core/models/activity.dart';
+import '../../shared/services/task_document_generator.dart';
 import '../../core/models/activity.dart';
 import '../../core/models/garden.dart';
 import '../../core/models/garden_bed.dart';
 import '../../core/models/garden_freezed.dart';
 import '../../features/garden/providers/garden_provider.dart';
+
+enum ExportOption { none, shareText, exportPdf, exportDocx }
 
 class CreateTaskDialog extends ConsumerStatefulWidget {
   final DateTime? initialDate;
@@ -35,6 +40,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   bool _urgent = false;
   String _priority = 'Medium'; // Low, Medium, High
   String _assignee = '';
+  ExportOption _selectedExportOption = ExportOption.none;
 
   late DateTime _startDate;
   TimeOfDay? _startTime;
@@ -196,6 +202,32 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
         // debug log for verification
         developer.log('[CreateTask] written activity id=${newTask.id} nextRun=${newTask.metadata['nextRunDate']}');
+
+        // Export Logic
+        try {
+          if (_selectedExportOption == ExportOption.shareText) {
+            await _shareTask(); 
+          } else if (_selectedExportOption == ExportOption.exportPdf) {
+            final f = await TaskDocumentGenerator.generateTaskPdf(newTask);
+            if (mounted) {
+              await TaskDocumentGenerator.shareFile(f, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF)');
+            }
+          } else if (_selectedExportOption == ExportOption.exportDocx) {
+            final f = await TaskDocumentGenerator.generateTaskDocx(newTask);
+            if (mounted) {
+              await TaskDocumentGenerator.shareFile(f, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', context, shareText: 'Tâche PermaCalendar (.docx)');
+            }
+          }
+        } catch (e, s) {
+          developer.log('Export error: $e\n$s');
+          if (mounted) {
+             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: Text('Erreur export: $e'),
+               backgroundColor: Colors.orange, // Warning color, as task IS saved
+             ));
+          }
+          // Do not return here, we still want to close the dialog as the task was saved.
+        }
 
         if (mounted) {
            Navigator.pop(context, true);
@@ -458,6 +490,24 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                 ),
                 initialValue: _assignee,
                 onChanged: (v) => _assignee = v,
+              ),
+              const SizedBox(height: 16),
+
+              // Export Options
+              DropdownButtonFormField<ExportOption>(
+                value: _selectedExportOption,
+                decoration: const InputDecoration(
+                  labelText: 'Sortie / Partage',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.share),
+                ),
+                items: const [
+                  DropdownMenuItem(value: ExportOption.none, child: Text('Aucune (Sauvegarde uniquement)')),
+                  DropdownMenuItem(value: ExportOption.shareText, child: Text('Partager (texte)')),
+                  DropdownMenuItem(value: ExportOption.exportPdf, child: Text('Exporter — PDF')),
+                  DropdownMenuItem(value: ExportOption.exportDocx, child: Text('Exporter — Word (.docx)')),
+                ],
+                onChanged: (v) => setState(() => _selectedExportOption = v ?? ExportOption.none),
               ),
               const SizedBox(height: 16),
 
