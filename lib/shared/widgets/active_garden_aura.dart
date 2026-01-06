@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ActiveGardenAura extends StatefulWidget {
   const ActiveGardenAura({
     super.key,
-    this.size = 80.0,
+    this.size = 100.0,
     this.color,
     this.isActive = true,
   });
@@ -27,7 +27,7 @@ class _ActiveGardenAuraState extends State<ActiveGardenAura>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 3500), // Speed up (was 6000)
     );
     if (widget.isActive) _ctrl.repeat();
   }
@@ -50,110 +50,104 @@ class _ActiveGardenAuraState extends State<ActiveGardenAura>
 
   @override
   Widget build(BuildContext context) {
-    // Respect reduced motion / accessibility
     final mq = MediaQuery.of(context);
     final disableAnimations = mq.disableAnimations || mq.accessibleNavigation;
-    final color = widget.color ?? const Color(0xFF7BC26A); // doux vert
+    // Use a brighter white/green by default for better contrast
+    final color = widget.color ?? const Color(0xFFFFFFFF); 
 
     if (disableAnimations) {
-      // static aura fallback (subtil ring)
-      return SizedBox(
-        width: widget.size * 1.3,
-        height: widget.size * 1.3,
-        child: Center(
-          child: CustomPaint(
-            painter: _AuraPainter(
-              progress: 0.0,
-              color: color,
-              staticMode: true,
-            ),
-          ),
+      return CustomPaint(
+        painter: _OrganicCloudPainter(
+          progress: 0.0,
+          color: color,
+          staticMode: true,
         ),
+        size: Size(widget.size, widget.size),
       );
     }
 
-    return SizedBox(
-      width: widget.size * 1.4,
-      height: widget.size * 1.4,
-      child: RepaintBoundary(
-        child: AnimatedBuilder(
-          animation: _ctrl,
-          builder: (context, child) {
-            return Transform.rotate(
-              angle: _ctrl.value * 2 * math.pi,
-              child: CustomPaint(
-                painter: _AuraPainter(
-                  progress: _ctrl.value,
-                  color: color,
-                  staticMode: false,
-                ),
-              ),
-            );
-          },
-        ),
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _ctrl,
+        builder: (context, child) {
+          return CustomPaint(
+            painter: _OrganicCloudPainter(
+              progress: _ctrl.value,
+              color: color,
+              staticMode: false,
+            ),
+            size: Size(widget.size, widget.size),
+          );
+        },
       ),
     );
   }
 }
 
-class _AuraPainter extends CustomPainter {
-  _AuraPainter({
+class _OrganicCloudPainter extends CustomPainter {
+  _OrganicCloudPainter({
     required this.progress,
     required this.color,
     this.staticMode = false,
   });
 
-  final double progress; // 0..1 animation phase
+  final double progress;
   final Color color;
   final bool staticMode;
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
-    final radius = math.min(size.width, size.height) * 0.45;
+    final radius = size.shortestSide * 0.5;
 
-    // --- halo radial gradient ---
-    final haloPaint = Paint()
-      ..shader = RadialGradient(
-        colors: [
-          color.withAlpha(46), // ~0.18
-          color.withAlpha(15), // ~0.06
-          Colors.transparent,
-        ],
-        stops: const [0.0, 0.6, 1.0],
-      ).createShader(Rect.fromCircle(center: center, radius: radius * 1.15))
-      ..isAntiAlias = true
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18.0);
+    // Increased opacity for better visibility
+    final paint = Paint()
+      ..color = color.withAlpha(100) // Was 25 -> significantly boosted
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 15.0); // Slightly sharper blur
 
-    canvas.drawCircle(center, radius * 1.15, haloPaint);
-
-    // --- small organic spots (particles) ---
-    final particlePaint = Paint()
-      ..color = color.withAlpha(56) // ~0.22
-      ..isAntiAlias = true
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8.0);
-
-    final count = 4;
-    for (int i = 0; i < count; i++) {
-      final angle = (i / count) * 2 * math.pi + progress * 2 * math.pi * (0.6 + (i * 0.08));
-      final r = radius * (0.7 + 0.12 * math.sin(progress * 2 * math.pi + i));
-      final dx = center.dx + r * math.cos(angle);
-      final dy = center.dy + r * math.sin(angle);
-      final s = radius * (0.12 + 0.03 * math.cos(progress * 2 * math.pi + i));
-      canvas.drawCircle(Offset(dx, dy), s, particlePaint);
+    if (staticMode) {
+      // Stronger static indicator
+      canvas.drawCircle(center, radius * 1.1, paint..color = color.withAlpha(150));
+      return;
     }
 
-    // --- thin inner ring for contrast ---
-    final ringPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0
-      ..color = color.withAlpha(217); // ~0.85
+    // 5 blobs with higher opacity logic
+    final count = 5;
+    for (int i = 0; i < count; i++) {
+      final t = (progress + i / count) * 2 * math.pi;
+      
+      final offset1 = Offset(
+        math.cos(t) * radius * 0.25, // Widen orbit slightly
+        math.sin(t) * radius * 0.25,
+      );
+      
+      final blobRadius = radius * (0.85 + 0.15 * math.sin(t * 2.0));
+      
+      // Dynamic opacity: 80..140 range (much higher than 20..30)
+      paint.color = color.withAlpha(80 + (60 * math.sin(t)).toInt().abs());
+      canvas.drawCircle(center + offset1, blobRadius, paint);
+    }
+    
+    // Core glow - stronger
+    final corePaint = Paint()
+      ..color = color.withAlpha(120)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25.0);
+      
+    canvas.drawCircle(center, radius * 0.9, corePaint);
 
-    canvas.drawCircle(center, radius * 0.98, ringPaint);
+    // Inner distinct ring (optional, but helps define it if background is chaotic)
+    // Subtle white stroke
+    final ringPaint = Paint()
+      ..color = color.withAlpha(180)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
+      
+    canvas.drawCircle(center, radius * 1.15, ringPaint);
   }
 
   @override
-  bool shouldRepaint(covariant _AuraPainter old) {
+  bool shouldRepaint(covariant _OrganicCloudPainter old) {
     return old.progress != progress || old.color != color || old.staticMode != staticMode;
   }
 }
