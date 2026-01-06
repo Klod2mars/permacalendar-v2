@@ -413,9 +413,70 @@ class LegacyDataAdapter implements DataAdapter {
     String gardenId, {
     int limit = 20,
   }) async {
-    // Les activités ne sont pas disponibles dans le système Legacy
-    // Cette fonctionnalité devrait être fournie par le système Moderne
-    return [];
+    try {
+      final beds = GardenBoxes.getGardenBeds(gardenId);
+      final activities = <UnifiedActivityHistory>[];
+
+      for (final bed in beds) {
+        final plantings = GardenBoxes.getPlantings(bed.id);
+        
+        // Transform plantings into activities
+        for (final planting in plantings) {
+          // Planting created
+          if (planting.plantedDate != null) {
+            activities.add(UnifiedActivityHistory(
+              activityId: 'legacy_plant_${planting.id}',
+              type: 'plantingCreated',
+              description: 'Plantation de ${planting.plantName}',
+              timestamp: planting.plantedDate!,
+              plantId: planting.plantId,
+              bedId: bed.id,
+              metadata: {
+                'gardenId': gardenId,
+                'gardenBedId': bed.id,
+                'plantId': planting.plantId,
+                'plantName': planting.plantName,
+                'quantity': planting.quantity,
+                'source': 'legacy'
+              },
+            ));
+          }
+          
+          // Harvest
+          if (planting.actualHarvestDate != null) {
+            activities.add(UnifiedActivityHistory(
+              activityId: 'legacy_harvest_${planting.id}',
+              type: 'plantingHarvested',
+              description: 'Récolte de ${planting.plantName}',
+              timestamp: planting.actualHarvestDate!,
+              plantId: planting.plantId,
+              bedId: bed.id,
+              metadata: {
+                'gardenId': gardenId,
+                'gardenBedId': bed.id,
+                'plantId': planting.plantId,
+                'plantName': planting.plantName,
+                'source': 'legacy'
+              },
+            ));
+          }
+        }
+      }
+
+      // Sort by date desc
+      activities.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+      // Take limit
+      return activities.take(limit).toList();
+    } catch (e) {
+      developer.log(
+        'Erreur lors de la récupération des activités récentes Legacy',
+        name: _logName,
+        level: 1000,
+        error: e,
+      );
+      return [];
+    }
   }
 
   // ==================== MÉTHODES PRIVÉES ====================

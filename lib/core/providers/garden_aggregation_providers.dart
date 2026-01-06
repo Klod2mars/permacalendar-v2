@@ -1,10 +1,14 @@
 ﻿import 'package:riverpod/riverpod.dart';
+import 'activity_tracker_v3_provider.dart';
+import '../../features/activities/application/providers/garden_history_provider.dart';
 import '../services/aggregation/garden_aggregation_hub.dart';
 import '../services/aggregation/legacy_data_adapter.dart';
 import '../services/aggregation/modern_data_adapter.dart';
 import '../services/aggregation/data_consistency_manager.dart';
 import '../services/aggregation/migration_progress_tracker.dart';
 import '../models/unified_garden_context.dart';
+
+export '../../features/activities/application/providers/garden_history_provider.dart';
 
 /// Providers pour le Garden Aggregation Hub
 ///
@@ -20,7 +24,10 @@ final legacyDataAdapterProvider = Provider<LegacyDataAdapter>((ref) {
 
 /// Provider pour l'adaptateur Moderne
 final modernDataAdapterProvider = Provider<ModernDataAdapter>((ref) {
-  return ModernDataAdapter();
+  final activityTracker = ref.read(activityTrackerV3Provider);
+  return ModernDataAdapter(
+    activityTracker: activityTracker,
+  );
 });
 
 // ==================== HUB CENTRAL ====================
@@ -165,6 +172,7 @@ final invalidateGardenCacheProvider =
   ref.invalidate(gardenHistoricalPlantsProvider(gardenId));
   ref.invalidate(gardenStatsProvider(gardenId));
   ref.invalidate(gardenActivitiesProvider(gardenId));
+  ref.invalidate(gardenHistoryProvider(gardenId));
 });
 
 /// Provider pour effacer tout le cache du hub

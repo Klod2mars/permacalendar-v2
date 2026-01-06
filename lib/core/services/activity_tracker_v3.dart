@@ -183,6 +183,33 @@ class ActivityTrackerV3 {
     }
   }
 
+  /// Récupère les activités pour un jardin spécifique
+  Future<List<ActivityV3>> getActivitiesByGarden(
+    String gardenId, {
+    int limit = 20,
+  }) async {
+    if (!_isInitialized || _box == null) {
+      return [];
+    }
+
+    try {
+      final filtered = _box!.values
+          .where((activity) =>
+              activity.isActive && activity.metadata?['gardenId'] == gardenId)
+          .toList();
+
+      filtered.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+      return filtered.take(limit).toList();
+    } catch (e) {
+      developer.log(
+        'Erreur lors de la récupération des activités par jardin: $e',
+        name: 'ActivityTrackerV3',
+        level: 1000, // Error level
+      );
+      return [];
+    }
+  }
+
   /// Marque une activité comme inactive (soft delete)
   Future<void> deactivateActivity(String activityId) async {
     if (!_isInitialized || _box == null) return;

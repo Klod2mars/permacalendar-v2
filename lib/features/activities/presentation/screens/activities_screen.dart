@@ -4,6 +4,8 @@ import '../../../../core/providers/activity_tracker_v3_provider.dart';
 import '../../../../core/models/activity_v3.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../garden/providers/garden_provider.dart';
+import '../widgets/garden_history_widget.dart';
+import '../../../../core/providers/garden_aggregation_providers.dart';
 
 /// Écran pour afficher toutes les activités
 class ActivitiesScreen extends ConsumerStatefulWidget {
@@ -17,30 +19,60 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final gardenState = ref.watch(gardenProvider);
+    final  currentGardenId = gardenState.selectedGarden?.id ?? (gardenState.gardens.isNotEmpty ? gardenState.gardens.first.id : '');
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Activités & Historique'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Récentes'),
+              Tab(text: 'Historique'),
+            ],
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                ref.read(recentActivitiesProvider.notifier).refresh();
+                if (currentGardenId.isNotEmpty) {
+                   ref.read(invalidateGardenCacheProvider(currentGardenId));
+                }
+              },
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Actualiser',
+            ),
+          ],
+        ),
+        body: TabBarView(
+          children: [
+            // Onglet 1: Activités Récentes (Existing logic)
+            _buildRecentActivitiesTab(theme, currentGardenId),
+            
+            // Onglet 2: Historique (New Widget)
+            currentGardenId.isNotEmpty 
+                ? GardenHistoryWidget(gardenId: currentGardenId)
+                : const Center(child: Text("Aucun jardin sélectionné")),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRecentActivitiesTab(ThemeData theme, String currentGardenId) {
     final activitiesAsync = ref.watch(recentActivitiesProvider);
     final gardenState = ref.watch(gardenProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Toutes les Activités'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ref.read(recentActivitiesProvider.notifier).refresh();
-            },
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Actualiser',
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Filtres
-
-          // Liste des activités
-          Expanded(
-            child: activitiesAsync.when(
-              data: (activities) {
+    
+    return Column(
+      children: [
+        // Filtres (placeholder if needed)
+        
+        // Liste des activités
+        Expanded(
+          child: activitiesAsync.when(
+            data: (activities) {
                 final filteredActivities = activities;
 
                 if (filteredActivities.isEmpty) {
@@ -74,13 +106,12 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
                     },
                   ),
                 );
-              },
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => _buildErrorState(error, theme),
-            ),
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stack) => _buildErrorState(error, theme),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
