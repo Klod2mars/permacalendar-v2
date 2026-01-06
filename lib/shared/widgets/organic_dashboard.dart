@@ -524,6 +524,7 @@ class _OrganicDashboardWidgetState
 
     // [NEW] Read image settings from provider (handling persistence + live update)
     final imageSettings = ref.watch(dashboardImageSettingsProvider);
+    final activeGardenId = ref.watch(activeGardenIdProvider);
 
     if (kDebugMode) {
       debugPrint('[CALIBRATION BUILD] zones keys: ${zones.keys.toList()}');
@@ -784,6 +785,8 @@ class _OrganicDashboardWidgetState
                                     gardenName: garden.name,
                                     radius: diameter / 2,
                                     onTap: () => _onGardenTap(slot),
+                                    isActive: activeGardenId == garden.id,
+                                    auraColor: Theme.of(context).colorScheme.primaryContainer,
                                   );
                                 }
                               }

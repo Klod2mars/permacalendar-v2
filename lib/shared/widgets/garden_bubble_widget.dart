@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permacalendar/shared/widgets/curved_text.dart';
+import 'package:permacalendar/shared/widgets/active_garden_aura.dart';
 
 class GardenBubbleWidget extends StatelessWidget {
   const GardenBubbleWidget({
@@ -9,12 +10,16 @@ class GardenBubbleWidget extends StatelessWidget {
     required this.radius,
     // Asset path hardcoded here but can be injected if needed
     this.assetPath = 'assets/images/dashboard/bubbles/bubble_garden.webp',
+    this.isActive = false,
+    this.auraColor,
   });
 
   final String gardenName;
   final VoidCallback onTap;
   final double radius;
   final String assetPath;
+  final bool isActive;
+  final Color? auraColor;
 
   @override
   Widget build(BuildContext context) {
@@ -79,50 +84,63 @@ class GardenBubbleWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: radius * 2,
-        height: radius * 2,
-        decoration: glassDecoration,
-        child: Stack(
-          // No decoration, fully transparent container
-          alignment: Alignment.center,
-          children: [
-            // Background: Asset wrapped in ClipOval
-            ClipOval(
-              child: Image.asset(
-                assetPath,
-                width: radius * 2,
-                height: radius * 2,
-                fit: BoxFit
-                    .contain, // Contain to avoid cropping/zooming on the transparent canvas
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: radius * 2,
-                    height: radius * 2,
-                    decoration: fallbackDecoration,
-                  );
-                },
+      child: Semantics(
+        label: isActive ? '$gardenName — jardin actif' : gardenName,
+        child: Container(
+          width: radius * 2,
+          height: radius * 2,
+          decoration: glassDecoration,
+          child: Stack(
+            // No decoration, fully transparent container
+            alignment: Alignment.center,
+            children: [
+              if (isActive)
+                Positioned.fill(
+                  child: Center(
+                    child: ActiveGardenAura(
+                      size: radius * 2,
+                      color: auraColor,
+                      isActive: true,
+                    ),
+                  ),
+                ),
+              // Background: Asset wrapped in ClipOval
+              ClipOval(
+                child: Image.asset(
+                  assetPath,
+                  width: radius * 2,
+                  height: radius * 2,
+                  fit: BoxFit
+                      .contain, // Contain to avoid cropping/zooming on the transparent canvas
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: radius * 2,
+                      height: radius * 2,
+                      decoration: fallbackDecoration,
+                    );
+                  },
+                ),
               ),
-            ),
 
-            // Content: Curved Text
-            // We use a Stack to layer text if needed (e.g. top and bottom)
-            if (topText != null)
-              CurvedText(
-                text: topText,
-                textStyle: textStyle,
-                radius: textRadius,
-                placement: CurvedTextPlacement.top,
-              ),
+              // Content: Curved Text
+              // We use a Stack to layer text if needed (e.g. top and bottom)
+              if (topText != null)
+                CurvedText(
+                  text: topText,
+                  textStyle: textStyle,
+                  radius: textRadius,
+                  placement: CurvedTextPlacement.top,
+                ),
 
-            if (bottomText != null)
-              CurvedText(
-                text: bottomText,
-                textStyle: textStyle,
-                radius: textRadius, // Same radius, but bottom placement
-                placement: CurvedTextPlacement.bottom,
-              ),
-          ],
+              if (bottomText != null)
+                CurvedText(
+                  text: bottomText,
+                  textStyle: textStyle,
+                  radius: textRadius, // Same radius, but bottom placement
+                  placement: CurvedTextPlacement.bottom,
+                ),
+            ],
+          ),
         ),
       ),
     );
