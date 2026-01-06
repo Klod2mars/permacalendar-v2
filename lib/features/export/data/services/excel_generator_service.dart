@@ -500,5 +500,51 @@ class ExcelGeneratorService {
       }
       sheet.appendRow(row);
     }
+
+    // --- Ajout de la ligne TOTAL pour les récoltes ---
+    if (type == ExportBlockType.harvest && data.isNotEmpty) {
+      double totalQty = 0.0;
+      double totalValue = 0.0;
+
+      for (var item in data) {
+        if (item is HarvestRecord) {
+          totalQty += item.quantityKg;
+          totalValue += item.totalValue;
+        } else if (item is Map) {
+          // Robustesse si les enregistrements sont des Map (JSON)
+          try {
+            final q = (item['quantityKg'] as num?)?.toDouble() ?? 0.0;
+            final v = (item['totalValue'] as num?)?.toDouble() ?? 0.0;
+            totalQty += q;
+            totalValue += v;
+          } catch (_) {
+            // ignore malformed entries
+          }
+        }
+      }
+
+      // Construire une ligne de la même longueur que fieldIds
+      List<CellValue> totalsRow =
+          List<CellValue>.generate(fieldIds.length, (_) => TextCellValue(''));
+
+      // Label TOTAL en colonne 0
+      totalsRow[0] = TextCellValue('TOTAL');
+
+      // Positionner les totaux si les colonnes existent
+      final qtyIndex = fieldIds.indexOf('harvest_qty');
+      if (qtyIndex >= 0) {
+        totalsRow[qtyIndex] =
+            DoubleCellValue(double.parse(totalQty.toStringAsFixed(2)));
+      }
+
+      final valueIndex = fieldIds.indexOf('harvest_value');
+      if (valueIndex >= 0) {
+        totalsRow[valueIndex] =
+            DoubleCellValue(double.parse(totalValue.toStringAsFixed(2)));
+      }
+
+      // Appender la ligne TOTAL
+      sheet.appendRow(totalsRow);
+    }
   }
 }

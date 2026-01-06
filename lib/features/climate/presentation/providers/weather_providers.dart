@@ -23,6 +23,7 @@ import '../../data/commune_storage.dart';
 // Utilisez l'import au-dessus pour utiliser le modèle unifié
 
 import '../../domain/utils/weather_interpolation.dart';
+import '../../../../core/utils/moon_utils.dart'; // Add MoonUtils import
 import 'weather_time_provider.dart';
 
 /// Provider dérivé pour obtenir des coordonnées depuis le nom de commune choisi
@@ -418,14 +419,60 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     debugPrint(
         'FETCH RESULT: hourly=${result.hourlyWeather.length}, currentTemp=${result.currentTemperatureC}');
 
-    // Construire WeatherViewData
+    // Enrichir l'UI
+    // Calculate moon phase for today (using CURRENT time or result date?)
+    // result.currentWeatherCode is for "Now".
+    // We should also update the daily list inside result if we want the UI list to be correct.
+    // However, result.dailyWeather is a List<DailyWeatherPoint>.
+    // To update it, we need to map it.
+
+    final enrichedDaily = result.dailyWeather.map((d) {
+      final phase = MoonUtils.calculateMoonPhase(d.date);
+      // We can't easily change the Moonrise/set strings without real calculation, 
+      // but we CAN fix the phase so the icon is correct.
+      // We also update the 'enrich' method to accept moonPhase if we want to override it.
+      // Actually DailyWeatherPoint.enrich() accepts moonPhase? Let's check model.
+      // usage: return daily.enrich(...)
+      
+      // Let's look at DailyWeatherPoint.enrich in daily_weather_point.dart from Step 41
+      // It DOES accept moonPhase, but we need to pass it.
+      // It has named param `moonPhase`.
+
+      return d.enrich(
+        icon: d.weatherCode != null 
+            ? WeatherIconMapper.getIconPath(d.weatherCode!) 
+            : WeatherIconMapper.getFallbackIcon(),
+        description: d.weatherCode != null 
+            ? WeatherIconMapper.getWeatherDescription(d.weatherCode!) 
+            : '—',
+        moonPhase: phase,
+      );
+    }).toList();
+
+    // Reconstruct result with enriched daily? 
+    // WeatherViewData holds `result` which is OpenMeteoResult.
+    // OpenMeteoResult holds `dailyWeather` list.
+    // We need to update that list in the object passed to WeatherViewData.
+    
+    // Create new OpenMeteoResult with enriched daily
+    final enrichedResult = om.OpenMeteoResult(
+      latitude: result.latitude,
+      longitude: result.longitude,
+      hourlyWeather: result.hourlyWeather,
+      dailyWeather: enrichedDaily,
+      currentTemperatureC: result.currentTemperatureC,
+      currentWeatherCode: result.currentWeatherCode,
+      currentWindSpeed: result.currentWindSpeed,
+      currentWindDirection: result.currentWindDirection,
+    );
+
     final weatherView = WeatherViewData.fromDomain(
       locationLabel: coords.resolvedName ?? '—',
       coordinates: coords,
-      result: result,
+      result: enrichedResult,
     );
-
-    // Enrichir l'UI
+    
+    // Final enrich for the "Main" view (current condition)
     final enriched = weatherView.enrich(
       icon: WeatherIconMapper.getIconPath(result.currentWeatherCode),
       description:
@@ -543,32 +590,16 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
       final description = daily.weatherCode != null
           ? WeatherIconMapper.getWeatherDescription(daily.weatherCode)
           : _getWeatherDescription(condition);
+      
+      // Calculate local moon phase
+      final phase = MoonUtils.calculateMoonPhase(daily.date);
 
       // UPDATE: using enrich method that preserves new fields because it copies everything
-      // Wait, enrich method on DailyWeatherPoint (as per my update) DOES preserve them
-      // Let's verify DailyWeatherPoint.enrich
-      /*
-       DailyWeatherPoint enrich({
-        ...
-       }) {
-        return DailyWeatherPoint(
-           date: date,
-           precipMm: precipMm,
-           ...
-           sunrise: sunrise, // It copies `this.sunrise` !
-           ...
-        );
-       }
-     */
-      // So calling .enrich() is safer than casting to .fromEnriched unless I manually pass everything.
-      // In previous code it was using .fromEnriched constructor which DOES NOT default copy unknown fields.
-
-      // I replaced .fromEnriched call with .enrich() method on the object itself.
-
       return daily.enrich(
         icon: icon,
         description: description,
         condition: condition.toString(),
+        moonPhase: phase,
       );
     }).toList();
   } catch (e) {

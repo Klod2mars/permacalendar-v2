@@ -94,11 +94,11 @@ class OpenMeteoService {
         'longitude': longitude,
         // hourly étendu : précip / temp / vent / direction / pression / visibilité / nuages
         'hourly':
-            'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,pressure_msl,cloudcover,visibility',
+            'precipitation,precipitation_probability,temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weathercode,pressure_msl,cloudcover,visibility',
         // daily étendu : sunrise/sunset + wind max
-        // NOTE: Moon data removed as it seems to cause 400 errors (not in standard daily params?)
+        // NOTE: Moon data (moonrise, moonset, moon_phase) is NOT supported by the standard Forecast API.
         'daily':
-            'precipitation_sum,temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
+            'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
         'past_days': pastDays,
 // ... (inside fetchPrecipitation)
         'forecast_days': forecastDays,
@@ -132,7 +132,7 @@ class OpenMeteoService {
     final hourlyWindDir = _toIntList(hourly?['wind_direction_10m']);
     final hourlyWindGusts = _toDoubleList(hourly?['wind_gusts_10m']);
     final hourlyPressure = _toDoubleList(hourly?['pressure_msl']);
-    final hourlyCodes = _toIntList(hourly?['weather_code']);
+    final hourlyCodes = _toIntList(hourly?['weathercode'] ?? hourly?['weather_code']);
     final hourlyCloudCover = _toIntList(hourly?['cloudcover']);
     final hourlyVisibility = _toDoubleList(hourly?['visibility']);
 
@@ -181,19 +181,17 @@ class OpenMeteoService {
     final dailyPrecip = _toDoubleList(daily?['precipitation_sum']);
     final dailyTMax = _toDoubleList(daily?['temperature_2m_max']);
     final dailyTMin = _toDoubleList(daily?['temperature_2m_min']);
-    final dailyCodes = _toIntList(daily?['weather_code']);
+    final dailyCodes = _toIntList(daily?['weathercode'] ?? daily?['weather_code']);
 
     final dailySunrise =
         (daily?['sunrise'] as List?)?.cast<String?>() ?? const [];
     final dailySunset =
         (daily?['sunset'] as List?)?.cast<String?>() ?? const [];
 
-    // Moon data retiré de la requête pour éviter erreur 400
-    final dailyMoonrise =
-        (daily?['moonrise'] as List?)?.cast<String?>() ?? const [];
-    final dailyMoonset =
-        (daily?['moonset'] as List?)?.cast<String?>() ?? const [];
-    final dailyMoonPhase = _toDoubleList(daily?['moon_phase']);
+    // Moon data is NOT fetched (see fetchPrecipitation query), so these will be empty.
+    final dailyMoonrise = const <String?>[];
+    final dailyMoonset = const <String?>[];
+    final dailyMoonPhase = const <double>[];
 
     final dailyWindSpeedMax = _toDoubleList(daily?['wind_speed_10m_max']);
     final dailyWindGustsMax = _toDoubleList(daily?['wind_gusts_10m_max']);

@@ -123,6 +123,7 @@ class DailyWeatherPoint {
     required String icon,
     required String description,
     String? condition,
+    double? moonPhase,
   }) {
     // Crée une copie en préservant tous les champs bruts et en ajoutant les champs UI
     return DailyWeatherPoint(
@@ -135,7 +136,7 @@ class DailyWeatherPoint {
       sunset: sunset,
       moonrise: moonrise,
       moonset: moonset,
-      moonPhase: moonPhase,
+      moonPhase: moonPhase ?? this.moonPhase,
       windSpeedMax: windSpeedMax,
       windGustsMax: windGustsMax,
       minTemp: tMinC,
