@@ -119,7 +119,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
         _precipProbability >= kPrecipProbabilityThreshold) {
       // Taux de spawn (particules / sec) basé sur l'intensité
       double spawnRate = _precipIntensity * 50;
-      if (_isSnow) spawnRate *= 0.2; // Moins de flocons que de gouttes
+      if (_isSnow) spawnRate *= 20.0; // Augmenter drastiquement (symbolique)
 
       // Si l'intensité est très faible mais la probabilité est élevée,
       // créer un spawnRate minimal pour rendre l'effet visible en test.
@@ -139,9 +139,10 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
         debugPrint('CALIB -> cx=${calib.cx} cy=${calib.cy} rx=${calib.rx} ry=${calib.ry} rot=${calib.rotation}');
       }
 
-      // Spawn zone: en haut de l'ellipse
-      final minX = calib.cx - calib.rx * 0.8;
-      final maxX = calib.cx + calib.rx * 0.8;
+      // Spawn zone: plus large que l'ovoïde pour eviter l'effet tube/canon
+      // On élargit X (2.0 au lieu de 0.8) pour que la neige "remplisse" le hublot
+      final minX = calib.cx - calib.rx * 2.0;
+      final maxX = calib.cx + calib.rx * 2.0;
       final startY = calib.cy - calib.ry;
 
       for (int i = 0; i < toSpawn; i++) {
