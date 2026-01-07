@@ -34,6 +34,14 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
   double _cloudCover = 0.0; // 0..100
   double _visibility = 10000.0; // m
 
+  // DEBUG / TEMP FLAGS - à désactiver après diagnostic
+  static const bool kWeatherDebug = true;
+  static const double kPrecipSpawnThreshold = 0.02; // mm, seuil réduit pour tests
+  static const double kPrecipProbabilityThreshold = 30.0; // % - si >=, on force spawn
+
+  // NOTE: variable additionnelle pour stocker la probabilité de précipitation
+  double _precipProbability = 0.0; // 0..100
+
   bool _isSnow = false;
 
   @override
@@ -91,19 +99,45 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     _cloudCover = p.cloudCover.toDouble();
     _visibility = p.visibility;
 
+    // Stocker la probabilité (par sécurité gérer null)
+    _precipProbability = p.precipitationProbability.toDouble();
+
     final code = p.weatherCode;
     // Logique Neige/Pluie
     _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
+
+    if (kWeatherDebug) {
+      debugPrint(
+          'WEATHER_BIO -> time=${p.time.toUtc().toIso8601String()} precip=${_precipIntensity}mm prob=${_precipProbability}% code=${code} isSnow=${_isSnow} wind=${_windSpeed}km/h');
+    }
   }
 
   void _spawnParticles(double dt, SkyCalibrationConfig calib) {
     // 1. Precipitations
-    if (_precipIntensity > 0.1) {
-      // Taux de spawn (particules / sec)
+    // On déclenche si l'intensité (mm) dépasse un seuil de test, OU si la probabilité est importante.
+    if (_precipIntensity > kPrecipSpawnThreshold ||
+        _precipProbability >= kPrecipProbabilityThreshold) {
+      // Taux de spawn (particules / sec) basé sur l'intensité
       double spawnRate = _precipIntensity * 50;
       if (_isSnow) spawnRate *= 0.2; // Moins de flocons que de gouttes
 
-      final toSpawn = (spawnRate * dt).toInt();
+      // Si l'intensité est très faible mais la probabilité est élevée,
+      // créer un spawnRate minimal pour rendre l'effet visible en test.
+      if (spawnRate < 1.0 && _precipProbability >= kPrecipProbabilityThreshold) {
+        // Convertit prob en un spawnRate de test (ex: prob 50% -> ~5 particules/s)
+        spawnRate = (_precipProbability / 100.0) * 10.0;
+      }
+
+      final toSpawn = math.max(1, (spawnRate * dt).toInt());
+
+      if (kWeatherDebug) {
+        debugPrint(
+            'SPAWN -> spawnRate=${spawnRate.toStringAsFixed(2)} isSnow=$_isSnow toSpawn=$toSpawn precip=${_precipIntensity} prob=${_precipProbability}');
+      }
+
+      if (kWeatherDebug) {
+        debugPrint('CALIB -> cx=${calib.cx} cy=${calib.cy} rx=${calib.rx} ry=${calib.ry} rot=${calib.rotation}');
+      }
 
       // Spawn zone: en haut de l'ellipse
       final minX = calib.cx - calib.rx * 0.8;
