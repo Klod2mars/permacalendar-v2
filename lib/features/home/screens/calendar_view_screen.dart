@@ -127,14 +127,22 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     final endOfMonth =
         DateTime(_selectedMonth.year, _selectedMonth.month + 1, 0);
 
+    // developer.log('[Calendar] Updating daily tasks. Total activities: ${_activities.length}');
+
     for (var activity in _activities) {
       // Filter only custom tasks
       final isCustom = activity.metadata['isCustomTask'] == true;
       if (!isCustom) continue; // Or handle other activity types if needed
 
+      // Debug specific activity
+      // developer.log('[Calendar] Processing custom task: ${activity.title}, nextRun=${activity.metadata['nextRunDate']}');
+
       // 1. Check Recurrence
-      final recurrence =
-          activity.metadata['recurrence'] as Map<String, dynamic>?;
+      Map<String, dynamic>? recurrence;
+      final rawRecurrence = activity.metadata['recurrence'];
+      if (rawRecurrence is Map) {
+        recurrence = rawRecurrence.cast<String, dynamic>();
+      }
 
       if (recurrence != null) {
         // Project occurrences for the month
@@ -180,11 +188,17 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           date = activity.timestamp;
         }
 
+        if (date != null) {
+           // Debug date parsing
+           // developer.log('[Calendar] Task ${activity.title} date=$date selectedMonth=${_selectedMonth.month}');
+        }
+
         if (date != null &&
             date.year == _selectedMonth.year &&
             date.month == _selectedMonth.month) {
           final k = DateTime(date.year, date.month, date.day);
           _dailyTasks.putIfAbsent(k, () => []).add(activity);
+          // developer.log('[Calendar] Added task ${activity.title} to day $k');
         }
       }
     }
@@ -550,7 +564,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: 8,
       crossAxisSpacing: 8,
-      childAspectRatio: 0.9,
+      childAspectRatio: 0.75, // Reduced from 0.9 to give more vertical space
       children: dayWidgets,
     );
   }
@@ -627,77 +641,88 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
               : null,
         ),
         padding: const EdgeInsets.all(4),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Numéro du jour
-            Text(
-              '$day',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
-                color: isSelected
-                    ? theme.colorScheme.onPrimaryContainer
-                    : theme.colorScheme.onSurface,
-              ),
-            ),
-
-            // Indicateurs d'événements
-            Column(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.topCenter,
+          child: Container(
+            width: 40, // Constraint width to ensure wrapping happens if needed
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (showStd && plantingCount > 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.eco, size: 12, color: Colors.green),
-                      const SizedBox(width: 4),
-                      Text('$plantingCount',
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(fontSize: 10, color: Colors.green)),
-                    ],
+                // Numéro du jour
+                Text(
+                  '$day',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
+                    color: isSelected
+                        ? theme.colorScheme.onPrimaryContainer
+                        : theme.colorScheme.onSurface,
                   ),
-                if (showStd && wateringCount > 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.water_drop,
-                          size: 12, color: Colors.blue),
-                      const SizedBox(width: 4),
-                      Text('$wateringCount',
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(fontSize: 10, color: Colors.blue)),
-                    ],
-                  ),
-                if (showStd && harvestCount > 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.shopping_basket,
-                          size: 12, color: Colors.orange),
-                      const SizedBox(width: 4),
-                      Text('$harvestCount',
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(fontSize: 10, color: Colors.orange)),
-                    ],
-                  ),
-                if (showStd && frost)
-                  const Icon(Icons.ac_unit, size: 12, color: Colors.lightBlue),
-                if (showStd && overdueCount > 0)
-                  const Icon(Icons.warning, size: 12, color: Colors.red),
+                ),
+                const SizedBox(height: 2),
 
-                // Tâches
-                if (hasTasks)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: visibleTasks.take(3).map((t) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 1),
-                        child: _buildTaskIcon(t.metadata['taskKind']),
-                      );
-                    }).toList(),
-                  )
+                // Indicateurs d'événements
+                Column(
+                  children: [
+                    if (showStd && plantingCount > 0)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.eco, size: 12, color: Colors.green),
+                          const SizedBox(width: 2),
+                          Text('$plantingCount',
+                              style: theme.textTheme.bodySmall
+                                  ?.copyWith(fontSize: 9, color: Colors.green)),
+                        ],
+                      ),
+                    if (showStd && wateringCount > 0)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.water_drop,
+                              size: 12, color: Colors.blue),
+                          const SizedBox(width: 2),
+                          Text('$wateringCount',
+                              style: theme.textTheme.bodySmall
+                                  ?.copyWith(fontSize: 9, color: Colors.blue)),
+                        ],
+                      ),
+                    if (showStd && harvestCount > 0)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.shopping_basket,
+                              size: 12, color: Colors.orange),
+                          const SizedBox(width: 2),
+                          Text('$harvestCount',
+                              style: theme.textTheme.bodySmall
+                                  ?.copyWith(fontSize: 9, color: Colors.orange)),
+                        ],
+                      ),
+                    if (showStd && frost)
+                      const Icon(Icons.ac_unit, size: 12, color: Colors.lightBlue),
+                    if (showStd && overdueCount > 0)
+                      const Icon(Icons.warning, size: 12, color: Colors.red),
+
+                    // Tâches
+                    if (hasTasks)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: visibleTasks.take(3).map((t) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 1),
+                              child: _buildTaskIcon(t.metadata['taskKind']),
+                            );
+                          }).toList(),
+                        ),
+                      )
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );
