@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 import 'package:permacalendar/features/plant_catalog/data/models/plant_hive.dart';
 import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
+import 'package:permacalendar/shared/widgets/month_picker.dart';
 
 class CustomPlantFormScreen extends ConsumerStatefulWidget {
   final PlantFreezed? plantToEdit;
@@ -33,6 +34,10 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
   String? _imagePath;
   bool _isLoading = false;
 
+  // Selection de mois
+  List<String> _sowingMonths = [];
+  List<String> _harvestMonths = [];
+
   @override
   void initState() {
     super.initState();
@@ -51,6 +56,9 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
         _imagePath = img;
       }
     }
+
+    _sowingMonths = p?.sowingMonths ?? [];
+    _harvestMonths = p?.harvestMonths ?? [];
   }
 
   @override
@@ -150,8 +158,8 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
         depth: isEdit ? widget.plantToEdit!.depth : 1.0,
         sunExposure: isEdit ? widget.plantToEdit!.sunExposure : 'Plein soleil',
         waterNeeds: isEdit ? widget.plantToEdit!.waterNeeds : 'Moyen',
-        sowingMonths: isEdit ? widget.plantToEdit!.sowingMonths : <String>[],
-        harvestMonths: isEdit ? widget.plantToEdit!.harvestMonths : <String>[],
+        sowingMonths: _sowingMonths,
+        harvestMonths: _harvestMonths,
         
         metadata: meta,
         createdAt: isEdit ? widget.plantToEdit!.createdAt : DateTime.now(),
@@ -318,12 +326,24 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                              decoration: const InputDecoration(
                                labelText: 'Saison récolte',
                                border: OutlineInputBorder(),
-                               prefixIcon: Icon(Icons.agriculture),
+                               prefixIcon: Icon(Icons.shopping_basket),
                                hintText: 'ex: Été',
                              ),
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 12),
+                    MonthPicker(
+                      label: 'Mois de semis',
+                      initialSelected: isEdit ? (widget.plantToEdit?.sowingMonths ?? []) : [],
+                      onChanged: (months) => setState(() => _sowingMonths = months),
+                    ),
+                    const SizedBox(height: 12),
+                    MonthPicker(
+                      label: 'Mois de récolte',
+                      initialSelected: isEdit ? (widget.plantToEdit?.harvestMonths ?? []) : [],
+                      onChanged: (months) => setState(() => _harvestMonths = months),
                     ),
                     
                     const SizedBox(height: 32),
