@@ -166,6 +166,52 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
     }
   }
 
+  Future<void> _exportPreview() async {
+    // Save form fields into state
+    _formKey.currentState?.save();
+
+    DateTime finalDate = _startDate;
+    if (_startTime != null) {
+      finalDate = DateTime(_startDate.year, _startDate.month, _startDate.day, _startTime!.hour, _startTime!.minute);
+    }
+
+    final tmpTask = Activity.customTask(
+      title: _title,
+      description: _description,
+      taskKind: _taskKind,
+      zoneGardenBedId: _selectedGardenBedId,
+      urgent: _urgent,
+      recurrence: _recurrenceMap,
+      nextRunDate: finalDate,
+      metadata: {
+        'isCustomTask': true,
+        'durationMinutes': _durationMinutes,
+        'priority': _priority,
+        'assignee': _assignee,
+        'gardenId': _selectedGardenId,
+        'zoneGardenBedId': _selectedGardenBedId,
+        'taskKind': _taskKind,
+        'nextRunDate': finalDate.toIso8601String(),
+      },
+    );
+
+    try {
+      final f = await TaskDocumentGenerator.generateTaskPdf(tmpTask);
+      await TaskDocumentGenerator.shareFile(f, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF - Brouillon)');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('PDF envoyé (brouillon). Appuyez sur Créer pour enregistrer la tâche.'),
+          duration: Duration(seconds: 3),
+        ));
+      }
+    } catch (e, s) {
+      developer.log('Export preview error: $e\n$s');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur export (brouillon) : $e')));
+      }
+    }
+  }
+
   Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -202,35 +248,13 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
         // debug log for verification
         developer.log('[CreateTask] written activity id=${newTask.id} nextRun=${newTask.metadata['nextRunDate']}');
+        developer.log('[CreateTask] activities.count=${GardenBoxes.activities.values.length}');
+        developer.log('[CreateTask] readBack=${GardenBoxes.activities.get(newTask.id)}');
 
-        // Export Logic
-        try {
-          if (_selectedExportOption == ExportOption.shareText) {
-            await _shareTask(); 
-          } else if (_selectedExportOption == ExportOption.exportPdf) {
-            final f = await TaskDocumentGenerator.generateTaskPdf(newTask);
-            if (mounted) {
-              await TaskDocumentGenerator.shareFile(f, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF)');
-            }
-          } else if (_selectedExportOption == ExportOption.exportDocx) {
-            final f = await TaskDocumentGenerator.generateTaskDocx(newTask);
-            if (mounted) {
-              await TaskDocumentGenerator.shareFile(f, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', context, shareText: 'Tâche PermaCalendar (.docx)');
-            }
-          }
-        } catch (e, s) {
-          developer.log('Export error: $e\n$s');
-          if (mounted) {
-             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-               content: Text('Erreur export: $e'),
-               backgroundColor: Colors.orange, // Warning color, as task IS saved
-             ));
-          }
-          // Do not return here, we still want to close the dialog as the task was saved.
-        }
-
+        // Close the dialog and return the created task (and chosen export option) to the caller.
+        // Note: Do NOT perform export here.
         if (mounted) {
-           Navigator.pop(context, true);
+          Navigator.pop(context, {'task': newTask, 'exportOption': _selectedExportOption});
         }
       } catch (e) {
         if (mounted) {
@@ -256,6 +280,14 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
             onPressed: () {
               _formKey.currentState?.save();
               _shareTask();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf),
+            tooltip: 'Exporter PDF (brouillon)',
+            onPressed: () {
+              _formKey.currentState?.save();
+              _exportPreview();
             },
           ),
           PopupMenuButton<String>(

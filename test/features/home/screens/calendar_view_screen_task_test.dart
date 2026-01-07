@@ -106,7 +106,12 @@ void main() {
 
     // Click Create
     await tester.tap(find.text('Créer'));
-    await tester.pumpAndSettle(); // Dialog closes
+    await tester.pumpAndSettle(); // Create Dialog closes, but Ask Export Dialog opens
+
+    // 5b. Handle "Ask to Export" dialog
+    expect(find.text('Tâche enregistrée'), findsOneWidget);
+    await tester.tap(find.text('Non'));
+    await tester.pumpAndSettle(); // Close alert dialog
 
     // 6. Verify New Task in Hive
     expect(GardenBoxes.activities.values.length, 2);

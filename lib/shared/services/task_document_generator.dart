@@ -159,19 +159,31 @@ class TaskDocumentGenerator {
   }
 
   /// Ouvre la feuille de partage système
-  static Future<void> shareFile(File file, String mimeType, BuildContext context, { String? shareText }) async {
+  static Future<void> shareFile(File file, String mimeType, BuildContext? context, { String? shareText }) async {
     if (!await file.exists()) {
       throw Exception('Fichier introuvable pour le partage: ${file.path}');
     }
     
     final xFile = XFile(file.path, mimeType: mimeType);
     
-    // Sur iPad / Tablettes, sharePositionOrigin est recommandé, mais optionnel.
-    // context.findRenderObject() as RenderBox? ...
+    // Optional: only compute sharePositionOrigin if context != null and renderObject available
+    Rect? sharePositionOrigin;
+    try {
+      if (context != null) {
+        final box = context.findRenderObject() as RenderBox?;
+        if (box != null && box.hasSize) {
+          final pos = box.localToGlobal(Offset.zero);
+          sharePositionOrigin = Rect.fromLTWH(pos.dx, pos.dy, box.size.width, box.size.height);
+        }
+      }
+    } catch (_) {
+      // ignore: don't fail sharing for lack of position
+    }
     
     await Share.shareXFiles(
       [xFile],
       text: shareText ?? 'Tâche PermaCalendar',
+      sharePositionOrigin: sharePositionOrigin,
     );
   }
 }

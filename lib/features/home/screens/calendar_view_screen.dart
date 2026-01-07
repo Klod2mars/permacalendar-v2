@@ -14,6 +14,8 @@ import '../../calendar/presentation/providers/calendar_filter_provider.dart';
 import '../../../features/home/providers/calendar_aggregation_provider.dart';
 import '../../../core/services/recurrence_service.dart';
 import '../../../shared/widgets/create_task_dialog.dart';
+import '../../../shared/services/task_document_generator.dart';
+import 'dart:developer' as developer;
 
 /// Vue calendrier simplifiée des plantations et récoltes prévues
 class CalendarViewScreen extends ConsumerStatefulWidget {
@@ -84,6 +86,36 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           _isLoading = false;
           _errorMessage = 'Erreur de chargement: ${e.toString()}';
         });
+      }
+    }
+  }
+
+  Future<void> _askToExport(Activity created, ExportOption suggested) async {
+    // Ask user if they want to export now
+    final want = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Tâche enregistrée'),
+        content: const Text('Voulez-vous l\'envoyer à quelqu\'un en PDF ?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Non')),
+          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Oui')),
+        ],
+      ),
+    );
+
+    if (want == true) {
+      try {
+        final file = await TaskDocumentGenerator.generateTaskPdf(created);
+        await TaskDocumentGenerator.shareFile(file, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF)');
+      } catch (e, s) {
+        developer.log('Export after create failed: $e\n$s');
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Erreur export PDF: $e'),
+            backgroundColor: Colors.orange,
+          ));
+        }
       }
     }
   }
@@ -205,8 +237,24 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 context: context,
                 builder: (_) => CreateTaskDialog(initialDate: _selectedDate),
               );
+
+              // Back-compat: if result was previously boolean true, keep behavior
               if (result == true) {
-                _loadCalendarData(); // Reload to show new task
+                await _loadCalendarData();
+                return;
+              }
+
+              if (result != null && result is Map<String, dynamic> && result['task'] != null) {
+                final Activity created = result['task'] as Activity;
+                final ExportOption exportOption = result['exportOption'] as ExportOption? ?? ExportOption.none;
+
+                // Reload calendar to show new task
+                await _loadCalendarData();
+
+                // After the UI has settled, ask user if they want to export
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _askToExport(created, exportOption);
+                });
               }
             },
           ),
