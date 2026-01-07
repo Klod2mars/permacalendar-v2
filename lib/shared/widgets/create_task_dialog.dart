@@ -20,8 +20,9 @@ enum ExportOption { none, shareText, exportPdf, exportDocx }
 
 class CreateTaskDialog extends ConsumerStatefulWidget {
   final DateTime? initialDate;
+  final Activity? activityToEdit;
 
-  const CreateTaskDialog({super.key, this.initialDate});
+  const CreateTaskDialog({super.key, this.initialDate, this.activityToEdit});
 
   @override
   ConsumerState<CreateTaskDialog> createState() => _CreateTaskDialogState();
@@ -70,22 +71,51 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   @override
   void initState() {
     super.initState();
-    _startDate = widget.initialDate ?? DateTime.now();
-
-    // Auto-select garden if provider has one
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final gardenState = ref.read(gardenProvider);
-      // We don't have direct access to 'selectedGarden' in the basic state usually,
-      // but let's assume we want to start with 'All' unless logic dictates otherwise.
-      // If the user requirement said "Read via ref.read(gardenProvider)", we do so.
-      // However, usually gardenProvider State is AsyncValue<List<Garden>> or similar.
-      // We'll leave it as null (All) for now as a safe default, or pick first if only one.
-      if (gardenState.gardens.length == 1) {
-        setState(() {
-          _selectedGardenId = gardenState.gardens.first.id;
-        });
+    
+    if (widget.activityToEdit != null) {
+      final a = widget.activityToEdit!;
+      _title = a.title;
+      _description = a.description ?? '';
+      _taskKind = a.metadata['taskKind'] is String ? a.metadata['taskKind'] : 'generic';
+      _selectedGardenId = a.metadata['gardenId'];
+      _selectedGardenBedId = a.metadata['zoneGardenBedId'];
+      _urgent = a.metadata['urgent'] == true;
+      _priority = a.metadata['priority'] ?? 'Medium';
+      _assignee = a.metadata['assignee'] ?? '';
+      
+      // Date handling: try nextRunDate first, then timestamp
+      if (a.metadata['nextRunDate'] != null) {
+        final parsed = DateTime.tryParse(a.metadata['nextRunDate']);
+        _startDate = parsed ?? a.timestamp;
+        if (parsed != null) {
+          _startTime = TimeOfDay.fromDateTime(parsed);
+        }
+      } else {
+        _startDate = a.timestamp;
+        _startTime = TimeOfDay.fromDateTime(a.timestamp);
       }
-    });
+      
+      _durationMinutes = (a.metadata['durationMinutes'] is int) ? a.metadata['durationMinutes'] : 60;
+      
+      if (a.metadata['recurrence'] is Map) {
+        _recurrenceMap = Map<String, dynamic>.from(a.metadata['recurrence']);
+      }
+    } else {
+      _startDate = widget.initialDate ?? DateTime.now();
+
+      // Auto-select garden if provider has one (Only for create)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // ... previous logic for auto-select if needed ...
+        // We can keep it or simplify. 
+        // Logic: if only 1 garden, select it.
+        final gardenState = ref.read(gardenProvider);
+        if (gardenState.gardens.length == 1) {
+          setState(() {
+            _selectedGardenId = gardenState.gardens.first.id;
+          });
+        }
+      });
+    }
   }
 
   Future<void> _shareTask() async {
@@ -243,18 +273,41 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
           },
         );
 
-        // write in legacy box for calendar
-        await GardenBoxes.activities.put(newTask.id, newTask);
+        if (widget.activityToEdit != null) {
+          // Update Mode
+          final existing = widget.activityToEdit!;
+          final updated = Activity(
+             id: existing.id, // Preserve ID
+             type: existing.type,
+             title: newTask.title, // Update fields
+             description: newTask.description,
+             entityId: existing.entityId, // Preserve entity linkage if any
+             entityType: existing.entityType,
+             timestamp: finalDate, // Update timestamp to new date? Or keep original? Usually timestamp is event time.
+             // For task scheduler, timestamp often doubles as "date".
+             metadata: newTask.metadata,
+             createdAt: existing.createdAt,
+             updatedAt: DateTime.now(),
+             isActive: existing.isActive,
+          );
+          
+          await GardenBoxes.activities.put(updated.id, updated);
+          developer.log('[CreateTask] Updated activity id=${updated.id}');
+          
+          if (mounted) {
+            Navigator.pop(context, {'task': updated, 'exportOption': _selectedExportOption});
+          }
+        } else {
+          // Create Mode
+          await GardenBoxes.activities.put(newTask.id, newTask);
 
-        // debug log for verification
-        developer.log('[CreateTask] written activity id=${newTask.id} nextRun=${newTask.metadata['nextRunDate']}');
-        developer.log('[CreateTask] activities.count=${GardenBoxes.activities.values.length}');
-        developer.log('[CreateTask] readBack=${GardenBoxes.activities.get(newTask.id)}');
-
-        // Close the dialog and return the created task (and chosen export option) to the caller.
-        // Note: Do NOT perform export here.
-        if (mounted) {
-          Navigator.pop(context, {'task': newTask, 'exportOption': _selectedExportOption});
+          // debug log for verification
+          developer.log('[CreateTask] written activity id=${newTask.id} nextRun=${newTask.metadata['nextRunDate']}');
+          
+          // Close the dialog and return the created task (and chosen export option) to the caller.
+          if (mounted) {
+             Navigator.pop(context, {'task': newTask, 'exportOption': _selectedExportOption});
+          }
         }
       } catch (e) {
         if (mounted) {
@@ -272,7 +325,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nouvelle Tâche'),
+        title: Text(widget.activityToEdit != null ? 'Modifier Tâche' : 'Nouvelle Tâche'),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
@@ -319,7 +372,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               Expanded(
                 child: FilledButton(
                   onPressed: _submit,
-                  child: const Text('Créer'),
+                  child: Text(widget.activityToEdit != null ? 'Enregistrer' : 'Créer'),
                 ),
               ),
             ],

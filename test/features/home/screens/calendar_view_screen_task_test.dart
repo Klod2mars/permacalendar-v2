@@ -8,6 +8,7 @@ import 'package:permacalendar/core/models/activity.dart';
 import 'package:permacalendar/core/models/garden.dart';
 import 'package:permacalendar/core/models/garden_bed.dart';
 import 'package:permacalendar/core/models/planting.dart';
+import 'package:permacalendar/features/home/providers/calendar_aggregation_provider.dart';
 import 'package:permacalendar/features/home/screens/calendar_view_screen.dart';
 
 void main() {
@@ -127,5 +128,125 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('New Created Task'), findsOneWidget);
+  });
+
+  testWidgets('Task Actions: Delete (Undo) and Assign', (tester) async {
+    // 1. Setup task
+    final task = Activity.customTask(
+      title: 'Action Task',
+      description: 'Test Actions',
+      taskKind: 'repair',
+      nextRunDate: DateTime.now(),
+    );
+    await GardenBoxes.activities.put(task.id, task);
+
+    // 2. Pump Widget with Override
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          // Override aggregation to avoid complex dependencies/hangs
+          calendarAggregationProvider.overrideWith((ref, date) async => {}),
+        ],
+        child: const MaterialApp(
+          home: CalendarViewScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Select today
+    final today = DateTime.now().day.toString();
+    await tester.tap(find.text(today).first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Action Task'), findsOneWidget);
+
+    // --- TEST 1: DELETE + UNDO ---
+    
+    // Tap chevron (there is now an IconButton chevron)
+    // We look for the chevron associated with the task. 
+    // Since there is only one task, find.byIcon(Icons.chevron_right) inside the card.
+    await tester.tap(find.byIcon(Icons.chevron_right).last); 
+    await tester.pumpAndSettle(); // Bottom Sheet opens
+
+    // Verify Menu
+    expect(find.text('Supprimer'), findsOneWidget);
+    expect(find.text('Envoyer / Attribuer à...'), findsOneWidget);
+
+    // Tap Delete
+    await tester.tap(find.text('Supprimer'));
+    await tester.pumpAndSettle(); // Alert Dialog
+
+    // Confirm
+    expect(find.text('Supprimer la tâche ?'), findsOneWidget);
+    await tester.tap(find.text('Supprimer').last); // The button in dialog
+    await tester.pumpAndSettle();
+
+    // Verify Deleted
+    expect(GardenBoxes.activities.get(task.id), isNull);
+    expect(find.text('Action Task'), findsNothing);
+
+    // Verify SnackBar and Undo
+    expect(find.text('Tâche supprimée'), findsOneWidget);
+    await tester.tap(find.text('Annuler')); // SnackBar action
+    await tester.pumpAndSettle();
+
+    // Verify Restored
+    expect(GardenBoxes.activities.get(task.id), isNotNull);
+    expect(find.text('Action Task'), findsOneWidget); 
+
+    // --- TEST 2: ASSIGN ---
+    
+    // Tap chevron again
+    await tester.tap(find.byIcon(Icons.chevron_right).last);
+    await tester.pumpAndSettle();
+
+    // Tap Assign
+    await tester.tap(find.text('Envoyer / Attribuer à...'));
+    await tester.pumpAndSettle(); // Dialog
+
+    // Fill Dialog
+    await tester.enterText(find.byType(TextField), 'John Doe');
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    // Verify Metadata
+    final updated = GardenBoxes.activities.get(task.id) as Activity;
+    expect(updated.metadata['assignee'], 'John Doe');
+    
+    // Verify SnackBar
+    expect(find.text('Tâche attribuée à John Doe'), findsOneWidget);
+
+    // --- TEST 3: EDIT ---
+    
+    // Tap chevron again
+    await tester.tap(find.byIcon(Icons.chevron_right).last);
+    await tester.pumpAndSettle();
+
+    // Tap Modifier
+    await tester.tap(find.text('Modifier'));
+    await tester.pumpAndSettle(); // Dialog Opens
+
+    // Verify Title is pre-filled (checking widget properties is hard, checking text presence is easier)
+    expect(find.text('Modifier Tâche'), findsOneWidget);
+    expect(find.text('Action Task'), findsOneWidget); // Title field initial value
+
+    // Change Title
+    await tester.enterText(find.widgetWithText(TextFormField, 'Titre *'), 'Action Task Edited');
+    
+    // Save
+    await tester.tap(find.text('Enregistrer'));
+    await tester.pumpAndSettle();
+
+    // Verify SnackBar
+    expect(find.text('Tâche modifiée'), findsOneWidget);
+
+    // Verify List Updated
+    expect(find.text('Action Task Edited'), findsOneWidget);
+    expect(find.text('Action Task'), findsNothing); // Old title gone
+
+    // Verify Hive
+    final edited = GardenBoxes.activities.get(task.id) as Activity;
+    expect(edited.title, 'Action Task Edited');
   });
 }

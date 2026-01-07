@@ -69,9 +69,30 @@ class TaskDocumentGenerator {
 
     final bytes = await pdf.save();
     final tmp = await getTemporaryDirectory();
-    final file = File('${tmp.path}/permatask_${task.id}.pdf');
+    final sanitizedTitle = _sanitizeFilename(task.title);
+    final fileName = sanitizedTitle.isNotEmpty ? sanitizedTitle : 'task_${task.id}';
+    final file = File('${tmp.path}/$fileName.pdf');
     await file.writeAsBytes(bytes);
     return file;
+  }
+
+  static String _sanitizeFilename(String name) {
+    // Keep only alphanumeric, spaces, hyphens and underscores
+    // Replace spaces with underscores or keep them? Filesystems handle spaces, but underscores are safer.
+    // Let's replace spaces with underscores and remove special chars.
+    final validChars = RegExp(r'[a-zA-Z0-9\-_ ]');
+    final buffer = StringBuffer();
+    for (int i = 0; i < name.length; i++) {
+      final char = name[i];
+      if (validChars.hasMatch(char)) {
+        buffer.write(char);
+      } else {
+        buffer.write('_');
+      }
+    }
+    String result = buffer.toString().trim().replaceAll(RegExp(r'_+'), '_');
+    if (result.length > 50) result = result.substring(0, 50); // Truncate if too long
+    return result;
   }
 
   static pw.Widget _buildPdfRow(String label, String value) {
@@ -153,7 +174,9 @@ class TaskDocumentGenerator {
     }
 
     final tmp = await getTemporaryDirectory();
-    final file = File('${tmp.path}/permatask_${task.id}.docx');
+    final sanitizedTitle = _sanitizeFilename(task.title);
+    final fileName = sanitizedTitle.isNotEmpty ? sanitizedTitle : 'task_${task.id}';
+    final file = File('${tmp.path}/$fileName.docx');
     await file.writeAsBytes(generated);
     return file;
   }

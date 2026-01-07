@@ -204,6 +204,215 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     }
   }
 
+  void _showTaskActions(Activity activity) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.send),
+                title: const Text('Envoyer / Attribuer à...'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _assignOrSendActivity(activity);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete),
+                title: const Text('Supprimer'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _confirmAndDeleteActivity(activity);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Modifier'),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  await _editActivity(activity); 
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _editActivity(Activity activity) async {
+    final result = await showDialog(
+      context: context,
+      builder: (_) => CreateTaskDialog(
+        initialDate: activity.timestamp,
+        activityToEdit: activity,
+      ),
+    );
+
+    if (result != null && result is Map && result['task'] != null) {
+      final Activity updated = result['task'] as Activity;
+      final ExportOption exportOption =
+          result['exportOption'] as ExportOption? ?? ExportOption.none;
+
+      await _loadCalendarData();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Tâche modifiée')));
+        
+        // Handle export if option selected or just prompt
+        if (exportOption != ExportOption.none) {
+             // For now, reuse _askToExport logic which prompts user
+             // Or if user explicitly selected "Export PDF", maybe just do it?
+             // Since ExportOption is just a dropdown, let's stick to consistent flow:
+             _askToExport(updated, exportOption);
+        }
+      }
+    }
+  }
+
+  Future<void> _confirmAndDeleteActivity(Activity activity) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Supprimer la tâche ?'),
+        content: Text('"${activity.title}" sera supprimée.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Annuler')),
+          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white), child: const Text('Supprimer')),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+    await _deleteActivityWithUndo(activity);
+  }
+
+  Future<void> _deleteActivityWithUndo(Activity activity) async {
+    final Activity deletedCopy = activity;
+    try {
+      await GardenBoxes.activities.delete(activity.id);
+      await _loadCalendarData();
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Tâche supprimée'),
+          action: SnackBarAction(
+            label: 'Annuler',
+            onPressed: () async {
+              try {
+                await GardenBoxes.activities.put(deletedCopy.id, deletedCopy);
+                await _loadCalendarData();
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur restauration : $e')));
+                }
+              }
+            },
+          ),
+          duration: const Duration(seconds: 6),
+        ),
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur suppression : $e')));
+      }
+    }
+  }
+
+  Future<void> _assignOrSendActivity(Activity activity) async {
+    final TextEditingController controller = TextEditingController(text: activity.metadata['assignee']?.toString() ?? '');
+    final String? recipient = await showDialog<String>(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Attribuer / Envoyer'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Saisir le nom ou email du destinataire :'),
+              TextField(controller: controller, autofocus: true, decoration: const InputDecoration(hintText: 'Nom ou Email')),
+            ],
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(ctx).pop(null), child: const Text('Annuler')),
+            ElevatedButton(onPressed: () => Navigator.of(ctx).pop(controller.text.trim()), child: const Text('OK')),
+          ],
+        );
+      },
+    );
+
+    if (recipient == null || recipient.isEmpty) return;
+
+    final newMeta = Map<String, dynamic>.from(activity.metadata);
+    newMeta['assignee'] = recipient;
+
+    final updated = Activity(
+      id: activity.id,
+      type: activity.type,
+      title: activity.title,
+      description: activity.description,
+      entityId: activity.entityId,
+      entityType: activity.entityType,
+      timestamp: activity.timestamp,
+      metadata: newMeta,
+      createdAt: activity.createdAt,
+      updatedAt: DateTime.now(),
+      isActive: activity.isActive,
+    );
+
+    try {
+      await GardenBoxes.activities.put(updated.id, updated);
+      await _loadCalendarData();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Tâche attribuée à $recipient')));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur attribution : $e')));
+      }
+      return;
+    }
+
+    await _sendActivityIfNotSent(updated, recipient);
+  }
+
+  Future<void> _sendActivityIfNotSent(Activity activity, String? recipient) async {
+    try {
+      final file = await TaskDocumentGenerator.generateTaskPdf(activity);
+      if (!mounted) return;
+      await TaskDocumentGenerator.shareFile(file, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF)');
+      
+      final newMeta = Map<String, dynamic>.from(activity.metadata);
+      newMeta['sentAt'] = DateTime.now().toIso8601String();
+      if (recipient != null && recipient.isNotEmpty) newMeta['sentTo'] = recipient;
+      
+      final updated = Activity(
+        id: activity.id,
+        type: activity.type,
+        title: activity.title,
+        description: activity.description,
+        entityId: activity.entityId,
+        entityType: activity.entityType,
+        timestamp: activity.timestamp,
+        metadata: newMeta,
+        createdAt: activity.createdAt,
+        updatedAt: DateTime.now(),
+        isActive: activity.isActive,
+      );
+      
+      await GardenBoxes.activities.put(updated.id, updated);
+      await _loadCalendarData();
+      
+    } catch (e, s) {
+      developer.log('Send task failed: $e\n$s');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -855,9 +1064,10 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 _getIconForKind(a.metadata['taskKind']),
                 Colors.blueGrey,
                 () {
-                  // TODO: Edit Task Dialog
+                  // Behavior on tap (open details/edit not impl, stay same)
                 },
                 theme,
+                onAction: () => _showTaskActions(a),
               )),
         ],
       ],
@@ -870,8 +1080,9 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     IconData icon,
     Color color,
     VoidCallback onTap,
-    ThemeData theme,
-  ) {
+    ThemeData theme, {
+    VoidCallback? onAction,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: CustomCard(
@@ -910,11 +1121,22 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.chevron_right,
-                  color: theme.colorScheme.onSurfaceVariant,
-                  size: 20,
-                ),
+                onAction != null
+                    ? IconButton(
+                        icon: Icon(
+                          Icons.chevron_right,
+                          color: theme.colorScheme.onSurfaceVariant,
+                          size: 24,
+                        ),
+                        onPressed: onAction,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                      )
+                    : Icon(
+                        Icons.chevron_right,
+                        color: theme.colorScheme.onSurfaceVariant,
+                        size: 20,
+                      ),
               ],
             ),
           ),
