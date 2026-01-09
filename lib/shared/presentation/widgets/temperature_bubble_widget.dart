@@ -2,6 +2,7 @@ import 'dart:ui' show FontFeature;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:google_fonts/google_fonts.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 class TemperatureBubbleWidget extends ConsumerWidget {
@@ -9,8 +10,6 @@ class TemperatureBubbleWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // RÉTABLISSEMENT DU SYSTÈME DRAG :
-    // On surveille le provider projeté qui contient la température interpolée
     final projectedPoint = ref.watch(projectedWeatherProvider);
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -22,7 +21,7 @@ class TemperatureBubbleWidget extends ConsumerWidget {
           shape: BoxShape.circle,
           gradient: RadialGradient(
             colors: [
-              Colors.white.withOpacity(0.10), // plus faible highlight
+              Colors.white.withOpacity(0.10), // highlight atténué
               Colors.white.withOpacity(0.03),
             ],
             stops: const [0.2, 1.0],
@@ -40,7 +39,7 @@ class TemperatureBubbleWidget extends ConsumerWidget {
         child: ClipOval(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Padding(
-            // IMPORTANT : éloigne le texte du rim pour éviter "morsure"
+            // éloigne le texte du rim pour éviter la "morsure" autour du °
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
             child: projectedPoint != null
                 ? _buildTemperatureContent(context, projectedPoint.temperatureC)
@@ -52,25 +51,39 @@ class TemperatureBubbleWidget extends ConsumerWidget {
   }
 
   Widget _buildTemperatureContent(BuildContext context, double? tempC) {
-    final textColor = Color.lerp(Colors.white, Theme.of(context).colorScheme.surface, 0.16) ?? const Color(0xFFF2F4F6);
-    final number = tempC != null ? tempC.toStringAsFixed(0) : '--';
+    // couleur plus douce que le blanc pur, pour intégrer au bubble
+    final textColor = Color.lerp(
+          Colors.white,
+          Theme.of(context).colorScheme.surface,
+          0.18,
+        ) ??
+        const Color(0xFFF2F4F6);
 
-    final baseNumberStyle = TextStyle(
-      fontFamily: 'Roboto',
-      fontSize: 44,
-      fontWeight: FontWeight.w700,
-      color: textColor,
-      height: 1.0,
-      letterSpacing: -0.4,
-      fontFeatures: const [FontFeature.tabularFigures()],
-      shadows: const [], // on enlève l'ombre lourde
+    final numberStr = tempC != null ? tempC.toStringAsFixed(0) : '--';
+
+    // style du chiffre principal (QuickSand, poids 700)
+    final baseNumberStyle = GoogleFonts.quicksand(
+      textStyle: TextStyle(
+        fontSize: 44,
+        fontWeight: FontWeight.w700,
+        color: textColor,
+        height: 1.0,
+        letterSpacing: -0.4,
+        fontFeatures: const [FontFeature.tabularFigures()],
+        shadows: const [], // on retire l'ombre lourde
+      ),
     );
 
-    final degreeStyle = baseNumberStyle.copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w700,
-      color: textColor.withOpacity(0.92),
-      shadows: const [], // pas d'ombre pour le degré
+    // degré - agrandi ~12% par rapport aux 16 précédents => 18
+    final degreeStyle = GoogleFonts.quicksand(
+      textStyle: TextStyle(
+        fontSize: 18, // ~+12% pour le °
+        fontWeight: FontWeight.w700,
+        color: textColor.withOpacity(0.92),
+        letterSpacing: 0.0,
+        shadows: const [], // pas d'ombre sur le °
+        height: 1.0,
+      ),
     );
 
     return Center(
@@ -80,11 +93,12 @@ class TemperatureBubbleWidget extends ConsumerWidget {
           textAlign: TextAlign.center,
           text: TextSpan(
             children: [
-              TextSpan(text: number, style: baseNumberStyle),
+              TextSpan(text: numberStr, style: baseNumberStyle),
+              // ° rendu comme WidgetSpan pour pouvoir le remonter proprement
               WidgetSpan(
                 alignment: PlaceholderAlignment.top,
                 child: Transform.translate(
-                  offset: const Offset(4, -10), // ajuste la position du °
+                  offset: const Offset(4, -10), // ajuster si nécessaire
                   child: Text('°', style: degreeStyle),
                 ),
               ),
