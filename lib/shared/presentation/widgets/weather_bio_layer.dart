@@ -39,6 +39,12 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
   static const double kPrecipSpawnThreshold = 0.02; // mm, seuil réduit pour tests
   static const double kPrecipProbabilityThreshold = 30.0; // % - si >=, on force spawn
 
+  // === Snow tuning constants ===
+  static const double _kSnowBaseMultiplier = 18.0;
+  static const double _kSnowHorizontalSpread = 6.0;
+  static const double _kSnowStartYSpread = 0.25;
+  static const int _kSnowSpawnCap = 1800; // Increased to allow high density with long life
+
   // NOTE: variable additionnelle pour stocker la probabilité de précipitation
   double _precipProbability = 0.0; // 0..100
 
@@ -117,47 +123,69 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     // On déclenche si l'intensité (mm) dépasse un seuil de test, OU si la probabilité est importante.
     if (_precipIntensity > kPrecipSpawnThreshold ||
         _precipProbability >= kPrecipProbabilityThreshold) {
-      // Taux de spawn (particules / sec) basé sur l'intensité
-      double spawnRate = _precipIntensity * 50;
-      if (_isSnow) spawnRate *= 20.0; // Augmenter drastiquement (symbolique)
+      // Base spawnRate from intensity (same base idea as before)
+      double spawnRate = _precipIntensity * 50.0;
 
-      // Si l'intensité est très faible mais la probabilité est élevée,
-      // créer un spawnRate minimal pour rendre l'effet visible en test.
-      if (spawnRate < 1.0 && _precipProbability >= kPrecipProbabilityThreshold) {
-        // Convertit prob en un spawnRate de test (ex: prob 50% -> ~5 particules/s)
-        spawnRate = (_precipProbability / 100.0) * 10.0;
+      if (_isSnow) {
+        // use more reasonable base multiplier and apply density preset
+        final preset = _snowPresetFrom(_precipIntensity, _precipProbability);
+        spawnRate *= _kSnowBaseMultiplier * preset.multiplier;
       }
 
-      final toSpawn = math.max(1, (spawnRate * dt).toInt());
+      // Fallback when intensity low but probability high
+      if (spawnRate < 1.0 && _precipProbability >= kPrecipProbabilityThreshold) {
+        spawnRate = (_precipProbability / 100.0) * 6.0;
+      }
+
+      final calculated = (spawnRate * dt).toInt();
+      final toSpawn = math.max(1, math.min(calculated, _kSnowSpawnCap));
 
       if (kWeatherDebug) {
         debugPrint(
             'SPAWN -> spawnRate=${spawnRate.toStringAsFixed(2)} isSnow=$_isSnow toSpawn=$toSpawn precip=${_precipIntensity} prob=${_precipProbability}');
       }
 
-      if (kWeatherDebug) {
-        debugPrint('CALIB -> cx=${calib.cx} cy=${calib.cy} rx=${calib.rx} ry=${calib.ry} rot=${calib.rotation}');
-      }
-
-      // Spawn zone: plus large que l'ovoïde pour eviter l'effet tube/canon
-      // On élargit X (2.0 au lieu de 0.8) pour que la neige "remplisse" le hublot
-      final minX = calib.cx - calib.rx * 2.0;
-      final maxX = calib.cx + calib.rx * 2.0;
-      final startY = calib.cy - calib.ry;
+      // Spawn zone: much larger than the ovoïde to avoid tube/canon
+      final minX = calib.cx - calib.rx * _kSnowHorizontalSpread;
+      final maxX = calib.cx + calib.rx * _kSnowHorizontalSpread;
+      final baseStartY = calib.cy - calib.ry;
 
       for (int i = 0; i < toSpawn; i++) {
         final startX = minX + _rng.nextDouble() * (maxX - minX);
-        _particles.add(_BioParticle(
-          x: startX,
-          y: startY,
-          type: _isSnow ? _ParticleType.snow : _ParticleType.rain,
-          vx: _windSpeed * 0.005, // Vent influence X
-          vy: _isSnow
-              ? (0.05 + _rng.nextDouble() * 0.02)
-              : (0.2 + _rng.nextDouble() * 0.1), // Gravité
-          life: 1.0,
-          size: _rng.nextDouble() * 2 + 1,
-        ));
+        // disperse vertical starting position slightly above the top of the oval
+        final startY = baseStartY - (_rng.nextDouble() * _kSnowStartYSpread);
+
+        if (_isSnow) {
+          final preset = _snowPresetFrom(_precipIntensity, _precipProbability);
+          final size = preset.sizeMin +
+              _rng.nextDouble() * (preset.sizeMax - preset.sizeMin);
+          
+          // Fix: Snow falls slowly (0.06-0.10/sec), so it needs ~10-15s to cross the screen/ovoid.
+          // Previously life=1.0 caused them to fade out halfway.
+          final lifeTime = 10.0 + _rng.nextDouble() * 4.0;
+
+          _particles.add(_BioParticle(
+            x: startX,
+            y: startY,
+            type: _ParticleType.snow,
+            vx: _windSpeed * 0.005 + (_rng.nextDouble() - 0.5) * 0.02, // drift
+            vy: 0.06 + _rng.nextDouble() * 0.04, // slower fall for snow
+            life: lifeTime,
+            maxLife: lifeTime,
+            size: size,
+          ));
+        } else {
+          // rain behavior unchanged but we keep similar distribution area
+          _particles.add(_BioParticle(
+            x: startX,
+            y: startY,
+            type: _ParticleType.rain,
+            vx: _windSpeed * 0.005,
+            vy: (0.2 + _rng.nextDouble() * 0.1),
+            life: 1.0,
+            size: _rng.nextDouble() * 2 + 1,
+          ));
+        }
       }
     }
     // Nuages (basé sur cloudCover)
@@ -211,13 +239,21 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
             (localX * localX) / (rx * rx) + (localY * localY) / (ry * ry);
 
         if (eq >= 1.0) {
-          // COLLISION !
-          // Option A: Disparition (Splash)
-          p.life = -1;
+          // COLLISION ADOUCIE :
+          // On pousse la particule le long d'une tangente faible et on réduit sa vie progressivement
+          // Calcul tangent approximatif dans le repère local
+          final tangentX = -localY / ry;
+          final tangentY = localX / rx;
 
-          // Option B (Avancé): Faire glisser ou rebondir.
-          // Ici on se contente de tuer pour éviter la charge visuelle,
-          // mais c'est BEAUCOUP plus propre que y > 1.0 car cela suit la forme.
+          // Appliquer petite poussée tangentielle pour "glisser" le long de la bordure
+          p.vx += tangentX * 0.02;
+          p.vy += tangentY * 0.02 * 0.1;
+
+          // Réduire progressivement la vie pour éviter suppression instantanée
+          p.life -= 0.15;
+
+          // Si la particule est très loin en-dehors (bord net), alors supprimer
+          if (eq > 1.05) p.life = -1;
         }
       } else if (p.type == _ParticleType.cloud) {
         p.x += p.vx * dt;
@@ -277,7 +313,9 @@ class _BioParticlePainter extends CustomPainter {
       ..color = Colors.blueAccent.withOpacity(0.6)
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
-    final paintSnow = Paint()..color = Colors.white.withOpacity(0.8);
+    final paintSnow = Paint()
+      ..color = Colors.white.withOpacity(0.92)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0); // doux pour flocons
     final paintCloud = Paint()
       ..color = Colors.white.withOpacity(0.2)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 15);
@@ -300,8 +338,10 @@ class _BioParticlePainter extends CustomPainter {
         canvas.drawLine(
             Offset(px, py), Offset(px - p.vx * 15, py - p.vy * 15), paintRain);
       } else if (p.type == _ParticleType.snow) {
-        paintSnow.color = paintSnow.color.withOpacity(alpha * 0.9);
-        canvas.drawCircle(Offset(px, py), p.size, paintSnow);
+        paintSnow.color =
+            Colors.white.withOpacity((alpha * 0.9).clamp(0.0, 1.0));
+        final radius = p.size;
+        canvas.drawCircle(Offset(px, py), radius, paintSnow);
       } else if (p.type == _ParticleType.cloud) {
         paintCloud.color = paintCloud.color.withOpacity(alpha * 0.3);
         canvas.drawCircle(Offset(px, py), p.size, paintCloud);
@@ -339,4 +379,26 @@ class _OrganicSkyClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant _OrganicSkyClipper old) => old.config != config;
+}
+
+// Presets for density (light / normal / heavy)
+class _SnowPreset {
+  final double multiplier; // multiplies spawnRate
+  final double sizeMin;
+  final double sizeMax;
+  final double blurRadius;
+  const _SnowPreset(
+      this.multiplier, this.sizeMin, this.sizeMax, this.blurRadius);
+}
+
+// Map intensity/probability to a snow preset
+_SnowPreset _snowPresetFrom(double intensityMm, double probabilityPct) {
+  // intensity thresholds are heuristics — tune to taste
+  if (intensityMm >= 1.5 || probabilityPct >= 70) {
+    return const _SnowPreset(2.5, 1.8, 4.0, 2.8); // heavy (multiplier 1.8 -> 2.5)
+  } else if (intensityMm >= 0.5 || probabilityPct >= 40) {
+    return const _SnowPreset(1.5, 1.2, 3.0, 2.0); // normal (multiplier 1.2 -> 1.5)
+  } else {
+    return const _SnowPreset(1.0, 0.8, 2.2, 1.4); // light (multiplier 0.75 -> 1.0)
+  }
 }
