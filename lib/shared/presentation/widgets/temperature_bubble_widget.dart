@@ -1,6 +1,7 @@
+import 'dart:ui' show FontFeature;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 
 class TemperatureBubbleWidget extends ConsumerWidget {
@@ -17,54 +18,79 @@ class TemperatureBubbleWidget extends ConsumerWidget {
         width: constraints.maxWidth,
         height: constraints.maxHeight,
         alignment: Alignment.center,
-        // On garde le style visuel "Bulle" qui est joli
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: RadialGradient(
             colors: [
-              Colors.white.withOpacity(0.15),
-              Colors.white.withOpacity(0.05),
+              Colors.white.withOpacity(0.10), // plus faible highlight
+              Colors.white.withOpacity(0.03),
             ],
-            stops: const [0.3, 1.0],
-            center: const Alignment(-0.2, -0.2),
+            stops: const [0.2, 1.0],
+            center: const Alignment(-0.25, -0.25),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(2, 4),
+              color: Colors.black.withOpacity(0.12), // plus léger
+              blurRadius: 6,
+              offset: const Offset(1, 2),
+              spreadRadius: -1,
             ),
           ],
         ),
         child: ClipOval(
-          child: projectedPoint != null
-              ? _buildTemperatureContent(projectedPoint.temperatureC)
-              : _buildLoading(),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Padding(
+            // IMPORTANT : éloigne le texte du rim pour éviter "morsure"
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+            child: projectedPoint != null
+                ? _buildTemperatureContent(context, projectedPoint.temperatureC)
+                : _buildLoading(),
+          ),
         ),
       );
     });
   }
 
-  Widget _buildTemperatureContent(double? tempC) {
-    final tempStr = tempC != null ? '${tempC.toStringAsFixed(0)}°' : '--';
+  Widget _buildTemperatureContent(BuildContext context, double? tempC) {
+    final textColor = Color.lerp(Colors.white, Theme.of(context).colorScheme.surface, 0.16) ?? const Color(0xFFF2F4F6);
+    final number = tempC != null ? tempC.toStringAsFixed(0) : '--';
 
-    return AutoSizeText(
-      tempStr,
-      maxLines: 1,
-      minFontSize: 14,
-      style: const TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 40,
-        fontWeight: FontWeight.w900,
-        color: Colors.white,
-        height: 1.0,
-        shadows: [
-          Shadow(
-            color: Colors.black,
-            blurRadius: 4,
-            offset: Offset(0, 2),
+    final baseNumberStyle = TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 44,
+      fontWeight: FontWeight.w700,
+      color: textColor,
+      height: 1.0,
+      letterSpacing: -0.4,
+      fontFeatures: const [FontFeature.tabularFigures()],
+      shadows: const [], // on enlève l'ombre lourde
+    );
+
+    final degreeStyle = baseNumberStyle.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+      color: textColor.withOpacity(0.92),
+      shadows: const [], // pas d'ombre pour le degré
+    );
+
+    return Center(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(text: number, style: baseNumberStyle),
+              WidgetSpan(
+                alignment: PlaceholderAlignment.top,
+                child: Transform.translate(
+                  offset: const Offset(4, -10), // ajuste la position du °
+                  child: Text('°', style: degreeStyle),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
