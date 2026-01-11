@@ -8,15 +8,32 @@ import 'package:permacalendar/features/climate/presentation/widgets/weather_widg
 import 'package:permacalendar/core/services/open_meteo_service.dart';
 import 'package:permacalendar/core/providers/app_settings_provider.dart';
 import 'package:permacalendar/core/models/daily_weather_point.dart';
+import 'package:intl/intl.dart';
 
 class WeatherDetailScreen extends ConsumerWidget {
   const WeatherDetailScreen({super.key});
+
+  String _formatTime(String? isoString) {
+    if (isoString == null) return '--:--';
+    try {
+       DateTime dt;
+       if (!isoString.endsWith('Z') && !isoString.contains('+')) {
+         dt = DateTime.parse('${isoString}Z').toLocal();
+       } else {
+         dt = DateTime.parse(isoString).toLocal();
+       }
+       return DateFormat('HH:mm').format(dt);
+    } catch (_) {
+      return '--:--';
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherAsync = ref.watch(currentWeatherProvider);
 
     return Scaffold(
+
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Météo',
@@ -173,14 +190,14 @@ class WeatherDetailScreen extends ConsumerWidget {
                             SizedBox(
                                 width: constraints.maxWidth,
                                 child: SunPathWidget(
-                                    sunrise: todayDaily.sunrise ?? '--:--',
-                                    sunset: todayDaily.sunset ?? '--:--')),
+                                    sunrise: _formatTime(todayDaily.sunrise),
+                                    sunset: _formatTime(todayDaily.sunset))),
                             SizedBox(
                                 width: constraints.maxWidth,
                                 child: MoonPhaseWidget(
                                   phase: todayDaily.moonPhase ?? 0.0,
-                                  moonrise: todayDaily.moonrise ?? '--:--',
-                                  moonset: todayDaily.moonset ?? '--:--',
+                                  moonrise: _formatTime(todayDaily.moonrise),
+                                  moonset: _formatTime(todayDaily.moonset),
                                 )),
                           ]
                         ],

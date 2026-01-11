@@ -118,12 +118,13 @@ class DailyWeatherPoint {
     );
   }
 
-  /// Convertit les données brutes en enrichies
   DailyWeatherPoint enrich({
     required String icon,
     required String description,
     String? condition,
     double? moonPhase,
+    String? moonrise,
+    String? moonset,
   }) {
     // Crée une copie en préservant tous les champs bruts et en ajoutant les champs UI
     return DailyWeatherPoint(
@@ -134,8 +135,8 @@ class DailyWeatherPoint {
       weatherCode: weatherCode,
       sunrise: sunrise,
       sunset: sunset,
-      moonrise: moonrise,
-      moonset: moonset,
+      moonrise: moonrise ?? this.moonrise,
+      moonset: moonset ?? this.moonset,
       moonPhase: moonPhase ?? this.moonPhase,
       windSpeedMax: windSpeedMax,
       windGustsMax: windGustsMax,

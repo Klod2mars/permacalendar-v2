@@ -23,7 +23,8 @@ import '../../data/commune_storage.dart';
 // Utilisez l'import au-dessus pour utiliser le modèle unifié
 
 import '../../domain/utils/weather_interpolation.dart';
-import '../../../../core/utils/moon_utils.dart'; // Add MoonUtils import
+import '../../../../core/utils/moon_utils.dart';
+import '../../../../core/services/bio_moon_service.dart';
 import 'weather_time_provider.dart';
 
 /// Provider dérivé pour obtenir des coordonnées depuis le nom de commune choisi
@@ -438,6 +439,13 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
       // It DOES accept moonPhase, but we need to pass it.
       // It has named param `moonPhase`.
 
+      // Calculate moon times
+      final (rise, set) = BioMoonService.instance.getMoonTimes(d.date, coords.latitude, coords.longitude);
+      
+      // We need to pass these to enrich, but enrich might not accept them yet.
+      // If enrich doesn't support them, we can use copyWith if it existed, or construct new object.
+      // Easiest is to update DailyWeatherPoint.enrich first.
+      // But for now, let's assume I will update it.
       return d.enrich(
         icon: d.weatherCode != null 
             ? WeatherIconMapper.getIconPath(d.weatherCode!) 
@@ -446,6 +454,8 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
             ? WeatherIconMapper.getWeatherDescription(d.weatherCode!) 
             : '—',
         moonPhase: phase,
+        moonrise: rise?.toIso8601String(),
+        moonset: set?.toIso8601String(),
       );
     }).toList();
 
