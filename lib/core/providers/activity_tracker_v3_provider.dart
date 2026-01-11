@@ -1,6 +1,7 @@
 import 'package:riverpod/riverpod.dart';
 import '../services/activity_tracker_v3.dart';
 import '../models/activity_v3.dart';
+import '../../features/garden/providers/garden_provider.dart';
 
 /// Provider pour le service ActivityTrackerV3
 final activityTrackerV3Provider = Provider<ActivityTrackerV3>((ref) {
@@ -24,8 +25,18 @@ class RecentActivitiesNotifier extends AsyncNotifier<List<ActivityV3>> {
   @override
   Future<List<ActivityV3>> build() async {
     final tracker = ref.read(activityTrackerV3Provider);
-    final activities = await tracker.getRecentActivities(limit: 20);
-    return activities;
+    
+    // Watch garden selection for context-aware filtering
+    final gardenState = ref.watch(gardenProvider);
+    
+    if (gardenState.selectedGarden != null) {
+      return await tracker.getActivitiesByGarden(
+        gardenState.selectedGarden!.id, 
+        limit: 20
+      );
+    } else {
+      return await tracker.getRecentActivities(limit: 20);
+    }
   }
 
   /// Force le refresh des activités

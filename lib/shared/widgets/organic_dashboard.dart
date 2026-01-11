@@ -1251,13 +1251,18 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
       // 3) Lire l'état APRES le toggle pour décider du feedback visuel:
       final nowActive = widget.ref.read(activeGardenIdProvider);
 
+      // Récupérer le nom du jardin pour l'affichage
+      final gardenState = widget.ref.read(gardenProvider);
+      final garden = gardenState.findGardenById(gardenId);
+      final gardenName = garden?.name ?? 'Jardin $gardenId';
+
       if (nowActive == gardenId) {
         // Nous venons d'activer ce garden:
         // Awakening triggering removed.
         // Message utilisateur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content: Text('Jardin $gardenId activé'),
+              content: Text('$gardenName activé'),
               duration: const Duration(seconds: 2)),
         );
       } else {
@@ -1265,7 +1270,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
         // Message utilisateur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content: Text('Jardin $gardenId désactivé'),
+              content: Text('$gardenName désactivé'),
               duration: const Duration(seconds: 1)),
         );
       }

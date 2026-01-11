@@ -6,6 +6,8 @@ import '../../../../shared/widgets/custom_card.dart';
 import '../../../garden/providers/garden_provider.dart';
 import '../widgets/garden_history_widget.dart';
 import '../../../../core/providers/garden_aggregation_providers.dart';
+import '../../../../core/providers/app_settings_provider.dart';
+import '../widgets/history_hint_card.dart';
 
 /// Écran pour afficher toutes les activités
 class ActivitiesScreen extends ConsumerStatefulWidget {
@@ -27,10 +29,12 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Activités & Historique'),
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Récentes'),
-              Tab(text: 'Historique'),
+              Tab(text: gardenState.selectedGarden != null 
+                  ? 'Récentes (${gardenState.selectedGarden!.name})' 
+                  : 'Récentes (Global)'),
+              const Tab(text: 'Historique'),
             ],
           ),
           actions: [
@@ -52,9 +56,43 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
             _buildRecentActivitiesTab(theme, currentGardenId),
             
             // Onglet 2: Historique (New Widget)
-            currentGardenId.isNotEmpty 
-                ? GardenHistoryWidget(gardenId: currentGardenId)
-                : const Center(child: Text("Aucun jardin sélectionné")),
+            gardenState.selectedGarden != null
+                ? Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Row(
+                          children: [
+                            Text('Historique — ',
+                                style: theme.textTheme.titleLarge
+                                    ?.copyWith(fontWeight: FontWeight.w600)),
+                            Expanded(
+                              child: Text(
+                                gardenState.selectedGarden!.name,
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                    color: theme.colorScheme.primary,
+                                    fontWeight: FontWeight.w600),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                          child: GardenHistoryWidget(
+                              gardenId: gardenState.selectedGarden!.id)),
+                    ],
+                  )
+                : const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'Aucun jardin sélectionné.\nPour consulter l’historique d’un jardin, sélectionnez-le par un appui long depuis le tableau de bord.',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),
@@ -64,10 +102,21 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
   Widget _buildRecentActivitiesTab(ThemeData theme, String currentGardenId) {
     final activitiesAsync = ref.watch(recentActivitiesProvider);
     final gardenState = ref.watch(gardenProvider);
+    final appSettings = ref.watch(appSettingsProvider);
+    final showHistoryHint = appSettings.showHistoryHint;
+    final selectedGarden = gardenState.selectedGarden;
     
     return Column(
       children: [
-        // Filtres (placeholder if needed)
+        if (selectedGarden == null && showHistoryHint)
+          HistoryHintCard(
+            onGoToDashboard: () {
+              Navigator.of(context).popUntil((r) => r.isFirst);
+            },
+            onDismiss: () => ref
+                .read(appSettingsProvider.notifier)
+                .setShowHistoryHint(false),
+          ),
         
         // Liste des activités
         Expanded(
@@ -101,8 +150,12 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
                            gardenName = garden.name;
                         }
                       }
+
+                      // Si un jardin est sélectionné, on n'affiche pas le nom du jardin sur chaque carte (redondant)
+                      // Sauf si l'activité vient d'un autre contexte (peu probable avec le filtre, mais safe)
+                      final displayGardenName = selectedGarden == null ? gardenName : null;
                       
-                      return _buildActivityCard(activity, theme, gardenName);
+                      return _buildActivityCard(activity, theme, displayGardenName);
                     },
                   ),
                 );

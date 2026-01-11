@@ -18,6 +18,7 @@ class AppSettings {
   bool backupEnabled;
   bool gardenCalibrationEnabled;
   bool showMoonInOvoid;
+  bool showHistoryHint;
 
   AppSettings({
     required this.themeMode,
@@ -34,9 +35,10 @@ class AppSettings {
     required this.backupEnabled,
     required this.gardenCalibrationEnabled,
     required this.showMoonInOvoid,
+    required this.showHistoryHint,
   });
 
-  /// Valeurs par dÃƒÂ©faut (conformes aux tests)
+  /// Valeurs par défaut (conformes aux tests)
   factory AppSettings.defaults() => AppSettings(
         themeMode: 'system',
         showAnimations: true,
@@ -52,10 +54,9 @@ class AppSettings {
         backupEnabled: false,
         gardenCalibrationEnabled: false,
         showMoonInOvoid: false,
+        showHistoryHint: true,
       );
 
-  /// CopyWith (immutable-style)
-  /// CopyWith (immutable-style)
   /// CopyWith (immutable-style)
   AppSettings copyWith({
     String? themeMode,
@@ -72,6 +73,7 @@ class AppSettings {
     bool? backupEnabled,
     bool? gardenCalibrationEnabled,
     bool? showMoonInOvoid,
+    bool? showHistoryHint,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -90,6 +92,7 @@ class AppSettings {
       gardenCalibrationEnabled:
           gardenCalibrationEnabled ?? this.gardenCalibrationEnabled,
       showMoonInOvoid: showMoonInOvoid ?? this.showMoonInOvoid,
+      showHistoryHint: showHistoryHint ?? this.showHistoryHint,
     );
   }
 
@@ -105,7 +108,7 @@ class AppSettings {
     }
   }
 
-  /// Mettre ÃƒÂ  jour en place depuis un ThemeMode (les tests appellent cela)
+  /// Mettre à jour en place depuis un ThemeMode (les tests appellent cela)
   void setThemeModeEnum(ThemeMode m) {
     switch (m) {
       case ThemeMode.light:
@@ -123,6 +126,6 @@ class AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: $weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled, showMoonInOvoid: $showMoonInOvoid)';
+    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: $weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled, showMoonInOvoid: $showMoonInOvoid, showHistoryHint: $showHistoryHint)';
   }
 }

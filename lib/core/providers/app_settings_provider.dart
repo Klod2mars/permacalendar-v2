@@ -31,4 +31,8 @@ class AppSettingsNotifier extends Notifier<AppSettings> {
   void toggleShowMoonInOvoid(bool value) {
     state = state.copyWith(showMoonInOvoid: value);
   }
+
+  Future<void> setShowHistoryHint(bool value) async {
+    state = state.copyWith(showHistoryHint: value);
+  }
 }
