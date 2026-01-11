@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:permacalendar/shared/widgets/curved_text.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:permacalendar/shared/widgets/curved_text.dart'; // Removed
+
 import 'package:permacalendar/shared/widgets/active_garden_aura.dart';
 
 class GardenBubbleWidget extends StatelessWidget {
@@ -42,45 +45,12 @@ class GardenBubbleWidget extends StatelessWidget {
     const glassDecoration = null;
 
     // Prepare text logic
-    final upperName = gardenName.toUpperCase();
-    final words = upperName.split(' ');
+    // Text logic removed for Minimalist approach
 
-    String? topText;
-    String? bottomText;
-
-    if (words.length > 1) {
-      // Heuristic: First word top, rest bottom (or balanced split)
-      // Simple split for now:
-      topText = words[0];
-      bottomText = words.sublist(1).join(' ');
-    } else {
-      topText = upperName;
-      bottomText = null;
-    }
 
     // Text style shared
-    final textStyle = TextStyle(
-      color: Colors.white.withOpacity(0.95),
-      fontWeight: FontWeight.w500,
-      fontSize: 11, // Fixed size for arc
-      letterSpacing:
-          2.0, // Wider spacing for arc to prevent overlapping characters
-      shadows: [
-        Shadow(
-          blurRadius: 2,
-          color: Colors.black.withOpacity(0.5),
-          offset: const Offset(0, 1),
-        ),
-        Shadow(
-          blurRadius: 4,
-          color: Colors.white.withOpacity(0.2),
-          offset: const Offset(0, 0),
-        ),
-      ],
-    );
+    // Text style and radius removed for Minimalist approach
 
-    // Calculate radius for text (slightly inside the bubble edge)
-    final textRadius = radius * 0.60;
 
     return GestureDetector(
       onTap: onTap,
@@ -151,20 +121,72 @@ class GardenBubbleWidget extends StatelessWidget {
                         },
                       ),
                     ),
-                    if (topText != null)
-                      CurvedText(
-                        text: topText,
-                        textStyle: textStyle,
-                        radius: textRadius,
-                        placement: CurvedTextPlacement.top,
+                    // Approche Equilibrée : "Organic Breath"
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0), // 14 etait trop exclusif (hachage), 12 est le bon compromis
+                      child: Stack(
+                        children: [
+                          // 1. Shadow Layer (Softer Deep Green)
+                          AutoSizeText(
+                            gardenName.toUpperCase(),
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
+                            minFontSize: 5, // Autorise petite taille pour eviter hachage "JARDI N"
+                            maxFontSize: 9,
+                            stepGranularity: 0.1, // Scaling fluide
+                            overflow: TextOverflow.ellipsis,
+                            wrapWords: false, // Force le wrap sur les mots entiers si possible (pas character break)
+                            style: GoogleFonts.montserrat(
+                              color: const Color(0xFF1B5E20).withOpacity(0.6), // Green 900, reduced opacity
+                              fontSize: 9,
+                              fontWeight: FontWeight.w600, // SemiBold instead of Bold for lightness
+                              letterSpacing: 0.8, // Slightly increased spacing
+                              height: 1.1, // Breathing room
+                              shadows: [
+                                const Shadow(
+                                  blurRadius: 3,
+                                  color: Color(0xFF1B5E20),
+                                  offset: Offset(0, 1),
+                                ),
+                              ]
+                            ),
+                          ),
+                          // 2. Gradient Face Layer (Pearl/Organic)
+                          ShaderMask(
+                            shaderCallback: (bounds) {
+                              return const LinearGradient(
+                                colors: [
+                                  Color(0xFFFAFAFA), // Soft White (Grey 50)
+                                  Color(0xFFC5E1A5), // Light Green 200 (Soft, natural)
+                                ],
+                                stops: [0.2, 1.0], // Smooth transition
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ).createShader(bounds);
+                            },
+                            blendMode: BlendMode.srcIn,
+                            child: AutoSizeText(
+                              gardenName.toUpperCase(),
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                              minFontSize: 5,
+                              maxFontSize: 9,
+                              stepGranularity: 0.1,
+                              overflow: TextOverflow.ellipsis,
+                              wrapWords: false, 
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600, // Matching SemiBold
+                                letterSpacing: 0.8,
+                                height: 1.1,
+                                shadows: [],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                     if (bottomText != null)
-                      CurvedText(
-                        text: bottomText,
-                        textStyle: textStyle,
-                        radius: textRadius,
-                        placement: CurvedTextPlacement.bottom,
-                      ),
+                    ),
                   ],
                 ),
               ),
