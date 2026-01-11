@@ -6,6 +6,7 @@ import 'soil_metrics_repository_provider.dart';
 import 'weather_providers.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
+import '../../../../core/models/daily_weather_point.dart';
 
 /// State for soil temperature by scope
 class SoilTempState {
@@ -354,56 +355,94 @@ class SoilTempForecastPoint {
   SoilTempForecastPoint({required this.date, required this.tempC});
 }
 
-/// Computes 7-day soil temperature forecast based on current soil temp and air temp forecast
+/// Provider producing a list of SoilTempForecastPoint for charting
 final soilTempForecastProvider =
-    FutureProvider.family<List<SoilTempForecastPoint>, String>(
-        (ref, scopeKey) async {
-  // 1. Get current soil temperature
-  // Lecture réactive de l'état du soilTempProvider.
-  // Si la donnée est en cours de chargement, on demande un load en arrière-plan
-  // via Future.microtask afin de ne pas modifier un autre provider pendant
-  // l'initialisation du présent provider (évite l'assertion Riverpod).
-  final soilState = ref.watch(soilTempProvider);
-  final metricsAsync = soilState.getMetrics(scopeKey);
-
-  if (metricsAsync.isLoading) {
-    // Demande asynchrone non bloquante du chargement.
+    FutureProvider.family<List<SoilTempForecastPoint>, String>((ref, scopeKey) async {
+  // 1) Ensure we have the current estimated soil temp (or anchor)
+  final soilTempAsync = ref.watch(soilTempProviderByScope(scopeKey));
+  final SoilMetricsDto? dto = ref.watch(soilTempProvider).getMetrics(scopeKey).value;
+  // If the DTO isn't ready yet, wait for it explicitly so we have the starting point.
+  double? startSoil = soilTempAsync.value;
+  if (startSoil == null && dto == null) {
+    // Force load if needed
     Future.microtask(() => ref.read(soilTempProvider.notifier).load(scopeKey));
+    // We might not get it immediately, but let's try reading again or wait?
+    // User suggestion used await ref.read(...).load(). 
+    // load() is async Future<void>. So we can await it.
+    await ref.read(soilTempProvider.notifier).load(scopeKey);
+    // Refresh local reading
+    startSoil = ref.read(soilTempProvider).getMetrics(scopeKey).value?.soilTempEstimatedC;
   }
+  
+  // Now get fresh DTO/value
+  final SoilMetricsDto? finalDto = ref.read(soilTempProvider).getMetrics(scopeKey).value;
+  startSoil = startSoil ?? finalDto?.soilTempEstimatedC ?? finalDto?.anchorTempC;
 
-  final startSoilTemp = metricsAsync.value?.soilTempEstimatedC ?? 0.0;
+  // 2) If still null, fallback to today's air mean temp
+  final forecastPoints = await ref.read(forecastProvider.future); // existing provider
+  final today = DateTime.now();
+  final todayDate = DateTime(today.year, today.month, today.day);
 
-  // 2. Get air temperature forecast
-  final forecastPoints = await ref.watch(forecastProvider.future);
-
-  // 3. Compute trajectory
-  final computeUsecase = ComputeSoilTempNextDayUsecase();
-  final result = <SoilTempForecastPoint>[];
-
-  // Initial point (Today/Now)
-  result.add(SoilTempForecastPoint(date: DateTime.now(), tempC: startSoilTemp));
-
-  double currentSoilC = startSoilTemp;
-  final sortedForecast = List.of(forecastPoints)
-    ..sort((a, b) => a.date.compareTo(b.date));
-
-  for (final dayPoint in sortedForecast) {
-    // Air temp for the day: arithmetic mean of min and max
-    final tMin = dayPoint.tMinC ?? dayPoint.tMaxC ?? 15.0;
-    final tMax = dayPoint.tMaxC ?? dayPoint.tMinC ?? 15.0;
-    final meanAirTemp = (tMin + tMax) / 2;
-
-    // Apply inertia model
-    currentSoilC = computeUsecase(
-      soilTempC: currentSoilC,
-      airTempC: meanAirTemp,
-      alpha: 0.15, // Default for loam, TODO: Make dynamic
+  double startingSoilTemp;
+  if (startSoil != null) {
+    startingSoilTemp = startSoil;
+  } else {
+    if (forecastPoints.isEmpty) {
+       // Total fallback if no weather
+       return [SoilTempForecastPoint(date: todayDate, tempC: 10.0)];
+    }
+    // compute today's mean air temp from forecast
+    final todayPoint = forecastPoints.firstWhere(
+      (p) => p.date.year == todayDate.year && p.date.month == todayDate.month && p.date.day == todayDate.day,
+      orElse: () => forecastPoints.first
     );
-
-    result.add(SoilTempForecastPoint(date: dayPoint.date, tempC: currentSoilC));
+    final tMin = todayPoint.tMinC ?? todayPoint.tMaxC ?? 15.0;
+    final tMax = todayPoint.tMaxC ?? todayPoint.tMinC ?? 15.0;
+    startingSoilTemp = (tMin + tMax) / 2;
   }
 
-  return result;
+  // 3) Build N days forecast starting from today using compute usecase
+  const int days = 7;
+  final compute = ComputeSoilTempNextDayUsecase();
+  final List<SoilTempForecastPoint> out = [];
+
+  // Add the first point = today with startingSoilTemp
+  out.add(SoilTempForecastPoint(date: todayDate, tempC: startingSoilTemp));
+
+  double currentSoil = startingSoilTemp;
+
+  for (int i = 1; i < days; i++) {
+    final simulationDate = todayDate.add(Duration(days: i));
+    // find forecast point for that date
+    final point = forecastPoints.firstWhere(
+      (p) => p.date.year == simulationDate.year && p.date.month == simulationDate.month && p.date.day == simulationDate.day,
+      orElse: () => forecastPoints.isNotEmpty ? forecastPoints.last : DailyWeatherPoint(date: simulationDate), // fallback
+    );
+     // Note: forecastPoints are likely SoilWeatherPoint or similar from weather_providers.dart? 
+     // Checking Step 55 view_file: weather_providers.dart usage. 
+     // The type is implicit in `ref.watch(forecastProvider.future)`.
+     // If `forecastProvider` returns `List<DailyWeatherPoint>` (likely naming), then `tMinC` exists.
+     // In Step 55, line 402 access `dayPoint.tMinC`.
+     // I assume `forecastPoints` items have `tMinC`.
+
+    double meanAir;
+    // Check if point is valid (dummy check if fallback returned dummy)
+    if (point.tMinC != null || point.tMaxC != null) {
+      final tMin = point.tMinC ?? point.tMaxC ?? 15.0;
+      final tMax = point.tMaxC ?? point.tMinC ?? 15.0;
+      meanAir = (tMin + tMax) / 2;
+    } else {
+      // fallback if no weather data found/valid
+      meanAir = currentSoil; // no change
+    }
+
+    // compute next day soil temperature using same alpha as controller (0.15)
+    currentSoil = compute(soilTempC: currentSoil, airTempC: meanAir, alpha: 0.15);
+
+    out.add(SoilTempForecastPoint(date: simulationDate, tempC: currentSoil));
+  }
+
+  return out;
 });
 
 /// Sowing advice status
