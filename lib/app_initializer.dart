@@ -18,6 +18,7 @@ import 'core/models/sky_calibration_config.dart';
 import 'core/models/activity_v3.dart';
 import 'core/services/activity_observer_service.dart';
 import 'core/hive/type_ids.dart';
+import 'features/climate/data/initialization/soil_metrics_initialization.dart';
 
 class AppInitializer {
   static Future<void> initialize() async {
@@ -66,6 +67,9 @@ class AppInitializer {
       // Sky Calibration Adapter
       if (!Hive.isAdapterRegistered(44))
         Hive.registerAdapter(SkyCalibrationConfigAdapter());
+      
+      // ✅ Soil Metrics Adapter
+      await SoilMetricsInitialization.initialize();
     } catch (e) {
       print('Warning: Error registering adapters: $e');
     }
