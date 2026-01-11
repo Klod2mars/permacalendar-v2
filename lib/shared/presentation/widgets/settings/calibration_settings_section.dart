@@ -53,34 +53,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
             ),
 
 
-            // Message d'avertissement si calibration active
-            if (isCalibrating) ...[
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.orange.withOpacity(0.3)),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.info_outline,
-                        color: Colors.orange, size: 20),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Mode calibration actif. Retournez au dashboard pour ajuster.',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.orange.shade800,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+
           ],
         ),
       ),
@@ -172,7 +145,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-              'ðŸŒ¿ Mode calibration organique activé. Retournez au dashboard.'),
+              'ðŸŒ¿ Mode calibration organique activé. Sélectionnez l’un des trois onglets.'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 3),
         ),

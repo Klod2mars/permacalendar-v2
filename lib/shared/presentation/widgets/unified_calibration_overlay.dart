@@ -2,27 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/home/presentation/providers/unified_calibration_provider.dart';
 import '../../../../core/models/calibration_state.dart';
+import '../../../../core/providers/organic_zones_provider.dart';
 
-class UnifiedCalibrationOverlay extends ConsumerWidget {
+class UnifiedCalibrationOverlay extends ConsumerStatefulWidget {
   const UnifiedCalibrationOverlay({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<UnifiedCalibrationOverlay> createState() => _UnifiedCalibrationOverlayState();
+}
+
+class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOverlay> {
+  bool _isCollapsed = false;
+
+  void _toggleCollapse() {
+    setState(() {
+      _isCollapsed = !_isCollapsed;
+    });
+  }
+
+  Future<void> _saveAndExit() async {
+    try {
+      // 1. Sauvegarder
+      await ref.read(organicZonesProvider.notifier).saveAll();
+      
+      // 2. Désactiver le mode calibration
+      ref.read(calibrationStateProvider.notifier).disableCalibration();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Calibration sauvegardée'),
+          backgroundColor: Colors.green,
+        ));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Erreur sauvegarde calibration: $e'),
+          backgroundColor: Colors.red,
+        ));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final unifiedState = ref.watch(unifiedCalibrationProvider);
     final activeTool = unifiedState.activeTool;
 
     return Stack(
       children: [
-        // Zone supérieure transparente pour laisser voir le dashboard
-        // On pourrait mettre des infos en haut si besoin
-
+        // Zone supérieure transparente
+        
         // Barre de contrôle en bas
         Positioned(
           left: 0,
           right: 0,
           bottom: 0,
           child: Container(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.85),
               borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
@@ -37,62 +73,91 @@ class UnifiedCalibrationOverlay extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Titre / Instructions contextuelles
-                Text(
-                  _getInstructionText(activeTool),
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
-                  textAlign: TextAlign.center,
+                // --- HEADER / HANDLE (Toujours visible) ---
+                GestureDetector(
+                  onTap: _toggleCollapse,
+                  behavior: HitTestBehavior.opaque,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Icon(
+                      _isCollapsed ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                      color: Colors.white70,
+                      size: 28,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 16),
-                
-                // Tabs de sélection d'outil
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildToolButton(
-                      context, 
-                      ref, 
-                      CalibrationTool.image, 
-                      Icons.image, 
-                      'Image',
-                      activeTool == CalibrationTool.image,
+
+                // --- CONTENU REPLIABLE ---
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  child: SizedBox(
+                    height: _isCollapsed ? 0 : null,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Titre / Instructions contextuelles
+                          Text(
+                            _getInstructionText(activeTool),
+                            style: const TextStyle(color: Colors.white70, fontSize: 13),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 16),
+                          
+                          // Tabs de sélection d'outil
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildToolButton(
+                                context, 
+                                ref, 
+                                CalibrationTool.image, 
+                                Icons.image, 
+                                'Image',
+                                activeTool == CalibrationTool.image,
+                              ),
+                              _buildToolButton(
+                                context,
+                                ref,
+                                CalibrationTool.sky,
+                                Icons.cloud,
+                                'Ciel',
+                                activeTool == CalibrationTool.sky,
+                              ),
+                              _buildToolButton(
+                                context,
+                                ref,
+                                CalibrationTool.modules,
+                                Icons.widgets,
+                                'Modules',
+                                activeTool == CalibrationTool.modules,
+                              ),
+                            ],
+                          ),
+                          
+                          const SizedBox(height: 24),
+                          
+                          // Actions Globales (Valider / Annuler)
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              onPressed: _saveAndExit,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                              icon: const Icon(Icons.check),
+                              label: const Text('Valider & Quitter'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    _buildToolButton(
-                      context,
-                      ref,
-                      CalibrationTool.sky,
-                      Icons.cloud,
-                      'Ciel',
-                      activeTool == CalibrationTool.sky,
-                    ),
-                    _buildToolButton(
-                      context,
-                      ref,
-                      CalibrationTool.modules,
-                      Icons.widgets,
-                      'Modules',
-                      activeTool == CalibrationTool.modules,
-                    ),
-                  ],
-                ),
-                
-                const SizedBox(height: 24),
-                
-                // Actions Globales (Valider / Annuler)
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      ref.read(calibrationStateProvider.notifier).disableCalibration();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    ),
-                    icon: const Icon(Icons.check),
-                    label: const Text('Valider & Quitter'),
                   ),
                 ),
               ],

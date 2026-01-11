@@ -71,36 +71,7 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox.shrink(),
         ],
       ),
-      floatingActionButton: isCalibrating
-          ? FloatingActionButton.extended(
-              heroTag: 'validateCalibration',
-              icon: const Icon(Icons.check),
-              label: const Text('Valider'),
-              onPressed: () async {
-                try {
-                  await ref.read(organicZonesProvider.notifier).saveAll();
-                  ref
-                      .read(calibrationStateProvider.notifier)
-                      .disableCalibration();
-
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Calibration sauvegardée'),
-                    backgroundColor: Colors.green,
-                  ));
-
-                  // Stay on dashboard after validation
-                  // await Future.delayed(const Duration(milliseconds: 200));
-                  // if (context.mounted) {
-                  //   context.push(AppRoutes.settings);
-                  // }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('Erreur sauvegarde calibration: $e'),
-                  ));
-                }
-              },
-            )
-          : null,
+      floatingActionButton: null,
     );
   }
 }
