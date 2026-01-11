@@ -35,17 +35,33 @@ class HomeScreen extends ConsumerWidget {
           ),
 
           // Petit bouton d'accès rapide aux Paramètres (temporaire)
+          // Safety fallback invisible: zone cliquable en haut-droite qui ouvre Paramètres.
+          // Ne supprime pas le hotspot orga dans OrganicDashboard — c'est simplement un fallback.
           Positioned(
-            top: 12,
-            right: 12,
+            top: 0,
+            right: 0,
             child: SafeArea(
-              child: Material(
-                color: Colors.transparent,
-                child: IconButton(
-                  icon: Icon(Icons.settings,
-                      color: Theme.of(context).colorScheme.onSurface),
-                  tooltip: 'Paramètres',
-                  onPressed: () => context.push(AppRoutes.settings),
+              child: SizedBox(
+                width: 56, // taille de zone fallback (ajuster si besoin)
+                height: 56,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => context.push(AppRoutes.settings),
+                    // neutraliser tout feedback visuel
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    borderRadius: BorderRadius.circular(12),
+                    child: Semantics(
+                      // Garder l'accessibilité : annonce "Paramètres (repli)" pour
+                      // les lecteurs d'écran afin de conserver ce fallback pour les
+                      // utilisateurs non voyants.
+                      button: true,
+                      label: 'Paramètres (repli)',
+                      child: const SizedBox.expand(),
+                    ),
+                  ),
                 ),
               ),
             ),
