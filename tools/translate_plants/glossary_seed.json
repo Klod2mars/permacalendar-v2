@@ -1,0 +1,23 @@
+{
+    "Solanum_lycopersicum": {
+        "fr": "Tomate",
+        "en": "Tomato",
+        "es": "Tomate",
+        "pt_BR": "Tomate",
+        "de": "Tomate"
+    },
+    "Lactuca_sativa": {
+        "fr": "Laitue",
+        "en": "Lettuce",
+        "es": "Lechuga",
+        "pt_BR": "Alface",
+        "de": "Lattich"
+    },
+    "Daucus_carota": {
+        "fr": "Carotte",
+        "en": "Carrot",
+        "es": "Zanahoria",
+        "pt_BR": "Cenoura",
+        "de": "Karotte"
+    }
+}

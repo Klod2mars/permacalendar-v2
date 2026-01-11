@@ -46,6 +46,9 @@ const int kTypeIdPlantHive = 29;
 /// ActivityV3 - Modern activity tracking
 const int kTypeIdActivityV3 = 30;
 
+/// PlantLocalized - Multilingual plant data (offline packs)
+const int kTypeIdPlantLocalized = 33;
+
 // ============================================================================
 // EXTENDED TYPEIDS (31+) - FOR SPECIALIZED FEATURES
 // ============================================================================

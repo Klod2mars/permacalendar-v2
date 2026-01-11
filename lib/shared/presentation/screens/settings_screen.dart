@@ -17,6 +17,7 @@ import '../../../core/services/open_meteo_service.dart';
 import '../widgets/settings/calibration_settings_section.dart';
 import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
+import '../../../features/settings/presentation/screens/language_settings_page.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -82,6 +83,18 @@ class SettingsScreen extends ConsumerWidget {
       const SizedBox(height: 16),
       CustomCard(
         child: Column(children: [
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: const Text('Langue / Language'),
+            subtitle: const Text('Français, English, Español...'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const LanguageSettingsPage(),
+              ),
+            ),
+          ),
+          const Divider(height: 1),
           SwitchListTile(
             title: const Text('Animations'),
             subtitle: const Text('Activer les animations de l\'interface'),
