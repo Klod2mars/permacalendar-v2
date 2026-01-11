@@ -24,14 +24,12 @@ class StatisticsPillarCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final iconAndTitle = switch (type) {
-      PillarType.economieVivante => {'icon': '🌾', 'title': 'Économie Vivante'},
+      PillarType.economieVivante => {'icon': '🧺', 'title': 'Économie du jardin'},
       PillarType.sante => {'icon': '🥗', 'title': 'Équilibre Nutritionnel'},
-      PillarType.patrimoine => {'icon': '📜', 'title': 'Patrimoine'},
+      PillarType.patrimoine => {'icon': '📜', 'title': 'Export'},
     };
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Center(
+    return Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 460),
           child: AspectRatio(
@@ -50,9 +48,9 @@ class StatisticsPillarCard extends ConsumerWidget {
                         color: Colors.white.withOpacity(0.12), width: 0.8),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF00FF88).withOpacity(0.18),
-                        blurRadius: 60,
-                        spreadRadius: 8,
+                        color: const Color(0xFF00FF88).withOpacity(0.30),
+                        blurRadius: 80,
+                        spreadRadius: 20,
                       ),
                     ],
                   ),
@@ -167,7 +165,7 @@ class StatisticsPillarCard extends ConsumerWidget {
                                   child: ConstrainedBox(
                                     constraints: BoxConstraints(
                                         maxWidth: contentMaxWidth,
-                                        maxHeight: diameter * 0.5),
+                                        maxHeight: diameter * 0.6),
                                     child: _buildSummaryContent(
                                         type, diameter, context, ref),
                                   ),
@@ -201,8 +199,7 @@ class StatisticsPillarCard extends ConsumerWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildSummaryContent(
@@ -310,7 +307,9 @@ class StatisticsPillarCard extends ConsumerWidget {
                         orElse: () => const SizedBox(),
                       );
                     })),
-              )
+              ),
+              // Spacer to push content up visually
+              SizedBox(height: diameter * 0.05),
             ],
           ),
         );
@@ -355,10 +354,10 @@ class StatisticsPillarCard extends ConsumerWidget {
       case PillarType.economieVivante:
         return 'Valeur totale des récoltes';
       case PillarType.sante:
-        return 'Contribution Nutritionnelle';
+        return 'Signature Nutritionnelle';
 
       case PillarType.patrimoine:
-        return 'Héritage & Transmission';
+        return 'Récupérez vos données';
     }
   }
 }

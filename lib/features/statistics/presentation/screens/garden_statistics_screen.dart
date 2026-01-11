@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/statistics_pillars_list.dart';
 import '../providers/statistics_filters_provider.dart';
 
-import '../widgets/garden_multi_selector.dart';
+
 
 class GardenStatisticsScreen extends ConsumerStatefulWidget {
   final String? gardenId;
@@ -49,7 +49,7 @@ class _GardenStatisticsScreenState
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
-                'CONSCIENCE DU VIVANT',
+                'Statistiques',
                 style: TextStyle(
                   color: Colors.greenAccent.withOpacity(0.8),
                   letterSpacing: 1.2,
@@ -58,38 +58,20 @@ class _GardenStatisticsScreenState
                 ),
               ),
             ),
-            // Multi-Garden Selector
-            const SliverToBoxAdapter(
-              child: GardenMultiSelector(),
-            ),
+
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    Hero(
-                      // Using a global tag for the generic entry point
-                      tag: 'stats-bubble-hero-global',
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          'Statistiques de résilience',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
                     Text(
-                      'Analyse en temps réel de votre autonomie.',
-                      style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                      'Analysez en temps réel et exportez vos données.',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.7),
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 40),
 
