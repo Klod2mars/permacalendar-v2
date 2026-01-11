@@ -32,6 +32,8 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildAppInfoSection(context, theme),
           const SizedBox(height: 24),
+          _buildDisplaySection(context, theme, ref),
+          const SizedBox(height: 24),
           _buildGardenSettingsSection(context, theme),
           const SizedBox(height: 24),
           _buildScientificToolsSection(context, theme, ref),
@@ -62,6 +64,40 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: const Text(AppConstants.appVersion),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showVersionInfo(context),
+          ),
+        ]),
+      ),
+    ]);
+  }
+
+  Widget _buildDisplaySection(
+      BuildContext context, ThemeData theme, WidgetRef ref) {
+    final settings = ref.watch(appSettingsProvider);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(
+        'Affichage',
+        style:
+            theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 16),
+      CustomCard(
+        child: Column(children: [
+          SwitchListTile(
+            title: const Text('Animations'),
+            subtitle: const Text('Activer les animations de l\'interface'),
+            secondary: const Icon(Icons.animation),
+            value: settings.showAnimations,
+            onChanged: (v) =>
+                ref.read(appSettingsProvider.notifier).toggleShowAnimations(v),
+          ),
+          const Divider(height: 1),
+          SwitchListTile(
+            title: const Text("Afficher la Lune dans l'ovoïde météo"),
+            subtitle: const Text('Affiche la phase lunaire symbolique'),
+            secondary: const Icon(Icons.nights_stay),
+            value: settings.showMoonInOvoid,
+            onChanged: (v) =>
+                ref.read(appSettingsProvider.notifier).toggleShowMoonInOvoid(v),
           ),
         ]),
       ),

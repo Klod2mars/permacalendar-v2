@@ -6,14 +6,52 @@ import '../../../core/models/daily_weather_point.dart';
 import '../../../../features/climate/presentation/providers/weather_providers.dart';
 import '../../../../features/climate/presentation/providers/weather_time_provider.dart';
 import '../../../core/models/calibration_state.dart';
+import '../../../core/providers/app_settings_provider.dart';
+import 'moon_in_ovoid_painter.dart';
 
-class WeatherSkyBackground extends ConsumerWidget {
+class WeatherSkyBackground extends ConsumerStatefulWidget {
   const WeatherSkyBackground({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WeatherSkyBackground> createState() =>
+      _WeatherSkyBackgroundState();
+}
+
+class _WeatherSkyBackgroundState extends ConsumerState<WeatherSkyBackground>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _moonController;
+  Animation<double>? _moonAnim;
+
+  @override
+  void dispose() {
+    _moonController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // 1. Calibration (Où peindre ?)
     final calib = ref.watch(skyCalibrationProvider);
+    final appSettings = ref.watch(appSettingsProvider);
+    final showMoon = appSettings.showMoonInOvoid;
+    final showAnimations = appSettings.showAnimations;
+
+    // Manage Animation Controller
+    // FORCED TEST: Always enable moon controller if not null
+    final forceShowMoon = true; // FORCE FOR USER TEST
+    
+    if (forceShowMoon && showAnimations && _moonController == null) {
+      _moonController = AnimationController(
+        vsync: this,
+        duration: const Duration(minutes: 10),
+      )..repeat();
+      _moonAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+          parent: _moonController!, curve: Curves.easeInOut));
+    } else if ((!forceShowMoon || !showAnimations) && _moonController != null) {
+      _moonController!.dispose();
+      _moonController = null;
+      _moonAnim = null;
+    }
 
     // 2. Temps & Météo (Quoi peindre ?)
     final timeOffset = ref.watch(weatherTimeOffsetProvider);
@@ -66,6 +104,9 @@ class WeatherSkyBackground extends ConsumerWidget {
 
         final sunrise = parseUtc(daily?.sunrise);
         final sunset = parseUtc(daily?.sunset);
+        
+        // Moon Phase (0..1)
+        final moonPhase = daily?.moonPhase; // Assuming field exists in DailyWeatherPoint
 
         // --- CORRECTION FALLBACK SÉCURISÉ ---
         // Si les dates sunrise/sunset semblent invalides (ex: égales à projectedTime suite à un parse null),
@@ -91,16 +132,60 @@ class WeatherSkyBackground extends ConsumerWidget {
         // On garde 'elevation' pour l'intensité du zénith (0.0 Horizon -> 1.0 Midi)
         final elevation = _calculateSolarIntensity(dayProgress);
 
-        return CustomPaint(
-          painter: _OrganicSkyPainter(
-            cx: calib.cx,
-            cy: calib.cy,
-            rx: calib.rx,
-            ry: calib.ry,
-            rotation: calib.rotation,
-            elevation: elevation,
-          ),
-          size: Size.infinite,
+        return AnimatedBuilder(
+          animation: _moonAnim ?? const AlwaysStoppedAnimation(0.0),
+          builder: (context, child) {
+             // compute animOffset for MoonPainter:
+            Offset animOffset = Offset.zero;
+            if (_moonAnim != null) {
+              final t = _moonAnim!.value;
+              // Very subtle movement
+              // The original request suggested 1% width and 0.5% height amplitude
+              // We can't know ovalRect here exactly but we can pass relative values or just a small offset
+              // The painter will use it.
+              // Let's pass normalized offset logic or just fixed small pixels?
+              // The loop is inside painter usually relative to size.
+              // Ideally we pass the raw 't' or precomputed offset.
+              // Let's compute a relative offset factor that the painter will scale.
+              // Or better: pass the offset in logical pixels if we knew size.
+              // But CustomPaint size is infinite here? No, it takes constraints.
+              // We'll pass a fixed relative offset to be scaled by painter size.
+              
+              // Actually, the request said:
+              // "Offset(dx, dy)" where dx derived from ovalRect.
+              // But we are in build() so we don't know ovalRect size easily without LayoutBuilder.
+              // However, _OrganicSkyPainter receives rx, ry (relative sizes).
+              // We can compute the relative offset here!
+              // rx is relative to width.
+              
+              // dx = sin(...) * (rx*2 * 0.01) -> relative to Width
+              // dy = cos(...) * (ry*2 * 0.005) -> relative to Height
+              
+              // Let's just pass t to the painter and let it compute?
+              // Or pass the computed relative offsets.
+              
+              // Let's simply Compute the factor here.
+              // Offset( sin(t*2pi)*0.01, cos(t*2pi)*0.005 )  <-- Normalized relative offset
+              
+              final rad = t * 2 * math.pi;
+              animOffset = Offset(math.sin(rad) * 0.01, math.cos(rad) * 0.005);
+            }
+            
+            return CustomPaint(
+              painter: _OrganicSkyPainter(
+                cx: calib.cx,
+                cy: calib.cy,
+                rx: calib.rx,
+                ry: calib.ry,
+                rotation: calib.rotation,
+                elevation: elevation,
+                moonPhase: moonPhase ?? 0.5, // FORCE FULL MOON IF NULL
+                moonAnimOffset: animOffset,
+                moonEnabled: true, // FORCE ENABLED
+              ),
+              size: Size.infinite,
+            );
+          }
         );
       },
       loading: () => const SizedBox(),
@@ -144,6 +229,10 @@ class _OrganicSkyPainter extends CustomPainter {
   final double cx, cy, rx, ry, rotation;
   final double elevation;
 
+  final double? moonPhase; // 0..1
+  final Offset moonAnimOffset; // Normalized relative offset
+  final bool moonEnabled;
+
   _OrganicSkyPainter({
     required this.cx,
     required this.cy,
@@ -151,6 +240,9 @@ class _OrganicSkyPainter extends CustomPainter {
     required this.ry,
     required this.rotation,
     required this.elevation,
+    this.moonPhase,
+    this.moonAnimOffset = Offset.zero,
+    this.moonEnabled = false,
   });
 
   @override
@@ -215,12 +307,30 @@ class _OrganicSkyPainter extends CustomPainter {
           ..blendMode = BlendMode.multiply;
         canvas.drawOval(ovalRect, paint);
 
+
         // Étoiles (inchangé, car fonctionnel)
         if (darkness > 0.4) {
           final starOpacity = ((darkness - 0.4) / 0.3).clamp(0.0, 1.0);
           if (starOpacity > 0) _drawLiveStars(canvas, ovalRect, starOpacity);
         }
       }
+    }
+
+    // MOON IMPLEMENTATION
+    if (moonEnabled && moonPhase != null) {
+      // We need to pass absolute pixel offset for animation
+      final animDx = moonAnimOffset.dx * (radiusX * 2);
+      final animDy = moonAnimOffset.dy * (radiusY * 2);
+
+      // Invoke Moon Painter
+      final moonPainter = MoonInOvoidPainter(
+        phase: moonPhase!,
+        ovalRect: ovalRect, 
+        animOffset: Offset(animDx, animDy),
+        darkness: (elevation > -0.05) ? 0.0 : (-elevation).clamp(0.0, 1.0),
+      );
+      
+      moonPainter.paint(canvas, Size(radiusX*2, radiusY*2));
     }
     canvas.restore();
   }
@@ -249,6 +359,9 @@ class _OrganicSkyPainter extends CustomPainter {
         old.cy != cy ||
         old.rx != rx ||
         old.ry != ry ||
-        old.rotation != rotation;
+        old.rotation != rotation ||
+        old.moonPhase != moonPhase ||
+        old.moonAnimOffset != moonAnimOffset ||
+        old.moonEnabled != moonEnabled;
   }
 }

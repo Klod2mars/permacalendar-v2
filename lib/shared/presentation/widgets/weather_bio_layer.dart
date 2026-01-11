@@ -112,10 +112,6 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     // Logique Neige/Pluie
     _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
 
-    if (kWeatherDebug) {
-      debugPrint(
-          'WEATHER_BIO -> time=${p.time.toUtc().toIso8601String()} precip=${_precipIntensity}mm prob=${_precipProbability}% code=${code} isSnow=${_isSnow} wind=${_windSpeed}km/h');
-    }
   }
 
   void _spawnParticles(double dt, SkyCalibrationConfig calib) {

@@ -23,4 +23,12 @@ class AppSettingsNotifier extends Notifier<AppSettings> {
   Future<void> setSelectedCommune(String? commune) async {
     state = state.copyWith(selectedCommune: commune);
   }
+
+  void toggleShowAnimations(bool value) {
+    state = state.copyWith(showAnimations: value);
+  }
+
+  void toggleShowMoonInOvoid(bool value) {
+    state = state.copyWith(showMoonInOvoid: value);
+  }
 }
