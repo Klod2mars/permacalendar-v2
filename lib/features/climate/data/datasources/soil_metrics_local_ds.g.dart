@@ -17,22 +17,28 @@ class SoilMetricsDtoAdapter extends TypeAdapter<SoilMetricsDto> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SoilMetricsDto(
-      soilTempC: fields[0] as double?,
+      soilTempEstimatedC: fields[0] as double?,
       soilPH: fields[1] as double?,
-      lastUpdated: fields[2] as DateTime?,
+      lastComputed: fields[2] as DateTime?,
+      anchorTempC: fields[3] as double?,
+      anchorTimestamp: fields[4] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, SoilMetricsDto obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.soilTempC)
+      ..write(obj.soilTempEstimatedC)
       ..writeByte(1)
       ..write(obj.soilPH)
       ..writeByte(2)
-      ..write(obj.lastUpdated);
+      ..write(obj.lastComputed)
+      ..writeByte(3)
+      ..write(obj.anchorTempC)
+      ..writeByte(4)
+      ..write(obj.anchorTimestamp);
   }
 
   @override

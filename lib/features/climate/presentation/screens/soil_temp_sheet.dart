@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/soil_temp_provider.dart';
+import '../../data/datasources/soil_metrics_local_ds.dart';
 import '../../../../core/providers/active_garden_provider.dart';
 
 /// Soil Temperature Input Sheet
@@ -43,23 +44,21 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
     final activeId = ref.read(activeGardenIdProvider);
     _scopeKey = activeId ?? "garden:demo";
 
-    // Load current soil temperature from provider
-    // We use ref.read because we are in a lifecycle method and want to fetch once
-    final soilTempAsync = ref.read(soilTempProviderByScope(_scopeKey));
-    if (soilTempAsync.hasValue && soilTempAsync.value != null) {
-      if (mounted) {
-        setState(() {
-          _temperature = soilTempAsync.value!;
-          _controller.text = _temperature.toStringAsFixed(1);
-        });
-      }
-    } else {
-      if (mounted) {
-        setState(() {
-          _temperature = 0.0;
-          _controller.text = _temperature.toStringAsFixed(1);
-        });
-      }
+    // Initialize local state from provider if not already touched
+    // We prefer reading the latest value.
+    final soilState = ref.read(soilTempProvider);
+    final metrics = soilState.getMetrics(_scopeKey).value;
+    
+    // Only init if we haven't set it (implicit via _temperature being 0.0 default? Might be risky if actual is 0.0)
+    // Better to flag if initialized.
+    // However, usually we want to start with current estimated.
+    if (metrics != null && metrics.soilTempEstimatedC != null) {
+        if (mounted && _temperature == 0.0) { // Simple check, or add boolean _initialized
+            setState(() {
+                _temperature = metrics.soilTempEstimatedC!;
+                _controller.text = _temperature.toStringAsFixed(1);
+            });
+        }
     }
   }
 
@@ -72,11 +71,18 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    
+    // Reactively watch for anchor info
+    final soilState = ref.watch(soilTempProvider);
+    final metrics = soilState.getMetrics(_scopeKey).value;
+    final estimated = metrics?.soilTempEstimatedC;
+    final anchor = metrics?.anchorTempC;
+    final anchorDate = metrics?.anchorTimestamp;
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.8, // More space
+      height: MediaQuery.of(context).size.height * 0.85, 
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.8),
+        color: Colors.black.withOpacity(0.85),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: ClipRRect(
@@ -109,12 +115,24 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                                 fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 8),
+                          // Display Current Estimated
                           Text(
-                            '${_temperature.toStringAsFixed(1)}°C',
+                            estimated != null ? '${estimated.toStringAsFixed(1)}°C' : '-- °C',
                             style: theme.textTheme.displayMedium?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800),
                           ),
+                          // Display Anchor Info
+                          if (anchor != null && anchorDate != null) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              'Dernière mesure: ${anchor.toStringAsFixed(1)}°C (${anchorDate.day}/${anchorDate.month})',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: Colors.white54,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -122,6 +140,10 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         color: Colors.white54, size: 32),
                   ],
                 ),
+                const SizedBox(height: 24),
+                
+                Text("Nouvelle mesure (Ancrage)", style: theme.textTheme.titleSmall?.copyWith(color: Colors.amber)),
+
                 const SizedBox(height: 16),
 
                 // Slider (allow negative)
@@ -134,9 +156,9 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                   ),
                   child: Slider(
                     value: _temperature,
-                    min: -50.0,
-                    max: 60.0,
-                    divisions: 1100, // approx 0.1°C step
+                    min: -10.0,
+                    max: 45.0,
+                    divisions: 110, // 0.5°C step
                     label: '${_temperature.toStringAsFixed(1)}°C',
                     onChanged: (value) {
                       setState(() {
@@ -159,7 +181,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                   decoration: InputDecoration(
                     labelText: 'Température (°C)',
                     errorText:
-                        _inputValid ? null : 'Valeur invalide (-50.0 à 60.0)',
+                        _inputValid ? null : 'Valeur invalide (-10.0 à 45.0)',
                     labelStyle: const TextStyle(color: Colors.white70),
                     hintText: '0.0',
                     filled: true,
@@ -169,7 +191,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                   ),
                   onChanged: (value) {
                     final parsed = double.tryParse(value.replaceAll(',', '.'));
-                    if (parsed != null && parsed >= -50.0 && parsed <= 60.0) {
+                    if (parsed != null && parsed >= -10.0 && parsed <= 45.0) {
                       setState(() {
                         _temperature = parsed;
                         _inputValid = true;
@@ -220,7 +242,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                                 .setManual(_scopeKey, _temperature);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Température enregistrée')),
+                                  content: Text('Mesure enregistrée comme ancrage')),
                             );
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(

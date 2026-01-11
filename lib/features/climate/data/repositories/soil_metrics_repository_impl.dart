@@ -16,7 +16,7 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
   Future<double?> getSoilTempC(String scopeKey) async {
     try {
       final dto = await _localDataSource.read(scopeKey);
-      return dto?.soilTempC;
+      return dto?.soilTempEstimatedC;
     } catch (e) {
       print(
           '[SoilMetricsRepository] Error getting soil temp for $scopeKey: $e');
@@ -36,30 +36,69 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
   }
 
   @override
-  Future<void> setSoilTempC(String scopeKey, double tempC) async {
+  Future<void> setManualAnchor(String scopeKey, double anchorTempC, DateTime timestamp) async {
     try {
-      // Validate temperature range
-      if (tempC < -50.0 || tempC > 60.0) {
+      // Validate
+      if (anchorTempC < -50.0 || anchorTempC > 60.0) {
         throw ArgumentError(
-            'Temperature must be between -50Â°C and 60Â°C, got $tempC');
+            'Temperature must be between -50°C and 60°C, got $anchorTempC');
       }
 
       final existingDto = await _localDataSource.read(scopeKey);
       final updatedDto = existingDto?.copyWith(
-            soilTempC: tempC,
-            lastUpdated: DateTime.now(),
+            anchorTempC: anchorTempC,
+            anchorTimestamp: timestamp,
+            soilTempEstimatedC: anchorTempC, // Reset estimated to anchor
+            lastComputed: timestamp,
           ) ??
           SoilMetricsDto.create(
-            soilTempC: tempC,
-            lastUpdated: DateTime.now(),
+            anchorTempC: anchorTempC,
+            anchorTimestamp: timestamp,
+            soilTempEstimatedC: anchorTempC,
+            lastComputed: timestamp,
           );
 
       await _localDataSource.write(scopeKey, updatedDto);
     } catch (e) {
       print(
-          '[SoilMetricsRepository] Error setting soil temp for $scopeKey: $e');
+          '[SoilMetricsRepository] Error setting manual anchor for $scopeKey: $e');
       rethrow;
     }
+  }
+
+  @override
+  Future<void> setEstimatedTemp(String scopeKey, double estimated, DateTime computedAt) async {
+    try {
+       // Validate
+      if (estimated < -50.0 || estimated > 60.0) {
+        throw ArgumentError(
+            'Temperature must be between -50°C and 60°C, got $estimated');
+      }
+
+      final existingDto = await _localDataSource.read(scopeKey);
+      final updatedDto = existingDto?.copyWith(
+            soilTempEstimatedC: estimated,
+            lastComputed: computedAt,
+          ) ??
+          SoilMetricsDto.create(
+            soilTempEstimatedC: estimated,
+            lastComputed: computedAt,
+          );
+
+      await _localDataSource.write(scopeKey, updatedDto);
+    } catch (e) {
+      print(
+          '[SoilMetricsRepository] Error setting estimated temp for $scopeKey: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> setSoilTempC(String scopeKey, double tempC) async {
+    // Backward compatibility: treat as estimated update or manual without anchor logic?
+    // The user prompt analysis suggested "SoilTempController.updateFromAirTemp calculates a nextTemp and saves it...".
+    // So this is likely used for estimated updates.
+    await setEstimatedTemp(scopeKey, tempC, DateTime.now());
   }
 
   @override
@@ -73,11 +112,11 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
       final existingDto = await _localDataSource.read(scopeKey);
       final updatedDto = existingDto?.copyWith(
             soilPH: ph,
-            lastUpdated: DateTime.now(),
+            lastComputed: DateTime.now(),
           ) ??
           SoilMetricsDto.create(
             soilPH: ph,
-            lastUpdated: DateTime.now(),
+            lastComputed: DateTime.now(),
           );
 
       await _localDataSource.write(scopeKey, updatedDto);
@@ -91,7 +130,7 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
   Future<DateTime?> getLastUpdated(String scopeKey) async {
     try {
       final dto = await _localDataSource.read(scopeKey);
-      return dto?.lastUpdated;
+      return dto?.lastComputed;
     } catch (e) {
       print(
           '[SoilMetricsRepository] Error getting last updated for $scopeKey: $e');
@@ -104,7 +143,7 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
     try {
       final existingDto = await _localDataSource.read(scopeKey);
       if (existingDto != null) {
-        final updatedDto = existingDto.copyWith(lastUpdated: timestamp);
+        final updatedDto = existingDto.copyWith(lastComputed: timestamp);
         await _localDataSource.write(scopeKey, updatedDto);
       }
     } catch (e) {
@@ -116,20 +155,28 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
 
   @override
   Future<Map<String, dynamic>?> getAllMetrics(String scopeKey) async {
+    print('[SoilMetricsRepo] getAllMetrics($scopeKey)');
     try {
       final dto = await _localDataSource.read(scopeKey);
-      if (dto == null) return null;
+      if (dto == null) {
+        print('[SoilMetricsRepo] No data found for $scopeKey');
+        return null;
+      }
+      
+      print('[SoilMetricsRepo] Found DTO: $dto');
 
       return {
-        'soilTempC': dto.soilTempC,
+        'soilTempC': dto.soilTempEstimatedC, // OLD KEY COMPATIBILITY
         'soilPH': dto.soilPH,
-        'lastUpdated': dto.lastUpdated,
-        'hasData': dto.hasData,
-        'isSoilTempUpdatedToday': dto.isSoilTempUpdatedToday,
+        'lastUpdated': dto.lastComputed, // OLD KEY COMPATIBILITY
+        
+        'soilTempEstimatedC': dto.soilTempEstimatedC,
+        'lastComputed': dto.lastComputed,
+        'anchorTempC': dto.anchorTempC,
+        'anchorTimestamp': dto.anchorTimestamp,
       };
     } catch (e) {
-      print(
-          '[SoilMetricsRepository] Error getting all metrics for $scopeKey: $e');
+      print('[SoilMetricsRepo] Error reading metrics: $e');
       return null;
     }
   }
@@ -138,23 +185,27 @@ class SoilMetricsRepositoryImpl implements SoilMetricsRepository {
   Future<void> setAllMetrics(
       String scopeKey, Map<String, dynamic> metrics) async {
     try {
-      final soilTempC = metrics['soilTempC'] as double?;
+      final soilTempEstimatedC = metrics['soilTempEstimatedC'] as double? ?? metrics['soilTempC'] as double?;
+      final anchorTempC = metrics['anchorTempC'] as double?;
+      final anchorTimestamp = metrics['anchorTimestamp'] as DateTime?;
       final soilPH = metrics['soilPH'] as double?;
-      final lastUpdated = metrics['lastUpdated'] as DateTime?;
+      final lastComputed = metrics['lastComputed'] as DateTime? ?? metrics['lastUpdated'] as DateTime?;
 
       // Validate inputs
-      if (soilTempC != null && (soilTempC < -50.0 || soilTempC > 60.0)) {
+      if (soilTempEstimatedC != null && (soilTempEstimatedC < -50.0 || soilTempEstimatedC > 60.0)) {
         throw ArgumentError(
-            'Temperature must be between -50Â°C and 60Â°C, got $soilTempC');
+            'Temperature must be between -50°C and 60°C, got $soilTempEstimatedC');
       }
       if (soilPH != null && (soilPH < 0.0 || soilPH > 14.0)) {
         throw ArgumentError('pH must be between 0.0 and 14.0, got $soilPH');
       }
 
       final dto = SoilMetricsDto.create(
-        soilTempC: soilTempC,
+        soilTempEstimatedC: soilTempEstimatedC,
         soilPH: soilPH,
-        lastUpdated: lastUpdated ?? DateTime.now(),
+        lastComputed: lastComputed ?? DateTime.now(),
+        anchorTempC: anchorTempC,
+        anchorTimestamp: anchorTimestamp,
       );
 
       await _localDataSource.write(scopeKey, dto);

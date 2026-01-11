@@ -7,7 +7,7 @@ abstract class SoilMetricsRepository {
   ///
   /// [scopeKey] Scope identifier (e.g., "garden:gardenId" or "garden:gardenId:bed:bedId")
   ///
-  /// Returns the soil temperature in Celsius, or null if not available
+  /// Returns the soil temperature in Celsius (Estimated), or null if not available
   Future<double?> getSoilTempC(String scopeKey);
 
   /// Get soil pH for a specific scope
@@ -17,11 +17,21 @@ abstract class SoilMetricsRepository {
   /// Returns the soil pH value, or null if not available
   Future<double?> getSoilPH(String scopeKey);
 
-  /// Set soil temperature for a specific scope
+  /// Set manual anchor soil temperature
   ///
   /// [scopeKey] Scope identifier
-  /// [tempC] Temperature in Celsius
-  Future<void> setSoilTempC(String scopeKey, double tempC);
+  /// [anchorTempC] Measured temperature
+  /// [timestamp] Date of measurement (usually now)
+  ///
+  /// This will also reset the estimated temperature to this anchor value
+  Future<void> setManualAnchor(String scopeKey, double anchorTempC, DateTime timestamp);
+
+  /// Set estimated soil temperature
+  ///
+  /// [scopeKey] Scope identifier
+  /// [estimated] Calculated temperature
+  /// [computedAt] Date of computation
+  Future<void> setEstimatedTemp(String scopeKey, double estimated, DateTime computedAt);
 
   /// Set soil pH for a specific scope
   ///
@@ -42,11 +52,23 @@ abstract class SoilMetricsRepository {
   /// [timestamp] Update timestamp
   Future<void> setLastUpdated(String scopeKey, DateTime timestamp);
 
-  /// Get all soil metrics for a specific scope
+  /// Get all soil metrics data object for a specific scope
   ///
   /// [scopeKey] Scope identifier
   ///
-  /// Returns a map with all available metrics, or null if no data exists
+  /// Returns the full DTO (including anchor info), or null if no data exists
+  // We need to import the DTO in the interface file or return a generic Map/Object if we want to keep layers strict.
+  // However, for simplicity in this project, we often return domain objects or Maps. 
+  // The user requested `Future<SoilMetricsDto?> getMetrics(String scopeKey);` 
+  // but DTO is in data layer. To respect Clean Arch, we should return a Domain Entity or Map.
+  // The current interface uses `getAllMetrics` returning `Map<String, dynamic>?`.
+  // I will stick to extending `getAllMetrics` or adding a new method that returns a Domain Entity if one existed.
+  // Given the current state, `SoilMetricsDto` is used in Data Source.
+  // The user explicitly asked for `Future<SoilMetricsDto?> getMetrics(String scopeKey);` in the prompt's analysis section,
+  // but usually Repository returns Entities.
+  // I will check if there is a `SoilMetrics` entity.
+  // Looking at the file list, there isn't a specific `SoilMetrics` entity file, just `SoilMetricsRepository`.
+  // I will use `Map<String, dynamic>` for `getAllMetrics` as it was before, ensuring it includes new fields.
   Future<Map<String, dynamic>?> getAllMetrics(String scopeKey);
 
   /// Set multiple soil metrics for a specific scope
@@ -82,4 +104,7 @@ abstract class SoilMetricsRepository {
 
   /// Clear all metrics (for testing/reset purposes)
   Future<void> clearAllMetrics();
+
+  @Deprecated('Use setManualAnchor or setEstimatedTemp instead')
+  Future<void> setSoilTempC(String scopeKey, double tempC);
 }

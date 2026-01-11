@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/soil_metrics_repository.dart';
+import '../../data/datasources/soil_metrics_local_ds.dart';
 import '../../domain/usecases/compute_soil_temp_next_day_usecase.dart';
 import 'soil_metrics_repository_provider.dart';
 import 'weather_providers.dart';
@@ -8,21 +9,21 @@ import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 
 /// State for soil temperature by scope
 class SoilTempState {
-  final Map<String, AsyncValue<double?>> temperatures;
+  final Map<String, AsyncValue<SoilMetricsDto?>> temperatures;
 
   const SoilTempState({
     required this.temperatures,
   });
 
   SoilTempState copyWith({
-    Map<String, AsyncValue<double?>>? temperatures,
+    Map<String, AsyncValue<SoilMetricsDto?>>? temperatures,
   }) {
     return SoilTempState(
       temperatures: temperatures ?? this.temperatures,
     );
   }
 
-  AsyncValue<double?> getTemp(String scopeKey) {
+  AsyncValue<SoilMetricsDto?> getMetrics(String scopeKey) {
     return temperatures[scopeKey] ?? const AsyncValue.loading();
   }
 }
@@ -41,18 +42,102 @@ class SoilTempController extends Notifier<SoilTempState> {
   }
 
   /// Load soil temperature from repository
+  ///
+  /// Recalculates estimated temperature if necessary based on anchor.
   Future<void> load(String scopeKey) async {
+    print('[SoilTempController] Loading for scope: $scopeKey');
     try {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = const AsyncValue.loading();
       state = state.copyWith(temperatures: updated);
+      
+      final metricsMap = await _repo.getAllMetrics(scopeKey);
+      print('[SoilTempController] Loaded metricsMap: $metricsMap');
+      
+      SoilMetricsDto? dto;
+      if (metricsMap != null) {
+         dto = SoilMetricsDto.create(
+           soilTempEstimatedC: metricsMap['soilTempEstimatedC'] as double? ?? metricsMap['soilTempC'] as double?,
+           soilPH: metricsMap['soilPH'] as double?,
+           lastComputed: metricsMap['lastComputed'] as DateTime? ?? metricsMap['lastUpdated'] as DateTime?,
+           anchorTempC: metricsMap['anchorTempC'] as double?,
+           anchorTimestamp: metricsMap['anchorTimestamp'] as DateTime?,
+         );
+         print('[SoilTempController] Parsed DTO: $dto');
+      } else {
+         print('[SoilTempController] No metrics found for $scopeKey');
+      }
 
-      final temp = await _repo.getSoilTempC(scopeKey);
+      if (dto != null) {
+        // Re-computation Logic
+        if (dto.anchorTimestamp != null && dto.lastComputed != null) {
+           final today = DateTime.now();
+           final todayDate = DateTime(today.year, today.month, today.day);
+           final lastComputedDate = DateTime(dto.lastComputed!.year, dto.lastComputed!.month, dto.lastComputed!.day);
 
-      updated[scopeKey] = AsyncValue.data(temp);
+           if (lastComputedDate.isBefore(todayDate)) {
+             print('[SoilTempController] Catch-up needed. Last computed: $lastComputedDate');
+             // Need to catch up
+             double currentSoil = dto.soilTempEstimatedC ?? dto.anchorTempC ?? 0.0;
+             // If last computed is far behind, we might want to start from anchor if anchor is more recent than last computed?
+             // Usually lastComputed >= anchorTimestamp.
+             
+             // Get historical/forecast data
+             // We need data from lastComputedDate + 1 day UNTIL today.
+             final catchUpDays = todayDate.difference(lastComputedDate).inDays;
+             
+             if (catchUpDays > 0) {
+               final forecastPoints = await ref.read(forecastProvider.future); 
+               // Note: reading provider inside async method.
+               
+               DateTime simulationDate = lastComputedDate;
+               
+               for (int i = 0; i < catchUpDays; i++) {
+                 simulationDate = simulationDate.add(const Duration(days: 1));
+                 
+                 // Find air temp for simulationDate
+                 // Simple lookup
+                 final point = forecastPoints.firstWhere(
+                   (p) => p.date.year == simulationDate.year && 
+                          p.date.month == simulationDate.month && 
+                          p.date.day == simulationDate.day,
+                   orElse: () => forecastPoints.isNotEmpty ? forecastPoints.first : (throw "No weather data"), // Fallback?
+                 );
+                 
+                 // If we found a point (or fallback)
+                 if (forecastPoints.contains(point)) {
+                    final tMin = point.tMinC ?? point.tMaxC ?? 15.0;
+                    final tMax = point.tMaxC ?? point.tMinC ?? 15.0;
+                    final meanAir = (tMin + tMax) / 2;
+                    
+                    currentSoil = _compute(
+                      soilTempC: currentSoil, 
+                      airTempC: meanAir, 
+                      alpha: 0.15
+                    );
+                 }
+               }
+               
+               print('[SoilTempController] Catch-up done. New Estimated: $currentSoil');
+
+               // Update DTO
+               dto = dto.copyWith(
+                 soilTempEstimatedC: currentSoil,
+                 lastComputed: DateTime.now(),
+               );
+               
+               // Persist updated estimation
+               await _repo.setEstimatedTemp(scopeKey, currentSoil, DateTime.now());
+             }
+           }
+        }
+      }
+
+      updated[scopeKey] = AsyncValue.data(dto);
       state = state.copyWith(temperatures: updated);
     } catch (e, st) {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      print('[SoilTempController] Error loading: $e');
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = AsyncValue.error(e, st);
       state = state.copyWith(temperatures: updated);
     }
@@ -63,21 +148,31 @@ class SoilTempController extends Notifier<SoilTempState> {
   /// [scopeKey] Scope identifier
   /// [tempC] Temperature in Celsius
   Future<void> setManual(String scopeKey, double tempC) async {
+    print('[SoilTempController] setting Manual Anchor: $tempC for $scopeKey');
     try {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = const AsyncValue.loading();
       state = state.copyWith(temperatures: updated);
 
       // Direct override with measured value (explicit user measurement).
       final double finalTemp = tempC;
+      final now = DateTime.now();
 
-      await _repo.setSoilTempC(scopeKey, finalTemp);
-      await _repo.setLastUpdated(scopeKey, DateTime.now());
+      await _repo.setManualAnchor(scopeKey, finalTemp, now);
 
-      updated[scopeKey] = AsyncValue.data(finalTemp);
+      // Construct new DTO for state
+      final newDto = SoilMetricsDto(
+        soilTempEstimatedC: finalTemp,
+        anchorTempC: finalTemp,
+        anchorTimestamp: now,
+        lastComputed: now,
+      );
+
+      updated[scopeKey] = AsyncValue.data(newDto);
       state = state.copyWith(temperatures: updated);
     } catch (e, st) {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      print('[SoilTempController] Error setting manual: $e');
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = AsyncValue.error(e, st);
       state = state.copyWith(temperatures: updated);
     }
@@ -94,14 +189,25 @@ class SoilTempController extends Notifier<SoilTempState> {
   Future<void> updateFromAirTemp(String scopeKey, double airTempC,
       {double alpha = 0.15}) async {
     try {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = const AsyncValue.loading();
       state = state.copyWith(temperatures: updated);
 
-      // Get current soil temperature, fallback to air temperature if not available
-      final currentSoilTemp = state.temperatures[scopeKey]?.value ??
-          (await _repo.getSoilTempC(scopeKey)) ??
-          airTempC;
+      // Get current soil temperature from state or repo
+      var dto = state.temperatures[scopeKey]?.value;
+      if (dto == null) {
+         final map = await _repo.getAllMetrics(scopeKey);
+         if (map != null) {
+            dto = SoilMetricsDto.create(
+               soilTempEstimatedC: map['soilTempEstimatedC'] as double?,
+               lastComputed: map['lastComputed'] as DateTime?,
+               anchorTempC: map['anchorTempC'] as double?,
+               anchorTimestamp: map['anchorTimestamp'] as DateTime?,
+            );
+         }
+      }
+
+      final currentSoilTemp = dto?.soilTempEstimatedC ?? airTempC;
 
       // Compute next day soil temperature
       final nextTemp = _compute(
@@ -111,13 +217,21 @@ class SoilTempController extends Notifier<SoilTempState> {
       );
 
       // Save the computed temperature
-      await _repo.setSoilTempC(scopeKey, nextTemp);
-      await _repo.setLastUpdated(scopeKey, DateTime.now());
+      await _repo.setEstimatedTemp(scopeKey, nextTemp, DateTime.now());
+      
+      // Update internal state
+      final newDto = dto?.copyWith(
+         soilTempEstimatedC: nextTemp,
+         lastComputed: DateTime.now(),
+      ) ?? SoilMetricsDto.create(
+         soilTempEstimatedC: nextTemp,
+         lastComputed: DateTime.now(),
+      );
 
-      updated[scopeKey] = AsyncValue.data(nextTemp);
+      updated[scopeKey] = AsyncValue.data(newDto);
       state = state.copyWith(temperatures: updated);
     } catch (e, st) {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = AsyncValue.error(e, st);
       state = state.copyWith(temperatures: updated);
     }
@@ -154,9 +268,15 @@ class SoilTempController extends Notifier<SoilTempState> {
       String scopeKey, double airTempC,
       {double alpha = 0.15}) async {
     try {
-      final currentTemp = state.temperatures[scopeKey]?.value ??
-          (await _repo.getSoilTempC(scopeKey)) ??
-          airTempC;
+       // Need to resolve current temp properly
+       var temp = state.temperatures[scopeKey]?.value?.soilTempEstimatedC;
+       if (temp == null) {
+         final map = await _repo.getAllMetrics(scopeKey);
+         temp = map?['soilTempEstimatedC'] as double?;
+       }
+       
+      final currentTemp = temp ?? airTempC;
+          
       final daysToEquilibrium = _compute.daysToEquilibrium(
         soilTempC: currentTemp,
         airTempC: airTempC,
@@ -184,7 +304,7 @@ class SoilTempController extends Notifier<SoilTempState> {
   /// Reset soil temperature to null
   Future<void> reset(String scopeKey) async {
     try {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = const AsyncValue.loading();
       state = state.copyWith(temperatures: updated);
 
@@ -193,7 +313,7 @@ class SoilTempController extends Notifier<SoilTempState> {
       updated[scopeKey] = const AsyncValue.data(null);
       state = state.copyWith(temperatures: updated);
     } catch (e, st) {
-      final updated = Map<String, AsyncValue<double?>>.from(state.temperatures);
+      final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = AsyncValue.error(e, st);
       state = state.copyWith(temperatures: updated);
     }
@@ -204,21 +324,25 @@ class SoilTempController extends Notifier<SoilTempState> {
 final soilTempProvider =
     NotifierProvider<SoilTempController, SoilTempState>(SoilTempController.new);
 
-/// Provider that exposes the temperature for a specific scope
+/// Provider that exposes the temperature for a specific scope (Estimated)
 final soilTempProviderByScope =
     Provider.family<AsyncValue<double?>, String>((ref, scopeKey) {
   final controller = ref.watch(soilTempProvider);
-  final temp = controller.getTemp(scopeKey);
+  final dtoAsync = controller.getMetrics(scopeKey);
 
   // Load data if not already loaded
-  if (temp.isLoading) {
+  if (dtoAsync.isLoading) {
     Future.microtask(() {
       ref.read(soilTempProvider.notifier).load(scopeKey);
     });
   }
-
-  return temp;
+  
+  return dtoAsync.whenData((dto) => dto?.soilTempEstimatedC);
 });
+
+// --- Forecast & Advice Logic ---
+// ... (Forecast logic needs to adapt to reading DTO)
+
 
 // --- Forecast & Advice Logic ---
 
@@ -240,14 +364,14 @@ final soilTempForecastProvider =
   // via Future.microtask afin de ne pas modifier un autre provider pendant
   // l'initialisation du présent provider (évite l'assertion Riverpod).
   final soilState = ref.watch(soilTempProvider);
-  final tempAsync = soilState.getTemp(scopeKey);
+  final metricsAsync = soilState.getMetrics(scopeKey);
 
-  if (tempAsync.isLoading) {
+  if (metricsAsync.isLoading) {
     // Demande asynchrone non bloquante du chargement.
     Future.microtask(() => ref.read(soilTempProvider.notifier).load(scopeKey));
   }
 
-  final startSoilTemp = tempAsync.value ?? 0.0;
+  final startSoilTemp = metricsAsync.value?.soilTempEstimatedC ?? 0.0;
 
   // 2. Get air temperature forecast
   final forecastPoints = await ref.watch(forecastProvider.future);
