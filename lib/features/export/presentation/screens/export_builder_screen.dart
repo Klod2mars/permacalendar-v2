@@ -355,10 +355,18 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
     try {
       final bytes = await notifier.generate();
 
+      // Custom Filename: Sowing 13 janvier 2026 – 09h22
+      // Ensure 'fr_FR' is used for the date format as requested.
+      // We assume intl is initialized. If 'fr_FR' data is not loaded, it might fallback or error.
+      // Usually, standard flutter apps initialize locale data.
+      final now = DateTime.now();
+      final formatter = DateFormat('d MMMM yyyy – HH\'h\'mm', 'fr_FR');
+      final dateStr = formatter.format(now);
+      final filename = 'Sowing $dateStr.xlsx';
+
       // Save file
       final tempDir = await getTemporaryDirectory();
-      final file = File(
-          '${tempDir.path}/export_permacalendar_${DateTime.now().millisecondsSinceEpoch}.xlsx');
+      final file = File('${tempDir.path}/$filename');
       await file.writeAsBytes(bytes);
 
       // Share
@@ -368,7 +376,7 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                 mimeType:
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
           ],
-          text: 'Voici votre export PermaCalendar');
+          text: 'Voici votre export PermaCalendar ($filename)');
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context)

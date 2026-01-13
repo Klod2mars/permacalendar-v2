@@ -32,11 +32,12 @@ class ExcelGeneratorService {
   // Real implementation running in main isolate (accessing Hive)
   Future<List<int>> generateExportInMainIsolate(ExportConfig config) async {
     final excel = Excel.createExcel();
-    if (excel.sheets.containsKey('Sheet1')) {
-      excel.rename('Sheet1', 'META');
-    } else {
-      excel['META'];
-    }
+    // META Sheet Removed per user request
+    // if (excel.sheets.containsKey('Sheet1')) {
+    //   excel.rename('Sheet1', 'META');
+    // } else {
+    //   excel['META'];
+    // }
 
     // 1. Fetch Data
     // FIX: Read from the correct 'gardens_hive' box instead of legacy GardenBoxes
@@ -177,8 +178,14 @@ class ExcelGeneratorService {
       }
     }
 
-    // 2. Generate META Sheet
-    _generateMetaSheet(excel, config);
+    // 2. Generate META Sheet (Disabled)
+    // _generateMetaSheet(excel, config);
+    
+    // Clean up default sheet if not needed or rename to first data sheet
+    // For now, let's just delete Sheet1 if we are going to create others, 
+    // BUT 'excel' package requires at least one sheet.
+    // So we will let _fillSheet create/get the sheets.
+    // After filling, if 'Sheet1' is empty/unused, we can delete it.
 
     // 3. Generate Content Sheets
     if (config.format == ExportFormat.separateSheets) {
@@ -219,6 +226,14 @@ class ExcelGeneratorService {
       }
     }
 
+    // Cleanup default "Sheet1" if it's empty and we have other sheets
+    if (excel.sheets.length > 1 && excel.sheets.containsKey('Sheet1')) {
+      // Check if empty? Or just blindly delete if we know we created others.
+      // Ideally we check if it has data. For now, simplistic safety:
+      // If we added 'Activites' or 'Recoltes', Sheet1 is likely extra.
+      excel.delete('Sheet1');
+    }
+    
     return excel.encode() ?? [];
   }
 
@@ -308,6 +323,28 @@ class ExcelGeneratorService {
       headerRow.add(TextCellValue(def?.label ?? fid));
     }
     sheet.appendRow(headerRow);
+    
+    // --- STYLING: Bold Headers ---
+    try {
+      // Row 0 is the header (0-indexed)
+      // Note: excel package uses 0-based indexing for rows/cols in some versions, check docs.
+      // Based on usual usage 'appendRow' adds to end. First call = row 0.
+      
+      // Define style
+      CellStyle headerStyle = CellStyle(
+        bold: true,
+        fontFamily: getFontFamily(FontFamily.Arial),
+        horizontalAlign: HorizontalAlign.Center,
+        verticalAlign: VerticalAlign.Center,
+      );
+      
+      for (int i = 0; i < headerRow.length; i++) {
+        var cell = sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0));
+        cell.cellStyle = headerStyle;
+      }
+    } catch (_) {
+       // Ignore styling errors if package version differs
+    }
 
     // 2. Data Rows
     List<GardenBed> beds = (extraData?['beds'] as List<GardenBed>?) ?? [];
@@ -590,6 +627,21 @@ class ExcelGeneratorService {
 
       // Appender la ligne TOTAL
       sheet.appendRow(totalsRow);
+      
+      // Style TOTAL row to be bold
+      final lastRowIndex = sheet.maxRows - 1;
+      CellStyle totalStyle = CellStyle(bold: true);
+       for (int i = 0; i < fieldIds.length; i++) {
+        var cell = sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: lastRowIndex));
+        cell.cellStyle = totalStyle;
+      }
+    }
+    
+    // --- POLISH: Auto-Size Columns (Approximate) ---
+    // We set a default width that is comfortable (e.g., 25.0) for all columns
+    // "Les textes sont trop resserrés" -> enlarge default
+    for (int i = 0; i < fieldIds.length; i++) {
+       sheet.setColumnWidth(i, 25.0);
     }
   }
 
