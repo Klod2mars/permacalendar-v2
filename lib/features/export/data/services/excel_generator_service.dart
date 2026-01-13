@@ -15,6 +15,7 @@ import 'package:permacalendar/core/models/plant.dart';
 import 'package:permacalendar/features/harvest/domain/models/harvest_record.dart';
 import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/models/export_schema.dart';
+import 'package:permacalendar/core/models/activity_v3.dart';
 
 class ExcelGeneratorService {
   /// Main Entry Point
@@ -124,28 +125,42 @@ class ExcelGeneratorService {
       return true;
     }).toList();
 
-    // Activities
-    final allActivitiesRaw = GardenBoxes.activities.values.toList();
-    final allActivities = allActivitiesRaw
-        .map((e) {
-          if (e is model_activity.Activity) return e;
-          // If stored as JSON map?
-          if (e is Map) {
-            try {
-              return model_activity.Activity.fromJson(
-                  Map<String, dynamic>.from(e));
-            } catch (_) {
-              return null;
-            }
-          }
-          return null;
-        })
-        .whereType<model_activity.Activity>()
-        .toList();
+    // Activities (V3)
+    final allActivitiesRaw = <ActivityV3>[];
+    try {
+      final box = await Hive.openBox<ActivityV3>('activities_v3');
+      allActivitiesRaw.addAll(box.values);
+    } catch (e) {
+      print('[Export] Error loading activities_v3: $e');
+    }
 
-    final filteredActivities = allActivities.where((a) {
+    final filteredActivities = allActivitiesRaw.where((a) {
+      if (!a.isActive) return false;
+      
+      // Date Filter
       if (dateStart != null && a.timestamp.isBefore(dateStart)) return false;
       if (dateEnd != null && a.timestamp.isAfter(dateEnd)) return false;
+
+      // Garden Filter
+      if (config.scope.gardenIds.isNotEmpty) {
+        final gId = a.metadata?['gardenId'];
+        // If activity has a gardenId, it MUST match.
+        // If it doesn't have a gardenId, we include it only if we decide global activities are OK.
+        // User request: "celui-ci doit également être appliqué au journal des activités"
+        // implying loose structure but generally we should filter if applicable.
+        // Let's exclude if gardenId exists and doesn't match.
+        if (gId != null && !config.scope.gardenIds.contains(gId)) return false;
+        
+        // If no gardenId is present (e.g. system event), we might want to keep it or hide it.
+        // Given the goal "cohérence des données exportées par jardin", if filtered by garden, generic events might be noise.
+        // Safe bet: If strictly filtering by garden, allow only if gardenId matches OR if it's explicitly global?
+        // Let's assume: include if gardenId matches OR if no gardenId (system wide). 
+        // BUT user said "par jardin", implying strictness.
+        // Let's try: Include if gardenId matches. If no gardenId, exclude?
+        // Let's stick to: if metadata has gardenId, check it.
+        if (gId != null && !config.scope.gardenIds.contains(gId)) return false;
+      }
+      
       return true;
     }).toList();
 
@@ -297,8 +312,7 @@ class ExcelGeneratorService {
     // 2. Data Rows
     List<GardenBed> beds = (extraData?['beds'] as List<GardenBed>?) ?? [];
     List<Garden> gardens = (extraData?['gardens'] as List<Garden>?) ?? [];
-    List<model_activity.Activity> activities =
-        (extraData?['activities'] as List<model_activity.Activity>?) ?? [];
+    List<dynamic> activities = (extraData?['activities'] as List<dynamic>?) ?? [];
 
     for (var item in data) {
       List<CellValue> row = [];
@@ -366,6 +380,7 @@ class ExcelGeneratorService {
         // 2) Si non trouvé, fallback heuristique existante (activité)
         if (resolvedBedId == null) {
           final match = activities
+              .whereType<model_activity.Activity>() 
               .where((a) =>
                   a.type == model_activity.ActivityType.plantingHarvested &&
                   a.metadata['plantName'] == item.plantName &&
@@ -461,6 +476,7 @@ class ExcelGeneratorService {
         }
 
         // --- ACTIVITY MAPPING ---
+        // --- ACTIVITY MAPPING (Legacy) ---
         else if (type == ExportBlockType.activity &&
             item is model_activity.Activity) {
           switch (fid) {
@@ -483,6 +499,35 @@ class ExcelGeneratorService {
               break;
             case 'activity_entity_id':
               value = item.entityId;
+              break;
+          }
+        }
+        // --- ACTIVITY V3 MAPPING ---
+        else if (type == ExportBlockType.activity && item is ActivityV3) {
+           switch (fid) {
+            case 'activity_date':
+              value = item.timestamp;
+              break;
+            case 'activity_type':
+              // Translate common types to readable strings if needed
+              value = item.type;
+              break;
+            case 'activity_title':
+              // ActivityV3 doesn't have a title, synthesize one from Type
+              value = _mapActivityTypeToTitle(item.type); 
+              break;
+            case 'activity_desc':
+              value = item.description;
+              break;
+            case 'activity_entity':
+              value = item.metadata?['plantName'] ??
+                  item.metadata?['bedName'] ??
+                  item.metadata?['gardenName'];
+              break;
+            case 'activity_entity_id':
+              value = item.metadata?['plantingId'] ??
+                  item.metadata?['gardenBedId'] ??
+                  item.metadata?['gardenId'];
               break;
           }
         }
@@ -545,6 +590,40 @@ class ExcelGeneratorService {
 
       // Appender la ligne TOTAL
       sheet.appendRow(totalsRow);
+    }
+  }
+
+  String _mapActivityTypeToTitle(String type) {
+    switch (type) {
+      case 'gardenCreated':
+        return 'Création de jardin';
+      case 'gardenUpdated':
+        return 'Mise à jour du jardin';
+      case 'gardenDeleted':
+        return 'Suppression de jardin';
+      case 'gardenBedCreated':
+        return 'Création de parcelle';
+      case 'gardenBedUpdated':
+        return 'Mise à jour de parcelle';
+      case 'gardenBedDeleted':
+        return 'Suppression de parcelle';
+      case 'plantingCreated':
+        return 'Nouvelle plantation';
+      case 'plantingUpdated':
+        return 'Mise à jour plantation';
+      case 'plantingDeleted':
+        return 'Suppression plantation';
+      case 'harvestCompleted':
+        return 'Récolte';
+      case 'maintenanceCompleted':
+        return 'Entretien';
+      case 'weatherUpdate':
+        return 'Météo';
+      case 'error':
+        return 'Erreur';
+      default:
+        // Try to make it readable if unknown (camelCase to words)
+        return type;
     }
   }
 }
