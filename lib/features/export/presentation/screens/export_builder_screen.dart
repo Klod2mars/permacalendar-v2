@@ -217,7 +217,11 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
       color: Theme.of(context).colorScheme.surfaceContainerLow,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Column(
-        children: ExportSchema.blockLabels.entries.map((entry) {
+        children: ExportSchema.blockLabels.entries
+            .where((e) =>
+                e.key == ExportBlockType.activity ||
+                e.key == ExportBlockType.harvest)
+            .map((entry) {
           final type = entry.key;
           final label = entry.value;
           final isEnabled = state.config.isBlockEnabled(type);
