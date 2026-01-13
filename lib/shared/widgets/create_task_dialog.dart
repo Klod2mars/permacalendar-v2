@@ -246,6 +246,22 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
+      // AUTO-SAVE ASSIGNEE: If the user entered a name, save it to history automatically.
+      if (_assignee.trim().isNotEmpty) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          final saved = prefs.getStringList('saved_assignees') ?? [];
+          final name = _assignee.trim();
+          if (!saved.contains(name)) {
+            saved.add(name);
+            await prefs.setStringList('saved_assignees', saved);
+            developer.log('[CreateTask] Auto-saved assignee: $name');
+          }
+        } catch (e) {
+          developer.log('[CreateTask] Failed to auto-save assignee: $e');
+        }
+      }
+
       try {
         DateTime finalDate = _startDate;
         if (_startTime != null) {
@@ -565,14 +581,8 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               const SizedBox(height: 16),
 
               // Assignee & Attachments
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Assigné à',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
-                  suffixIcon:
-                      Icon(Icons.contacts, color: Colors.grey), // Placeholder
-                ),
+// Assignee Selector with History
+              _AssigneeSelector(
                 initialValue: _assignee,
                 onChanged: (v) => _assignee = v,
               ),
@@ -801,7 +811,7 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
             DropdownMenuItem(
                 value: 'weekly', child: Text('Hebdomadaire (Jours)')),
             DropdownMenuItem(
-                value: 'monthlyByDay', child: Text('Mensuel (Même jour)')),
+                value: 'monthlyByDay', child: Text('Mensuel (même jour)')),
           ],
           onChanged: (v) {
             setState(() => _type = v!);
@@ -859,6 +869,185 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
               }).toList(),
             ),
           ),
+      ],
+    );
+  }
+}
+
+class _AssigneeSelector extends StatefulWidget {
+  final String initialValue;
+  final ValueChanged<String> onChanged;
+
+  const _AssigneeSelector({
+    required this.initialValue,
+    required this.onChanged,
+  });
+
+  @override
+  State<_AssigneeSelector> createState() => _AssigneeSelectorState();
+}
+
+class _AssigneeSelectorState extends State<_AssigneeSelector> {
+  late TextEditingController _controller;
+  final FocusNode _focusNode = FocusNode();
+  
+  bool _isExpanded = false;
+  List<String> _savedAssignees = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+    _loadSavedAssignees();
+    
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        setState(() => _isExpanded = true);
+      } else {
+        // Delay closing to allow button taps
+        Future.delayed(const Duration(milliseconds: 200), () {
+          if (mounted) setState(() => _isExpanded = false);
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadSavedAssignees() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _savedAssignees = prefs.getStringList('saved_assignees') ?? [];
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _addAssignee(String name) async {
+    if (name.trim().isEmpty) return;
+    final prefs = await SharedPreferences.getInstance();
+    final updated = List<String>.from(_savedAssignees);
+    if (!updated.contains(name.trim())) {
+      updated.add(name.trim());
+      await prefs.setStringList('saved_assignees', updated);
+      setState(() => _savedAssignees = updated);
+    }
+  }
+
+  Future<void> _removeAssignee(String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    final updated = List<String>.from(_savedAssignees);
+    updated.remove(name);
+    await prefs.setStringList('saved_assignees', updated);
+    setState(() => _savedAssignees = updated);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // FILTER LOGIC
+    final query = _controller.text.toLowerCase().trim();
+    final filteredList = _savedAssignees
+        .where((n) => n.toLowerCase().contains(query))
+        .toList();
+    
+    // Determine if we should show the list
+    // (If not expanded, or loading, or filtered list empty AND text empty, hide)
+    // Note: If text not empty & not in list -> show "Add" option.
+    final bool showAddOption = query.isNotEmpty && !_savedAssignees.contains(_controller.text.trim());
+    final bool showList = filteredList.isNotEmpty || showAddOption;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextFormField(
+          controller: _controller,
+          focusNode: _focusNode,
+          decoration: InputDecoration(
+            labelText: 'Assigné à',
+            border: const OutlineInputBorder(),
+            prefixIcon: const Icon(Icons.person),
+            suffixIcon: IconButton(
+              icon: Icon(_isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down),
+              onPressed: () {
+                setState(() => _isExpanded = !_isExpanded);
+                if (_isExpanded) _focusNode.requestFocus();
+              },
+            ),
+          ),
+          onChanged: (v) {
+            widget.onChanged(v);
+            setState(() {
+              _isExpanded = true; 
+            }); 
+          },
+        ),
+        
+        AnimatedSize(
+          duration: const Duration(milliseconds: 200),
+          child: (_isExpanded && !_isLoading && showList)
+              ? Container(
+                  margin: const EdgeInsets.only(top: 4),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  constraints: const BoxConstraints(maxHeight: 200),
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    children: [
+                      if (showAddOption)
+                        ListTile(
+                          dense: true,
+                          leading: const Icon(Icons.add, color: Colors.green),
+                          title: Text('Ajouter "${_controller.text}" aux favoris',
+                              style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+                          onTap: () {
+                             _addAssignee(_controller.text);
+                             // Keep expanded ? Or close? Maybe keep expanded to see it added.
+                          },
+                        ),
+                        
+                      ...filteredList.map((name) {
+                        return ListTile(
+                          dense: true,
+                          title: Text(name),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.remove_circle_outline, color: Colors.grey),
+                            onPressed: () => _removeAssignee(name),
+                          ),
+                          onTap: () {
+                            _controller.text = name;
+                            widget.onChanged(name);
+                            setState(() => _isExpanded = false);
+                          },
+                        );
+                      }),
+                      
+                      if (filteredList.isEmpty && !showAddOption)
+                         const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text('Aucun résultat.', 
+                              style: TextStyle(color: Colors.grey)),
+                        ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
       ],
     );
   }
