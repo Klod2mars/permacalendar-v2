@@ -54,9 +54,11 @@ class ConfirmationDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: Text(
-        content,
-        style: theme.textTheme.bodyMedium,
+      content: SingleChildScrollView(
+        child: Text(
+          content,
+          style: theme.textTheme.bodyMedium,
+        ),
       ),
       actions: [
         TextButton(
@@ -161,9 +163,11 @@ class InfoDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: Text(
-        content,
-        style: theme.textTheme.bodyMedium,
+      content: SingleChildScrollView(
+        child: Text(
+          content,
+          style: theme.textTheme.bodyMedium,
+        ),
       ),
       actions: [
         ElevatedButton(

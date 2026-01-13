@@ -18,6 +18,7 @@ import '../widgets/settings/calibration_settings_section.dart';
 import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
 import '../../../features/settings/presentation/screens/language_settings_page.dart';
+import '../../constants/user_guide_content.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -34,8 +35,6 @@ class SettingsScreen extends ConsumerWidget {
           _buildAppInfoSection(context, theme),
           const SizedBox(height: 24),
           _buildDisplaySection(context, theme, ref),
-          const SizedBox(height: 24),
-          _buildGardenSettingsSection(context, theme),
           const SizedBox(height: 24),
           _buildScientificToolsSection(context, theme, ref),
           const SizedBox(height: 24),
@@ -94,24 +93,6 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
-          const Divider(height: 1),
-          SwitchListTile(
-            title: const Text('Animations'),
-            subtitle: const Text('Activer les animations de l\'interface'),
-            secondary: const Icon(Icons.animation),
-            value: settings.showAnimations,
-            onChanged: (v) =>
-                ref.read(appSettingsProvider.notifier).toggleShowAnimations(v),
-          ),
-          const Divider(height: 1),
-          SwitchListTile(
-            title: const Text("Afficher la Lune dans l'ovoïde météo"),
-            subtitle: const Text('Affiche la phase lunaire symbolique'),
-            secondary: const Icon(Icons.nights_stay),
-            value: settings.showMoonInOvoid,
-            onChanged: (v) =>
-                ref.read(appSettingsProvider.notifier).toggleShowMoonInOvoid(v),
-          ),
         ]),
       ),
     ]);
@@ -134,61 +115,18 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push(AppRoutes.plants),
           ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.download),
-            title: const Text('Export Builder'),
-            subtitle: const Text('Extraire vos données vers Excel'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push(AppRoutes.export),
-          ),
         ]),
       ),
     ]);
   }
 
-  Widget _buildGardenSettingsSection(BuildContext context, ThemeData theme) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        'Jardins',
-        style:
-            theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 16),
-      CustomCard(
-        child: Column(children: [
-          ListTile(
-            leading: const Icon(Icons.eco),
-            title: const Text('Limite de jardins'),
-            subtitle:
-                const Text('Maximum ${AppConstants.maxGardensPerUser} jardins'),
-            trailing: const Icon(Icons.info_outline),
-            onTap: () => _showGardenLimitInfo(context),
-          ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.eco),
-            title: const Text('Validation des plantations'),
-            subtitle: const Text('Vérification automatique des dates'),
-            trailing: Icon(
-              EnvironmentService.isGardenValidationEnabled
-                  ? Icons.toggle_on
-                  : Icons.toggle_off,
-              color: EnvironmentService.isGardenValidationEnabled
-                  ? Colors.green
-                  : Colors.grey,
-            ),
-          ),
-        ]),
-      ),
-    ]);
-  }
+
 
   Widget _buildScientificToolsSection(
       BuildContext context, ThemeData theme, WidgetRef ref) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Outils scientifiques',
+        'Sélecteur météo',
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
@@ -366,8 +304,8 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(children: [
           ListTile(
             leading: const Icon(Icons.help_outline),
-            title: const Text('Aide'),
-            subtitle: const Text('Guide d\'utilisation'),
+            title: const Text('Guide d\'utilisation'),
+            subtitle: const Text('Consulter la notice'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showHelp(context),
           ),
@@ -397,39 +335,20 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => const InfoDialog(
         title: 'Version de l\'application',
-        content: 'Version: ${AppConstants.appVersion}\n\n'
-            'Build: ${AppConstants.buildNumber}\n\n'
-            'PermaCalendar 2.0 - Gestion de jardins permaculturels',
+        content: 'Version: 1.2 – Gestion de jardin dynamique\n\n'
+            'Sowing - Gestion de jardins vivants',
       ),
     );
   }
 
-  void _showGardenLimitInfo(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Limite de jardins',
-        content:
-            'Cette version permet de gérer jusqu\'à ${AppConstants.maxGardensPerUser} jardins simultanément. '
-            'Cette limite assure des performances optimales et une expérience utilisateur fluide.',
-      ),
-    );
-  }
+
 
   void _showHelp(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => const InfoDialog(
-        title: 'Aide',
-        content:
-            'PermaCalendar 2.0 vous aide à gérer vos jardins permaculturels.\n\n'
-            'Fonctionnalités principales :\n'
-            '• Gestion de jardins et parcelles\n'
-            '• Catalogue de plantes\n'
-            '• Suivi des plantations\n'
-            '• Outils scientifiques\n'
-            '• Export de données\n\n'
-            'Pour plus d\'informations, consultez la documentation en ligne.',
+        title: 'Guide d\'utilisation',
+        content: UserGuideContent.text,
       ),
     );
   }
@@ -439,12 +358,11 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => const InfoDialog(
         title: 'Politique de confidentialité',
-        content: 'PermaCalendar 2.0 respecte votre vie privée.\n\n'
+        content: 'Sowing respecte pleinement votre vie privée.\n\n'
             '• Toutes les données sont stockées localement sur votre appareil\n'
-            '• Aucune donnée personnelle n\'est transmise à des tiers\n'
-            '• Les fonctionnalités sociales sont désactivées par défaut\n'
-            '• Vous contrôlez entièrement vos données\n\n'
-            'Cette application fonctionne entièrement hors ligne.',
+            '• Aucune donnée personnelle n’est transmise à des tiers\n'
+            '• Aucune information n’est stockée sur un serveur externe\n\n'
+            'L’application fonctionne entièrement hors ligne. Une connexion Internet est uniquement utilisée pour récupérer les données météorologiques ou lors des exports.',
       ),
     );
   }
@@ -454,12 +372,13 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => const InfoDialog(
         title: 'Conditions d\'utilisation',
-        content: 'En utilisant PermaCalendar 2.0, vous acceptez :\n\n'
+        content: 'En utilisant Sowing, vous acceptez :\n\n'
             '• D\'utiliser l\'application de manière responsable\n'
-            '• De ne pas tenter de contourner les limitations\n'
+            '• De ne pas tenter de contourner ses limitations\n'
             '• De respecter les droits de propriété intellectuelle\n'
-            '• D\'utiliser vos propres données\n\n'
-            'Cette application est fournie "en l\'état" sans garantie.',
+            '• D\'utiliser uniquement vos propres données\n\n'
+            'Cette application est fournie en l\'état, sans garantie.\n\n'
+            'L’équipe Sowing reste à l’écoute pour toute amélioration ou évolution future.',
       ),
     );
   }

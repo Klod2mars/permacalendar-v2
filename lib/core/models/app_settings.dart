@@ -53,7 +53,7 @@ class AppSettings {
         analysisIntervalMinutes: 60,
         backupEnabled: false,
         gardenCalibrationEnabled: false,
-        showMoonInOvoid: false,
+        showMoonInOvoid: true,
         showHistoryHint: true,
       );
 
