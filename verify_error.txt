@@ -1,3 +1,0 @@
-Starting reproduction script (simple)...
-Found 44 plants.
-Finished: Success=44, Error=0
