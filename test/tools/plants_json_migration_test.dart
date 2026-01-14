@@ -344,13 +344,13 @@ void main() {
   });
 
   group('Plants JSON Real File Validation', () {
-    test('should validate actual plants_v2.json exists and is valid', () async {
+    test('should validate actual plants.json exists and is valid', () async {
       // Arrange
-      final file = File('assets/data/plants_v2.json');
+      final file = File('assets/data/plants.json');
 
       // Assert
       expect(await file.exists(), true,
-          reason: 'plants_v2.json should exist after migration');
+          reason: 'plants.json should exist as the source of truth');
 
       if (await file.exists()) {
         final content = await file.readAsString();
@@ -374,21 +374,7 @@ void main() {
         expect(plants.length, greaterThan(0));
 
         print(
-            '✅ plants_v2.json validé : ${plants.length} plantes, version ${data['schema_version']}');
-      }
-    });
-
-    test('should validate backup exists', () async {
-      // Assert
-      final backupFile = File('assets/data/plants.json.backup');
-
-      // Le backup devrait exister après la migration
-      if (await backupFile.exists()) {
-        final content = await backupFile.readAsString();
-        final data = json.decode(content);
-
-        expect(data, isA<List>(), reason: 'Backup should be in legacy format');
-        print('✅ Backup validé : ${data.length} plantes');
+            '✅ plants.json validé : ${plants.length} plantes, version ${data['schema_version']}');
       }
     });
   });

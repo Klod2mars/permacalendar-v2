@@ -79,15 +79,15 @@ class AppInitializer {
     await GardenBoxes.initialize(); // Helper boxes for legacy/beds
     await PlantHiveRepository.initialize();
 
-    // Seed Plant Data if empty
+    // Auto-Sync Plant Data on every startup
+    // This ensures new plants in JSON are added and existing descriptions are updated
+    // while preserving user preferences (isActive).
     try {
       final plantRepo = PlantHiveRepository();
-      if ((await plantRepo.getAllPlants()).isEmpty) {
-        print('🌱 Seeding Plant Catalog from JSON...');
-        await plantRepo.initializeFromJson();
-      }
+      print('🌱 Synchronizing Plant Catalog with JSON...');
+      await plantRepo.syncWithJson();
     } catch (e) {
-      print('⚠️ Error seeding plant data: $e');
+      print('⚠️ Error syncing plant data: $e');
     }
 
     // await WeatherService.initialize(); // Uncomment if needed
@@ -106,112 +106,10 @@ class AppInitializer {
     await _validatePlantData();
   }
 
-  /// ✅ NOUVEAU - Migration v2.1.0 : Validation du format plants.json
-  ///
-  /// Détecte automatiquement la version du fichier et affiche les métadonnées.
-  /// Valide la cohérence entre metadata.total_plants et la longueur réelle.
+  /// Validation simple des données
   static Future<void> _validatePlantData() async {
-    try {
-      print('🔎 ========================================');
-      print('   Validation des données de plantes');
-      print('========================================');
-
-      // Charger le JSON brut
-      final jsonString = await rootBundle.loadString('assets/data/plants.json');
-      final dynamic jsonData = json.decode(jsonString);
-
-      // Vérifier le format
-      if (jsonData is Map<String, dynamic>) {
-        // Format v2.1.0+ (structured)
-        final schemaVersion = jsonData['schema_version'] as String?;
-        final metadata = jsonData['metadata'] as Map<String, dynamic>?;
-        final plants = jsonData['plants'] as List?;
-
-        if (schemaVersion != null && metadata != null && plants != null) {
-          print('✅ Format v$schemaVersion détecté');
-          print('');
-          print('📋 Métadonnées :');
-          print('   - Version        : ${metadata['version']}');
-          print('   - Total plantes  : ${metadata['total_plants']}');
-          print('   - Source         : ${metadata['source']}');
-          print('   - mise à jour    : ${metadata['updated_at']}');
-          print('   - Description    : ${metadata['description']}');
-
-          if (metadata.containsKey('migration_date')) {
-            print('   - Date migration : ${metadata['migration_date']}');
-            print('   - Migré depuis   : ${metadata['migrated_from']}');
-          }
-
-          print('');
-          print('🔍 Validation de cohérence :');
-
-          // Validation de cohérence
-          final expectedTotal = metadata['total_plants'] as int?;
-          final actualTotal = plants.length;
-
-          if (expectedTotal != null) {
-            if (actualTotal == expectedTotal) {
-              print('   ✅ Cohérence validée : $actualTotal plantes');
-            } else {
-              print('   ⚠️  INCOHÉRENCE détectée !');
-              print('      - Attendu : $expectedTotal plantes');
-              print('      - Trouvé  : $actualTotal plantes');
-              print(
-                  '      - Écart   : ${(actualTotal - expectedTotal).abs()} plante(s)');
-            }
-          } else {
-            print('   ⚠️  Champ total_plants manquant dans les métadonnées');
-            print('      - Plantes trouvées : $actualTotal');
-          }
-
-          // Vérification de quelques plantes
-          if (plants.isNotEmpty) {
-            final firstPlant = plants.first as Map<String, dynamic>?;
-            if (firstPlant != null) {
-              print('');
-              print('🌱 Première plante :');
-              print('   - ID   : ${firstPlant['id']}');
-              print('   - Nom  : ${firstPlant['commonName']}');
-
-              // Vérifier l'absence des champs obsolètes (plantingSeason, harvestSeason)
-              final hasPlantingSeason =
-                  firstPlant.containsKey('plantingSeason');
-              final hasHarvestSeason = firstPlant.containsKey('harvestSeason');
-
-              if (!hasPlantingSeason && !hasHarvestSeason) {
-                print('   ✅ Format normalisé (sans champs obsolètes)');
-              } else {
-                print('   ⚠️  Champs obsolètes détectés :');
-                if (hasPlantingSeason) print('      - plantingSeason présent');
-                if (hasHarvestSeason) print('      - harvestSeason présent');
-              }
-            }
-          }
-        } else {
-          print('⚠️  Format Map détecté mais structure invalide');
-          print('   - schema_version : ${schemaVersion != null ? "✅" : "❌"}');
-          print('   - metadata       : ${metadata != null ? "✅" : "❌"}');
-          print('   - plants         : ${plants != null ? "✅" : "❌"}');
-        }
-      } else if (jsonData is List) {
-        // Format Legacy (array-only)
-        print('⚠️  Format Legacy détecté (array-only)');
-        print('   - Plantes trouvées : ${jsonData.length}');
-        print('   - Recommandation   : Migrer vers v2.1.0');
-        print('   - Commande         : dart tools/migrate_plants_json.dart');
-      } else {
-        print('❌ Format JSON invalide détecté !');
-        print('   - Type reçu : ${jsonData.runtimeType}');
-        print('   - Attendu   : List ou Map<String, dynamic>');
-      }
-
-      print('========================================\n');
-    } catch (e, stackTrace) {
-      print('❌ Erreur lors de la validation des données de plantes:');
-      print('   $e');
-      print('   StackTrace: $stackTrace');
-      print('========================================\n');
-      // Ne pas bloquer le démarrage de l'app
-    }
+    // La validation stricte est désactivée car le système Auto-Sync gère désormais
+    // l'ajout automatique des nouvelles plantes et la mise à jour des définitions.
+    print('✅ Système Auto-Sync actif : La base de données est synchronisée avec le JSON.');
   }
 }

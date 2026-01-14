@@ -31,7 +31,6 @@ class PlantHiveRepository {
   static const String _boxName = 'plants_box';
   // Primary path kept for backward compatibility; fallback to canonical plants.json
   static const String _jsonAssetPath = 'assets/data/plants.json';
-  static const String _jsonAssetFallback = 'assets/data/plants_merged_clean.json';
 
   Box<PlantHive>? _box;
   bool _isInitialized = false;
@@ -137,145 +136,96 @@ class PlantHiveRepository {
     }
   }
 
-  /// Initialise la base de données depuis le fichier JSON des assets
-  Future<void> initializeFromJson({bool clearBefore = false}) async {
+
+  /// Synchronise la base de données locale avec le fichier JSON (Smart Sync)
+  ///
+  /// - Ajoute les nouvelles plantes
+  /// - Met à jour les plantes existantes (contenu)
+  /// - Préserve les préférences utilisateur (isActive)
+  Future<void> syncWithJson() async {
     try {
-      developer.log('PlantHiveRepository: Début du chargement depuis JSON',
+      developer.log('PlantHiveRepository: Début de la synchronisation JSON (Smart Sync)',
           name: 'PlantHiveRepository');
-      // Visible debug print to ensure startup is logged
-      print('PlantHiveRepository: initializeFromJson START (clearBefore=$clearBefore)');
+      print('PlantHiveRepository: syncWithJson START');
 
-      if (clearBefore) {
-        await clearAllPlants();
-        print('PlantHiveRepository: Box cleared before initialization');
-      }
-
-      // Try primary path first, then fallback path. Log clearly which path was used.
-      String jsonString;
-      String usedPath = _jsonAssetPath;
-      try {
-        jsonString = await rootBundle.loadString(_jsonAssetPath);
-        developer.log(
-            'PlantHiveRepository: Loaded plants JSON from $_jsonAssetPath',
-            name: 'PlantHiveRepository');
-      } catch (ePrimary) {
-        developer.log(
-            'PlantHiveRepository: Could not load $_jsonAssetPath: $ePrimary',
-            name: 'PlantHiveRepository',
-            level: 900);
-        try {
-          usedPath = _jsonAssetFallback;
-          jsonString = await rootBundle.loadString(_jsonAssetFallback);
-          developer.log(
-              'PlantHiveRepository: Loaded plants JSON from $_jsonAssetFallback',
-              name: 'PlantHiveRepository');
-        } catch (eFallback) {
-          developer.log(
-              'PlantHiveRepository: Could not load fallback $_jsonAssetFallback: $eFallback',
-              name: 'PlantHiveRepository',
-              level: 1000);
-          // Re-throw as a PlantHiveException so upstream can handle/log.
-          throw PlantHiveException(
-              'Impossible de charger le fichier JSON des plantes : $_jsonAssetPath et $_jsonAssetFallback');
-        }
-      }
+      // 1. Charger le JSON
+      final jsonString = await rootBundle.loadString(_jsonAssetPath);
       final dynamic jsonData = json.decode(jsonString);
 
-      // Détection automatique du format
-      List<dynamic> plantsList;
-      String detectedFormat;
-      Map<String, dynamic>? metadata;
-
-      if (jsonData is List) {
-        // Format Legacy (array-only)
+      List<dynamic> plantsList = [];
+      if (jsonData is Map<String, dynamic>) {
+        plantsList = jsonData['plants'] as List? ?? [];
+      } else if (jsonData is List) {
         plantsList = jsonData;
-        detectedFormat = 'Legacy (array-only)';
-        developer.log(
-            'PlantHiveRepository: Format détecté : Legacy (array-only)',
-            name: 'PlantHiveRepository');
-      } else if (jsonData is Map<String, dynamic>) {
-        // Format v2.1.0+ (structured avec schema_version)
-        final schemaVersion = jsonData['schema_version'] as String?;
-        // Relax check to allow simple maps if needed, but warnings usually good
-        if (schemaVersion == null && !jsonData.containsKey('plants')) {
-             // fallback or throw? let's iterate if 'plants' exists
-             if (jsonData.containsKey('plants')) {
-                 detectedFormat = 'Unknown (has plants)';
-                 plantsList = jsonData['plants'] as List? ?? [];
-             } else {
-                 throw const PlantHiveException(
-                  'Format JSON invalide : Object sans schema_version ni clé plants');
-             }
-        } else {
-            detectedFormat = 'v$schemaVersion (structured)';
-            metadata = jsonData['metadata'] as Map<String, dynamic>?;
-
-            developer.log('PlantHiveRepository: Format détecté : v$schemaVersion',
-                name: 'PlantHiveRepository');
-
-            plantsList = jsonData['plants'] as List? ?? [];
-        }
-
-        if (plantsList.isEmpty) {
-          developer.log(
-              'PlantHiveRepository: Aucune plante dans le fichier JSON',
-              name: 'PlantHiveRepository',
-              level: 900);
-        }
-      } else {
-        throw PlantHiveException(
-            'Format JSON invalide : Attendu List ou Map, reçu ${jsonData.runtimeType}');
       }
 
-      // ==================== TRAITEMENT DES PLANTES ====================
+      if (plantsList.isEmpty) {
+        print('PlantHiveRepository: JSON vide, skip sync.');
+        return;
+      }
+
+      // 2. Ouvrir la box
       final box = await _getBox();
-      int successCount = 0;
+      int addedCount = 0;
+      int updatedCount = 0;
       int errorCount = 0;
 
-      // Traitement de chaque plante avec tolérance aux erreurs
+      // 3. Itérer et merger
       for (final dynamic plantJson in plantsList) {
         try {
           if (plantJson is Map<String, dynamic>) {
-            final plantHive = _createPlantHiveFromJson(plantJson);
-            await box.put(plantHive.id, plantHive);
-            successCount++;
-          } else {
-            developer.log(
-                'PlantHiveRepository: Format JSON invalide pour une plante',
-                name: 'PlantHiveRepository',
-                level: 900);
-            errorCount++;
+            // Créer l'objet "candidat" depuis le JSON
+            final candidatePlant = _createPlantHiveFromJson(plantJson);
+            final id = candidatePlant.id;
+
+            if (box.containsKey(id)) {
+              // EXISTE DÉJÀ : Mise à jour avec préservation de l'état
+              final existingPlant = box.get(id);
+              if (existingPlant != null) {
+                // On garde l'état utilisateur
+                candidatePlant.isActive = existingPlant.isActive;
+                candidatePlant.createdAt = existingPlant.createdAt;
+                // On met à jour updatedAt
+                candidatePlant.updatedAt = DateTime.now();
+                
+                // Sauvegarde
+                await box.put(id, candidatePlant);
+                updatedCount++;
+              }
+            } else {
+              // NOUVEAU : Insertion directe
+              await box.put(id, candidatePlant);
+              print('PlantHiveRepository: ✨ Nouvelle plante ajoutée : ${candidatePlant.commonName} ($id)');
+              addedCount++;
+            }
           }
         } catch (e) {
-          final plantId = plantJson is Map<String, dynamic>
-              ? plantJson['id'] ?? 'unknown'
-              : 'unknown';
-          // FORCE LOGGING FOR DEBUG: ensure visibility in flutter logs / adb logcat
-          print('!!! CRITICAL ERROR LOADING PLANT $plantId: $e');
-          developer.log(
-              'PlantHiveRepository: Erreur lors du traitement de la plante $plantId: $e',
-              name: 'PlantHiveRepository',
-              level: 900);
+          print('Error syncing plant: $e');
           errorCount++;
         }
       }
 
       developer.log(
-          'PlantHiveRepository: Chargement terminé [$detectedFormat] - $successCount succès, $errorCount erreurs',
+          'PlantHiveRepository: Sync terminé - +$addedCount, ~$updatedCount, !$errorCount',
           name: 'PlantHiveRepository');
       print(
-          'PlantHiveRepository: initializeFromJson END - successCount=$successCount, errorCount=$errorCount, detectedFormat=$detectedFormat');
+          'PlantHiveRepository: syncWithJson END - Added: $addedCount, Updated: $updatedCount, Errors: $errorCount');
 
       _isInitialized = true;
     } catch (e) {
-      print('!!! CRITICAL EXCEPTION initializeFromJson: $e');
-      developer.log(
-          'PlantHiveRepository: Erreur critique lors du chargement JSON: $e',
-          name: 'PlantHiveRepository',
-          level: 1000);
-      throw PlantHiveException(
-          'Impossible de charger les plantes depuis JSON: $e');
+      print('!!! EXCEPTION syncWithJson: $e');
+      developer.log('PlantHiveRepository: Erreur sync JSON: $e', level: 1000);
+      // On ne throw pas pour ne pas bloquer l'app, juste log
     }
+  }
+
+  /// Initialise la base de données depuis le fichier JSON des assets
+  Future<void> initializeFromJson({bool clearBefore = false}) async {
+    // Si on demande un clear, on le fait, puis on utilise le sync pour remplir
+    if (clearBefore) {
+      await clearAllPlants();
+    }
+    await syncWithJson();
   }
 
   /// Vide complétement la box (pour rechargement propre)
