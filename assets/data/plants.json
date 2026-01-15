@@ -5237,8 +5237,8 @@
       "harvestMonths": []
     },
     {
-      "id": "pumpkin_squash",
-      "commonName": "Potiron / Courge",
+      "id": "courge_potiron",
+      "commonName": "Courge Potiron ",
       "scientificName": "Cucurbita spp.",
       "family": "Cucurbitaceae",
       "daysToMaturity": 90,
@@ -9016,7 +9016,7 @@
       }
     },
     {
-      "id": "watercress",
+      "id": "cresson",
       "image": "cresson.jpg",
       "commonName": "Cresson de fontaine",
       "scientificName": "Nasturtium officinale",
@@ -11105,7 +11105,7 @@
       }
     },
     {
-      "id": "pattypan_squash",
+      "id": "courge_patisson",
       "image": "patisson.jpg",
       "commonName": "Courge pâtisson",
       "scientificName": "Cucurbita pepo L.",
@@ -11455,7 +11455,7 @@
     },
     {
       "id": "red_chili",
-      "image": "piment.png",
+      "image": "piment.jpg",
       "commonName": "Piment rouge",
       "scientificName": "Capsicum annuum L.",
       "family": "Solanaceae",
@@ -12161,7 +12161,7 @@
       }
     },
     {
-      "id": "radis_18_jours",
+      "id": "radis",
       "commonName": "Radis de 18 jours",
       "scientificName": "Raphanus sativus L. var. sativus",
       "family": "Brassicaceae",
@@ -12526,7 +12526,7 @@
       }
     },
     {
-      "id": "purple_winter_radish",
+      "id": "radis_violet_hiver",
       "commonName": "Radis violet d'hiver",
       "scientificName": "Raphanus sativus L.",
       "family": "Brassicaceae",
