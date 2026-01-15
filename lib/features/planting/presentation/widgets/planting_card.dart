@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../core/models/planting.dart';
+import '../../../../features/plant_catalog/domain/entities/plant_entity.dart';
 import '../../../../core/utils/planting_utils.dart'; // Ensure this exists or use local helpers
 import '../../../../shared/widgets/custom_card.dart';
 import 'planting_image.dart';
+import 'companion_chevrons_widget.dart';
 
 class PlantingCard extends ConsumerWidget {
   final Planting planting;
@@ -121,6 +123,17 @@ class PlantingCard extends ConsumerWidget {
                     ),
                   ),
                 ),
+
+                // TOP LEFT: Companion Chevrons (New)
+                if (catalogPlant != null)
+                  Positioned(
+                    top: 12,
+                    left: 12,
+                    child: CompanionChevronsWidget(
+                      beneficial: catalogPlant.beneficialCompanions,
+                      avoid: catalogPlant.plantsToAvoid,
+                    ),
+                  ),
 
                 // BOTTOM RIGHT: Harvest Button (Moved here)
                 if (planting.status != 'Récolté' && planting.status != 'Échoué')
