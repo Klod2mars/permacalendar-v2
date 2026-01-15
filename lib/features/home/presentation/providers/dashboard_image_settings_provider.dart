@@ -8,9 +8,9 @@ const String _keyAlignY = 'organic_dashboard_image_align_y';
 const String _keyZoom = 'organic_dashboard_image_zoom';
 
 // Default values
-const double _defaultAlignX = -0.15;
-const double _defaultAlignY = -0.03;
-const double _defaultZoom = 1.18;
+const double _defaultAlignX = 0.500;
+const double _defaultAlignY = 0.349;
+const double _defaultZoom = 1.335;
 
 @immutable
 class DashboardImageSettings {

@@ -12,11 +12,11 @@ part 'sky_calibration_config.g.dart';
 @HiveType(typeId: 44) // ID unique arbitraire (check conflict)
 class SkyCalibrationConfig with _$SkyCalibrationConfig {
   const factory SkyCalibrationConfig({
-    @HiveField(0) @Default(0.5) double cx, // Centre X
-    @HiveField(1) @Default(0.35) double cy, // Centre Y
-    @HiveField(2) @Default(0.4) double rx, // Rayon X
-    @HiveField(3) @Default(0.3) double ry, // Rayon Y
-    @HiveField(4) @Default(0.0) double rotation, // Rotation en radians
+    @HiveField(0) @Default(0.503) double cx, // Centre X
+    @HiveField(1) @Default(0.226) double cy, // Centre Y
+    @HiveField(2) @Default(0.140) double rx, // Rayon X
+    @HiveField(3) @Default(0.105) double ry, // Rayon Y
+    @HiveField(4) @Default(0.000) double rotation, // Rotation en radians
   }) = _SkyCalibrationConfig;
 
   factory SkyCalibrationConfig.fromJson(Map<String, dynamic> json) =>

@@ -160,11 +160,11 @@ class _$SkyCalibrationConfigImpl
     with DiagnosticableTreeMixin
     implements _SkyCalibrationConfig {
   const _$SkyCalibrationConfigImpl(
-      {@HiveField(0) this.cx = 0.5,
-      @HiveField(1) this.cy = 0.35,
-      @HiveField(2) this.rx = 0.4,
-      @HiveField(3) this.ry = 0.3,
-      @HiveField(4) this.rotation = 0.0});
+      {@HiveField(0) this.cx = 0.503,
+      @HiveField(1) this.cy = 0.226,
+      @HiveField(2) this.rx = 0.140,
+      @HiveField(3) this.ry = 0.105,
+      @HiveField(4) this.rotation = 0.000});
 
   factory _$SkyCalibrationConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$SkyCalibrationConfigImplFromJson(json);

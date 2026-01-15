@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/home/presentation/providers/unified_calibration_provider.dart';
 import '../../../../core/models/calibration_state.dart';
@@ -19,6 +21,10 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
       _isCollapsed = !_isCollapsed;
     });
   }
+
+
+
+
 
   Future<void> _saveAndExit() async {
     try {
@@ -155,6 +161,11 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
                               label: const Text('Valider & Quitter'),
                             ),
                           ),
+                          
+
+                          
+
+                          
                         ],
                       ),
                     ),
@@ -167,6 +178,10 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
       ],
     );
   }
+
+
+
+
 
   String _getInstructionText(CalibrationTool tool) {
     switch (tool) {

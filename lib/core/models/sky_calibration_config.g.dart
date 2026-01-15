@@ -59,11 +59,11 @@ class SkyCalibrationConfigAdapter extends TypeAdapter<SkyCalibrationConfig> {
 _$SkyCalibrationConfigImpl _$$SkyCalibrationConfigImplFromJson(
         Map<String, dynamic> json) =>
     _$SkyCalibrationConfigImpl(
-      cx: (json['cx'] as num?)?.toDouble() ?? 0.5,
-      cy: (json['cy'] as num?)?.toDouble() ?? 0.35,
-      rx: (json['rx'] as num?)?.toDouble() ?? 0.4,
-      ry: (json['ry'] as num?)?.toDouble() ?? 0.3,
-      rotation: (json['rotation'] as num?)?.toDouble() ?? 0.0,
+      cx: (json['cx'] as num?)?.toDouble() ?? 0.503,
+      cy: (json['cy'] as num?)?.toDouble() ?? 0.226,
+      rx: (json['rx'] as num?)?.toDouble() ?? 0.140,
+      ry: (json['ry'] as num?)?.toDouble() ?? 0.105,
+      rotation: (json['rotation'] as num?)?.toDouble() ?? 0.000,
     );
 
 Map<String, dynamic> _$$SkyCalibrationConfigImplToJson(
