@@ -17,6 +17,7 @@ import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_pro
 
 // Formulaire
 import 'custom_plant_form_screen.dart';
+import 'package:permacalendar/shared/utils/plant_image_resolver.dart';
 
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -257,114 +258,27 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           },
         );
       } else {
-        // Asset logic
-        final List<String> candidates = <String>[];
+        // Use centralized resolver
         final base = raw;
-        if (kDebugMode) debugPrint('[DEBUG_IMG] Entering Asset Logic for $base');
-
-        // Extract stem (remove extension if present) for flexible matching
-        final List<String> stems = [];
-        
-        // 1. Base stem from ID/Metadata
-        String stem1 = base;
-        final extRegex = RegExp(r'\.(png|jpg|jpeg|webp)$', caseSensitive: false);
-        if (extRegex.hasMatch(base)) {
-           stem1 = base.replaceAll(extRegex, '');
-        }
-        stems.add(stem1);
-        
-        // 2. Stem from Common Name (normalized) to handle French filenames vs English IDs
-        // e.g. ID="tomato" -> "tomato.jpg", but file is "tomate.png"
-        final commonNameSafe = _normalize(plant.commonName);
-        if (commonNameSafe.isNotEmpty && commonNameSafe != stem1 && commonNameSafe != stem1.toLowerCase()) {
-           stems.add(commonNameSafe);
-           // Try replacing spaces with underscores (e.g. "chou fleur" -> "chou_fleur")
-           final withUnderscores = commonNameSafe.replaceAll(' ', '_');
-           if (withUnderscores != commonNameSafe) {
-             stems.add(withUnderscores);
-           }
-        }
-        
-        // 3. Stem from Raw Common Name (for accents)
-        // e.g. "Maïs doux" -> "maïs_doux.png" (if file has accent)
-        final commonNameRaw = plant.commonName.toLowerCase().trim();
-        if (commonNameRaw.isNotEmpty && commonNameRaw != stem1 && commonNameRaw != commonNameSafe) {
-           stems.add(commonNameRaw);
-           final rawUnderscores = commonNameRaw.replaceAll(' ', '_');
-           if (rawUnderscores != commonNameRaw) {
-              stems.add(rawUnderscores);
-           }
-        }
-        
-        // Remove potentially duplicates
-        final uniqueStems = stems.toSet().toList(); // requires import 'dart:collection' or just use toSet logic
-
-        if (base.startsWith('assets/')) {
-          candidates.add(base);
-          candidates.add(base.toLowerCase());
-        }
-
-        // Generate combinations
-        final prefixes = [
-          'assets/images/legumes/',
-          'assets/images/plants/',
-          'assets/'
-        ];
-        final exts = ['.png', '.jpg', '.jpeg', '.webp'];
-
-        for (final stem in uniqueStems) {
-          for (final prefix in prefixes) {
-            // Add stem 
-            candidates.add('$prefix$stem');
-            candidates.add('$prefix${stem.toLowerCase()}');
-            
-            // Add stem + extensions
-            for (final ext in exts) {
-              candidates.add('$prefix$stem$ext');
-              candidates.add('$prefix${stem.toLowerCase()}$ext');
-            }
-          }
-        }
-        
-        // Also add original base just in case
-        candidates.add('assets/images/legumes/$base');
-        candidates.add('assets/images/plants/$base');
-        candidates.add('assets/$base');
-        
-        final id = plant.id;
-        if (id.isNotEmpty) {
-           candidates.add('assets/images/legumes/$id.jpg');
-           candidates.add('assets/images/plants/$id.jpg');
-        }
-        
-        // seen/final logic
-        final seen = <String>{};
-        final finalCandidates = <String>[];
-        for (final c in candidates) {
-          if (!seen.contains(c)) { seen.add(c); finalCandidates.add(c); }
-        }
-        
-        // if (kDebugMode) debugPrint('[DEBUG_IMG] Candidates: $finalCandidates');
-
         imageWidget = FutureBuilder<String?>(
-          future: _findExistingAsset(finalCandidates),
+          future: findPlantImageAsset(plant),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
-               return Container(height: imageHeight, color: Colors.green.shade50);
+              return Container(height: imageHeight, color: Colors.green.shade50);
             }
             final found = snapshot.data;
             if (found != null) {
-              if (kDebugMode && index < 3) debugPrint('[DEBUG_IMG] Found asset: $found'); // log only first few
+              // if (kDebugMode && index < 3) debugPrint('[DEBUG_IMG] Found asset (central): $found');
               return Image.asset(found, height: imageHeight, width: double.infinity, fit: BoxFit.cover, errorBuilder: (_,err,stack)=> _fallbackImage(height: imageHeight));
             } else {
-              if (kDebugMode) debugPrint('[DEBUG_IMG] No asset found for $base');
+              // if (kDebugMode) debugPrint('[DEBUG_IMG] No asset found for $base (central resolver)');
               return _fallbackImage(height: imageHeight);
             }
           },
         );
       }
     } else {
-      if (kDebugMode) debugPrint('[DEBUG_IMG] No raw path for ${plant.commonName}');
+      // if (kDebugMode) debugPrint('[DEBUG_IMG] No raw path for ${plant.commonName}');
       imageWidget = _fallbackImage(height: imageHeight);
     }
 

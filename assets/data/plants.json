@@ -7964,6 +7964,7 @@
     },
     {
       "id": "chou_cabus_rouge",
+      "image": "chou_cabu_rouge.png",
       "commonName": "Chou cabus rouge",
       "scientificName": "Brassica oleracea var. capitata f. rubra",
       "family": "Brassicacées",
@@ -9016,6 +9017,7 @@
     },
     {
       "id": "watercress",
+      "image": "cresson.jpg",
       "commonName": "Cresson de fontaine",
       "scientificName": "Nasturtium officinale",
       "family": "Brassicaceae",
@@ -10588,6 +10590,7 @@
     },
     {
       "id": "white_onion",
+      "image": "oignons_blanc.png",
       "commonName": "Oignon blanc",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
@@ -11103,6 +11106,7 @@
     },
     {
       "id": "pattypan_squash",
+      "image": "patisson.jpg",
       "commonName": "Courge pâtisson",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitaceae",
@@ -11451,6 +11455,7 @@
     },
     {
       "id": "red_chili",
+      "image": "piment.png",
       "commonName": "Piment rouge",
       "scientificName": "Capsicum annuum L.",
       "family": "Solanaceae",

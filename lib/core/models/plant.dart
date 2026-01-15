@@ -397,7 +397,7 @@ class Plant extends HiveObject {
       companionPlanting: Map<String, dynamic>.from(json['companionPlanting']),
       notificationSettings:
           Map<String, dynamic>.from(json['notificationSettings']),
-      imageUrl: json['imageUrl'],
+      imageUrl: json['imageUrl'] ?? json['image'],
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : DateTime.now(),

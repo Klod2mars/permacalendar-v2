@@ -2,11 +2,26 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-/// Résolveur d'asset d'image pour une "plant" (tolérant casse / extension / dossiers).
-/// Accepte un `plant` dynamique (doit exposer `id`, `commonName`, `metadata`).
+String _normalizeDiacritics(String input) {
+  if (input == null || input.isEmpty) return '';
+  var s = input.toLowerCase().trim();
+  const diacritics = {
+    'à': 'a','á': 'a','â': 'a','ã': 'a','ä': 'a','å': 'a',
+    'ç': 'c','è': 'e','é': 'e','ê': 'e','ë': 'e',
+    'ì': 'i','í': 'i','î': 'i','ï': 'i','ñ':'n',
+    'ò':'o','ó':'o','ô':'o','õ':'o','ö':'o',
+    'ù':'u','ú':'u','û':'u','ü':'u','ý':'y','ÿ':'y',
+    'œ':'oe','æ':'ae'
+  };
+  diacritics.forEach((k, v) => s = s.replaceAll(k, v));
+  // remove punctuation but keep spaces, underscores, hyphens and alphanumerics
+  s = s.replaceAll(RegExp(r'[^a-z0-9\s_\-]'), '');
+  s = s.replaceAll(RegExp(r'\s+'), ' ');
+  return s;
+}
+
 Future<String?> findPlantImageAsset(dynamic plant) async {
   try {
-    // 1) Charger manifest et table lowercase -> original
     final manifest = await rootBundle.loadString('AssetManifest.json');
     final Map<String, dynamic> m = json.decode(manifest);
     final mapLower = <String, String>{};
@@ -14,7 +29,7 @@ Future<String?> findPlantImageAsset(dynamic plant) async {
       mapLower[k.toLowerCase()] = k;
     }
 
-    // 2) extraire valeur metadata si présente
+    // extract raw metadata image
     String? raw;
     try {
       final meta = (plant?.metadata);
@@ -28,87 +43,111 @@ Future<String?> findPlantImageAsset(dynamic plant) async {
       }
     } catch (_) {}
 
-    // 3) construire candidats
-    final candidates = <String>[];
+    // helper to add candidate variants
+    final candidates = <String>{};
+    void addCandidate(String c) {
+      if (c == null || c.trim().isEmpty) return;
+      candidates.add(c);
+      candidates.add(c.toLowerCase());
+    }
+
+    // If raw provided
     if (raw != null && raw.isNotEmpty) {
       final base = raw;
-      // si l'utilisateur a mis un chemin assets/ explicite
+      if (RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(base)) {
+        // It's a network image — return raw so caller can treat network.
+        return base;
+      }
+      if (base.startsWith('file:') || base.startsWith('/')) {
+        // Local absolute path
+        return base;
+      }
       if (base.startsWith('assets/')) {
-        candidates.add(base);
-        candidates.add(base.toLowerCase());
+        addCandidate(base);
       } else {
-        candidates.add('assets/images/legumes/$base');
-        candidates.add('assets/images/legumes/${base.toLowerCase()}');
-        candidates.add('assets/images/plants/$base');
-        candidates.add('assets/images/plants/${base.toLowerCase()}');
-        candidates.add('assets/$base');
-        candidates.add('assets/${base.toLowerCase()}');
-
-        if (!RegExp(r'\.\w+$').hasMatch(base)) {
-          final exts = ['.png', '.jpg', '.jpeg', '.webp'];
-          for (final ext in exts) {
-            candidates.add('assets/images/legumes/${base}$ext');
-            candidates.add('assets/images/legumes/${base.toLowerCase()}$ext');
-            candidates.add('assets/images/plants/${base}$ext');
-            candidates.add('assets/images/plants/${base.toLowerCase()}$ext');
+        // Try in assets folders
+        final prefixes = [
+          'assets/images/legumes/',
+          'assets/images/plants/',
+          'assets/'
+        ];
+        if (RegExp(r'\.\w+$').hasMatch(base)) {
+          for (final p in prefixes) {
+            addCandidate('$p$base');
           }
         } else {
-          candidates.add('assets/images/legumes/${base.toLowerCase()}');
-          candidates.add('assets/images/plants/${base.toLowerCase()}');
+          final exts = ['.png', '.jpg', '.jpeg', '.webp'];
+          for (final p in prefixes) {
+            addCandidate('$p$base');
+            for (final e in exts) addCandidate('$p$base$e');
+          }
         }
       }
     }
 
-    // ajouter candidats id / commonName
+    // try id-based
     final id = (plant?.id ?? '').toString();
     if (id.isNotEmpty) {
-      candidates.add('assets/images/legumes/$id.jpg');
-      candidates.add('assets/images/legumes/$id.png');
-      candidates.add('assets/images/legumes/$id.webp');
-      candidates.add('assets/images/plants/$id.jpg');
-      candidates.add('assets/images/plants/$id.png');
+      final prefixes = ['assets/images/legumes/', 'assets/images/plants/', 'assets/'];
+      final exts = ['.jpg', '.png', '.webp', '.jpeg'];
+      for (final p in prefixes) {
+        for (final e in exts) addCandidate('$p$id$e');
+        addCandidate('$p$id');
+      }
     }
 
+    // try commonName normalized and raw variations
     final cn = (plant?.commonName ?? '').toString();
     if (cn.isNotEmpty) {
-      var safe = cn.toLowerCase().trim();
-      safe = safe.replaceAll(RegExp(r'[^a-z0-9_\-]'), '_');
+      final normalized = _normalizeDiacritics(cn).replaceAll(' ', '_');
+      final normalizedSpace = _normalizeDiacritics(cn);
+      final rawLower = cn.toLowerCase().trim();
       final exts = ['.png', '.jpg', '.jpeg', '.webp'];
-      for (final ext in exts) {
-        candidates.add('assets/images/legumes/${safe}$ext');
-        candidates.add('assets/images/plants/${safe}$ext');
+      final prefixes = ['assets/images/legumes/', 'assets/images/plants/'];
+      for (final p in prefixes) {
+        for (final e in exts) {
+          addCandidate('$p$normalized$e');
+          addCandidate('$p${normalized.toLowerCase()}$e');
+          addCandidate('$p${rawLower.replaceAll(' ', '_')}$e');
+        }
+        addCandidate('$p$normalized');
+        addCandidate('$p${normalized.toLowerCase()}');
+        addCandidate('$p${normalizedSpace}');
       }
     }
 
-    // dédupliquer
-    final seen = <String>{};
-    final finalCandidates = <String>[];
+    // Allow underscore/hyphen variants
+    final additional = <String>{};
     for (final c in candidates) {
-      if (c != null && c.isNotEmpty && !seen.contains(c)) {
-        seen.add(c);
-        finalCandidates.add(c);
-      }
+      additional.add(c.replaceAll('_', '-'));
+      additional.add(c.replaceAll('-', '_'));
+      additional.add(c.replaceAll(' ', '_'));
+      additional.add(c.replaceAll(' ', '-'));
     }
+    candidates.addAll(additional);
 
-    // 4) recherche via manifest (insensible à la casse)
-    for (final c in finalCandidates) {
+    // Try manifest exact lowercase
+    for (final c in candidates) {
       final lc = c.toLowerCase();
       if (mapLower.containsKey(lc)) return mapLower[lc];
     }
-    for (final c in finalCandidates) {
+
+    // Try endsWith matches (handles prefix differences)
+    for (final c in candidates) {
       final lc = c.toLowerCase();
       for (final keyLower in mapLower.keys) {
         if (keyLower.endsWith(lc)) return mapLower[keyLower];
       }
     }
 
-    // 5) dernier recours : essayer rootBundle.load
-    for (final c in finalCandidates) {
+    // Last resort: try rootBundle.load
+    for (final c in candidates) {
       try {
         await rootBundle.load(c);
         return c;
       } catch (_) {}
     }
+
   } catch (_) {}
   return null;
 }
