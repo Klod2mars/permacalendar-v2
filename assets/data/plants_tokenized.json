@@ -1,14 +1,13 @@
 {
   "schema_version": "2.2.0",
   "metadata": {
-    "generated_at": "2026-01-17T15:53:11.617725",
-    "source": "plants.json transformation",
+    "generated_at": "2026-01-17T16:33:11.527829",
+    "source": "plants.json transformation v2",
     "total_plants": 76
   },
   "plants": [
     {
       "id": "artichoke",
-      "commonName": "Artichaut",
       "scientificName": "Cynara cardunculus var. scolymus",
       "family": "Asteraceae",
       "daysToMaturity": 120,
@@ -57,12 +56,7 @@
         },
         "minTemperature": 7
       },
-      "watering": {
-        "frequency": "1 à 3 fois/semaine en période chaude",
-        "amount": "25 à 50 mm d'eau par semaine",
-        "method": "Arrosage au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin ou tard le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "80 cm entre plants, 1 mètre entre rangs",
         "when": "Lorsque les œilletons apparaissent, ne conserver que 3 pousses par pied"
@@ -135,18 +129,17 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Artichaut"
+      "commonName_legacy_dev": "Artichaut"
     },
     {
       "id": "asparagus",
-      "commonName": "Asperge",
       "scientificName": "Asparagus officinalis",
       "family": "Asparagaceae",
       "daysToMaturity": 1095,
       "spacing": 70,
       "depth": 8,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_HIGH",
+      "waterNeeds": "WATER_MEDIUM_HIGH",
       "marketPricePerKg": 6.5,
       "defaultUnit": "kg",
       "nutritionPer100g": {
@@ -188,12 +181,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "Tous les 10 à 14 jours en sol sableux",
-        "amount": "50-75 mm par arrosage (soit ~2,8 mm/jour en période de croissance maximale)",
-        "method": "Arrosage goutte-à-goutte ou au pied, éviter l'humidité stagnante",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "70 cm entre plants, 70 cm à 1,50 m entre rangs",
         "when": "Premier éclaircissage en retirant les tiges frêles, ne pas récolter les 2-3 premières années"
@@ -266,18 +254,17 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Asperge"
+      "commonName_legacy_dev": "Asperge"
     },
     {
       "id": "basil",
-      "commonName": "Basilic",
       "scientificName": "Ocimum basilicum",
       "family": "Lamiaceae",
       "daysToMaturity": 60,
       "spacing": 20,
       "depth": 0.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé (sol humide mais pas détrempé)",
       "sowingMonths": [
         "A",
         "M"
@@ -329,12 +316,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "Quotidien en pot / 2-3 fois par semaine en pleine terre (selon météo et sol)",
-        "amount": "Adapté pour maintenir le sol humide sans saturation",
-        "method": "Arroser au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou en début de soirée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "20 cm entre plants",
         "when": "Au stade jeune plantule, pour éviter surpeuplement et favoriser aération"
@@ -420,11 +402,10 @@
           }
         }
       },
-      "commonName_dev": "Basilic"
+      "commonName_legacy_dev": "Basilic"
     },
     {
       "id": "bean",
-      "commonName": "Haricot",
       "scientificName": "Phaseolus vulgaris",
       "family": "Fabaceae",
       "daysToMaturity": 60,
@@ -482,12 +463,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "Variable selon phase de croissance : 2-3 fois/semaine en croissance, 3 fois/semaine en floraison, réduire 1 mois avant récolte",
-        "amount": "10-15 litres par m²/semaine en phase de floraison",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "25-40 cm entre plants",
         "when": "Lorsque les jeunes plants mesurent quelques centimètres, conserver les plus vigoureux"
@@ -580,11 +556,10 @@
           }
         }
       },
-      "commonName_dev": "Haricot"
+      "commonName_legacy_dev": "Haricot"
     },
     {
       "id": "beetroot",
-      "commonName": "Betterave",
       "scientificName": "Beta vulgaris",
       "family": "Amaranthaceae",
       "daysToMaturity": 60,
@@ -644,12 +619,7 @@
         },
         "minTemperature": 6
       },
-      "watering": {
-        "frequency": "1 fois/semaine (adapter selon climat)",
-        "amount": "2-4 litres par m²/semaine",
-        "method": "Au pied, sol maintenu frais sans excès",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-25 cm entre plants",
         "when": "Lorsque les plants ont 4 à 5 feuilles"
@@ -741,18 +711,17 @@
           }
         }
       },
-      "commonName_dev": "Betterave"
+      "commonName_legacy_dev": "Betterave"
     },
     {
       "id": "black_radish",
-      "commonName": "Radis Noir",
       "scientificName": "Raphanus sativus var. niger",
       "family": "Brassicaceae",
       "daysToMaturity": 60,
       "spacing": 10,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "SUN_FULL_PARTIAL",
+      "waterNeeds": "UNKNOWN_Modéré à régulier",
       "marketPricePerKg": 5.5,
       "defaultUnit": "kg",
       "nutritionPer100g": {
@@ -792,12 +761,7 @@
         },
         "minTemperature": 6
       },
-      "watering": {
-        "frequency": "Tous les 2-3 jours en été, selon pluie en printemps/automne",
-        "amount": "2-4 litres par m²/semaine (ajuster selon sol)",
-        "method": "Arrosage doux au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10 cm entre plants, 20-30 cm entre rangs",
         "when": "Dès l'apparition des premières vraies feuilles (stade jeune plant)"
@@ -876,17 +840,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Radis Noir"
+      "commonName_legacy_dev": "Radis Noir"
     },
     {
       "id": "broccoli",
-      "commonName": "Brocoli",
       "scientificName": "Brassica oleracea var. italica",
       "family": "Brassicaceae",
       "daysToMaturity": 70,
       "spacing": 50,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_HIGH",
       "marketPricePerKg": 4.2,
       "defaultUnit": "kg",
@@ -929,12 +892,7 @@
         },
         "minTemperature": 7
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (2-3 fois en cas de forte chaleur)",
-        "amount": "Maintenir le sol toujours frais",
-        "method": "Goutte-à-goutte idéal, éviter les excès",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40-60 cm entre plants, 45-80 cm entre rangs",
         "when": "Au stade de 4-5 feuilles, conserver les plants les plus robustes"
@@ -967,7 +925,7 @@
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
-        "Automne (selon climat)"
+        "AUTUMN"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -1013,11 +971,10 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Brocoli"
+      "commonName_legacy_dev": "Brocoli"
     },
     {
       "id": "brussels_sprout",
-      "commonName": "Chou de Bruxelles",
       "scientificName": "Brassica oleracea var. gemmifera",
       "family": "Brassicaceae",
       "daysToMaturity": 120,
@@ -1066,12 +1023,7 @@
         },
         "minTemperature": 7
       },
-      "watering": {
-        "frequency": "Régulier après repiquage, puis 2 fois/semaine en cas de sécheresse",
-        "amount": "20-30 mm/semaine (10-15 mm par arrosage)",
-        "method": "Au pied, sol humide mais non détrempé",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "6-8 cm après levée (2-3 feuilles), puis 50-70 cm entre plants et 60-80 cm entre rangs au repiquage (6-8 feuilles)",
         "when": "Premier éclaircissement à 2-3 feuilles, repiquage définitif à 6-8 feuilles"
@@ -1147,17 +1099,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Chou de Bruxelles"
+      "commonName_legacy_dev": "Chou de Bruxelles"
     },
     {
       "id": "cabbage",
-      "commonName": "Chou pommé",
       "scientificName": "Brassica oleracea var. capitata",
       "family": "Brassicaceae",
       "daysToMaturity": 90,
       "spacing": 50,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_HIGH",
       "marketPricePerKg": 2.2,
       "defaultUnit": "kg",
@@ -1200,12 +1151,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 2-3 jours en période sèche, quotidien en cas de canicule",
-        "amount": "4-6 litres par plant/semaine",
-        "method": "Arrosage au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "50 cm entre plants en tous sens",
         "when": "Lorsque les plants ont 6 à 8 feuilles"
@@ -1286,18 +1232,17 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Chou pommé"
+      "commonName_legacy_dev": "Chou pommé"
     },
     {
       "id": "carrot",
-      "commonName": "Carotte",
       "scientificName": "Daucus carota subsp. sativus",
       "family": "Apiaceae",
       "daysToMaturity": 90,
       "spacing": 8,
       "depth": 1,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -1350,12 +1295,7 @@
         },
         "minTemperature": 9
       },
-      "watering": {
-        "frequency": "Tous les 4 à 5 jours (ou plus fréquemment avant levée)",
-        "amount": "Arrosages copieux, surtout en phase de tubérisation",
-        "method": "Au pied, sol maintenu humide mais pas détrempé",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "4 cm pour carottes courtes, 8 cm pour carottes longues",
         "when": "Au stade jeune plantule, ou retardé jusqu'à formation de petites carottes"
@@ -1448,11 +1388,10 @@
           }
         }
       },
-      "commonName_dev": "Carotte"
+      "commonName_legacy_dev": "Carotte"
     },
     {
       "id": "cauliflower",
-      "commonName": "chou-fleur",
       "scientificName": "Brassica oleracea var. botrytis",
       "family": "Brassicaceae",
       "daysToMaturity": 90,
@@ -1501,12 +1440,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "2 fois/semaine (plus en cas de chaleur ou sécheresse)",
-        "amount": "20-25 mm/semaine",
-        "method": "Au pied, sol constamment humide mais non détrempé",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10 cm en tous sens au stade 3-4 feuilles, puis 70-80 cm en tous sens au repiquage (6-8 feuilles)",
         "when": "Après la levée (3-4 feuilles), puis avant formation de la pomme (6-8 feuilles)"
@@ -1536,7 +1470,7 @@
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
-        "Automne (selon variété)"
+        "AUTUMN"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -1587,17 +1521,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "chou-fleur"
+      "commonName_legacy_dev": "chou-fleur"
     },
     {
       "id": "celery_branch",
-      "commonName": "Céleri branche",
       "scientificName": "Apium graveolens var. dulce",
       "family": "Apiaceae",
       "daysToMaturity": 120,
       "spacing": 35,
       "depth": 0.3,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Mi-ombre à plein soleil",
       "waterNeeds": "WATER_HIGH",
       "marketPricePerKg": 2.5,
       "defaultUnit": "kg",
@@ -1632,12 +1565,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 2 à 3 jours selon chaleur",
-        "amount": "20-30 mm/semaine",
-        "method": "Arrosage au pied, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "30-40 cm entre plants",
         "when": "Lorsque les plantules ont 3 vraies feuilles"
@@ -1717,17 +1645,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Céleri branche"
+      "commonName_legacy_dev": "Céleri branche"
     },
     {
       "id": "chard",
-      "commonName": "Blette",
       "scientificName": "Beta vulgaris subsp. vulgaris",
       "family": "Amaranthaceae",
       "daysToMaturity": 60,
       "spacing": 40,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil ou mi-ombre",
       "waterNeeds": "WATER_HIGH",
       "sowingMonths": [
         "M",
@@ -1778,12 +1705,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Régulièrement, 2-3 fois/semaine en période chaude",
-        "amount": "20-30 mm/semaine (selon chaleur et type de sol)",
-        "method": "Au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40 cm entre plants (20-30 cm si plants faibles)",
         "when": "À 2-3 feuilles, environ 3 semaines après semis"
@@ -1875,17 +1797,16 @@
           }
         }
       },
-      "commonName_dev": "Blette"
+      "commonName_legacy_dev": "Blette"
     },
     {
       "id": "chives",
-      "commonName": "Ciboulette",
       "scientificName": "Allium schoenoprasum",
       "family": "Amaryllidaceae",
       "daysToMaturity": 60,
       "spacing": 15,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "M",
@@ -1939,12 +1860,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 3 jours en période chaude (plus fréquent en pot)",
-        "amount": "Maintenir le sol frais sans excès",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15 cm entre chaque pied",
         "when": "Au moment de la plantation définitive"
@@ -1992,8 +1908,8 @@
         "SPRING"
       ],
       "harvestSeason": [
-        "SPRING",
         "SUMMER",
+        "SPRING",
         "AUTUMN"
       ],
       "notificationSettings": {
@@ -2034,18 +1950,17 @@
           }
         }
       },
-      "commonName_dev": "Ciboulette"
+      "commonName_legacy_dev": "Ciboulette"
     },
     {
       "id": "coriander",
-      "commonName": "Coriandre",
       "scientificName": "Coriandrum sativum",
       "family": "Apiaceae",
       "daysToMaturity": 45,
       "spacing": 15,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
+      "waterNeeds": "UNKNOWN_Modéré mais régulier",
       "marketPricePerKg": 15.0,
       "defaultUnit": "kg",
       "nutritionPer100g": {
@@ -2087,12 +2002,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "1 fois/semaine (plus souvent en pot ou par temps chaud/sec)",
-        "amount": "Sol maintenu humide sans eau stagnante",
-        "method": "Arroser au pied, éviter de mouiller les feuilles",
-        "bestTime": "Tôt le matin ou en soirée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm entre plants",
         "when": "Dès les premières semaines après germination, au stade de quelques feuilles"
@@ -2166,11 +2076,10 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Coriandre"
+      "commonName_legacy_dev": "Coriandre"
     },
     {
       "id": "courgette",
-      "commonName": "Courgette",
       "scientificName": "Cucurbita pepo",
       "family": "Cucurbitaceae",
       "daysToMaturity": 45,
@@ -2227,12 +2136,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "1 fois/semaine (copieux en été)",
-        "amount": "5-8 litres par plant/semaine",
-        "method": "Arrosage au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "70-80 cm entre plants",
         "when": "Lorsque les plants ont 2-3 vraies feuilles, ne conserver que les plus vigoureux"
@@ -2276,7 +2180,7 @@
         "Sep"
       ],
       "plantingSeason": [
-        "Printemps (après les dernières gelées)"
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER"
@@ -2320,11 +2224,10 @@
           }
         }
       },
-      "commonName_dev": "Courgette"
+      "commonName_legacy_dev": "Courgette"
     },
     {
       "id": "cucumber",
-      "commonName": "Concombre",
       "scientificName": "Cucumis sativus",
       "family": "Cucurbitaceae",
       "daysToMaturity": 55,
@@ -2382,12 +2285,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "2-3 fois/semaine (plus en cas de chaleur ou vent sec)",
-        "amount": "2-5 litres par plant par arrosage",
-        "method": "Toujours au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "60-80 cm entre plants",
         "when": "Dès l'apparition des premières feuilles vraies"
@@ -2474,11 +2372,10 @@
           }
         }
       },
-      "commonName_dev": "Concombre"
+      "commonName_legacy_dev": "Concombre"
     },
     {
       "id": "dill",
-      "commonName": "Aneth",
       "scientificName": "Anethum graveolens",
       "family": "Apiaceae",
       "daysToMaturity": 70,
@@ -2527,12 +2424,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "Arroser modérément, uniquement lorsque la terre commence à sécher",
-        "amount": "Sol légèrement humide, éviter le détrempé",
-        "method": "Sous paillage si possible, au pied sans mouiller le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-25 cm entre plants, 20-30 cm entre rangs",
         "when": "Lorsque les plants mesurent 5-10 cm ou ont 4-5 vraies feuilles"
@@ -2607,11 +2499,10 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Aneth"
+      "commonName_legacy_dev": "Aneth"
     },
     {
       "id": "eggplant",
-      "commonName": "Aubergine",
       "scientificName": "Solanum melongena",
       "family": "Solanaceae",
       "daysToMaturity": 90,
@@ -2670,12 +2561,7 @@
         },
         "minTemperature": 15
       },
-      "watering": {
-        "frequency": "Tous les 3-4 jours sur sol paillé, 2-3 fois/semaine par temps chaud",
-        "amount": "1-4 litres par plant selon stade et température",
-        "method": "Arrosage au pied, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "50-70 cm entre plants",
         "when": "Au stade de semis ou juste après germination, en conservant les plants les plus vigoureux"
@@ -2764,11 +2650,10 @@
           }
         }
       },
-      "commonName_dev": "Aubergine"
+      "commonName_legacy_dev": "Aubergine"
     },
     {
       "id": "garlic",
-      "commonName": "Ail",
       "scientificName": "Allium sativum",
       "family": "Amaryllidaceae",
       "daysToMaturity": 240,
@@ -2823,12 +2708,7 @@
         },
         "minTemperature": 1
       },
-      "watering": {
-        "frequency": "Tous les 10-15 jours en cas de sécheresse",
-        "amount": "Arrosage abondant mais rare",
-        "method": "Au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm entre plants, 20-30 cm entre rangs",
         "when": "Non nécessaire — planté directement à bonne densité"
@@ -2912,17 +2792,16 @@
           }
         }
       },
-      "commonName_dev": "Ail"
+      "commonName_legacy_dev": "Ail"
     },
     {
       "id": "kale",
-      "commonName": "Chou kale",
       "scientificName": "Brassica oleracea var. sabellica",
       "family": "Brassicaceae",
       "daysToMaturity": 60,
       "spacing": 50,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_HIGH",
       "marketPricePerKg": 6.0,
       "defaultUnit": "kg",
@@ -2966,10 +2845,6 @@
         "minTemperature": 5
       },
       "watering": {
-        "frequency": "2-3 fois/semaine en été, selon pluviométrie",
-        "amount": "Arrosage profond 1-2 fois/semaine",
-        "method": "Au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée",
         "tip": "Paillage fortement recommandé pour conserver l'humidité"
       },
       "thinning": {
@@ -3050,17 +2925,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Chou kale"
+      "commonName_legacy_dev": "Chou kale"
     },
     {
       "id": "leek",
-      "commonName": "Poireau",
       "scientificName": "Allium porrum",
       "family": "Amaryllidaceae",
       "daysToMaturity": 120,
       "spacing": 15,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "F",
@@ -3110,10 +2984,6 @@
         "minTemperature": 2
       },
       "watering": {
-        "frequency": "Tous les 8-10 jours sans paillage, toutes les 2-3 semaines avec paillage. 2-3 fois/semaine en forte chaleur.",
-        "amount": "20-30 mm d'eau tous les 7-10 jours en début de culture",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée",
         "stopBeforeHarvest": "Arrêter 3-4 semaines avant récolte pour éviter les pourritures"
       },
       "thinning": {
@@ -3162,7 +3032,7 @@
       ],
       "plantingSeason": [
         "SPRING",
-        "Automne (selon variété)"
+        "AUTUMN"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -3207,17 +3077,16 @@
           }
         }
       },
-      "commonName_dev": "Poireau"
+      "commonName_legacy_dev": "Poireau"
     },
     {
       "id": "lettuce",
-      "commonName": "Laitue",
       "scientificName": "Lactuca sativa",
       "family": "Asteraceae",
       "daysToMaturity": 45,
       "spacing": 25,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Mi-ombre à plein soleil",
       "waterNeeds": "WATER_HIGH",
       "sowingMonths": [
         "M",
@@ -3264,10 +3133,6 @@
         "minTemperature": 3
       },
       "watering": {
-        "frequency": "2-3 fois/semaine en climat sec ou chaud",
-        "amount": "2-4 L/m² jusqu'au stade rosette, puis 3-6 L/m² au stade pommaison",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Le matin",
         "adaptation": "Réduire ou arrêter en période pluvieuse"
       },
       "thinning": {
@@ -3349,8 +3214,8 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SPRING",
         "SUMMER",
+        "SPRING",
         "AUTUMN"
       ],
       "notificationSettings": {
@@ -3390,18 +3255,17 @@
           }
         }
       },
-      "commonName_dev": "Laitue"
+      "commonName_legacy_dev": "Laitue"
     },
     {
       "id": "mache",
-      "commonName": "Mâche",
       "scientificName": "Valerianella locusta",
       "family": "Valerianaceae",
       "daysToMaturity": 60,
       "spacing": 10,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "UNKNOWN_Ombre légère / Mi-ombre",
+      "waterNeeds": "UNKNOWN_Modéré à régulier",
       "sowingMonths": [
         "A",
         "O"
@@ -3447,12 +3311,7 @@
         "idealTemperature": 18,
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "1 à 2 fois/semaine selon sol et climat",
-        "amount": "8-20 mm/semaine (ajusté selon pluviométrie)",
-        "method": "Arrosage au pied, tôt le matin, éviter mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "8-15 cm entre plants selon variété, 15-20 cm entre rangs",
         "when": "À 2-3 vraies feuilles (3-4 semaines après semis)"
@@ -3492,11 +3351,11 @@
         "Dec"
       ],
       "plantingSeason": [
-        "Fin été"
+        "UNKNOWN_Fin été"
       ],
       "harvestSeason": [
-        "WINTER",
-        "SPRING"
+        "SPRING",
+        "WINTER"
       ],
       "notificationSettings": {
         "watering": {
@@ -3537,11 +3396,10 @@
           }
         }
       },
-      "commonName_dev": "Mâche"
+      "commonName_legacy_dev": "Mâche"
     },
     {
       "id": "melon",
-      "commonName": "Melon",
       "scientificName": "Cucumis melo",
       "family": "Cucurbitaceae",
       "daysToMaturity": 90,
@@ -3590,12 +3448,7 @@
         },
         "minTemperature": 15
       },
-      "watering": {
-        "frequency": "1 fois/semaine (ajuster selon météo)",
-        "amount": "10-20 mm/semaine",
-        "method": "Arrosage au pied, goutte-à-goutte idéal",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "100 cm en tous sens",
         "when": "Au stade jeune plant, conserver les plus vigoureux"
@@ -3671,18 +3524,17 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Melon"
+      "commonName_legacy_dev": "Melon"
     },
     {
       "id": "navet",
-      "commonName": "Navet",
       "scientificName": "Brassica rapa subsp. rapa",
       "family": "Brassicaceae",
       "daysToMaturity": 50,
       "spacing": 15,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
+      "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "M",
         "A",
@@ -3736,12 +3588,7 @@
         },
         "minTemperature": 1
       },
-      "watering": {
-        "frequency": "1 à 2 fois/semaine en été",
-        "amount": "Sol toujours frais sans excès d'eau",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm entre plants, lignes espacées de 15-20 cm",
         "when": "Lorsque les jeunes pousses mesurent environ 5 cm de haut"
@@ -3795,8 +3642,8 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SPRING",
         "SUMMER",
+        "SPRING",
         "AUTUMN"
       ],
       "notificationSettings": {
@@ -3837,11 +3684,10 @@
           }
         }
       },
-      "commonName_dev": "Navet"
+      "commonName_legacy_dev": "Navet"
     },
     {
       "id": "onion",
-      "commonName": "Oignon",
       "scientificName": "Allium cepa",
       "family": "Amaryllidaceae",
       "daysToMaturity": 120,
@@ -3895,12 +3741,7 @@
         },
         "minTemperature": 1
       },
-      "watering": {
-        "frequency": "Arrosage léger et régulier après semis, puis seulement en cas de sécheresse prolongée ou au grossissement des bulbes",
-        "amount": "Modéré, éviter l'excès",
-        "method": "Au pied, sans mouiller les bulbes",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm entre plants",
         "when": "Lorsque les plants ont quelques feuilles"
@@ -3986,17 +3827,16 @@
           }
         }
       },
-      "commonName_dev": "Oignon"
+      "commonName_legacy_dev": "Oignon"
     },
     {
       "id": "parsley",
-      "commonName": "Persil",
       "scientificName": "Petroselinum crispum",
       "family": "Apiaceae",
       "daysToMaturity": 90,
       "spacing": 20,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Mi-ombre (surtout en été dans les régions chaudes)",
       "waterNeeds": "WATER_HIGH",
       "sowingMonths": [
         "M",
@@ -4052,12 +3892,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 3 à 5 jours (ou 1-2 fois/semaine), quotidien en forte chaleur",
-        "amount": "Sol toujours légèrement humide, sans excès",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Matin ou soir pour limiter l’évaporation"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-20 cm entre plants",
         "when": "Dès que les premières feuilles sont bien développées (après 3 semaines environ)"
@@ -4104,12 +3939,12 @@
       ],
       "plantingSeason": [
         "SPRING",
-        "Automne (dans les climats doux)"
+        "AUTUMN"
       ],
       "harvestSeason": [
         "SUMMER",
         "AUTUMN",
-        "Hiver (sous abri ou en région douce)"
+        "WINTER"
       ],
       "notificationSettings": {
         "watering": {
@@ -4150,11 +3985,10 @@
           }
         }
       },
-      "commonName_dev": "Persil"
+      "commonName_legacy_dev": "Persil"
     },
     {
       "id": "parsnip",
-      "commonName": "Panais",
       "scientificName": "Pastinaca sativa",
       "family": "Apiaceae",
       "daysToMaturity": 120,
@@ -4211,12 +4045,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 7 à 10 jours en période sèche (copieux), léger et fréquent au stade germination",
-        "amount": "Arrosage abondant pour humidifier en profondeur",
-        "method": "Au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin (éviter le soir pour limiter les maladies)"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-20 cm entre plants, 30 cm entre rangs",
         "when": "Lorsque les plants ont 2 à 3 feuilles vraies (soit 3-4 feuilles)"
@@ -4301,11 +4130,10 @@
           }
         }
       },
-      "commonName_dev": "Panais"
+      "commonName_legacy_dev": "Panais"
     },
     {
       "id": "potato",
-      "commonName": "Pomme de terre",
       "scientificName": "Solanum tuberosum",
       "family": "Solanaceae",
       "daysToMaturity": 90,
@@ -4354,12 +4182,7 @@
         },
         "minTemperature": 7
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (ajuster selon phase de croissance)",
-        "amount": "15-30 mm/semaine (3-6 mm/jour selon phase)",
-        "method": "Arrosage au sol, entre les rangs, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin ou en fin d’après-midi"
-      },
+      "watering": {},
       "thinning": {
         "distance": "30-40 cm entre plants, 60-75 cm entre rangs",
         "when": "Non nécessaire si plantation initiale bien espacée"
@@ -4438,11 +4261,10 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Pomme de terre"
+      "commonName_legacy_dev": "Pomme de terre"
     },
     {
       "id": "courge_potiron",
-      "commonName": "Courge Potiron ",
       "scientificName": "Cucurbita spp.",
       "family": "Cucurbitaceae",
       "daysToMaturity": 90,
@@ -4491,12 +4313,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "1 fois/semaine (environ 15 mm)",
-        "amount": "Environ 15 mm/semaine",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Le soir en période chaude, le matin en temps frais"
-      },
+      "watering": {},
       "thinning": {
         "distance": "1 mètre pour variétés non coureuses, 1.5 à 2 mètres pour variétés coureuses",
         "when": "Dès l'apparition des premières vraies feuilles, conserver le plant le plus vigoureux"
@@ -4574,17 +4391,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Courge Potiron "
+      "commonName_legacy_dev": "Courge Potiron "
     },
     {
       "id": "roquette",
-      "commonName": "Roquette",
       "scientificName": "Eruca vesicaria",
       "family": "Brassicaceae",
       "daysToMaturity": 30,
       "spacing": 20,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Mi-ombre (éviter plein soleil en été)",
       "waterNeeds": "WATER_MEDIUM",
       "marketPricePerKg": 22.0,
       "defaultUnit": "kg",
@@ -4620,12 +4436,7 @@
         },
         "minTemperature": 4
       },
-      "watering": {
-        "frequency": "1 fois/semaine ou lorsque le sol est sec en surface",
-        "amount": "Modéré (éviter l'excès pour ne pas pourrir les racines)",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "8 cm entre plants après éclaircissage, puis 20-30 cm pour développement optimal",
         "when": "À 5-10 cm de hauteur, environ 15 jours après la levée"
@@ -4663,8 +4474,8 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SPRING",
         "SUMMER",
+        "SPRING",
         "AUTUMN"
       ],
       "notificationSettings": {
@@ -4708,17 +4519,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Roquette"
+      "commonName_legacy_dev": "Roquette"
     },
     {
       "id": "rosemary",
-      "commonName": "Romarin",
       "scientificName": "Salvia rosmarinus",
       "family": "Lamiaceae",
       "daysToMaturity": 90,
       "spacing": 40,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil (min. 6h/jour)",
       "waterNeeds": "WATER_LOW",
       "marketPricePerKg": 20.0,
       "defaultUnit": "kg",
@@ -4761,12 +4571,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "Tous les 10-14 jours en pleine terre (adulte), tous les 2-3 jours pour jeunes plants",
-        "amount": "Arrosage profond, uniquement quand le sol est sec sur 2 cm (en pot)",
-        "method": "Au pied, en profondeur, jamais par petites doses répétées",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40 cm entre plants",
         "when": "Dès la plantation ou le semis, en début de croissance"
@@ -4802,7 +4607,7 @@
         "SPRING"
       ],
       "harvestSeason": [
-        "Toute l'année (feuilles)"
+        "UNKNOWN_Toute l'année (feuilles)"
       ],
       "notificationSettings": {
         "watering": {
@@ -4845,18 +4650,17 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Romarin"
+      "commonName_legacy_dev": "Romarin"
     },
     {
       "id": "salsify",
-      "commonName": "Salsifis",
       "scientificName": "Tragopogon porrifolius",
       "family": "Asteraceae",
       "daysToMaturity": 120,
       "spacing": 20,
       "depth": 1.5,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_LOW",
+      "sunExposure": "UNKNOWN_Plein soleil, Mi-ombre tolérée",
+      "waterNeeds": "UNKNOWN_Faible à modéré",
       "marketPricePerKg": 5.8,
       "defaultUnit": "kg",
       "nutritionPer100g": {
@@ -4896,12 +4700,7 @@
         },
         "minTemperature": 7
       },
-      "watering": {
-        "frequency": "Tous les 2 jours durant la levée, puis 1-2 fois/semaine en cas de sécheresse",
-        "amount": "Arrosage léger en pluie fine durant la germination, modéré ensuite",
-        "method": "En pluie fine au début, puis au pied sans mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-20 cm entre plants, 30-40 cm entre rangs",
         "when": "15-20 jours après la levée, lorsque les plants ont 2-3 vraies feuilles"
@@ -4973,17 +4772,16 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Salsifis"
+      "commonName_legacy_dev": "Salsifis"
     },
     {
       "id": "scarole",
-      "commonName": "Scarole",
       "scientificName": "Cichorium endivia",
       "family": "Asteraceae",
       "daysToMaturity": 90,
       "spacing": 30,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Mi-ombre à plein soleil",
       "waterNeeds": "WATER_HIGH",
       "sowingMonths": [
         "F",
@@ -5037,12 +4835,7 @@
         },
         "minTemperature": 4
       },
-      "watering": {
-        "frequency": "Tous les 2 à 4 jours selon météo",
-        "amount": "À adapter pour maintenir sol humide sans excès",
-        "method": "Arrosage à la base, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "30 cm entre plants, 40 cm entre rangs",
         "when": "Dès apparition des premières feuilles vraies, post-levée"
@@ -5140,11 +4933,10 @@
           }
         }
       },
-      "commonName_dev": "Scarole"
+      "commonName_legacy_dev": "Scarole"
     },
     {
       "id": "shallot",
-      "commonName": "Échalote",
       "scientificName": "Allium cepa var. aggregatum",
       "family": "Amaryllidaceae",
       "daysToMaturity": 90,
@@ -5197,12 +4989,7 @@
         },
         "minTemperature": 3
       },
-      "watering": {
-        "frequency": "Uniquement en cas de sécheresse prolongée",
-        "amount": "Arrosage modéré, sol légèrement humide",
-        "method": "Au pied, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin ou en fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15 cm entre plants, 30 cm entre rangs",
         "when": "Lors de la plantation, pas d'éclaircissement ultérieur nécessaire si bien espacé"
@@ -5237,7 +5024,7 @@
         "Jul"
       ],
       "plantingSeason": [
-        "Automne ou Printemps (selon variété)"
+        "AUTUMN"
       ],
       "harvestSeason": [
         "SUMMER"
@@ -5280,17 +5067,16 @@
           }
         }
       },
-      "commonName_dev": "Échalote"
+      "commonName_legacy_dev": "Échalote"
     },
     {
       "id": "spinach",
-      "commonName": "Épinard",
       "scientificName": "Spinacia oleracea",
       "family": "Amaranthaceae",
       "daysToMaturity": 45,
       "spacing": 8,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_HIGH",
       "sowingMonths": [
         "M",
@@ -5341,12 +5127,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 2-3 jours sans pluie",
-        "amount": "10-20 mm/semaine",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "8 cm entre plants, 25-30 cm entre rangs",
         "when": "Lorsque les plants ont 3-4 feuilles"
@@ -5441,11 +5222,10 @@
           }
         }
       },
-      "commonName_dev": "Épinard"
+      "commonName_legacy_dev": "Épinard"
     },
     {
       "id": "sweet_corn",
-      "commonName": "Maïs doux",
       "scientificName": "Zea mays var. saccharata",
       "family": "Poaceae",
       "daysToMaturity": 70,
@@ -5493,12 +5273,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "1 fois/semaine (plus en sécheresse)",
-        "amount": "15-20 mm/semaine",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "30 cm entre plants, 70 cm entre rangs",
         "when": "Au stade 2-3 feuilles, conserver le plant le plus vigoureux"
@@ -5575,11 +5350,10 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Maïs doux"
+      "commonName_legacy_dev": "Maïs doux"
     },
     {
       "id": "thyme",
-      "commonName": "Thym",
       "scientificName": "Thymus vulgaris",
       "family": "Lamiaceae",
       "daysToMaturity": 60,
@@ -5628,12 +5402,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "Très occasionnel (uniquement en sécheresse ou en pot)",
-        "amount": "Environ 20 litres/m² tous les 6 jours en potager paillé sous 30°C",
-        "method": "Arrosage au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "30 cm entre plants",
         "when": "Lorsque les plants atteignent 5-10 cm, après 2 mois de croissance"
@@ -5708,11 +5477,10 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
-      "commonName_dev": "Thym"
+      "commonName_legacy_dev": "Thym"
     },
     {
       "id": "tomato",
-      "commonName": "Tomate",
       "scientificName": "Solanum lycopersicum",
       "family": "Solanaceae",
       "daysToMaturity": 80,
@@ -5766,12 +5534,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "2-3 fois/semaine par temps chaud",
-        "amount": "3-5 litres par plant/semaine",
-        "method": "Au pied, jamais sur le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "50-70 cm entre plants, 70-100 cm entre rangs",
         "when": "Lorsque plants atteignent 15-25 cm"
@@ -5866,11 +5629,10 @@
           }
         }
       },
-      "commonName_dev": "Tomate"
+      "commonName_legacy_dev": "Tomate"
     },
     {
       "id": "topinambour",
-      "commonName": "Topinambour",
       "scientificName": "Helianthus tuberosus",
       "family": "Asteraceae",
       "daysToMaturity": 120,
@@ -5923,12 +5685,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 7 à 14 jours en période sèche",
-        "amount": "Faible, uniquement en cas de sécheresse prolongée",
-        "method": "Au pied, éviter les sols détrempés",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "50-60 cm entre plants, 70 cm entre rangs",
         "when": "Lorsque les plants atteignent 20-30 cm (éclaircir + butter)"
@@ -5960,8 +5717,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "AUTUMN",
-        "SPRING"
+        "SPRING",
+        "AUTUMN"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -6005,18 +5762,17 @@
           }
         }
       },
-      "commonName_dev": "Topinambour"
+      "commonName_legacy_dev": "Topinambour"
     },
     {
       "id": "carotte_blanche",
-      "commonName": "Carotte blanche",
       "scientificName": "Daucus carota L.",
       "family": "Apiaceae",
       "daysToMaturity": 120,
       "spacing": 5,
       "depth": 0.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -6073,12 +5829,7 @@
         },
         "minTemperature": 7
       },
-      "watering": {
-        "frequency": "Régulière, surtout à la levée",
-        "amount": null,
-        "method": "Aspersion fine puis au pied ou goutte-à-goutte",
-        "bestTime": "Matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "3 à 8 cm sur le rang, 30 cm entre rangs",
         "when": "Après levée, lorsque les plants ont 2-3 feuilles"
@@ -6122,8 +5873,8 @@
         "Dec"
       ],
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -6166,11 +5917,10 @@
           }
         }
       },
-      "commonName_dev": "Carotte blanche"
+      "commonName_legacy_dev": "Carotte blanche"
     },
     {
       "id": "poivron_capsicum_annuum",
-      "commonName": "Poivron",
       "scientificName": "Capsicum annuum Linnaeus var. annuum",
       "family": "Solanaceae",
       "daysToMaturity": 60,
@@ -6226,12 +5976,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "2 à 3 fois par semaine",
-        "amount": "3-5 litres par plant",
-        "method": "Au pied, sans mouiller le feuillage",
-        "bestTime": "Matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40-50 cm sur le rang, 50-80 cm entre rangs",
         "when": "Au repiquage définitif"
@@ -6318,18 +6063,17 @@
           }
         }
       },
-      "commonName_dev": "Poivron"
+      "commonName_legacy_dev": "Poivron"
     },
     {
       "id": "bok_choy",
-      "commonName": "Bok choy",
       "scientificName": "Brassica rapa subsp. chinensis",
       "family": "Brassicaceae",
       "daysToMaturity": 55,
       "spacing": 15,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "UNKNOWN_Soleil à mi-ombre",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [],
       "harvestMonths": [],
       "marketPricePerKg": null,
@@ -6381,12 +6125,7 @@
         },
         "minTemperature": -3
       },
-      "watering": {
-        "frequency": "1-2 arrosages profonds par semaine selon climat",
-        "amount": "20-25 mm par semaine en l’absence de pluie",
-        "method": "Au pied, goutte-à-goutte ou tuyau suintant",
-        "bestTime": null
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm sur le rang, 45-75 cm entre rangs",
         "when": "Après levée lorsque les plants sont bien établis"
@@ -6467,11 +6206,10 @@
           }
         }
       },
-      "commonName_dev": "Bok choy"
+      "commonName_legacy_dev": "Bok choy"
     },
     {
       "id": "chayotte",
-      "commonName": "Chayotte",
       "scientificName": "Sechium edule (Jacq.) Sw.",
       "family": "Cucurbitacées",
       "daysToMaturity": null,
@@ -6507,12 +6245,7 @@
         "idealTemperature": {},
         "minTemperature": 13
       },
-      "watering": {
-        "frequency": "1 fois par semaine en temps sec après mai",
-        "amount": null,
-        "method": "Au pied, avec paillage végétal",
-        "bestTime": null
-      },
+      "watering": {},
       "thinning": {
         "distance": null,
         "when": null
@@ -6577,18 +6310,17 @@
           }
         }
       },
-      "commonName_dev": "Chayotte"
+      "commonName_legacy_dev": "Chayotte"
     },
     {
       "id": "chou_brocoli_romanesco",
-      "commonName": "Chou brocoli romanesco",
       "scientificName": "Brassica oleracea var. botrytis (groupe romanesco)",
       "family": "Brassicaceae",
       "daysToMaturity": null,
       "spacing": 50,
       "depth": 0.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "F",
         "M",
@@ -6633,12 +6365,7 @@
         },
         "minTemperature": -5
       },
-      "watering": {
-        "frequency": "Après repiquage : tous les 1–2 jours pendant 1–2 semaines selon climat ; ensuite : arrosages profonds tous les 2–4 jours, plus fréquents en période chaude ou venteuse",
-        "amount": null,
-        "method": "Au pied, arrosage lent et profond ; éviter de mouiller les têtes et le feuillage (goutte-à-goutte, tuyaux pleureurs, rigoles conseillés)",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "50 cm entre plants, 50–60 cm entre rangs",
         "when": "Repiquage recommandé au stade 4–5 feuilles vraies (plants robustes non filés) ; espacement maîtrisé et système racinaire fort"
@@ -6684,8 +6411,8 @@
       ],
       "harvestMonths3": [],
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -6725,19 +6452,18 @@
           }
         }
       },
-      "commonName_dev": "Chou brocoli romanesco"
+      "commonName_legacy_dev": "Chou brocoli romanesco"
     },
     {
       "id": "chou_cabus_rouge",
       "image": "chou_cabu_rouge.png",
-      "commonName": "Chou cabus rouge",
       "scientificName": "Brassica oleracea var. capitata f. rubra",
       "family": "Brassicacées",
       "daysToMaturity": 100,
       "spacing": 60,
       "depth": 1,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "UNKNOWN_Soleil à mi-ombre",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "F",
         "M",
@@ -6796,12 +6522,7 @@
         },
         "minTemperature": -5
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine selon conditions",
-        "amount": null,
-        "method": "Au pied, irrigation localisée",
-        "bestTime": "Matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40-70 cm selon variété",
         "when": "Après repiquage ou lorsque les plants sont bien établis"
@@ -6831,8 +6552,8 @@
       "sowingMonths3": [],
       "harvestMonths3": [],
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -6840,17 +6561,16 @@
         "WINTER"
       ],
       "notificationSettings": {},
-      "commonName_dev": "Chou cabus rouge"
+      "commonName_legacy_dev": "Chou cabus rouge"
     },
     {
       "id": "chou-daubenton",
-      "commonName": "Chou Daubenton",
       "scientificName": "Brassica oleracea var. ramosa",
       "family": "Brassicacées",
       "daysToMaturity": 180,
       "spacing": 90,
       "depth": 0,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "M",
@@ -6910,12 +6630,7 @@
         },
         "minTemperature": -15
       },
-      "watering": {
-        "frequency": "Régulier par temps sec",
-        "amount": "Maintenir le sol frais mais non détrempé",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "80-100 cm en tous sens",
         "when": "Dès que le plant est bien raciné"
@@ -6973,8 +6688,8 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SPRING",
         "SUMMER",
+        "SPRING",
         "AUTUMN",
         "WINTER"
       ],
@@ -7016,17 +6731,16 @@
           }
         }
       },
-      "commonName_dev": "Chou Daubenton"
+      "commonName_legacy_dev": "Chou Daubenton"
     },
     {
       "id": "mizuna",
-      "commonName": "Chou Mizuna",
       "scientificName": "Brassica rapa var. nipposinica",
       "family": "Brassicacées",
       "daysToMaturity": 45,
       "spacing": 15,
       "depth": 1.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "M",
@@ -7080,12 +6794,7 @@
         },
         "minTemperature": -4
       },
-      "watering": {
-        "frequency": "Maintenir le sol frais, fréquent par temps sec",
-        "amount": "Régulier sans excès pour éviter l'asphyxie",
-        "method": "Au pied, irrigation douce (goutte-à-goutte)",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm pour les feuilles, 30-40 cm pour les plants entiers",
         "when": "Dès l'apparition des premières feuilles vraies"
@@ -7164,18 +6873,17 @@
           }
         }
       },
-      "commonName_dev": "Chou Mizuna"
+      "commonName_legacy_dev": "Chou Mizuna"
     },
     {
       "id": "butternut_squash",
-      "commonName": "Courge Butternut",
       "scientificName": "Cucurbita moschata",
       "family": "Cucurbitaceae",
       "daysToMaturity": 95,
       "spacing": 50,
       "depth": 2.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -7229,12 +6937,7 @@
         },
         "minTemperature": 0
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine si paillé (plus fréquent si non paillé)",
-        "amount": "Abondant au pied, sensible au stress lors de la floraison et de la nouaison",
-        "method": "Au pied, de préférence goutte-à-goutte ou rigoles, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40-60 cm entre plants, 150 cm entre rangs",
         "when": "Stade 2-3 vraies feuilles"
@@ -7318,18 +7021,17 @@
           }
         }
       },
-      "commonName_dev": "Courge Butternut"
+      "commonName_legacy_dev": "Courge Butternut"
     },
     {
       "id": "musquee_de_provence",
-      "commonName": "Courge musquée muscade",
       "scientificName": "Cucurbita moschata Duchesne ex Poir.",
       "family": "Cucurbitacées",
       "daysToMaturity": 110,
       "spacing": 150,
       "depth": 2.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "A",
         "M",
@@ -7383,12 +7085,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "2-3 fois/semaine (sol non paillé) ou 1-2 fois/semaine (sol paillé)",
-        "amount": "Arrosages profonds et réguliers, surtout en floraison et grossissement des fruits",
-        "method": "Au pied, sans mouiller le feuillage, goutte-à-goutte recommandé",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "150-200 cm entre plants, 200-250 cm entre rangs",
         "when": "Au stade 2-3 vraies feuilles après repiquage"
@@ -7474,18 +7171,17 @@
           }
         }
       },
-      "commonName_dev": "Courge musquée muscade"
+      "commonName_legacy_dev": "Courge musquée muscade"
     },
     {
       "id": "patidou",
-      "commonName": "Courge patidou",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitacées",
       "daysToMaturity": 100,
       "spacing": 100,
       "depth": 2.0,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -7533,12 +7229,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Tous les 2-3 jours en été",
-        "amount": "Sol maintenu frais mais non détrempé",
-        "method": "Au pied, sans mouiller le feuillage",
-        "bestTime": "Fin de journée"
-      },
+      "watering": {},
       "thinning": {
         "distance": "90-120 cm sur le rang, 130-200 cm entre rangs",
         "when": "Après les gelées pour les plants en godets"
@@ -7621,19 +7312,18 @@
           }
         }
       },
-      "commonName_dev": "Courge patidou"
+      "commonName_legacy_dev": "Courge patidou"
     },
     {
       "id": "cresson",
       "image": "cresson.jpg",
-      "commonName": "Cresson de fontaine",
       "scientificName": "Nasturtium officinale",
       "family": "Brassicaceae",
       "daysToMaturity": 75,
       "spacing": 15,
       "depth": 0.2,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_HIGH",
+      "sunExposure": "UNKNOWN_Mi-ombre / Soleil tamisé",
+      "waterNeeds": "UNKNOWN_Très élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -7686,12 +7376,7 @@
         },
         "minTemperature": -5
       },
-      "watering": {
-        "frequency": "Quotidien (sol saturé)",
-        "amount": "Maintenir en eau courante ou renouvelée",
-        "method": "Immersion partielle ou sol gorgé d'eau",
-        "bestTime": "En continu (gestion du flux)"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-20 cm entre les lignes ou touffes",
         "when": "Après formation des premières vraies feuilles"
@@ -7735,8 +7420,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -7781,17 +7466,16 @@
           }
         }
       },
-      "commonName_dev": "Cresson de fontaine"
+      "commonName_legacy_dev": "Cresson de fontaine"
     },
     {
       "id": "endive",
-      "commonName": "Endive",
       "scientificName": "Cichorium intybus L. var. foliosum",
       "family": "Asteraceae",
       "daysToMaturity": 155,
       "spacing": 12,
       "depth": 0.7,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "A",
@@ -7841,12 +7525,7 @@
         },
         "minTemperature": -3
       },
-      "watering": {
-        "frequency": "Espacés mais abondants en période sèche",
-        "amount": "Maintenir le sol frais (non détrempé)",
-        "method": "Au pied, éviter de mouiller le feuillage (goutte-à-goutte conseillé)",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "8-15 cm entre plants, 30-40 cm entre rangs",
         "when": "Dès l'apparition des premières feuilles après la levée"
@@ -7887,8 +7566,8 @@
         "Feb"
       ],
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -7932,18 +7611,17 @@
           }
         }
       },
-      "commonName_dev": "Endive"
+      "commonName_legacy_dev": "Endive"
     },
     {
       "id": "broad_bean",
-      "commonName": "Fève",
       "scientificName": "Vicia faba L.",
       "family": "Fabaceae",
       "daysToMaturity": 105,
       "spacing": 20,
       "depth": 6,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "F",
         "M",
@@ -8005,12 +7683,7 @@
         },
         "minTemperature": -5
       },
-      "watering": {
-        "frequency": "Tous les 3 à 7 jours selon conditions",
-        "amount": "Environ 250 mm répartis sur le cycle",
-        "method": "Arrosage au pied, éviter le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "15-25 cm sur le rang, 40-60 cm entre rangs",
         "when": "Semis direct recommandé, repiquage déconseillé"
@@ -8045,11 +7718,11 @@
         ]
       },
       "plantingSeason": [
-        "Automne ou Fin Hiver"
+        "AUTUMN"
       ],
       "harvestSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "notificationSettings": {
         "watering": {
@@ -8088,17 +7761,16 @@
           }
         }
       },
-      "commonName_dev": "Fève"
+      "commonName_legacy_dev": "Fève"
     },
     {
       "id": "gobo",
-      "commonName": "Gobo (Grande Bardane)",
       "scientificName": "Arctium lappa L.",
       "family": "Asteraceae",
       "daysToMaturity": 120,
       "spacing": 30,
       "depth": 2.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "M",
@@ -8151,12 +7823,7 @@
         },
         "minTemperature": -20
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (plus fréquent en sol nu ou par temps sec)",
-        "amount": "Arrosage abondant pour humidifier le sol en profondeur",
-        "method": "Au pied, sans mouiller excessivement le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "20-40 cm entre plants, 40-100 cm entre rangs",
         "when": "Dès l'apparition des premières feuilles véritables"
@@ -8242,11 +7909,10 @@
           }
         }
       },
-      "commonName_dev": "Gobo (Grande Bardane)"
+      "commonName_legacy_dev": "Gobo (Grande Bardane)"
     },
     {
       "id": "haricot_rames",
-      "commonName": "Haricot à rames",
       "scientificName": "Phaseolus vulgaris L.",
       "family": "Fabaceae",
       "daysToMaturity": 67,
@@ -8300,12 +7966,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (plus fréquent lors de la floraison)",
-        "amount": "Arrosage profond pour maintenir le sol frais",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "7-10 cm entre plants, 45-90 cm entre rangs",
         "when": "Généralement pas d'éclaircissage (semis direct à bonne distance)"
@@ -8346,8 +8007,8 @@
         "Oct"
       ],
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -8391,18 +8052,17 @@
           }
         }
       },
-      "commonName_dev": "Haricot à rames"
+      "commonName_legacy_dev": "Haricot à rames"
     },
     {
       "id": "haricot_coco",
-      "commonName": "Haricot coco",
       "scientificName": "Phaseolus vulgaris L.",
       "family": "Fabaceae",
       "daysToMaturity": 105,
       "spacing": 45,
       "depth": 2.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "J"
@@ -8450,12 +8110,7 @@
         },
         "minTemperature": 0
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (plus fréquent lors de la floraison)",
-        "amount": "Maintenir le sol frais sans excès",
-        "method": "Au pied, sans mouiller le feuillage",
-        "bestTime": "Matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "8-10 cm sur le rang, 40-50 cm entre rangs",
         "when": "Après la levée (stade 2-3 feuilles)"
@@ -8528,11 +8183,10 @@
           }
         }
       },
-      "commonName_dev": "Haricot coco"
+      "commonName_legacy_dev": "Haricot coco"
     },
     {
       "id": "yellow_bean",
-      "commonName": "Haricot jaune",
       "scientificName": "Phaseolus vulgaris L.",
       "family": "Fabaceae",
       "daysToMaturity": 55,
@@ -8585,12 +8239,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (sol paillé) à 3 fois (sol nu)",
-        "amount": "Régulier, surtout lors de la floraison et formation des gousses",
-        "method": "Au pied, éviter le mouillage du feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "5-10 cm entre plants, 45-70 cm entre rangs",
         "when": "Après la levée complète des plantules"
@@ -8620,8 +8269,8 @@
         ]
       },
       "plantingSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -8665,18 +8314,17 @@
           }
         }
       },
-      "commonName_dev": "Haricot jaune"
+      "commonName_legacy_dev": "Haricot jaune"
     },
     {
       "id": "lentil",
-      "commonName": "Lentille",
       "scientificName": "Lens culinaris",
       "family": "Fabaceae",
       "daysToMaturity": 105,
       "spacing": 10,
       "depth": 3.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_LOW",
+      "waterNeeds": "UNKNOWN_Faible à Moyen",
       "sowingMonths": [
         "M",
         "A"
@@ -8720,12 +8368,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "Modérée, surtout pendant la floraison",
-        "amount": "Sol frais mais non détrempé",
-        "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "5-10 cm sur le rang, 18-25 cm entre rangs",
         "when": "Dès que les plants sont manipulables"
@@ -8809,17 +8452,16 @@
           }
         }
       },
-      "commonName_dev": "Lentille"
+      "commonName_legacy_dev": "Lentille"
     },
     {
       "id": "lupin",
-      "commonName": "Lupin",
       "scientificName": "Lupinus polyphyllus / Lupinus albus",
       "family": "Fabaceae",
       "daysToMaturity": 130,
       "spacing": 50,
       "depth": 4,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "M",
@@ -8866,12 +8508,7 @@
         },
         "minTemperature": -20
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine lors de l'implantation",
-        "amount": "Arrosage profond en période sèche",
-        "method": "Au pied ou goutte-à-goutte",
-        "bestTime": "Le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "45-60 cm entre plants",
         "when": "Stade plantule (repiquage délicat dû au pivot)"
@@ -8959,12 +8596,11 @@
           }
         }
       },
-      "commonName_dev": "Lupin"
+      "commonName_legacy_dev": "Lupin"
     },
     {
       "id": "white_onion",
       "image": "oignons_blanc.png",
-      "commonName": "Oignon blanc",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
       "daysToMaturity": 125,
@@ -9021,12 +8657,7 @@
         },
         "minTemperature": -3
       },
-      "watering": {
-        "frequency": "Tous les 2-4 jours par temps chaud, sinon 7-10 jours",
-        "amount": "Apports légers et fréquents (éviter la saturation du sol)",
-        "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm sur le rang, 30-40 cm entre les rangs",
         "when": "Stade crayon ou après levée pour les semis denses"
@@ -9100,11 +8731,10 @@
           }
         }
       },
-      "commonName_dev": "Oignon blanc"
+      "commonName_legacy_dev": "Oignon blanc"
     },
     {
       "id": "red_onion",
-      "commonName": "Oignon rouge",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
       "daysToMaturity": 110,
@@ -9160,12 +8790,7 @@
         },
         "minTemperature": -3
       },
-      "watering": {
-        "frequency": "Environ 20-25 mm / semaine",
-        "amount": "Réduire puis stopper 2-3 semaines avant récolte",
-        "method": "Au pied / goutte-à-goutte, éviter le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "5-8 cm entre plants, 20-40 cm entre rangs",
         "when": "Lorsque les plants ont 3-4 feuilles"
@@ -9207,7 +8832,7 @@
         "Sep"
       ],
       "plantingSeason": [
-        "Fin d'hiver",
+        "UNKNOWN_Fin d'hiver",
         "SPRING"
       ],
       "harvestSeason": [
@@ -9252,18 +8877,17 @@
           }
         }
       },
-      "commonName_dev": "Oignon rouge"
+      "commonName_legacy_dev": "Oignon rouge"
     },
     {
       "id": "watermelon",
-      "commonName": "Pastèque",
       "scientificName": "Citrullus lanatus",
       "family": "Cucurbitaceae",
       "daysToMaturity": 90,
       "spacing": 135,
       "depth": 1.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -9310,12 +8934,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "Régulier pour jeunes plants, puis profond et espacé",
-        "amount": "5-10 litres par plant/semaine (selon chaleur)",
-        "method": "Au pied ou goutte-à-goutte, éviter le feuillage",
-        "bestTime": "Tôt le matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "90-180 cm entre plants, 180-300 cm entre rangs",
         "when": "Après les dernières gelées, sol > 18°C"
@@ -9399,19 +9018,18 @@
           }
         }
       },
-      "commonName_dev": "Pastèque"
+      "commonName_legacy_dev": "Pastèque"
     },
     {
       "id": "courge_patisson",
       "image": "patisson.jpg",
-      "commonName": "Courge pâtisson",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitaceae",
       "daysToMaturity": 65,
       "spacing": 90,
       "depth": 1.5,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "A",
         "M",
@@ -9457,12 +9075,7 @@
         },
         "minTemperature": 8
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (profond)",
-        "amount": "Apport lent et abondant",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "80-100 cm entre plants",
         "when": "Lorsque les plants ont 2-3 vraies feuilles"
@@ -9548,17 +9161,16 @@
           }
         }
       },
-      "commonName_dev": "Courge pâtisson"
+      "commonName_legacy_dev": "Courge pâtisson"
     },
     {
       "id": "petit_pois",
-      "commonName": "Petit pois",
       "scientificName": "Pisum sativum L.",
       "family": "Fabaceae",
       "daysToMaturity": 75,
       "spacing": 4,
       "depth": 3,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Soleil (supporte mi-ombre légère)",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "F",
@@ -9605,12 +9217,7 @@
         },
         "minTemperature": -5
       },
-      "watering": {
-        "frequency": "Régulier, surtout de la floraison à la formation des gousses",
-        "amount": "Maintenir le sol frais, éviter les excès stagnants",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "2-5 cm entre plants, 30-60 cm entre rangs",
         "when": "Après la levée si le semis est trop dense"
@@ -9653,8 +9260,8 @@
         "SPRING"
       ],
       "harvestSeason": [
-        "SPRING",
-        "SUMMER"
+        "SUMMER",
+        "SPRING"
       ],
       "notificationSettings": {
         "watering": {
@@ -9695,12 +9302,11 @@
           }
         }
       },
-      "commonName_dev": "Petit pois"
+      "commonName_legacy_dev": "Petit pois"
     },
     {
       "id": "red_chili",
       "image": "piment.jpg",
-      "commonName": "Piment rouge",
       "scientificName": "Capsicum annuum L.",
       "family": "Solanaceae",
       "daysToMaturity": 80,
@@ -9754,12 +9360,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (plus en cas de forte chaleur)",
-        "amount": "2-4 litres par plant/semaine",
-        "method": "Au pied, sans mouiller le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "45-60 cm entre plants, 60-80 cm entre rangs",
         "when": "Lors du repiquage (3-4 feuilles vraies)"
@@ -9847,11 +9448,10 @@
           }
         }
       },
-      "commonName_dev": "Piment rouge"
+      "commonName_legacy_dev": "Piment rouge"
     },
     {
       "id": "split_pea",
-      "commonName": "Pois cassé",
       "scientificName": "Pisum sativum L. subsp. sativum",
       "family": "Fabaceae",
       "daysToMaturity": 90,
@@ -9907,12 +9507,7 @@
         },
         "minTemperature": -4
       },
-      "watering": {
-        "frequency": "Régulier durant la floraison et la formation des gousses",
-        "amount": "Maintenir le sol frais sans saturation",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "3 cm sur la ligne, 40 cm entre les rangs",
         "when": "Dès que les plants atteignent 3-4 cm"
@@ -9953,8 +9548,8 @@
         "Aug"
       ],
       "plantingSeason": [
-        "Fin hiver",
-        "SPRING"
+        "SPRING",
+        "UNKNOWN_Fin hiver"
       ],
       "harvestSeason": [
         "SUMMER"
@@ -9998,18 +9593,17 @@
           }
         }
       },
-      "commonName_dev": "Pois cassé"
+      "commonName_legacy_dev": "Pois cassé"
     },
     {
       "id": "chickpea",
-      "commonName": "Pois chiche",
       "scientificName": "Cicer arietinum L.",
       "family": "Fabaceae",
       "daysToMaturity": 105,
       "spacing": 15,
       "depth": 6,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_LOW",
+      "waterNeeds": "UNKNOWN_Faible à moyen",
       "sowingMonths": [
         "F",
         "M",
@@ -10056,12 +9650,7 @@
         },
         "minTemperature": -3
       },
-      "watering": {
-        "frequency": "Modérée, surtout pendant la floraison",
-        "amount": "Maintenir frais à l'implantation, puis limité",
-        "method": "Au pied ou goutte-à-goutte",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-20 cm entre plants, 30-60 cm entre rangs",
         "when": "Semis direct recommandé, éclaircir si trop dense"
@@ -10146,18 +9735,17 @@
           }
         }
       },
-      "commonName_dev": "Pois chiche"
+      "commonName_legacy_dev": "Pois chiche"
     },
     {
       "id": "poivron_vert",
-      "commonName": "Poivron vert",
       "scientificName": "Capsicum annuum L.",
       "family": "Solanaceae",
       "daysToMaturity": 85,
       "spacing": 40,
       "depth": 0.75,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "F",
         "M",
@@ -10204,12 +9792,7 @@
         },
         "minTemperature": 12
       },
-      "watering": {
-        "frequency": "2-3 fois/semaine en période chaude",
-        "amount": "2-4 litres par plant/semaine",
-        "method": "Au pied ou goutte-à-goutte, éviter le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "30-45 cm entre plants, 50-60 cm entre rangs",
         "when": "Après l'apparition de 4-6 vraies feuilles (repiquage)"
@@ -10298,17 +9881,16 @@
           }
         }
       },
-      "commonName_dev": "Poivron vert"
+      "commonName_legacy_dev": "Poivron vert"
     },
     {
       "id": "radis",
-      "commonName": "Radis de 18 jours",
       "scientificName": "Raphanus sativus L. var. sativus",
       "family": "Brassicaceae",
       "daysToMaturity": 18,
       "spacing": 5,
       "depth": 1.2,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "F",
@@ -10359,12 +9941,7 @@
         },
         "minTemperature": -2
       },
-      "watering": {
-        "frequency": "2-3 fois/semaine en sols légers",
-        "amount": "Maintenir le sol humide sur 10-15 cm",
-        "method": "Au pied, éviter de mouiller excessivement le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "2-5 cm entre plants, 10-20 cm entre rangs",
         "when": "Dès l'apparition des premières feuilles"
@@ -10454,17 +10031,16 @@
           }
         }
       },
-      "commonName_dev": "Radis de 18 jours"
+      "commonName_legacy_dev": "Radis de 18 jours"
     },
     {
       "id": "radis_daikon",
-      "commonName": "Radis Daikon",
       "scientificName": "Raphanus sativus L. var. longipinnatus",
       "family": "Brassicaceae",
       "daysToMaturity": 60,
       "spacing": 12,
       "depth": 1.75,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "A",
@@ -10514,12 +10090,7 @@
         },
         "minTemperature": -4
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (plus en cas de levée)",
-        "amount": "Humidité régulière, sol frais",
-        "method": "Au pied ou en rang, éviter l'aspersion sur feuillage âgé",
-        "bestTime": "Tôt le matin"
-      },
+      "watering": {},
       "thinning": {
         "distance": "10-15 cm entre plants, 30 cm entre rangs",
         "when": "Dès l'apparition des premières feuilles vraies"
@@ -10566,8 +10137,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "SPRING",
-        "Fin d'été"
+        "UNKNOWN_Fin d'été",
+        "SPRING"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -10613,17 +10184,16 @@
           }
         }
       },
-      "commonName_dev": "Radis Daikon"
+      "commonName_legacy_dev": "Radis Daikon"
     },
     {
       "id": "radis_violet_hiver",
-      "commonName": "Radis violet d'hiver",
       "scientificName": "Raphanus sativus L.",
       "family": "Brassicaceae",
       "daysToMaturity": 75,
       "spacing": 10,
       "depth": 1.5,
-      "sunExposure": "UNKNOWN",
+      "sunExposure": "UNKNOWN_Soleil ou mi-ombre",
       "waterNeeds": "WATER_MEDIUM",
       "sowingMonths": [
         "J",
@@ -10671,12 +10241,7 @@
         },
         "minTemperature": -3
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine selon météo",
-        "amount": "Maintenir le sol frais sans saturation",
-        "method": "Au pied pour limiter les maladies foliaires",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "8-12 cm entre plants, 25 cm entre rangs",
         "when": "Dès l'apparition des premières vraies feuilles"
@@ -10761,18 +10326,17 @@
           }
         }
       },
-      "commonName_dev": "Radis violet d'hiver"
+      "commonName_legacy_dev": "Radis violet d'hiver"
     },
     {
       "id": "watermelon_radish",
-      "commonName": "Radis Watermelon",
       "scientificName": "Raphanus sativus L.",
       "family": "Brassicaceae",
       "daysToMaturity": 60,
       "spacing": 5,
       "depth": 1.0,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "UNKNOWN_Plein soleil à mi-ombre",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "M",
         "A",
@@ -10823,12 +10387,7 @@
         },
         "minTemperature": 2
       },
-      "watering": {
-        "frequency": "Tous les 1-3 jours (sol nu) ou 3-5 jours (paillé)",
-        "amount": "Maintenir le sol frais et régulièrement humide",
-        "method": "Au pied ou goutte-à-goutte pour éviter les maladies foliaires",
-        "bestTime": "Matin ou soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "3-6 cm entre plants, 25-30 cm entre rangs",
         "when": "Dès l'apparition des premières feuilles après la levée"
@@ -10873,8 +10432,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "SPRING",
-        "Fin d'été"
+        "UNKNOWN_Fin d'été",
+        "SPRING"
       ],
       "harvestSeason": [
         "SPRING",
@@ -10918,18 +10477,17 @@
           }
         }
       },
-      "commonName_dev": "Radis Watermelon"
+      "commonName_legacy_dev": "Radis Watermelon"
     },
     {
       "id": "cherry_tomato",
-      "commonName": "Tomate cerise rouge",
       "scientificName": "Solanum lycopersicum var. cerasiforme",
       "family": "Solanaceae",
       "daysToMaturity": 70,
       "spacing": 50,
       "depth": 0.7,
       "sunExposure": "SUN_FULL",
-      "waterNeeds": "WATER_MEDIUM",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "F",
         "M",
@@ -10978,12 +10536,7 @@
         },
         "minTemperature": 10
       },
-      "watering": {
-        "frequency": "1-2 fois/semaine (profond)",
-        "amount": "25-50 mm par semaine",
-        "method": "Au pied, éviter de mouiller le feuillage",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "40-60 cm entre plants, 80-100 cm entre rangs",
         "when": "Stade 2 vraies feuilles pour le repiquage"
@@ -11072,18 +10625,17 @@
           }
         }
       },
-      "commonName_dev": "Tomate cerise rouge"
+      "commonName_legacy_dev": "Tomate cerise rouge"
     },
     {
       "id": "tomato_coeur_de_boeuf",
-      "commonName": "Tomate Cœur de Bœuf",
       "scientificName": "Solanum lycopersicum L.",
       "family": "Solanaceae",
       "daysToMaturity": 90,
       "spacing": 50,
       "depth": 0.5,
-      "sunExposure": "UNKNOWN",
-      "waterNeeds": "WATER_MEDIUM",
+      "sunExposure": "UNKNOWN_Plein soleil, abrité du vent",
+      "waterNeeds": "UNKNOWN_Moyen à élevé",
       "sowingMonths": [
         "F",
         "M",
@@ -11130,12 +10682,7 @@
         },
         "minTemperature": 5
       },
-      "watering": {
-        "frequency": "2-3 fois/semaine (environ 2.9 mm/jour)",
-        "amount": "Ajuster pour couvrir 80-100% des besoins hydriques",
-        "method": "Au pied, irrigation localisée (goutte-à-goutte) recommandée",
-        "bestTime": "Tôt le matin ou le soir"
-      },
+      "watering": {},
       "thinning": {
         "distance": "50 cm entre plants, 80 cm entre rangs",
         "when": "Au moment du repiquage (6-8 semaines après semis)"
@@ -11217,7 +10764,7 @@
           }
         }
       },
-      "commonName_dev": "Tomate Cœur de Bœuf"
+      "commonName_legacy_dev": "Tomate Cœur de Bœuf"
     }
   ]
 }

@@ -29,8 +29,8 @@ class PlantHiveException implements Exception {
 /// - Aucune validation stricte pour permettre l'ajout libre
 class PlantHiveRepository {
   static const String _boxName = 'plants_box';
-  // Primary path kept for backward compatibility; fallback to canonical plants.json
-  static const String _jsonAssetPath = 'assets/data/plants.json';
+  // Updated source to tokenized file
+  static const String _jsonAssetPath = 'assets/data/plants_tokenized.json';
 
   Box<PlantHive>? _box;
   bool _isInitialized = false;
@@ -153,6 +153,7 @@ class PlantHiveRepository {
       final dynamic jsonData = json.decode(jsonString);
 
       List<dynamic> plantsList = [];
+      // Handle "plants": [...] wrapper
       if (jsonData is Map<String, dynamic>) {
         plantsList = jsonData['plants'] as List? ?? [];
       } else if (jsonData is List) {
@@ -355,7 +356,7 @@ class PlantHiveRepository {
           json['biologicalControl'] = bc;
         }
 
-        // 2b) Normaliser les températures dans preparations si ce sont des strings ("20 °C" -> 20.0)
+      // 2b) Normaliser les températures dans preparations si ce sont des strings ("20 °C" -> 20.0)
         if (bc['preparations'] is List) {
           final preparations = List.from(bc['preparations'] as List);
           for (var i = 0; i < preparations.length; i++) {
@@ -377,8 +378,7 @@ class PlantHiveRepository {
         }
       }
 
-      // 3) companionPlanting : s'assurer que beneficial est une liste,
-      //    déplacer les phrases 'éviter...' vers avoid et notes
+      // 3) companionPlanting : s'assurer que beneficial est une liste
       if (json['companionPlanting'] is Map) {
         final cp = Map<String, dynamic>.from(json['companionPlanting'] as Map);
         final ben = cp['beneficial'];
@@ -434,7 +434,6 @@ class PlantHiveRepository {
 
       // FIN NORMALISATION
       // Si aucune clé d'image n'est présente, proposer automatiquement une image basée sur l'ID.
-      // L'écran acceptera "tomato.jpg" et préfixera "assets/images/legumes/" si nécessaire.
       final hasImage = meta.containsKey('image') ||
           meta.containsKey('imagePath') ||
           meta.containsKey('photo') ||
@@ -443,31 +442,39 @@ class PlantHiveRepository {
 
       if (!hasImage) {
         final candidateBase = id.toLowerCase();
-        // Choix par défaut : JPG (peut être adapté)
         final defaultImage = '${candidateBase}.jpg';
         meta['image'] = defaultImage;
-        developer.log(
-            'PlantHiveRepository: metadata.image auto-set for $id -> $defaultImage',
-            name: 'PlantHiveRepository',
-            level: 800);
+      }
+      
+      // Handle list-based seasons (tokenized) -> string for Hive model compatibility
+      String normalizeSeason(dynamic val) {
+        if (val is List) {
+          return val.join(',');
+        }
+        return val?.toString() ?? 'Toute saison';
       }
 
       return PlantHive(
         // Champs obligatoires avec valeurs par défaut si manquants
         id: id,
-        commonName: _getStringValue(json, 'commonName', 'Nom inconnu'),
+        // Common Name Strategy: Use legacy_dev if commonName is missing (Tokenized has no commonName)
+        commonName: _getStringValue(json, 'commonName', 
+             _getStringValue(json, 'commonName_legacy_dev', 'Nom valide requis')),
         scientificName:
             _getStringValue(json, 'scientificName', 'Espèce inconnue'),
         family: _getStringValue(json, 'family', 'Famille inconnue'),
-        plantingSeason: _getStringValue(json, 'plantingSeason', 'Toute saison'),
-        harvestSeason: _getStringValue(json, 'harvestSeason', 'Variable'),
+        
+        // Seasons: Tokenized JSON uses Lists, Model uses String. Join them.
+        plantingSeason: normalizeSeason(json['plantingSeason']),
+        harvestSeason: normalizeSeason(json['harvestSeason']),
+        
         daysToMaturity: _getIntValue(json, 'daysToMaturity', 90),
         spacing: _getIntValue(json, 'spacing', 30),
         depth: _getDoubleValue(json, 'depth', 1.0),
         sunExposure: _getStringValue(json, 'sunExposure', 'Plein soleil'),
         waterNeeds: _getStringValue(json, 'waterNeeds', 'Moyen'),
         description:
-            _getStringValue(json, 'description', 'Description non disponible'),
+            _getStringValue(json, 'description', ''), // Empty by default, filled by i18n
         sowingMonths:
             _getStringListValue(json, 'sowingMonths', ['M', 'A', 'M']),
         harvestMonths:

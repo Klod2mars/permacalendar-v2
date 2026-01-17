@@ -1,7 +1,7 @@
 import json
 import os
 import csv
-import hashlib
+import re
 from datetime import datetime
 
 # Configuration
@@ -16,7 +16,10 @@ SUN_EXPOSURE_MAP = {
     "Plein soleil": "SUN_FULL",
     "Mi-soleil": "SUN_PARTIAL",
     "Mi-ombre": "SUN_PARTIAL_SHADE",
-    "Ombre": "SUN_SHADE"
+    "Ombre": "SUN_SHADE",
+    "Ombre légère": "SUN_PARTIAL_SHADE", # Added
+    "Plein soleil, Mi-ombre": "SUN_FULL_PARTIAL", # Added hybrid
+    "Mi-ombre, Ombre": "SUN_PARTIAL_SHADE_SHADE" # Added hybrid
 }
 
 WATER_NEEDS_MAP = {
@@ -24,7 +27,9 @@ WATER_NEEDS_MAP = {
     "Moyen": "WATER_MEDIUM",
     "Élevé": "WATER_HIGH",
     "Modéré": "WATER_MEDIUM",
-    "Modéré à élevé": "WATER_MEDIUM_HIGH" 
+    "Modéré à élevé": "WATER_MEDIUM_HIGH",
+    "Régulier": "WATER_MEDIUM", # Mapped as requested
+    "Tres faible": "WATER_LOW"
 }
 
 SEASON_MAP = {
@@ -34,17 +39,38 @@ SEASON_MAP = {
     "Hiver": "WINTER"
 }
 
-# Helper to map list of seasons (often comma separated in source)
+# Regex to find numbers/values in messages for templating
+# Matches numbers like 25, 2.5, ranges 25-50, and simple units
+VALUE_REGEX = re.compile(r'(\d+(?:[.,]\d+)?(?:-\d+(?:[.,]\d+)?)?)\s*([°a-zA-Z%]+)?')
+
+def templatisze_message(msg):
+    # Simple strategy: replace numbers with placeholders? 
+    # Actually, simplistic replacement is dangerous. 
+    # For now, we just pass the message as is to i18n, but we could try to identify known patterns.
+    # The DoD asks for {{commonName}}, {{amount}} etc. 
+    # Without NLP, hard to map "25-50 mm" to {{amount}} reliably for ALL strings.
+    # We will mark it as requiring manual review in the report if it looks like a template candidate.
+    return msg
+
 def map_seasons(season_str):
     if not season_str: return []
     parts = [s.strip() for s in season_str.split(',')]
     mapped = []
     for p in parts:
-        if p in SEASON_MAP:
-            mapped.append(SEASON_MAP[p])
+        pk = p.capitalize() # normalize
+        if pk in SEASON_MAP:
+            mapped.append(SEASON_MAP[pk])
         else:
-            mapped.append(p) # Fallback
-    return mapped
+             # Try simple fuzzy match
+             found = False
+             for k, v in SEASON_MAP.items():
+                 if k in pk: 
+                     mapped.append(v)
+                     found = True
+                     break
+             if not found:
+                mapped.append("UNKNOWN_" + p)
+    return list(set(mapped)) # Dedup
 
 def main():
     print(f"Reading {INPUT_FILE}...")
@@ -65,63 +91,54 @@ def main():
         p_out = p.copy()
         i18n_entry = {}
 
-        # 1. Common Name
+        # 1. Common Name - Remove from tokenized (legacy field handling)
         i18n_entry['commonName'] = p.get('commonName', '')
         report_rows.append([pid, 'commonName', p.get('commonName', ''), 'Extracted'])
-        # Keep commonName in tokenized for fallback/debugging or remove? 
-        # Strategy says: plants.json -> codes... i18n -> texts. 
-        # But commonly we might keep a dev name. Let's REMOVE it to force i18n usage, or keep as 'name_dev'.
-        # Decision: Keep it as 'name_dev' for readability in JSON, but logic should use i18n.
-        p_out['commonName_dev'] = p.pop('commonName', '')
+        if 'commonName' in p_out: del p_out['commonName']
+        p_out['commonName_legacy_dev'] = p.get('commonName', '') # For debug purposes only
 
         # 2. Description
         if 'description' in p:
             i18n_entry['description'] = p['description']
             report_rows.append([pid, 'description', '...', 'Extracted'])
             del p_out['description']
-
-        # 3. Cultural Tips (List)
+        
+        # 3. Cultural Tips
         if 'culturalTips' in p:
             i18n_entry['culturalTips'] = p['culturalTips']
-            report_rows.append([pid, 'culturalTips', f"{len(p['culturalTips'])} items", 'Extracted'])
             del p_out['culturalTips']
 
         # 4. Biological Control
         if 'biologicalControl' in p:
             bc = p['biologicalControl']
             i18n_entry['biologicalControl'] = {}
-            
-            # Preparations
             if 'preparations' in bc:
                 i18n_entry['biologicalControl']['preparations'] = bc['preparations']
                 del bc['preparations']
-            
-            # Beneficial Insects - often contains names, keep as strings in i18n for now
             if 'beneficialInsects' in bc:
                 i18n_entry['biologicalControl']['beneficialInsects'] = bc['beneficialInsects']
                 del bc['beneficialInsects']
-                
-            # Companion Plants - names -> ideally mapping, but for now extract text
             if 'companionPlants' in bc:
                 i18n_entry['biologicalControl']['companionPlants'] = bc['companionPlants']
                 del bc['companionPlants']
-            
-            p_out['biologicalControl'] = bc # Empty skeleton or remaining tech fields
+            p_out['biologicalControl'] = bc 
 
         # 5. Harvest Time
         if 'harvestTime' in p:
             i18n_entry['harvestTime'] = p['harvestTime']
             del p_out['harvestTime']
 
-        # 6. Notification Messages
+        # 6. Notifications
         if 'notificationSettings' in p:
             ns = p['notificationSettings']
             i18n_entry['notificationSettings'] = {}
             for notif_type, settings in ns.items():
                 if isinstance(settings, dict) and 'message' in settings:
-                    i18n_entry['notificationSettings'][notif_type] = {'message': settings['message']}
+                    original_msg = settings['message']
+                    # Tokenize message ? For now extract full string.
+                    i18n_entry['notificationSettings'][notif_type] = {'message': original_msg}
                     del settings['message']
-                # Handle nested temperature alerts
+                
                 if notif_type == 'temperature_alert':
                      i18n_entry['notificationSettings']['temperature_alert'] = {}
                      for sub_key, sub_val in settings.items():
@@ -131,53 +148,75 @@ def main():
             p_out['notificationSettings'] = ns
 
         # 7. Enum Tokenization
-        # Sun Exposure
+        
+        # Sun
         sun = p.get('sunExposure')
         if sun:
-            if sun in SUN_EXPOSURE_MAP:
-                p_out['sunExposure'] = SUN_EXPOSURE_MAP[sun]
+            # Normalize
+            sun_norm = sun.replace("’", "'").strip()
+            if sun_norm in SUN_EXPOSURE_MAP:
+                p_out['sunExposure'] = SUN_EXPOSURE_MAP[sun_norm]
             else:
-                audit_log.append(f"WARNING: Unknown sunExposure '{sun}' for {pid}")
-                p_out['sunExposure'] = "UNKNOWN"
+                # Try simple comma logic
+                if "," in sun_norm:
+                     parts = [s.strip() for s in sun_norm.split(',')]
+                     if "Plein soleil" in parts and "Mi-ombre" in parts:
+                         p_out['sunExposure'] = "SUN_FULL_PARTIAL"
+                     else:
+                         p_out['sunExposure'] = "UNKNOWN_" + sun_norm
+                         audit_log.append(f"WARNING: Unknown sunExposure '{sun}' for {pid}")
+                else:
+                    p_out['sunExposure'] = "UNKNOWN_" + sun_norm
+                    audit_log.append(f"WARNING: Unknown sunExposure '{sun}' for {pid}")
 
-        # Water Needs
+        # Water
         water = p.get('waterNeeds')
         if water:
-            # Handle partial matches or "Moderate to High" logic if needed, but dictionary covers observed cases
-            found = False
-            for k, v in WATER_NEEDS_MAP.items():
-                if k.lower() in water.lower(): # Simple substring match for safety? No, exact map indicated in script logic better for consistency, but fuzzy needed for "Modéré à élevé" if not mapped
-                     p_out['waterNeeds'] = v
-                     found = True
-                     break
-            if not found:
-                 # Check exact keys
-                 if water in WATER_NEEDS_MAP:
-                     p_out['waterNeeds'] = WATER_NEEDS_MAP[water]
-                 else:
+            water_norm = water.split('(')[0].strip() # Remove comments like (surtout en été)
+            if water_norm in WATER_NEEDS_MAP:
+                p_out['waterNeeds'] = WATER_NEEDS_MAP[water_norm]
+            else:
+                 found = False
+                 for k,v in WATER_NEEDS_MAP.items():
+                     if k.lower() == water_norm.lower(): 
+                         p_out['waterNeeds'] = v
+                         found = True
+                 if not found:
+                     p_out['waterNeeds'] = "UNKNOWN_" + water
                      audit_log.append(f"WARNING: Unknown waterNeeds '{water}' for {pid}")
-                     p_out['waterNeeds'] = "UNKNOWN"
-        
-        # Planting Seasons (String -> List of Enums)
+
+        # Seasons
         p_season = p.get('plantingSeason')
         if p_season:
-             p_out['plantingSeason'] = map_seasons(p_season) # Becomes a list of CODES
+             p_out['plantingSeason'] = map_seasons(p_season)
         
-        # Harvest Seasons
         h_season = p.get('harvestSeason')
         if h_season:
              p_out['harvestSeason'] = map_seasons(h_season)
+
+        # Watering fields cleanup (often has free text)
+        if 'watering' in p_out:
+            w = p_out['watering']
+            # We should move 'frequency', 'method', 'bestTime' to i18n instructions? 
+            # Yes, these are text. The DoD says "suppression/renommage des champs textuels résiduels".
+            # We'll extract them similarly to notification messages.
+            i18n_entry['watering'] = {}
+            for k in ['frequency', 'amount', 'method', 'bestTime']:
+                if k in w:
+                    i18n_entry['watering'][k] = w[k]
+                    del w[k]
+            p_out['watering'] = w # Should be empty or mostly empty now
 
         # Add to local map
         i18n_fr[pid] = i18n_entry
         plants_out.append(p_out)
 
-    # Wrap up Output JSON
+    # Output writing...
     output_tech = {
         "schema_version": "2.2.0",
         "metadata": {
             "generated_at": datetime.now().isoformat(),
-            "source": "plants.json transformation",
+            "source": "plants.json transformation v2",
             "total_plants": len(plants_out)
         },
         "plants": plants_out
@@ -190,7 +229,7 @@ def main():
     print(f"Writing {OUTPUT_I18N_FR}...")
     with open(OUTPUT_I18N_FR, 'w', encoding='utf-8') as f:
         json.dump(i18n_fr, f, indent=2, ensure_ascii=False)
-
+    
     print(f"Writing reports...")
     with open(REPORT_CSV, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -198,7 +237,7 @@ def main():
         writer.writerows(report_rows)
 
     with open(REPORT_MD, 'w', encoding='utf-8') as f:
-        f.write("# Plans JSON Migration Report\n\n")
+        f.write("# Plans JSON Migration Report V2\n\n")
         f.write(f"Generated at: {datetime.now()}\n\n")
         f.write("## Warnings / Ambiguities\n")
         if audit_log:
@@ -207,7 +246,7 @@ def main():
         else:
             f.write("No warnings generated.\n")
 
-    print("Done.")
+    print("Done (v2).")
 
 if __name__ == "__main__":
     main()

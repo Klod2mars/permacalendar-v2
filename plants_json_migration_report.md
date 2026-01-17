@@ -1,38 +1,60 @@
-# Plans JSON Migration Report
+# Plans JSON Migration Report V2
 
-Generated at: 2026-01-17 15:53:11.631767
+Generated at: 2026-01-17 16:33:11.541139
 
 ## Warnings / Ambiguities
-- WARNING: Unknown sunExposure 'Plein soleil, Mi-ombre' for black_radish
+- WARNING: Unknown waterNeeds 'Moyen à élevé (sol humide mais pas détrempé)' for basil
+- WARNING: Unknown waterNeeds 'Modéré à régulier' for black_radish
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for broccoli
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for cabbage
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for carrot
 - WARNING: Unknown sunExposure 'Mi-ombre à plein soleil' for celery_branch
 - WARNING: Unknown sunExposure 'Plein soleil ou mi-ombre' for chard
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for chives
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for coriander
+- WARNING: Unknown waterNeeds 'Modéré mais régulier' for coriander
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for kale
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for leek
 - WARNING: Unknown sunExposure 'Mi-ombre à plein soleil' for lettuce
 - WARNING: Unknown sunExposure 'Ombre légère / Mi-ombre' for mache
+- WARNING: Unknown waterNeeds 'Modéré à régulier' for mache
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for navet
-- WARNING: Unknown waterNeeds 'Régulier' for navet
 - WARNING: Unknown sunExposure 'Mi-ombre (surtout en été dans les régions chaudes)' for parsley
 - WARNING: Unknown sunExposure 'Mi-ombre (éviter plein soleil en été)' for roquette
 - WARNING: Unknown sunExposure 'Plein soleil (min. 6h/jour)' for rosemary
 - WARNING: Unknown sunExposure 'Plein soleil, Mi-ombre tolérée' for salsify
+- WARNING: Unknown waterNeeds 'Faible à modéré' for salsify
 - WARNING: Unknown sunExposure 'Mi-ombre à plein soleil' for scarole
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for spinach
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for carotte_blanche
 - WARNING: Unknown sunExposure 'Soleil à mi-ombre' for bok_choy
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for bok_choy
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for chou_brocoli_romanesco
 - WARNING: Unknown sunExposure 'Soleil à mi-ombre' for chou_cabus_rouge
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for chou_cabus_rouge
 - WARNING: Unknown sunExposure 'Soleil à mi-ombre' for chou-daubenton
 - WARNING: Unknown sunExposure 'Soleil à mi-ombre' for mizuna
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for butternut_squash
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for musquee_de_provence
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for patidou
 - WARNING: Unknown sunExposure 'Mi-ombre / Soleil tamisé' for cresson
+- WARNING: Unknown waterNeeds 'Très élevé' for cresson
 - WARNING: Unknown sunExposure 'Soleil à mi-ombre' for endive
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for broad_bean
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for gobo
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for haricot_coco
+- WARNING: Unknown waterNeeds 'Faible à Moyen' for lentil
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for lupin
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for watermelon
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for courge_patisson
 - WARNING: Unknown sunExposure 'Soleil (supporte mi-ombre légère)' for petit_pois
+- WARNING: Unknown waterNeeds 'Faible à moyen' for chickpea
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for poivron_vert
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for radis
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for radis_daikon
 - WARNING: Unknown sunExposure 'Soleil ou mi-ombre' for radis_violet_hiver
 - WARNING: Unknown sunExposure 'Plein soleil à mi-ombre' for watermelon_radish
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for watermelon_radish
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for cherry_tomato
 - WARNING: Unknown sunExposure 'Plein soleil, abrité du vent' for tomato_coeur_de_boeuf
+- WARNING: Unknown waterNeeds 'Moyen à élevé' for tomato_coeur_de_boeuf

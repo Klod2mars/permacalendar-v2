@@ -10,6 +10,7 @@ import '../data/models/plant_hive.dart';
 import '../../../core/services/activity_tracker_v3.dart';
 
 import '../../../core/models/activity_v3.dart';
+import '../../../core/services/plant_localization_service.dart'; // Imported Service
 
 // État simplifié et moderne
 
@@ -63,8 +64,15 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
+      // Initialize Localization Service (TODO: Get actual locale from provider)
+      final localizationService = PlantLocalizationService();
+      await localizationService.loadLocale('fr');
+
       // 1. Charger le catalogue standard
       final stdRepo = PlantHiveRepository();
+      // Ensure Hive is open (optional safety check, Repository handles it mostly)
+      // await PlantHiveRepository.initialize(); 
+      
       final stdPlants = await stdRepo.getAllPlants();
 
       // 2. Charger le catalogue personnalisé
@@ -82,7 +90,10 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
       // mais idéalement c'est fait à la création.
       // Pour l'affichage, on fusionne simplement.
 
-      final allPlants = [...stdPlants, ...customPlants];
+      var allPlants = [...stdPlants, ...customPlants];
+
+      // 4. APPLY LOCALIZATION
+      allPlants = allPlants.map((p) => localizationService.localize(p)).toList();
 
       // Optionnel : trier par nom
       allPlants.sort((a, b) => a.commonName.compareTo(b.commonName));

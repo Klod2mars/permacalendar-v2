@@ -1,229 +1,153 @@
 PlantID,Field,ValueSnippet,Action
 artichoke,commonName,Artichaut,Extracted
 artichoke,description,...,Extracted
-artichoke,culturalTips,5 items,Extracted
 asparagus,commonName,Asperge,Extracted
 asparagus,description,...,Extracted
-asparagus,culturalTips,5 items,Extracted
 basil,commonName,Basilic,Extracted
 basil,description,...,Extracted
-basil,culturalTips,5 items,Extracted
 bean,commonName,Haricot,Extracted
 bean,description,...,Extracted
-bean,culturalTips,5 items,Extracted
 beetroot,commonName,Betterave,Extracted
 beetroot,description,...,Extracted
-beetroot,culturalTips,5 items,Extracted
 black_radish,commonName,Radis Noir,Extracted
 black_radish,description,...,Extracted
-black_radish,culturalTips,5 items,Extracted
 broccoli,commonName,Brocoli,Extracted
 broccoli,description,...,Extracted
-broccoli,culturalTips,5 items,Extracted
 brussels_sprout,commonName,Chou de Bruxelles,Extracted
 brussels_sprout,description,...,Extracted
-brussels_sprout,culturalTips,5 items,Extracted
 cabbage,commonName,Chou pommé,Extracted
 cabbage,description,...,Extracted
-cabbage,culturalTips,5 items,Extracted
 carrot,commonName,Carotte,Extracted
 carrot,description,...,Extracted
-carrot,culturalTips,6 items,Extracted
 cauliflower,commonName,chou-fleur,Extracted
 cauliflower,description,...,Extracted
-cauliflower,culturalTips,5 items,Extracted
 celery_branch,commonName,Céleri branche,Extracted
 celery_branch,description,...,Extracted
-celery_branch,culturalTips,5 items,Extracted
 chard,commonName,Blette,Extracted
 chard,description,...,Extracted
-chard,culturalTips,5 items,Extracted
 chives,commonName,Ciboulette,Extracted
 chives,description,...,Extracted
-chives,culturalTips,5 items,Extracted
 coriander,commonName,Coriandre,Extracted
 coriander,description,...,Extracted
-coriander,culturalTips,5 items,Extracted
 courgette,commonName,Courgette,Extracted
 courgette,description,...,Extracted
-courgette,culturalTips,5 items,Extracted
 cucumber,commonName,Concombre,Extracted
 cucumber,description,...,Extracted
-cucumber,culturalTips,5 items,Extracted
 dill,commonName,Aneth,Extracted
 dill,description,...,Extracted
-dill,culturalTips,5 items,Extracted
 eggplant,commonName,Aubergine,Extracted
 eggplant,description,...,Extracted
-eggplant,culturalTips,5 items,Extracted
 garlic,commonName,Ail,Extracted
 garlic,description,...,Extracted
-garlic,culturalTips,5 items,Extracted
 kale,commonName,Chou kale,Extracted
 kale,description,...,Extracted
-kale,culturalTips,5 items,Extracted
 leek,commonName,Poireau,Extracted
 leek,description,...,Extracted
-leek,culturalTips,7 items,Extracted
 lettuce,commonName,Laitue,Extracted
 lettuce,description,...,Extracted
-lettuce,culturalTips,6 items,Extracted
 mache,commonName,Mâche,Extracted
 mache,description,...,Extracted
-mache,culturalTips,7 items,Extracted
 melon,commonName,Melon,Extracted
 melon,description,...,Extracted
-melon,culturalTips,5 items,Extracted
 navet,commonName,Navet,Extracted
 navet,description,...,Extracted
-navet,culturalTips,5 items,Extracted
 onion,commonName,Oignon,Extracted
 onion,description,...,Extracted
-onion,culturalTips,7 items,Extracted
 parsley,commonName,Persil,Extracted
 parsley,description,...,Extracted
-parsley,culturalTips,5 items,Extracted
 parsnip,commonName,Panais,Extracted
 parsnip,description,...,Extracted
-parsnip,culturalTips,6 items,Extracted
 potato,commonName,Pomme de terre,Extracted
 potato,description,...,Extracted
-potato,culturalTips,6 items,Extracted
 courge_potiron,commonName,Courge Potiron ,Extracted
 courge_potiron,description,...,Extracted
-courge_potiron,culturalTips,6 items,Extracted
 roquette,commonName,Roquette,Extracted
 roquette,description,...,Extracted
-roquette,culturalTips,5 items,Extracted
 rosemary,commonName,Romarin,Extracted
 rosemary,description,...,Extracted
-rosemary,culturalTips,5 items,Extracted
 salsify,commonName,Salsifis,Extracted
 salsify,description,...,Extracted
-salsify,culturalTips,6 items,Extracted
 scarole,commonName,Scarole,Extracted
 scarole,description,...,Extracted
-scarole,culturalTips,5 items,Extracted
 shallot,commonName,Échalote,Extracted
 shallot,description,...,Extracted
-shallot,culturalTips,5 items,Extracted
 spinach,commonName,Épinard,Extracted
 spinach,description,...,Extracted
-spinach,culturalTips,5 items,Extracted
 sweet_corn,commonName,Maïs doux,Extracted
 sweet_corn,description,...,Extracted
-sweet_corn,culturalTips,6 items,Extracted
 thyme,commonName,Thym,Extracted
 thyme,description,...,Extracted
-thyme,culturalTips,7 items,Extracted
 tomato,commonName,Tomate,Extracted
 tomato,description,...,Extracted
-tomato,culturalTips,5 items,Extracted
 topinambour,commonName,Topinambour,Extracted
 topinambour,description,...,Extracted
-topinambour,culturalTips,5 items,Extracted
 carotte_blanche,commonName,Carotte blanche,Extracted
 carotte_blanche,description,...,Extracted
-carotte_blanche,culturalTips,5 items,Extracted
 poivron_capsicum_annuum,commonName,Poivron,Extracted
 poivron_capsicum_annuum,description,...,Extracted
-poivron_capsicum_annuum,culturalTips,5 items,Extracted
 bok_choy,commonName,Bok choy,Extracted
 bok_choy,description,...,Extracted
-bok_choy,culturalTips,3 items,Extracted
 chayotte,commonName,Chayotte,Extracted
 chayotte,description,...,Extracted
-chayotte,culturalTips,12 items,Extracted
 chou_brocoli_romanesco,commonName,Chou brocoli romanesco,Extracted
 chou_brocoli_romanesco,description,...,Extracted
-chou_brocoli_romanesco,culturalTips,8 items,Extracted
 chou_cabus_rouge,commonName,Chou cabus rouge,Extracted
 chou_cabus_rouge,description,...,Extracted
-chou_cabus_rouge,culturalTips,3 items,Extracted
 chou-daubenton,commonName,Chou Daubenton,Extracted
 chou-daubenton,description,...,Extracted
-chou-daubenton,culturalTips,5 items,Extracted
 mizuna,commonName,Chou Mizuna,Extracted
 mizuna,description,...,Extracted
-mizuna,culturalTips,5 items,Extracted
 butternut_squash,commonName,Courge Butternut,Extracted
 butternut_squash,description,...,Extracted
-butternut_squash,culturalTips,5 items,Extracted
 musquee_de_provence,commonName,Courge musquée muscade,Extracted
 musquee_de_provence,description,...,Extracted
-musquee_de_provence,culturalTips,5 items,Extracted
 patidou,commonName,Courge patidou,Extracted
 patidou,description,...,Extracted
-patidou,culturalTips,5 items,Extracted
 cresson,commonName,Cresson de fontaine,Extracted
 cresson,description,...,Extracted
-cresson,culturalTips,5 items,Extracted
 endive,commonName,Endive,Extracted
 endive,description,...,Extracted
-endive,culturalTips,5 items,Extracted
 broad_bean,commonName,Fève,Extracted
 broad_bean,description,...,Extracted
-broad_bean,culturalTips,5 items,Extracted
 gobo,commonName,Gobo (Grande Bardane),Extracted
 gobo,description,...,Extracted
-gobo,culturalTips,7 items,Extracted
 haricot_rames,commonName,Haricot à rames,Extracted
 haricot_rames,description,...,Extracted
-haricot_rames,culturalTips,5 items,Extracted
 haricot_coco,commonName,Haricot coco,Extracted
 haricot_coco,description,...,Extracted
-haricot_coco,culturalTips,4 items,Extracted
 yellow_bean,commonName,Haricot jaune,Extracted
 yellow_bean,description,...,Extracted
-yellow_bean,culturalTips,4 items,Extracted
 lentil,commonName,Lentille,Extracted
 lentil,description,...,Extracted
-lentil,culturalTips,4 items,Extracted
 lupin,commonName,Lupin,Extracted
 lupin,description,...,Extracted
-lupin,culturalTips,5 items,Extracted
 white_onion,commonName,Oignon blanc,Extracted
 white_onion,description,...,Extracted
-white_onion,culturalTips,5 items,Extracted
 red_onion,commonName,Oignon rouge,Extracted
 red_onion,description,...,Extracted
-red_onion,culturalTips,4 items,Extracted
 watermelon,commonName,Pastèque,Extracted
 watermelon,description,...,Extracted
-watermelon,culturalTips,4 items,Extracted
 courge_patisson,commonName,Courge pâtisson,Extracted
 courge_patisson,description,...,Extracted
-courge_patisson,culturalTips,4 items,Extracted
 petit_pois,commonName,Petit pois,Extracted
 petit_pois,description,...,Extracted
-petit_pois,culturalTips,5 items,Extracted
 red_chili,commonName,Piment rouge,Extracted
 red_chili,description,...,Extracted
-red_chili,culturalTips,5 items,Extracted
 split_pea,commonName,Pois cassé,Extracted
 split_pea,description,...,Extracted
-split_pea,culturalTips,4 items,Extracted
 chickpea,commonName,Pois chiche,Extracted
 chickpea,description,...,Extracted
-chickpea,culturalTips,5 items,Extracted
 poivron_vert,commonName,Poivron vert,Extracted
 poivron_vert,description,...,Extracted
-poivron_vert,culturalTips,5 items,Extracted
 radis,commonName,Radis de 18 jours,Extracted
 radis,description,...,Extracted
-radis,culturalTips,4 items,Extracted
 radis_daikon,commonName,Radis Daikon,Extracted
 radis_daikon,description,...,Extracted
-radis_daikon,culturalTips,5 items,Extracted
 radis_violet_hiver,commonName,Radis violet d'hiver,Extracted
 radis_violet_hiver,description,...,Extracted
-radis_violet_hiver,culturalTips,4 items,Extracted
 watermelon_radish,commonName,Radis Watermelon,Extracted
 watermelon_radish,description,...,Extracted
-watermelon_radish,culturalTips,4 items,Extracted
 cherry_tomato,commonName,Tomate cerise rouge,Extracted
 cherry_tomato,description,...,Extracted
-cherry_tomato,culturalTips,5 items,Extracted
 tomato_coeur_de_boeuf,commonName,Tomate Cœur de Bœuf,Extracted
 tomato_coeur_de_boeuf,description,...,Extracted
-tomato_coeur_de_boeuf,culturalTips,5 items,Extracted

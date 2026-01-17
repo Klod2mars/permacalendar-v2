@@ -12,14 +12,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'PermaCalendar';
 
   @override
-  String get common_validate => 'Validate';
-
-  @override
-  String get common_cancel => 'Cancel';
-
-  @override
   String get settings_title => 'Settings';
-
-  @override
-  String get settings_language => 'Language';
 }
