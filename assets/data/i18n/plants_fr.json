@@ -1,0 +1,4140 @@
+{
+  "artichoke": {
+    "commonName": "Artichaut",
+    "description": "Plante vivace gourmande en eau, cultivée pour ses capitules comestibles. Exige un sol riche, bien drainé et une bonne aération.",
+    "culturalTips": [
+      "Rotation des cultures : laisser reposer le sol 2-3 ans après culture d'artichaut.",
+      "Protéger les pieds en hiver avec du paillis, mais éviter l'humidité stagnante.",
+      "Arrêter l'arrosage en hiver ou périodes froides.",
+      "Éviter les associations avec fenouil et persil.",
+      "Appliquer une bouillie bordelaise en prévention du mildiou après périodes humides."
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Bouillie bordelaise (préventive contre mildiou)",
+        "Pièges à escargots",
+        "Ramassage manuel des parasites"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (contre chenilles et pucerons)"
+      ],
+      "companionPlants": [
+        "salades",
+        "radis",
+        "pois (cultures intercalaires la première année)"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après plantation, selon variété et climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos artichauts : 25-50 mm d'eau cette semaine, au pied, tôt matin ou soir."
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : espacer à 80 cm, ne garder que 3 pousses par pied."
+      },
+      "weeding": {
+        "message": "Désherbage recommandé : binage superficiel + vérifier paillage."
+      },
+      "biological_control": {
+        "message": "Risque de mildiou : appliquer bouillie bordelaise préventive."
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos artichauts (dans ~10 jours)."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les artichauts atteinte (7°C). Protéger les pieds si prolongé."
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination pour artichaut (18-20°C)."
+        }
+      }
+    }
+  },
+  "asparagus": {
+    "commonName": "Asperge",
+    "description": "Légume vivace à racines profondes, exigeant en installation mais durable (10-15 ans). Production de turions à partir de la 3ème année. Culture adaptée à la permaculture avec rotation longue et paillage organique.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter avant 10 ans au même endroit",
+      "Éviter les sols contaminés par le rhizoctone violet",
+      "Buttage progressif pour asperges blanches ; laisser verdir pour les vertes",
+      "Surveiller les maladies cryptogamiques (rouille, rhizoctone) et ravageurs (criocère, mouche de l’asperge)",
+      "Favoriser les associations : pois, tomates, concombres, poireaux. Éviter ail, oignon, betterave"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de tanaisie contre les larves",
+        "Purin d’ortie ou d’ail comme traitement préventif fongique",
+        "Décoction de prêle contre la rouille"
+      ],
+      "beneficialInsects": [
+        "Prédateurs naturels des criocères (oiseaux, guêpes parasitoïdes)",
+        "Auxiliaires insectivores favorisés par la biodiversité"
+      ],
+      "companionPlants": [
+        "pois",
+        "tomates",
+        "concombres",
+        "poireaux"
+      ]
+    },
+    "harvestTime": "À partir de la 3ème année après plantation (ou 1ère année si griffes de 2 ans utilisées)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage profond recommandé : 50-75 mm, surtout en période sèche ou première année"
+      },
+      "thinning": {
+        "message": "Éclaircissage : retirer les tiges frêles. Ne pas récolter les 2 premières années."
+      },
+      "weeding": {
+        "message": "Désherbage manuel et paillage recommandés pour limiter les adventices"
+      },
+      "biological_control": {
+        "message": "Application de purin d’ortie ou décoction de prêle recommandée en prévention"
+      },
+      "harvest": {
+        "message": "Première récolte possible ! (3 ans après semis, ou 1 an après plantation de griffes de 2 ans)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale de croissance atteinte (10°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (20-25°C)"
+        }
+      }
+    }
+  },
+  "basil": {
+    "commonName": "Basilic",
+    "description": "Plante aromatique annuelle, appréciée en cuisine et en médecine douce, sensible au froid et à la sécheresse.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter au même endroit 2 années consécutives",
+      "Ne jamais mouiller le feuillage pour éviter les maladies fongiques (ex: mildiou)",
+      "Couper les tiges florales dès leur apparition pour favoriser un feuillage dense",
+      "Éviter les excès d'eau, surtout en sol lourd, pour ne pas affaiblir la plante",
+      "Vaporiser légèrement tous les 2 jours au stade semis, puis réduire à 1 fois tous les 4 jours après levée"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (préventif et fortifiant)",
+        "Savon noir (contre pucerons)",
+        "Insecticide naturel à base de pyrèthre ou d'huiles essentielles (en cas d'attaque)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (prédateurs de pucerons et cochenilles)",
+        "Syrphes (larves dévorent les pucerons)"
+      ],
+      "companionPlants": [
+        "tomate",
+        "poivron",
+        "laitue",
+        "favorise la biodiversité et repousse certains nuisibles"
+      ]
+    },
+    "harvestTime": "50-60 jours après semis, selon conditions de culture",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre basilic : humidifiez le sol sans le saturer, au pied, tôt le matin ou en soirée."
+      },
+      "thinning": {
+        "message": "Éclaircissez vos plants de basilic : laissez 20 cm entre chaque pour un bon développement."
+      },
+      "weeding": {
+        "message": "Désherbage recommandé autour de vos plants de basilic. Paillez pour limiter la repousse."
+      },
+      "biological_control": {
+        "message": "Appliquez un traitement préventif au purin d'ortie ou introduisez des coccinelles."
+      },
+      "harvest": {
+        "message": "Premières récoltes possibles ! Coupez les tiges au-dessus d'une paire de feuilles pour favoriser la ramification."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le basilic atteinte (12°C). Protégez vos plants !"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination du basilic (21-24°C)"
+        }
+      }
+    }
+  },
+  "bean": {
+    "commonName": "Haricot",
+    "description": "Légumineuse nutritive, fixatrice d'azote, idéale en rotation et en association de culture.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas planter après d'autres légumineuses",
+      "Éviter l'excès d'eau pour prévenir la pourriture des racines",
+      "Pailler pour réduire l'évaporation et le désherbage",
+      "Ne jamais arroser le feuillage pour éviter les maladies fongiques",
+      "Privilégier les associations avec maïs ou tournesol pour les variétés grimpantes"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant, anti-pucerons)",
+        "Décoction de prêle (anti-fongique)",
+        "Lait dilué en pulvérisation (préventif contre mildiou)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Guêpes parasitoïdes",
+        "Syrphes"
+      ],
+      "companionPlants": [
+        "maïs",
+        "tournesol (support et microclimat favorable)"
+      ]
+    },
+    "harvestTime": "60 jours après plantation en moyenne (selon variété naine ou grimpante)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Adaptez l'arrosage : 10-15 L/m²/semaine en floraison, au pied, sans mouiller le feuillage."
+      },
+      "thinning": {
+        "message": "Éclaircissez à 25-40 cm entre plants, ne conservez que les plus vigoureux."
+      },
+      "weeding": {
+        "message": "Binage recommandé 24-48h après arrosage + paillage pour limiter les mauvaises herbes."
+      },
+      "biological_control": {
+        "message": "Appliquez un purin d'ortie ou de prêle en prévention des maladies fongiques."
+      },
+      "harvest": {
+        "message": "Récolte imminente. Réduisez progressivement les arrosages pour éviter les maladies."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les haricots atteinte (10°C). Risque de ralentissement ou gel."
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (20-25°C)."
+        }
+      }
+    }
+  },
+  "beetroot": {
+    "commonName": "Betterave",
+    "description": "Légume-racine sucré et nutritif, riche en fer, vitamines et antioxydants, cultivé en bio et permaculture avec des techniques douces et respectueuses du sol.",
+    "culturalTips": [
+      "Rotation des cultures de 3 à 4 ans pour éviter l'épuisement du sol et les maladies",
+      "Sol bien ameubli, sans cailloux pour éviter les racines fourchues",
+      "Ne pas utiliser de fumier frais ou non composté",
+      "Éviter l'excès d'eau pour prévenir mildiou et pourriture des racines",
+      "Protéger les jeunes plants en cas de gelées avec un voile ou tunnel léger"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de consoude (fortifiant)",
+        "Purin d'ortie (anti-pucerons et stimulateur de croissance)",
+        "Infusions de plantes aromatiques pour renforcer les défenses naturelles"
+      ],
+      "beneficialInsects": [
+        "Auxiliaires naturels contre pucerons (coccinelles, syrphes)",
+        "Nématodes bénéfiques contre nématodes ravageurs"
+      ],
+      "companionPlants": [
+        "laitue",
+        "oignon",
+        "radis",
+        "haricot nain",
+        "éviter les épinards (même famille)"
+      ]
+    },
+    "harvestTime": "60-90 jours après semis selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé : 1 fois/semaine, sol à maintenir frais sans excès"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conserver un plant tous les 15-25 cm"
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés pour aérer le sol et limiter les adventices"
+      },
+      "biological_control": {
+        "message": "Risque de mildiou — appliquer purin d'ortie en prévention et aérer les plants"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos betteraves (60-90 jours après semis)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la croissance de la betterave atteinte (6°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "black_radish": {
+    "commonName": "Radis Noir",
+    "description": "Légume-racine robuste, idéal en agriculture biologique et permaculture. Racine noire à chair blanche, croquante et piquante, riche en vitamines et minéraux.",
+    "culturalTips": [
+      "Rotation des cultures : attendre au moins 2 ans avant de replanter des radis ou crucifères au même endroit",
+      "Éviter les associations avec carottes, concombres et choux",
+      "Ne pas trop arroser le feuillage pour prévenir l'oïdium",
+      "Privilégier les sols meubles et bien drainés pour éviter la pourriture des racines",
+      "Alterner avec des cultures comme fèves, laitues ou tomates pour régénérer le sol"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et répulsif)",
+        "Décoction d'ail (contre ravageurs)",
+        "Compost mûr pour renforcer la santé du sol"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (prédateurs de pucerons)",
+        "Guêpes parasitoïdes (contre chenilles de mouche du chou)"
+      ],
+      "companionPlants": [
+        "laitue",
+        "épinard",
+        "haricot (associations bénéfiques non compétitives)"
+      ]
+    },
+    "harvestTime": "60 jours après semis (selon variété et conditions)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos radis noirs : sol à maintenir frais sans excès"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conserver 1 plant tous les 10 cm"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé + vérifier l'état du paillage"
+      },
+      "biological_control": {
+        "message": "Appliquer purin d'ortie ou décoction d'ail en prévention"
+      },
+      "harvest": {
+        "message": "Récolte imminente pour vos radis noirs (60 jours)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour radis noir atteinte (6°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (19°C)"
+        }
+      }
+    }
+  },
+  "broccoli": {
+    "commonName": "Brocoli",
+    "description": "Légume idéal pour une culture en permaculture et bio, appréciant les soins raisonnés et l’intégration dans des systèmes diversifiés.",
+    "culturalTips": [
+      "Respecter une rotation des cultures sur au moins 4 ans (éviter les brassicacées au même endroit)",
+      "Ne pas planter après ou avant d’autres choux",
+      "Enrichir le sol en compost et amendements naturels pour éviter carences (bore, manganèse, calcium)",
+      "Attention à l’excès d’arrosage (risques d’attaques fongiques)",
+      "Repiquage dès 4-5 feuilles"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de fougère",
+        "Savon noir contre les pucerons"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes",
+        "Oiseaux (contre limaces et chenilles)",
+        "Coléoptères auxiliaires"
+      ],
+      "companionPlants": [
+        "œillet d’inde",
+        "plantes aromatiques (répulsives naturelles)"
+      ]
+    },
+    "harvestTime": "70-90 jours après plantation selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos brocolis : sol à maintenir frais (1-2 fois/semaine, plus si chaleur)"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : conserver les plants les plus robustes à 40-60 cm d’espacement"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé + vérifier paillage"
+      },
+      "biological_control": {
+        "message": "Surveillance des pucerons et piérides du chou – favoriser biodiversité et auxiliaires"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos brocolis"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour les brocolis atteinte (7°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    }
+  },
+  "brussels_sprout": {
+    "commonName": "Chou de Bruxelles",
+    "description": "Légume crucifère formant de petites pommes le long de sa tige, riche en fibres, vitamines C et K. Cultivé en permaculture, il bénéficie d'une rotation stricte et d'associations protectrices.",
+    "culturalTips": [
+      "Rotation : ne pas cultiver de brassicacées sur la même parcelle avant 5-6 ans",
+      "Planter après des légumineuses (pois, fèves) pour un sol enrichi en azote",
+      "Tuteurer les plants en cas de vent ou croissance excessive",
+      "Éviter les excès d’azote après formation des pommes (favorise les feuilles au détriment des choux)",
+      "Surveiller limaces et altises, surtout en sols frais"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Bacillus thuringiensis (BT) contre les chenilles",
+        "Savon noir dilué contre pucerons",
+        "Décoction d’ail contre pucerons et champignons"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Carabes et hérissons contre limaces",
+        "Oiseaux insectivores contre divers ravageurs"
+      ],
+      "companionPlants": [
+        "mélisse",
+        "sauge",
+        "romarin",
+        "coriandre",
+        "œillets d’inde",
+        "tomates"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après semis, selon variété et climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé : 10-15 mm, au pied, en 2 fois cette semaine"
+      },
+      "thinning": {
+        "message": "Premier éclaircissement : conserver 6-8 cm entre plants (2-3 feuilles)"
+      },
+      "weeding": {
+        "message": "Vérifier le paillage et désherber manuellement les adventices concurrentes"
+      },
+      "biological_control": {
+        "message": "Appliquer Bacillus thuringiensis si chenilles présentes, ou savon noir contre pucerons"
+      },
+      "harvest": {
+        "message": "Les premiers choux de Bruxelles devraient être prêts à récolter sous 2-3 semaines"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour germination atteinte (7°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    }
+  },
+  "cabbage": {
+    "commonName": "Chou pommé",
+    "description": "Légume-feuille formant une pomme compacte, riche en fibres, vitamines C et K. Culture exigeante en eau et en nutriments.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter de choux au même endroit avant 3-4 ans",
+      "Buttage léger un mois après repiquage pour ancrer les racines",
+      "Éviter le stress hydrique (manque ou excès d'eau) pour prévenir l'éclatement de la pomme",
+      "Favoriser la biodiversité avec des fleurs mellifères pour attirer les auxiliaires",
+      "Ne pas composter les parties malades pour éviter la propagation des maladies"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et répulsif)",
+        "Décoction de prêle (renforce les tissus contre les champignons)",
+        "Huile de neem (contre pucerons et altises)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (prédateurs polyvalents)",
+        "Syrphes (larves dévorent les pucerons)"
+      ],
+      "companionPlants": [
+        "œillet d'inde",
+        "céleri",
+        "laitue",
+        "betterave",
+        "camomille (répulsifs naturels)"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après plantation, selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos choux : 4-6 litres/plant, au pied, tôt le matin"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conserver 50 cm entre plants, 6-8 feuilles"
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés, pensez au paillage si pas encore fait"
+      },
+      "biological_control": {
+        "message": "Appliquer purin d'ortie ou huile de neem en prévention contre pucerons"
+      },
+      "harvest": {
+        "message": "Vos choux approchent de maturité : vérifiez la fermeté de la pomme"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les choux atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    }
+  },
+  "carrot": {
+    "commonName": "Carotte",
+    "description": "Légume-racine croquant et sucré, riche en bêta-carotène, cultivé en agriculture biologique et permaculture avec des techniques douces et respectueuses de l'écosystème.",
+    "culturalTips": [
+      "Éviter les sols compacts ou mal drainés pour prévenir racines déformées ou pourriture",
+      "Ne pas pailler trop tôt si limaces ou rongeurs présents",
+      "Éviter les apports excessifs d’azote (favorise feuillage au détriment de la racine)",
+      "Pratiquer la rotation des cultures pour éviter la mouche de la carotte",
+      "Semer après la première génération de mouches (mai-juin)",
+      "Associer avec poireau, coriandre, aneth ou œillets d’Inde pour repousser la mouche de la carotte"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Marc de café comme répulsif",
+        "Poudre d’algues",
+        "Branchages de tanaisie ou d’absinthe"
+      ],
+      "beneficialInsects": [
+        "Chrysopes contre pucerons",
+        "Coccinelles contre pucerons"
+      ],
+      "companionPlants": [
+        "poireau",
+        "coriandre",
+        "aneth",
+        "œillets d’inde (contre mouche de la carotte)"
+      ]
+    },
+    "harvestTime": "90-120 jours après semis selon variété et taille désirée",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos carottes : sol à maintenir humide, surtout en phase de grossissement"
+      },
+      "thinning": {
+        "message": "Éclaircissage recommandé : laisser 4-8 cm entre plants selon variété"
+      },
+      "weeding": {
+        "message": "Désherbage manuel ou binage recommandé pour éviter la concurrence"
+      },
+      "biological_control": {
+        "message": "Installer filet anti-insectes ou appliquer répulsifs naturels (tanaisie, marc de café)"
+      },
+      "harvest": {
+        "message": "Premières récoltes possibles. Vérifiez la taille des racines."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la croissance des carottes atteinte (9°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "cauliflower": {
+    "commonName": "chou-fleur",
+    "description": "Légume crucifère exigeant en eau et en nutriments, formant une pomme compacte blanche ou colorée, riche en vitamines C et K.",
+    "culturalTips": [
+      "Rotation longue : 3 à 4 ans sans Brassicacées au même endroit",
+      "Amender le sol avec du compost mûr avant plantation",
+      "Éviter le stress hydrique ou thermique (risque de montée en graines ou absence de pomme)",
+      "Ne jamais repiquer ou travailler en période de fortes chaleurs",
+      "Surveiller l’apport d’azote : excès favorise les feuilles au détriment de la pomme"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de consoude ou d'ortie (préventif)",
+        "Savon noir (contre pucerons, en respectant dosages bio)",
+        "Voile anti-insectes contre mouche du chou et altises"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Oiseaux insectivores",
+        "Carabes (contre larves et chenilles)"
+      ],
+      "companionPlants": [
+        "bourrache",
+        "menthe",
+        "fenouil (répulsifs naturels contre certains ravageurs)"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après plantation, selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos choux-fleurs : maintenir sol humide (20-25 mm/semaine)"
+      },
+      "thinning": {
+        "message": "Premier éclaircissage : laisser 10 cm entre plants au stade 3-4 feuilles"
+      },
+      "transplanting": {
+        "message": "Repiquage recommandé au stade 6-8 feuilles, espacer de 70-80 cm"
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés, pensez au paillage"
+      },
+      "biological_control": {
+        "message": "Appliquer purin d'ortie ou installer voile anti-insectes en prévention"
+      },
+      "harvest": {
+        "message": "Surveillez la formation de la pomme : récolte imminente"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le chou-fleur atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    }
+  },
+  "celery_branch": {
+    "commonName": "Céleri branche",
+    "description": "Légume croquant et rafraîchissant, riche en fibres et minéraux. Exigeant en eau et en sol frais, il prospère en culture bio avec paillage et rotation rigoureuse.",
+    "culturalTips": [
+      "Rotation des cultures obligatoire (3-4 ans sans céleri au même endroit)",
+      "Butter les plants 15 jours avant récolte pour blanchir les côtes et adoucir la saveur",
+      "Éviter tout travail du sol ou manipulation par temps humide pour limiter les maladies cryptogamiques",
+      "Protéger les jeunes plants des limaces et escargots (Ferramol ou pièges biologiques)",
+      "Ne jamais laisser le sol sécher : le céleri est très sensible au stress hydrique"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie dilué à 10% (1x/mois en arrosage préventif contre maladies fongiques)",
+        "Bouillie bordelaise en cas d'urgence (seulement si autorisé en bio local)",
+        "Infusion de prêle contre les maladies du feuillage"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre les pucerons",
+        "Syrphes (larves dévorent les pucerons)",
+        "Carabes contre les limaces (favoriser biodiversité du sol)"
+      ],
+      "companionPlants": [
+        "chou",
+        "poireau",
+        "tomate",
+        "oignon",
+        "éviter les plantes gourmandes en eau comme la courgette"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après semis, ou 90 jours après repiquage",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre céleri branche : 20-30 mm cette semaine, au pied sans mouiller les feuilles"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conservez un plant tous les 30-40 cm, éliminez les plus faibles"
+      },
+      "weeding": {
+        "message": "Désherbage manuel ou paillage à vérifier — le céleri déteste la concurrence"
+      },
+      "biological_control": {
+        "message": "Traitement préventif au purin d'ortie recommandé pour éviter les maladies fongiques"
+      },
+      "harvest": {
+        "message": "Période de récolte approche — pensez à butter les plants pour blanchir les tiges"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le céleri branche atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (18°C) — bon moment pour semer"
+        }
+      }
+    }
+  },
+  "chard": {
+    "commonName": "Blette",
+    "description": "Légume-feuille à côtes charnues, riche en vitamines et minéraux. Appelée aussi bette ou poirée, elle se consomme crue ou cuite, feuilles et tiges.",
+    "culturalTips": [
+      "Rotation : attendre 3 ans avant de replanter au même endroit",
+      "Supprimer les tiges florales pour éviter l'épuisement de la plante",
+      "Pailler en été pour conserver l'humidité et éviter le stress hydrique",
+      "Arroser régulièrement pour éviter que les côtes ne deviennent fibreuses",
+      "Éviter la plantation à côté des poireaux"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de prêle en pulvérisation contre mildiou et rouille",
+        "Infusion de consoude pour fortifier les plants"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes auxiliaires",
+        "Vers de terre pour sol vivant"
+      ],
+      "companionPlants": [
+        "carottes",
+        "navets",
+        "haricots nains"
+      ]
+    },
+    "harvestTime": "60-90 jours après semis, selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos blettes : sol à maintenir frais (20-30 mm/semaine)"
+      },
+      "thinning": {
+        "message": "Éclaircissage à faire : conserver 1 plant vigoureux tous les 40 cm"
+      },
+      "weeding": {
+        "message": "Désherbage léger recommandé avant paillage"
+      },
+      "biological_control": {
+        "message": "Traitement préventif au purin de prêle recommandé contre maladies fongiques"
+      },
+      "harvest": {
+        "message": "Premières récoltes possibles pour vos blettes (feuilles externes)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la blette atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "chives": {
+    "commonName": "Ciboulette",
+    "description": "Plante aromatique vivace, riche en vitamines et aux propriétés répulsives naturelles contre certains ravageurs.",
+    "culturalTips": [
+      "Rotation des cultures : éviter de planter près des pois et haricots",
+      "Protéger en hiver avec un voile d'hivernage si température < -10°C",
+      "Éviter l'humidité stagnante pour prévenir la moisissure grise",
+      "Ne pas consommer crue en excès pour les personnes sensibles aux alliacées",
+      "Accepte le ressemis spontané — à gérer selon l'espace disponible"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Eau savonneuse au savon noir contre les pucerons",
+        "Infusion d'ail (en prévention)",
+        "Purin de consoude (fortifiant naturel)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes",
+        "Chrysopes"
+      ],
+      "companionPlants": [
+        "carotte",
+        "tomate",
+        "concombre",
+        "repousse certains ravageurs naturellement"
+      ]
+    },
+    "harvestTime": "60 jours après semis, puis récolte régulière tout l'été",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre ciboulette : maintenir sol frais, éviter excès"
+      },
+      "thinning": {
+        "message": "Éclaircissement terminé ? Vérifiez 15 cm entre chaque pied."
+      },
+      "weeding": {
+        "message": "Contrôle des mauvaises herbes recommandé — pensez au paillage léger si plants bien établis"
+      },
+      "biological_control": {
+        "message": "Risque de moisissure grise — aérez les plants et vérifiez l'arrosage"
+      },
+      "harvest": {
+        "message": "Première récolte possible ! Coupez les tiges au tiers pour favoriser la repousse."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention gel extrême (< -10°C) — protégez la ciboulette avec un voile d'hivernage"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (18-20°C)"
+        }
+      }
+    }
+  },
+  "coriander": {
+    "commonName": "Coriandre",
+    "description": "Plante aromatique annuelle, appréciée pour ses feuilles fraîches et ses graines. Sensible au stress hydrique qui provoque une montée rapide en graines.",
+    "culturalTips": [
+      "Éviter la montée prématurée en graines en maintenant un arrosage régulier",
+      "Rotation des cultures : ne pas replanter la coriandre au même endroit chaque année",
+      "Préfère un sol bien drainé",
+      "Supporte la mi-ombre mais préfère le plein soleil",
+      "Ne pas laisser le sol sécher complètement pour prolonger la récolte des feuilles"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Compost ou engrais organique (éviter les engrais chimiques)",
+        "Traitements bio en cas de maladies fongiques (rare si conditions optimales)"
+      ],
+      "beneficialInsects": [
+        "Hérissons contre limaces et escargots",
+        "Carabes contre limaces et autres invertébrés nuisibles"
+      ],
+      "companionPlants": [
+        "non spécifié",
+        "mais éviter la concurrence avec plantes envahissantes"
+      ]
+    },
+    "harvestTime": "30-45 jours après germination pour les feuilles, 90-100 jours pour les graines",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre coriandre : maintenir le sol humide, surtout en pot ou par temps chaud"
+      },
+      "thinning": {
+        "message": "Éclaircissage recommandé : espacer les plants de 10-15 cm pour un bon développement"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé : la coriandre est vulnérable à la concurrence des mauvaises herbes"
+      },
+      "biological_control": {
+        "message": "Surveiller limaces/escargots : favoriser hérissons et carabes, éviter produits chimiques"
+      },
+      "harvest": {
+        "message": "Récolte des feuilles possible à partir de 5 semaines. Couper les tiges extérieures pour prolonger la production."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la coriandre atteinte (10°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (18-22°C)"
+        }
+      }
+    }
+  },
+  "courgette": {
+    "commonName": "Courgette",
+    "description": "Légume-fruit vigoureux, productif et facile à cultiver en sol riche et bien drainé, idéal en permaculture et culture biologique.",
+    "culturalTips": [
+      "Rotation des cultures : attendre 2-3 ans avant de replanter des cucurbitacées au même endroit",
+      "Ne jamais arroser sur le feuillage pour éviter les maladies fongiques",
+      "Récolter en coupant le pédoncule avec un sécateur propre",
+      "Ne pas planter trop tôt : éviter les périodes fraîches et humides du printemps",
+      "Assurer une bonne aération entre les plants pour limiter l'oïdium et le mildiou"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et préventif)",
+        "Purin de prêle (anti-fongique)",
+        "Bicarbonate de soude (en pulvérisation contre l'oïdium)",
+        "Savon noir (contre pucerons)",
+        "Huile de pin ou pyrèthre (insecticide bio ciblé)"
+      ],
+      "beneficialInsects": [
+        "Larves de coccinelles (contre pucerons)",
+        "Syrphes (prédateurs de pucerons)",
+        "Guêpes parasitoïdes (contre chenilles)"
+      ],
+      "companionPlants": [
+        "haricot",
+        "maïs",
+        "radis",
+        "capucine (piège)",
+        "oignon",
+        "ail (répulsifs naturels)"
+      ]
+    },
+    "harvestTime": "45-60 jours après plantation, selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage copieux nécessaire pour vos courgettes : 5-8 litres par plant, au pied uniquement"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : conserver un plant tous les 70-80 cm, ne garder que les plus vigoureux"
+      },
+      "weeding": {
+        "message": "Désherbage manuel et vérification du paillage recommandés pour vos courgettes"
+      },
+      "biological_control": {
+        "message": "Traitement préventif au purin d'ortie ou de prêle recommandé contre les maladies fongiques"
+      },
+      "harvest": {
+        "message": "Premières récoltes possibles pour vos courgettes ! Couper le pédoncule avec un sécateur."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les courgettes atteinte (12°C) - risque de ralentissement ou de stress"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (22-25°C) - bon moment pour semer !"
+        }
+      }
+    }
+  },
+  "cucumber": {
+    "commonName": "Concombre",
+    "description": "Légume gourmand en eau, croissance rapide, idéal en permaculture avec paillage et treillis.",
+    "culturalTips": [
+      "Rotation des cultures sur 3-4 ans (éviter après d'autres cucurbitacées)",
+      "Utiliser un treillis ou support pour favoriser l'aération et éviter les fruits déformés",
+      "Éviter les sols mal drainés pour prévenir la pourriture racinaire",
+      "Récolter à maturité pour éviter l'amertume",
+      "Semer en poquets de 3-4 graines puis éclaircir au plus vigoureux"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de consoude (nourrissant et fortifiant)",
+        "Infusion de tanaisie (anti-pucerons)",
+        "Décoction d'ail (fongicide naturel)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes (prédateurs de pucerons)",
+        "Guêpes parasitoïdes (contre chenilles et pucerons)"
+      ],
+      "companionPlants": [
+        "capucines (piège à pucerons)",
+        "radis",
+        "oignon",
+        "laitue"
+      ]
+    },
+    "harvestTime": "50-65 jours après plantation selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos concombres : 2-5 litres par plant, au pied"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conserver 1 plant tous les 60-80 cm"
+      },
+      "weeding": {
+        "message": "Désherbage manuel + vérifier le paillage pour vos concombres"
+      },
+      "biological_control": {
+        "message": "Appliquer purin de consoude ou infusion de tanaisie en prévention"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos concombres — récoltez jeunes pour éviter l'amertume"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les concombres atteinte (12°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (20-25°C)"
+        }
+      }
+    }
+  },
+  "dill": {
+    "commonName": "Aneth",
+    "description": "Plante aromatique annuelle aux fines feuilles découpées, utilisée en cuisine et en médecine traditionnelle. Attire les pollinisateurs et repousse certains insectes nuisibles.",
+    "culturalTips": [
+      "Sol léger, bien drainé, riche en matière organique",
+      "Éviter l’excès d’eau pour prévenir les pourritures racinaires",
+      "Ne pas planter à proximité d’autres Apiacées (ex: fenouil)",
+      "Semer en plusieurs fois pour étaler la récolte et éviter la montée prématurée en graines",
+      "Rotation des cultures recommandée pour préserver la santé du sol"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purins bio en cas d’attaque forte (ex: purin d’ortie)",
+        "Décoctions naturelles (ex: ail, tanaisie)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes comme auxiliaires naturels",
+        "Pollinisateurs attirés par la floraison blanche"
+      ],
+      "companionPlants": [
+        "oignons",
+        "choux",
+        "concombres",
+        "brocolis (effet répulsif contre certains nuisibles)"
+      ]
+    },
+    "harvestTime": "60-80 jours après semis, selon conditions climatiques et variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage modéré nécessaire : sol doit rester légèrement humide, pas détrempé"
+      },
+      "thinning": {
+        "message": "Éclaircir à 15-25 cm entre plants dès 5-10 cm de hauteur ou 4-5 feuilles"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé — attention aux racines fines de l’aneth"
+      },
+      "biological_control": {
+        "message": "Appliquer purin d’ortie ou attirer coccinelles en cas de pucerons"
+      },
+      "harvest": {
+        "message": "Récolte possible des feuilles d’aneth — couper avant floraison pour plus de saveur"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour l’aneth atteinte (10°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (18-22°C)"
+        }
+      }
+    }
+  },
+  "eggplant": {
+    "commonName": "Aubergine",
+    "description": "Légume fruit de la famille des solanacées, apprécié pour sa chair ferme et son goût subtil, idéal en climat chaud et en sol riche.",
+    "culturalTips": [
+      "Rotation des cultures : éviter de replanter des solanacées (tomates, poivrons, pommes de terre) au même endroit pendant 3-4 ans",
+      "Ne pas recouvrir le collet lors de la plantation pour éviter le Sclérotinia",
+      "Pailler systématiquement pour conserver l'humidité et prévenir les maladies",
+      "Favoriser l'aération des plants pour limiter mildiou et champignons",
+      "Choisir un sol bien drainé, léger et riche en matière organique, en plein soleil"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et anti-pucerons)",
+        "Purin de prêle (préventif contre champignons)",
+        "Savon noir ou huiles essentielles en cas d'attaque"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Guêpes parasitoïdes",
+        "Chrysopes"
+      ],
+      "companionPlants": [
+        "basilic",
+        "soucis (contre certains ravageurs)"
+      ]
+    },
+    "harvestTime": "90-120 jours après plantation selon variété et climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos aubergines : 2-4 litres par plant, au pied, tôt le matin"
+      },
+      "thinning": {
+        "message": "Éclaircissage recommandé : conserver 50-70 cm entre plants les plus vigoureux"
+      },
+      "weeding": {
+        "message": "Vérifiez le paillage et désherbez manuellement si nécessaire"
+      },
+      "biological_control": {
+        "message": "Appliquez un purin de prêle en prévention contre les maladies cryptogamiques"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos aubergines"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les aubergines atteinte (15°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination pour l'aubergine (25-28°C)"
+        }
+      }
+    }
+  },
+  "garlic": {
+    "commonName": "Ail",
+    "description": "Bulbe aromatique aux propriétés culinaires et médicinales, cultivé en permaculture pour sa résistance et ses besoins modérés en eau.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter l’ail au même endroit avant 3-4 ans",
+      "Éviter les sols lourds et mal drainés pour prévenir la pourriture",
+      "Pailler généreusement pour conserver l’humidité et stabiliser la température du sol",
+      "Espacer les plants pour une bonne aération et éviter mildiou/rouille",
+      "Ne pas arroser sauf en cas de sécheresse prolongée — l’ail craint l’excès d’humidité"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d’ortie (fortifiant)",
+        "Décoction de prêle (anti-fongique)",
+        "Savon noir ou huiles essentielles en cas d’attaque"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (contre pucerons)",
+        "Auxiliaires favorisés par la biodiversité environnante"
+      ],
+      "companionPlants": [
+        "carotte",
+        "betterave",
+        "tomate",
+        "laitue",
+        "éviter les légumineuses"
+      ]
+    },
+    "harvestTime": "Environ 8 mois après plantation (selon variété et climat)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage occasionnel nécessaire pour votre ail — au pied, abondant mais rare"
+      },
+      "thinning": {
+        "message": "Éclaircissage non nécessaire — densité correcte dès la plantation"
+      },
+      "weeding": {
+        "message": "Contrôle des adventices recommandé — pensez au paillage pour réduire l’entretien"
+      },
+      "biological_control": {
+        "message": "Risque de maladies fongiques — appliquez un purin de prêle en prévention"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour votre ail — surveillez le jaunissement des feuilles"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour l’ail atteinte (1°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (15°C)"
+        }
+      }
+    }
+  },
+  "kale": {
+    "commonName": "Chou kale",
+    "description": "Légume-feuille riche en vitamines, antioxydants et minéraux. Très rustique, idéal en permaculture et bio.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter de Brassicacées au même endroit avant 5-6 ans",
+      "Sol riche en matière organique, bien drainé et frais",
+      "Éviter d'arroser le feuillage pour prévenir l'oïdium et la rouille",
+      "Surveiller la santé du sol pour éviter la hernie du chou",
+      "Privilégier un espacement généreux pour une bonne aération"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et répulsif)",
+        "Purin de tanaisie (contre pucerons et chenilles)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes (larves dévorent pucerons)",
+        "Oiseaux du jardin (contre chenilles)"
+      ],
+      "companionPlants": [
+        "mélisse",
+        "sauge",
+        "romarin",
+        "coriandre",
+        "aneth",
+        "œillets d’inde",
+        "tomates",
+        "genêt",
+        "sureau"
+      ]
+    },
+    "harvestTime": "60 jours après plantation, récolte possible jusqu'aux gelées",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre chou kale : sol à garder frais, jamais sec"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : 30 cm (compact) ou 80 cm (grand sujet) entre plants"
+      },
+      "weeding": {
+        "message": "Désherbage ou vérification du paillage recommandé pour votre chou kale"
+      },
+      "biological_control": {
+        "message": "Traitement préventif au purin d'ortie ou de tanaisie recommandé"
+      },
+      "harvest": {
+        "message": "Premières récoltes possibles pour votre chou kale !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le chou kale atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination du chou kale (18-20°C)"
+        }
+      }
+    }
+  },
+  "leek": {
+    "commonName": "Poireau",
+    "description": "Légume-racine au goût doux et subtil, riche en fibres et vitamines. Très rustique et adapté aux cultures d'automne-hiver.",
+    "culturalTips": [
+      "Rotation des cultures : attendre 4-5 ans avant de replanter des alliacées au même endroit",
+      "Éviter après ail, oignon, pomme de terre, carotte",
+      "Préférer la rotation avec laitues, navets, crucifères",
+      "Butter progressivement pour blanchir le fût",
+      "Ne pas excéder en eau pour éviter la pourriture",
+      "Sol bien drainé indispensable",
+      "Installer le paillage après les premiers buttages pour ne pas freiner le blanchiment"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (anti-pucerons, fortifiant)",
+        "Décoction de tanaisie",
+        "Cendres contre limaces et certains insectes"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (prédateurs de thrips et pucerons)"
+      ],
+      "companionPlants": [
+        "laitues",
+        "carottes",
+        "betteraves",
+        "éviter les autres alliacées en culture simultanée"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après semis, selon variété et conditions climatiques",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé : 20-30 mm d'eau au pied. Réduire si paillé."
+      },
+      "thinning": {
+        "message": "Éclaircissage à prévoir : laisser 15 cm entre plants matures"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé — pensez au paillage pour réduire la fréquence"
+      },
+      "biological_control": {
+        "message": "Appliquer purin d'ortie ou décoction de tanaisie en prévention"
+      },
+      "harvest": {
+        "message": "Récolte imminente — arrêtez les arrosages dans 3-4 semaines"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale de croissance atteinte (2°C) — protéger si gel annoncé"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (18-19°C)"
+        }
+      }
+    }
+  },
+  "lettuce": {
+    "commonName": "Laitue",
+    "description": "Légume-feuille populaire, riche en vitamines et minéraux, cultivé pour ses feuilles tendres.",
+    "culturalTips": [
+      "Rotation des cultures sur au moins 4 ans",
+      "Éviter les arrosages par aspersion",
+      "Éviter la surpopulation des plants",
+      "Choisir des variétés résistantes ou adaptées à la saison",
+      "Maintenir un sol léger, bien drainé sans excès d'azote",
+      "Aérer la planche pour limiter les maladies"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ail contre pucerons",
+        "Purin de fougère",
+        "Savon noir contre pucerons",
+        "Extraits d'armoise ou d'agrumes contre mildiou"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Chrysopes contre pucerons"
+      ]
+    },
+    "harvestTime": "45-60 jours après plantation selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos laitues: 2-4 L/m²"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire: conserver 20-25 cm entre plants"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé pour vos laitues"
+      },
+      "biological_control": {
+        "message": "Surveillance renforcée contre limaces et mildiou recommandée"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos laitues"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour les laitues atteinte (3°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (15°C)"
+        }
+      }
+    }
+  },
+  "mache": {
+    "commonName": "Mâche",
+    "description": "Légume-feuille rustique, idéal pour l'hiver, aux rosettes tendres et délicates, peu exigeant en nutriments mais sensible aux à-coups d'eau et à la chaleur.",
+    "culturalTips": [
+      "Semer très superficiellement (0,5–1 cm) pour une levée régulière",
+      "Pré-refroidir les graines au réfrigérateur 3-5 jours en cas de chaleur estivale",
+      "Éviter les sols lourds ou détrempés (risque de fonte des semis)",
+      "Ne pas apporter d’azote en excès (goût fade, risque de maladies)",
+      "Récolter en coupant au collet pour favoriser d’éventuelles repousses",
+      "Protéger du froid intense avec un voile P17 si nécessaire",
+      "Associer avec poireaux, choux ou carottes tardives pour optimiser l’espace"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Aucun traitement foliaire nécessaire si bon équilibre hydrique et aération",
+        "Purin de consoude en très faible dose si sol pauvre",
+        "Pièges à bière ou barrières de cuivre contre limaces"
+      ],
+      "beneficialInsects": [],
+      "companionPlants": [
+        "poireaux",
+        "choux",
+        "carottes tardives"
+      ]
+    },
+    "harvestTime": "6-8 semaines après semis selon température et variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre mâche : 8-12 mm d'eau au pied, tôt le matin"
+      },
+      "thinning": {
+        "message": "Éclaircissage recommandé : conserver 8-15 cm entre plants selon variété"
+      },
+      "weeding": {
+        "message": "Désherbage superficiel recommandé — attention aux racines fragiles"
+      },
+      "biological_control": {
+        "message": "Risque de Botrytis ou Mildiou — aérer, éviter arrosage tardif"
+      },
+      "harvest": {
+        "message": "Premières récoltes possibles — couper au collet tôt le matin"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale de croissance atteinte (5°C) — protéger si descente plus basse"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (10-18°C) — semer en soirée si sol frais"
+        }
+      }
+    }
+  },
+  "melon": {
+    "commonName": "Melon",
+    "description": "Fruit-légume sucré et juteux, cultivé en permaculture avec soin pour éviter l’humidité excessive et favoriser la santé du sol.",
+    "culturalTips": [
+      "Rotation des cultures obligatoire (4-5 ans sans cucurbitacées au même endroit)",
+      "Éviter les excès d’azote pour limiter la sensibilité aux maladies",
+      "Palisser les plants pour éloigner les fruits du sol humide",
+      "Choisir des variétés rustiques ou hybrides F1 résistantes",
+      "Ne pas planter près d’autres cucurbitacées ou solanacées pour éviter concurrence et maladies"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle (préventif)",
+        "Bicarbonate de soude (contre l’oïdium)",
+        "Soufre (en cas d’attaque confirmée)",
+        "Purin d’ortie dilué (début de culture)",
+        "Purin de consoude dilué (floraison/fructification)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes",
+        "Chrysopes"
+      ],
+      "companionPlants": [
+        "ail",
+        "oignon",
+        "ciboulette",
+        "basilic",
+        "œillet d’inde"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après plantation selon variété et climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos melons: 10-20 mm au pied, tôt le matin"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire: conserver un plant tous les 100 cm"
+      },
+      "weeding": {
+        "message": "Désherbage léger recommandé en début de culture + paillage"
+      },
+      "biological_control": {
+        "message": "Traitement préventif au bicarbonate de soude ou décoction de prêle recommandé"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos melons"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour les melons atteinte (15°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (24-28°C)"
+        }
+      }
+    }
+  },
+  "navet": {
+    "commonName": "Navet",
+    "description": "Légume-racine rapide à cultiver, croquant et savoureux, idéal en rotation et en permaculture si cultivé avec soin.",
+    "culturalTips": [
+      "Utiliser un sol bien aéré, sans cailloux, pour favoriser le développement racinaire",
+      "Éviter les fumures fraîches (risque de hernie du navet)",
+      "Protéger les semis précoces avec tunnel ou châssis (aérer le jour)",
+      "Respecter une rotation longue des cultures (éviter brassicacées successives)",
+      "Semer en mars-avril ou août pour éviter le stress thermique"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle contre le mildiou",
+        "Purin d'ortie comme fortifiant et préventif"
+      ],
+      "beneficialInsects": [],
+      "companionPlants": [
+        "thym",
+        "romarin",
+        "mélisse",
+        "hysope (contre les altises)"
+      ]
+    },
+    "harvestTime": "Environ 50 jours après semis selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos navets : maintenir le sol frais (1-2x/semaine en été)"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : laisser 10-15 cm entre chaque plant"
+      },
+      "weeding": {
+        "message": "Désherbage manuel ou paillage recommandé autour des navets"
+      },
+      "biological_control": {
+        "message": "Pulvérisation préventive de décoction de prêle ou purin d'ortie recommandée"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos navets (récolter jeunes pour meilleure texture)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les navets atteinte (1°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (19°C)"
+        }
+      }
+    }
+  },
+  "onion": {
+    "commonName": "Oignon",
+    "description": "Légume bulbeux essentiel en cuisine, riche en antioxydants et en composés soufrés bénéfiques pour la santé.",
+    "culturalTips": [
+      "Préférer un sol léger, meuble et bien drainé",
+      "Exposition en plein soleil indispensable",
+      "Éviter l’excès d’humidité : pas de fumier frais ni de purin d’ortie près des oignons",
+      "Rotation des cultures : ne pas replanter d’oignons au même endroit avant 3-4 ans",
+      "Ne pas associer avec les légumineuses (pois, fèves)",
+      "Utiliser un filet anti-insectes en période de vol des ravageurs",
+      "Récolter uniquement lorsque le feuillage est bien sec pour une bonne conservation"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Pièges jaunes collants contre pucerons et thrips",
+        "Décoction de tanaisie contre maladies fongiques",
+        "Décoction de prêle contre le mildiou",
+        "Bouillie bordelaise (usage bio ciblé)",
+        "Insecticides naturels à base de pyrèthre ou de neem"
+      ],
+      "beneficialInsects": [],
+      "companionPlants": [
+        "carotte",
+        "betterave",
+        "laitue",
+        "tomate",
+        "chou (éviter pois",
+        "fèves)"
+      ]
+    },
+    "harvestTime": "Lorsque le feuillage est complètement sec, généralement 4 à 5 mois après semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage modéré conseillé : évitez l’excès d’humidité pour prévenir la pourriture des bulbes"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : espacer les plants de 10-15 cm pour un bon développement des bulbes"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé : sarcler régulièrement pour éviter la concurrence des mauvaises herbes"
+      },
+      "biological_control": {
+        "message": "Appliquer une décoction de prêle ou installer des pièges jaunes en cas d’humidité élevée"
+      },
+      "harvest": {
+        "message": "Vérifiez le séchage du feuillage : récoltez vos oignons quand les tiges sont complètement sèches"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour les oignons atteinte (1°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (15°C)"
+        }
+      }
+    }
+  },
+  "parsley": {
+    "commonName": "Persil",
+    "description": "Herbe aromatique bisannuelle, riche en vitamines, appréciée en cuisine et en médecine naturelle. Germination lente, nécessite sol frais et riche.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter au même endroit pendant au moins 3 ans",
+      "Protéger en fin d'hiver avec un voile d'hivernage si nécessaire",
+      "Éviter les arrosages excessifs pour prévenir la pourriture des racines",
+      "Récolter avant la montée en graine pour éviter l'amertume (année 2)",
+      "Ne pas laisser monter complètement en graine pour éviter l'envahissement"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant naturel)",
+        "Décoctions de plantes (ex: prêle, consoude)",
+        "Infusions naturelles sans produits chimiques"
+      ],
+      "beneficialInsects": [
+        "Larves de coccinelles",
+        "Insectes auxiliaires divers (syrphes, chrysopes)"
+      ],
+      "companionPlants": [
+        "ciboulette (repousse la mouche de la carotte)"
+      ]
+    },
+    "harvestTime": "90 jours après semis, récolte possible tout l'été et jusqu'à l'hiver dans les climats doux",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre persil : sol à maintenir frais, arroser matin ou soir"
+      },
+      "thinning": {
+        "message": "Éclaircissage à faire : laissez 15-20 cm entre les plants de persil"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé — racines superficielles, soyez doux !"
+      },
+      "biological_control": {
+        "message": "Appliquer un purin d'ortie en prévention pour renforcer les plants"
+      },
+      "harvest": {
+        "message": "Première récolte possible pour votre persil — coupez les tiges extérieures en priorité"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le persil atteinte (5°C) — protéger si nécessaire"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination du persil (20-25°C)"
+        }
+      }
+    }
+  },
+  "parsnip": {
+    "commonName": "Panais",
+    "description": "Légume-racine ancien, sucré et nutritif, très sensible à la sécheresse. Exige un sol profond, léger et bien drainé pour éviter les racines fourchues.",
+    "culturalTips": [
+      "Éviter les engrais riches en azote (favorise le feuillage au détriment de la racine)",
+      "Utiliser uniquement des graines de l'année (germination dégradée au-delà)",
+      "Rotation stricte : attendre 6 ans avant de ressemer au même endroit",
+      "Ne pas cultiver après d'autres Apiacées (carotte, céleri, fenouil)",
+      "Sol profond, léger, bien drainé, sans cailloux pour éviter les racines fourchues",
+      "Éviter d’arroser le soir pour limiter les maladies fongiques"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de lavande (répulsive)",
+        "Filets anti-insectes contre la mouche de la carotte",
+        "Infusions ou purins naturels (ex: tanaisie, ail)"
+      ],
+      "beneficialInsects": [
+        "Auxiliaires attirés par la biodiversité (coccinelles, syrphes, chrysopes)",
+        "Guêpes parasitoïdes contre les œufs de ravageurs"
+      ],
+      "companionPlants": [
+        "oignon",
+        "échalote",
+        "ail (répulsifs naturels contre certains insectes)"
+      ]
+    },
+    "harvestTime": "4 à 6 mois après semis, idéalement après les premières gelées pour sucrer la racine",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage copieux nécessaire pour vos panais : humidifiez en profondeur. Évitez le soir."
+      },
+      "thinning": {
+        "message": "Éclaircissez vos panais : laissez 15-20 cm entre plants à 2-3 feuilles vraies."
+      },
+      "weeding": {
+        "message": "Désherbage recommandé + paillage pour limiter la concurrence des adventices."
+      },
+      "biological_control": {
+        "message": "Installer filets anti-insectes si risque de mouche de la carotte. Favoriser biodiversité."
+      },
+      "harvest": {
+        "message": "Récolte possible des panais. Idéal après premières gelées pour améliorer le goût."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la croissance du panais atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (18°C) pour vos panais."
+        }
+      }
+    }
+  },
+  "potato": {
+    "commonName": "Pomme de terre",
+    "description": "Tubercule nourrissant et polyvalent, cultivé en permaculture avec rotation et paillage pour limiter les maladies et les mauvaises herbes.",
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter au même endroit avant 3-4 ans",
+      "Sol léger, bien drainé, enrichi en matière organique",
+      "Butter les plants pour protéger les tubercules de la lumière",
+      "Arrêter l’arrosage 1 mois avant récolte pour favoriser maturation",
+      "Éviter l’arrosage nocturne pour limiter les maladies fongiques",
+      "Utiliser de l’eau de pluie si possible"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Bouillie bordelaise (prévention mildiou)",
+        "Purin d’ortie (fortifiant)",
+        "Décoction d’ail (fongicide naturel)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (contre pucerons)",
+        "Nématodes bénéfiques (contre parasites souterrains)"
+      ],
+      "companionPlants": [
+        "capucine",
+        "souci",
+        "trèfle (attirent auxiliaires",
+        "répulsifs naturels)"
+      ]
+    },
+    "harvestTime": "Environ 90-120 jours après plantation, selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage modéré nécessaire : 15-30 mm/semaine, au pied, sans mouiller les feuilles"
+      },
+      "thinning": {
+        "message": "Éclaircissage non nécessaire si plantation initiale respecte 30-40 cm"
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés. Pensez au paillage et au buttage."
+      },
+      "biological_control": {
+        "message": "Risque de mildiou : appliquer bouillie bordelaise ou purin d’ortie en prévention"
+      },
+      "harvest": {
+        "message": "Récolte possible à partir de maintenant. Arrêtez l’arrosage depuis 1 mois."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la pomme de terre atteinte (7°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "courge_potiron": {
+    "commonName": "Courge Potiron ",
+    "description": "Légume-fruit gourmand en espace, idéal en permaculture, riche en vitamines et fibres. Variétés coureuses ou non, nécessitant un sol riche et bien drainé.",
+    "culturalTips": [
+      "Rotation des cultures : attendre 2 à 3 ans avant de replanter des cucurbitacées au même endroit",
+      "Privilégier une culture après les légumineuses (enrichissent le sol en azote)",
+      "Éviter la proximité avec pommes de terre, radis ou autres cucurbitacées",
+      "Tailler les coureurs des variétés vigoureuses pour favoriser la fructification",
+      "Ne jamais mouiller le feuillage pour éviter mildiou et oïdium",
+      "Protéger les fruits du contact direct avec le sol (paillage ou support)"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle (prévention fongique)",
+        "Décoction d'ail (prévention fongique et insectes)",
+        "Purin de consoude (fortifiant)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes (larves dévorent pucerons)",
+        "Chrysopes (prédateurs polyvalents)"
+      ],
+      "companionPlants": [
+        "maïs",
+        "haricots (méthode des trois sœurs)",
+        "capucine (piège à pucerons)"
+      ]
+    },
+    "harvestTime": "Environ 90-120 jours après semis, selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé : 15 mm au pied, éviter le feuillage. Privilégier le soir en cas de chaleur."
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : conservez un seul plant vigoureux par emplacement."
+      },
+      "weeding": {
+        "message": "Désherbage manuel ou mécanique recommandé avant pose du paillage."
+      },
+      "biological_control": {
+        "message": "Traitement préventif conseillé : décoction de prêle ou d'ail pour éviter maladies fongiques."
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos courges/potirons (90-120 jours après semis)."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les courges atteinte (12°C). Risque de ralentissement ou gel."
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination atteintes (21-24°C)."
+        }
+      }
+    }
+  },
+  "roquette": {
+    "commonName": "Roquette",
+    "description": "Légume-feuille au goût poivré, riche en vitamines et minéraux. Idéal en culture rapide et en permaculture. Craint la chaleur et la sécheresse qui accélèrent la montée à graines.",
+    "culturalTips": [
+      "Rotation des cultures tous les 3 ans pour éviter maladies et épuisement du sol",
+      "Éviter les périodes de forte chaleur — privilégier la mi-ombre en été",
+      "Ne pas trop fertiliser en azote pour conserver une saveur équilibrée",
+      "Pailler pour garder le sol frais et limiter la montée à graines",
+      "Laisser des zones non récoltées pour favoriser la biodiversité et la régulation naturelle des parasites"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction d’ail ou de piment",
+        "Purins d’ortie, prêle, consoude",
+        "Pyrèthre végétal (en dernier recours)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Chrysopes contre pucerons"
+      ],
+      "companionPlants": [
+        "laisser en bordure pour attirer auxiliaires",
+        "éviter la concurrence avec plantes gourmandes"
+      ]
+    },
+    "harvestTime": "30 jours après semis (feuilles jeunes à couper régulièrement)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé pour votre roquette : modéré, tôt le matin, pour éviter la montée à graines."
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : espacer les plants à 8 cm, puis à 20-30 cm pour un bon développement."
+      },
+      "weeding": {
+        "message": "Désherbage manuel ou binage léger recommandé pour éviter la concurrence."
+      },
+      "biological_control": {
+        "message": "Appliquer une décoction d’ail ou purin d’ortie en prévention. Installer des filets anti-insectes si nécessaire."
+      },
+      "harvest": {
+        "message": "Première récolte possible ! Coupez les feuilles jeunes pour favoriser la repousse."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la roquette atteinte (4°C). Protéger en cas de gel."
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (15°C) — bon moment pour semer !"
+        }
+      }
+    }
+  },
+  "rosemary": {
+    "commonName": "Romarin",
+    "description": "Arbuste aromatique méditerranéen, résistant à la sécheresse et répulsif naturel contre de nombreux insectes. Idéal en permaculture et culture bio.",
+    "culturalTips": [
+      "Ne jamais planter à l'ombre — besoin de min. 6h de soleil quotidien",
+      "Sol bien drainé obligatoire — ajouter sable ou pierre ponce si nécessaire",
+      "Éviter les sols trop riches ou lourds — préfère sol pauvre, calcaire ou légèrement alcalin",
+      "Pas de rotation nécessaire — peut rester en place plusieurs années",
+      "Ne jamais laisser le sol humide — risque de pourriture des racines et d'oïdium"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Savon noir dilué (contre pucerons/cochenilles)",
+        "Purin d'ortie (traitement préventif et fortifiant)",
+        "Nettoyage manuel des parties infestées (si infestation légère)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Guêpes parasitoïdes (Aphidius spp.)"
+      ],
+      "companionPlants": [
+        "choux",
+        "carottes",
+        "haricots",
+        "repousse naturelle des insectes grâce aux huiles essentielles"
+      ]
+    },
+    "harvestTime": "Feuilles récoltables toute l'année une fois la plante établie (après 3-4 mois)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage profond recommandé pour votre romarin — vérifiez sécheresse du sol sur 2 cm"
+      },
+      "thinning": {
+        "message": "Éclaircissement à 40 cm recommandé dès la plantation"
+      },
+      "weeding": {
+        "message": "Désherbage manuel conseillé — pensez au paillage pour réduire la fréquence"
+      },
+      "biological_control": {
+        "message": "Traitement bio au savon noir ou purin d'ortie recommandé contre pucerons"
+      },
+      "harvest": {
+        "message": "Votre romarin est prêt à être récolté — coupez les tiges au besoin, toute l'année"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour le romarin atteinte (10°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "salsify": {
+    "commonName": "Salsifis",
+    "description": "Légume-racine bisannuel au goût subtil de noisette, apprécié en potage ou gratin. Culture exigeante en sol meuble mais peu gourmande en eau une fois établie.",
+    "culturalTips": [
+      "Culture bisannuelle : récolter les racines avant la floraison la 2e année",
+      "Supprimer les hampes florales dès la 1ère année pour favoriser la racine",
+      "Éviter les sols lourds et mal drainés (risque de pourriture)",
+      "Rotation des cultures (éviter de replanter après d'autres astéracées)",
+      "Attention aux limaces et escargots sur les jeunes plants",
+      "Semer en pleine terre, pas de repiquage (racine pivotante fragile)"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de prêle (préventif contre rouille)",
+        "Décoction d'ail (fongicide naturel)",
+        "Cendres ou coquilles d'œufs broyées contre limaces",
+        "Pièges à bière pour limaces"
+      ],
+      "beneficialInsects": [
+        "Carabes (prédateurs de limaces)",
+        "Crapauds (régulateurs naturels des gastéropodes)"
+      ],
+      "companionPlants": [
+        "aucun compagnon spécifique documenté",
+        "mais paillage vivant (phacélie",
+        "trèfle) utile"
+      ]
+    },
+    "harvestTime": "120-150 jours après semis, à l'automne de la 1ère année ou au printemps de la 2e année",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage en pluie fine nécessaire pour la levée du salsifis"
+      },
+      "thinning": {
+        "message": "Éclaircissage à 15-20 cm recommandé pour vos salsifis"
+      },
+      "weeding": {
+        "message": "Désherbage manuel léger recommandé pour éviter d'endommager les racines"
+      },
+      "biological_control": {
+        "message": "Surveiller limaces et escargots — installer pièges ou paillis protecteur"
+      },
+      "harvest": {
+        "message": "Période de récolte possible pour vos salsifis (racines avant floraison)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour la croissance du salsifis atteinte (7°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "scarole": {
+    "commonName": "Scarole",
+    "description": "Légume-feuille croquant et légèrement amer, idéal en salade. Blanchi avant récolte pour un cœur tendre et doux.",
+    "culturalTips": [
+      "Rotation obligatoire : ne pas replanter d’astéracées au même endroit avant 4-5 ans",
+      "Blanchir la scarole 15 jours avant récolte avec cloche ou pot retourné",
+      "Protéger avec voile d’hivernage en cas de gelées fortes",
+      "Éviter d’enterrer le collet lors du repiquage",
+      "Éclaircir en serre/tunnel en coupant une salade sur deux dès que les feuilles se touchent"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d’ortie (prévention mildiou)",
+        "Eau savonneuse douce (contre pucerons)",
+        "Purins d’ail ou piment (contre altises)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Nématodes bénéfiques (contre chenilles)"
+      ],
+      "companionPlants": [
+        "menthe (répulsif contre altises)"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après semis, selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos scaroles : humidifiez la base sans mouiller le feuillage"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : espacer les plants à 30 cm"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé + pensez au paillage"
+      },
+      "biological_control": {
+        "message": "Risque de mildiou : appliquez du purin d’ortie et vérifiez l’aération"
+      },
+      "harvest": {
+        "message": "Préparez le blanchiment : couvrez les cœurs 15 jours avant récolte"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la scarole atteinte (4°C) - protégez avec voile d’hivernage"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (15°C)"
+        }
+      }
+    }
+  },
+  "shallot": {
+    "commonName": "Échalote",
+    "description": "Bulbe aromatique proche de l'oignon, cultivé pour ses gousses regroupées. Craint l'humidité stagnante et nécessite un sol bien drainé.",
+    "culturalTips": [
+      "Rotation culturale de 3 à 5 ans, éviter de replanter des alliacées au même endroit",
+      "Privilégier une culture après légumes-feuilles, légumes-fruits ou légumineuses",
+      "Ne jamais planter dans un sol mal drainé ; préférer les buttes si nécessaire",
+      "Éviter l’excès d’azote qui favorise le feuillage au détriment des bulbes",
+      "Planter les bulbes avec la pointe vers le haut, à 2 cm de profondeur"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Bouillie bordelaise bio (préventif contre le mildiou)",
+        "Filets anti-insectes (contre la mouche de l’oignon)",
+        "Œillets d’Inde (contre les nématodes)"
+      ],
+      "beneficialInsects": [
+        "Auxiliaires naturels non spécifiques (favorisés par la biodiversité)"
+      ],
+      "companionPlants": [
+        "carotte",
+        "sarriette",
+        "aneth (répulsifs naturels contre la mouche de l’oignon)"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après plantation, lorsque le feuillage jaunit et sèche",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage modéré nécessaire pour vos échalotes : au pied, sans mouiller le feuillage."
+      },
+      "thinning": {
+        "message": "Éclaircissement effectué à la plantation (15 cm entre plants, 30 cm entre rangs)."
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé : attention aux racines superficielles des échalotes."
+      },
+      "biological_control": {
+        "message": "Risque de mildiou : appliquer bouillie bordelaise bio en prévention."
+      },
+      "harvest": {
+        "message": "Récolte imminente : surveillez le jaunissement du feuillage des échalotes."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour les échalotes atteinte (3°C)."
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (15°C)."
+        }
+      }
+    }
+  },
+  "spinach": {
+    "commonName": "Épinard",
+    "description": "Légume-feuille riche en fer, vitamines et antioxydants, idéal en culture fraîche et rapide. Préfère les températures fraîches et un sol humide mais bien drainé.",
+    "culturalTips": [
+      "Rotation des cultures : attendre au moins 3 ans avant de replanter des épinards au même endroit",
+      "Sol riche en matière organique, bien drainé, légèrement acide",
+      "Éviter d'arroser sur le feuillage pour prévenir les maladies fongiques",
+      "Privilégier une exposition ensoleillée à mi-ombre",
+      "Attention aux associations défavorables : fenouil, betterave, topinambour"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle (prévention fonte des semis)",
+        "Bicarbonate de soude + savon noir (contre mildiou)",
+        "Charbon de bois incorporé au sol (effet antifongique)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Carabes (prédateurs de limaces et œufs d'insectes)",
+        "Syrphes (larves consomment pucerons)"
+      ],
+      "companionPlants": [
+        "laitue",
+        "radis",
+        "pois",
+        "fraises",
+        "choux (favorisent la croissance ou partagent l'espace efficacement)"
+      ]
+    },
+    "harvestTime": "40-50 jours après semis, selon variété et conditions",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos épinards : 10-20 mm d'eau cette semaine, au pied uniquement"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conservez un plant tous les 10 à 12 cm"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé + pensez au paillage pour limiter les repousses"
+      },
+      "biological_control": {
+        "message": "Risque de mildiou : pulvérisez bicarbonate de soude + savon noir en prévention"
+      },
+      "harvest": {
+        "message": "Vos épinards sont prêts à être récoltés ! Cueillez les feuilles extérieures en priorité."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour la croissance des épinards atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination pour les épinards (15-18°C)"
+        }
+      }
+    }
+  },
+  "sweet_corn": {
+    "commonName": "Maïs doux",
+    "description": "Céréale-légume cultivée pour ses épis sucrés, exigeante en chaleur et en azote, idéale en association Milpa (maïs-haricots-courges).",
+    "culturalTips": [
+      "Semer ou planter en blocs ou carrés (minimum 4 rangs) pour assurer la pollinisation par le vent",
+      "Éviter de planter en isolé — la pollinisation échoue",
+      "Préférer un sol riche en matière organique (compost ou fumier décomposé avant plantation)",
+      "Rotation : ne pas cultiver au même endroit avant 4 ans, idéalement après légumineuses",
+      "Association bénéfique : système Milpa (maïs + haricots grimpants + courges)",
+      "Ne pas trop arroser : risque de pourriture des racines et maladies fongiques"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle contre l’oïdium",
+        "Purin d’ortie en préventif fortifiant",
+        "Décoction d’ail contre la rouille"
+      ],
+      "beneficialInsects": [
+        "Trichogrammes contre la pyrale du maïs",
+        "Coccinelles et chrysopes contre pucerons et autres insectes nuisibles"
+      ],
+      "companionPlants": [
+        "haricots grimpants",
+        "courges (système milpa)",
+        "tournesols (brise",
+        "vent)"
+      ]
+    },
+    "harvestTime": "65-80 jours après semis, selon variété et conditions climatiques",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour votre maïs doux : 15-20 mm cette semaine"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : conserver 30 cm entre plants, éliminer les plus faibles"
+      },
+      "weeding": {
+        "message": "Binage et contrôle des adventices recommandés pour votre maïs doux"
+      },
+      "biological_control": {
+        "message": "Traitement préventif conseillé : purin d’ortie ou décoction de prêle"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour votre maïs doux — vérifiez la maturité des épis"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le maïs doux atteinte (10°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination du maïs doux (20-25°C)"
+        }
+      }
+    }
+  },
+  "thyme": {
+    "commonName": "Thym",
+    "description": "Plante aromatique vivace, résistante à la sécheresse, idéale en permaculture pour son action répulsive contre certains nuisibles et ses besoins minimes en eau.",
+    "culturalTips": [
+      "Éviter l'humidité constante pour prévenir la pourriture des racines",
+      "Privilégier un sol léger, calcaire, pauvre et bien drainé",
+      "Tailler annuellement à la floraison pour stimuler la repousse et conserver la forme",
+      "Renouveler les plants tous les 4 ans en climat humide pour préserver la saveur",
+      "Associer avec le romarin (besoins similaires, effet répulsif complémentaire)",
+      "Rotation des cultures recommandée pour éviter l'appauvrissement du sol",
+      "Éviter les engrais chimiques ou excès de compost — une fertilisation légère suffit"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de neem (en cas d'infestation ciblée)",
+        "Savon noir dilué (contre pucerons rares)",
+        "Décoctions de plantes aromatiques (préventif)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (auxiliaires généraux)",
+        "Chrysopes (contre pucerons)",
+        "Syrphes (pollinisateurs et auxiliaires)"
+      ],
+      "companionPlants": [
+        "romarin",
+        "lavande",
+        "sauge",
+        "plantes méditerranéennes à faible besoin hydrique"
+      ]
+    },
+    "harvestTime": "Dès la floraison, 2 à 3 mois après plantation — récolte possible toute l'année en climat doux",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage léger recommandé pour votre thym : 20 litres/m² au pied, seulement si sol sec"
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : conserver un plant tous les 30 cm"
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé autour des jeunes plants de thym"
+      },
+      "biological_control": {
+        "message": "Surveillance renforcée : risque de pourriture ou maladie fongique — aérer et éviter l’arrosage du feuillage"
+      },
+      "harvest": {
+        "message": "Première récolte possible : couper les tiges florales pour favoriser la repousse"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le thym atteinte (10°C) — protéger en cas de gel"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  "tomato": {
+    "commonName": "Tomate",
+    "description": "Fruit-légume populaire, riche en vitamines et antioxydants.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans solanacées au même endroit)",
+      "Éviter d'arroser sur les feuilles",
+      "Supprimer les feuilles basses touchant le sol",
+      "Espacer correctement les plants pour l'aération",
+      "Choisir des variétés résistantes (Tigerelle, Rose claire, Paoline)"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et anti-pucerons)",
+        "Décoction d'ail",
+        "Infusion de tanaisie"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Guêpes parasitoïdes (Aphidius spp.)",
+        "Nématodes Steinernema feltiae contre mineuses"
+      ],
+      "companionPlants": [
+        "œillet d'inde",
+        "basilic contre nématodes"
+      ]
+    },
+    "harvestTime": "50-100 jours après plantation selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour vos tomates: 3-5 litres par plant"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire: conserver 50-70 cm entre plants"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé pour vos tomates"
+      },
+      "biological_control": {
+        "message": "Traitement préventif au purin d'ortie recommandé"
+      },
+      "harvest": {
+        "message": "Période de récolte approche pour vos tomates"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: température minimale pour les tomates atteinte (12°C)"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (22-25°C)"
+        }
+      }
+    }
+  },
+  "topinambour": {
+    "commonName": "Topinambour",
+    "description": "Plante robuste produisant des tubercules comestibles, peu exigeante en eau et en entretien. Peut devenir envahissante si non maîtrisée.",
+    "culturalTips": [
+      "Rotation obligatoire : ne pas replanter avant 4 ans au même endroit",
+      "Planter après des légumineuses (fèves, trèfle)",
+      "Après récolte, privilégier cultures légères ou feuilles",
+      "Éviter de planter près de légumes sensibles à l’ombre",
+      "Récolter soigneusement pour éviter la repousse spontanée envahissante"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Bicarbonate de soude (1 c.à café/L) contre mildiou",
+        "Savon noir ou huile de neem contre pucerons",
+        "Pièges à bière et cendres contre limaces"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes contre pucerons",
+        "Nématodes bénéfiques contre taupins"
+      ],
+      "companionPlants": [
+        "menthe",
+        "coriandre (contre doryphores)"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après plantation, à l'automne ou en hiver",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé uniquement en cas de sécheresse prolongée pour votre topinambour."
+      },
+      "thinning": {
+        "message": "Éclaircissage et buttage recommandés à 20-30 cm de hauteur."
+      },
+      "weeding": {
+        "message": "Désherbage manuel recommandé en début de culture. Pensez au paillage !"
+      },
+      "biological_control": {
+        "message": "Risque de maladies fongiques : appliquer bicarbonate de soude en prévention."
+      },
+      "harvest": {
+        "message": "Période de récolte du topinambour : automne/hiver. Attention à ne rien laisser dans le sol !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale pour le topinambour atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte (19°C)"
+        }
+      }
+    }
+  },
+  "carotte_blanche": {
+    "commonName": "Carotte blanche",
+    "description": "Légume racine bisannuel rustique, à chair blanche ou ivoire, moins sucrée que les carottes orange mais plus aromatique, adapté aux systèmes biologiques et permaculturels.",
+    "culturalTips": [
+      "Éviter les sols lourds ou caillouteux",
+      "Ne pas apporter de matière organique fraîche",
+      "Maintenir une humidité constante à la levée",
+      "Pratiquer des rotations longues (4 à 8 ans)",
+      "Utiliser le faux semis en agriculture biologique"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Infusion d'ail",
+        "Décoction de tanaisie",
+        "Purin de fougère",
+        "Purin de consoude"
+      ],
+      "beneficialInsects": [
+        "Coccinelles",
+        "Syrphes",
+        "Chrysopes",
+        "Carabes",
+        "Staphylins"
+      ],
+      "companionPlants": [
+        "oignon",
+        "poireau",
+        "radis",
+        "salade",
+        "œillet d'inde",
+        "pois",
+        "haricot"
+      ]
+    },
+    "harvestTime": "100 à 140 jours après semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage régulier recommandé pour les carottes blanches"
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire pour les carottes blanches"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé pour les carottes blanches"
+      },
+      "biological_control": {
+        "message": "Surveillance de la mouche de la carotte recommandée"
+      },
+      "harvest": {
+        "message": "Période de récolte optimale des carottes blanches"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention aux fortes gelées prolongées pour les carottes en sol"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination des carottes blanches"
+        }
+      }
+    }
+  },
+  "poivron_capsicum_annuum": {
+    "commonName": "Poivron",
+    "description": "Plante potagère de la famille des Solanacées, cultivée pour ses fruits charnus consommés à différents stades de maturité.",
+    "culturalTips": [
+      "Rotation des cultures de 3 à 6 ans",
+      "Éviter les excès d'eau stagnante",
+      "Maintenir une humidité du sol constante",
+      "Acclimater les plants avant plantation",
+      "Récolter régulièrement pour stimuler la production"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Savon noir",
+        "Purin d'ortie",
+        "Décoction de prêle",
+        "Huile de neem",
+        "Bacillus thuringiensis"
+      ],
+      "beneficialInsects": [
+        "Coccinelles",
+        "Chrysopes",
+        "Orius insidiosus",
+        "Amblyseius swirskii",
+        "Aphidius colemani"
+      ],
+      "companionPlants": [
+        "basilic",
+        "ail",
+        "oignon",
+        "carotte",
+        "persil",
+        "œillet d'inde",
+        "capucine",
+        "salade",
+        "épinard"
+      ]
+    },
+    "harvestTime": "60 à 90 jours après plantation",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire pour les poivrons"
+      },
+      "thinning": {
+        "message": null
+      },
+      "weeding": {
+        "message": "Désherbage recommandé pour les poivrons"
+      },
+      "biological_control": {
+        "message": "Surveillance sanitaire recommandée pour les poivrons"
+      },
+      "harvest": {
+        "message": "Début possible de la récolte des poivrons"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Température critique pour les poivrons"
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte"
+        }
+      }
+    }
+  },
+  "bok_choy": {
+    "commonName": "Bok choy",
+    "description": "Chou chinois à pétioles charnus et feuilles vertes, cultivé comme annuelle de saison fraîche, à croissance rapide.",
+    "culturalTips": [
+      "Maintenir le sol uniformément frais pour éviter le stress hydrique",
+      "Éviter les températures supérieures à 29-30°C pour limiter la montée à graine",
+      "Respecter une rotation de 3-4 ans sans Brassicaceae"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "purin d’ortie",
+        "purin de prêle",
+        "Bacillus thuringiensis (Bt kurstaki)",
+        "savon insecticide ou savon noir",
+        "huile de neem"
+      ],
+      "beneficialInsects": [
+        "coccinelles",
+        "syrphes",
+        "chrysopes",
+        "parasitoïdes de piérides et teignes"
+      ],
+      "companionPlants": [
+        "aneth",
+        "fenouil",
+        "carotte fleurie",
+        "achillée",
+        "souci",
+        "œillet d’Inde"
+      ]
+    },
+    "harvestTime": "45-60 jours après semis ou 30-45 jours après repiquage",
+    "notificationSettings": {
+      "watering": {
+        "message": null
+      },
+      "thinning": {
+        "message": null
+      },
+      "weeding": {
+        "message": null
+      },
+      "biological_control": {
+        "message": null
+      },
+      "harvest": {
+        "message": null
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": null
+        },
+        "germination_optimal": {
+          "message": null
+        }
+      }
+    }
+  },
+  "chayotte": {
+    "commonName": "Chayotte",
+    "description": "Légume-fruit vivace (aussi appelé christophine, chouchou, mirliton), cultivé en sol bien drainé et riche en matière organique.",
+    "culturalTips": [
+      "Alias : christophine, chouchou, mirliton",
+      "Planter après les gelées lorsque le sol est > 15°C (période : mars à mai)",
+      "Planter le fruit entier à moitié enterré, large partie vers le bas",
+      "Repiquage déconseillé (racines développées)",
+      "Sol bien drainé, riche en matière organique",
+      "pH optimal : 5.5-7",
+      "Espacement : 1 à 2 pieds pour 10 m²",
+      "Fertilisation naturelle possible : compost, fumier décomposé",
+      "Observation régulière, diversité et hygiène comme stratégies préventives",
+      "Pourriture racinaire : risque en cas d'excès d'eau (flétrissement)",
+      "Maladies fongiques : favorisées par excès d'arrosage",
+      "Araignée rouge : favorisée par humidité faible et chaleur (jaunissement feuilles, croûtes sur fruits)"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Huile essentielle de romarin diluée (araignée rouge)"
+      ],
+      "beneficialInsects": [],
+      "companionPlants": []
+    },
+    "harvestTime": "5-6 mois",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage chayotte : 1 fois/semaine en temps sec après mai, au pied, avec paillage végétal"
+      },
+      "thinning": {
+        "message": null
+      },
+      "weeding": {
+        "message": "Paillage végétal conseillé pour limiter le désherbage"
+      },
+      "biological_control": {
+        "message": "Surveillance araignée rouge : possible usage d'huile essentielle de romarin diluée"
+      },
+      "harvest": {
+        "message": "Récolte chayotte : 5-6 mois après plantation, fruits bien formés ; couper au pédoncule"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : dégâts possibles sur chayotte en dessous de 13°C"
+        },
+        "germination_optimal": {
+          "message": null
+        }
+      }
+    }
+  },
+  "chou_brocoli_romanesco": {
+    "commonName": "Chou brocoli romanesco",
+    "description": "Chou romanesco (brocoli romanesco / chou-fleur romanesco) : bisannuelle cultivée en annuelle. Inflorescence conique compacte à motifs fractals, couleur vert vif. Confusions possibles : autres choux brocolis et choux-fleurs. Aucun cas documenté de confusion avec une plante toxique similaire (non documenté). Sol conseillé : fertile, limono-argileux ou limono-sableux, bien drainé, riche en matière organique, bonne rétention d’eau sans engorgement. pH optimal 6,0–7,5 (neutre à légèrement alcalin). Exposition : plein soleil, tolère légère mi-ombre en été chaud.",
+    "culturalTips": [
+      "Durée jusqu’à maturité : 75–100 jours après repiquage ; 100–120 jours après semis",
+      "Semis (climat tempéré) : sous abri fin février–avril ; repiquage mars–mai ; semis d’été pour récolte d’automne/hiver : mai–juillet selon climat ; repiquage 4–6 semaines après semis",
+      "Conditions de levée : substrat fin, bien drainé, humide sans détremper ; température de sol 15–24°C ; bonne aération ; lumière indirecte ; éviter le dessèchement en surface",
+      "Facteurs blocants : croûte de battance (éviter arrosages violents), sécheresse du substrat, excès d’eau (asphyxie, fonte des semis), températures >27°C (germination irrégulière ; montée à graines précoce plus tard)",
+      "Fertilisation naturelle : compost mûr en fond 3–5 kg/m² + rappels légers ; purin d’ortie (azote) et purin de consoude (K) dilués au pied ; engrais verts possibles : légumineuses, phacélie, mélanges céréales–légumineuses",
+      "Rotation : retour des Brassicaceae sur la même planche après 3–4 ans ; éviter brassicacées en précédent/suivant immédiat (clubroot/hernie et ravageurs spécifiques)",
+      "Prévention hernie du chou : éviter sols acides (pH<6), excès d’humidité et rotations trop courtes ; maintenir pH proche de 7 (compost + amendements calcaires doux si besoin)",
+      "Protection ravageurs : filets insect-proof/voiles (piérides, mouche du chou, altises) ; collerettes au collet (mouche du chou) ; pièges à bière/abris pièges (limaces)"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (renforcement végétatif ; résistance générale)",
+        "Purin de consoude (soutien floraison et fermeté des têtes ; apports K)",
+        "Décoction de prêle (prévention maladies cryptogamiques ; renforcement tissulaire)",
+        "Savon noir dilué / savon insecticide organique (contre pucerons ; application ciblée)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (larves et adultes) contre pucerons",
+        "Syrphes (larves) contre pucerons",
+        "Chrysopes (larves) contre pucerons et petits ravageurs",
+        "Guêpes parasitoïdes (parasitisme chenilles de piérides)"
+      ],
+      "companionPlants": [
+        "capucine",
+        "soucis",
+        "achillée",
+        "aneth",
+        "fenouil",
+        "ombellifères diverses"
+      ]
+    },
+    "harvestTime": "75–100 jours après repiquage ; 100–120 jours après semis selon variété et climat. Signes : pomme conique compacte, motifs fractals bien formés, vert vif, boutons floraux fermés (pas de petites fleurs jaunes). Récolte : coupe sous la tête au couteau propre, laisser quelques feuilles protectrices ; de préférence le matin par temps frais. Repousse : principalement une seule tête, peu ou pas de pousses latérales utiles (repousse limitée). Conservation : réfrigérateur 0–4°C 3–7 jours (sac perforé) ; surgelation après blanchiment 2–3 min puis refroidissement (plusieurs mois) ; lactofermentation possible (durées chiffrées non documentées).",
+    "notificationSettings": {
+      "watering": {
+        "message": null
+      },
+      "thinning": {
+        "message": null
+      },
+      "weeding": {
+        "message": null
+      },
+      "biological_control": {
+        "message": null
+      },
+      "harvest": {
+        "message": null
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": null
+        },
+        "germination_optimal": {
+          "message": null
+        }
+      }
+    }
+  },
+  "chou_cabus_rouge": {
+    "commonName": "Chou cabus rouge",
+    "description": "Chou formant une pomme dense de couleur rouge violacé, adapté aux climats tempérés et aux cultures de printemps à hiver.",
+    "culturalTips": [
+      "Rotation de 3 à 4 ans hors Brassicacées",
+      "Maintenir le sol frais sans excès d'eau",
+      "Pailler pour limiter stress hydrique et adventices"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie",
+        "Tisane de prêle",
+        "Bacillus thuringiensis",
+        "Savon noir"
+      ],
+      "beneficialInsects": [
+        "Coccinelles",
+        "Syrphes",
+        "Chrysopes",
+        "Guêpes parasitoïdes"
+      ],
+      "companionPlants": [
+        "betterave",
+        "carotte",
+        "céleri",
+        "épinard",
+        "laitue",
+        "pois",
+        "haricot",
+        "aromatiques diverses"
+      ]
+    },
+    "harvestTime": "80-120 jours après plantation",
+    "notificationSettings": {}
+  },
+  "chou-daubenton": {
+    "commonName": "Chou Daubenton",
+    "description": "Légume vivace et perpétuel, très rustique, dont on consomme les jeunes pousses et les feuilles toute l'année.",
+    "culturalTips": [
+      "Multiplication par bouturage de 'jets' (crosmes) très facile",
+      "Plante vivace pouvant produire pendant 4 à 7 ans",
+      "Récolter les feuilles au fur et à mesure des besoins",
+      "Tailler pour favoriser la ramification et éviter la floraison",
+      "Apporter du compost mûr chaque année au printemps"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (azote et renforcement)",
+        "Purin de consoude (croissance foliaire)",
+        "Décoction de tanaisie (anti-chenilles)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes contre pucerons",
+        "Micro-hyménoptères contre la piéride"
+      ],
+      "companionPlants": [
+        "Ail et oignon contre les maladies",
+        "Plantes aromatiques (thym, sauge) contre la piéride",
+        "Capucine (plante piège pour pucerons)"
+      ]
+    },
+    "harvestTime": "Récolte possible toute l'année dès que le pied est établi",
+    "notificationSettings": {
+      "watering": {
+        "message": "Vérifiez l'humidité du sol pour votre chou Daubenton."
+      },
+      "thinning": {
+        "message": "N/A"
+      },
+      "weeding": {
+        "message": "Nettoyer le pied du chou Daubenton et renouveler le paillis."
+      },
+      "biological_control": {
+        "message": "Surveillez la présence de pontes de piéride sous les feuilles."
+      },
+      "harvest": {
+        "message": "Vous pouvez commencer à récolter les jeunes pousses de votre chou."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Grand froid prévu : le chou Daubenton résiste jusqu'à -15°C."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour l'enracinement des boutures."
+        }
+      }
+    }
+  },
+  "mizuna": {
+    "commonName": "Chou Mizuna",
+    "description": "Légume-feuille japonais rustique aux feuilles finement découpées, apprécié pour sa saveur douce et légèrement poivrée.",
+    "culturalTips": [
+      "Rotation des cultures de 3-4 ans sans Brassicacées",
+      "Éviter les arrosages sur le feuillage pour prévenir l'oïdium",
+      "Récolte possible en 'coupé et repoussé' (jusqu'à 5 fois)",
+      "Utiliser des filets anti-insectes dès le semis contre les altises",
+      "Préférer un sol riche en matière organique et bien drainé"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant)",
+        "Purin de prêle (préventif fongique)",
+        "Décoction d'ail (répulsif insectes)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles et syrphes contre les pucerons",
+        "Carabes contre les limaces",
+        "Hyménoptères parasitoïdes contre les chenilles"
+      ],
+      "companionPlants": [
+        "Oignon",
+        "Ciboulette",
+        "Ail",
+        "Pois"
+      ]
+    },
+    "harvestTime": "20-35 jours (jeunes feuilles) ou 50-70 jours (plantes entières)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Vérifiez l'humidité du sol pour votre Mizuna : maintenir frais au pied."
+      },
+      "thinning": {
+        "message": "Éclaircissage : espacez vos Mizunas de 10-15 cm pour un bon développement."
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage recommandés pour le chou Mizuna."
+      },
+      "biological_control": {
+        "message": "Alerte Altises ou Piérides : vérifiez vos filets ou appliquez un répulsif naturel."
+      },
+      "harvest": {
+        "message": "Première récolte de jeunes feuilles de Mizuna possible !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Risque de gel fort : protégez vos Mizunas avec un voile d'hivernage."
+        },
+        "germination_optimal": {
+          "message": "Conditions idéales pour la levée rapide de vos graines de Mizuna."
+        }
+      }
+    }
+  },
+  "butternut_squash": {
+    "commonName": "Courge Butternut",
+    "description": "Courge musquée à la chair fondante et sucrée, célèbre pour son goût de noisette et sa grande capacité de conservation.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans cucurbitacées)",
+      "Apport initial riche en compost mûr ou fumier bien décomposé",
+      "Culture sur buttes pour améliorer le drainage",
+      "Éviter de manipuler les lianes fragiles",
+      "Récolter avec un morceau de pédoncule pour une meilleure conservation"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle (prévention des maladies fongiques)",
+        "Purin d'ortie dilué (stimulation et résistance)",
+        "Savon noir dilué contre pucerons et aleurodes"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (larves et adultes) contre pucerons",
+        "Syrphes (larves) contre pucerons",
+        "Chrysopes (larves) contre pucerons et aleurodes",
+        "Carabes et staphylines, prédateurs de limaces"
+      ],
+      "companionPlants": [
+        "Maïs (structure verticale et ombrage partiel)",
+        "Haricots (apport d'azote)",
+        "Souci, capucine, bourrache (attraction des auxiliaires)",
+        "Phacélie (bandes fleuries)"
+      ]
+    },
+    "harvestTime": "80-110 jours après semis selon variété et climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Besoin en eau crucial pour la Butternut : arrosez abondamment au pied."
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement : laissez 40-60 cm entre les plants."
+      },
+      "weeding": {
+        "message": "Désherbage et contrôle du paillage recommandés."
+      },
+      "biological_control": {
+        "message": "Risque d'oïdium : appliquez une décoction de prêle en prévention."
+      },
+      "harvest": {
+        "message": "La récolte approche : vérifiez la dureté de l'écorce et la couleur."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Risque de gel : protégez ou récoltez les fruits mûrs."
+        },
+        "germination_optimal": {
+          "message": "Conditions idéales pour la levée (20-30°C)."
+        }
+      }
+    }
+  },
+  "musquee_de_provence": {
+    "commonName": "Courge musquée muscade",
+    "description": "Courge musquée tardive et coureuse produisant de gros fruits côtelés à épiderme brun bronze et chair orange, sucrée et parfumée.",
+    "culturalTips": [
+      "Rotation des cultures de 3-4 ans en évitant les autres cucurbitacées",
+      "Sol profond, riche en matière organique et bien drainé",
+      "Apport de compost mûr avant plantation (2-5 kg/m²)",
+      "Placer une planche ou un paillage sous les fruits pour éviter la pourriture",
+      "Éviter les excès d'azote favorisant pucerons et maladies"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie en début de croissance",
+        "Purin de consoude en début de fructification",
+        "Décoction de prêle en prévention de l'oïdium et du mildiou",
+        "Savon noir dilué contre pucerons et aleurodes"
+      ],
+      "beneficialInsects": [
+        "Coccinelles",
+        "Syrphes",
+        "Chrysopes",
+        "Guêpes parasitoïdes",
+        "Carabes"
+      ],
+      "companionPlants": [
+        "Capucine",
+        "Souci",
+        "Phacélie",
+        "Trèfle"
+      ]
+    },
+    "harvestTime": "100-120 jours après plantation, lorsque l'écorce est dure et le pédoncule liégeux",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage renforcé recommandé pour vos courges musquées en floraison et fructification"
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement : prévoir 1,5 à 2 m entre plants"
+      },
+      "weeding": {
+        "message": "Désherbage ou entretien du paillage recommandé"
+      },
+      "biological_control": {
+        "message": "Conditions favorables aux maladies cryptogamiques, traitement préventif conseillé"
+      },
+      "harvest": {
+        "message": "Contrôlez la maturité : écorce dure et pédoncule sec pour la récolte"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte froid : croissance stoppée, protéger ou récolter avant gel"
+        },
+        "germination_optimal": {
+          "message": "Température idéale atteinte pour la germination des graines"
+        }
+      }
+    }
+  },
+  "patidou": {
+    "commonName": "Courge patidou",
+    "description": "Petite courge d'hiver décorative et délicieuse, au goût de noisette et de châtaigne (Sweet Dumpling).",
+    "culturalTips": [
+      "Rotation des cultures (4-5 ans sans cucurbitacées)",
+      "Peut être cultivé directement sur un tas de compost",
+      "Utiliser la technique des trois sœurs (maïs, haricot, courge)",
+      "Protéger les jeunes plants des limaces avec des collerettes",
+      "Récolter avec le pédoncule pour une meilleure conservation"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant)",
+        "Décoction de prêle (anti-oïdium)",
+        "Savon noir contre les pucerons"
+      ],
+      "beneficialInsects": [
+        "Coccinelles, syrphes et chrysopes contre les pucerons",
+        "Abeilles et bourdons pour la pollinisation",
+        "Vers de terre pour la structure du sol"
+      ],
+      "companionPlants": [
+        "Maïs",
+        "Haricot",
+        "Fleurs mellifères (phacélie, souci, bourrache)"
+      ]
+    },
+    "harvestTime": "90-110 jours après semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage conseillé pour vos patidous : au pied et en fin de journée."
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement : les patidous sont des variétés coureuses (1m entre plants)."
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage pour vos courges."
+      },
+      "biological_control": {
+        "message": "Risque d'oïdium élevé : prévoyez une décoction de prêle en prévention."
+      },
+      "harvest": {
+        "message": "Surveillez le pédoncule de vos patidous, il doit devenir liégeux pour la récolte."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : la croissance de la courge patidou s'arrête en dessous de 5°C."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos graines de patidou (20°C)."
+        }
+      }
+    }
+  },
+  "cresson": {
+    "commonName": "Cresson de fontaine",
+    "description": "Plante vivace semi-aquatique, reconnue pour sa saveur poivrée et sa densité nutritionnelle exceptionnelle en fer et calcium.",
+    "culturalTips": [
+      "Privilégier une eau en mouvement pour éviter l'asphyxie",
+      "Maintenir un pH neutre à légèrement basique (proche de 7)",
+      "Désinfecter les bassins entre deux cycles en cas de maladie",
+      "Éviter les apports d'azote excessifs pour limiter les pucerons",
+      "Surveiller la présence de limaces, très friandes d'humidité"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie dilué (vigueur)",
+        "Décoction de prêle (préventif antifongique)",
+        "Barrières de sable contre les limaces"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre les pucerons",
+        "Syrphes (larves prédatrices)",
+        "Carabes (contre les limaces)"
+      ],
+      "companionPlants": [
+        "Laitue",
+        "Chicorée",
+        "Radis"
+      ]
+    },
+    "harvestTime": "60-90 jours après installation",
+    "notificationSettings": {
+      "watering": {
+        "message": "Alerte humidité : Le cresson doit avoir les pieds dans l'eau en permanence."
+      },
+      "thinning": {
+        "message": "Vérification de la densité : éclaircir si nécessaire pour une bonne aération."
+      },
+      "weeding": {
+        "message": "Nettoyage du bassin : éliminer les débris organiques et mauvaises herbes."
+      },
+      "biological_control": {
+        "message": "Risque de pourriture : vérifier la circulation de l'eau."
+      },
+      "harvest": {
+        "message": "Première récolte possible : couper les tiges de 8-15 cm."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Gel sévère : risque pour la végétation établie du cresson."
+        },
+        "germination_optimal": {
+          "message": "Fenêtre de germination idéale (15-20°C)."
+        }
+      }
+    }
+  },
+  "endive": {
+    "commonName": "Endive",
+    "description": "Plante bisannuelle cultivée pour sa racine, dont le forçage à l'obscurité produit le chicon croquant.",
+    "culturalTips": [
+      "Rotation longue de 4-5 ans avant de revenir sur la même zone",
+      "Éviter les excès d'azote (risques de racines creuses)",
+      "Forçage des racines indispensable à l'obscurité pour obtenir des chicons",
+      "Arracher les racines par sol ressuyé pour une meilleure conservation",
+      "Supprimer les résidus de culture en cas de présence de sclérotinia"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Barrières mécaniques (cendres, sable) contre les limaces",
+        "Purin d'ortie (fortifiant)",
+        "Purin de consoude (vigueur)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles, syrphes et chrysopes contre les pucerons",
+        "Carabes et staphylins contre les limaces et larves du sol",
+        "Plantes attractives (ombellifères) pour les auxiliaires"
+      ],
+      "companionPlants": [
+        "Oignon et ciboulette (effet répulsif pucerons)",
+        "Carotte (partage d'espace)",
+        "Engrais verts (phacélie) pour la structure du sol"
+      ]
+    },
+    "harvestTime": "140-170 jours après semis pour les racines, puis 3-4 semaines de forçage",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage abondant nécessaire pour vos endives : maintenez le sol frais au pied."
+      },
+      "thinning": {
+        "message": "Éclaircissement : laissez 8-15 cm entre chaque plant d'endive."
+      },
+      "weeding": {
+        "message": "Binage recommandé pour aérer le sol et limiter l'humidité stagnante."
+      },
+      "biological_control": {
+        "message": "Vigilance limaces et sclérotinia : vérifiez l'état de vos plants."
+      },
+      "harvest": {
+        "message": "Les racines d'endives approchent de la maturité (diamètre 3-5 cm). Préparez le forçage."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : seuil de tolérance des racines en champ atteint (-3°C)."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos semis d'endives."
+        }
+      }
+    }
+  },
+  "broad_bean": {
+    "commonName": "Fève",
+    "description": "Légumineuse annuelle rustique, parfois conduite en bisannuelle selon la date de semis. Elle produit des gousses contenant de grosses graines riches en protéines et améliore la structure et la fertilité du sol grâce à la fixation symbiotique de l’azote.",
+    "culturalTips": [
+      "Rotation des cultures de 4 à 6 ans sans légumineuses",
+      "Éviter les apports d’azote solubles, risque de verse",
+      "Inoculation Rhizobium possible en sol pauvre",
+      "Pincer les tiges pour limiter les pucerons noirs",
+      "Laisser les racines en terre après récolte pour enrichir le sol"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Savon noir contre les pucerons",
+        "Purin d’ortie ou de consoude",
+        "Décoction d’ail ou de tanaisie"
+      ],
+      "beneficialInsects": [
+        "Coccinelles",
+        "Syrphes",
+        "Chrysopes",
+        "Parasitoïdes des pucerons"
+      ],
+      "companionPlants": [
+        "Céréales",
+        "Plantes mellifères",
+        "Alliacées"
+      ]
+    },
+    "harvestTime": "70-90 jours pour consommation fraîche, 110-140 jours pour graines sèches",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage important pendant la floraison et le remplissage des grains."
+      },
+      "thinning": {
+        "message": "Le repiquage est déconseillé pour les fèves."
+      },
+      "weeding": {
+        "message": "Contrôlez les adventices et l’état du paillage."
+      },
+      "biological_control": {
+        "message": "Présence de pucerons détectée, intervenir avec des solutions biologiques."
+      },
+      "harvest": {
+        "message": "Vérifiez la maturité des gousses pour une récolte fraîche."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Température basse tolérée atteinte pour la fève."
+        },
+        "germination_optimal": {
+          "message": "Température optimale de germination atteinte."
+        }
+      }
+    }
+  },
+  "gobo": {
+    "commonName": "Gobo (Grande Bardane)",
+    "description": "Plante bisannuelle cultivée pour sa longue racine pivotante charnue, consommée comme légume et reconnue pour ses usages culinaires et traditionnels.",
+    "culturalTips": [
+      "Également connue sous les noms : bardane, grande bardane, bardane commune, burdock, great burdock.",
+      "Le terme « gobo » correspond à l’appellation culinaire japonaise de la racine d’Arctium lappa.",
+      "Plante-racine cultivée comme légume en Asie, également utilisée comme plante médicinale traditionnelle en Europe.",
+      "Nécessite un sol profond, meuble et sans cailloux pour permettre le développement d'une racine droite et longue.",
+      "Le repiquage est déconseillé car il provoque la déformation de la racine pivotante.",
+      "Rotation des cultures recommandée de 3 à 4 ans, en évitant les autres Astéracées.",
+      "Éviter les sols trop compacts ou asphyxiants qui freinent fortement le développement racinaire."
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie ou de prêle en pulvérisation préventive contre les maladies fongiques",
+        "Décoction d'ail comme répulsif contre certains insectes",
+        "Infusion de fougère utilisée empiriquement contre divers ravageurs"
+      ],
+      "beneficialInsects": [
+        "Carabes pour la prédation des limaces",
+        "Syrphes et coccinelles contribuant à l'équilibre des populations d'insectes",
+        "Vers de terre améliorant la structure du sol et favorisant la pénétration du pivot"
+      ],
+      "companionPlants": [
+        "Pois",
+        "Haricots nains",
+        "Souci",
+        "Phacélie"
+      ]
+    },
+    "harvestTime": "90-150 jours après semis, de préférence avant la montée à graines",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé pour le gobo : apportez de l'eau en profondeur."
+      },
+      "thinning": {
+        "message": "Éclaircissement du gobo : conservez environ 30 cm entre chaque plant."
+      },
+      "weeding": {
+        "message": "Désherbage et binage conseillés pour le gobo, surtout en début de culture."
+      },
+      "biological_control": {
+        "message": "Conditions humides : traitement préventif au purin de prêle conseillé."
+      },
+      "harvest": {
+        "message": "La période de récolte idéale du gobo est atteinte."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Température basse : la germination du gobo peut être ralentie."
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales pour la levée du gobo (15–20 °C)."
+        }
+      }
+    }
+  },
+  "haricot_rames": {
+    "commonName": "Haricot à rames",
+    "description": "Légumineuse grimpante productive, idéale pour les petits espaces grâce à sa croissance verticale. Nécessite un support (rames, filets ou tipis).",
+    "culturalTips": [
+      "Installer les supports (rames, tipis) avant le semis pour ne pas abîmer les racines",
+      "Récolter tous les 2-3 jours pour stimuler l'apparition de nouvelles fleurs",
+      "Éviter de manipuler les plants ou de récolter quand le feuillage est mouillé",
+      "Rotation de 3-4 ans sans autres Fabacées (pois, fèves)",
+      "Privilégier un arrosage matinal pour limiter l'humidité nocturne sur les feuilles"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (croissance et répulsif pucerons)",
+        "Décoction d'ail (préventif maladies cryptogamiques)",
+        "Infusion de tanaisie"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre les pucerons",
+        "Syrphes et Chrysopes",
+        "Carabes contre les limaces"
+      ],
+      "companionPlants": [
+        "Capucine (piège à pucerons)",
+        "Souci",
+        "Œillet d'Inde"
+      ]
+    },
+    "harvestTime": "60-75 jours après semis selon la variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage crucial pour vos haricots : ils sont en période de floraison/fructification."
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement de 7-10 cm entre vos plants."
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage pour vos haricots à rames."
+      },
+      "biological_control": {
+        "message": "Risque d'anthracnose : évitez de mouiller le feuillage et surveillez les taches."
+      },
+      "harvest": {
+        "message": "Début de la récolte ! Cueillez régulièrement pour prolonger la production."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte froid : croissance des haricots compromise en dessous de 5°C."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos haricots (21-30°C)."
+        }
+      }
+    }
+  },
+  "haricot_coco": {
+    "commonName": "Haricot coco",
+    "description": "Légumineuse annuelle produisant des grains blancs savoureux. Apprécié pour sa richesse en fibres et sa capacité à fixer l'azote dans le sol.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans minimum sans légumineuses)",
+      "Ne pas repiquer (racine pivotante fragile)",
+      "Éviter les apports d'azote (la plante le fixe elle-même)",
+      "Butter les pieds lorsqu'ils atteignent 15-20 cm pour les stabiliser"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction d'ail (contre la mouche des semis)",
+        "Savon noir dilué (contre les pucerons)",
+        "Purin d'ortie (fortifiant général)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles et syrphes (contre les pucerons)",
+        "Carabes (prédateurs de limaces)",
+        "Vers de terre (amélioration du drainage)"
+      ],
+      "companionPlants": [
+        "Sarriette (éloigne les pucerons)",
+        "Souci",
+        "Cosmos"
+      ]
+    },
+    "harvestTime": "70-90 jours (frais) à 120 jours (secs) après semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage important : vos haricots coco sont en fleur/nouaison."
+      },
+      "thinning": {
+        "message": "Éclaircissement ou vérification de l'espacement (8-10 cm entre plants)."
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés pour vos haricots."
+      },
+      "biological_control": {
+        "message": "Risque d'anthracnose ou mildiou : surveillez le feuillage."
+      },
+      "harvest": {
+        "message": "La récolte des grains frais peut commencer."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Température basse : la levée du haricot risque d'être bloquée."
+        },
+        "germination_optimal": {
+          "message": "Conditions idéales pour le semis du haricot coco."
+        }
+      }
+    }
+  },
+  "yellow_bean": {
+    "commonName": "Haricot jaune",
+    "description": "Variété de haricot nain mangetout à gousses jaunes tendres, riche en fibres et vitamine C. Facile à cultiver et productif.",
+    "culturalTips": [
+      "Ne pas repiquer (racine pivotante fragile)",
+      "Récolte fréquente tous les 2-3 jours pour stimuler la production",
+      "Rotation des cultures de 4 à 5 ans recommandée",
+      "Semer en sol réchauffé (> 15°C) pour éviter la pourriture"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (croissance)",
+        "Purin de consoude (fructification)",
+        "Décoction de prêle (prévention cryptogamique)",
+        "Savon noir dilué (contre pucerons)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes et Chrysopes",
+        "Carabes (prédateurs de limaces)",
+        "Parasitoïdes de pucerons"
+      ],
+      "companionPlants": [
+        "Capucine",
+        "Soucis",
+        "Tagètes",
+        "Phacélie"
+      ]
+    },
+    "harvestTime": "50-60 jours après semis selon la météo",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage crucial : vos haricots sont en fleur ou en formation de gousses."
+      },
+      "thinning": {
+        "message": "Vérifiez la levée : éclaircissez pour laisser 10 cm entre les plants."
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés pour vos haricots."
+      },
+      "biological_control": {
+        "message": "Risque d'anthracnose : pulvérisation de décoction de prêle conseillée."
+      },
+      "harvest": {
+        "message": "Première récolte possible : cueillez les gousses jeunes et cassantes."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte froid : protégez vos haricots avec un voile thermique."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour un semis réussi aujourd'hui."
+        }
+      }
+    }
+  },
+  "lentil": {
+    "commonName": "Lentille",
+    "description": "Légumineuse annuelle riche en protéines et minéraux, cultivée pour ses graines comestibles.",
+    "culturalTips": [
+      "Rotation des cultures (4-6 ans sans légumineuses)",
+      "Ne pas apporter d'engrais azoté (fixation naturelle)",
+      "Associer à des céréales pour servir de tuteurs naturels",
+      "Éviter les sols trop humides ou gorgés d'eau"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Savon noir (contre les pucerons)",
+        "Décoction de prêle (préventif maladies)",
+        "Purin d'ortie (vigueur générale)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre les pucerons",
+        "Syrphes et chrysopes (prédateurs de pucerons)",
+        "Carabes contre les limaces"
+      ],
+      "companionPlants": [
+        "Avoine",
+        "Orge",
+        "Phacélie (attraction pollinisateurs)"
+      ]
+    },
+    "harvestTime": "90-120 jours après semis (gousses brunes et sèches)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage modéré conseillé pour vos lentilles (phase sensible)"
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement de vos lentilles (5-10 cm)"
+      },
+      "weeding": {
+        "message": "Désherbage nécessaire pour limiter la concurrence des adventices"
+      },
+      "biological_control": {
+        "message": "Application de savon noir recommandée contre les pucerons"
+      },
+      "harvest": {
+        "message": "Vérifiez la sécheresse des gousses pour la récolte"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte : Température minimale de croissance atteinte pour les lentilles (5°C)"
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos lentilles"
+        }
+      }
+    }
+  },
+  "lupin": {
+    "commonName": "Lupin",
+    "description": "Légumineuse fixatrice d'azote, cultivée pour ses graines nutritives ou sa floraison ornementale spectaculaire.",
+    "culturalTips": [
+      "Rotation des cultures (4-5 ans sans Fabacées)",
+      "Ne nécessite aucun apport d'azote (fixation symbiotique)",
+      "Trempage des graines 12-24h avant semis pour faciliter la levée",
+      "Éviter les sols trop calcaires (préfère pH < 7)",
+      "Attention à la croûte de battance qui bloque la levée"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant)",
+        "Décoction de prêle (maladies cryptogamiques)",
+        "Savon noir (contre pucerons)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles et syrphes (contre pucerons)",
+        "Carabes et staphylins (prédateurs du sol)",
+        "Pollinisateurs variés (attirés par les fleurs)"
+      ],
+      "companionPlants": [
+        "Cucurbitacées",
+        "Légumes-feuilles",
+        "Solanacées"
+      ]
+    },
+    "harvestTime": "110-150 jours après semis selon l'espèce",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé pour vos lupins (période sèche)"
+      },
+      "thinning": {
+        "message": "Éclaircissement : espacez vos lupins de 45-60 cm"
+      },
+      "weeding": {
+        "message": "Vérifiez la présence d'adventices et l'état du paillage"
+      },
+      "biological_control": {
+        "message": "Alerte pucerons : pulvérisation de savon noir ou purin d'ortie possible"
+      },
+      "harvest": {
+        "message": "Vérifiez la maturité des gousses de lupin (sèches et brunes)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Risque pour la germination : température minimale de 2°C atteinte"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales pour la germination des lupins (10-15°C)"
+        }
+      }
+    }
+  },
+  "white_onion": {
+    "commonName": "Oignon blanc",
+    "description": "Oignon à bulbe blanc croquant, apprécié pour sa saveur douce. Cultivé en annuelle pour ses bulbes ou en jeunes pousses (cébettes).",
+    "culturalTips": [
+      "Rotation de 3-4 ans minimum avant de revenir sur une parcelle d'Allium",
+      "Stopper l'arrosage 10-20 jours avant la récolte pour améliorer la conservation",
+      "Éviter les sols lourds ou mal drainés",
+      "Ne pas enterrer les bulbes trop profondément",
+      "Limiter les excès d'azote"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie ou de prêle",
+        "Décoction d'ail contre les thrips"
+      ],
+      "beneficialInsects": [
+        "Chrysopes",
+        "Syrphes",
+        "Carabes",
+        "Staphylins"
+      ],
+      "companionPlants": [
+        "Carotte",
+        "Laitue",
+        "Fraisier"
+      ]
+    },
+    "harvestTime": "100-150 jours après semis selon l'usage",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage de vos oignons : privilégiez un apport léger au pied."
+      },
+      "thinning": {
+        "message": "Éclaircissement : espacez vos oignons de 10-15 cm."
+      },
+      "weeding": {
+        "message": "Désherbage nécessaire pour éviter la concurrence."
+      },
+      "biological_control": {
+        "message": "Risque de maladies fongiques : surveillez le feuillage."
+      },
+      "harvest": {
+        "message": "Surveillez la chute des fanes pour débuter la récolte."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : gel critique pour les bulbes en terre (-3°C)."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos oignons."
+        }
+      }
+    }
+  },
+  "red_onion": {
+    "commonName": "Oignon rouge",
+    "description": "Variété d'oignon appréciée pour sa couleur vive et sa saveur légèrement sucrée, idéale pour la consommation crue ou la garde.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans Allium)",
+      "Stopper les arrosages avant la récolte pour favoriser la conservation",
+      "Pratiquer le ressuyage (séchage au sol) après arrachage",
+      "Éviter les fumures organiques trop fraîches"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (stimulation au début)",
+        "Décoction d'ail (prévention fongique)",
+        "Infusion de tanaisie"
+      ],
+      "beneficialInsects": [
+        "Carabes et staphylins contre les ravageurs du sol",
+        "Syrphes contre les pucerons",
+        "Chrysopes"
+      ],
+      "companionPlants": [
+        "Carotte",
+        "Betterave",
+        "Laitue"
+      ]
+    },
+    "harvestTime": "100-120 jours après plantation",
+    "notificationSettings": {
+      "watering": {
+        "message": "Besoin en eau pour les oignons : maintenez le sol frais (20-25mm/semaine)"
+      },
+      "thinning": {
+        "message": "Éclaircissement ou repiquage : vérifiez si les plants ont 3-4 feuilles"
+      },
+      "weeding": {
+        "message": "Désherbage crucial : l'oignon craint la concurrence des adventices"
+      },
+      "biological_control": {
+        "message": "Risque de mildiou : vérifiez l'aération et traitez préventivement"
+      },
+      "harvest": {
+        "message": "Signe de récolte : vérifiez si 50% des feuilles sont couchées"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : risque de gel pour les jeunes plants d'oignons"
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos oignons"
+        }
+      }
+    }
+  },
+  "watermelon": {
+    "commonName": "Pastèque",
+    "description": "Fruit rafraîchissant gorgé d'eau (91%), riche en lycopène et en citrulline.",
+    "culturalTips": [
+      "Utiliser des godets biodégradables pour éviter le stress racinaire",
+      "Privilégier un sol léger et riche en matière organique",
+      "Pratiquer une rotation de 3 ans minimum",
+      "Installer un mulch sec pour éviter le contact direct du fruit avec le sol"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (pucerons et vigueur)",
+        "Savon noir (pucerons et aleurodes)",
+        "Décoction d'ail (répulsif général)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles et syrphes contre pucerons",
+        "Chrysopes contre aleurodes",
+        "Abeilles pour la pollinisation et la nouaison"
+      ],
+      "companionPlants": [
+        "Basilic",
+        "Souci",
+        "Calendula",
+        "Légumineuses basses"
+      ]
+    },
+    "harvestTime": "80-100 jours après levée selon variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage profond nécessaire pour vos pastèques : 5-10 litres par plant"
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement : assurez-vous d'avoir au moins 90cm entre les plants"
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage pour vos pastèques"
+      },
+      "biological_control": {
+        "message": "Risque d'oïdium : aérez bien et évitez de mouiller le feuillage"
+      },
+      "harvest": {
+        "message": "La récolte approche : vérifiez si la vrille est sèche et si le son est mat"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : croissance de la pastèque ralentie sous 12°C"
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales de germination (21-29°C)"
+        }
+      }
+    }
+  },
+  "courge_patisson": {
+    "commonName": "Courge pâtisson",
+    "description": "Courge d'été originale en forme de bonnet de prêtre, appréciée pour sa chair tendre et son goût rappelant l'artichaut.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans cucurbitacées)",
+      "Récolter jeune pour stimuler la production de nouvelles fleurs",
+      "Éviter l'arrosage sur les feuilles pour limiter l'oïdium",
+      "Utiliser un paillage aéré pour protéger les fruits du contact direct avec le sol"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (croissance)",
+        "Purin de prêle (prévention fongique)",
+        "Décoction d'ail (répulsif pucerons)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes et Chrysopes",
+        "Carabes contre les limaces"
+      ],
+      "companionPlants": [
+        "Souci",
+        "Bourrache",
+        "Phacélie"
+      ]
+    },
+    "harvestTime": "55-70 jours pour les jeunes fruits, 90 jours pour la conservation",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage profond nécessaire pour vos pâtissons (éviter les feuilles)"
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement : gardez un plant vigoureux tous les 80-100 cm"
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage autour des pâtissons"
+      },
+      "biological_control": {
+        "message": "Risque d'oïdium : appliquez préventivement une décoction de prêle"
+      },
+      "harvest": {
+        "message": "La récolte des jeunes pâtissons (5-10cm) peut commencer"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte fraîcheur : le pâtisson souffre en dessous de 8°C"
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos pâtissons"
+        }
+      }
+    }
+  },
+  "petit_pois": {
+    "commonName": "Petit pois",
+    "description": "Légumineuse annuelle printanière, appréciée pour ses grains tendres et sucrés. Améliore le sol en fixant l'azote.",
+    "culturalTips": [
+      "Installer des tuteurs pour les variétés à rames dès le semis",
+      "Rotation des cultures : attendre 4-5 ans avant de replanter des Fabacées",
+      "Éviter les apports d'azote (fumier frais), le pois fixe son propre azote",
+      "Semer en sol ressuyé pour éviter la pourriture des graines",
+      "Pratiquer la congélation des semences 15 jours pour éliminer la bruche"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant)",
+        "Décoction de prêle (préventif oïdium et mildiou)",
+        "Purin de prêle"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre les pucerons",
+        "Syrphes et Chrysopes (larves prédatrices)",
+        "Vers de terre pour le drainage et l'aération du sol"
+      ],
+      "companionPlants": [
+        "Carotte",
+        "Laitue",
+        "Radis",
+        "Épinard"
+      ]
+    },
+    "harvestTime": "60-90 jours après semis selon la variété",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage crucial pour vos petits pois : maintenez le sol frais pendant la floraison."
+      },
+      "thinning": {
+        "message": "Vérifiez la densité de vos petits pois : gardez 2 à 5 cm entre chaque plant."
+      },
+      "weeding": {
+        "message": "Désherbage et binage léger recommandés pour vos pois."
+      },
+      "biological_control": {
+        "message": "Risque d'oïdium : une pulvérisation de décoction de prêle est conseillée."
+      },
+      "harvest": {
+        "message": "Vérifiez vos gousses : la récolte des petits pois approche !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Température basse : la germination des petits pois risque d'être ralentie."
+        },
+        "germination_optimal": {
+          "message": "Conditions idéales pour la levée de vos petits pois (10-18°C)."
+        }
+      }
+    }
+  },
+  "red_chili": {
+    "commonName": "Piment rouge",
+    "description": "Piment fort rouge riche en capsaïcine et vitamine C, cultivé pour ses fruits piquants.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans solanacées)",
+      "Utiliser du purin de consoude pour favoriser la floraison",
+      "Maintenir une température stable au-dessus de 15°C pour éviter l'arrêt de croissance",
+      "Éviter les apports excessifs d'azote qui favorisent le feuillage au détriment des fruits",
+      "Récoltes régulières pour stimuler la production de nouveaux fruits"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Savon noir dilué (contre pucerons et aleurodes)",
+        "Purin d'ortie (fortifiant)",
+        "Décoction de prêle (préventif fongique)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes et Chrysopes",
+        "Parasitoïdes (Encarsia) contre aleurodes"
+      ],
+      "companionPlants": [
+        "Basilic",
+        "Soucis et Tagètes",
+        "Oignon et Ail"
+      ]
+    },
+    "harvestTime": "70-90 jours après plantation",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage pour vos piments : sol frais recommandé (2-4L par plant)"
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement : assurez 45-60 cm entre vos plants de piments"
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage pour vos piments"
+      },
+      "biological_control": {
+        "message": "Risque de mildiou ou botrytis : pulvérisation de décoction de prêle recommandée"
+      },
+      "harvest": {
+        "message": "Vos piments devraient commencer à rougir, préparez la récolte"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte froid : le piment arrête sa croissance en dessous de 12-15°C"
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos piments (22-28°C)"
+        }
+      }
+    }
+  },
+  "split_pea": {
+    "commonName": "Pois cassé",
+    "description": "Légumineuse rustique de saison fraîche, riche en protéines et fibres, consommée sèche.",
+    "culturalTips": [
+      "Rotation longue obligatoire (5-6 ans) pour éviter les maladies racinaires",
+      "Éviter les apports d'azote frais (fumier)",
+      "Semer en sol bien ressuyé pour éviter la pourriture des graines",
+      "Pratiquer le binage dès la levée pour casser la croûte de battance"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Décoction de prêle (prévention cryptogamique)",
+        "Purin d'ortie (fortifiant)",
+        "Macération d'ail"
+      ],
+      "beneficialInsects": [
+        "Coccinelles et syrphes contre les pucerons",
+        "Hyménoptères parasitoïdes contre les bruches",
+        "Vers de terre pour la structure du sol"
+      ],
+      "companionPlants": [
+        "Carotte",
+        "Laitue",
+        "Brassica (choux)"
+      ]
+    },
+    "harvestTime": "80-100 jours après le semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Période critique : Arrosage nécessaire pour vos pois (floraison/gousses)"
+      },
+      "thinning": {
+        "message": "Vérification du désherbage et binage : vos pois atteignent 4cm"
+      },
+      "weeding": {
+        "message": "Désherbage recommandé pour limiter la concurrence"
+      },
+      "biological_control": {
+        "message": "Vigilance Bruche du pois : temps chaud et sec favorable au ravageur"
+      },
+      "harvest": {
+        "message": "Vérifiez si les gousses sont brunes et les graines dures (récolte sèche)"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : gelée sévère prévue, limite de tolérance des pois cassés"
+        },
+        "germination_optimal": {
+          "message": "Conditions idéales pour la levée de vos pois cassés"
+        }
+      }
+    }
+  },
+  "chickpea": {
+    "commonName": "Pois chiche",
+    "description": "Légumineuse annuelle rustique, très résistante à la sécheresse, cultivée pour ses graines nutritives.",
+    "culturalTips": [
+      "Rotation des cultures (4-6 ans sans légumineuses)",
+      "Éviter les sols avec excès d'eau (asphyxie racinaire)",
+      "Sensible à la croûte de battance pour la levée",
+      "Ne pas repiquer (racine pivotante sensible)",
+      "Besoins accrus du bouton floral au remplissage des gousses"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (soutien végétatif)",
+        "Extraits de neem (contre chenilles)",
+        "Purin de consoude"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Trichogrammes contre tordeuses de gousses",
+        "Carabes (prédateurs du sol)"
+      ],
+      "companionPlants": [
+        "Oignon",
+        "Coriandre",
+        "Alysson (attire les auxiliaires)"
+      ]
+    },
+    "harvestTime": "90-120 jours après la levée selon climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Période critique : Arrosage recommandé pendant la floraison de vos pois chiches."
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement (10-20 cm) si le semis a été dense."
+      },
+      "weeding": {
+        "message": "Désherbage recommandé pour éviter la concurrence."
+      },
+      "biological_control": {
+        "message": "Surveillez l'apparition de la tordeuse des gousses (Helicoverpa)."
+      },
+      "harvest": {
+        "message": "Les gousses jaunissent ? La récolte approche."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte gel : Les pois chiches tolèrent jusqu'à -3°C."
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales pour la levée des pois chiches (15-25°C)."
+        }
+      }
+    }
+  },
+  "poivron_vert": {
+    "commonName": "Poivron vert",
+    "description": "Légume-soleil croquant et coloré, exceptionnellement riche en vitamine C.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans solanacées)",
+      "Éviter les excès d'azote qui favorisent le feuillage au détriment des fruits",
+      "Une récolte régulière favorise la poursuite de la floraison",
+      "Maintenir un arrosage régulier pour éviter la pourriture apicale (nécrose)",
+      "Aérer les abris (serres) pour limiter l'humidité stagnante"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (stimulant et répulsif pucerons)",
+        "Décoction de plantes locales",
+        "Savon noir dilué (contre pucerons et aleurodes)"
+      ],
+      "beneficialInsects": [
+        "coccinelles, syrphes et chrysopes contre les pucerons",
+        "phytoseiulus contre les acariens tétranyques",
+        "carabes et staphylins pour la régulation du sol"
+      ],
+      "companionPlants": [
+        "basilic",
+        "oignon",
+        "ciboulette",
+        "œillet d'inde"
+      ]
+    },
+    "harvestTime": "60-90 jours après plantation selon maturité souhaitée (vert ou coloré)",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage recommandé pour vos poivrons : sol maintenu frais mais non gorgé d'eau."
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement de vos poivrons : 30-45 cm recommandés entre les plants."
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage pour vos poivrons."
+      },
+      "biological_control": {
+        "message": "Vigilance acariens et pucerons : favorisez les auxiliaires ou utilisez du savon noir."
+      },
+      "harvest": {
+        "message": "La récolte de vos poivrons approche : coupez proprement le pédoncule au sécateur."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte froid : la croissance du poivron ralentit sous les 12°C."
+        },
+        "germination_optimal": {
+          "message": "Conditions de germination optimales atteintes (20-28°C)."
+        }
+      }
+    }
+  },
+  "radis": {
+    "commonName": "Radis de 18 jours",
+    "description": "Petit radis croquant à croissance ultra-rapide, idéal pour les récoltes précoces de printemps et d'automne.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans Brassicacées)",
+      "Éviter les excès d'azote qui favorisent le feuillage au détriment de la racine",
+      "Utiliser des voiles anti-insectes dès le semis contre l'altise et la mouche du chou",
+      "Maintenir une humidité régulière pour éviter que les radis ne deviennent piquants ou creux"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant)",
+        "Décoction de prêle (fongistatique)",
+        "Savon noir contre les pucerons"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes et chrysopes",
+        "Carabes contre les larves au sol"
+      ],
+      "companionPlants": [
+        "Laitue",
+        "Carotte",
+        "Pois"
+      ]
+    },
+    "harvestTime": "18-25 jours après le semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire : maintenez le sol frais pour éviter des radis trop piquants."
+      },
+      "thinning": {
+        "message": "Éclaircissement recommandé : laissez 2 à 5 cm entre chaque radis."
+      },
+      "weeding": {
+        "message": "Vérifiez la présence d'adventices et l'état de la croûte du sol."
+      },
+      "biological_control": {
+        "message": "Alerte Altises : installez un filet ou maintenez le feuillage humide."
+      },
+      "harvest": {
+        "message": "Vos radis de 18 jours devraient être prêts à être récoltés !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Température basse : la germination pourrait être ralentie."
+        },
+        "germination_optimal": {
+          "message": "Conditions de germination optimales atteintes."
+        }
+      }
+    }
+  },
+  "radis_daikon": {
+    "commonName": "Radis Daikon",
+    "description": "Radis oriental à longue racine blanche, croquant et légèrement piquant, idéal pour l'automne.",
+    "culturalTips": [
+      "Rotation des cultures de 3-4 ans sans Brassicacées",
+      "Éviter les sols pierreux pour prévenir les racines fourchues",
+      "Ne pas repiquer pour éviter la déformation de la racine pivot",
+      "Maintenir une humidité constante pour éviter le goût trop piquant",
+      "Utiliser un voile insect-proof contre l'altise et la mouche du chou"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie dilué (fortifiant)",
+        "Tisane de prêle (préventif maladies)",
+        "Macération d'ail (répulsif insectes)"
+      ],
+      "beneficialInsects": [
+        "Carabes contre les limaces",
+        "Syrphes et Chrysopes contre les pucerons",
+        "Coccinelles",
+        "Hyménoptères parasitoïdes"
+      ],
+      "companionPlants": [
+        "Pois",
+        "Laitue",
+        "Oignon",
+        "Ail"
+      ]
+    },
+    "harvestTime": "50-70 jours après semis selon le calibre souhaité",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage du Daikon : maintenez le sol frais pour éviter les racines creuses."
+      },
+      "thinning": {
+        "message": "Éclaircissage nécessaire : laissez 10-15 cm entre vos radis Daikon."
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés pour vos radis."
+      },
+      "biological_control": {
+        "message": "Attention aux altises : installez un voile ou maintenez le sol humide."
+      },
+      "harvest": {
+        "message": "Vérifiez le diamètre au collet (4-8 cm), la récolte approche !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Risque de gel pour le feuillage du Daikon (-4°C). Récoltez ou protégez."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée rapide de vos graines."
+        }
+      }
+    }
+  },
+  "radis_violet_hiver": {
+    "commonName": "Radis violet d'hiver",
+    "description": "Radis d'hiver à peau violette et chair blanche, croquant et légèrement piquant. Excellente conservation.",
+    "culturalTips": [
+      "Rotation des cultures de 3-4 ans sans Brassicacées",
+      "Éviter les fumures fraîches qui font fourcher les racines",
+      "Maintenir une humidité régulière pour éviter que le radis ne devienne trop piquant",
+      "Protéger avec un voile anti-insectes contre les altises"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (vigueur)",
+        "Décoction d'ail (répulsif)",
+        "Purin de prêle (prévention fongique)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes (larves prédatrices)",
+        "Carabes contre les limaces"
+      ],
+      "companionPlants": [
+        "Laitue",
+        "Carotte",
+        "Oignon"
+      ]
+    },
+    "harvestTime": "60-90 jours après semis selon climat",
+    "notificationSettings": {
+      "watering": {
+        "message": "Vérifiez l'humidité du sol pour vos radis violets : un sol frais évite le goût piquant."
+      },
+      "thinning": {
+        "message": "Éclaircissement : laissez 10 cm entre chaque radis violet pour un bon développement."
+      },
+      "weeding": {
+        "message": "Désherbage et binage conseillés pour vos radis d'hiver."
+      },
+      "biological_control": {
+        "message": "Attention aux altises (puces de terre) : maintenez le sol humide ou posez un voile."
+      },
+      "harvest": {
+        "message": "Vos radis violets devraient être prêts à être récoltés."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Risque de gel pour vos radis : couvrez ou récoltez avant les grands froids."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée de vos radis (15-18°C)."
+        }
+      }
+    }
+  },
+  "watermelon_radish": {
+    "commonName": "Radis Watermelon",
+    "description": "Radis d'hiver asiatique spectaculaire à chair rose vif et peau blanche, au goût doux et croquant.",
+    "culturalTips": [
+      "Rotation des cultures (3-4 ans sans Brassicacées)",
+      "Éviter les excès d'azote (favorise le feuillage au détriment de la racine)",
+      "Semer de préférence en fin d'été pour éviter la montée à graine prématurée",
+      "Maintenir une humidité constante pour éviter que la racine ne devienne fibreuse"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant)",
+        "Purin de consoude (soutien croissance)",
+        "Tisane de prêle (préventif fongique)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes (larves prédatrices)",
+        "Chrysopes (prédateurs généralistes)"
+      ],
+      "companionPlants": [
+        "Laitue",
+        "Épinard",
+        "Oignon",
+        "Ciboulette"
+      ]
+    },
+    "harvestTime": "55-65 jours après semis",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage pour vos radis Watermelon : maintenez le sol frais pour éviter les racines fibreuses."
+      },
+      "thinning": {
+        "message": "Éclaircissement nécessaire : laissez 3 à 6 cm entre chaque radis."
+      },
+      "weeding": {
+        "message": "Désherbage et binage recommandés pour vos radis."
+      },
+      "biological_control": {
+        "message": "Risque de maladies fongiques : une décoction de prêle peut être utile."
+      },
+      "harvest": {
+        "message": "Vérifiez le calibre de vos radis Watermelon (5-8 cm) pour la récolte."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention : température minimale de germination atteinte (5°C)."
+        },
+        "germination_optimal": {
+          "message": "Conditions idéales pour la levée de vos radis (15-24°C)."
+        }
+      }
+    }
+  },
+  "cherry_tomato": {
+    "commonName": "Tomate cerise rouge",
+    "description": "Petite tomate croquante et sucrée, idéale pour l'apéritif. Très productive et plus résistante que les variétés classiques.",
+    "culturalTips": [
+      "Rotation des cultures de 3-4 ans sans solanacées",
+      "Supprimer les feuilles basses pour améliorer l'aération",
+      "La taille des gourmands est facultative sur la cerise",
+      "Utiliser des tuteurs solides ou des cages",
+      "Récolte régulière pour stimuler la production"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (croissance)",
+        "Purin de consoude (fructification)",
+        "Décoction de prêle (anti-fongique)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes et Chrysopes",
+        "Abeilles pour la pollinisation"
+      ],
+      "companionPlants": [
+        "Basilic",
+        "Ciboulette",
+        "Souci",
+        "Œillet d'inde"
+      ]
+    },
+    "harvestTime": "60-80 jours après repiquage",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire : 25-50 mm/semaine au pied, sans mouiller les feuilles."
+      },
+      "thinning": {
+        "message": "Vérifiez le stade de croissance : repiquage recommandé à 2 vraies feuilles."
+      },
+      "weeding": {
+        "message": "Désherbage et vérification du paillage recommandés."
+      },
+      "biological_control": {
+        "message": "Risque de mildiou élevé : application préventive de décoction de prêle conseillée."
+      },
+      "harvest": {
+        "message": "La récolte de vos tomates cerises approche !"
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Attention: croissance ralentie sous 10°C, protégez vos plants."
+        },
+        "germination_optimal": {
+          "message": "Température idéale pour la levée des graines (24-32°C)."
+        }
+      }
+    }
+  },
+  "tomato_coeur_de_boeuf": {
+    "commonName": "Tomate Cœur de Bœuf",
+    "description": "Variété ancienne produisant de gros fruits charnus en forme de cœur. Chair dense, savoureuse et contenant peu de graines.",
+    "culturalTips": [
+      "Rotation des cultures de 3 à 4 ans minimum",
+      "Éviter absolument de mouiller le feuillage",
+      "Supprimer les feuilles basses pour aérer",
+      "Utiliser un tuteurage solide pour supporter le poids des fruits",
+      "Pratiquer le repiquage pour favoriser un système racinaire puissant"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (croissance et azote)",
+        "Purin de prêle (renforcement contre maladies cryptogamiques)",
+        "Purin de consoude (potassium pour la fructification)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles et syrphes contre les pucerons",
+        "Chrysopes",
+        "Micro-hyménoptères parasitoïdes contre les aleurodes"
+      ],
+      "companionPlants": [
+        "Basilic (confusion olfactive)",
+        "Œillet d'Inde (pucerons et nématodes)",
+        "Capucine (plante piège)"
+      ]
+    },
+    "harvestTime": "80-100 jours après plantation",
+    "notificationSettings": {
+      "watering": {
+        "message": "Arrosage nécessaire : maintenez une humidité régulière pour vos Cœurs de Bœuf."
+      },
+      "thinning": {
+        "message": "Vérifiez l'espacement (50cm) et l'aération du feuillage."
+      },
+      "weeding": {
+        "message": "Renouvelez le paillage organique si nécessaire."
+      },
+      "biological_control": {
+        "message": "Risque de mildiou élevé : appliquez une décoction de prêle en prévention."
+      },
+      "harvest": {
+        "message": "Vos tomates Cœur de Bœuf arrivent à maturité, surveillez la souplesse du fruit."
+      },
+      "temperature_alert": {
+        "cold_alert": {
+          "message": "Alerte froid : protégez vos plants (température critique < 5°C)."
+        },
+        "germination_optimal": {
+          "message": "Conditions optimales pour la levée de vos graines."
+        }
+      }
+    }
+  }
+}
