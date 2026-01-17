@@ -615,17 +615,11 @@ class PlantHiveRepository {
   }
 
   /// Récupère une liste de String avec fallback
+  /// Helper method to safely extract string lists
+  /// Handles null, List, and String (CSV) inputs. Returns [] on failure.
   List<String> _getStringListValue(
       Map<String, dynamic> json, String key, List<String> defaultValue) {
-    try {
-      final value = json[key];
-      if (value is List) {
-        return value.map((e) => e.toString()).toList();
-      }
-      return defaultValue;
-    } catch (e) {
-      return defaultValue;
-    }
+    return _getOptionalStringListValue(json, key) ?? defaultValue;
   }
 
   /// Récupère une liste de String optionnelle
@@ -633,12 +627,25 @@ class PlantHiveRepository {
       Map<String, dynamic> json, String key) {
     try {
       final value = json[key];
+      if (value == null) return <String>[];
+      
       if (value is List) {
-        return value.map((e) => e.toString()).toList();
+        return value
+            .map((e) => e?.toString() ?? '')
+            .where((s) => s.isNotEmpty)
+            .toList();
       }
-      return null;
+      if (value is String) {
+        // Séparer sur ; , \n ou virgule
+        return value
+            .split(RegExp(r'[;,\n]'))
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList();
+      }
+      return <String>[];
     } catch (e) {
-      return null;
+      return <String>[];
     }
   }
 

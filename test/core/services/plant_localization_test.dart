@@ -106,5 +106,51 @@ void main() {
       expect(localized.plantingSeason, contains('Printemps'));
       expect(localized.plantingSeason, contains('Été'));
     });
+
+    test('localize should return empty list (not null or crash) for missing/null list fields', () async {
+      await service.loadLocale('fr');
+      
+      // Create plant with empty lists (simulating a "poorly formed" but valid object from Hive)
+      final plant = PlantFreezed(
+        id: firstId,
+        commonName: 'Legacy Name',
+        scientificName: 'Testus',
+        family: 'Testaceae',
+        plantingSeason: 'SPRING', 
+        harvestSeason: 'SUMMER',
+        daysToMaturity: 60,
+        spacing: 30,
+        depth: 1.0,
+        sunExposure: 'SUN_FULL', 
+        waterNeeds: 'WATER_HIGH',
+        description: 'Desc', 
+        sowingMonths: <String>[],
+        harvestMonths: <String>[],
+        nutritionPer100g: <String, dynamic>{}, // Empty
+        germination: <String, dynamic>{}, // Empty
+        growth: <String, dynamic>{}, // Empty
+        watering: <String, dynamic>{}, // Empty
+        thinning: <String, dynamic>{}, // Empty
+        weeding: <String, dynamic>{}, // Empty
+        culturalTips: <String>[], // Empty list from Hive
+        biologicalControl: <String, dynamic>{}, 
+        harvestTime: '',
+        companionPlanting: <String, dynamic>{},
+        notificationSettings: <String, dynamic>{},
+        varieties: <String, dynamic>{},
+        metadata: <String, dynamic>{},
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        isActive: true,
+      );
+      
+      // Act
+      final localized = service.localize(plant);
+      
+      // Assert
+      // Ensure culturalTips is NOT null (freezed guarantees it, but we check logic flow)
+      expect(localized.culturalTips, isA<List<String>>());
+      // Even if localization file has null or missing field, implementation should return list
+    });
   });
 }

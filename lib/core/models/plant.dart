@@ -381,8 +381,12 @@ class Plant extends HiveObject {
       depth: (json['depth'] as num).toDouble(),
       sunExposure: json['sunExposure'],
       waterNeeds: json['waterNeeds'],
-      sowingMonths: List<String>.from(json['sowingMonths']),
-      harvestMonths: List<String>.from(json['harvestMonths']),
+      sowingMonths:
+          (json['sowingMonths'] as List?)?.map((e) => e.toString()).toList() ??
+              [],
+      harvestMonths:
+          (json['harvestMonths'] as List?)?.map((e) => e.toString()).toList() ??
+              [],
       marketPricePerKg: (json['marketPricePerKg'] as num).toDouble(),
       defaultUnit: json['defaultUnit'],
       nutritionPer100g: Map<String, dynamic>.from(json['nutritionPer100g']),
@@ -391,7 +395,9 @@ class Plant extends HiveObject {
       watering: Map<String, dynamic>.from(json['watering']),
       thinning: Map<String, dynamic>.from(json['thinning']),
       weeding: Map<String, dynamic>.from(json['weeding']),
-      culturalTips: List<String>.from(json['culturalTips']),
+      culturalTips:
+          (json['culturalTips'] as List?)?.map((e) => e.toString()).toList() ??
+              [],
       biologicalControl: Map<String, dynamic>.from(json['biologicalControl']),
       harvestTime: json['harvestTime'],
       companionPlanting: Map<String, dynamic>.from(json['companionPlanting']),

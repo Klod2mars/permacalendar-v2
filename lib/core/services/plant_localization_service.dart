@@ -39,34 +39,45 @@ class PlantLocalizationService {
   /// Merges localized data into a PlantFreezed object.
   PlantFreezed localize(PlantFreezed plant) {
     if (!_isLoaded || !_localizedData.containsKey(plant.id)) {
-      // Fallback: translate Enums at least?
-      // If we don't have text data, we still likely want to map "SUN_FULL" -> "Plein soleil"
-      // to avoid showing raw tokens.
       return _localizeEnumsOnly(plant);
     }
 
     final loc = _localizedData[plant.id] as Map<String, dynamic>;
 
+    // Audit Patch 3: Normalize list fields to prevent null
+    final cultural = _normalizeListField(loc['culturalTips']);
+
     return plant.copyWith(
       commonName: loc['commonName'] ?? plant.commonName,
       description: loc['description'] ?? plant.description,
-      culturalTips: (loc['culturalTips'] as List?)?.cast<String>() ?? plant.culturalTips,
+      // Apply normalized list if available, else keep original (which mimics current behavior but safer)
+      // Actually, if loc doesn't have it, we keep plant's. If loc has it, we use the safe list.
+      culturalTips: cultural.isNotEmpty ? cultural : (plant.culturalTips ?? <String>[]),
       harvestTime: loc['harvestTime'] ?? plant.harvestTime,
-      // Deep merge for complex objects could be added here if needed
-      // preventing overwrites of non-localized technical data
     ).copyWith(
-       // Apply Enum mappings on top
+       // Apply Enum mappings
        sunExposure: _translateEnum('sunExposure', plant.sunExposure),
        waterNeeds: _translateEnum('waterNeeds', plant.waterNeeds),
        plantingSeason: _translateSeasonList(plant.plantingSeason), 
        harvestSeason: _translateSeasonList(plant.harvestSeason),
-       // Notification messages are complex deep merges. 
-       // For Sprint 1, we assume the object might be used as is, 
-       // but ideally notifications are templated at display time, not stored on the text field.
-       // However, checking the Plant model, notificationSettings contains 'message'.
-       // We should override it here if possible.
        notificationSettings: _mergeNotificationMessages(plant.notificationSettings, loc['notificationSettings']),
     );
+  }
+
+  // Helper from Audit to ensure List<String>
+  List<String> _normalizeListField(dynamic field) {
+    if (field == null) return <String>[];
+    if (field is List) {
+      return field.map((e) => e?.toString() ?? '').where((s) => s.isNotEmpty).toList();
+    }
+    if (field is String) {
+      return field
+        .split(RegExp(r'[;,\n]'))
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+    }
+    return <String>[];
   }
 
   PlantFreezed _localizeEnumsOnly(PlantFreezed plant) {
