@@ -822,6 +822,177 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get weather_screen_title => 'Weather';
+
+  @override
+  String get weather_provider_credit => 'Data provided by Open-Meteo';
+
+  @override
+  String get weather_error_loading => 'Unable to load weather';
+
+  @override
+  String get weather_action_retry => 'Retry';
+
+  @override
+  String get weather_header_next_24h => 'NEXT 24H';
+
+  @override
+  String get weather_header_daily_summary => 'DAILY SUMMARY';
+
+  @override
+  String get weather_header_precipitations => 'PRECIPITATION (24h)';
+
+  @override
+  String get weather_label_wind => 'WIND';
+
+  @override
+  String get weather_label_pressure => 'PRESSURE';
+
+  @override
+  String get weather_label_sun => 'SUN';
+
+  @override
+  String get weather_label_astro => 'ASTRO';
+
+  @override
+  String get weather_data_speed => 'Speed';
+
+  @override
+  String get weather_data_gusts => 'Gusts';
+
+  @override
+  String get weather_data_sunrise => 'Sunrise';
+
+  @override
+  String get weather_data_sunset => 'Sunset';
+
+  @override
+  String get weather_data_rain => 'Rain';
+
+  @override
+  String get weather_data_max => 'Max';
+
+  @override
+  String get weather_data_min => 'Min';
+
+  @override
+  String get weather_data_wind_max => 'Max Wind';
+
+  @override
+  String get weather_pressure_high => 'High';
+
+  @override
+  String get weather_pressure_low => 'Low';
+
+  @override
+  String get weather_today_label => 'Today';
+
+  @override
+  String get moon_phase_new => 'New Moon';
+
+  @override
+  String get moon_phase_waxing_crescent => 'Waxing Crescent';
+
+  @override
+  String get moon_phase_first_quarter => 'First Quarter';
+
+  @override
+  String get moon_phase_waxing_gibbous => 'Waxing Gibbous';
+
+  @override
+  String get moon_phase_full => 'Full Moon';
+
+  @override
+  String get moon_phase_waning_gibbous => 'Waning Gibbous';
+
+  @override
+  String get moon_phase_last_quarter => 'Last Quarter';
+
+  @override
+  String get moon_phase_waning_crescent => 'Waning Crescent';
+
+  @override
+  String get wmo_code_0 => 'Clear sky';
+
+  @override
+  String get wmo_code_1 => 'Mainly clear';
+
+  @override
+  String get wmo_code_2 => 'Partly cloudy';
+
+  @override
+  String get wmo_code_3 => 'Overcast';
+
+  @override
+  String get wmo_code_45 => 'Fog';
+
+  @override
+  String get wmo_code_48 => 'Depositing rime fog';
+
+  @override
+  String get wmo_code_51 => 'Light drizzle';
+
+  @override
+  String get wmo_code_53 => 'Moderate drizzle';
+
+  @override
+  String get wmo_code_55 => 'Dense drizzle';
+
+  @override
+  String get wmo_code_61 => 'Slight rain';
+
+  @override
+  String get wmo_code_63 => 'Moderate rain';
+
+  @override
+  String get wmo_code_65 => 'Heavy rain';
+
+  @override
+  String get wmo_code_66 => 'Light freezing rain';
+
+  @override
+  String get wmo_code_67 => 'Heavy freezing rain';
+
+  @override
+  String get wmo_code_71 => 'Slight snow fall';
+
+  @override
+  String get wmo_code_73 => 'Moderate snow fall';
+
+  @override
+  String get wmo_code_75 => 'Heavy snow fall';
+
+  @override
+  String get wmo_code_77 => 'Snow grains';
+
+  @override
+  String get wmo_code_80 => 'Slight rain showers';
+
+  @override
+  String get wmo_code_81 => 'Moderate rain showers';
+
+  @override
+  String get wmo_code_82 => 'Violent rain showers';
+
+  @override
+  String get wmo_code_85 => 'Slight snow showers';
+
+  @override
+  String get wmo_code_86 => 'Heavy snow showers';
+
+  @override
+  String get wmo_code_95 => 'Thunderstorm';
+
+  @override
+  String get wmo_code_96 => 'Thunderstorm with slight hail';
+
+  @override
+  String get wmo_code_99 => 'Thunderstorm with heavy hail';
+
+  @override
+  String get wmo_code_unknown => 'Unknown conditions';
+
+  @override
   String get task_kind_buy => 'Buy 🛒';
 
   @override

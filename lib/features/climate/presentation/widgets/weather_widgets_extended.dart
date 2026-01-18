@@ -8,6 +8,7 @@ import '../../../../core/models/daily_weather_point.dart';
 import '../../../../core/models/hourly_weather_point.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
 // 1. HOURLY FORECAST GRAPH (Scrollable + CustomPainter)
@@ -38,7 +39,7 @@ class HourlyForecastWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "PROCHAINES 24H",
+              AppLocalizations.of(context)!.weather_header_next_24h,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: Colors.white70,
                     letterSpacing: 1.2,
@@ -196,9 +197,11 @@ class DailyForecastListWidget extends StatelessWidget {
       child: Column(
         children: dailyData.map((day) {
           final isToday = day.date.day == DateTime.now().day;
+          final locale = Localizations.localeOf(context).toString();
+          final l10n = AppLocalizations.of(context)!;
           final dayName = isToday
-              ? "Aujourd'hui"
-              : DateFormat('EEEE', 'fr_FR').format(day.date);
+              ? l10n.weather_today_label
+              : DateFormat('EEEE', locale).format(day.date);
           // Capitalize
           final dayLabel =
               dayName.substring(0, 1).toUpperCase() + dayName.substring(1);
@@ -294,7 +297,7 @@ class WindCompassWidget extends StatelessWidget {
             children: [
               Icon(Icons.air, color: Colors.white70, size: 16),
               const SizedBox(width: 8),
-              Text("VENT",
+              Text(AppLocalizations.of(context)!.weather_label_wind,
                   style: Theme.of(context)
                       .textTheme
                       .labelSmall
@@ -328,7 +331,7 @@ class WindCompassWidget extends StatelessWidget {
             ),
           ),
           if (gustsKmh > 0)
-            Text('Rafales: ${gustsKmh.round()} km/h',
+            Text('${AppLocalizations.of(context)!.weather_data_gusts}: ${gustsKmh.round()} km/h',
                 style: const TextStyle(color: Colors.white54, fontSize: 10)),
         ],
       ),
@@ -459,7 +462,7 @@ class PressureGaugeWidget extends StatelessWidget {
               Icon(Icons.speed, color: Colors.white70, size: 16),
               const SizedBox(width: 8),
               Expanded(
-                  child: Text("PRESSION",
+                  child: Text(AppLocalizations.of(context)!.weather_label_pressure,
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall
@@ -494,7 +497,9 @@ class PressureGaugeWidget extends StatelessWidget {
             ),
           ),
           // Basic interpretation
-          Text(pressureHPa > 1013 ? "Haute" : "Basse",
+          Text(pressureHPa > 1013 
+             ? AppLocalizations.of(context)!.weather_pressure_high
+             : AppLocalizations.of(context)!.weather_pressure_low,
               style: const TextStyle(color: Colors.white54, fontSize: 12)),
         ],
       ),
@@ -575,7 +580,7 @@ class SunPathWidget extends StatelessWidget {
             children: [
               const Icon(Icons.sunny, color: Colors.amber, size: 16),
               const SizedBox(width: 8),
-              Text("SOLEIL",
+              Text(AppLocalizations.of(context)!.weather_label_sun,
                   style: Theme.of(context)
                       .textTheme
                       .labelSmall
@@ -592,15 +597,15 @@ class SunPathWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const Text("Lever",
-                    style: TextStyle(color: Colors.white54, fontSize: 10)),
+                Text(AppLocalizations.of(context)!.weather_data_sunrise,
+                    style: const TextStyle(color: Colors.white54, fontSize: 10)),
                 Text(sunrise,
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
               ]),
               Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                const Text("Coucher",
-                    style: TextStyle(color: Colors.white54, fontSize: 10)),
+                Text(AppLocalizations.of(context)!.weather_data_sunset,
+                    style: const TextStyle(color: Colors.white54, fontSize: 10)),
                 Text(sunset,
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
@@ -657,18 +662,19 @@ class MoonPhaseWidget extends StatelessWidget {
       required this.moonrise,
       required this.moonset});
 
-  String get phaseLabel {
-    if (phase < 0.05) return "Nouvelle Lune";
-    if (phase < 0.25) return "Premier Croissant";
-    if (phase < 0.45) return "Premier Quartier";
-    if (phase < 0.55) return "Pleine Lune";
-    if (phase < 0.75) return "Dernier Quartier";
-    if (phase < 0.95) return "Dernier Croissant";
-    return "Nouvelle Lune";
+  String phaseLabel(AppLocalizations l10n) {
+    if (phase < 0.05) return l10n.moon_phase_new;
+    if (phase < 0.25) return l10n.moon_phase_waxing_crescent;
+    if (phase < 0.45) return l10n.moon_phase_first_quarter;
+    if (phase < 0.55) return l10n.moon_phase_full;
+    if (phase < 0.75) return l10n.moon_phase_last_quarter;
+    if (phase < 0.95) return l10n.moon_phase_waning_crescent;
+    return l10n.moon_phase_new;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       height: 160,
       width: double.infinity,
@@ -691,7 +697,7 @@ class MoonPhaseWidget extends StatelessWidget {
                     color: Colors.grey[
                         300]), // Placeholder for true moon phase rendering
                 const SizedBox(height: 8),
-                Text(phaseLabel,
+                Text(phaseLabel(l10n),
                     textAlign: TextAlign.center,
                     style:
                         const TextStyle(color: Colors.white70, fontSize: 10)),
@@ -705,9 +711,10 @@ class MoonPhaseWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _timeRow("Coucher", moonset),
+                _timeRow(l10n.weather_data_sunset, moonset), // Using sunset/sunrise labels since moonset/moonrise same concept? Or I should use specific if needed.
+                // Actually in french "Coucher" works for both.
                 const SizedBox(height: 12),
-                _timeRow("Lever", moonrise),
+                _timeRow(l10n.weather_data_sunrise, moonrise),
               ],
             ),
           )

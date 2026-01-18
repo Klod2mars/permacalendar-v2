@@ -9,6 +9,7 @@ import 'package:permacalendar/core/services/open_meteo_service.dart';
 import 'package:permacalendar/core/providers/app_settings_provider.dart';
 import 'package:permacalendar/core/models/daily_weather_point.dart';
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class WeatherDetailScreen extends ConsumerWidget {
   const WeatherDetailScreen({super.key});
@@ -31,13 +32,14 @@ class WeatherDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherAsync = ref.watch(currentWeatherProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
 
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Météo',
-            style: TextStyle(
+        title: Text(l10n.weather_screen_title,
+            style: const TextStyle(
                 color: Colors.white,
                 shadows: [Shadow(blurRadius: 2, color: Colors.black45)])),
         centerTitle: true,
@@ -143,7 +145,11 @@ class WeatherDetailScreen extends ConsumerWidget {
                                     Shadow(
                                         blurRadius: 10, color: Colors.black26)
                                   ])),
-                          Text(data.description ?? '',
+                          Text(
+                              data.weatherCode != null
+                                  ? WeatherIconMapper.getLocalizedDescription(
+                                      l10n, data.weatherCode!)
+                                  : (data.description ?? ''),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 24,
@@ -205,9 +211,9 @@ class WeatherDetailScreen extends ConsumerWidget {
                     }),
 
                     const SizedBox(height: 30),
-                    const Center(
-                        child: Text("Données fournies par Open-Meteo",
-                            style: TextStyle(
+                    Center(
+                        child: Text(l10n.weather_provider_credit,
+                            style: const TextStyle(
                                 color: Colors.white54, fontSize: 10))),
                   ],
                 ),
@@ -223,12 +229,13 @@ class WeatherDetailScreen extends ConsumerWidget {
                 const Icon(Icons.error_outline,
                     size: 48, color: Colors.white70),
                 const SizedBox(height: 16),
-                const Text('Impossible de charger la météo',
-                    style: TextStyle(color: Colors.white)),
+                const SizedBox(height: 16),
+                Text(l10n.weather_error_loading,
+                    style: const TextStyle(color: Colors.white)),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => ref.invalidate(currentWeatherProvider),
-                  child: const Text('Réessayer'),
+                  child: Text(l10n.weather_action_retry),
                 )
               ],
             ),

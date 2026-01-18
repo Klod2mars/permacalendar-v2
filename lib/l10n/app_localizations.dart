@@ -1570,6 +1570,348 @@ abstract class AppLocalizations {
   /// **'Erreur sauvegarde : {error}'**
   String soil_sheet_snack_error(Object error);
 
+  /// Titre écran météo
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo'**
+  String get weather_screen_title;
+
+  /// Crédit fournisseur données
+  ///
+  /// In fr, this message translates to:
+  /// **'Données fournies par Open-Meteo'**
+  String get weather_provider_credit;
+
+  /// Erreur chargement météo
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de charger la météo'**
+  String get weather_error_loading;
+
+  /// Bouton réessayer
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get weather_action_retry;
+
+  /// Header prochaines 24h
+  ///
+  /// In fr, this message translates to:
+  /// **'PROCHAINES 24H'**
+  String get weather_header_next_24h;
+
+  /// Header résumé jour
+  ///
+  /// In fr, this message translates to:
+  /// **'RÉSUMÉ JOUR'**
+  String get weather_header_daily_summary;
+
+  /// Header précipitations
+  ///
+  /// In fr, this message translates to:
+  /// **'PRÉCIPITATIONS (24h)'**
+  String get weather_header_precipitations;
+
+  /// Label vent
+  ///
+  /// In fr, this message translates to:
+  /// **'VENT'**
+  String get weather_label_wind;
+
+  /// Label pression
+  ///
+  /// In fr, this message translates to:
+  /// **'PRESSION'**
+  String get weather_label_pressure;
+
+  /// Label soleil
+  ///
+  /// In fr, this message translates to:
+  /// **'SOLEIL'**
+  String get weather_label_sun;
+
+  /// Label astres
+  ///
+  /// In fr, this message translates to:
+  /// **'ASTRES'**
+  String get weather_label_astro;
+
+  /// Label vitesse vent
+  ///
+  /// In fr, this message translates to:
+  /// **'Vitesse'**
+  String get weather_data_speed;
+
+  /// Label rafales
+  ///
+  /// In fr, this message translates to:
+  /// **'Rafales'**
+  String get weather_data_gusts;
+
+  /// Label lever soleil
+  ///
+  /// In fr, this message translates to:
+  /// **'Lever'**
+  String get weather_data_sunrise;
+
+  /// Label coucher soleil
+  ///
+  /// In fr, this message translates to:
+  /// **'Coucher'**
+  String get weather_data_sunset;
+
+  /// Label pluie
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie'**
+  String get weather_data_rain;
+
+  /// Label temp max
+  ///
+  /// In fr, this message translates to:
+  /// **'Max'**
+  String get weather_data_max;
+
+  /// Label temp min
+  ///
+  /// In fr, this message translates to:
+  /// **'Min'**
+  String get weather_data_min;
+
+  /// Label vent max
+  ///
+  /// In fr, this message translates to:
+  /// **'Vent Max'**
+  String get weather_data_wind_max;
+
+  /// Pression haute
+  ///
+  /// In fr, this message translates to:
+  /// **'Haute'**
+  String get weather_pressure_high;
+
+  /// Pression basse
+  ///
+  /// In fr, this message translates to:
+  /// **'Basse'**
+  String get weather_pressure_low;
+
+  /// Label aujourd'hui
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd\'hui'**
+  String get weather_today_label;
+
+  /// Phase nouvelle lune
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle Lune'**
+  String get moon_phase_new;
+
+  /// Phase premier croissant
+  ///
+  /// In fr, this message translates to:
+  /// **'Premier Croissant'**
+  String get moon_phase_waxing_crescent;
+
+  /// Phase premier quartier
+  ///
+  /// In fr, this message translates to:
+  /// **'Premier Quartier'**
+  String get moon_phase_first_quarter;
+
+  /// Phase gibbeuse croissante
+  ///
+  /// In fr, this message translates to:
+  /// **'Gibbeuse Croissante'**
+  String get moon_phase_waxing_gibbous;
+
+  /// Phase pleine lune
+  ///
+  /// In fr, this message translates to:
+  /// **'Pleine Lune'**
+  String get moon_phase_full;
+
+  /// Phase gibbeuse décroissante
+  ///
+  /// In fr, this message translates to:
+  /// **'Gibbeuse Décroissante'**
+  String get moon_phase_waning_gibbous;
+
+  /// Phase dernier quartier
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernier Quartier'**
+  String get moon_phase_last_quarter;
+
+  /// Phase dernier croissant
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernier Croissant'**
+  String get moon_phase_waning_crescent;
+
+  /// No description provided for @wmo_code_0.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ciel clair'**
+  String get wmo_code_0;
+
+  /// No description provided for @wmo_code_1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Principalement clair'**
+  String get wmo_code_1;
+
+  /// No description provided for @wmo_code_2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partiellement nuageux'**
+  String get wmo_code_2;
+
+  /// No description provided for @wmo_code_3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couvert'**
+  String get wmo_code_3;
+
+  /// No description provided for @wmo_code_45.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillard'**
+  String get wmo_code_45;
+
+  /// No description provided for @wmo_code_48.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillard givrant'**
+  String get wmo_code_48;
+
+  /// No description provided for @wmo_code_51.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bruine légère'**
+  String get wmo_code_51;
+
+  /// No description provided for @wmo_code_53.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bruine modérée'**
+  String get wmo_code_53;
+
+  /// No description provided for @wmo_code_55.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bruine dense'**
+  String get wmo_code_55;
+
+  /// No description provided for @wmo_code_61.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie légère'**
+  String get wmo_code_61;
+
+  /// No description provided for @wmo_code_63.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie modérée'**
+  String get wmo_code_63;
+
+  /// No description provided for @wmo_code_65.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie forte'**
+  String get wmo_code_65;
+
+  /// No description provided for @wmo_code_66.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie verglaçante légère'**
+  String get wmo_code_66;
+
+  /// No description provided for @wmo_code_67.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie verglaçante forte'**
+  String get wmo_code_67;
+
+  /// No description provided for @wmo_code_71.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chute de neige légère'**
+  String get wmo_code_71;
+
+  /// No description provided for @wmo_code_73.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chute de neige modérée'**
+  String get wmo_code_73;
+
+  /// No description provided for @wmo_code_75.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chute de neige forte'**
+  String get wmo_code_75;
+
+  /// No description provided for @wmo_code_77.
+  ///
+  /// In fr, this message translates to:
+  /// **'Grains de neige'**
+  String get wmo_code_77;
+
+  /// No description provided for @wmo_code_80.
+  ///
+  /// In fr, this message translates to:
+  /// **'Averses légères'**
+  String get wmo_code_80;
+
+  /// No description provided for @wmo_code_81.
+  ///
+  /// In fr, this message translates to:
+  /// **'Averses modérées'**
+  String get wmo_code_81;
+
+  /// No description provided for @wmo_code_82.
+  ///
+  /// In fr, this message translates to:
+  /// **'Averses violentes'**
+  String get wmo_code_82;
+
+  /// No description provided for @wmo_code_85.
+  ///
+  /// In fr, this message translates to:
+  /// **'Averses de neige légères'**
+  String get wmo_code_85;
+
+  /// No description provided for @wmo_code_86.
+  ///
+  /// In fr, this message translates to:
+  /// **'Averses de neige fortes'**
+  String get wmo_code_86;
+
+  /// No description provided for @wmo_code_95.
+  ///
+  /// In fr, this message translates to:
+  /// **'Orage'**
+  String get wmo_code_95;
+
+  /// No description provided for @wmo_code_96.
+  ///
+  /// In fr, this message translates to:
+  /// **'Orage avec grêle légère'**
+  String get wmo_code_96;
+
+  /// No description provided for @wmo_code_99.
+  ///
+  /// In fr, this message translates to:
+  /// **'Orage avec grêle forte'**
+  String get wmo_code_99;
+
+  /// No description provided for @wmo_code_unknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conditions variables'**
+  String get wmo_code_unknown;
+
   /// Type tâche achat
   ///
   /// In fr, this message translates to:

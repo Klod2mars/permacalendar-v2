@@ -450,9 +450,7 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
         icon: d.weatherCode != null 
             ? WeatherIconMapper.getIconPath(d.weatherCode!) 
             : WeatherIconMapper.getFallbackIcon(),
-        description: d.weatherCode != null 
-            ? WeatherIconMapper.getWeatherDescription(d.weatherCode!) 
-            : '—',
+        description: '', // Description is now handled by UI using l10n and weatherCode
         moonPhase: phase,
         moonrise: rise?.toIso8601String(),
         moonset: set?.toIso8601String(),
@@ -485,8 +483,7 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     // Final enrich for the "Main" view (current condition)
     final enriched = weatherView.enrich(
       icon: WeatherIconMapper.getIconPath(result.currentWeatherCode),
-      description:
-          WeatherIconMapper.getWeatherDescription(result.currentWeatherCode),
+      description: '', // Handled by UI localized
     );
 
     return enriched;
@@ -597,9 +594,7 @@ final forecastProvider = FutureProvider<List<DailyWeatherPoint>>((ref) async {
           ? WeatherIconMapper.getIconPath(daily.weatherCode)
           : _getWeatherIcon(condition);
 
-      final description = daily.weatherCode != null
-          ? WeatherIconMapper.getWeatherDescription(daily.weatherCode)
-          : _getWeatherDescription(condition);
+      final description = ''; // Handled by UI localized
       
       // Calculate local moon phase
       final phase = MoonUtils.calculateMoonPhase(daily.date);
@@ -634,9 +629,7 @@ List<TimelineWeatherPoint> mapList(List<DailyWeatherPoint> src,
         ? WeatherIconMapper.getIconPath(daily.weatherCode!)
         : _getWeatherIcon(condition);
 
-    final description = daily.weatherCode != null
-        ? WeatherIconMapper.getWeatherDescription(daily.weatherCode!)
-        : _getWeatherDescription(condition);
+    final description = ''; // Handled by UI localized
 
     return TimelineWeatherPoint(
       date: daily.date,

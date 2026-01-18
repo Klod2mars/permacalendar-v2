@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import 'dart:math' as math;
 import 'package:permacalendar/core/models/daily_weather_point.dart';
 import 'package:permacalendar/core/models/hourly_weather_point.dart';
@@ -23,6 +24,9 @@ class WeatherHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+
     return Column(
       children: [
         Text(
@@ -34,7 +38,7 @@ class WeatherHeader extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          DateFormat('EEEE d MMMM • HH:mm', 'fr_FR').format(date),
+          DateFormat('EEEE d MMMM • HH:mm', locale).format(date),
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Colors.grey[600],
               ),
@@ -68,7 +72,7 @@ class WeatherHeader extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           weatherCode != null
-              ? WeatherIconMapper.getWeatherDescription(weatherCode!)
+              ? WeatherIconMapper.getLocalizedDescription(l10n, weatherCode!)
               : '',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
@@ -95,6 +99,7 @@ class WindCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       color: Colors.blueGrey.withOpacity(0.05),
@@ -107,7 +112,7 @@ class WindCard extends StatelessWidget {
               children: [
                 const Icon(Icons.air, color: Colors.blueGrey),
                 const SizedBox(width: 8),
-                Text('VENT',
+                Text(l10n.weather_label_wind,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.blueGrey)),
               ],
@@ -117,10 +122,10 @@ class WindCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildInfo(
-                    context, 'Vitesse', '${windSpeed.toStringAsFixed(1)} km/h'),
+                    context, l10n.weather_data_speed, '${windSpeed.toStringAsFixed(1)} km/h'),
                 _buildDirectionArrow(windDirection),
                 _buildInfo(
-                    context, 'Rafales', '${windGusts.toStringAsFixed(1)} km/h',
+                    context, l10n.weather_data_gusts, '${windGusts.toStringAsFixed(1)} km/h',
                     isWarning: windGusts > 40),
               ],
             ),
@@ -226,7 +231,7 @@ class PrecipitationCard extends StatelessWidget {
               children: [
                 const Icon(Icons.umbrella, color: Colors.blue),
                 const SizedBox(width: 8),
-                Text('PRÉCIPITATIONS (24h)',
+                Text(AppLocalizations.of(context)!.weather_header_precipitations,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.blue)),
               ],
@@ -317,6 +322,7 @@ class SunMoonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       color: Colors.orange.withOpacity(0.05),
@@ -329,7 +335,7 @@ class SunMoonCard extends StatelessWidget {
               children: [
                 const Icon(Icons.wb_sunny_outlined, color: Colors.orange),
                 const SizedBox(width: 8),
-                Text('ASTRES',
+                Text(l10n.weather_label_astro,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.deepOrange)),
               ],
@@ -338,7 +344,7 @@ class SunMoonCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildAstreColumn('Soleil', Icons.wb_sunny, sunrise ?? '--:--',
+                _buildAstreColumn(l10n.weather_data_sunrise, Icons.wb_sunny, sunrise ?? '--:--',
                     sunset ?? '--:--', Colors.orange),
                 Container(
                     width: 1, height: 40, color: Colors.grey.withOpacity(0.3)),
@@ -348,7 +354,7 @@ class SunMoonCard extends StatelessWidget {
             ),
             if (moonPhase != null) ...[
               const SizedBox(height: 12),
-              Text(_getMoonPhaseName(moonPhase!),
+              Text(_getMoonPhaseName(moonPhase!, l10n),
                   style: const TextStyle(
                       fontStyle: FontStyle.italic,
                       fontSize: 12,
@@ -381,15 +387,15 @@ class SunMoonCard extends StatelessWidget {
     );
   }
 
-  String _getMoonPhaseName(double phase) {
-    if (phase == 0 || phase == 1) return 'Nouvelle Lune';
-    if (phase < 0.25) return 'Premier Croissant';
-    if (phase == 0.25) return 'Premier Quartier';
-    if (phase < 0.5) return 'Gibbeuse Croissante';
-    if (phase == 0.5) return 'Pleine Lune';
-    if (phase < 0.75) return 'Gibbeuse Décroissante';
-    if (phase == 0.75) return 'Dernier Quartier';
-    return 'Dernier Croissant';
+  String _getMoonPhaseName(double phase, AppLocalizations l10n) {
+    if (phase == 0 || phase == 1) return l10n.moon_phase_new;
+    if (phase < 0.25) return l10n.moon_phase_waxing_crescent;
+    if (phase == 0.25) return l10n.moon_phase_first_quarter;
+    if (phase < 0.5) return l10n.moon_phase_waxing_gibbous;
+    if (phase == 0.5) return l10n.moon_phase_full;
+    if (phase < 0.75) return l10n.moon_phase_waning_gibbous;
+    if (phase == 0.75) return l10n.moon_phase_last_quarter;
+    return l10n.moon_phase_waning_crescent;
   }
 }
 
@@ -401,6 +407,7 @@ class DailySummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
         elevation: 0,
         color: Colors.grey[100],
@@ -414,7 +421,7 @@ class DailySummaryCard extends StatelessWidget {
                   const Icon(Icons.calendar_today,
                       size: 16, color: Colors.grey),
                   const SizedBox(width: 8),
-                  Text('RÉSUMÉ JOUR',
+                  Text(l10n.weather_header_daily_summary,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.grey)),
                 ],
@@ -424,12 +431,12 @@ class DailySummaryCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildItem(
-                      'Max', '${day.tMaxC?.toStringAsFixed(1) ?? '--'}°'),
+                      l10n.weather_data_max, '${day.tMaxC?.toStringAsFixed(1) ?? '--'}°'),
                   _buildItem(
-                      'Min', '${day.tMinC?.toStringAsFixed(1) ?? '--'}°'),
-                  _buildItem('Pluie', '${day.precipMm}mm'),
+                      l10n.weather_data_min, '${day.tMinC?.toStringAsFixed(1) ?? '--'}°'),
+                  _buildItem(l10n.weather_data_rain, '${day.precipMm}mm'),
                   _buildItem(
-                      'Vent Max', '${day.windSpeedMax?.round() ?? '--'}k'),
+                      l10n.weather_data_wind_max, '${day.windSpeedMax?.round() ?? '--'}k'),
                 ],
               )
             ],

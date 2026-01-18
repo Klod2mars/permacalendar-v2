@@ -6,6 +6,8 @@
 
 /// pour mapper vers les icônes du pack organique DeeVid.
 
+import 'package:permacalendar/l10n/app_localizations.dart';
+
 class WeatherIconMapper {
   /// Retourne le chemin vers l'icône météo correspondant au code WMO
 
@@ -137,94 +139,43 @@ class WeatherIconMapper {
     }
   }
 
-  /// Retourne une description textuelle du temps pour l'accessibilité
 
-  static String getWeatherDescription(int? weatherCode) {
-    if (weatherCode == null) return 'Conditions inconnues';
+  /// Retourne une description textuelle localisée
+  static String getLocalizedDescription(AppLocalizations l10n, int? weatherCode) {
+    if (weatherCode == null) return l10n.wmo_code_unknown;
 
     switch (weatherCode) {
-      case 0:
-        return 'Ciel clair';
-
-      case 1:
-        return 'Principalement clair';
-
-      case 2:
-        return 'Partiellement nuageux';
-
-      case 3:
-        return 'Couvert';
-
-      case 45:
-        return 'Brouillard';
-
-      case 48:
-        return 'Brouillard givrant';
-
-      case 51:
-        return 'Bruine légère';
-
-      case 53:
-        return 'Bruine modérée';
-
-      case 55:
-        return 'Bruine dense';
-
-      case 61:
-        return 'Pluie légère';
-
-      case 63:
-        return 'Pluie modérée';
-
-      case 65:
-        return 'Pluie forte';
-
-      case 66:
-        return 'Pluie verglaçante légère';
-
-      case 67:
-        return 'Pluie verglaçante forte';
-
-      case 71:
-        return 'Chute de neige légère';
-
-      case 73:
-        return 'Chute de neige modérée';
-
-      case 75:
-        return 'Chute de neige forte';
-
-      case 77:
-        return 'Grains de neige';
-
-      case 80:
-        return 'Averses légères';
-
-      case 81:
-        return 'Averses modérées';
-
-      case 82:
-        return 'Averses violentes';
-
-      case 85:
-        return 'Averses de neige légères';
-
-      case 86:
-        return 'Averses de neige fortes';
-
-      case 95:
-        return 'Orage';
-
-      case 96:
-        return 'Orage avec grêle légère';
-
-      case 99:
-        return 'Orage avec grêle forte';
-
-      default:
-        return 'Conditions variables';
+      case 0: return l10n.wmo_code_0;
+      case 1: return l10n.wmo_code_1;
+      case 2: return l10n.wmo_code_2;
+      case 3: return l10n.wmo_code_3;
+      case 45: return l10n.wmo_code_45;
+      case 48: return l10n.wmo_code_48;
+      case 51: return l10n.wmo_code_51;
+      case 53: return l10n.wmo_code_53;
+      case 55: return l10n.wmo_code_55;
+      case 61: return l10n.wmo_code_61;
+      case 63: return l10n.wmo_code_63;
+      case 65: return l10n.wmo_code_65;
+      case 66: return l10n.wmo_code_66;
+      case 67: return l10n.wmo_code_67;
+      case 71: return l10n.wmo_code_71;
+      case 73: return l10n.wmo_code_73;
+      case 75: return l10n.wmo_code_75;
+      case 77: return l10n.wmo_code_77;
+      case 80: return l10n.wmo_code_80;
+      case 81: return l10n.wmo_code_81;
+      case 82: return l10n.wmo_code_82;
+      case 85: return l10n.wmo_code_85;
+      case 86: return l10n.wmo_code_86;
+      case 95: return l10n.wmo_code_95;
+      case 96: return l10n.wmo_code_96;
+      case 99: return l10n.wmo_code_99;
+      default: return l10n.wmo_code_unknown;
     }
   }
+
+
 
   /// Retourne une icône de fallback en cas d'erreur de chargement
 
