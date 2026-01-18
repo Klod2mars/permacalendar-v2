@@ -368,27 +368,37 @@ class Plant extends HiveObject {
   }
 
   factory Plant.fromJson(Map<String, dynamic> json) {
+    // Helper pour parser les nombres de manière robuste (int/double/String/null)
+    double parseDouble(dynamic value, [double defaultValue = 0.0]) {
+      if (value == null) return defaultValue;
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? defaultValue;
+      return defaultValue;
+    }
+
     return Plant(
       id: json['id'],
-      commonName: json['commonName'],
-      scientificName: json['scientificName'],
-      family: json['family'],
-      description: json['description'],
-      plantingSeason: json['plantingSeason'],
-      harvestSeason: json['harvestSeason'],
-      daysToMaturity: json['daysToMaturity'],
-      spacing: (json['spacing'] as num).toDouble(),
-      depth: (json['depth'] as num).toDouble(),
-      sunExposure: json['sunExposure'],
-      waterNeeds: json['waterNeeds'],
+      commonName: json['commonName'] ?? '',
+      scientificName: json['scientificName'] ?? '',
+      family: json['family'] ?? '',
+      description: json['description'] ?? '',
+      plantingSeason: json['plantingSeason'] ?? '',
+      harvestSeason: json['harvestSeason'] ?? '',
+      daysToMaturity: json['daysToMaturity'] is int 
+          ? json['daysToMaturity'] 
+          : (json['daysToMaturity'] is String ? int.tryParse(json['daysToMaturity']) : 0) ?? 0,
+      spacing: parseDouble(json['spacing']),
+      depth: parseDouble(json['depth']),
+      sunExposure: json['sunExposure'] ?? '',
+      waterNeeds: json['waterNeeds'] ?? '',
       sowingMonths:
           (json['sowingMonths'] as List?)?.map((e) => e.toString()).toList() ??
               [],
       harvestMonths:
           (json['harvestMonths'] as List?)?.map((e) => e.toString()).toList() ??
               [],
-      marketPricePerKg: (json['marketPricePerKg'] as num).toDouble(),
-      defaultUnit: json['defaultUnit'],
+      marketPricePerKg: parseDouble(json['marketPricePerKg']),
+      defaultUnit: json['defaultUnit'] ?? '',
       nutritionPer100g:
           Map<String, dynamic>.from(json['nutritionPer100g'] ?? {}),
       germination: Map<String, dynamic>.from(json['germination'] ?? {}),
@@ -401,17 +411,17 @@ class Plant extends HiveObject {
               [],
       biologicalControl:
           Map<String, dynamic>.from(json['biologicalControl'] ?? {}),
-      harvestTime: json['harvestTime'],
+      harvestTime: json['harvestTime'] ?? '',
       companionPlanting:
           Map<String, dynamic>.from(json['companionPlanting'] ?? {}),
       notificationSettings:
           Map<String, dynamic>.from(json['notificationSettings'] ?? {}),
       imageUrl: json['imageUrl'] ?? json['image'],
       createdAt: json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'])
+          ? DateTime.tryParse(json['createdAt'].toString()) ?? DateTime.now()
           : DateTime.now(),
       updatedAt: json['updatedAt'] != null
-          ? DateTime.parse(json['updatedAt'])
+          ? DateTime.tryParse(json['updatedAt'].toString()) ?? DateTime.now()
           : DateTime.now(),
       metadata: Map<String, dynamic>.from(json['metadata'] ?? {}),
       isActive: json['isActive'] ?? true,
