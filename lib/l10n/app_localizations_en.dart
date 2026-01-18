@@ -395,4 +395,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String calibration_snack_save_error(String error) {
     return 'Error while saving: $error';
   }
+
+  @override
+  String get calibration_overlay_saved => 'Calibration saved';
+
+  @override
+  String calibration_overlay_error_save(String error) {
+    return 'Calibration save error: $error';
+  }
+
+  @override
+  String get calibration_instruction_image =>
+      'Drag to move, pinch to zoom the background image.';
+
+  @override
+  String get calibration_instruction_sky =>
+      'Adjust the day/night ovoid (center, size, rotation).';
+
+  @override
+  String get calibration_instruction_modules =>
+      'Move the modules (bubbles) to the desired location.';
+
+  @override
+  String get calibration_instruction_none => 'Select a tool to start.';
+
+  @override
+  String get calibration_tool_image => 'Image';
+
+  @override
+  String get calibration_tool_sky => 'Sky';
+
+  @override
+  String get calibration_tool_modules => 'Modules';
+
+  @override
+  String get calibration_action_validate_exit => 'Validate & Exit';
 }

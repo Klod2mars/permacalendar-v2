@@ -403,4 +403,40 @@ class AppLocalizationsFr extends AppLocalizations {
   String calibration_snack_save_error(String error) {
     return 'Erreur lors de la sauvegarde: $error';
   }
+
+  @override
+  String get calibration_overlay_saved => 'Calibration sauvegardée';
+
+  @override
+  String calibration_overlay_error_save(String error) {
+    return 'Erreur sauvegarde calibration: $error';
+  }
+
+  @override
+  String get calibration_instruction_image =>
+      'Glissez pour déplacer, pincez pour zoomer l\'image de fond.';
+
+  @override
+  String get calibration_instruction_sky =>
+      'Ajustez l\'ovoïde jour/nuit (centre, taille, rotation).';
+
+  @override
+  String get calibration_instruction_modules =>
+      'Déplacez les modules (bulles) à l\'emplacement souhaité.';
+
+  @override
+  String get calibration_instruction_none =>
+      'Sélectionnez un outil pour commencer.';
+
+  @override
+  String get calibration_tool_image => 'Image';
+
+  @override
+  String get calibration_tool_sky => 'Ciel';
+
+  @override
+  String get calibration_tool_modules => 'Modules';
+
+  @override
+  String get calibration_action_validate_exit => 'Valider & Quitter';
 }

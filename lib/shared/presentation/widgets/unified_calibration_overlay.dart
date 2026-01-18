@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/home/presentation/providers/unified_calibration_provider.dart';
 import '../../../../core/models/calibration_state.dart';
 import '../../../../core/providers/organic_zones_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class UnifiedCalibrationOverlay extends ConsumerStatefulWidget {
   const UnifiedCalibrationOverlay({super.key});
@@ -35,15 +36,17 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
       ref.read(calibrationStateProvider.notifier).disableCalibration();
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Calibration sauvegardée'),
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(l10n.calibration_overlay_saved),
           backgroundColor: Colors.green,
         ));
       }
     } catch (e) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Erreur sauvegarde calibration: $e'),
+          content: Text(l10n.calibration_overlay_error_save(e.toString())),
           backgroundColor: Colors.red,
         ));
       }
@@ -54,6 +57,7 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
   Widget build(BuildContext context) {
     final unifiedState = ref.watch(unifiedCalibrationProvider);
     final activeTool = unifiedState.activeTool;
+    final l10n = AppLocalizations.of(context)!;
 
     return Stack(
       children: [
@@ -107,7 +111,7 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
                         children: [
                           // Titre / Instructions contextuelles
                           Text(
-                            _getInstructionText(activeTool),
+                            _getInstructionText(activeTool, l10n),
                             style: const TextStyle(color: Colors.white70, fontSize: 13),
                             textAlign: TextAlign.center,
                           ),
@@ -122,7 +126,7 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
                                 ref, 
                                 CalibrationTool.image, 
                                 Icons.image, 
-                                'Image',
+                                l10n.calibration_tool_image,
                                 activeTool == CalibrationTool.image,
                               ),
                               _buildToolButton(
@@ -130,7 +134,7 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
                                 ref,
                                 CalibrationTool.sky,
                                 Icons.cloud,
-                                'Ciel',
+                                l10n.calibration_tool_sky,
                                 activeTool == CalibrationTool.sky,
                               ),
                               _buildToolButton(
@@ -138,7 +142,7 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
                                 ref,
                                 CalibrationTool.modules,
                                 Icons.widgets,
-                                'Modules',
+                                l10n.calibration_tool_modules,
                                 activeTool == CalibrationTool.modules,
                               ),
                             ],
@@ -158,7 +162,7 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               ),
                               icon: const Icon(Icons.check),
-                              label: const Text('Valider & Quitter'),
+                              label: Text(l10n.calibration_action_validate_exit),
                             ),
                           ),
                           
@@ -183,16 +187,16 @@ class _UnifiedCalibrationOverlayState extends ConsumerState<UnifiedCalibrationOv
 
 
 
-  String _getInstructionText(CalibrationTool tool) {
+  String _getInstructionText(CalibrationTool tool, AppLocalizations l10n) {
     switch (tool) {
       case CalibrationTool.image:
-        return 'Glissez pour déplacer, pincez pour zoomer l\'image de fond.';
+        return l10n.calibration_instruction_image;
       case CalibrationTool.sky:
-        return 'Ajustez l\'ovoïde jour/nuit (centre, taille, rotation).';
+        return l10n.calibration_instruction_sky;
       case CalibrationTool.modules:
-        return 'Déplacez les modules (bulles) à l\'emplacement souhaité.';
+        return l10n.calibration_instruction_modules;
       case CalibrationTool.none:
-        return 'Sélectionnez un outil pour commencer.';
+        return l10n.calibration_instruction_none;
     }
   }
 

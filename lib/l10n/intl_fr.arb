@@ -619,6 +619,24 @@
         "type": "String"
       }
     }
-  }
+  },
+  "calibration_overlay_saved": "Calibration sauvegardée",
+  "calibration_overlay_error_save": "Erreur sauvegarde calibration: {error}",
+  "@calibration_overlay_error_save": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "calibration_instruction_image": "Glissez pour déplacer, pincez pour zoomer l'image de fond.",
+  "calibration_instruction_sky": "Ajustez l'ovoïde jour/nuit (centre, taille, rotation).",
+  "calibration_instruction_modules": "Déplacez les modules (bulles) à l'emplacement souhaité.",
+  "calibration_instruction_none": "Sélectionnez un outil pour commencer.",
+  "calibration_tool_image": "Image",
+  "calibration_tool_sky": "Ciel",
+  "calibration_tool_modules": "Modules",
+  "calibration_action_validate_exit": "Valider & Quitter"
 }
+
 

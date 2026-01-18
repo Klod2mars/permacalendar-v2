@@ -801,6 +801,66 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Erreur lors de la sauvegarde: {error}'**
   String calibration_snack_save_error(String error);
+
+  /// No description provided for @calibration_overlay_saved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calibration sauvegardée'**
+  String get calibration_overlay_saved;
+
+  /// No description provided for @calibration_overlay_error_save.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur sauvegarde calibration: {error}'**
+  String calibration_overlay_error_save(String error);
+
+  /// No description provided for @calibration_instruction_image.
+  ///
+  /// In fr, this message translates to:
+  /// **'Glissez pour déplacer, pincez pour zoomer l\'image de fond.'**
+  String get calibration_instruction_image;
+
+  /// No description provided for @calibration_instruction_sky.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajustez l\'ovoïde jour/nuit (centre, taille, rotation).'**
+  String get calibration_instruction_sky;
+
+  /// No description provided for @calibration_instruction_modules.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplacez les modules (bulles) à l\'emplacement souhaité.'**
+  String get calibration_instruction_modules;
+
+  /// No description provided for @calibration_instruction_none.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionnez un outil pour commencer.'**
+  String get calibration_instruction_none;
+
+  /// No description provided for @calibration_tool_image.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image'**
+  String get calibration_tool_image;
+
+  /// No description provided for @calibration_tool_sky.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ciel'**
+  String get calibration_tool_sky;
+
+  /// No description provided for @calibration_tool_modules.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modules'**
+  String get calibration_tool_modules;
+
+  /// No description provided for @calibration_action_validate_exit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider & Quitter'**
+  String get calibration_action_validate_exit;
 }
 
 class _AppLocalizationsDelegate

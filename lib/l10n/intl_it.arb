@@ -118,6 +118,18 @@
   "calibration_snack_profile_deleted": "Profile deleted for this device.",
   "calibration_snack_no_calibration": "No calibration saved. Calibrate from dashboard first.",
   "calibration_snack_saved_as_profile": "Current calibration saved as profile for this device.",
-  "calibration_snack_save_error": "Error while saving: {error}"
+  "calibration_snack_save_error": "Error while saving: {error}",
+
+  "calibration_overlay_saved": "Calibration saved",
+  "calibration_overlay_error_save": "Calibration save error: {error}",
+  "calibration_instruction_image": "Drag to move, pinch to zoom the background image.",
+  "calibration_instruction_sky": "Adjust the day/night ovoid (center, size, rotation).",
+  "calibration_instruction_modules": "Move the modules (bubbles) to the desired location.",
+  "calibration_instruction_none": "Select a tool to start.",
+  "calibration_tool_image": "Image",
+  "calibration_tool_sky": "Sky",
+  "calibration_tool_modules": "Modules",
+  "calibration_action_validate_exit": "Validate & Exit"
 }
+
 
