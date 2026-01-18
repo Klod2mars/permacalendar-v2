@@ -608,4 +608,147 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get common_error => 'Error';
+
+  @override
+  String get task_editor_title_new => 'New Task';
+
+  @override
+  String get task_editor_title_edit => 'Edit Task';
+
+  @override
+  String get task_editor_title_field => 'Title *';
+
+  @override
+  String get task_editor_error_title_required => 'Required';
+
+  @override
+  String get task_editor_garden_all => 'All Gardens';
+
+  @override
+  String get task_editor_zone_label => 'Zone (Bed)';
+
+  @override
+  String get task_editor_zone_none => 'No specific zone';
+
+  @override
+  String get task_editor_zone_empty => 'No beds for this garden';
+
+  @override
+  String get task_editor_description_label => 'Description';
+
+  @override
+  String get task_editor_date_label => 'Start Date';
+
+  @override
+  String get task_editor_time_label => 'Time';
+
+  @override
+  String get task_editor_duration_label => 'Estimated Duration';
+
+  @override
+  String get task_editor_duration_other => 'Other';
+
+  @override
+  String get task_editor_type_label => 'Task Type';
+
+  @override
+  String get task_editor_priority_label => 'Priority';
+
+  @override
+  String get task_editor_urgent_label => 'Urgent';
+
+  @override
+  String get task_editor_option_none => 'None (Save Only)';
+
+  @override
+  String get task_editor_option_share => 'Share (Text)';
+
+  @override
+  String get task_editor_option_pdf => 'Export — PDF';
+
+  @override
+  String get task_editor_option_docx => 'Export — Word (.docx)';
+
+  @override
+  String get task_editor_export_label => 'Output / Share';
+
+  @override
+  String get task_editor_photo_placeholder => 'Add Photo (Coming Soon)';
+
+  @override
+  String get task_editor_action_create => 'Create';
+
+  @override
+  String get task_editor_action_save => 'Save';
+
+  @override
+  String get task_editor_action_cancel => 'Cancel';
+
+  @override
+  String get task_editor_assignee_label => 'Assigned to';
+
+  @override
+  String task_editor_assignee_add(String name) {
+    return 'Add \"$name\" to favorites';
+  }
+
+  @override
+  String get task_editor_assignee_none => 'No results.';
+
+  @override
+  String get task_editor_recurrence_label => 'Recurrence';
+
+  @override
+  String get task_editor_recurrence_none => 'None';
+
+  @override
+  String get task_editor_recurrence_interval => 'Every X days';
+
+  @override
+  String get task_editor_recurrence_weekly => 'Weekly (Days)';
+
+  @override
+  String get task_editor_recurrence_monthly => 'Monthly (same day)';
+
+  @override
+  String get task_editor_recurrence_repeat_label => 'Repeat every ';
+
+  @override
+  String get task_editor_recurrence_days_suffix => ' d';
+
+  @override
+  String get task_kind_generic => 'Generic';
+
+  @override
+  String get task_kind_repair => 'Repair 🛠️';
+
+  @override
+  String get task_kind_buy => 'Buy 🛒';
+
+  @override
+  String get task_kind_clean => 'Clean 🧹';
+
+  @override
+  String get task_kind_watering => 'Watering 💧';
+
+  @override
+  String get task_kind_seeding => 'Seeding 🌱';
+
+  @override
+  String get task_kind_pruning => 'Pruning ✂️';
+
+  @override
+  String get task_kind_weeding => 'Weeding 🌿';
+
+  @override
+  String get task_kind_amendment => 'Amendment 🪵';
+
+  @override
+  String get task_kind_treatment => 'Treatment 🧪';
+
+  @override
+  String get task_kind_harvest => 'Harvest 🧺';
+
+  @override
+  String get task_kind_winter_protection => 'Winter Protection ❄️';
 }

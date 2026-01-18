@@ -1173,6 +1173,288 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Erreur'**
   String get common_error;
+
+  /// Titre dialogue nouvelle tâche
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle Tâche'**
+  String get task_editor_title_new;
+
+  /// Titre dialogue modifier tâche
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier Tâche'**
+  String get task_editor_title_edit;
+
+  /// Label champ titre
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre *'**
+  String get task_editor_title_field;
+
+  /// Erreur validation titre
+  ///
+  /// In fr, this message translates to:
+  /// **'Requis'**
+  String get task_editor_error_title_required;
+
+  /// Option tous les jardins
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les jardins'**
+  String get task_editor_garden_all;
+
+  /// Label champ zone
+  ///
+  /// In fr, this message translates to:
+  /// **'Zone (Parcelle)'**
+  String get task_editor_zone_label;
+
+  /// Option aucune zone
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune zone spécifique'**
+  String get task_editor_zone_none;
+
+  /// Message aucune parcelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune parcelle pour ce jardin'**
+  String get task_editor_zone_empty;
+
+  /// Label champ description
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get task_editor_description_label;
+
+  /// Label champ date
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de début'**
+  String get task_editor_date_label;
+
+  /// Label champ heure
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure'**
+  String get task_editor_time_label;
+
+  /// Label champ durée
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée estimée'**
+  String get task_editor_duration_label;
+
+  /// Option durée autre
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre'**
+  String get task_editor_duration_other;
+
+  /// Label champ type
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de tâche'**
+  String get task_editor_type_label;
+
+  /// Label champ priorité
+  ///
+  /// In fr, this message translates to:
+  /// **'Priorité'**
+  String get task_editor_priority_label;
+
+  /// Label switch urgent
+  ///
+  /// In fr, this message translates to:
+  /// **'Urgent'**
+  String get task_editor_urgent_label;
+
+  /// Option export aucune
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune (Sauvegarde uniquement)'**
+  String get task_editor_option_none;
+
+  /// Option export partage
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager (texte)'**
+  String get task_editor_option_share;
+
+  /// Option export PDF
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter — PDF'**
+  String get task_editor_option_pdf;
+
+  /// Option export Word
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter — Word (.docx)'**
+  String get task_editor_option_docx;
+
+  /// Label champ export
+  ///
+  /// In fr, this message translates to:
+  /// **'Sortie / Partage'**
+  String get task_editor_export_label;
+
+  /// Bouton photo placeholder
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une photo (Bientôt disponible)'**
+  String get task_editor_photo_placeholder;
+
+  /// Bouton créer
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer'**
+  String get task_editor_action_create;
+
+  /// Bouton enregistrer
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get task_editor_action_save;
+
+  /// Bouton annuler
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get task_editor_action_cancel;
+
+  /// Label champ assigné à
+  ///
+  /// In fr, this message translates to:
+  /// **'Assigné à'**
+  String get task_editor_assignee_label;
+
+  /// Action ajouter assigné
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter \"{name}\" aux favoris'**
+  String task_editor_assignee_add(String name);
+
+  /// Message aucun résultat assigné
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat.'**
+  String get task_editor_assignee_none;
+
+  /// Label champ récurrence
+  ///
+  /// In fr, this message translates to:
+  /// **'Récurrence'**
+  String get task_editor_recurrence_label;
+
+  /// Option récurrence aucune
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune'**
+  String get task_editor_recurrence_none;
+
+  /// Option récurrence intervalle
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les X jours'**
+  String get task_editor_recurrence_interval;
+
+  /// Option récurrence hebdo
+  ///
+  /// In fr, this message translates to:
+  /// **'Hebdomadaire (Jours)'**
+  String get task_editor_recurrence_weekly;
+
+  /// Option récurrence mensuelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Mensuel (même jour)'**
+  String get task_editor_recurrence_monthly;
+
+  /// Label répéter tous les
+  ///
+  /// In fr, this message translates to:
+  /// **'Répéter tous les '**
+  String get task_editor_recurrence_repeat_label;
+
+  /// Suffixe jours
+  ///
+  /// In fr, this message translates to:
+  /// **' j'**
+  String get task_editor_recurrence_days_suffix;
+
+  /// Type tâche générique
+  ///
+  /// In fr, this message translates to:
+  /// **'Générique'**
+  String get task_kind_generic;
+
+  /// Type tâche réparation
+  ///
+  /// In fr, this message translates to:
+  /// **'Réparation 🛠️'**
+  String get task_kind_repair;
+
+  /// Type tâche achat
+  ///
+  /// In fr, this message translates to:
+  /// **'Achat 🛒'**
+  String get task_kind_buy;
+
+  /// Type tâche nettoyage
+  ///
+  /// In fr, this message translates to:
+  /// **'Nettoyage 🧹'**
+  String get task_kind_clean;
+
+  /// Type tâche arrosage
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrosage 💧'**
+  String get task_kind_watering;
+
+  /// Type tâche semis
+  ///
+  /// In fr, this message translates to:
+  /// **'Semis 🌱'**
+  String get task_kind_seeding;
+
+  /// Type tâche taille
+  ///
+  /// In fr, this message translates to:
+  /// **'Taille ✂️'**
+  String get task_kind_pruning;
+
+  /// Type tâche désherbage
+  ///
+  /// In fr, this message translates to:
+  /// **'Désherbage 🌿'**
+  String get task_kind_weeding;
+
+  /// Type tâche amendement
+  ///
+  /// In fr, this message translates to:
+  /// **'Amendement 🪵'**
+  String get task_kind_amendment;
+
+  /// Type tâche traitement
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitement 🧪'**
+  String get task_kind_treatment;
+
+  /// Type tâche récolte
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte 🧺'**
+  String get task_kind_harvest;
+
+  /// Type tâche hivernage
+  ///
+  /// In fr, this message translates to:
+  /// **'Hivernage ❄️'**
+  String get task_kind_winter_protection;
 }
 
 class _AppLocalizationsDelegate

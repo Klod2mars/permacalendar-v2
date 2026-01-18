@@ -16,6 +16,8 @@ import '../../core/models/garden_bed.dart';
 import '../../core/models/garden_freezed.dart';
 import '../../features/garden/providers/garden_provider.dart';
 
+import '../../l10n/app_localizations.dart';
+
 enum ExportOption { none, shareText, exportPdf, exportDocx }
 
 class CreateTaskDialog extends ConsumerStatefulWidget {
@@ -51,20 +53,29 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   Map<String, dynamic>? _recurrenceMap;
 
   // Available Task Kinds
-  final Map<String, String> _taskKinds = {
-    'generic': 'Générique',
-    'repair': 'Réparation 🛠️',
-    'buy': 'Achat 🛒',
-    'clean': 'Nettoyage 🧹',
-    'watering': 'Arrosage 💧',
-    'seeding': 'Semis 🌱',
-    'pruning': 'Taille ✂️',
-    'weeding': 'Désherbage 🌿',
-    'amendment': 'Amendement 🪵',
-    'treatment': 'Traitement 🧪',
-    'harvest': 'Récolte 🧺',
-    'winter_protection': 'Hivernage ❄️',
-  };
+  // Available Task Kinds (will be localized in build)
+  final List<String> _taskKindsKeys = [
+    'generic', 'repair', 'buy', 'clean', 'watering', 'seeding', 
+    'pruning', 'weeding', 'amendment', 'treatment', 'harvest', 'winter_protection'
+  ];
+
+  String _getLocalizedTaskKind(String key, AppLocalizations l10n) {
+    switch (key) {
+      case 'generic': return l10n.task_kind_generic;
+      case 'repair': return l10n.task_kind_repair;
+      case 'buy': return l10n.task_kind_buy;
+      case 'clean': return l10n.task_kind_clean;
+      case 'watering': return l10n.task_kind_watering;
+      case 'seeding': return l10n.task_kind_seeding;
+      case 'pruning': return l10n.task_kind_pruning;
+      case 'weeding': return l10n.task_kind_weeding;
+      case 'amendment': return l10n.task_kind_amendment;
+      case 'treatment': return l10n.task_kind_treatment;
+      case 'harvest': return l10n.task_kind_harvest;
+      case 'winter_protection': return l10n.task_kind_winter_protection;
+      default: return key;
+    }
+  }
 
   final List<String> _priorities = ['Low', 'Medium', 'High'];
 
@@ -145,7 +156,20 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
     sb.writeln('Début: $dateStr$timeStr');
 
     sb.writeln('Durée: $_durationMinutes minutes');
-    sb.writeln('Type: ${_taskKinds[_taskKind] ?? _taskKind}');
+    // For sharing, we might still want a quick resolution or pass context
+    // Ideally refactor _shareTask to take l10n, or just use English/French fallback hardcoded for share text?
+    // Let's use context to get l10n if mounted
+    final l10n = AppLocalizations.of(context)!;
+
+    sb.writeln('Tâche: $_title'); // Keep static keys for share? Or localize share text too? User didn't ask for share text localization but it's better.
+    // user said "New task screen in French", implying UI. Share content is secondary but let's leave it as is for now or minimal touch.
+    // Actually the user pointed out the UI. Let's fix UI first.
+    // For share text, I'll update it to use localized labels if possible, but the prompt emphasizes the UI. 
+    
+    // ... skipping deep share text refactor to avoid breaking things, 
+    // but WILL use _getLocalizedTaskKind for the kind line.
+    
+    sb.writeln('Type: ${_getLocalizedTaskKind(_taskKind, l10n)}');
     sb.writeln('Urgent: ${_urgent ? "Oui" : "Non"}');
     sb.writeln('Priorité: $_priority');
     sb.writeln('Assigné à: ${_assignee.isEmpty ? "-" : _assignee}');
@@ -339,13 +363,14 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.activityToEdit != null ? 'Modifier Tâche' : 'Nouvelle Tâche'),
+        title: Text(widget.activityToEdit != null ? l10n.task_editor_title_edit : l10n.task_editor_title_new),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
-            tooltip: 'Partager (brouillon)',
+            tooltip: l10n.task_editor_option_share,
             onPressed: () {
               _formKey.currentState?.save();
               _shareTask();
@@ -381,14 +406,14 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Annuler'),
+                  child: Text(l10n.task_editor_action_cancel),
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: FilledButton(
                   onPressed: _submit,
-                  child: Text(widget.activityToEdit != null ? 'Enregistrer' : 'Créer'),
+                  child: Text(widget.activityToEdit != null ? l10n.task_editor_action_save : l10n.task_editor_action_create),
                 ),
               ),
             ],
@@ -404,13 +429,13 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
             children: [
               // Title
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Titre *',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.title),
+                decoration: InputDecoration(
+                  labelText: l10n.task_editor_title_field,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.title),
                 ),
                 initialValue: _title,
-                validator: (v) => v == null || v.isEmpty ? 'Requis' : null,
+                validator: (v) => v == null || v.isEmpty ? l10n.task_editor_error_title_required : null,
                 onSaved: (v) => _title = v!,
                 onChanged: (v) => _title = v, // update for share
               ),
@@ -437,9 +462,9 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
               // Description
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: l10n.task_editor_description_label,
+                  border: const OutlineInputBorder(),
                   alignLabelWithHint: true,
                 ),
                 maxLines: 3,
@@ -464,10 +489,10 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                         if (d != null) setState(() => _startDate = d);
                       },
                       child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: 'Date de début',
-                          prefixIcon: Icon(Icons.calendar_today),
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.task_editor_date_label,
+                          prefixIcon: const Icon(Icons.calendar_today),
+                          border: const OutlineInputBorder(),
                         ),
                         child:
                             Text(DateFormat('dd/MM/yyyy').format(_startDate)),
@@ -485,10 +510,10 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                         if (t != null) setState(() => _startTime = t);
                       },
                       child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: 'Heure',
-                          prefixIcon: Icon(Icons.access_time),
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.task_editor_time_label,
+                          prefixIcon: const Icon(Icons.access_time),
+                          border: const OutlineInputBorder(),
                         ),
                         child: Text(_startTime?.format(context) ?? '--:--'),
                       ),
@@ -499,7 +524,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               const SizedBox(height: 16),
 
               // Duration
-              Text('Durée estimée',
+              Text(l10n.task_editor_duration_label,
                   style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 8),
               Wrap(
@@ -515,7 +540,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                   );
                 }).toList()
                   ..add(ChoiceChip(
-                    label: const Text('Autre'),
+                    label: Text(l10n.task_editor_duration_other),
                     selected:
                         ![15, 30, 60, 120, 240].contains(_durationMinutes),
                     onSelected: (s) async {
@@ -528,15 +553,14 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
               // Task Kind
               DropdownButtonFormField<String>(
-                value:
-                    _taskKinds.containsKey(_taskKind) ? _taskKind : 'generic',
-                decoration: const InputDecoration(
-                  labelText: 'Type de tâche',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.category),
+                value: _taskKindsKeys.contains(_taskKind) ? _taskKind : 'generic',
+                decoration: InputDecoration(
+                  labelText: l10n.task_editor_type_label,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.category),
                 ),
-                items: _taskKinds.entries.map((e) {
-                  return DropdownMenuItem(value: e.key, child: Text(e.value));
+                items: _taskKindsKeys.map((key) {
+                  return DropdownMenuItem(value: key, child: Text(_getLocalizedTaskKind(key, l10n)));
                 }).toList(),
                 onChanged: (v) => setState(() => _taskKind = v!),
               ),
@@ -557,9 +581,9 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                   Expanded(
                       child: DropdownButtonFormField<String>(
                     value: _priority,
-                    decoration: const InputDecoration(
-                      labelText: 'Priorité',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: l10n.task_editor_priority_label,
+                      border: const OutlineInputBorder(),
                     ),
                     items: _priorities
                         .map((p) => DropdownMenuItem(value: p, child: Text(p)))
@@ -569,8 +593,8 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                   const SizedBox(width: 16),
                   Expanded(
                       child: CheckboxListTile(
-                    title: const Text('Urgent',
-                        style: TextStyle(
+                    title: Text(l10n.task_editor_urgent_label,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.orange)),
                     value: _urgent,
                     contentPadding: EdgeInsets.zero,
@@ -591,16 +615,16 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               // Export Options
               DropdownButtonFormField<ExportOption>(
                 value: _selectedExportOption,
-                decoration: const InputDecoration(
-                  labelText: 'Sortie / Partage',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.share),
+                decoration: InputDecoration(
+                  labelText: l10n.task_editor_export_label,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.share),
                 ),
-                items: const [
-                  DropdownMenuItem(value: ExportOption.none, child: Text('Aucune (Sauvegarde uniquement)')),
-                  DropdownMenuItem(value: ExportOption.shareText, child: Text('Partager (texte)')),
-                  DropdownMenuItem(value: ExportOption.exportPdf, child: Text('Exporter — PDF')),
-                  DropdownMenuItem(value: ExportOption.exportDocx, child: Text('Exporter — Word (.docx)')),
+                items: [
+                   DropdownMenuItem(value: ExportOption.none, child: Text(l10n.task_editor_option_none)),
+                   DropdownMenuItem(value: ExportOption.shareText, child: Text(l10n.task_editor_option_share)),
+                   DropdownMenuItem(value: ExportOption.exportPdf, child: Text(l10n.task_editor_option_pdf)),
+                   DropdownMenuItem(value: ExportOption.exportDocx, child: Text(l10n.task_editor_option_docx)),
                 ],
                 onChanged: (v) => setState(() => _selectedExportOption = v ?? ExportOption.none),
               ),
@@ -609,7 +633,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               OutlinedButton.icon(
                 onPressed: null, // Disabled as per requirements (placeholder)
                 icon: const Icon(Icons.camera_alt),
-                label: const Text('Ajouter une photo (Bientôt disponible)'),
+                label: Text(l10n.task_editor_photo_placeholder),
               ),
 
               const SizedBox(height: 50), // Spacing for FAB/BottomBar
@@ -651,7 +675,7 @@ class _GardenSelector extends ConsumerWidget {
       child: Row(
         children: options.map((garden) {
           final isSelected = selectedGardenId == garden?.id;
-          final label = garden?.name ?? 'Tous les jardins';
+          final label = garden?.name ?? AppLocalizations.of(context)!.task_editor_garden_all;
 
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
@@ -703,13 +727,13 @@ class _BedSelector extends ConsumerWidget {
     if (gardenId != null) {
       final beds = GardenBoxes.getGardenBeds(gardenId!);
       if (beds.isEmpty) {
-        return const InputDecorator(
+        return InputDecorator(
           decoration: InputDecoration(
-            labelText: 'Zone (Parcelle)',
-            border: OutlineInputBorder(),
+            labelText: AppLocalizations.of(context)!.task_editor_zone_label,
+            border: const OutlineInputBorder(),
           ),
-          child: Text('Aucune parcelle pour ce jardin',
-              style: TextStyle(color: Colors.grey)),
+          child: Text(AppLocalizations.of(context)!.task_editor_zone_empty,
+              style: const TextStyle(color: Colors.grey)),
         );
       }
 
@@ -732,15 +756,15 @@ class _BedSelector extends ConsumerWidget {
 
     items.insert(
         0,
-        const DropdownMenuItem(
-            value: null, child: Text('Aucune zone spécifique')));
+        DropdownMenuItem(
+            value: null, child: Text(AppLocalizations.of(context)!.task_editor_zone_none)));
 
     return DropdownButtonFormField<String>(
       value: selectedBedId,
-      decoration: const InputDecoration(
-        labelText: 'Zone (Parcelle)',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.grid_on),
+      decoration: InputDecoration(
+        labelText: AppLocalizations.of(context)!.task_editor_zone_label,
+        border: const OutlineInputBorder(),
+        prefixIcon: const Icon(Icons.grid_on),
       ),
       isExpanded: true,
       items: items,
@@ -794,24 +818,25 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownButtonFormField<String>(
           value: _type,
-          decoration: const InputDecoration(
-            labelText: 'Récurrence',
-            border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.repeat),
+          decoration: InputDecoration(
+            labelText: l10n.task_editor_recurrence_label,
+            border: const OutlineInputBorder(),
+            prefixIcon: const Icon(Icons.repeat),
           ),
-          items: const [
-            DropdownMenuItem(value: 'none', child: Text('Aucune')),
+          items: [
+            DropdownMenuItem(value: 'none', child: Text(l10n.task_editor_recurrence_none)),
             DropdownMenuItem(
-                value: 'interval', child: Text('Tous les X jours')),
+                value: 'interval', child: Text(l10n.task_editor_recurrence_interval)),
             DropdownMenuItem(
-                value: 'weekly', child: Text('Hebdomadaire (Jours)')),
+                value: 'weekly', child: Text(l10n.task_editor_recurrence_weekly)),
             DropdownMenuItem(
-                value: 'monthlyByDay', child: Text('Mensuel (même jour)')),
+                value: 'monthlyByDay', child: Text(l10n.task_editor_recurrence_monthly)),
           ],
           onChanged: (v) {
             setState(() => _type = v!);
@@ -823,13 +848,13 @@ class _RecurrenceEditorState extends State<_RecurrenceEditor> {
             padding: const EdgeInsets.only(top: 12.0),
             child: Row(
               children: [
-                const Text('Répéter tous les '),
+                Text(l10n.task_editor_recurrence_repeat_label),
                 SizedBox(
                   width: 80,
                   child: TextFormField(
                     initialValue: _intervalEvery.toString(),
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(suffixText: ' j'),
+                    decoration: InputDecoration(suffixText: l10n.task_editor_recurrence_days_suffix),
                     onChanged: (v) {
                       final val = int.tryParse(v);
                       if (val != null) {
@@ -960,6 +985,7 @@ class _AssigneeSelectorState extends State<_AssigneeSelector> {
     // Note: If text not empty & not in list -> show "Add" option.
     final bool showAddOption = query.isNotEmpty && !_savedAssignees.contains(_controller.text.trim());
     final bool showList = filteredList.isNotEmpty || showAddOption;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -968,7 +994,7 @@ class _AssigneeSelectorState extends State<_AssigneeSelector> {
           controller: _controller,
           focusNode: _focusNode,
           decoration: InputDecoration(
-            labelText: 'Assigné à',
+            labelText: l10n.task_editor_assignee_label,
             border: const OutlineInputBorder(),
             prefixIcon: const Icon(Icons.person),
             suffixIcon: IconButton(
@@ -1013,7 +1039,7 @@ class _AssigneeSelectorState extends State<_AssigneeSelector> {
                         ListTile(
                           dense: true,
                           leading: const Icon(Icons.add, color: Colors.green),
-                          title: Text('Ajouter "${_controller.text}" aux favoris',
+                          title: Text(l10n.task_editor_assignee_add(_controller.text),
                               style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
                           onTap: () {
                              _addAssignee(_controller.text);
@@ -1038,10 +1064,10 @@ class _AssigneeSelectorState extends State<_AssigneeSelector> {
                       }),
                       
                       if (filteredList.isEmpty && !showAddOption)
-                         const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text('Aucun résultat.', 
-                              style: TextStyle(color: Colors.grey)),
+                          Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(l10n.task_editor_assignee_none, 
+                              style: const TextStyle(color: Colors.grey)),
                         ),
                     ],
                   ),
