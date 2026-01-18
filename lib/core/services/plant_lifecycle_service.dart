@@ -1,4 +1,5 @@
-﻿import '../../features/plant_catalog/domain/entities/plant_entity.dart';
+﻿// lib/core/services/plant_lifecycle_service.dart
+import '../../features/plant_catalog/domain/entities/plant_entity.dart';
 
 class PlantLifecycleService {
   static Future<Map<String, dynamic>> calculateLifecycle(
@@ -7,34 +8,24 @@ class PlantLifecycleService {
     double? initialProgressFromPlanting,
     String? plantingStatus,
   }) async {
-    // Algorithme robuste prenant en compte :
-    // - un avancement initial transmis par la planting (metadata)
-    // - une valeur spécifique dans plant.growth['transplantInitialPercent']
-    // - des valeurs par défaut (0.0 pour Semé, 0.3 pour Planté)
-    //
-    // On calcule ensuite :
-    // - la progression (progress) normalisée entre 0.0 et 1.0
-    // - une date de germination (adaptée si initialProgress > 0)
-    // - une date de récolte attendue tenant compte de l'avancement initial
-
     final germinationDays = _getSafeGerminationDays(plant);
 
     // Sécuriser daysToMaturity
-    int maturityDays = (plant.daysToMaturity ?? 60);
+    int maturityDays = plant.daysToMaturity;
     if (maturityDays <= 0) maturityDays = 60;
 
     // --- Déterminer initialProgress (0.0 .. 1.0)
     double initialProgress = 0.0;
 
     if (initialProgressFromPlanting != null) {
-      initialProgress = initialProgressFromPlanting.clamp(0.0, 1.0) as double;
+      // clamp renvoie num : forcer en double via toDouble()
+      initialProgress = initialProgressFromPlanting.clamp(0.0, 1.0).toDouble();
     } else {
-      // Si la plantation est marquée "Planté", tenter la valeur spécifique
       if (plantingStatus != null && plantingStatus == 'Planté') {
         double? plantSpecific;
         try {
-          if (plant.growth != null) {
-            final raw = plant.growth!['transplantInitialPercent'];
+          if (plant.growth != null && plant.growth is Map) {
+            final raw = (plant.growth! as Map<String, dynamic>)['transplantInitialPercent'];
             if (raw is num) {
               plantSpecific = raw.toDouble();
             } else if (raw is String) {
@@ -44,9 +35,9 @@ class PlantLifecycleService {
         } catch (_) {
           plantSpecific = null;
         }
-        initialProgress = ((plantSpecific ?? 0.3).clamp(0.0, 1.0)) as double;
+        // forcer en double
+        initialProgress = ( (plantSpecific ?? 0.3).clamp(0.0, 1.0) ).toDouble();
       } else {
-        // Par défaut Semée => 0%
         initialProgress = 0.0;
       }
     }
@@ -56,25 +47,19 @@ class PlantLifecycleService {
     int elapsedDays = now.difference(plantingDate).inDays;
     if (elapsedDays < 0) elapsedDays = 0;
 
-    // Jours équivalents déjà "faits" avant la plantation
     final double initialDoneDays = initialProgress * maturityDays;
-
-    // Total de jours "réalisés" depuis le début du cycle (en équivalent)
     final double totalDoneDays = initialDoneDays + elapsedDays;
 
     double rawProgress =
         maturityDays > 0 ? (totalDoneDays / maturityDays) : 0.0;
     final double progress = rawProgress.clamp(0.0, 1.0);
 
-    // Jours restants pour arriver à maturité en tenant compte de l'avancement initial
     final int effectiveMaturityDays =
         (maturityDays * (1.0 - initialProgress)).ceil().clamp(1, maturityDays);
 
     final DateTime expectedHarvestDate =
         plantingDate.add(Duration(days: effectiveMaturityDays));
 
-    // Germination : si la plantation a un avancement initial, on considère que
-    // la germination est passée / immédiate ; sinon on la calcule normalement.
     final DateTime germinationDate = initialProgress > 0.0
         ? plantingDate
         : plantingDate.add(Duration(days: germinationDays));
@@ -90,7 +75,6 @@ class PlantLifecycleService {
       currentStage = 'récolte';
       nextAction = 'Commencer la récolte';
     } else {
-      // Entre germination et récolte : distinguer croissance / fructification
       if (progress < 0.6) {
         currentStage = 'croissance';
         nextAction = 'Soins: surveiller croissance, arroser selon besoin';
@@ -113,26 +97,42 @@ class PlantLifecycleService {
   }
 
   static int _getSafeGerminationDays(PlantFreezed plant) {
-    // Méthode ultra-sécurisée pour éviter tout crash
-
     try {
-      // Si germination existe et est une Map
-
+      // 1) si la map de germination existe -> parser minDays/maxDays proprement
       if (plant.germination != null && plant.germination is Map) {
-        final germinationMap = plant.germination as Map<String, dynamic>;
+        final germinationMap =
+            Map<String, dynamic>.from(plant.germination! as Map);
+        final dynamic minRaw = germinationMap['minDays'];
+        final dynamic maxRaw = germinationMap['maxDays'];
 
-        return germinationMap['minDays'] ?? germinationMap['maxDays'] ?? 7;
+        int? tryParseInt(dynamic v) {
+          if (v == null) return null;
+          if (v is num) return v.toInt();
+          if (v is String) return int.tryParse(v);
+          return null;
+        }
+
+        final minDays = tryParseInt(minRaw);
+        if (minDays != null && minDays > 0) return minDays;
+
+        final maxDays = tryParseInt(maxRaw);
+        if (maxDays != null && maxDays > 0) return maxDays;
+        // sinon fallback vers la suite
       }
 
-      // Si daysToMaturity existe, on calcule un ratio
+      // 2) fallback : utiliser daysToMaturity s'il est présent / sain
+      final int maturity =
+          (plant.daysToMaturity is int && plant.daysToMaturity > 0)
+              ? plant.daysToMaturity
+              : 60;
 
-      return (plant.daysToMaturity * 0.1).ceil().clamp(5, 21);
+      // calcul robuste et forçage en int
+      final int computed = (maturity * 0.1).ceil();
+      final int bounded = computed.clamp(5, 21).toInt();
+      return bounded;
     } catch (e) {
-      // Erreur silencieuse dans _getSafeGerminationDays
+      // En cas d'erreur, retourner valeur par défaut sûre
+      return 7;
     }
-
-    // Valeur par défaut ultime
-
-    return 7;
   }
 }
