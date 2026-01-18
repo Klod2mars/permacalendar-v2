@@ -1,5 +1,6 @@
 // lib/features/planting/presentation/widgets/planting_info_widget.dart
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
 import '../../../../shared/widgets/custom_card.dart';
@@ -18,13 +19,14 @@ class PlantingInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData usedTheme = theme ?? Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return CustomCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Informations botaniques',
+            l10n.planting_info_title,
             style: usedTheme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -41,7 +43,7 @@ class PlantingInfoWidget extends StatelessWidget {
           if (plant.culturalTips != null && plant.culturalTips!.isNotEmpty) ...[
             const SizedBox(height: 16),
             Text(
-              'Conseils de culture',
+              l10n.planting_info_tips_title,
               style: usedTheme.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -76,21 +78,22 @@ class PlantingInfoWidget extends StatelessWidget {
   }
 
   Widget _buildInfoGrid(ThemeData theme, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final items = <_InfoItem>[
       if (plant.daysToMaturity > 0)
-        _InfoItem('Maturité', '${plant.daysToMaturity} jours', Icons.schedule),
+        _InfoItem(l10n.planting_info_maturity, l10n.planting_info_days(plant.daysToMaturity), Icons.schedule),
       if (plant.spacing > 0)
-        _InfoItem('Espacement', '${plant.spacing} cm', Icons.straighten),
+        _InfoItem(l10n.planting_info_spacing, l10n.planting_info_cm(plant.spacing), Icons.straighten),
       if (plant.depth > 0)
         _InfoItem(
-            'Profondeur', '${plant.depth} cm', Icons.vertical_align_bottom),
+            l10n.planting_info_depth, l10n.planting_info_cm(plant.depth), Icons.vertical_align_bottom),
       if (plant.sunExposure.isNotEmpty)
-        _InfoItem('Exposition', plant.sunExposure, Icons.wb_sunny),
+        _InfoItem(l10n.planting_info_exposure, plant.sunExposure, Icons.wb_sunny),
       if (plant.waterNeeds.isNotEmpty)
-        _InfoItem('Arrosage', plant.waterNeeds, Icons.water_drop),
+        _InfoItem(l10n.planting_info_water, plant.waterNeeds, Icons.water_drop),
       if (plant.plantingSeason.isNotEmpty)
         _InfoItem(
-            'Saison plantation', plant.plantingSeason, Icons.calendar_today),
+            l10n.planting_info_season, plant.plantingSeason, Icons.calendar_today),
     ];
 
     return Wrap(

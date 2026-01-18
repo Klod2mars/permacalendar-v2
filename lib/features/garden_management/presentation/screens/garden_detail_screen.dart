@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
+
 import 'package:permacalendar/app_router.dart';
 import '../../../../features/garden_bed/providers/garden_bed_scoped_provider.dart';
 import '../../providers/garden_management_provider.dart';
@@ -38,33 +40,34 @@ class GardenDetailScreen extends ConsumerWidget {
     final gardenAsync = ref.watch(gardenDetailProvider(gardenId));
     final gardenBedsAsync = ref.watch(gardenBedsForGardenProvider(gardenId));
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return gardenAsync.when(
       loading: () => const Scaffold(
         body: Center(child: LoadingWidget()),
       ),
       error: (error, stack) => Scaffold(
-        appBar: const CustomAppBar(
-          title: 'Erreur',
+        appBar: CustomAppBar(
+          title: l10n.garden_detail_title_error,
         ),
         body: ErrorStateWidget(
-          title: 'Erreur de chargement',
-          subtitle: 'Impossible de charger le jardin: $error',
+          title: l10n.garden_error_title,
+          subtitle: l10n.garden_error_subtitle(error.toString()),
           onRetry: () => ref.refresh(gardenDetailProvider(gardenId)),
-          retryText: 'Réessayer',
+          retryText: l10n.common_retry,
         ),
       ),
       data: (garden) {
         if (garden == null) {
           return Scaffold(
-            appBar: const CustomAppBar(
-              title: 'Jardin introuvable',
+            appBar: CustomAppBar(
+              title: l10n.garden_detail_title_error,
             ),
             body: ErrorStateWidget(
-              title: 'Jardin introuvable',
-              subtitle: 'Le jardin demandé n\'existe pas ou a été supprimé.',
+              title: l10n.garden_detail_title_error,
+              subtitle: l10n.garden_detail_subtitle_not_found,
               onRetry: () => context.pop(),
-              retryText: 'Retour',
+              retryText: l10n.common_back,
             ),
           );
         }
@@ -78,10 +81,10 @@ class GardenDetailScreen extends ConsumerWidget {
               title: garden.name,
             ),
             body: ErrorStateWidget(
-              title: 'Erreur de chargement des planches',
-              subtitle: 'Impossible de charger les planches: $error',
+              title: l10n.garden_detail_subtitle_error_beds(error.toString()),
+              subtitle: l10n.garden_detail_subtitle_error_beds(error.toString()),
               onRetry: () => ref.refresh(gardenBedsForGardenProvider(gardenId)),
-              retryText: 'Réessayer',
+              retryText: l10n.common_retry,
             ),
           ),
           data: (gardenBeds) {
@@ -107,7 +110,7 @@ class GardenDetailScreen extends ConsumerWidget {
                           children: [
                             Icon(Icons.edit),
                             SizedBox(width: 8),
-                            Text('Modifier'),
+                            Text('Modifier'), // TODO: Use l10n.garden_action_edit but needs context in builder or pre-calc
                           ],
                         ),
                       ),
@@ -119,18 +122,18 @@ class GardenDetailScreen extends ConsumerWidget {
                                 ? Icons.archive
                                 : Icons.unarchive),
                             const SizedBox(width: 8),
-                            Text(garden.isActive ? 'Archiver' : 'Désarchiver'),
+                            Text(garden.isActive ? l10n.garden_action_archive : l10n.garden_action_unarchive),
                           ],
                         ),
                       ),
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'delete',
                         child: Row(
                           children: [
-                            Icon(Icons.delete, color: Colors.red),
-                            SizedBox(width: 8),
-                            Text('Supprimer',
-                                style: TextStyle(color: Colors.red)),
+                            const Icon(Icons.delete, color: Colors.red),
+                            const SizedBox(width: 8),
+                            Text(l10n.garden_action_delete,
+                                style: const TextStyle(color: Colors.red)),
                           ],
                         ),
                       ),
@@ -142,7 +145,7 @@ class GardenDetailScreen extends ConsumerWidget {
               // FAB : ouvre le formulaire complet de création de parcelle
               floatingActionButton: FloatingActionButton.extended(
                 icon: const Icon(Icons.add),
-                label: const Text("Parcelle"),
+                label: Text(l10n.garden_management_add_bed_label),
                 onPressed: () =>
                     _showCreateGardenBedDialog(context, ref, garden),
               ),
@@ -162,14 +165,14 @@ class GardenDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: Colors.orange),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.archive, size: 16, color: Colors.orange),
-                            SizedBox(width: 4),
+                            const Icon(Icons.archive, size: 16, color: Colors.orange),
+                            const SizedBox(width: 4),
                             Text(
-                              'Jardin archivé',
-                              style: TextStyle(
+                              l10n.garden_management_archived_tag,
+                              style: const TextStyle(
                                   color: Colors.orange,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -206,12 +209,12 @@ class GardenDetailScreen extends ConsumerWidget {
 
                     // Garden Information (superficie calculée depuis les parcelles)
                     _buildGardenInfo(
-                        garden, theme, totalBedsArea, gardenBeds.length),
+                        garden, theme, totalBedsArea, gardenBeds.length, l10n),
                     const SizedBox(height: 24),
 
                     // Garden Beds Section
                     _buildGardenBedsSection(
-                        context, ref, theme, garden, sortedBeds),
+                        context, ref, theme, garden, sortedBeds, l10n),
                   ],
                 ),
               ),
@@ -223,7 +226,7 @@ class GardenDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildGardenInfo(GardenFreezed garden, ThemeData theme,
-      double totalBedsArea, int gardenBedsCount) {
+      double totalBedsArea, int gardenBedsCount, AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -261,13 +264,13 @@ class GardenDetailScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildStatItem(
-                'Parcelles',
+                l10n.garden_management_stats_beds,
                 '$gardenBedsCount',
                 Icons.grid_view,
                 theme,
               ),
               _buildStatItem(
-                'Surface totale',
+                l10n.garden_management_stats_area,
                 '${totalBedsArea.toStringAsFixed(1)} m²',
                 Icons.straighten,
                 theme,
@@ -281,7 +284,7 @@ class GardenDetailScreen extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
-            'Créé le ${AppDateUtils.formatDate(garden.createdAt)}',
+            l10n.garden_created_at(AppDateUtils.formatDate(garden.createdAt)),
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.outline,
             ),
@@ -345,7 +348,7 @@ class GardenDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildGardenBedsSection(BuildContext context, WidgetRef ref,
-      ThemeData theme, GardenFreezed garden, List<GardenBed> gardenBeds) {
+      ThemeData theme, GardenFreezed garden, List<GardenBed> gardenBeds, AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -353,7 +356,7 @@ class GardenDetailScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Parcelles',
+              l10n.garden_management_beds_title,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -377,14 +380,14 @@ class GardenDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Aucune parcelle',
+                    l10n.garden_management_no_beds_title,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.colorScheme.outline,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Créez des parcelles pour organiser vos plantations',
+                    l10n.garden_management_no_beds_desc,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.outline,
                     ),
@@ -395,7 +398,7 @@ class GardenDetailScreen extends ConsumerWidget {
                     onPressed: () =>
                         _showCreateGardenBedDialog(context, ref, garden),
                     icon: const Icon(Icons.add),
-                    label: const Text('Créer une parcelle'),
+                    label: Text(l10n.garden_management_add_bed_label),
                   ),
                 ],
               ),
@@ -423,7 +426,6 @@ class GardenDetailScreen extends ConsumerWidget {
                       side: BorderSide(
                         color: theme.colorScheme.primary
                             .withOpacity(0.1), // Bordure subtile
-                        width: 1,
                       ),
                     ),
                     child: InkWell(
@@ -491,12 +493,12 @@ class GardenDetailScreen extends ConsumerWidget {
                                       }
                                     },
                                     itemBuilder: (_) => [
-                                      const PopupMenuItem(
+                                      PopupMenuItem(
                                           value: 'edit',
-                                          child: Text('Modifier')),
-                                      const PopupMenuItem(
+                                          child: Text(l10n.garden_action_modify)),
+                                      PopupMenuItem(
                                           value: 'delete',
-                                          child: Text('Supprimer')),
+                                          child: Text(l10n.common_delete)),
                                     ],
                                   ),
                                 )
@@ -557,20 +559,21 @@ class GardenDetailScreen extends ConsumerWidget {
 
   Future<void> _deleteBed(BuildContext context, WidgetRef ref,
       GardenFreezed garden, GardenBed bedTyped) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dctx) => AlertDialog(
-        title: const Text('Supprimer la parcelle'),
+        title: Text(l10n.garden_bed_delete_confirm_title),
         content: Text(
-          'Êtes-vous sûr de vouloir supprimer "${bedTyped.name}" ? Cette action est irréversible.',
+          l10n.garden_bed_delete_confirm_body(bedTyped.name),
         ),
         actions: [
           TextButton(
               onPressed: () => Navigator.of(dctx).pop(false),
-              child: const Text('Annuler')),
+              child: Text(l10n.common_cancel)),
           FilledButton(
               onPressed: () => Navigator.of(dctx).pop(true),
-              child: const Text('Supprimer')),
+              child: Text(l10n.common_delete)),
         ],
       ),
     );
@@ -608,15 +611,15 @@ class GardenDetailScreen extends ConsumerWidget {
 
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('Parcelle supprimée'),
+            SnackBar(
+                content: Text(l10n.garden_bed_deleted_snack),
                 backgroundColor: Colors.green),
           );
         }
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Erreur lors de la suppression: $e')));
+              SnackBar(content: Text(l10n.garden_bed_delete_error(e.toString()))));
         }
       }
     }
@@ -643,19 +646,16 @@ class GardenDetailScreen extends ConsumerWidget {
 
   void _showDeleteConfirmation(
       BuildContext context, WidgetRef ref, String gardenId) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Supprimer le jardin'),
-        content: const Text(
-          'Êtes-vous sûr de vouloir supprimer ce jardin ? '
-          'Cette action supprimera également toutes les parcelles et plantations associées. '
-          'Cette action est irréversible.',
-        ),
+        title: Text(l10n.garden_management_delete_confirm_title),
+        content: Text(l10n.garden_management_delete_confirm_body),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(l10n.common_cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -670,8 +670,8 @@ class GardenDetailScreen extends ConsumerWidget {
 
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Jardin supprimé avec succès'),
+                    SnackBar(
+                      content: Text(l10n.garden_management_delete_success),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -690,8 +690,8 @@ class GardenDetailScreen extends ConsumerWidget {
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Erreur lors de la suppression du jardin'),
+                    SnackBar(
+                      content: Text(l10n.common_error_prefix('suppression')),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -700,7 +700,7 @@ class GardenDetailScreen extends ConsumerWidget {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Erreur: ${e.toString()}'),
+                      content: Text(l10n.common_error_prefix(e.toString())),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -708,7 +708,7 @@ class GardenDetailScreen extends ConsumerWidget {
               }
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Supprimer'),
+            child: Text(l10n.common_delete),
           ),
         ],
       ),

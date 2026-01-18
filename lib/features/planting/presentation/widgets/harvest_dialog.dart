@@ -1,6 +1,7 @@
 // lib/features/planting/presentation/widgets/harvest_dialog.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../../core/models/planting.dart';
 import '../../../../core/utils/calibration_storage.dart';
@@ -14,6 +15,10 @@ Future<void> showHarvestDialog(
   final _priceController = TextEditingController();
   final _notesController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  // Use a variable for context to avoid "Build arguments ... not use across async gaps" warning if strict,
+  // but for showDialog we need the original context if possible or use the one from builder.
+  // We will access l10n inside builder.
 
   // Charger le prix par défaut
   double? initialPrice;
@@ -46,10 +51,14 @@ Future<void> showHarvestDialog(
   // Si on est en "update" (déjà récolté), on pourrait préremplir avec les valeurs existantes
   // Mais ici c'est un dialogue "Nouvelle récolte" pour clore une plantation.
 
+  if (!context.mounted) return;
+
   await showDialog(
     context: context,
-    builder: (dctx) => AlertDialog(
-      title: Text('Récolte: ${planting.plantName}'),
+    builder: (dctx) {
+        final l10n = AppLocalizations.of(dctx)!;
+        return AlertDialog(
+      title: Text(l10n.harvest_title(planting.plantName)),
       content: SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -66,15 +75,15 @@ Future<void> showHarvestDialog(
                   controller: _weightController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                    labelText: 'Poids récolté (kg) *',
+                  decoration: InputDecoration(
+                    labelText: l10n.harvest_weight_label,
                     suffixText: 'kg',
-                    prefixIcon: Icon(Icons.scale),
+                    prefixIcon: const Icon(Icons.scale),
                   ),
                   validator: (v) {
-                    if (v == null || v.trim().isEmpty) return 'Requis';
+                    if (v == null || v.trim().isEmpty) return l10n.harvest_form_error_required;
                     final d = double.tryParse(v.trim().replaceAll(',', '.'));
-                    if (d == null || d <= 0) return 'Invalide (> 0)';
+                    if (d == null || d <= 0) return l10n.harvest_form_error_positive;
                     return null;
                   },
                 ),
@@ -85,17 +94,16 @@ Future<void> showHarvestDialog(
                   controller: _priceController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                    labelText: 'Prix estimé (€/kg)',
+                  decoration: InputDecoration(
+                    labelText: l10n.harvest_price_label,
                     suffixText: '€/kg',
-                    prefixIcon: Icon(Icons.euro),
-                    helperText:
-                        'Sera mémorisé pour les prochaines récoltes de cette plante',
+                    prefixIcon: const Icon(Icons.euro),
+                    helperText: l10n.harvest_price_helper,
                   ),
                   validator: (v) {
                     if (v != null && v.trim().isNotEmpty) {
                       final d = double.tryParse(v.trim().replaceAll(',', '.'));
-                      if (d == null || d < 0) return 'Invalide (>= 0)';
+                      if (d == null || d < 0) return l10n.harvest_form_error_positive; // or generic invalid
                     }
                     return null;
                   },
@@ -105,9 +113,9 @@ Future<void> showHarvestDialog(
                 // Notes
                 TextFormField(
                   controller: _notesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Notes / Qualité',
-                    prefixIcon: Icon(Icons.note),
+                  decoration: InputDecoration(
+                    labelText: l10n.harvest_notes_label,
+                    prefixIcon: const Icon(Icons.note),
                   ),
                   maxLines: 2,
                 ),
@@ -119,7 +127,7 @@ Future<void> showHarvestDialog(
       actions: [
         TextButton(
             onPressed: () => Navigator.of(dctx).pop(),
-            child: const Text('Annuler')),
+            child: Text(l10n.common_cancel)),
         FilledButton(
           onPressed: () async {
             if (!_formKey.currentState!.validate()) return;
@@ -155,15 +163,16 @@ Future<void> showHarvestDialog(
             if (success && context.mounted) {
               Navigator.of(dctx).pop();
               ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Récolte enregistrée')));
+                  SnackBar(content: Text(l10n.harvest_snack_saved)));
             } else if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Erreur lors de l\'enregistrement')));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(l10n.harvest_snack_error)));
             }
           },
-          child: const Text('Enregistrer'),
+          child: Text(l10n.common_save), // or harvest_action_save
         ),
       ],
-    ),
+    );
+    } // builder
   );
 }

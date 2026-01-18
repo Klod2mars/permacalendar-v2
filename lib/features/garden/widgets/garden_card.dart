@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/garden_freezed.dart';
-import '../../../shared/widgets/custom_card.dart';
+import '../../core/models/garden_freezed.dart';
+import '../../shared/widgets/custom_card.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 /// Widget de carte pour afficher les informations d'un jardin
 /// Utilise le design Material 3 cohérent avec l'application
@@ -36,6 +37,7 @@ class GardenCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return CustomCard(
       onTap: onTap,
@@ -65,8 +67,8 @@ class GardenCard extends StatelessWidget {
                 // Surface totale (en haut à droite)
                 Text(
                   garden.totalAreaInSquareMeters > 0
-                      ? '${garden.totalAreaInSquareMeters.toStringAsFixed(0)} mÂ²'
-                      : '-- mÂ²',
+                      ? '${garden.totalAreaInSquareMeters.toStringAsFixed(0)} m²'
+                      : '-- m²',
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.primary,
@@ -92,7 +94,7 @@ class GardenCard extends StatelessWidget {
                     IconButton(
                       onPressed: onEdit,
                       icon: const Icon(Icons.edit, size: 16),
-                      tooltip: 'Modifier',
+                      tooltip: l10n.garden_action_modify,
                       style: IconButton.styleFrom(
                         foregroundColor: theme.colorScheme.primary,
                         padding: const EdgeInsets.all(4),
@@ -106,7 +108,9 @@ class GardenCard extends StatelessWidget {
                         garden.isActive ? Icons.pause : Icons.play_arrow,
                         size: 16,
                       ),
-                      tooltip: garden.isActive ? 'Désactiver' : 'Activer',
+                      tooltip: garden.isActive
+                          ? l10n.garden_action_disable
+                          : l10n.garden_action_enable,
                       style: IconButton.styleFrom(
                         foregroundColor: theme.colorScheme.onSurfaceVariant,
                         padding: const EdgeInsets.all(4),
@@ -117,7 +121,7 @@ class GardenCard extends StatelessWidget {
                     IconButton(
                       onPressed: onDelete,
                       icon: const Icon(Icons.delete, size: 16),
-                      tooltip: 'Supprimer',
+                      tooltip: l10n.garden_action_delete,
                       style: IconButton.styleFrom(
                         foregroundColor: theme.colorScheme.error,
                         padding: const EdgeInsets.all(4),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../../app_router.dart';
 import '../../../../features/garden/providers/garden_provider.dart';
@@ -16,25 +17,25 @@ class GardenListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gardenState = ref.watch(gardenProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     // Chargement
     if (gardenState.isLoading) {
-      return const Scaffold(
-        appBar: CustomAppBar(title: 'Mes jardins'),
-        body: Center(child: LoadingWidget()),
+      return Scaffold(
+        appBar: CustomAppBar(title: l10n.garden_list_title),
+        body: const Center(child: LoadingWidget()),
       );
     }
 
     // Erreur
     if (gardenState.error != null) {
       return Scaffold(
-        appBar: const CustomAppBar(title: 'Mes jardins'),
+        appBar: CustomAppBar(title: l10n.garden_list_title),
         body: ErrorStateWidget(
-          title: 'Erreur de chargement',
-          subtitle:
-              'Impossible de charger la liste des jardins : ${gardenState.error}',
+          title: l10n.garden_error_title,
+          subtitle: l10n.garden_error_subtitle(gardenState.error.toString()),
           onRetry: () => ref.read(gardenProvider.notifier).loadGardens(),
-          retryText: 'Réessayer',
+          retryText: l10n.garden_retry,
         ),
       );
     }
@@ -45,12 +46,12 @@ class GardenListScreen extends ConsumerWidget {
     final archivedCount = totalGardens.length - activeGardens.length;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Mes jardins'),
+      appBar: CustomAppBar(title: l10n.garden_list_title),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: activeGardens.isEmpty
-            ? const Center(
-                child: Text('Aucun jardin pour le moment.'),
+            ? Center(
+                child: Text(l10n.garden_no_gardens),
               )
             : ListView.builder(
                 itemCount: activeGardens.length + (archivedCount > 0 ? 1 : 0),
@@ -60,7 +61,7 @@ class GardenListScreen extends ConsumerWidget {
                     return Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        'Vous avez des jardins archivés. Activez l’affichage des jardins archivés pour les voir.',
+                        l10n.garden_archived_info,
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium
@@ -93,7 +94,7 @@ class GardenListScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppRoutes.gardenCreate),
-        tooltip: 'Ajouter un jardin',
+        tooltip: l10n.garden_add_tooltip,
         child: const Icon(Icons.add),
       ),
     );

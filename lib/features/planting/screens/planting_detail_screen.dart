@@ -1,20 +1,15 @@
 ﻿import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../core/models/planting.dart';
-
 import '../../../features/plant_catalog/domain/entities/plant_entity.dart';
-
 import '../../../shared/widgets/plant_lifecycle_widget.dart';
 
 /// Écran de détail d'une plantation avec cycle de vie interactif
-
 class PlantingDetailScreen extends ConsumerWidget {
   final Planting planting;
-
   final PlantFreezed plant;
 
   const PlantingDetailScreen({
@@ -37,11 +32,9 @@ class PlantingDetailScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // En-tête avec image et informations de base
-
-            _buildHeader(),
+            _buildHeader(context),
 
             // Widget principal du cycle de vie
-
             PlantLifecycleWidget(
               plant: plant,
               plantingDate: planting.plantedDate,
@@ -55,16 +48,13 @@ class PlantingDetailScreen extends ConsumerWidget {
             ),
 
             // Informations détaillées sur la plante
-
-            _buildPlantDetails(),
+            _buildPlantDetails(context),
 
             // Conseils de culture
-
-            _buildCulturalTips(),
+            _buildCulturalTips(context),
 
             // Historique des actions (placeholder)
-
-            _buildActionHistory(),
+            _buildActionHistory(context),
           ],
         ),
       ),
@@ -72,8 +62,11 @@ class PlantingDetailScreen extends ConsumerWidget {
   }
 
   /// Construit l'en-tête avec image et informations de base
+  Widget _buildHeader(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    // Helper to format date consistent with ARB expectation (string)
+    String fmtDate(DateTime d) => DateFormat('dd/MM/yyyy').format(d);
 
-  Widget _buildHeader() {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -94,7 +87,6 @@ class PlantingDetailScreen extends ConsumerWidget {
             Row(
               children: [
                 // Placeholder pour image de la plante
-
                 Container(
                   width: 80,
                   height: 80,
@@ -129,7 +121,7 @@ class PlantingDetailScreen extends ConsumerWidget {
                       ),
                       Text(
                         plant.scientificName ??
-                            'Nom scientifique non disponible',
+                            l10n.planting_info_scientific_name_none,
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
@@ -147,7 +139,7 @@ class PlantingDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          'Planté le ${DateFormat('dd/MM/yyyy').format(planting.plantedDate)}',
+                          l10n.planting_card_planted_date(fmtDate(planting.plantedDate)),
                           style: const TextStyle(
                             fontSize: 12,
                             color: Colors.white,
@@ -167,8 +159,8 @@ class PlantingDetailScreen extends ConsumerWidget {
   }
 
   /// Construit les informations détaillées sur la plante
-
-  Widget _buildPlantDetails() {
+  Widget _buildPlantDetails(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.all(8.0),
       child: Padding(
@@ -176,37 +168,41 @@ class PlantingDetailScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Informations de culture',
-              style: TextStyle(
+            Text(
+              l10n.planting_info_culture_title,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 12),
             _buildDetailRow(
-              'Temps de germination',
-              '${plant.averageGerminationDays?.toInt() ?? 'Non spécifié'} jours',
+              l10n.planting_info_germination,
+              plant.averageGerminationDays != null
+                  ? l10n.planting_info_days(plant.averageGerminationDays!.toInt())
+                  : l10n.planting_info_none,
               Icons.schedule,
             ),
             _buildDetailRow(
-              'Temps de croissance',
-              '${plant.daysToMaturity} jours',
+              l10n.planting_info_maturity, // Reuse reusing maturity key for growth time approx
+              l10n.planting_info_days(plant.daysToMaturity),
               Icons.trending_up,
             ),
             _buildDetailRow(
-              'Temps de récolte',
-              '${plant.harvestTime ?? 'Non spécifié'} jours',
+              l10n.planting_info_harvest_time,
+              plant.harvestTime != null
+                  ? l10n.planting_info_days(plant.harvestTime!)
+                  : l10n.planting_info_none,
               Icons.agriculture,
             ),
             _buildDetailRow(
-              'Espacement',
-              '${plant.spacing} cm',
+              l10n.planting_info_spacing,
+              l10n.planting_info_cm(plant.spacing),
               Icons.straighten,
             ),
             _buildDetailRow(
-              'Profondeur de semis',
-              '${plant.depth} cm',
+              l10n.planting_info_depth,
+              l10n.planting_info_cm(plant.depth),
               Icons.height,
             ),
           ],
@@ -216,7 +212,6 @@ class PlantingDetailScreen extends ConsumerWidget {
   }
 
   /// Construit une ligne de détail
-
   Widget _buildDetailRow(String label, String value, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -235,8 +230,8 @@ class PlantingDetailScreen extends ConsumerWidget {
   }
 
   /// Construit les conseils de culture
-
-  Widget _buildCulturalTips() {
+  Widget _buildCulturalTips(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (plant.culturalTips == null || plant.culturalTips!.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -252,9 +247,9 @@ class PlantingDetailScreen extends ConsumerWidget {
               children: [
                 Icon(Icons.lightbulb_outline, color: Colors.amber.shade600),
                 const SizedBox(width: 8),
-                const Text(
-                  'Conseils de culture',
-                  style: TextStyle(
+                Text(
+                  l10n.planting_info_tips_title,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -263,7 +258,7 @@ class PlantingDetailScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              plant.culturalTips?.join(', ') ?? 'Aucun conseil disponible',
+              plant.culturalTips?.join(', ') ?? l10n.planting_tips_none,
               style: const TextStyle(fontSize: 14, height: 1.5),
             ),
           ],
@@ -273,8 +268,8 @@ class PlantingDetailScreen extends ConsumerWidget {
   }
 
   /// Construit l'historique des actions (placeholder)
-
-  Widget _buildActionHistory() {
+  Widget _buildActionHistory(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.all(8.0),
       child: Padding(
@@ -286,9 +281,9 @@ class PlantingDetailScreen extends ConsumerWidget {
               children: [
                 Icon(Icons.history, color: Colors.blue.shade600),
                 const SizedBox(width: 8),
-                const Text(
-                  'Historique des actions',
-                  style: TextStyle(
+                Text(
+                  l10n.planting_history_title,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -299,7 +294,7 @@ class PlantingDetailScreen extends ConsumerWidget {
             const SizedBox(height: 12),
 
             _buildHistoryItem(
-              'Plantation',
+              l10n.planting_history_action_planting,
               DateFormat('dd/MM/yyyy à HH:mm').format(planting.plantedDate),
               Icons.eco,
               Colors.green,
@@ -320,11 +315,13 @@ class PlantingDetailScreen extends ConsumerWidget {
                 children: [
                   Icon(Icons.info_outline, color: Colors.grey.shade600),
                   const SizedBox(width: 8),
-                  Text(
-                    'L\'historique détaillé sera disponible prochainement',
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontStyle: FontStyle.italic,
+                  Expanded(
+                    child: Text(
+                      l10n.planting_history_todo,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                 ],
@@ -337,7 +334,6 @@ class PlantingDetailScreen extends ConsumerWidget {
   }
 
   /// Construit un élément d'historique
-
   Widget _buildHistoryItem(
     String action,
     String date,

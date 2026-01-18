@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../../core/models/garden_freezed.dart';
 import '../../../../core/utils/validators.dart';
@@ -43,6 +44,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isSubmitting = true);
+    final l10n = AppLocalizations.of(context)!;
 
     try {
       final newGarden = GardenFreezed(
@@ -79,16 +81,16 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
 
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Jardin créé avec succès'),
+          SnackBar(
+            content: Text(l10n.garden_management_created_success),
             backgroundColor: Colors.green,
           ),
         );
         context.pop();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Échec de la création du jardin'),
+          SnackBar(
+            content: Text(l10n.garden_management_create_error),
             backgroundColor: Colors.red,
           ),
         );
@@ -96,7 +98,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Erreur lors de la création : $e'),
+          content: Text('${l10n.common_error_prefix(e)}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -110,9 +112,10 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Créer un jardin'),
+      appBar: CustomAppBar(title: l10n.garden_management_create_title),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -124,32 +127,32 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                 children: [
                   CustomTextField(
                       controller: _nameController,
-                      label: 'Nom du jardin',
+                      label: l10n.garden_management_name_label,
                       prefixIcon: const Icon(Icons.eco),
                       validator: (v) => Validators.validateName(v)),
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _descriptionController,
-                    label: 'Description',
+                    label: l10n.garden_management_desc_label,
                     prefixIcon: const Icon(Icons.description),
                     maxLines: 3,
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Image du jardin (optionnel)',
+                    l10n.garden_management_image_label,
                     style: theme.textTheme.titleMedium,
                   ),
                   const SizedBox(height: 12),
                   CustomTextField(
                     controller: _imageUrlController,
-                    label: "URL de l'image",
+                    label: l10n.garden_management_image_url_label,
                     hint: 'https://exemple.com/image.jpg',
                     prefixIcon: const Icon(Icons.image),
                     onChanged: (_) => setState(() {}),
                   ),
                   const SizedBox(height: 16),
                   if (_imageUrlController.text.isNotEmpty)
-                    _buildImagePreview(theme),
+                    _buildImagePreview(theme, l10n),
                 ],
               ),
             ),
@@ -166,14 +169,16 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: CustomButton(
-          text: _isSubmitting ? 'Création...' : 'Créer le jardin',
+          text: _isSubmitting
+              ? l10n.garden_management_create_submitting
+              : l10n.garden_management_create_submit,
           onPressed: _isSubmitting ? null : _submit,
         ),
       ),
     );
   }
 
-  Widget _buildImagePreview(ThemeData theme) {
+  Widget _buildImagePreview(ThemeData theme, AppLocalizations l10n) {
     final url = _imageUrlController.text.trim();
     if (url.isEmpty) return const SizedBox.shrink();
 
@@ -203,7 +208,7 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
                   const Icon(Icons.broken_image, size: 40),
                   const SizedBox(height: 8),
                   Text(
-                    "Impossible de charger l'image",
+                    l10n.garden_management_image_preview_error,
                     style: theme.textTheme.bodyMedium!.copyWith(
                       color: theme.colorScheme.error,
                     ),

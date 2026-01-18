@@ -1,5 +1,6 @@
 // lib/features/planting/presentation/widgets/planting_steps_widget.dart
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../../core/models/plant.dart';
 import '../../../../core/models/planting.dart';
@@ -40,6 +41,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final steps = _computedSteps;
 
     final toShow = _expanded ? steps : steps.take(3).toList();
@@ -57,7 +59,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Pas-à-pas',
+                  l10n.planting_steps_title,
                   style: theme.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
@@ -78,7 +80,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                           Icon(Icons.add,
                               size: 16, color: theme.colorScheme.primary),
                           const SizedBox(width: 6),
-                          Text('Ajouter',
+                          Text(l10n.planting_steps_add_button,
                               style:
                                   TextStyle(color: theme.colorScheme.primary)),
                         ],
@@ -87,7 +89,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                     const SizedBox(width: 8),
                     TextButton(
                       onPressed: () => setState(() => _expanded = !_expanded),
-                      child: Text(_expanded ? 'Voir moins' : 'Voir tout'),
+                      child: Text(_expanded ? l10n.planting_steps_see_less : l10n.planting_steps_see_all),
                     ),
                   ],
                 ),
@@ -109,7 +111,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                         color: theme.colorScheme.onSurfaceVariant
                             .withOpacity(0.6)),
                     const SizedBox(height: 8),
-                    Text('Aucune étape recommandée',
+                    Text(l10n.planting_steps_empty,
                         style: theme.textTheme.bodyMedium),
                   ],
                 ),
@@ -120,7 +122,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
               ),
             if (!_expanded && steps.length > 3) ...[
               const SizedBox(height: 8),
-              Text('+ ${steps.length - 3} autres étapes',
+              Text(l10n.planting_steps_more(steps.length - 3),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
             ],
@@ -132,6 +134,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
 
   Widget _buildStepTile(PlantStep step) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     // consider step done if it's in planting.careActions OR marked locally
     final completed = step.completed ||
         widget.planting.careActions
@@ -164,7 +167,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                 color: Colors.blue.shade100,
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: Text('Prédiction',
+              child: Text(l10n.planting_steps_prediction_badge,
                   style: theme.textTheme.labelSmall
                       ?.copyWith(color: Colors.blue.shade700, fontSize: 10)),
             ),
@@ -176,7 +179,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
           if (step.description.isNotEmpty) Text(step.description),
           if (step.scheduledDate != null)
             Text(
-              'Le ${_formatDate(step.scheduledDate!)}',
+              l10n.planting_steps_date_prefix(_formatDate(step.scheduledDate!)),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
@@ -188,7 +191,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                 // Option to unmark? For now, do nothing
               },
               child:
-                  Text('Fait', style: TextStyle(color: Colors.green.shade700)),
+                  Text(l10n.planting_steps_done, style: TextStyle(color: Colors.green.shade700)),
             )
           : ElevatedButton(
               onPressed: () {
@@ -213,29 +216,30 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                   });
                 }
               },
-              child: const Text('Marquer fait'),
+              child: Text(l10n.planting_steps_mark_done),
             ),
     );
   }
 
   Future<String?> _showAddActionDialog(BuildContext context) async {
     final TextEditingController controller = TextEditingController();
+    final l10n = AppLocalizations.of(context)!;
     final res = await showDialog<String?>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Ajouter étape'),
+        title: Text(l10n.planting_steps_dialog_title),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Ex: Paillage léger'),
+          decoration: InputDecoration(hintText: l10n.planting_steps_dialog_hint),
           autofocus: true,
         ),
         actions: [
           TextButton(
               onPressed: () => Navigator.of(ctx).pop(null),
-              child: const Text('Annuler')),
+              child: Text(l10n.common_cancel)),
           ElevatedButton(
               onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
-              child: const Text('Ajouter')),
+              child: Text(l10n.planting_steps_dialog_add)),
         ],
       ),
     );

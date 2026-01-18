@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:permacalendar/core/models/planting.dart';
 import 'package:permacalendar/core/models/plant.dart';
 import 'package:permacalendar/core/services/plant_catalog_service.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class PlantingPreview extends StatelessWidget {
   final Planting planting;
@@ -228,9 +229,23 @@ class PlantingPreview extends StatelessWidget {
   String _formatDate(DateTime d) =>
       '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
+  String _getLocalizedStatus(BuildContext context, String status) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (status) {
+      case 'Semé': return l10n.planting_status_sown;
+      case 'Planté': return l10n.planting_status_planted;
+      case 'En croissance': return l10n.planting_status_growing;
+      case 'Prêt à récolter': return l10n.planting_status_ready;
+      case 'Récolté': return l10n.planting_status_harvested;
+      case 'Échoué': return l10n.planting_status_failed;
+      default: return status;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return FutureBuilder<Plant?>(
       future: PlantCatalogService.getPlantById(planting.plantId),
@@ -436,7 +451,7 @@ class PlantingPreview extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          planting.status,
+                          _getLocalizedStatus(context, planting.status),
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: statusTextColor(planting.status),
                             fontWeight: FontWeight.w600,
@@ -500,14 +515,14 @@ class PlantingPreview extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       planting.status == 'Semé'
-                          ? 'Semé le ${_formatDate(planting.plantedDate)}'
-                          : 'Planté le ${_formatDate(planting.plantedDate)}',
+                          ? l10n.planting_card_sown_date(_formatDate(planting.plantedDate))
+                          : l10n.planting_card_planted_date(_formatDate(planting.plantedDate)),
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: theme.colorScheme.outline),
                     ),
                     if (estimateDate != null)
                       Text(
-                        'Récolte estimée: ${_formatDate(estimateDate)}',
+                        l10n.planting_card_harvest_estimate(_formatDate(estimateDate)),
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.outline),
                       ),

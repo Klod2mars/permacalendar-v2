@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../../core/models/garden_bed.dart';
@@ -31,6 +32,7 @@ class GardenBedCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // Providers pour réactivité
     final allPlantings = ref.watch(plantingsListProvider);
@@ -149,7 +151,7 @@ class GardenBedCard extends ConsumerWidget {
                         if (activePlanting != null) ...[
                           const SizedBox(height: 8),
                           Text(
-                            "${plant?.commonName ?? activePlanting.plantName} — Semé le ${activePlanting.plantedDate.day}/${activePlanting.plantedDate.month}",
+                            "${plant?.commonName ?? activePlanting.plantName} — ${l10n.bed_card_sown_on(activePlanting.plantedDate)}",
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: 6),
@@ -162,7 +164,7 @@ class GardenBedCard extends ConsumerWidget {
                                 LinearProgressIndicator(value: progress),
                                 const SizedBox(height: 6),
                                 Text(
-                                  '${(progress * 100).toStringAsFixed(0)}% vers début récolte',
+                                  '${(progress * 100).toStringAsFixed(0)}% ${l10n.bed_card_harvest_start}',
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: theme.colorScheme.onSurfaceVariant,
                                   ),
@@ -176,7 +178,7 @@ class GardenBedCard extends ConsumerWidget {
                   ),
                   // Bouton récolte (visible quand la plantation existe) :
                   if (activePlanting != null)
-                    _buildHarvestOrEditButton(context, ref, activePlanting),
+                    _buildHarvestOrEditButton(context, ref, activePlanting, l10n),
                   // Menu contextuel
                   PopupMenuButton<String>(
                     onSelected: (value) {
@@ -184,12 +186,12 @@ class GardenBedCard extends ConsumerWidget {
                       if (value == 'delete' && onDelete != null) onDelete!();
                     },
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
-                          value: 'edit', child: Text('Modifier')),
-                      const PopupMenuItem(
+                      PopupMenuItem(
+                          value: 'edit', child: Text(l10n.garden_action_modify)),
+                      PopupMenuItem(
                         value: 'delete',
-                        child: Text('Supprimer',
-                            style: TextStyle(color: Colors.red)),
+                        child: Text(l10n.common_delete,
+                            style: const TextStyle(color: Colors.red)),
                       ),
                     ],
                   ),
@@ -207,7 +209,7 @@ class GardenBedCard extends ConsumerWidget {
   }
 
   Widget _buildHarvestOrEditButton(
-      BuildContext context, WidgetRef ref, Planting active) {
+      BuildContext context, WidgetRef ref, Planting active, AppLocalizations l10n) {
     final theme = Theme.of(context);
     final progress = computePlantingProgress(active);
     final bool inHarvestWindow = active.isInHarvestPeriod || progress >= 1.0;
@@ -223,7 +225,7 @@ class GardenBedCard extends ConsumerWidget {
 
     // Afficher bouton récolte (vert) et ouvrir un dialogue pour enregistrer la récolte
     return IconButton(
-      tooltip: 'Récolter',
+      tooltip: l10n.bed_action_harvest,
       icon: const Icon(Icons.agriculture),
       color: Colors.green,
       onPressed: () => _showQuickHarvestDialog(context, ref, active),

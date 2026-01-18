@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
@@ -43,6 +44,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
     // Use scoped provider for detail to avoid global state syncing issues
     final gardenBedAsync =
         ref.watch(gardenBedDetailProvider((gardenId: gardenId, bedId: bedId)));
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     // No need for imperative loading or checking global state
@@ -58,20 +60,20 @@ class GardenBedDetailScreen extends ConsumerWidget {
       body: gardenBedAsync.when(
         loading: () => const Center(child: LoadingWidget()),
         error: (error, stack) => ErrorStateWidget(
-          title: 'Erreur',
+          title: l10n.garden_detail_title_error,
           subtitle: error.toString(),
           onRetry: () => ref.refresh(
               gardenBedDetailProvider((gardenId: gardenId, bedId: bedId))),
         ),
         data: (gardenBed) {
           if (gardenBed == null) {
-            return const EmptyStateWidget(
+            return EmptyStateWidget(
               icon: Icons.grid_view,
-              title: 'Parcelle non trouvée',
-              subtitle: 'Cette parcelle n\'existe pas ou a été supprimée.',
+              title: 'Parcelle non trouvée', // TODO: Add localization key if needed
+              subtitle: 'Cette parcelle n\'existe pas ou a été supprimée.', // TODO: Add localization key
             );
           }
-          return _buildGardenBedDetail(context, ref, gardenBed, theme);
+          return _buildGardenBedDetail(context, ref, gardenBed, theme, l10n);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -79,7 +81,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
           ? Padding(
               padding: const EdgeInsets.only(bottom: 16.0, right: 8.0),
               child: FloatingActionButton(
-                tooltip: 'Ajouter une plantation',
+                tooltip: l10n.bed_detail_add_planting,
                 child: const Icon(Icons.add),
                 onPressed: () async {
                   final bed = gardenBedAsync.asData!.value!; // safe
@@ -151,7 +153,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildGardenBedDetail(BuildContext context, WidgetRef ref,
-      GardenBed gardenBed, ThemeData theme) {
+      GardenBed gardenBed, ThemeData theme, AppLocalizations l10n) {
     // S'assurer que les plantings pour cette parcelle sont chargés
     final plantingState = ref.watch(plantingProvider);
     final bedPlantings = plantingState.plantings
@@ -183,7 +185,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Surface',
+                                  l10n.bed_detail_surface,
                                   style: theme.textTheme.bodySmall?.copyWith(
                                       color: theme.colorScheme.outline),
                                 ),
@@ -208,7 +210,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 8),
                       ExpansionTile(
                         tilePadding: EdgeInsets.zero,
-                        title: Text('Détails',
+                        title: Text(l10n.bed_detail_details,
                             style: theme.textTheme.bodyMedium
                                 ?.copyWith(fontWeight: FontWeight.w600)),
                         children: [
@@ -218,7 +220,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                                     horizontal: 4, vertical: 6),
                                 child: _buildInfoRow(
                                     Icons.description,
-                                    'Description',
+                                    l10n.bed_form_desc_label,
                                     gardenBed.description,
                                     theme)),
                           if (gardenBed.notes != null &&
@@ -226,7 +228,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                             Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 4, vertical: 6),
-                                child: _buildInfoRow(Icons.note, 'Notes',
+                                child: _buildInfoRow(Icons.note, l10n.bed_detail_notes,
                                     gardenBed.notes!, theme)),
                         ],
                       ),
@@ -236,7 +238,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
           // Plantations actuelles
-          _buildCurrentPlantings(context, ref, gardenBed, theme),
+          _buildCurrentPlantings(context, ref, gardenBed, theme, l10n),
         ],
       ),
     );
@@ -260,7 +262,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildCurrentPlantings(BuildContext context, WidgetRef ref,
-      GardenBed gardenBed, ThemeData theme) {
+      GardenBed gardenBed, ThemeData theme, AppLocalizations l10n) {
     final plantingState = ref.watch(plantingProvider);
     final plantings = plantingState.plantings
         .where((planting) => planting.gardenBedId == gardenBed.id)
@@ -274,7 +276,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: Text('Plantations actuelles',
+                child: Text(l10n.bed_detail_current_plantings,
                     style: theme.textTheme.titleLarge
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ),
@@ -285,9 +287,9 @@ class GardenBedDetailScreen extends ConsumerWidget {
           if (plantings.isEmpty)
             EmptyStateWidget(
               icon: Icons.eco,
-              title: 'Aucune plantation',
-              subtitle: 'Cette parcelle n\'a pas encore de plantations.',
-              actionText: 'Ajouter une plantation',
+              title: l10n.bed_detail_no_plantings_title,
+              subtitle: l10n.bed_detail_no_plantings_desc,
+              actionText: l10n.bed_detail_add_planting,
               onAction: () async {
                 // Reprend la logique d'ajout depuis le bouton FAB (simple duplication locale)
                 final selectedPlantId =
@@ -341,13 +343,13 @@ class GardenBedDetailScreen extends ConsumerWidget {
                         onDelete: () => showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: const Text('Supprimer la plantation ?'),
-                            content: const Text(
-                                'Cette action est irréversible. Voulez-vous vraiment supprimer cette plantation ?'),
+                            title: Text(l10n.bed_delete_planting_confirm_title),
+                            content: Text(
+                                l10n.bed_delete_planting_confirm_body),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('Annuler'),
+                                child: Text(l10n.common_cancel),
                               ),
                               TextButton(
                                 onPressed: () async {
@@ -362,7 +364,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
                                 },
                                 style: TextButton.styleFrom(
                                     foregroundColor: Colors.red),
-                                child: const Text('Supprimer'),
+                                child: Text(l10n.common_delete),
                               ),
                             ],
                           ),

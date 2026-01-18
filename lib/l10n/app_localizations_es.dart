@@ -292,6 +292,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get common_cancel => 'Cancelar';
 
   @override
+  String get common_save => 'Enregistrer';
+
+  @override
   String get empty_action_create => 'Crear';
 
   @override
@@ -431,6 +434,72 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get calibration_action_validate_exit => 'Validate & Exit';
+
+  @override
+  String get garden_management_create_title => 'Créer un jardin';
+
+  @override
+  String get garden_management_edit_title => 'Modifier le jardin';
+
+  @override
+  String get garden_management_name_label => 'Nom du jardin';
+
+  @override
+  String get garden_management_desc_label => 'Description';
+
+  @override
+  String get garden_management_image_label => 'Image du jardin (optionnel)';
+
+  @override
+  String get garden_management_image_url_label => 'URL de l\'image';
+
+  @override
+  String get garden_management_image_preview_error =>
+      'Impossible de charger l\'image';
+
+  @override
+  String get garden_management_create_submit => 'Créer le jardin';
+
+  @override
+  String get garden_management_create_submitting => 'Création...';
+
+  @override
+  String get garden_management_created_success => 'Jardin créé avec succès';
+
+  @override
+  String get garden_management_create_error => 'Échec de la création du jardin';
+
+  @override
+  String get garden_management_delete_confirm_title => 'Supprimer le jardin';
+
+  @override
+  String get garden_management_delete_confirm_body =>
+      'Êtes-vous sûr de vouloir supprimer ce jardin ? Cette action supprimera également toutes les parcelles et plantations associées. Cette action est irréversible.';
+
+  @override
+  String get garden_management_delete_success => 'Jardin supprimé avec succès';
+
+  @override
+  String get garden_management_archived_tag => 'Jardin archivé';
+
+  @override
+  String get garden_management_beds_title => 'Parcelles';
+
+  @override
+  String get garden_management_no_beds_title => 'Aucune parcelle';
+
+  @override
+  String get garden_management_no_beds_desc =>
+      'Créez des parcelles pour organiser vos plantations';
+
+  @override
+  String get garden_management_add_bed_label => 'Créer une parcelle';
+
+  @override
+  String get garden_management_stats_beds => 'Parcelles';
+
+  @override
+  String get garden_management_stats_area => 'Surface totale';
 
   @override
   String get dashboard_weather_stats => 'Weather Details';
@@ -574,9 +643,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get common_retry => 'Retry';
 
   @override
-  String get common_general_error => 'An error occurred';
-
-  @override
   String get calendar_no_events => 'No events today';
 
   @override
@@ -606,6 +672,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendar_filter_urgent => 'Urgent';
 
   @override
+  String get common_general_error => 'An error occurred';
+
+  @override
   String get common_error => 'Error';
 
   @override
@@ -619,6 +688,145 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get task_editor_error_title_required => 'Required';
+
+  @override
+  String get planting_steps_title => 'Pas-à-pas';
+
+  @override
+  String get planting_steps_add_button => 'Ajouter';
+
+  @override
+  String get planting_steps_see_less => 'Voir moins';
+
+  @override
+  String get planting_steps_see_all => 'Voir tout';
+
+  @override
+  String get planting_steps_empty => 'Aucune étape recommandée';
+
+  @override
+  String planting_steps_more(int count) {
+    return '+ $count autres étapes';
+  }
+
+  @override
+  String get planting_steps_prediction_badge => 'Prédiction';
+
+  @override
+  String planting_steps_date_prefix(String date) {
+    return 'Le $date';
+  }
+
+  @override
+  String get planting_steps_done => 'Fait';
+
+  @override
+  String get planting_steps_mark_done => 'Marquer fait';
+
+  @override
+  String get planting_steps_dialog_title => 'Ajouter étape';
+
+  @override
+  String get planting_steps_dialog_hint => 'Ex: Paillage léger';
+
+  @override
+  String get planting_steps_dialog_add => 'Ajouter';
+
+  @override
+  String get planting_status_sown => 'Semé';
+
+  @override
+  String get planting_status_planted => 'Planté';
+
+  @override
+  String get planting_status_growing => 'En croissance';
+
+  @override
+  String get planting_status_ready => 'Prêt à récolter';
+
+  @override
+  String get planting_status_harvested => 'Récolté';
+
+  @override
+  String get planting_status_failed => 'Échoué';
+
+  @override
+  String planting_card_sown_date(String date) {
+    return 'Semé le $date';
+  }
+
+  @override
+  String planting_card_planted_date(String date) {
+    return 'Planté le $date';
+  }
+
+  @override
+  String planting_card_harvest_estimate(String date) {
+    return 'Récolte estimée : $date';
+  }
+
+  @override
+  String get planting_info_title => 'Informations botaniques';
+
+  @override
+  String get planting_info_tips_title => 'Conseils de culture';
+
+  @override
+  String get planting_info_maturity => 'Maturité';
+
+  @override
+  String planting_info_days(Object days) {
+    return '$days jours';
+  }
+
+  @override
+  String get planting_info_spacing => 'Espacement';
+
+  @override
+  String planting_info_cm(Object cm) {
+    return '$cm cm';
+  }
+
+  @override
+  String get planting_info_depth => 'Profondeur';
+
+  @override
+  String get planting_info_exposure => 'Exposition';
+
+  @override
+  String get planting_info_water => 'Arrosage';
+
+  @override
+  String get planting_info_season => 'Saison plantation';
+
+  @override
+  String get planting_info_scientific_name_none =>
+      'Nom scientifique non disponible';
+
+  @override
+  String get planting_info_culture_title => 'Informations de culture';
+
+  @override
+  String get planting_info_germination => 'Temps de germination';
+
+  @override
+  String get planting_info_harvest_time => 'Temps de récolte';
+
+  @override
+  String get planting_info_none => 'Non spécifié';
+
+  @override
+  String get planting_tips_none => 'Aucun conseil disponible';
+
+  @override
+  String get planting_history_title => 'Historique des actions';
+
+  @override
+  String get planting_history_action_planting => 'Plantation';
+
+  @override
+  String get planting_history_todo =>
+      'L\'historique détaillé sera disponible prochainement';
 
   @override
   String get task_editor_garden_all => 'All Gardens';
@@ -1021,4 +1229,191 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get task_kind_winter_protection => 'Winter Protection ❄️';
+
+  @override
+  String get garden_detail_title_error => 'Erreur';
+
+  @override
+  String get garden_detail_subtitle_not_found =>
+      'Le jardin demande n\'existe pas ou a été supprimé.';
+
+  @override
+  String garden_detail_subtitle_error_beds(Object error) {
+    return 'Impossible de charger les planches: $error';
+  }
+
+  @override
+  String get garden_action_edit => 'Modifier';
+
+  @override
+  String get garden_action_archive => 'Archiver';
+
+  @override
+  String get garden_action_unarchive => 'Désarchiver';
+
+  @override
+  String get garden_action_delete => 'Supprimer';
+
+  @override
+  String garden_created_at(Object date) {
+    return 'Créé le $date';
+  }
+
+  @override
+  String get garden_bed_delete_confirm_title => 'Supprimer la parcelle';
+
+  @override
+  String garden_bed_delete_confirm_body(Object bedName) {
+    return 'Êtes-vous sûr de vouloir supprimer \"$bedName\" ? Cette action est irréversible.';
+  }
+
+  @override
+  String get garden_bed_deleted_snack => 'Parcelle supprimée';
+
+  @override
+  String garden_bed_delete_error(Object error) {
+    return 'Erreur lors de la suppression: $error';
+  }
+
+  @override
+  String get common_back => 'Retour';
+
+  @override
+  String get garden_action_disable => 'Désactiver';
+
+  @override
+  String get garden_action_enable => 'Activer';
+
+  @override
+  String get garden_action_modify => 'Modifier';
+
+  @override
+  String get bed_create_title_new => 'Nouvelle parcelle';
+
+  @override
+  String get bed_create_title_edit => 'Modifier la parcelle';
+
+  @override
+  String get bed_form_name_label => 'Nom de la parcelle *';
+
+  @override
+  String get bed_form_name_hint => 'Ex: Parcelle Nord, Planche 1';
+
+  @override
+  String get bed_form_size_label => 'Surface (m²) *';
+
+  @override
+  String get bed_form_size_hint => 'Ex: 10.5';
+
+  @override
+  String get bed_form_desc_label => 'Description';
+
+  @override
+  String get bed_form_desc_hint => 'Description...';
+
+  @override
+  String get bed_form_submit_create => 'Créer';
+
+  @override
+  String get bed_form_submit_edit => 'Modifier';
+
+  @override
+  String get bed_snack_created => 'Parcelle créée avec succès';
+
+  @override
+  String get bed_snack_updated => 'Parcelle modifiée avec succès';
+
+  @override
+  String get bed_form_error_name_required => 'Le nom est obligatoire';
+
+  @override
+  String get bed_form_error_name_length =>
+      'Le nom doit contenir au moins 2 caractères';
+
+  @override
+  String get bed_form_error_size_required => 'La surface est obligatoire';
+
+  @override
+  String get bed_form_error_size_invalid =>
+      'Veuillez entrer une surface valide';
+
+  @override
+  String get bed_form_error_size_max =>
+      'La surface ne peut pas dépasser 1000 m²';
+
+  @override
+  String bed_card_sown_on(Object date) {
+    return 'Semé le $date';
+  }
+
+  @override
+  String get bed_card_harvest_start => 'vers début récolte';
+
+  @override
+  String get bed_action_harvest => 'Récolter';
+
+  @override
+  String get bed_detail_surface => 'Surface';
+
+  @override
+  String get bed_detail_details => 'Détails';
+
+  @override
+  String get bed_detail_notes => 'Notes';
+
+  @override
+  String get bed_detail_current_plantings => 'Plantations actuelles';
+
+  @override
+  String get bed_detail_no_plantings_title => 'Aucune plantation';
+
+  @override
+  String get bed_detail_no_plantings_desc =>
+      'Cette parcelle n\'a pas encore de plantations.';
+
+  @override
+  String get bed_detail_add_planting => 'Ajouter une plantation';
+
+  @override
+  String get bed_delete_planting_confirm_title => 'Supprimer la plantation ?';
+
+  @override
+  String get bed_delete_planting_confirm_body =>
+      'Cette action est irréversible. Voulez-vous vraiment supprimer cette plantation ?';
+
+  @override
+  String harvest_title(Object plantName) {
+    return 'Récolte :$plantName';
+  }
+
+  @override
+  String get harvest_weight_label => 'Poids récolté (kg) *';
+
+  @override
+  String get harvest_price_label => 'Prix estimé (€/kg)';
+
+  @override
+  String get harvest_price_helper =>
+      'Sera mémorisé pour les prochaines récoltes de cette plante';
+
+  @override
+  String get harvest_notes_label => 'Notes / Qualité';
+
+  @override
+  String get harvest_action_save => 'Enregistrer';
+
+  @override
+  String get harvest_snack_saved => 'Récolte enregistrée';
+
+  @override
+  String get harvest_snack_error => 'Erreur lors de l\'enregistrement';
+
+  @override
+  String get harvest_form_error_required => 'Requis';
+
+  @override
+  String get harvest_form_error_positive => 'Invalide (> 0)';
+
+  @override
+  String get harvest_form_error_positive_or_zero => 'Invalide (>= 0)';
 }

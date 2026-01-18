@@ -622,6 +622,12 @@ abstract class AppLocalizations {
   /// **'Annuler'**
   String get common_cancel;
 
+  /// Texte générique Enregistrer
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get common_save;
+
   /// Action générique pour créer quelque chose depuis un état vide
   ///
   /// In fr, this message translates to:
@@ -861,6 +867,132 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Valider & Quitter'**
   String get calibration_action_validate_exit;
+
+  /// Titre page création jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un jardin'**
+  String get garden_management_create_title;
+
+  /// Titre page modification jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le jardin'**
+  String get garden_management_edit_title;
+
+  /// Label champ nom jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du jardin'**
+  String get garden_management_name_label;
+
+  /// Label champ description
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get garden_management_desc_label;
+
+  /// Label section image
+  ///
+  /// In fr, this message translates to:
+  /// **'Image du jardin (optionnel)'**
+  String get garden_management_image_label;
+
+  /// Label champ URL image
+  ///
+  /// In fr, this message translates to:
+  /// **'URL de l\'image'**
+  String get garden_management_image_url_label;
+
+  /// Erreur preview image
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de charger l\'image'**
+  String get garden_management_image_preview_error;
+
+  /// Bouton soumettre création
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer le jardin'**
+  String get garden_management_create_submit;
+
+  /// Bouton pendant soumission
+  ///
+  /// In fr, this message translates to:
+  /// **'Création...'**
+  String get garden_management_create_submitting;
+
+  /// SnackBar succès création
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin créé avec succès'**
+  String get garden_management_created_success;
+
+  /// SnackBar erreur création
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la création du jardin'**
+  String get garden_management_create_error;
+
+  /// Titre dialog suppression
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le jardin'**
+  String get garden_management_delete_confirm_title;
+
+  /// Corps dialog suppression
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer ce jardin ? Cette action supprimera également toutes les parcelles et plantations associées. Cette action est irréversible.'**
+  String get garden_management_delete_confirm_body;
+
+  /// SnackBar succès suppression
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin supprimé avec succès'**
+  String get garden_management_delete_success;
+
+  /// Tag jardin archivé
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin archivé'**
+  String get garden_management_archived_tag;
+
+  /// Titre section parcelles
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelles'**
+  String get garden_management_beds_title;
+
+  /// Titre état vide parcelles
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune parcelle'**
+  String get garden_management_no_beds_title;
+
+  /// Description état vide parcelles
+  ///
+  /// In fr, this message translates to:
+  /// **'Créez des parcelles pour organiser vos plantations'**
+  String get garden_management_no_beds_desc;
+
+  /// Bouton ajouter parcelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une parcelle'**
+  String get garden_management_add_bed_label;
+
+  /// Label stat nombre parcelles
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelles'**
+  String get garden_management_stats_beds;
+
+  /// Label stat surface totale
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface totale'**
+  String get garden_management_stats_area;
 
   /// Label dashboard: Statistiques météo
   ///
@@ -1108,12 +1240,6 @@ abstract class AppLocalizations {
   /// **'Réessayer'**
   String get common_retry;
 
-  /// Message erreur générique
-  ///
-  /// In fr, this message translates to:
-  /// **'Une erreur est survenue'**
-  String get common_general_error;
-
   /// Message aucun événement
   ///
   /// In fr, this message translates to:
@@ -1168,6 +1294,12 @@ abstract class AppLocalizations {
   /// **'Urgences'**
   String get calendar_filter_urgent;
 
+  /// Message erreur générique
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur est survenue'**
+  String get common_general_error;
+
   /// Titre erreur générique
   ///
   /// In fr, this message translates to:
@@ -1197,6 +1329,252 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Requis'**
   String get task_editor_error_title_required;
+
+  /// Titre widget Pas-à-pas
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas-à-pas'**
+  String get planting_steps_title;
+
+  /// Label bouton ajouter étape
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter'**
+  String get planting_steps_add_button;
+
+  /// Bouton replier
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir moins'**
+  String get planting_steps_see_less;
+
+  /// Bouton voir tout
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir tout'**
+  String get planting_steps_see_all;
+
+  /// Message vide étapes
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune étape recommandée'**
+  String get planting_steps_empty;
+
+  /// Label x autres étapes
+  ///
+  /// In fr, this message translates to:
+  /// **'+ {count} autres étapes'**
+  String planting_steps_more(int count);
+
+  /// Badge prédiction
+  ///
+  /// In fr, this message translates to:
+  /// **'Prédiction'**
+  String get planting_steps_prediction_badge;
+
+  /// Préfixe date étape
+  ///
+  /// In fr, this message translates to:
+  /// **'Le {date}'**
+  String planting_steps_date_prefix(String date);
+
+  /// Label fait
+  ///
+  /// In fr, this message translates to:
+  /// **'Fait'**
+  String get planting_steps_done;
+
+  /// Bouton marquer fait
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer fait'**
+  String get planting_steps_mark_done;
+
+  /// Titre dialog ajout étape
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter étape'**
+  String get planting_steps_dialog_title;
+
+  /// Hint dialog ajout étape
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex: Paillage léger'**
+  String get planting_steps_dialog_hint;
+
+  /// Bouton valider ajout
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter'**
+  String get planting_steps_dialog_add;
+
+  /// No description provided for @planting_status_sown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semé'**
+  String get planting_status_sown;
+
+  /// No description provided for @planting_status_planted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planté'**
+  String get planting_status_planted;
+
+  /// No description provided for @planting_status_growing.
+  ///
+  /// In fr, this message translates to:
+  /// **'En croissance'**
+  String get planting_status_growing;
+
+  /// No description provided for @planting_status_ready.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prêt à récolter'**
+  String get planting_status_ready;
+
+  /// No description provided for @planting_status_harvested.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolté'**
+  String get planting_status_harvested;
+
+  /// No description provided for @planting_status_failed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échoué'**
+  String get planting_status_failed;
+
+  /// Label sémé le
+  ///
+  /// In fr, this message translates to:
+  /// **'Semé le {date}'**
+  String planting_card_sown_date(String date);
+
+  /// Label planté le
+  ///
+  /// In fr, this message translates to:
+  /// **'Planté le {date}'**
+  String planting_card_planted_date(String date);
+
+  /// Label récolte estimée
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte estimée : {date}'**
+  String planting_card_harvest_estimate(String date);
+
+  /// No description provided for @planting_info_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Informations botaniques'**
+  String get planting_info_title;
+
+  /// No description provided for @planting_info_tips_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseils de culture'**
+  String get planting_info_tips_title;
+
+  /// No description provided for @planting_info_maturity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maturité'**
+  String get planting_info_maturity;
+
+  /// No description provided for @planting_info_days.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days} jours'**
+  String planting_info_days(Object days);
+
+  /// No description provided for @planting_info_spacing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Espacement'**
+  String get planting_info_spacing;
+
+  /// No description provided for @planting_info_cm.
+  ///
+  /// In fr, this message translates to:
+  /// **'{cm} cm'**
+  String planting_info_cm(Object cm);
+
+  /// No description provided for @planting_info_depth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profondeur'**
+  String get planting_info_depth;
+
+  /// No description provided for @planting_info_exposure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exposition'**
+  String get planting_info_exposure;
+
+  /// No description provided for @planting_info_water.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrosage'**
+  String get planting_info_water;
+
+  /// No description provided for @planting_info_season.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saison plantation'**
+  String get planting_info_season;
+
+  /// No description provided for @planting_info_scientific_name_none.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom scientifique non disponible'**
+  String get planting_info_scientific_name_none;
+
+  /// No description provided for @planting_info_culture_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Informations de culture'**
+  String get planting_info_culture_title;
+
+  /// No description provided for @planting_info_germination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Temps de germination'**
+  String get planting_info_germination;
+
+  /// No description provided for @planting_info_harvest_time.
+  ///
+  /// In fr, this message translates to:
+  /// **'Temps de récolte'**
+  String get planting_info_harvest_time;
+
+  /// No description provided for @planting_info_none.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non spécifié'**
+  String get planting_info_none;
+
+  /// No description provided for @planting_tips_none.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun conseil disponible'**
+  String get planting_tips_none;
+
+  /// No description provided for @planting_history_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique des actions'**
+  String get planting_history_title;
+
+  /// No description provided for @planting_history_action_planting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantation'**
+  String get planting_history_action_planting;
+
+  /// No description provided for @planting_history_todo.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'historique détaillé sera disponible prochainement'**
+  String get planting_history_todo;
 
   /// Option tous les jardins
   ///
@@ -1971,6 +2349,342 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Hivernage ❄️'**
   String get task_kind_winter_protection;
+
+  /// No description provided for @garden_detail_title_error.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur'**
+  String get garden_detail_title_error;
+
+  /// No description provided for @garden_detail_subtitle_not_found.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le jardin demande n\'existe pas ou a été supprimé.'**
+  String get garden_detail_subtitle_not_found;
+
+  /// No description provided for @garden_detail_subtitle_error_beds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de charger les planches: {error}'**
+  String garden_detail_subtitle_error_beds(Object error);
+
+  /// No description provided for @garden_action_edit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get garden_action_edit;
+
+  /// No description provided for @garden_action_archive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Archiver'**
+  String get garden_action_archive;
+
+  /// No description provided for @garden_action_unarchive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désarchiver'**
+  String get garden_action_unarchive;
+
+  /// No description provided for @garden_action_delete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get garden_action_delete;
+
+  /// No description provided for @garden_created_at.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créé le {date}'**
+  String garden_created_at(Object date);
+
+  /// No description provided for @garden_bed_delete_confirm_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la parcelle'**
+  String get garden_bed_delete_confirm_title;
+
+  /// No description provided for @garden_bed_delete_confirm_body.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer \"{bedName}\" ? Cette action est irréversible.'**
+  String garden_bed_delete_confirm_body(Object bedName);
+
+  /// No description provided for @garden_bed_deleted_snack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle supprimée'**
+  String get garden_bed_deleted_snack;
+
+  /// No description provided for @garden_bed_delete_error.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la suppression: {error}'**
+  String garden_bed_delete_error(Object error);
+
+  /// No description provided for @common_back.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour'**
+  String get common_back;
+
+  /// No description provided for @garden_action_disable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver'**
+  String get garden_action_disable;
+
+  /// No description provided for @garden_action_enable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activer'**
+  String get garden_action_enable;
+
+  /// No description provided for @garden_action_modify.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get garden_action_modify;
+
+  /// No description provided for @bed_create_title_new.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle parcelle'**
+  String get bed_create_title_new;
+
+  /// No description provided for @bed_create_title_edit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la parcelle'**
+  String get bed_create_title_edit;
+
+  /// No description provided for @bed_form_name_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de la parcelle *'**
+  String get bed_form_name_label;
+
+  /// No description provided for @bed_form_name_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex: Parcelle Nord, Planche 1'**
+  String get bed_form_name_hint;
+
+  /// No description provided for @bed_form_size_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface (m²) *'**
+  String get bed_form_size_label;
+
+  /// No description provided for @bed_form_size_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex: 10.5'**
+  String get bed_form_size_hint;
+
+  /// No description provided for @bed_form_desc_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get bed_form_desc_label;
+
+  /// No description provided for @bed_form_desc_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description...'**
+  String get bed_form_desc_hint;
+
+  /// No description provided for @bed_form_submit_create.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer'**
+  String get bed_form_submit_create;
+
+  /// No description provided for @bed_form_submit_edit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get bed_form_submit_edit;
+
+  /// No description provided for @bed_snack_created.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle créée avec succès'**
+  String get bed_snack_created;
+
+  /// No description provided for @bed_snack_updated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle modifiée avec succès'**
+  String get bed_snack_updated;
+
+  /// No description provided for @bed_form_error_name_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nom est obligatoire'**
+  String get bed_form_error_name_required;
+
+  /// No description provided for @bed_form_error_name_length.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nom doit contenir au moins 2 caractères'**
+  String get bed_form_error_name_length;
+
+  /// No description provided for @bed_form_error_size_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'La surface est obligatoire'**
+  String get bed_form_error_size_required;
+
+  /// No description provided for @bed_form_error_size_invalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer une surface valide'**
+  String get bed_form_error_size_invalid;
+
+  /// No description provided for @bed_form_error_size_max.
+  ///
+  /// In fr, this message translates to:
+  /// **'La surface ne peut pas dépasser 1000 m²'**
+  String get bed_form_error_size_max;
+
+  /// No description provided for @bed_card_sown_on.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semé le {date}'**
+  String bed_card_sown_on(Object date);
+
+  /// No description provided for @bed_card_harvest_start.
+  ///
+  /// In fr, this message translates to:
+  /// **'vers début récolte'**
+  String get bed_card_harvest_start;
+
+  /// No description provided for @bed_action_harvest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolter'**
+  String get bed_action_harvest;
+
+  /// No description provided for @bed_detail_surface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface'**
+  String get bed_detail_surface;
+
+  /// No description provided for @bed_detail_details.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détails'**
+  String get bed_detail_details;
+
+  /// No description provided for @bed_detail_notes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes'**
+  String get bed_detail_notes;
+
+  /// No description provided for @bed_detail_current_plantings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantations actuelles'**
+  String get bed_detail_current_plantings;
+
+  /// No description provided for @bed_detail_no_plantings_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune plantation'**
+  String get bed_detail_no_plantings_title;
+
+  /// No description provided for @bed_detail_no_plantings_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette parcelle n\'a pas encore de plantations.'**
+  String get bed_detail_no_plantings_desc;
+
+  /// No description provided for @bed_detail_add_planting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une plantation'**
+  String get bed_detail_add_planting;
+
+  /// No description provided for @bed_delete_planting_confirm_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la plantation ?'**
+  String get bed_delete_planting_confirm_title;
+
+  /// No description provided for @bed_delete_planting_confirm_body.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action est irréversible. Voulez-vous vraiment supprimer cette plantation ?'**
+  String get bed_delete_planting_confirm_body;
+
+  /// No description provided for @harvest_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte :{plantName}'**
+  String harvest_title(Object plantName);
+
+  /// No description provided for @harvest_weight_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poids récolté (kg) *'**
+  String get harvest_weight_label;
+
+  /// No description provided for @harvest_price_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix estimé (€/kg)'**
+  String get harvest_price_label;
+
+  /// No description provided for @harvest_price_helper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sera mémorisé pour les prochaines récoltes de cette plante'**
+  String get harvest_price_helper;
+
+  /// No description provided for @harvest_notes_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes / Qualité'**
+  String get harvest_notes_label;
+
+  /// No description provided for @harvest_action_save.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get harvest_action_save;
+
+  /// No description provided for @harvest_snack_saved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte enregistrée'**
+  String get harvest_snack_saved;
+
+  /// No description provided for @harvest_snack_error.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de l\'enregistrement'**
+  String get harvest_snack_error;
+
+  /// No description provided for @harvest_form_error_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'Requis'**
+  String get harvest_form_error_required;
+
+  /// No description provided for @harvest_form_error_positive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invalide (> 0)'**
+  String get harvest_form_error_positive;
+
+  /// No description provided for @harvest_form_error_positive_or_zero.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invalide (>= 0)'**
+  String get harvest_form_error_positive_or_zero;
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:permacalendar/l10n/app_localizations.dart';
+
 import '../../../../core/models/garden_bed.dart';
 import '../../../../shared/widgets/custom_button.dart';
 import '../../providers/garden_bed_provider.dart';
@@ -71,6 +73,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final isEditing = widget.gardenBed != null;
 
     return Dialog(
@@ -93,7 +96,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
-                    isEditing ? 'Modifier la parcelle' : 'Nouvelle parcelle',
+                    isEditing ? l10n.bed_create_title_edit : l10n.bed_create_title_new,
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: _kDialogHeaderFontSize,
@@ -126,17 +129,17 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                       TextFormField(
                         controller: _nameController,
                         autofocus: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Nom de la parcelle *',
-                          hintText: 'Ex: Parcelle Nord, Planche 1',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.bed_form_name_label,
+                          hintText: l10n.bed_form_name_hint,
+                          border: const OutlineInputBorder(),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Le nom est obligatoire';
+                            return l10n.bed_form_error_name_required;
                           }
                           if (value.trim().length < 2) {
-                            return 'Le nom doit contenir au moins 2 caractères';
+                            return l10n.bed_form_error_name_length;
                           }
                           return null;
                         },
@@ -147,10 +150,10 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                       // Size field
                       TextFormField(
                         controller: _sizeController,
-                        decoration: const InputDecoration(
-                          labelText: 'Surface (m²) *',
-                          hintText: 'Ex: 10.5',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.bed_form_size_label,
+                          hintText: l10n.bed_form_size_hint,
+                          border: const OutlineInputBorder(),
                           suffixText: 'm²',
                         ),
                         keyboardType: const TextInputType.numberWithOptions(
@@ -161,14 +164,14 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                         ],
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'La surface est obligatoire';
+                            return l10n.bed_form_error_size_required;
                           }
                           final size = double.tryParse(value);
                           if (size == null || size <= 0) {
-                            return 'Veuillez entrer une surface valide';
+                            return l10n.bed_form_error_size_invalid;
                           }
                           if (size > 1000) {
-                            return 'La surface ne peut pas dépasser 1000 m²';
+                            return l10n.bed_form_error_size_max;
                           }
                           return null;
                         },
@@ -179,10 +182,10 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                       // Description field
                       TextFormField(
                         controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          labelText: 'Description',
-                          hintText: 'Description de la culture...',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.bed_form_desc_label,
+                          hintText: l10n.bed_form_desc_hint,
+                          border: const OutlineInputBorder(),
                         ),
                         maxLines: 2,
                       ),
@@ -205,11 +208,11 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 TextButton(
                   onPressed:
                       _isLoading ? null : () => Navigator.of(context).pop(),
-                  child: const Text('Annuler'),
+                  child: Text(l10n.common_cancel),
                 ),
                 const SizedBox(width: 12),
                 CustomButton(
-                  text: isEditing ? 'Modifier' : 'Créer',
+                  text: isEditing ? l10n.bed_form_submit_edit : l10n.bed_form_submit_create,
                   onPressed: _isLoading ? null : _saveGardenBed,
                   isLoading: _isLoading,
                 ),
@@ -225,6 +228,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
+
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
       _isLoading = true;
@@ -339,8 +344,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(widget.gardenBed != null
-                      ? 'Culture modifiée avec succès'
-                      : 'Culture créée avec succès'),
+                      ? l10n.bed_snack_updated
+                      : l10n.bed_snack_created),
                 ),
               ],
             ),
@@ -350,7 +355,7 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur: $e')),
+          SnackBar(content: Text(l10n.common_error_prefix(e))),
         );
       }
     } finally {
