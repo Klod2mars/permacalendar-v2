@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../widgets/organic_dashboard.dart';
@@ -54,11 +55,8 @@ class HomeScreen extends ConsumerWidget {
                     hoverColor: Colors.transparent,
                     borderRadius: BorderRadius.circular(12),
                     child: Semantics(
-                      // Garder l'accessibilité : annonce "Paramètres (repli)" pour
-                      // les lecteurs d'écran afin de conserver ce fallback pour les
-                      // utilisateurs non voyants.
                       button: true,
-                      label: 'Paramètres (repli)',
+                      label: AppLocalizations.of(context)!.home_settings_fallback_label,
                       child: const SizedBox.expand(),
                     ),
                   ),

@@ -17,6 +17,7 @@ import 'features/plant_catalog/presentation/screens/plant_detail_screen.dart';
 import 'features/activities/presentation/screens/activities_screen.dart';
 
 import 'features/home/screens/calendar_view_screen.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import 'shared/presentation/screens/home_screen.dart';
 import 'shared/presentation/screens/settings_screen.dart';
 
@@ -262,30 +263,30 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const SoilTempPage(),
       ),
     ],
-    errorBuilder: (context, state) => Scaffold(
+    errorBuilder: (context, state) {
+    // Basic 404 page
+    final l10n = AppLocalizations.of(context)!;
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error, size: 64, color: Colors.red),
-            const SizedBox(height: 16),
             Text(
-              'Page non trouvée',
+              l10n.error_page_title,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
-            const SizedBox(height: 8),
             Text(
-              'La page "${state.uri}" n\'existe pas.',
+              l10n.error_page_message(state.uri.toString()),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => context.go(AppRoutes.home),
-              child: const Text('Retour à l\'accueil'),
+              child: Text(l10n.error_page_back),
             ),
           ],
         ),
       ),
-    ),
-  );
+    );
+  },);
 });

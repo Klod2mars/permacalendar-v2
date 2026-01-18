@@ -14,6 +14,7 @@ import '../../core/models/calibration_state.dart';
 import '../widgets/calibration_debug_overlay.dart';
 import '../../core/repositories/dashboard_slots_repository.dart';
 import '../../core/providers/active_garden_provider.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 // Nouveaux imports pour affichage météo dans la bulle
 import '../../features/climate/presentation/providers/weather_providers.dart';
@@ -443,7 +444,8 @@ class _OrganicDashboardWidgetState
         if (success && mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Jardin "${newGarden.name}" créé avec succès'),
+              content: Text(AppLocalizations.of(context)!
+                  .dashboard_garden_created(newGarden.name)),
               backgroundColor: Colors.green,
             ),
           );
@@ -470,14 +472,16 @@ class _OrganicDashboardWidgetState
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Jardin "${newGarden.name}" créé avec succès'),
+            content: Text(AppLocalizations.of(context)!
+                .dashboard_garden_created(newGarden.name)),
             backgroundColor: Colors.green,
           ),
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Erreur lors de la création du jardin.'),
+          SnackBar(
+            content: Text(
+                AppLocalizations.of(context)!.dashboard_garden_create_error),
             backgroundColor: Colors.red,
           ),
         );
@@ -525,6 +529,34 @@ class _OrganicDashboardWidgetState
     // [NEW] Read image settings from provider (handling persistence + live update)
     final imageSettings = ref.watch(dashboardImageSettingsProvider);
     final activeGardenId = ref.watch(activeGardenIdProvider);
+    final l10n = AppLocalizations.of(context)!;
+
+    String getLocalizedLabel(String id) {
+      if (id.startsWith('garden_')) {
+        final slot = int.tryParse(id.split('_').last) ?? 0;
+        return l10n.dashboard_garden_n(slot);
+      }
+      switch (id) {
+        case 'weather_stats':
+          return l10n.dashboard_weather_stats;
+        case 'soil_temperature':
+          return l10n.dashboard_soil_temp;
+        case 'temperature':
+          return l10n.dashboard_air_temp;
+        case 'statistique':
+          return l10n.dashboard_statistics;
+        case 'calendar':
+          return l10n.dashboard_calendar;
+        case 'activities':
+          return l10n.dashboard_activities;
+        case 'weather':
+          return l10n.dashboard_weather;
+        case 'settings':
+          return l10n.dashboard_settings;
+        default:
+          return id;
+      }
+    }
 
     if (kDebugMode) {
       debugPrint('[CALIBRATION BUILD] zones keys: ${zones.keys.toList()}');
@@ -717,15 +749,16 @@ class _OrganicDashboardWidgetState
                                 top: top,
                                 width: diameter,
                                 height: diameter,
-                                child: _CalibratableHotspot(
-                                  id: cfg.id,
-                                  cfg: cfg,
-                                  isCalibrating: areModulesEditable, // Only draggable if modules tool
-                                  onTapRoute: null,
-                                  containerKey: _containerKey,
-                                  ref: ref,
-                                  showDebugOutline: areModulesEditable, // Show outline only if editable
-                                ),
+                                  child: _CalibratableHotspot(
+                                    id: cfg.id,
+                                    cfg: cfg,
+                                    localizedLabel: getLocalizedLabel(cfg.id),
+                                    isCalibrating: areModulesEditable, // Only draggable if modules tool
+                                    onTapRoute: null,
+                                    containerKey: _containerKey,
+                                    ref: ref,
+                                    showDebugOutline: areModulesEditable, // Show outline only if editable
+                                  ),
                               );
                             })(),
                       ],
@@ -804,6 +837,7 @@ class _OrganicDashboardWidgetState
                                 onTapRoute: route,
                                 containerKey: _containerKey,
                                 ref: ref,
+                                localizedLabel: getLocalizedLabel(cfg.id),
                                 // En mode normal on veut que les hotspots restent interactifs
                                 // mais **non visibles** (pas d'outline de debug).
                                 showDebugOutline: false,
@@ -953,6 +987,7 @@ class _CalibratableHotspot extends StatefulWidget {
     required this.onTapRoute,
     required this.containerKey,
     required this.ref,
+    required this.localizedLabel,
     this.showDebugOutline = false,
     this.child,
   }) : super(key: key);
@@ -963,6 +998,7 @@ class _CalibratableHotspot extends StatefulWidget {
   final String? onTapRoute;
   final GlobalKey containerKey;
   final WidgetRef ref;
+  final String localizedLabel;
   final bool showDebugOutline;
   final Widget? child;
 
@@ -1342,7 +1378,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
                 if (contentWidget != null) Center(child: contentWidget),
                 Center(
                   child: Text(
-                    widget.cfg.id,
+                    widget.localizedLabel,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -1383,7 +1419,7 @@ class _CalibratableHotspotState extends State<_CalibratableHotspot> {
           : (widget.id == 'weather' && !widget.isCalibrating)
               ? _handleWeatherLongPress
               : null,
-      semanticLabel: widget.cfg.id,
+      semanticLabel: widget.localizedLabel,
       showDebugOutline: widget.showDebugOutline,
       child: contentWidget,
     );

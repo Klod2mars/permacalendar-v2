@@ -861,6 +861,318 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Valider & Quitter'**
   String get calibration_action_validate_exit;
+
+  /// Label dashboard: Statistiques météo
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo détaillée'**
+  String get dashboard_weather_stats;
+
+  /// Label dashboard: Température du sol
+  ///
+  /// In fr, this message translates to:
+  /// **'Temp. Sol'**
+  String get dashboard_soil_temp;
+
+  /// Label dashboard: Température air
+  ///
+  /// In fr, this message translates to:
+  /// **'Température'**
+  String get dashboard_air_temp;
+
+  /// Label dashboard: Statistiques globales
+  ///
+  /// In fr, this message translates to:
+  /// **'Statistiques'**
+  String get dashboard_statistics;
+
+  /// Label dashboard: Calendrier
+  ///
+  /// In fr, this message translates to:
+  /// **'Calendrier'**
+  String get dashboard_calendar;
+
+  /// Label dashboard: Activités récentes
+  ///
+  /// In fr, this message translates to:
+  /// **'Activités'**
+  String get dashboard_activities;
+
+  /// Label dashboard: Météo ciel
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo'**
+  String get dashboard_weather;
+
+  /// Label dashboard: Paramètres
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get dashboard_settings;
+
+  /// Label dashboard: Jardin N
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin {number}'**
+  String dashboard_garden_n(int number);
+
+  /// SnackBar création jardin succès
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin \"{name}\" créé avec succès'**
+  String dashboard_garden_created(String name);
+
+  /// SnackBar erreur création jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la création du jardin.'**
+  String get dashboard_garden_create_error;
+
+  /// Titre page calendrier
+  ///
+  /// In fr, this message translates to:
+  /// **'Calendrier de culture'**
+  String get calendar_title;
+
+  /// SnackBar actualisation calendrier
+  ///
+  /// In fr, this message translates to:
+  /// **'Calendrier actualisé'**
+  String get calendar_refreshed;
+
+  /// Tooltip bouton nouvelle tâche
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle Tâche'**
+  String get calendar_new_task_tooltip;
+
+  /// Titre dialog tâche enregistrée
+  ///
+  /// In fr, this message translates to:
+  /// **'Tâche enregistrée'**
+  String get calendar_task_saved_title;
+
+  /// Contenu dialog export PDF
+  ///
+  /// In fr, this message translates to:
+  /// **'Voulez-vous l\'envoyer à quelqu\'un en PDF ?'**
+  String get calendar_ask_export_pdf;
+
+  /// SnackBar tâche modifiée
+  ///
+  /// In fr, this message translates to:
+  /// **'Tâche modifiée'**
+  String get calendar_task_modified;
+
+  /// Titre dialog suppression tâche
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la tâche ?'**
+  String get calendar_delete_confirm_title;
+
+  /// Contenu dialog suppression tâche
+  ///
+  /// In fr, this message translates to:
+  /// **'\"{title}\" sera supprimée.'**
+  String calendar_delete_confirm_content(String title);
+
+  /// SnackBar tâche supprimée
+  ///
+  /// In fr, this message translates to:
+  /// **'Tâche supprimée'**
+  String get calendar_task_deleted;
+
+  /// Erreur restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur restauration : {error}'**
+  String calendar_restore_error(Object error);
+
+  /// Erreur suppression
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur suppression : {error}'**
+  String calendar_delete_error(Object error);
+
+  /// Action sheet assigner
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer / Attribuer à...'**
+  String get calendar_action_assign;
+
+  /// Titre dialog assignation
+  ///
+  /// In fr, this message translates to:
+  /// **'Attribuer / Envoyer'**
+  String get calendar_assign_title;
+
+  /// Hint dialog assignation
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisir le nom ou email du destinataire'**
+  String get calendar_assign_hint;
+
+  /// Label champ assignation
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom ou Email'**
+  String get calendar_assign_field;
+
+  /// SnackBar tâche attribuée
+  ///
+  /// In fr, this message translates to:
+  /// **'Tâche attribuée à {name}'**
+  String calendar_task_assigned(String name);
+
+  /// Erreur attribution
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur attribution : {error}'**
+  String calendar_assign_error(Object error);
+
+  /// Erreur export PDF
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur export PDF: {error}'**
+  String calendar_export_error(Object error);
+
+  /// Tooltip mois précédent
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois précédent'**
+  String get calendar_previous_month;
+
+  /// Tooltip mois suivant
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois suivant'**
+  String get calendar_next_month;
+
+  /// Tooltip limite navigation
+  ///
+  /// In fr, this message translates to:
+  /// **'Limite atteinte'**
+  String get calendar_limit_reached;
+
+  /// Instruction navigation calendrier
+  ///
+  /// In fr, this message translates to:
+  /// **'Glisser pour naviguer'**
+  String get calendar_drag_instruction;
+
+  /// Tooltip actualiser
+  ///
+  /// In fr, this message translates to:
+  /// **'Actualiser'**
+  String get common_refresh;
+
+  /// Bouton Oui
+  ///
+  /// In fr, this message translates to:
+  /// **'Oui'**
+  String get common_yes;
+
+  /// Bouton Non
+  ///
+  /// In fr, this message translates to:
+  /// **'Non'**
+  String get common_no;
+
+  /// Bouton Supprimer
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get common_delete;
+
+  /// Bouton Modifier
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get common_edit;
+
+  /// Action Annuler (Undo)
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get common_undo;
+
+  /// Préfixe erreur
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur: {error}'**
+  String common_error_prefix(Object error);
+
+  /// Bouton réessayer
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get common_retry;
+
+  /// Message erreur générique
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur est survenue'**
+  String get common_general_error;
+
+  /// Message aucun événement
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement ce jour'**
+  String get calendar_no_events;
+
+  /// Titre événements du jour
+  ///
+  /// In fr, this message translates to:
+  /// **'Événements du {date}'**
+  String calendar_events_of(String date);
+
+  /// Titre section plantations
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantations'**
+  String get calendar_section_plantings;
+
+  /// Titre section récoltes
+  ///
+  /// In fr, this message translates to:
+  /// **'Récoltes prévues'**
+  String get calendar_section_harvests;
+
+  /// Titre section tâches
+  ///
+  /// In fr, this message translates to:
+  /// **'Tâches planifiées'**
+  String get calendar_section_tasks;
+
+  /// Filtre tâches
+  ///
+  /// In fr, this message translates to:
+  /// **'Tâches'**
+  String get calendar_filter_tasks;
+
+  /// Filtre entretien
+  ///
+  /// In fr, this message translates to:
+  /// **'Entretien'**
+  String get calendar_filter_maintenance;
+
+  /// Filtre récoltes
+  ///
+  /// In fr, this message translates to:
+  /// **'Récoltes'**
+  String get calendar_filter_harvests;
+
+  /// Filtre urgences
+  ///
+  /// In fr, this message translates to:
+  /// **'Urgences'**
+  String get calendar_filter_urgent;
+
+  /// Titre erreur générique
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur'**
+  String get common_error;
 }
 
 class _AppLocalizationsDelegate

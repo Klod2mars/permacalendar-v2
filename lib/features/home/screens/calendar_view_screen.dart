@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../shared/widgets/custom_app_bar.dart';
 import '../../../shared/widgets/custom_card.dart';
@@ -91,15 +92,20 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   }
 
   Future<void> _askToExport(Activity created, ExportOption suggested) async {
+    final l10n = AppLocalizations.of(context)!;
     // Ask user if they want to export now
     final want = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Tâche enregistrée'),
-        content: const Text('Voulez-vous l\'envoyer à quelqu\'un en PDF ?'),
+        title: Text(l10n.calendar_task_saved_title),
+        content: Text(l10n.calendar_ask_export_pdf),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Non')),
-          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Oui')),
+          TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(l10n.common_no)),
+          ElevatedButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: Text(l10n.common_yes)),
         ],
       ),
     );
@@ -107,12 +113,14 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     if (want == true) {
       try {
         final file = await TaskDocumentGenerator.generateTaskPdf(created);
-        await TaskDocumentGenerator.shareFile(file, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF)');
+        await TaskDocumentGenerator.shareFile(
+            file, 'application/pdf', context,
+            shareText: 'Tâche PermaCalendar (PDF)');
       } catch (e, s) {
         developer.log('Export after create failed: $e\n$s');
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Erreur export PDF: $e'),
+            content: Text(l10n.calendar_export_error(e)),
             backgroundColor: Colors.orange,
           ));
         }
@@ -205,6 +213,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   }
 
   void _showTaskActions(Activity activity) {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
@@ -214,7 +223,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.send),
-                title: const Text('Envoyer / Attribuer à...'),
+                title: Text(l10n.calendar_action_assign),
                 onTap: () {
                   Navigator.of(ctx).pop();
                   _assignOrSendActivity(activity);
@@ -222,7 +231,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.delete),
-                title: const Text('Supprimer'),
+                title: Text(l10n.common_delete),
                 onTap: () {
                   Navigator.of(ctx).pop();
                   _confirmAndDeleteActivity(activity);
@@ -230,10 +239,10 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.edit),
-                title: const Text('Modifier'),
+                title: Text(l10n.common_edit),
                 onTap: () async {
                   Navigator.of(ctx).pop();
-                  await _editActivity(activity); 
+                  await _editActivity(activity);
                 },
               ),
             ],
@@ -260,29 +269,36 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       await _loadCalendarData();
 
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Tâche modifiée')));
-        
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)!.calendar_task_modified)));
+
         // Handle export if option selected or just prompt
         if (exportOption != ExportOption.none) {
-             // For now, reuse _askToExport logic which prompts user
-             // Or if user explicitly selected "Export PDF", maybe just do it?
-             // Since ExportOption is just a dropdown, let's stick to consistent flow:
-             _askToExport(updated, exportOption);
+          // For now, reuse _askToExport logic which prompts user
+          // Or if user explicitly selected "Export PDF", maybe just do it?
+          // Since ExportOption is just a dropdown, let's stick to consistent flow:
+          _askToExport(updated, exportOption);
         }
       }
     }
   }
 
   Future<void> _confirmAndDeleteActivity(Activity activity) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Supprimer la tâche ?'),
-        content: Text('"${activity.title}" sera supprimée.'),
+        title: Text(l10n.calendar_delete_confirm_title),
+        content: Text(l10n.calendar_delete_confirm_content(activity.title)),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Annuler')),
-          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white), child: const Text('Supprimer')),
+          TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(l10n.common_cancel)),
+          ElevatedButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, foregroundColor: Colors.white),
+              child: Text(l10n.common_delete)),
         ],
       ),
     );
@@ -292,6 +308,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   }
 
   Future<void> _deleteActivityWithUndo(Activity activity) async {
+    final l10n = AppLocalizations.of(context)!;
     final Activity deletedCopy = activity;
     try {
       await GardenBoxes.activities.delete(activity.id);
@@ -300,16 +317,18 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Tâche supprimée'),
+          content: Text(l10n.calendar_task_deleted),
           action: SnackBarAction(
-            label: 'Annuler',
+            label: l10n.common_undo,
             onPressed: () async {
               try {
                 await GardenBoxes.activities.put(deletedCopy.id, deletedCopy);
                 await _loadCalendarData();
               } catch (e) {
                 if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur restauration : $e')));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text(l10n.calendar_restore_error(e))));
                 }
               }
             },
@@ -319,28 +338,38 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur suppression : $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.calendar_delete_error(e))));
       }
     }
   }
 
   Future<void> _assignOrSendActivity(Activity activity) async {
-    final TextEditingController controller = TextEditingController(text: activity.metadata['assignee']?.toString() ?? '');
+    final l10n = AppLocalizations.of(context)!;
+    final TextEditingController controller = TextEditingController(
+        text: activity.metadata['assignee']?.toString() ?? '');
     final String? recipient = await showDialog<String>(
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text('Attribuer / Envoyer'),
+          title: Text(l10n.calendar_assign_title),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Saisir le nom ou email du destinataire :'),
-              TextField(controller: controller, autofocus: true, decoration: const InputDecoration(hintText: 'Nom ou Email')),
+              Text('${l10n.calendar_assign_hint} :'),
+              TextField(
+                  controller: controller,
+                  autofocus: true,
+                  decoration: InputDecoration(hintText: l10n.calendar_assign_field)),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.of(ctx).pop(null), child: const Text('Annuler')),
-            ElevatedButton(onPressed: () => Navigator.of(ctx).pop(controller.text.trim()), child: const Text('OK')),
+            TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(l10n.common_cancel)),
+            ElevatedButton(
+                onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
+                child: const Text('OK')),
           ],
         );
       },
@@ -369,11 +398,13 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       await GardenBoxes.activities.put(updated.id, updated);
       await _loadCalendarData();
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Tâche attribuée à $recipient')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(l10n.calendar_task_assigned(recipient))));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur attribution : $e')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(l10n.calendar_assign_error(e))));
       }
       return;
     }
@@ -416,6 +447,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final plantingState = ref.watch(plantingProvider);
     final allPlantings = ref.watch(plantingsListProvider);
     final calendarAggAsync =
@@ -423,7 +455,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Calendrier de culture',
+        title: l10n.calendar_title,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -433,9 +465,9 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 ref.invalidate(calendarAggregationProvider(_selectedMonth));
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Calendrier actualisé'),
-                      duration: Duration(seconds: 2),
+                    SnackBar(
+                      content: Text(l10n.calendar_refreshed),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
                 }
@@ -443,18 +475,18 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Erreur: ${e.toString()}'),
+                      content: Text(l10n.common_error_prefix(e)),
                       backgroundColor: Colors.red,
                     ),
                   );
                 }
               }
             },
-            tooltip: 'Actualiser',
+            tooltip: l10n.common_refresh,
           ),
           IconButton(
             icon: const Icon(Icons.add_task),
-            tooltip: 'Nouvelle Tâche',
+            tooltip: l10n.calendar_new_task_tooltip,
             onPressed: () async {
               final result = await showDialog(
                 context: context,
@@ -509,6 +541,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   }
 
   Widget _buildErrorState(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -522,7 +555,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Erreur',
+              l10n.common_error,
               style: theme.textTheme.titleLarge?.copyWith(
                 color: theme.colorScheme.error,
                 fontWeight: FontWeight.bold,
@@ -530,7 +563,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              _errorMessage ?? 'Une erreur est survenue',
+              _errorMessage ?? l10n.common_general_error,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium,
             ),
@@ -538,7 +571,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             FilledButton.icon(
               onPressed: _loadCalendarData,
               icon: const Icon(Icons.refresh),
-              label: const Text('Réessayer'),
+              label: Text(l10n.common_retry),
             ),
           ],
         ),
@@ -548,6 +581,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
   Widget _buildMonthSelector(ThemeData theme) {
     // Limites de navigation: 10 ans dans le passé et 5 ans dans le futur
+    final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
     final minDate = DateTime(now.year - 10, 1, 1);
     final maxDate = DateTime(now.year + 5, 12, 31);
@@ -591,18 +625,20 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                     );
                   }
                 : null,
-            tooltip: canGoBack ? 'Mois précédent' : 'Limite atteinte',
+                tooltip: canGoBack
+                    ? l10n.calendar_previous_month
+                    : l10n.calendar_limit_reached,
           ),
           Column(
             children: [
               Text(
-                DateFormat('MMMM yyyy', 'fr_FR').format(_selectedMonth),
+                DateFormat('MMMM yyyy', l10n.localeName).format(_selectedMonth),
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                'Glisser pour naviguer',
+                l10n.calendar_drag_instruction,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -631,7 +667,9 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                     );
                   }
                 : null,
-            tooltip: canGoForward ? 'Mois suivant' : 'Limite atteinte',
+            tooltip: canGoForward
+                ? l10n.calendar_next_month
+                : l10n.calendar_limit_reached,
           ),
         ],
       ),
@@ -711,7 +749,16 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   }
 
   Widget _buildWeekdayHeaders(ThemeData theme) {
-    const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    final l10n = AppLocalizations.of(context)!;
+    // Génère les jours de la semaine (Lun, Mar...) via DateFormat
+    // On prend un index de Lundi qui est le 1er jour.
+    // Astuce: DateTime(2023, 10, 2) est un Lundi.
+    final monday = DateTime(2023, 10, 2);
+    final weekdays = List.generate(7, (index) {
+      final date = monday.add(Duration(days: index));
+      // Substring(0,1) pour avoir L, M, M...
+      return DateFormat.E(l10n.localeName).format(date).substring(0, 1).toUpperCase();
+    });
 
     return Row(
       children: weekdays.map((day) {
@@ -985,13 +1032,18 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       }).toList();
     }
 
+    final l10n = AppLocalizations.of(context)!;
+    // ...
+    // Note: I can't put l10n here because ... wait, _buildDayDetails is a helper, needs locale passed or accessible.
+    // It's in the state, so it has context.
+    
     if (dayPlantings.isEmpty && dayHarvests.isEmpty && dayActivities.isEmpty) {
       return CustomCard(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Center(
             child: Text(
-              'Aucun événement ce jour',
+              l10n.calendar_no_events,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -1005,7 +1057,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Événements du ${DateFormat('d MMMM yyyy', 'fr_FR').format(date)}',
+          l10n.calendar_events_of(DateFormat('d MMMM yyyy', l10n.localeName).format(date)),
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -1013,7 +1065,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         const SizedBox(height: 12),
         if (dayPlantings.isNotEmpty) ...[
           Text(
-            'Plantations',
+            l10n.calendar_section_plantings,
             style: theme.textTheme.titleSmall?.copyWith(
               color: Colors.green,
               fontWeight: FontWeight.w600,
@@ -1032,7 +1084,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         ],
         if (dayHarvests.isNotEmpty) ...[
           Text(
-            'Récoltes prévues',
+            l10n.calendar_section_harvests,
             style: theme.textTheme.titleSmall?.copyWith(
               color: Colors.orange,
               fontWeight: FontWeight.w600,
@@ -1051,7 +1103,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         ],
         if (dayActivities.isNotEmpty) ...[
           Text(
-            'Tâches planifiées',
+            l10n.calendar_section_tasks,
             style: theme.textTheme.titleSmall?.copyWith(
               color: Colors.blue,
               fontWeight: FontWeight.w600,
@@ -1182,6 +1234,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   Widget _buildFilterBar(ThemeData theme) {
     final filter = ref.watch(calendarFilterProvider);
     final notifier = ref.read(calendarFilterProvider.notifier);
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -1189,28 +1242,28 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       child: Row(
         children: [
           FilterChip(
-            label: const Text('Tâches'),
+            label: Text(l10n.calendar_filter_tasks),
             selected: filter.showTasksOnly,
             onSelected: (_) => notifier.toggleTasksOnly(),
             avatar: const Icon(Icons.task_alt, size: 16),
           ),
           const SizedBox(width: 8),
           FilterChip(
-            label: const Text('Entretien'),
+            label: Text(l10n.calendar_filter_maintenance),
             selected: filter.showMaintenanceOnly,
             onSelected: (_) => notifier.toggleMaintenanceOnly(),
             avatar: const Icon(Icons.build, size: 16),
           ),
           const SizedBox(width: 8),
           FilterChip(
-            label: const Text('Récoltes'),
+            label: Text(l10n.calendar_filter_harvests),
             selected: filter.showHarvestsOnly,
             onSelected: (_) => notifier.toggleHarvestsOnly(),
             avatar: const Icon(Icons.shopping_basket, size: 16),
           ),
           const SizedBox(width: 8),
           FilterChip(
-            label: const Text('Urgences'),
+            label: Text(l10n.calendar_filter_urgent),
             selected: filter.showUrgentOnly,
             onSelected: (_) => notifier.toggleUrgentOnly(),
             backgroundColor:

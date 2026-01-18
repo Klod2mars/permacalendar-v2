@@ -439,4 +439,182 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get calibration_action_validate_exit => 'Valider & Quitter';
+
+  @override
+  String get dashboard_weather_stats => 'Météo détaillée';
+
+  @override
+  String get dashboard_soil_temp => 'Temp. Sol';
+
+  @override
+  String get dashboard_air_temp => 'Température';
+
+  @override
+  String get dashboard_statistics => 'Statistiques';
+
+  @override
+  String get dashboard_calendar => 'Calendrier';
+
+  @override
+  String get dashboard_activities => 'Activités';
+
+  @override
+  String get dashboard_weather => 'Météo';
+
+  @override
+  String get dashboard_settings => 'Paramètres';
+
+  @override
+  String dashboard_garden_n(int number) {
+    return 'Jardin $number';
+  }
+
+  @override
+  String dashboard_garden_created(String name) {
+    return 'Jardin \"$name\" créé avec succès';
+  }
+
+  @override
+  String get dashboard_garden_create_error =>
+      'Erreur lors de la création du jardin.';
+
+  @override
+  String get calendar_title => 'Calendrier de culture';
+
+  @override
+  String get calendar_refreshed => 'Calendrier actualisé';
+
+  @override
+  String get calendar_new_task_tooltip => 'Nouvelle Tâche';
+
+  @override
+  String get calendar_task_saved_title => 'Tâche enregistrée';
+
+  @override
+  String get calendar_ask_export_pdf =>
+      'Voulez-vous l\'envoyer à quelqu\'un en PDF ?';
+
+  @override
+  String get calendar_task_modified => 'Tâche modifiée';
+
+  @override
+  String get calendar_delete_confirm_title => 'Supprimer la tâche ?';
+
+  @override
+  String calendar_delete_confirm_content(String title) {
+    return '\"$title\" sera supprimée.';
+  }
+
+  @override
+  String get calendar_task_deleted => 'Tâche supprimée';
+
+  @override
+  String calendar_restore_error(Object error) {
+    return 'Erreur restauration : $error';
+  }
+
+  @override
+  String calendar_delete_error(Object error) {
+    return 'Erreur suppression : $error';
+  }
+
+  @override
+  String get calendar_action_assign => 'Envoyer / Attribuer à...';
+
+  @override
+  String get calendar_assign_title => 'Attribuer / Envoyer';
+
+  @override
+  String get calendar_assign_hint => 'Saisir le nom ou email du destinataire';
+
+  @override
+  String get calendar_assign_field => 'Nom ou Email';
+
+  @override
+  String calendar_task_assigned(String name) {
+    return 'Tâche attribuée à $name';
+  }
+
+  @override
+  String calendar_assign_error(Object error) {
+    return 'Erreur attribution : $error';
+  }
+
+  @override
+  String calendar_export_error(Object error) {
+    return 'Erreur export PDF: $error';
+  }
+
+  @override
+  String get calendar_previous_month => 'Mois précédent';
+
+  @override
+  String get calendar_next_month => 'Mois suivant';
+
+  @override
+  String get calendar_limit_reached => 'Limite atteinte';
+
+  @override
+  String get calendar_drag_instruction => 'Glisser pour naviguer';
+
+  @override
+  String get common_refresh => 'Actualiser';
+
+  @override
+  String get common_yes => 'Oui';
+
+  @override
+  String get common_no => 'Non';
+
+  @override
+  String get common_delete => 'Supprimer';
+
+  @override
+  String get common_edit => 'Modifier';
+
+  @override
+  String get common_undo => 'Annuler';
+
+  @override
+  String common_error_prefix(Object error) {
+    return 'Erreur: $error';
+  }
+
+  @override
+  String get common_retry => 'Réessayer';
+
+  @override
+  String get common_general_error => 'Une erreur est survenue';
+
+  @override
+  String get calendar_no_events => 'Aucun événement ce jour';
+
+  @override
+  String calendar_events_of(String date) {
+    return 'Événements du $date';
+  }
+
+  @override
+  String get calendar_section_plantings => 'Plantations';
+
+  @override
+  String get calendar_section_harvests => 'Récoltes prévues';
+
+  @override
+  String get calendar_section_tasks => 'Tâches planifiées';
+
+  @override
+  String get calendar_filter_tasks => 'Tâches';
+
+  @override
+  String get calendar_filter_maintenance => 'Entretien';
+
+  @override
+  String get calendar_filter_harvests => 'Récoltes';
+
+  @override
+  String get calendar_filter_urgent => 'Urgences';
+
+  @override
+  String get common_error => 'Erreur';
 }

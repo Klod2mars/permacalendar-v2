@@ -431,4 +431,180 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get calibration_action_validate_exit => 'Validate & Exit';
+
+  @override
+  String get dashboard_weather_stats => 'Weather Details';
+
+  @override
+  String get dashboard_soil_temp => 'Soil Temp';
+
+  @override
+  String get dashboard_air_temp => 'Temperature';
+
+  @override
+  String get dashboard_statistics => 'Statistics';
+
+  @override
+  String get dashboard_calendar => 'Calendar';
+
+  @override
+  String get dashboard_activities => 'Activities';
+
+  @override
+  String get dashboard_weather => 'Weather';
+
+  @override
+  String get dashboard_settings => 'Settings';
+
+  @override
+  String dashboard_garden_n(int number) {
+    return 'Garden $number';
+  }
+
+  @override
+  String dashboard_garden_created(String name) {
+    return 'Garden \"$name\" created successfully';
+  }
+
+  @override
+  String get dashboard_garden_create_error => 'Error creating garden.';
+
+  @override
+  String get calendar_title => 'Growing Calendar';
+
+  @override
+  String get calendar_refreshed => 'Calendar refreshed';
+
+  @override
+  String get calendar_new_task_tooltip => 'New Task';
+
+  @override
+  String get calendar_task_saved_title => 'Task saved';
+
+  @override
+  String get calendar_ask_export_pdf => 'Do you want to send it as PDF?';
+
+  @override
+  String get calendar_task_modified => 'Task modified';
+
+  @override
+  String get calendar_delete_confirm_title => 'Delete task?';
+
+  @override
+  String calendar_delete_confirm_content(String title) {
+    return '\"$title\" will be deleted.';
+  }
+
+  @override
+  String get calendar_task_deleted => 'Task deleted';
+
+  @override
+  String calendar_restore_error(Object error) {
+    return 'Restore error: $error';
+  }
+
+  @override
+  String calendar_delete_error(Object error) {
+    return 'Delete error: $error';
+  }
+
+  @override
+  String get calendar_action_assign => 'Send / Assign to...';
+
+  @override
+  String get calendar_assign_title => 'Assign / Send';
+
+  @override
+  String get calendar_assign_hint => 'Enter name or email';
+
+  @override
+  String get calendar_assign_field => 'Name or Email';
+
+  @override
+  String calendar_task_assigned(String name) {
+    return 'Task assigned to $name';
+  }
+
+  @override
+  String calendar_assign_error(Object error) {
+    return 'Assignment error: $error';
+  }
+
+  @override
+  String calendar_export_error(Object error) {
+    return 'PDF Export error: $error';
+  }
+
+  @override
+  String get calendar_previous_month => 'Previous month';
+
+  @override
+  String get calendar_next_month => 'Next month';
+
+  @override
+  String get calendar_limit_reached => 'Limit reached';
+
+  @override
+  String get calendar_drag_instruction => 'Swipe to navigate';
+
+  @override
+  String get common_refresh => 'Refresh';
+
+  @override
+  String get common_yes => 'Yes';
+
+  @override
+  String get common_no => 'No';
+
+  @override
+  String get common_delete => 'Delete';
+
+  @override
+  String get common_edit => 'Edit';
+
+  @override
+  String get common_undo => 'Undo';
+
+  @override
+  String common_error_prefix(Object error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get common_retry => 'Retry';
+
+  @override
+  String get common_general_error => 'An error occurred';
+
+  @override
+  String get calendar_no_events => 'No events today';
+
+  @override
+  String calendar_events_of(String date) {
+    return 'Events of $date';
+  }
+
+  @override
+  String get calendar_section_plantings => 'Plantings';
+
+  @override
+  String get calendar_section_harvests => 'Expected harvests';
+
+  @override
+  String get calendar_section_tasks => 'Scheduled tasks';
+
+  @override
+  String get calendar_filter_tasks => 'Tasks';
+
+  @override
+  String get calendar_filter_maintenance => 'Maintenance';
+
+  @override
+  String get calendar_filter_harvests => 'Harvests';
+
+  @override
+  String get calendar_filter_urgent => 'Urgent';
+
+  @override
+  String get common_error => 'Error';
 }
