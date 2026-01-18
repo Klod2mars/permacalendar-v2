@@ -7,6 +7,7 @@ import '../../../../core/utils/planting_utils.dart'; // Ensure this exists or us
 import '../../../../shared/widgets/custom_card.dart';
 import 'planting_image.dart';
 import 'companion_chevrons_widget.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class PlantingCard extends ConsumerWidget {
   final Planting planting;
@@ -31,6 +32,7 @@ class PlantingCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final statusColor = _getStatusColor(planting.status, theme);
     final statusTextColor = _getStatusTextColor(planting.status, theme);
 
@@ -83,7 +85,7 @@ class PlantingCard extends ConsumerWidget {
                       ],
                     ),
                     child: Text(
-                      planting.status,
+                      _getLocalizedStatus(l10n, planting.status),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: statusTextColor,
                         fontWeight: FontWeight.bold,
@@ -96,7 +98,6 @@ class PlantingCard extends ConsumerWidget {
                 // Actually the screenshot shows it at Bottom Left (or close to it).
                 // Let's ensure it is consistent.
                 // New layout: Basket Bottom Right. Quantity Bottom Left.
-
                 Positioned(
                   bottom: 12,
                   left: 12,
@@ -182,7 +183,7 @@ class PlantingCard extends ConsumerWidget {
                                   size: 14, color: theme.colorScheme.outline),
                               const SizedBox(width: 4),
                               Text(
-                                '${planting.status == 'Semé' ? 'Semé' : 'Planté'} le ${_formatDate(planting.plantedDate)}',
+                                _getFormattedDateLabel(l10n, planting),
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: theme.colorScheme.outline,
                                 ),
@@ -215,7 +216,7 @@ class PlantingCard extends ConsumerWidget {
                       _buildMiniInfo(
                         theme,
                         Icons.timer_outlined,
-                        'Récolte: ${_formatDate(planting.expectedHarvestStartDate!)}',
+                        '${l10n.planting_stat_ready_for_harvest}: ${_formatDate(planting.expectedHarvestStartDate!)}',
                       ),
 
                     // Spacer
@@ -259,13 +260,14 @@ class PlantingCard extends ConsumerWidget {
   }
 
   List<PopupMenuEntry<String>> _buildMenuItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return [
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 'delete',
         child: Row(children: [
-          Icon(Icons.delete, color: Colors.red),
-          SizedBox(width: 8),
-          Text('Supprimer', style: TextStyle(color: Colors.red))
+          const Icon(Icons.delete, color: Colors.red),
+          const SizedBox(width: 8),
+          Text(l10n.common_delete, style: const TextStyle(color: Colors.red))
         ]),
       ),
     ];
@@ -405,5 +407,33 @@ class PlantingCard extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  String _getLocalizedStatus(AppLocalizations l10n, String status) {
+    switch (status) {
+      case 'Semé':
+        return l10n.status_sown;
+      case 'Planté':
+        return l10n.status_planted;
+      case 'En croissance':
+        return l10n.status_growing;
+      case 'Prêt à récolter':
+        return l10n.status_ready_to_harvest;
+      case 'Récolté':
+        return l10n.status_harvested;
+      case 'Échoué':
+        return l10n.status_failed;
+      default:
+        // Try fallback map if case sensitivity is issue, or just return status
+        return status;
+    }
+  }
+
+  String _getFormattedDateLabel(AppLocalizations l10n, Planting planting) {
+    final dateStr = _formatDate(planting.plantedDate);
+    if (planting.status == 'Semé') {
+      return l10n.planting_card_sown_date(dateStr);
+    }
+    return l10n.planting_card_planted_date(dateStr);
   }
 }

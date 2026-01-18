@@ -1336,6 +1336,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bed_form_error_size_max => 'Area cannot exceed 1000 m²';
 
   @override
+  String get status_sown => 'Sown';
+
+  @override
+  String get status_planted => 'Planted';
+
+  @override
+  String get status_growing => 'Growing';
+
+  @override
+  String get status_ready_to_harvest => 'Ready to harvest';
+
+  @override
+  String get status_harvested => 'Harvested';
+
+  @override
+  String get status_failed => 'Failed';
+
+  @override
   String bed_card_sown_on(Object date) {
     return 'Sown on $date';
   }
@@ -1345,6 +1363,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bed_action_harvest => 'Harvest';
+
+  @override
+  String get lifecycle_error_title => 'Error calculating lifecycle';
+
+  @override
+  String get lifecycle_error_prefix => 'Error: ';
+
+  @override
+  String get lifecycle_cycle_completed => 'cycle completed';
+
+  @override
+  String get lifecycle_stage_germination => 'Germination';
+
+  @override
+  String get lifecycle_stage_growth => 'Growth';
+
+  @override
+  String get lifecycle_stage_fruiting => 'Fruiting';
+
+  @override
+  String get lifecycle_stage_harvest => 'Harvest';
+
+  @override
+  String get lifecycle_stage_unknown => 'Unknown';
+
+  @override
+  String get lifecycle_harvest_expected => 'Expected harvest';
+
+  @override
+  String lifecycle_in_days(Object days) {
+    return 'In $days days';
+  }
+
+  @override
+  String get lifecycle_passed => 'Passed';
+
+  @override
+  String get lifecycle_now => 'Now!';
+
+  @override
+  String get lifecycle_next_action => 'Next action';
+
+  @override
+  String get lifecycle_update => 'Update cycle';
+
+  @override
+  String lifecycle_days_ago(Object days) {
+    return '$days days ago';
+  }
+
+  @override
+  String get planting_detail_title => 'Planting Details';
+
+  @override
+  String get companion_beneficial => 'Beneficial plants';
+
+  @override
+  String get companion_avoid => 'Plants to avoid';
+
+  @override
+  String get common_close => 'Close';
 
   @override
   String get bed_detail_surface => 'Area';

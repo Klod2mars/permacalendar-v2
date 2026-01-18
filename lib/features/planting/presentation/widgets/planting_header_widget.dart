@@ -1,5 +1,6 @@
 // lib/features/planting/presentation/widgets/planting_header_widget.dart
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 /// Header léger et robuste pour afficher photo / titre / sous-titre d'une plantation.
 /// Tolérant : accepte `Map<String,dynamic>` (JSON) ou objets domaine Freezed/dynamiques.
@@ -18,8 +19,10 @@ class PlantingHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData usedTheme = theme ?? Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    
     final String title = _getPlantTitle();
-    final String subtitle = _getSubtitle();
+    final String subtitle = _getSubtitle(l10n);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -143,9 +146,9 @@ class PlantingHeaderWidget extends StatelessWidget {
     }
   }
 
-  String _getSubtitle() {
+  String _getSubtitle(AppLocalizations l10n) {
     final String variety = _extractVariety();
-    final String planted = _formatPlantedDate();
+    final String planted = _formatPlantedDate(l10n);
     if (variety.isNotEmpty && planted.isNotEmpty) return '$variety · $planted';
     if (variety.isNotEmpty) return variety;
     if (planted.isNotEmpty) return planted;
@@ -173,7 +176,7 @@ class PlantingHeaderWidget extends StatelessWidget {
     }
   }
 
-  String _formatPlantedDate() {
+  String _formatPlantedDate(AppLocalizations l10n) {
     try {
       if (planting == null) return '';
       DateTime? d;
@@ -197,10 +200,18 @@ class PlantingHeaderWidget extends StatelessWidget {
       if (d == null) return '';
 
       final String status = _extractStatus().toLowerCase();
-      if (status == 'semé') return 'Semé le ${_formatDate(d)}';
-      if (status == 'planté') return 'Planté le ${_formatDate(d)}';
-      // fallback: present as planted
-      return 'Planté le ${_formatDate(d)}';
+      // Use l10n keys for date
+      // We assume format date is localized by l10n if we passed locale, 
+      // but here we just use helper. Ideally helper should be localized too.
+      // For now we use the existing _formatDate helper but wrapping with l10n string.
+      
+      final dateStr = _formatDate(d);
+
+      if (status == 'semé') return l10n.planting_card_sown_date(dateStr);
+      if (status == 'planté') return l10n.planting_card_planted_date(dateStr);
+      
+      // Fallback
+      return l10n.planting_card_planted_date(dateStr);
     } catch (_) {
       return '';
     }

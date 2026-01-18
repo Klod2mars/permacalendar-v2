@@ -1,5 +1,6 @@
 ﻿// lib/shared/widgets/plant_lifecycle_widget.dart
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../core/services/plant_lifecycle_service.dart';
 import '../../features/plant_catalog/domain/entities/plant_entity.dart';
@@ -31,6 +32,7 @@ class PlantLifecycleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FutureBuilder<Map<String, dynamic>>(
       future: PlantLifecycleService.calculateLifecycle(
         plant,
@@ -52,12 +54,12 @@ class PlantLifecycleWidget extends StatelessWidget {
                   const Icon(Icons.error, color: Colors.red, size: 48),
                   const SizedBox(height: 8),
                   Text(
-                    'Erreur lors du calcul du cycle de vie',
+                    l10n.lifecycle_error_title,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Erreur: ${snapshot.error}',
+                    '${l10n.lifecycle_error_prefix}${snapshot.error}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -144,6 +146,7 @@ class PlantLifecycleWidget extends StatelessWidget {
   Widget _buildHeader(
       BuildContext context, String currentStage, double progress) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -156,7 +159,7 @@ class PlantLifecycleWidget extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              _getStageDisplayName(currentStage),
+              _getStageDisplayName(context, currentStage),
               style: theme.textTheme.titleLarge?.copyWith(
                 color: _getStageColor(currentStage),
                 fontWeight: FontWeight.bold,
@@ -173,7 +176,7 @@ class PlantLifecycleWidget extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          '${(progress * 100).toInt()}% du cycle complété',
+          '${(progress * 100).toInt()}% ${l10n.lifecycle_cycle_completed}',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -186,6 +189,7 @@ class PlantLifecycleWidget extends StatelessWidget {
       DateTime expectedHarvestDate) {
     final now = DateTime.now();
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     final int? daysToGermination =
         germinationDate != null ? germinationDate.difference(now).inDays : null;
@@ -204,11 +208,11 @@ class PlantLifecycleWidget extends StatelessWidget {
             _buildDateRow(
               context,
               Icons.eco,
-              'Germination',
+              l10n.lifecycle_stage_germination,
               germinationDate,
               daysToGermination! > 0
-                  ? 'Dans $daysToGermination jours'
-                  : 'Passée',
+                  ? l10n.lifecycle_in_days(daysToGermination)
+                  : l10n.lifecycle_passed,
               daysToGermination <= 0 ? Colors.green : Colors.orange,
             ),
             const SizedBox(height: 8),
@@ -216,9 +220,9 @@ class PlantLifecycleWidget extends StatelessWidget {
           _buildDateRow(
             context,
             Icons.shopping_basket,
-            'Récolte prévue',
+            l10n.lifecycle_harvest_expected,
             expectedHarvestDate,
-            daysToHarvest > 0 ? 'Dans $daysToHarvest jours' : 'Maintenant !',
+            daysToHarvest > 0 ? l10n.lifecycle_in_days(daysToHarvest) : l10n.lifecycle_now,
             daysToHarvest <= 0 ? Colors.green : Colors.blue,
           ),
         ],
@@ -273,6 +277,7 @@ class PlantLifecycleWidget extends StatelessWidget {
 
   Widget _buildNextAction(BuildContext context, String nextAction) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -290,7 +295,7 @@ class PlantLifecycleWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Prochaine action',
+                  l10n.lifecycle_next_action,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.primary,
@@ -312,12 +317,13 @@ class PlantLifecycleWidget extends StatelessWidget {
   }
 
   Widget _buildActionButton(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: onUpdateLifecycle,
         icon: const Icon(Icons.update),
-        label: const Text('Mettre à jour le cycle'),
+        label: Text(l10n.lifecycle_update),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),
@@ -355,18 +361,19 @@ class PlantLifecycleWidget extends StatelessWidget {
     }
   }
 
-  String _getStageDisplayName(String stage) {
+  String _getStageDisplayName(BuildContext context, String stage) {
+    final l10n = AppLocalizations.of(context)!;
     switch (stage.toLowerCase()) {
       case 'germination':
-        return 'Germination';
+        return l10n.lifecycle_stage_germination;
       case 'croissance':
-        return 'Croissance';
+        return l10n.lifecycle_stage_growth;
       case 'fructification':
-        return 'Fructification';
+        return l10n.lifecycle_stage_fruiting;
       case 'récolte':
-        return 'Récolte';
+        return l10n.lifecycle_stage_harvest;
       default:
-        return 'Germination';
+        return l10n.lifecycle_stage_germination;
     }
   }
 }

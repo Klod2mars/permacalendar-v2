@@ -2548,6 +2548,42 @@ abstract class AppLocalizations {
   /// **'La surface ne peut pas dépasser 1000 m²'**
   String get bed_form_error_size_max;
 
+  /// No description provided for @status_sown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semé'**
+  String get status_sown;
+
+  /// No description provided for @status_planted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planté'**
+  String get status_planted;
+
+  /// No description provided for @status_growing.
+  ///
+  /// In fr, this message translates to:
+  /// **'En croissance'**
+  String get status_growing;
+
+  /// No description provided for @status_ready_to_harvest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prêt à récolter'**
+  String get status_ready_to_harvest;
+
+  /// No description provided for @status_harvested.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolté'**
+  String get status_harvested;
+
+  /// No description provided for @status_failed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échoué'**
+  String get status_failed;
+
   /// No description provided for @bed_card_sown_on.
   ///
   /// In fr, this message translates to:
@@ -2565,6 +2601,120 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Récolter'**
   String get bed_action_harvest;
+
+  /// No description provided for @lifecycle_error_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du calcul du cycle de vie'**
+  String get lifecycle_error_title;
+
+  /// No description provided for @lifecycle_error_prefix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur : '**
+  String get lifecycle_error_prefix;
+
+  /// No description provided for @lifecycle_cycle_completed.
+  ///
+  /// In fr, this message translates to:
+  /// **'du cycle complété'**
+  String get lifecycle_cycle_completed;
+
+  /// No description provided for @lifecycle_stage_germination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Germination'**
+  String get lifecycle_stage_germination;
+
+  /// No description provided for @lifecycle_stage_growth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croissance'**
+  String get lifecycle_stage_growth;
+
+  /// No description provided for @lifecycle_stage_fruiting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fructification'**
+  String get lifecycle_stage_fruiting;
+
+  /// No description provided for @lifecycle_stage_harvest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte'**
+  String get lifecycle_stage_harvest;
+
+  /// No description provided for @lifecycle_stage_unknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu'**
+  String get lifecycle_stage_unknown;
+
+  /// No description provided for @lifecycle_harvest_expected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte prévue'**
+  String get lifecycle_harvest_expected;
+
+  /// No description provided for @lifecycle_in_days.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dans {days} jours'**
+  String lifecycle_in_days(Object days);
+
+  /// No description provided for @lifecycle_passed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passée'**
+  String get lifecycle_passed;
+
+  /// No description provided for @lifecycle_now.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintenant !'**
+  String get lifecycle_now;
+
+  /// No description provided for @lifecycle_next_action.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochaine action'**
+  String get lifecycle_next_action;
+
+  /// No description provided for @lifecycle_update.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre à jour le cycle'**
+  String get lifecycle_update;
+
+  /// No description provided for @lifecycle_days_ago.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il y a {days} jours'**
+  String lifecycle_days_ago(Object days);
+
+  /// No description provided for @planting_detail_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détails de la plantation'**
+  String get planting_detail_title;
+
+  /// No description provided for @companion_beneficial.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantes amies'**
+  String get companion_beneficial;
+
+  /// No description provided for @companion_avoid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantes à éviter'**
+  String get companion_avoid;
+
+  /// No description provided for @common_close.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get common_close;
 
   /// No description provided for @bed_detail_surface.
   ///

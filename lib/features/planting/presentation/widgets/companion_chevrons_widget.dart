@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class CompanionChevronsWidget extends StatelessWidget {
   final List<String> beneficial;
@@ -13,8 +14,9 @@ class CompanionChevronsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Audit Patch: Ensure non-null lists
-    final List<String> ben = beneficial ?? <String>[];
-    final List<String> av = avoid ?? <String>[];
+    final List<String> ben = beneficial;
+    final List<String> av = avoid;
+    final l10n = AppLocalizations.of(context)!;
     
     // Si aucune donnée, on n'affiche rien
     if (ben.isEmpty && av.isEmpty) {
@@ -36,8 +38,9 @@ class CompanionChevronsWidget extends StatelessWidget {
               context,
               icon: Icons.keyboard_arrow_up,
               color: Colors.greenAccent,
-              label: 'Plantes amies',
+              label: l10n.companion_beneficial,
               items: ben,
+              isBeneficial: true,
             ),
           if (ben.isNotEmpty && av.isNotEmpty)
             const SizedBox(width: 4),
@@ -46,8 +49,9 @@ class CompanionChevronsWidget extends StatelessWidget {
               context,
               icon: Icons.keyboard_arrow_down,
               color: Colors.redAccent,
-              label: 'Plantes à éviter',
+              label: l10n.companion_avoid,
               items: av,
+              isBeneficial: false,
             ),
         ],
       ),
@@ -58,9 +62,10 @@ class CompanionChevronsWidget extends StatelessWidget {
       {required IconData icon,
       required Color color,
       required String label,
-      required List<String> items}) {
+      required List<String> items,
+      required bool isBeneficial}) {
     return InkWell(
-      onTap: () => _showListDialog(context, label, items, color),
+      onTap: () => _showListDialog(context, label, items, color, isBeneficial),
       borderRadius: BorderRadius.circular(8),
       child: Container(
         padding: const EdgeInsets.all(2),
@@ -78,9 +83,10 @@ class CompanionChevronsWidget extends StatelessWidget {
   }
 
   void _showListDialog(
-      BuildContext context, String title, List<String>? items, Color color) {
+      BuildContext context, String title, List<String>? items, Color color, bool isBeneficial) {
     // Guard: items ?? [] handled in map
     final safeItems = items ?? <String>[];
+    final l10n = AppLocalizations.of(context)!;
     
     showDialog(
       context: context,
@@ -89,7 +95,7 @@ class CompanionChevronsWidget extends StatelessWidget {
         title: Row(
           children: [
             Icon(
-              title.contains('amies') ? Icons.thumb_up : Icons.thumb_down,
+              isBeneficial ? Icons.thumb_up : Icons.thumb_down,
               color: color,
             ),
             const SizedBox(width: 10),
@@ -122,7 +128,7 @@ class CompanionChevronsWidget extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Fermer',
+              l10n.common_close,
               style: TextStyle(color: color), // Match theme color
             ),
           ),

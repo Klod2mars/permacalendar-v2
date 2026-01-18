@@ -1342,6 +1342,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'La surface ne peut pas dépasser 1000 m²';
 
   @override
+  String get status_sown => 'Semé';
+
+  @override
+  String get status_planted => 'Planté';
+
+  @override
+  String get status_growing => 'En croissance';
+
+  @override
+  String get status_ready_to_harvest => 'Prêt à récolter';
+
+  @override
+  String get status_harvested => 'Récolté';
+
+  @override
+  String get status_failed => 'Échoué';
+
+  @override
   String bed_card_sown_on(Object date) {
     return 'Semé le $date';
   }
@@ -1351,6 +1369,67 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bed_action_harvest => 'Récolter';
+
+  @override
+  String get lifecycle_error_title => 'Erreur lors du calcul du cycle de vie';
+
+  @override
+  String get lifecycle_error_prefix => 'Erreur : ';
+
+  @override
+  String get lifecycle_cycle_completed => 'du cycle complété';
+
+  @override
+  String get lifecycle_stage_germination => 'Germination';
+
+  @override
+  String get lifecycle_stage_growth => 'Croissance';
+
+  @override
+  String get lifecycle_stage_fruiting => 'Fructification';
+
+  @override
+  String get lifecycle_stage_harvest => 'Récolte';
+
+  @override
+  String get lifecycle_stage_unknown => 'Inconnu';
+
+  @override
+  String get lifecycle_harvest_expected => 'Récolte prévue';
+
+  @override
+  String lifecycle_in_days(Object days) {
+    return 'Dans $days jours';
+  }
+
+  @override
+  String get lifecycle_passed => 'Passée';
+
+  @override
+  String get lifecycle_now => 'Maintenant !';
+
+  @override
+  String get lifecycle_next_action => 'Prochaine action';
+
+  @override
+  String get lifecycle_update => 'Mettre à jour le cycle';
+
+  @override
+  String lifecycle_days_ago(Object days) {
+    return 'Il y a $days jours';
+  }
+
+  @override
+  String get planting_detail_title => 'Détails de la plantation';
+
+  @override
+  String get companion_beneficial => 'Plantes amies';
+
+  @override
+  String get companion_avoid => 'Plantes à éviter';
+
+  @override
+  String get common_close => 'Fermer';
 
   @override
   String get bed_detail_surface => 'Surface';

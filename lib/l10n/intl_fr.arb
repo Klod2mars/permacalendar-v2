@@ -1159,9 +1159,38 @@
   "bed_form_error_size_invalid": "Veuillez entrer une surface valide",
   "bed_form_error_size_max": "La surface ne peut pas dépasser 1000 m²",
   
+  "status_sown": "Semé",
+  "status_planted": "Planté",
+  "status_growing": "En croissance",
+  "status_ready_to_harvest": "Prêt à récolter",
+  "status_harvested": "Récolté",
+  "status_failed": "Échoué",
+  
   "bed_card_sown_on": "Semé le {date}",
   "bed_card_harvest_start": "vers début récolte",
   "bed_action_harvest": "Récolter",
+  
+  "lifecycle_error_title": "Erreur lors du calcul du cycle de vie",
+  "lifecycle_error_prefix": "Erreur : ",
+  "lifecycle_cycle_completed": "du cycle complété",
+  "lifecycle_stage_germination": "Germination",
+  "lifecycle_stage_growth": "Croissance",
+  "lifecycle_stage_fruiting": "Fructification",
+  "lifecycle_stage_harvest": "Récolte",
+  "lifecycle_stage_unknown": "Inconnu",
+  "lifecycle_harvest_expected": "Récolte prévue",
+  "lifecycle_in_days": "Dans {days} jours",
+  "lifecycle_passed": "Passée",
+  "lifecycle_now": "Maintenant !",
+  "lifecycle_next_action": "Prochaine action",
+  "lifecycle_update": "Mettre à jour le cycle",
+  "lifecycle_days_ago": "Il y a {days} jours",
+  
+  "planting_detail_title": "Détails de la plantation",
+  
+  "companion_beneficial": "Plantes amies",
+  "companion_avoid": "Plantes à éviter",
+  "common_close": "Fermer",
   
   "bed_detail_surface": "Surface",
   "bed_detail_details": "Détails",
