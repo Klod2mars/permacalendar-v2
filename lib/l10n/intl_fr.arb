@@ -1,5 +1,449 @@
 {
-    "@@locale": "fr",
-    "appTitle": "Permaculturo",
-    "settings_title": "Paramètres"
+  "@@locale": "fr",
+
+  "appTitle": "Sowing",
+  "@appTitle": {
+    "description": "Titre de l'application"
+  },
+
+  "settings_title": "Paramètres",
+  "@settings_title": {
+    "description": "Titre de la page des paramètres"
+  },
+
+  "home_settings_fallback_label": "Paramètres (repli)",
+  "@home_settings_fallback_label": {
+    "description": "Label accessibilité pour le hotspot de paramètres sur l'accueil"
+  },
+
+  "settings_application": "Application",
+  "@settings_application": {
+    "description": "Rubrique 'Application' dans les paramètres"
+  },
+
+  "settings_version": "Version",
+  "@settings_version": {
+    "description": "Label pour la version de l'application"
+  },
+
+  "settings_display": "Affichage",
+  "@settings_display": {
+    "description": "Titre de la section Affichage"
+  },
+
+  "settings_weather_selector": "Sélecteur météo",
+  "@settings_weather_selector": {
+    "description": "Titre de la section Sélecteur météo"
+  },
+
+  "settings_commune_title": "Commune pour la météo",
+  "@settings_commune_title": {
+    "description": "Titre du paramètre Commune pour la météo"
+  },
+
+  "settings_choose_commune": "Choisir une commune",
+  "@settings_choose_commune": {
+    "description": "Titre/drawer pour choisir une commune"
+  },
+
+  "settings_search_commune_hint": "Rechercher une commune…",
+  "@settings_search_commune_hint": {
+    "description": "Hint text pour la recherche de commune"
+  },
+
+  "settings_commune_default": "Défaut: {label}",
+  "@settings_commune_default": {
+    "description": "Texte indiquant la commune par défaut",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "Paris"
+      }
+    }
+  },
+
+  "settings_commune_selected": "Sélectionnée: {label}",
+  "@settings_commune_selected": {
+    "description": "Texte indiquant la commune sélectionnée",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "Saint-Affrique"
+      }
+    }
+  },
+
+  "settings_quick_access": "Accès rapide",
+  "@settings_quick_access": {
+    "description": "Titre de la zone Accès rapide dans les paramètres"
+  },
+
+  "settings_plants_catalog": "Catalogue des plantes",
+  "@settings_plants_catalog": {
+    "description": "Libellé pour l'accès au catalogue des plantes"
+  },
+
+  "settings_about": "À propos",
+  "@settings_about": {
+    "description": "Titre de la section À propos"
+  },
+
+  "settings_user_guide": "Guide d'utilisation",
+  "@settings_user_guide": {
+    "description": "Label pour le guide d'utilisation"
+  },
+
+  "settings_privacy": "Confidentialité",
+  "@settings_privacy": {
+    "description": "Label Confidentialité"
+  },
+
+  "settings_privacy_policy": "Politique de confidentialité",
+  "@settings_privacy_policy": {
+    "description": "Titre / label de la politique de confidentialité"
+  },
+
+  "settings_terms": "Conditions d'utilisation",
+  "@settings_terms": {
+    "description": "Titre / label des conditions d'utilisation"
+  },
+
+  "settings_version_dialog_title": "Version de l'application",
+  "@settings_version_dialog_title": {
+    "description": "Titre de la boîte de dialogue d'information sur la version"
+  },
+
+  "settings_version_dialog_content": "Version: {version} – Gestion de jardin dynamique\n\nPermaculturo - Gestion de jardins vivants",
+  "@settings_version_dialog_content": {
+    "description": "Contenu de la boîte de dialogue de version",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.2"
+      }
+    }
+  },
+
+  "language_title": "Langue / Language",
+  "@language_title": {
+    "description": "Titre de la page de sélection de la langue"
+  },
+
+  "language_french": "Français",
+  "@language_french": {
+    "description": "Nom de la langue française"
+  },
+
+  "language_english": "English",
+  "@language_english": {
+    "description": "Nom de la langue anglaise"
+  },
+
+  "language_spanish": "Español",
+  "@language_spanish": {
+    "description": "Nom de la langue espagnole"
+  },
+
+  "language_portuguese_br": "Português (Brasil)",
+  "@language_portuguese_br": {
+    "description": "Nom de la langue portugaise (Brésil)"
+  },
+
+  "language_german": "Deutsch",
+  "@language_german": {
+    "description": "Nom de la langue allemande"
+  },
+
+  "language_changed_snackbar": "Langue changée : {label}",
+  "@language_changed_snackbar": {
+    "description": "Message affiché en snackBar après changement de langue",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "English"
+      }
+    }
+  },
+
+  "garden_list_title": "Mes jardins",
+  "@garden_list_title": {
+    "description": "Titre écran liste des jardins"
+  },
+
+  "garden_error_title": "Erreur de chargement",
+  "@garden_error_title": {
+    "description": "Titre pour l'état d'erreur sur la liste des jardins"
+  },
+
+  "garden_error_subtitle": "Impossible de charger la liste des jardins : {error}",
+  "@garden_error_subtitle": {
+    "description": "Message d'erreur détaillé pour jardin",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "garden_retry": "Réessayer",
+  "@garden_retry": {
+    "description": "Texte du bouton Réessayer"
+  },
+
+  "garden_no_gardens": "Aucun jardin pour le moment.",
+  "@garden_no_gardens": {
+    "description": "Message affiché si aucun jardin actif"
+  },
+
+  "garden_archived_info": "Vous avez des jardins archivés. Activez l’affichage des jardins archivés pour les voir.",
+  "@garden_archived_info": {
+    "description": "Info affichée lorsque des jardins sont archivés"
+  },
+
+  "garden_add_tooltip": "Ajouter un jardin",
+  "@garden_add_tooltip": {
+    "description": "Tooltip du FAB pour ajouter un jardin"
+  },
+
+  "plant_catalog_title": "Catalogue de plantes",
+  "@plant_catalog_title": {
+    "description": "Titre de l'écran catalogue de plantes"
+  },
+
+  "plant_custom_badge": "Perso",
+  "@plant_custom_badge": {
+    "description": "Texte du badge pour plante personnalisée"
+  },
+
+  "plant_detail_not_found_title": "Plante introuvable",
+  "@plant_detail_not_found_title": {
+    "description": "Titre affiché si une plante n'existe pas"
+  },
+
+  "plant_detail_not_found_body": "Cette plante n'existe pas ou n'a pas pu être chargée.",
+  "@plant_detail_not_found_body": {
+    "description": "Message affiché lorsque la plante n'a pas été chargée"
+  },
+
+  "plant_added_favorites": "{plant} ajouté aux favoris",
+  "@plant_added_favorites": {
+    "description": "SnackBar indiquant qu'une plante a été ajoutée aux favoris",
+    "placeholders": {
+      "plant": {
+        "type": "String",
+        "example": "Tomate"
+      }
+    }
+  },
+
+  "plant_detail_popup_add_to_garden": "Ajouter au jardin",
+  "@plant_detail_popup_add_to_garden": {
+    "description": "Texte du menu contextuel pour ajouter une plante au jardin"
+  },
+
+  "plant_detail_popup_share": "Partager",
+  "@plant_detail_popup_share": {
+    "description": "Texte du menu contextuel pour partager"
+  },
+
+  "plant_detail_share_todo": "Partage à implémenter",
+  "@plant_detail_share_todo": {
+    "description": "SnackBar indiquant que le partage n'est pas encore implémenté"
+  },
+
+  "plant_detail_add_to_garden_todo": "Ajout au jardin à implémenter",
+  "@plant_detail_add_to_garden_todo": {
+    "description": "SnackBar indiquant que l'ajout au jardin est à implémenter"
+  },
+
+  "plant_detail_section_culture": "Détails de culture",
+  "@plant_detail_section_culture": {
+    "description": "Titre section Détails de culture"
+  },
+
+  "plant_detail_section_instructions": "Instructions générales",
+  "@plant_detail_section_instructions": {
+    "description": "Titre section Instructions générales"
+  },
+
+  "plant_detail_detail_family": "Famille",
+  "@plant_detail_detail_family": {
+    "description": "Label Famille dans le détail plante"
+  },
+
+  "plant_detail_detail_maturity": "Durée de maturation",
+  "@plant_detail_detail_maturity": {
+    "description": "Label Durée de maturation"
+  },
+
+  "plant_detail_detail_spacing": "Espacement",
+  "@plant_detail_detail_spacing": {
+    "description": "Label Espacement"
+  },
+
+  "plant_detail_detail_exposure": "Exposition",
+  "@plant_detail_detail_exposure": {
+    "description": "Label Exposition"
+  },
+
+  "plant_detail_detail_water": "Besoins en eau",
+  "@plant_detail_detail_water": {
+    "description": "Label Besoins en eau"
+  },
+
+  "planting_title_template": "Plantations - {gardenBedName}",
+  "@planting_title_template": {
+    "description": "Titre de l'écran des plantations, contient le nom de la parcelle",
+    "placeholders": {
+      "gardenBedName": {
+        "type": "String",
+        "example": "Parcelle A"
+      }
+    }
+  },
+
+  "planting_menu_statistics": "Statistiques",
+  "@planting_menu_statistics": {
+    "description": "Menu item Statistiques"
+  },
+
+  "planting_menu_ready_for_harvest": "Prêt à récolter",
+  "@planting_menu_ready_for_harvest": {
+    "description": "Menu item Prêt à récolter"
+  },
+
+  "planting_menu_test_data": "Données test",
+  "@planting_menu_test_data": {
+    "description": "Menu item Données test"
+  },
+
+  "planting_search_hint": "Rechercher une plantation...",
+  "@planting_search_hint": {
+    "description": "Hint de recherche sur la liste de plantations"
+  },
+
+  "planting_filter_all_statuses": "Tous les statuts",
+  "@planting_filter_all_statuses": {
+    "description": "Filtre Tous les statuts"
+  },
+
+  "planting_filter_all_plants": "Toutes les plantes",
+  "@planting_filter_all_plants": {
+    "description": "Filtre Toutes les plantes"
+  },
+
+  "planting_stat_plantings": "Plantations",
+  "@planting_stat_plantings": {
+    "description": "Label statistiques : Plantations"
+  },
+
+  "planting_stat_total_quantity": "Quantité totale",
+  "@planting_stat_total_quantity": {
+    "description": "Label statistiques : Quantité totale"
+  },
+
+  "planting_stat_success_rate": "Taux de réussite",
+  "@planting_stat_success_rate": {
+    "description": "Label statistiques : Taux de réussite"
+  },
+
+  "planting_stat_in_growth": "En croissance",
+  "@planting_stat_in_growth": {
+    "description": "Label statistiques : En croissance"
+  },
+
+  "planting_stat_ready_for_harvest": "Prêt à récolter",
+  "@planting_stat_ready_for_harvest": {
+    "description": "Label statistiques : Prêt à récolter"
+  },
+
+  "planting_empty_none": "Aucune plantation",
+  "@planting_empty_none": {
+    "description": "Titre pour l'état vide des plantations"
+  },
+
+  "planting_empty_first": "Commencez par ajouter votre première plantation dans cette parcelle.",
+  "@planting_empty_first": {
+    "description": "Texte incitatif si aucune plantation n'existe"
+  },
+
+  "planting_create_action": "Créer une plantation",
+  "@planting_create_action": {
+    "description": "Texte du bouton pour créer une plantation"
+  },
+
+  "planting_empty_no_result": "Aucun résultat",
+  "@planting_empty_no_result": {
+    "description": "Titre pour l'état 'aucun résultat' dans la recherche"
+  },
+
+  "planting_clear_filters": "Effacer les filtres",
+  "@planting_clear_filters": {
+    "description": "Action pour effacer les filtres"
+  },
+
+  "planting_add_tooltip": "Ajouter une plantation",
+  "@planting_add_tooltip": {
+    "description": "Tooltip du FAB pour ajouter une plantation"
+  },
+
+  "search_hint": "Rechercher...",
+  "@search_hint": {
+    "description": "Hint générique pour la barre de recherche"
+  },
+
+  "error_page_title": "Page non trouvée",
+  "@error_page_title": {
+    "description": "Titre pour la page d'erreur 'page non trouvée'"
+  },
+
+  "error_page_message": "La page \"{uri}\" n'existe pas.",
+  "@error_page_message": {
+    "description": "Message expliquant que la page demandée n'existe pas",
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
+
+  "error_page_back": "Retour à l'accueil",
+  "@error_page_back": {
+    "description": "Bouton pour revenir à l'accueil depuis la page d'erreur"
+  },
+
+  "dialog_confirm": "Confirmer",
+  "@dialog_confirm": {
+    "description": "Texte du bouton Confirmer dans les dialogues"
+  },
+
+  "dialog_cancel": "Annuler",
+  "@dialog_cancel": {
+    "description": "Texte du bouton Annuler dans les dialogues"
+  },
+
+  "snackbar_commune_selected": "Commune sélectionnée: {name}",
+  "@snackbar_commune_selected": {
+    "description": "SnackBar indiquant la commune sélectionnée",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+
+  "common_validate": "Valider",
+  "@common_validate": {
+    "description": "Texte générique Valider"
+  },
+
+  "common_cancel": "Annuler",
+  "@common_cancel": {
+    "description": "Texte générique Annuler (duplicate kept for backward compatibility)"
+  },
+
+  "empty_action_create": "Créer",
+  "@empty_action_create": {
+    "description": "Action générique pour créer quelque chose depuis un état vide"
+  }
 }
