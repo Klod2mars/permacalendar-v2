@@ -14,6 +14,7 @@ import '../../../core/providers/organic_zones_provider.dart';
 import '../../../core/models/calibration_state.dart';
 import '../../../features/home/presentation/providers/dashboard_image_settings_provider.dart'; // [NEW]
 import '../../../app_router.dart';
+import '../../../l10n/app_localizations.dart';
 
 class CalibrationSettingsScreen extends ConsumerStatefulWidget {
   const CalibrationSettingsScreen({super.key});
@@ -72,10 +73,12 @@ class _CalibrationSettingsScreenState
 
   Future<void> _exportCurrentProfile() async {
     await _refreshCurrentProfile();
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
 
     if (_currentProfile == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Aucun profil trouvé pour cet appareil.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(l10n.calibration_snack_no_profile)));
 
       return;
     }
@@ -84,18 +87,21 @@ class _CalibrationSettingsScreenState
 
     await Clipboard.setData(ClipboardData(text: json));
 
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profil copié dans le presse-papiers.')));
+        SnackBar(content: Text(l10n.calibration_snack_profile_copied)));
   }
 
   Future<void> _importProfileFromClipboard() async {
     final clip = await Clipboard.getData('text/plain');
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
 
     final text = clip?.text ?? '';
 
     if (text.trim().isEmpty) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Presse-papiers vide.')));
+          .showSnackBar(SnackBar(content: Text(l10n.calibration_snack_clipboard_empty)));
 
       return;
     }
@@ -104,27 +110,33 @@ class _CalibrationSettingsScreenState
       final Map<String, dynamic> profile =
           CalibrationStorage.importProfile(text);
 
+      if (!mounted) return;
       final key = await deviceCalibrationKey(context);
 
       await CalibrationStorage.saveProfile(key, profile);
 
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Profil importé et sauvegardé pour cet appareil.')));
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(l10n.calibration_snack_profile_imported)));
 
       await _refreshCurrentProfile();
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Erreur import JSON: $e')));
+          .showSnackBar(SnackBar(content: Text(l10n.calibration_snack_import_error(e.toString()))));
     }
   }
 
   Future<void> _resetProfileForDevice() async {
     final key = await deviceCalibrationKey(context);
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
 
     await CalibrationStorage.deleteProfile(key);
 
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profil supprimé pour cet appareil.')));
+        SnackBar(content: Text(l10n.calibration_snack_profile_deleted)));
 
     await _refreshCurrentProfile();
   }
@@ -132,12 +144,14 @@ class _CalibrationSettingsScreenState
   Future<void> _saveCurrentCalibrationAsProfile() async {
     try {
       final zones = ref.read(organicZonesProvider);
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
 
       if (zones.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
               content: Text(
-                  'Aucune calibration enregistrée. Calibrez d\'abord depuis le dashboard.')),
+                  l10n.calibration_snack_no_calibration)),
         );
 
         return;
@@ -160,31 +174,35 @@ class _CalibrationSettingsScreenState
 
       await CalibrationStorage.saveProfile(key, profile);
 
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
             content: Text(
-                'Calibration actuelle sauvegardée comme profil pour cet appareil.')),
+                l10n.calibration_snack_saved_as_profile)),
       );
 
       await _refreshCurrentProfile();
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur lors de la sauvegarde: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.calibration_snack_save_error(e.toString()))),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Calibration Organique')),
+      appBar: AppBar(title: Text(l10n.calibration_organic_title)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SwitchListTile(
-              title: const Text('Appliquer automatiquement pour cet appareil'),
+              title: Text(l10n.calibration_auto_apply),
               value: _autoApply,
               onChanged: _toggleAutoApply,
             ),
@@ -194,7 +212,7 @@ class _CalibrationSettingsScreenState
             const SizedBox(height: 12),
             ElevatedButton.icon(
               icon: const Icon(Icons.tune),
-              label: const Text('Calibrer maintenant'),
+              label: Text(l10n.calibration_calibrate_now),
               onPressed: () {
                 // 1) Activer le mode calibration organique
                 ref
@@ -210,39 +228,39 @@ class _CalibrationSettingsScreenState
             ElevatedButton.icon(
               icon: const Icon(Icons.save),
               label:
-                  const Text('Sauvegarder calibration actuelle comme profil'),
+                  Text(l10n.calibration_save_profile),
               onPressed: _saveCurrentCalibrationAsProfile,
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
               icon: const Icon(Icons.save_alt),
-              label: const Text('Exporter profil (copie JSON)'),
+              label: Text(l10n.calibration_export_profile),
               onPressed: _exportCurrentProfile,
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
               icon: const Icon(Icons.paste),
-              label: const Text('Importer profil depuis presse-papiers'),
+              label: Text(l10n.calibration_import_profile),
               onPressed: _importProfileFromClipboard,
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
               icon: const Icon(Icons.restore),
-              label: const Text('Réinitialiser profil pour cet appareil'),
+              label: Text(l10n.calibration_reset_profile),
               onPressed: () async {
                 final confirm = await showDialog<bool>(
                   context: context,
                   builder: (c) => AlertDialog(
-                    title: const Text('Confirmer'),
-                    content: const Text(
-                        'Supprimer le profil de calibration pour cet appareil ?'),
+                    title: Text(l10n.calibration_dialog_confirm_title),
+                    content: Text(
+                        l10n.calibration_dialog_delete_profile),
                     actions: [
                       TextButton(
                           onPressed: () => Navigator.of(c).pop(false),
-                          child: const Text('Annuler')),
+                          child: Text(l10n.common_cancel)),
                       TextButton(
                           onPressed: () => Navigator.of(c).pop(true),
-                          child: const Text('Supprimer')),
+                          child: Text(l10n.calibration_action_delete)),
                     ],
                   ),
                 );
@@ -255,12 +273,12 @@ class _CalibrationSettingsScreenState
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _refreshCurrentProfile,
-              child: const Text('Actualiser aperçu profil'),
+              child: Text(l10n.calibration_refresh_profile),
             ),
             const SizedBox(height: 12),
             if (_currentKey != null) ...[
               Text(
-                'Clé appareil: $_currentKey',
+                l10n.calibration_key_device(_currentKey!),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 8),
@@ -269,7 +287,7 @@ class _CalibrationSettingsScreenState
               child: SingleChildScrollView(
                 child: SelectableText(
                   _currentProfile == null
-                      ? 'Aucun profil enregistré pour cet appareil.'
+                      ? l10n.calibration_no_profile
                       : CalibrationStorage.exportProfile(_currentProfile!),
                   style: const TextStyle(fontFamily: 'monospace'),
                 ),
@@ -284,19 +302,20 @@ class _CalibrationSettingsScreenState
   Widget _buildImageSettingsControls(WidgetRef ref, BuildContext context) {
     final settings = ref.watch(dashboardImageSettingsProvider);
     final notifier = ref.read(dashboardImageSettingsProvider.notifier);
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Réglages Image de Fond (Persistant)',
+          l10n.calibration_image_settings_title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 8),
         // Align X
         Row(
           children: [
-            const SizedBox(width: 60, child: Text('Pos X')),
+            SizedBox(width: 60, child: Text(l10n.calibration_pos_x)),
             Expanded(
               child: Slider(
                 value: settings.alignX,
@@ -317,7 +336,7 @@ class _CalibrationSettingsScreenState
         // Align Y
         Row(
           children: [
-            const SizedBox(width: 60, child: Text('Pos Y')),
+            SizedBox(width: 60, child: Text(l10n.calibration_pos_y)),
             Expanded(
               child: Slider(
                 value: settings.alignY,
@@ -338,7 +357,7 @@ class _CalibrationSettingsScreenState
         // Zoom
         Row(
           children: [
-            const SizedBox(width: 60, child: Text('Zoom')),
+            SizedBox(width: 60, child: Text(l10n.calibration_zoom)),
             Expanded(
               child: Slider(
                 value: settings.zoom,
@@ -360,7 +379,7 @@ class _CalibrationSettingsScreenState
           alignment: Alignment.centerRight,
           child: TextButton.icon(
             icon: const Icon(Icons.restore),
-            label: const Text('Reset Image Defaults'),
+            label: Text(l10n.calibration_reset_image),
             onPressed: () => notifier.reset(),
           ),
         ),

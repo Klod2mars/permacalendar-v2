@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/models/calibration_state.dart';
 import '../../screens/calibration_settings_screen.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Section Calibration dans les paramètres
 class CalibrationSettingsSection extends ConsumerWidget {
@@ -12,6 +13,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final calibrationState = ref.watch(calibrationStateProvider);
     final isCalibrating = calibrationState.activeType != CalibrationType.none;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       margin: const EdgeInsets.all(16),
@@ -26,7 +28,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
                 const Icon(Icons.tune, color: Colors.green),
                 const SizedBox(width: 12),
                 Text(
-                  'Calibration',
+                  l10n.calibration_title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
@@ -35,7 +37,7 @@ class CalibrationSettingsSection extends ConsumerWidget {
             const SizedBox(height: 8),
 
             Text(
-              'Personnalisez l\'affichage de votre dashboard',
+              l10n.calibration_subtitle,
               style: Theme.of(context).textTheme.bodySmall,
             ),
 
@@ -46,8 +48,8 @@ class CalibrationSettingsSection extends ConsumerWidget {
               context: context,
               ref: ref,
               icon: Icons.auto_fix_high,
-              title: 'Calibration Organique',
-              subtitle: 'Mode unifié : Image, Ciel, Modules',
+              title: l10n.calibration_organic_title,
+              subtitle: l10n.calibration_organic_subtitle,
               isActive: calibrationState.activeType == CalibrationType.organic,
               onTap: () => _toggleOrganicCalibration(context, ref),
             ),
@@ -134,18 +136,20 @@ class CalibrationSettingsSection extends ConsumerWidget {
     final calibrationState = ref.read(calibrationStateProvider);
     if (calibrationState.activeType == CalibrationType.organic) {
       ref.read(calibrationStateProvider.notifier).disableCalibration();
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('ðŸŒ¿ Calibration organique désactivée'),
+        SnackBar(
+          content: Text(l10n.calibration_organic_disabled),
           backgroundColor: Colors.grey,
         ),
       );
     } else {
       ref.read(calibrationStateProvider.notifier).enableOrganicCalibration();
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-              'ðŸŒ¿ Mode calibration organique activé. Sélectionnez l’un des trois onglets.'),
+              l10n.calibration_organic_enabled),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 3),
         ),

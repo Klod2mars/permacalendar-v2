@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // pour debugPrint
 import '../../../features/climate/presentation/providers/weather_providers.dart';
+import '../../../l10n/app_localizations.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +19,7 @@ import '../widgets/settings/calibration_settings_section.dart';
 import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
 import '../../../features/settings/presentation/screens/language_settings_page.dart';
-import '../../constants/user_guide_content.dart';
+
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -26,9 +27,10 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Paramètres'),
+      appBar: CustomAppBar(title: l10n.settings_title),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -49,9 +51,10 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Widget _buildAppInfoSection(BuildContext context, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Application',
+        l10n.settings_application,
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
@@ -60,7 +63,7 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(children: [
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text('Version'),
+            title: Text(l10n.settings_version),
             subtitle: const Text(AppConstants.appVersion),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showVersionInfo(context),
@@ -73,9 +76,10 @@ class SettingsScreen extends ConsumerWidget {
   Widget _buildDisplaySection(
       BuildContext context, ThemeData theme, WidgetRef ref) {
     final settings = ref.watch(appSettingsProvider);
+    final l10n = AppLocalizations.of(context)!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Affichage',
+        l10n.settings_display,
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
@@ -84,7 +88,7 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(children: [
           ListTile(
             leading: const Icon(Icons.language),
-            title: const Text('Langue / Language'),
+            title: Text(l10n.language_title),
             subtitle: const Text('Français, English, Español...'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => Navigator.of(context).push(
@@ -99,9 +103,10 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Widget _buildQuickAccessSection(BuildContext context, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Accès rapide',
+        l10n.settings_quick_access,
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
@@ -110,8 +115,8 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(children: [
           ListTile(
             leading: const Icon(Icons.menu_book),
-            title: const Text('Catalogue des plantes'),
-            subtitle: const Text('Rechercher et consulter les plantes'),
+            title: Text(l10n.settings_plants_catalog),
+            subtitle: Text(l10n.settings_plants_catalog_subtitle),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push(AppRoutes.plants),
           ),
@@ -124,9 +129,10 @@ class SettingsScreen extends ConsumerWidget {
 
   Widget _buildScientificToolsSection(
       BuildContext context, ThemeData theme, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Sélecteur météo',
+        l10n.settings_weather_selector,
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
@@ -137,11 +143,11 @@ class SettingsScreen extends ConsumerWidget {
             final selected = ref.watch(selectedCommuneProvider);
             final defaultLabel = EnvironmentService.defaultCommuneName;
             final subtitle = selected == null
-                ? 'Défaut: $defaultLabel'
-                : 'Sélectionnée: $selected';
+                ? l10n.settings_commune_default(defaultLabel)
+                : l10n.settings_commune_selected(selected);
             return ListTile(
               leading: const Icon(Icons.location_city),
-              title: const Text('Commune pour la météo'),
+              title: Text(l10n.settings_commune_title),
               subtitle: Text(subtitle),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => _showCommuneSelector(context, ref),
@@ -174,6 +180,7 @@ class SettingsScreen extends ConsumerWidget {
         }
 
         return StatefulBuilder(builder: (sbCtx, setState) {
+          final l10n = AppLocalizations.of(context)!;
           final theme = Theme.of(sbCtx);
           return Padding(
             padding: EdgeInsets.only(
@@ -187,16 +194,16 @@ class SettingsScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Choisir une commune',
+                    l10n.settings_choose_commune,
                     style: theme.textTheme.titleLarge
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
                   TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Rechercher une commune…',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      hintText: l10n.settings_search_commune_hint,
+                      prefixIcon: const Icon(Icons.search),
+                      border: const OutlineInputBorder(),
                     ),
                     onChanged: (v) {
                       query = v;
@@ -293,9 +300,10 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Widget _buildAboutSection(BuildContext context, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'À propos',
+        l10n.settings_about,
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
@@ -304,23 +312,23 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(children: [
           ListTile(
             leading: const Icon(Icons.help_outline),
-            title: const Text('Guide d\'utilisation'),
-            subtitle: const Text('Consulter la notice'),
+            title: Text(l10n.settings_user_guide),
+            subtitle: Text(l10n.settings_user_guide_subtitle),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showHelp(context),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
-            title: const Text('Confidentialité'),
-            subtitle: const Text('Politique de confidentialité'),
+            title: Text(l10n.settings_privacy),
+            subtitle: Text(l10n.settings_privacy_policy),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showPrivacyPolicy(context),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.gavel_outlined),
-            title: const Text('Conditions d\'utilisation'),
+            title: Text(l10n.settings_terms),
             subtitle: const Text('Termes et conditions'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showTermsOfService(context),
@@ -331,12 +339,12 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _showVersionInfo(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Version de l\'application',
-        content: 'Version: 1.2 – Gestion de jardin dynamique\n\n'
-            'Sowing - Gestion de jardins vivants',
+      builder: (context) => InfoDialog(
+        title: l10n.settings_version_dialog_title,
+        content: l10n.settings_version_dialog_content("1.2"),
       ),
     );
   }
@@ -344,41 +352,34 @@ class SettingsScreen extends ConsumerWidget {
 
 
   void _showHelp(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Guide d\'utilisation',
-        content: UserGuideContent.text,
+      builder: (context) => InfoDialog(
+        title: l10n.settings_user_guide,
+        content: l10n.user_guide_text,
       ),
     );
   }
 
   void _showPrivacyPolicy(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Politique de confidentialité',
-        content: 'Sowing respecte pleinement votre vie privée.\n\n'
-            '• Toutes les données sont stockées localement sur votre appareil\n'
-            '• Aucune donnée personnelle n’est transmise à des tiers\n'
-            '• Aucune information n’est stockée sur un serveur externe\n\n'
-            'L’application fonctionne entièrement hors ligne. Une connexion Internet est uniquement utilisée pour récupérer les données météorologiques ou lors des exports.',
+      builder: (context) => InfoDialog(
+        title: l10n.settings_privacy_policy,
+        content: l10n.privacy_policy_text,
       ),
     );
   }
 
   void _showTermsOfService(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder: (context) => const InfoDialog(
-        title: 'Conditions d\'utilisation',
-        content: 'En utilisant Sowing, vous acceptez :\n\n'
-            '• D\'utiliser l\'application de manière responsable\n'
-            '• De ne pas tenter de contourner ses limitations\n'
-            '• De respecter les droits de propriété intellectuelle\n'
-            '• D\'utiliser uniquement vos propres données\n\n'
-            'Cette application est fournie en l\'état, sans garantie.\n\n'
-            'L’équipe Sowing reste à l’écoute pour toute amélioration ou évolution future.',
+      builder: (context) => InfoDialog(
+        title: l10n.settings_terms,
+        content: l10n.terms_text,
       ),
     );
   }

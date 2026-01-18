@@ -55,10 +55,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settings_plants_catalog => 'Pflanzenkatalog';
 
   @override
+  String get settings_plants_catalog_subtitle => 'Pflanzen suchen und anzeigen';
+
+  @override
   String get settings_about => 'Über';
 
   @override
   String get settings_user_guide => 'Benutzerhandbuch';
+
+  @override
+  String get settings_user_guide_subtitle => 'Handbuch lesen';
 
   @override
   String get settings_privacy => 'Datenschutz';
@@ -99,6 +105,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String language_changed_snackbar(String label) {
     return 'Sprache geändert: $label';
   }
+
+  @override
+  String get calibration_title => 'Kalibrierung';
+
+  @override
+  String get calibration_subtitle =>
+      'Passen Sie die Anzeige Ihres Dashboards an';
+
+  @override
+  String get calibration_organic_title => 'Organische Kalibrierung';
+
+  @override
+  String get calibration_organic_subtitle =>
+      'Einheitlicher Modus: Bild, Himmel, Module';
+
+  @override
+  String get calibration_organic_disabled =>
+      '🌿 Organische Kalibrierung deaktiviert';
+
+  @override
+  String get calibration_organic_enabled =>
+      '🌿 Organischer Kalibrierungsmodus aktiviert. Wählen Sie einen der drei Tabs.';
 
   @override
   String get garden_list_title => 'Meine Gärten';
@@ -266,4 +294,107 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get empty_action_create => 'Erstellen';
+
+  @override
+  String get user_guide_text =>
+      '1 — Willkommen bei Sowing\n(Übersetzung läuft...)\nSowing ist eine Anwendung, die Gärtner bei der lebendigen und konkreten Überwachung ihrer Kulturen unterstützt.\n...';
+
+  @override
+  String get privacy_policy_text =>
+      'Sowing respektiert Ihre Privatsphäre voll und ganz.\n\n• Alle Daten werden lokal auf Ihrem Gerät gespeichert\n• Es werden keine persönlichen Daten an Dritte übermittelt\n• Es werden keine Informationen auf einem externen Server gespeichert\n\nDie Anwendung funktioniert vollständig offline. Eine Internetverbindung wird nur zum Abrufen von Wetterdaten oder beim Export verwendet.';
+
+  @override
+  String get terms_text =>
+      'Durch die Nutzung von Sowing stimmen Sie zu:\n\n• Die Anwendung verantwortungsvoll zu nutzen\n• Nicht zu versuchen, ihre Einschränkungen zu umgehen\n• Die geistigen Eigentumsrechte zu respektieren\n• Nur Ihre eigenen Daten zu verwenden\n\nDiese Anwendung wird ohne Mängelgewähr bereitgestellt.\n\nDas Sowing-Team bleibt offen für zukünftige Verbesserungen oder Entwicklungen.';
+
+  @override
+  String get calibration_auto_apply => 'Automatically apply for this device';
+
+  @override
+  String get calibration_calibrate_now => 'Calibrate now';
+
+  @override
+  String get calibration_save_profile => 'Save current calibration as profile';
+
+  @override
+  String get calibration_export_profile => 'Export profile (JSON copy)';
+
+  @override
+  String get calibration_import_profile => 'Import profile from clipboard';
+
+  @override
+  String get calibration_reset_profile => 'Reset profile for this device';
+
+  @override
+  String get calibration_refresh_profile => 'Refresh profile preview';
+
+  @override
+  String calibration_key_device(String key) {
+    return 'Device key: $key';
+  }
+
+  @override
+  String get calibration_no_profile => 'No profile saved for this device.';
+
+  @override
+  String get calibration_image_settings_title =>
+      'Background Image Settings (Persistent)';
+
+  @override
+  String get calibration_pos_x => 'Pos X';
+
+  @override
+  String get calibration_pos_y => 'Pos Y';
+
+  @override
+  String get calibration_zoom => 'Zoom';
+
+  @override
+  String get calibration_reset_image => 'Reset Image Defaults';
+
+  @override
+  String get calibration_dialog_confirm_title => 'Confirm';
+
+  @override
+  String get calibration_dialog_delete_profile =>
+      'Delete calibration profile for this device?';
+
+  @override
+  String get calibration_action_delete => 'Delete';
+
+  @override
+  String get calibration_snack_no_profile =>
+      'No profile found for this device.';
+
+  @override
+  String get calibration_snack_profile_copied => 'Profile copied to clipboard.';
+
+  @override
+  String get calibration_snack_clipboard_empty => 'Clipboard empty.';
+
+  @override
+  String get calibration_snack_profile_imported =>
+      'Profile imported and saved for this device.';
+
+  @override
+  String calibration_snack_import_error(String error) {
+    return 'JSON import error: $error';
+  }
+
+  @override
+  String get calibration_snack_profile_deleted =>
+      'Profile deleted for this device.';
+
+  @override
+  String get calibration_snack_no_calibration =>
+      'No calibration saved. Calibrate from dashboard first.';
+
+  @override
+  String get calibration_snack_saved_as_profile =>
+      'Current calibration saved as profile for this device.';
+
+  @override
+  String calibration_snack_save_error(String error) {
+    return 'Error while saving: $error';
+  }
 }
