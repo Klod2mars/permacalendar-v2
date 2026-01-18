@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../providers/soil_temp_provider.dart';
 import '../../data/datasources/soil_metrics_local_ds.dart';
 import '../../../../core/providers/active_garden_provider.dart';
@@ -71,6 +73,8 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
     
     // Reactively watch for anchor info
     final soilState = ref.watch(soilTempProvider);
@@ -109,7 +113,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Température du sol',
+                            l10n.soil_sheet_title,
                             style: theme.textTheme.titleLarge?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700),
@@ -126,7 +130,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                           if (anchor != null && anchorDate != null) ...[
                             const SizedBox(height: 4),
                             Text(
-                              'Dernière mesure: ${anchor.toStringAsFixed(1)}°C (${anchorDate.day}/${anchorDate.month})',
+                              l10n.soil_sheet_last_measure(anchor.toStringAsFixed(1), '${anchorDate.day}/${anchorDate.month}'),
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: Colors.white54,
                                 fontStyle: FontStyle.italic,
@@ -142,7 +146,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                 ),
                 const SizedBox(height: 24),
                 
-                Text("Nouvelle mesure (Ancrage)", style: theme.textTheme.titleSmall?.copyWith(color: Colors.amber)),
+                Text(l10n.soil_sheet_new_measure, style: theme.textTheme.titleSmall?.copyWith(color: Colors.amber)),
 
                 const SizedBox(height: 16),
 
@@ -179,11 +183,11 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                       decimal: true, signed: true),
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: 'Température (°C)',
+                    labelText: l10n.soil_sheet_input_label,
                     errorText:
-                        _inputValid ? null : 'Valeur invalide (-10.0 à 45.0)',
+                        _inputValid ? null : l10n.soil_sheet_input_error,
                     labelStyle: const TextStyle(color: Colors.white70),
-                    hintText: '0.0',
+                    hintText: l10n.soil_sheet_input_hint,
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.06),
                     border: OutlineInputBorder(
@@ -220,7 +224,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text('Annuler'),
+                        child: Text(l10n.soil_sheet_action_cancel),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -229,9 +233,9 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                         onPressed: () async {
                           if (!_inputValid) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                   content: Text(
-                                      'Valeur invalide. Entrez -50.0 à 60.0')),
+                                      l10n.soil_sheet_snack_invalid)),
                             );
                             return;
                           }
@@ -241,12 +245,12 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                                 .read(soilTempProvider.notifier)
                                 .setManual(_scopeKey, _temperature);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Mesure enregistrée comme ancrage')),
+                              SnackBar(
+                                  content: Text(l10n.soil_sheet_snack_success)),
                             );
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Erreur sauvegarde: $e')),
+                              SnackBar(content: Text(l10n.soil_sheet_snack_error(e))),
                             );
                           }
                           Navigator.pop(context);
@@ -258,7 +262,7 @@ class _SoilTempSheetState extends ConsumerState<SoilTempSheet> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text('Sauvegarder'),
+                        child: Text(l10n.soil_sheet_action_save),
                       ),
                     ),
                   ],

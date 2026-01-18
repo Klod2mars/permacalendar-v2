@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../providers/soil_temp_provider.dart';
 import 'soil_temp_sheet.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
@@ -14,6 +15,8 @@ class SoilTempPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
     final forecastAsync = ref.watch(soilTempForecastProvider(scopeKey));
     final adviceAsync = ref.watch(sowingAdviceProvider(scopeKey));
 
@@ -48,7 +51,7 @@ class SoilTempPage extends ConsumerWidget {
                         icon:
                             const Icon(Icons.arrow_back, color: Colors.white)),
                     const SizedBox(width: 8),
-                    Text("Température du Sol",
+                    Text(l10n.soil_temp_title,
                         style: theme.textTheme.headlineSmall?.copyWith(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                   ],
@@ -60,11 +63,11 @@ class SoilTempPage extends ConsumerWidget {
                 height: 200,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: forecastAsync.when(
-                  data: (data) => _buildChart(data, theme),
+                  data: (data) => _buildChart(data, theme, locale),
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
-                  error: (e, s) => Center(
-                      child: Text("Erreur chart: $e",
+                   error: (e, s) => Center(
+                      child: Text(l10n.soil_temp_chart_error(e),
                           style: const TextStyle(color: Colors.white))),
                 ),
               ),
@@ -77,24 +80,24 @@ class SoilTempPage extends ConsumerWidget {
                   child: ExpansionTile(
                     leading: const Icon(Icons.info_outline, color: Colors.white70, size: 20),
                     title: Text(
-                      "À propos de la température du sol",
+                      l10n.soil_temp_about_title,
                       style: theme.textTheme.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     children: [
                        Text(
-                        "La température du sol affichée ici est estimée par l’application à partir de données climatiques et saisonnières, selon une formule de calcul intégrée.\n\nCette estimation permet de donner une tendance réaliste de la température du sol lorsque aucune mesure directe n’est disponible.",
+                        l10n.soil_temp_about_content,
                         style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70),
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        "Formule de calcul utilisée :",
+                        l10n.soil_temp_formula_label,
                         style: theme.textTheme.bodySmall?.copyWith(
                             color: Colors.amber, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "Température du sol = f(température de l’air, saison, inertie du sol)\n(Formule exacte définie dans le code de l’application)",
+                        l10n.soil_temp_formula_content,
                          style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70, fontStyle: FontStyle.italic),
                       ),
                     ],
@@ -120,10 +123,10 @@ class SoilTempPage extends ConsumerWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Column(
+                                child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Température actuelle',
+                                  Text(l10n.soil_temp_current_label,
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(color: Colors.white)),
                                   const SizedBox(height: 6),
@@ -147,7 +150,7 @@ class SoilTempPage extends ConsumerWidget {
                                   builder: (_) => const SoilTempSheet(),
                                 ),
                                 icon: const Icon(Icons.thermostat),
-                                label: const Text('Modifier / Mesurer'),
+                                label: Text(l10n.soil_temp_action_measure),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.amber,
                                   foregroundColor: Colors.black,
@@ -163,7 +166,7 @@ class SoilTempPage extends ConsumerWidget {
                         const SizedBox(height: 8),
                         // Concise instruction
                          Text(
-                          "Vous pouvez renseigner manuellement la température du sol dans l’onglet “Modifier / Mesurer”.",
+                          l10n.soil_temp_measure_hint,
                           style: theme.textTheme.bodySmall?.copyWith(color: Colors.white54, fontSize: 11),
                         ),
                       ],
@@ -184,7 +187,7 @@ class SoilTempPage extends ConsumerWidget {
                       return Center(
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Text("Erreur catalogue: $catalogError",
+                          child: Text(l10n.soil_temp_catalog_error(catalogError),
                               style: const TextStyle(color: Colors.redAccent),
                               textAlign: TextAlign.center),
                         ),
@@ -203,9 +206,9 @@ class SoilTempPage extends ConsumerWidget {
                             const Icon(Icons.inventory_2_outlined,
                                 color: Colors.white24, size: 64),
                             const SizedBox(height: 16),
-                            const Text(
-                              "Base de données de plantes vide.",
-                              style: TextStyle(color: Colors.white70),
+                             Text(
+                              l10n.soil_temp_db_empty,
+                              style: const TextStyle(color: Colors.white70),
                             ),
                             const SizedBox(height: 16),
                             isLoading
@@ -218,7 +221,7 @@ class SoilTempPage extends ConsumerWidget {
                                           .seedDefaultPlants();
                                     },
                                     icon: const Icon(Icons.refresh),
-                                    label: const Text("Recharger les plantes"),
+                                    label: Text(l10n.soil_temp_reload_plants),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white24,
                                       foregroundColor: Colors.white,
@@ -231,13 +234,13 @@ class SoilTempPage extends ConsumerWidget {
 
                     // 3. Si liste conseils vide mais plantes existent -> Aucune correspondance
                     if (adviceList.isEmpty) {
-                      return const Center(
+                      return Center(
                         child:Padding(
-                          padding: EdgeInsets.all(32.0),
+                          padding: const EdgeInsets.all(32.0),
                           child: Text(
-                            "Aucune plante avec données de germination trouvée.",
+                            l10n.soil_temp_no_advice,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white54),
+                            style: const TextStyle(color: Colors.white54),
                           ),
                         ),
                       );
@@ -248,14 +251,14 @@ class SoilTempPage extends ConsumerWidget {
                       itemCount: adviceList.length,
                       itemBuilder: (context, index) {
                         final item = adviceList[index];
-                        return _buildAdviceCard(item, theme);
+                        return _buildAdviceCard(item, theme, l10n);
                       },
                     );
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                   error: (e, s) => Center(
-                      child: Text("Erreur conseils: $e",
+                      child: Text(l10n.soil_temp_advice_error(e),
                           style: const TextStyle(color: Colors.white))),
                 ),
               ),
@@ -266,7 +269,7 @@ class SoilTempPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildChart(List<SoilTempForecastPoint> data, ThemeData theme) {
+  Widget _buildChart(List<SoilTempForecastPoint> data, ThemeData theme, String locale) {
     if (data.isEmpty) return const SizedBox();
 
     final points = data.asMap().entries.map((e) {
@@ -293,7 +296,7 @@ class SoilTempPage extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    DateFormat('E', 'fr').format(date), // Day name
+                    DateFormat('E', locale).format(date), // Day name
                     style: const TextStyle(color: Colors.white70, fontSize: 10),
                   ),
                 );
@@ -333,7 +336,7 @@ class SoilTempPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildAdviceCard(SowingAdvice item, ThemeData theme) {
+  Widget _buildAdviceCard(SowingAdvice item, ThemeData theme, AppLocalizations l10n) {
     Color color;
     IconData icon;
     String statusText;
@@ -342,22 +345,22 @@ class SoilTempPage extends ConsumerWidget {
       case SowingStatus.ideal:
         color = Colors.green;
         icon = Icons.star;
-        statusText = "Optimal";
+        statusText = l10n.soil_advice_status_ideal;
         break;
       case SowingStatus.sowNow:
         color = Colors.lightGreen;
         icon = Icons.check_circle;
-        statusText = "Semer";
+        statusText = l10n.soil_advice_status_sow_now;
         break;
       case SowingStatus.sowSoon:
         color = Colors.orangeAccent;
         icon = Icons.access_time;
-        statusText = "Bientôt";
+        statusText = l10n.soil_advice_status_sow_soon;
         break;
       case SowingStatus.wait:
         color = Colors.redAccent;
         icon = Icons.do_not_disturb;
-        statusText = "Attendre";
+        statusText = l10n.soil_advice_status_wait;
         break;
     }
 

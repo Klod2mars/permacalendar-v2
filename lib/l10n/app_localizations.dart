@@ -1396,6 +1396,180 @@ abstract class AppLocalizations {
   /// **'Réparation 🛠️'**
   String get task_kind_repair;
 
+  /// Titre écran température sol
+  ///
+  /// In fr, this message translates to:
+  /// **'Température du Sol'**
+  String get soil_temp_title;
+
+  /// Erreur affichage graphique
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur chart: {error}'**
+  String soil_temp_chart_error(Object error);
+
+  /// Titre section à propos
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos de la température du sol'**
+  String get soil_temp_about_title;
+
+  /// Contenu section à propos
+  ///
+  /// In fr, this message translates to:
+  /// **'La température du sol affichée ici est estimée par l’application à partir de données climatiques et saisonnières, selon une formule de calcul intégrée.\n\nCette estimation permet de donner une tendance réaliste de la température du sol lorsque aucune mesure directe n’est disponible.'**
+  String get soil_temp_about_content;
+
+  /// Label formule
+  ///
+  /// In fr, this message translates to:
+  /// **'Formule de calcul utilisée :'**
+  String get soil_temp_formula_label;
+
+  /// Contenu formule
+  ///
+  /// In fr, this message translates to:
+  /// **'Température du sol = f(température de l’air, saison, inertie du sol)\n(Formule exacte définie dans le code de l’application)'**
+  String get soil_temp_formula_content;
+
+  /// Label température actuelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Température actuelle'**
+  String get soil_temp_current_label;
+
+  /// Bouton modifier/mesurer
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier / Mesurer'**
+  String get soil_temp_action_measure;
+
+  /// Hint mesure manuelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous pouvez renseigner manuellement la température du sol dans l’onglet “Modifier / Mesurer”.'**
+  String get soil_temp_measure_hint;
+
+  /// Erreur catalogue
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur catalogue: {error}'**
+  String soil_temp_catalog_error(Object error);
+
+  /// Erreur chargement conseils
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur conseils: {error}'**
+  String soil_temp_advice_error(Object error);
+
+  /// Message DB vide
+  ///
+  /// In fr, this message translates to:
+  /// **'Base de données de plantes vide.'**
+  String get soil_temp_db_empty;
+
+  /// Bouton recharger plantes
+  ///
+  /// In fr, this message translates to:
+  /// **'Recharger les plantes'**
+  String get soil_temp_reload_plants;
+
+  /// Message aucun conseil
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune plante avec données de germination trouvée.'**
+  String get soil_temp_no_advice;
+
+  /// Statut conseil optimal
+  ///
+  /// In fr, this message translates to:
+  /// **'Optimal'**
+  String get soil_advice_status_ideal;
+
+  /// Statut conseil semer
+  ///
+  /// In fr, this message translates to:
+  /// **'Semer'**
+  String get soil_advice_status_sow_now;
+
+  /// Statut conseil bientôt
+  ///
+  /// In fr, this message translates to:
+  /// **'Bientôt'**
+  String get soil_advice_status_sow_soon;
+
+  /// Statut conseil attendre
+  ///
+  /// In fr, this message translates to:
+  /// **'Attendre'**
+  String get soil_advice_status_wait;
+
+  /// Titre sheet temp sol
+  ///
+  /// In fr, this message translates to:
+  /// **'Température du sol'**
+  String get soil_sheet_title;
+
+  /// Info dernière mesure
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière mesure : {temp}°C ({date})'**
+  String soil_sheet_last_measure(String temp, String date);
+
+  /// Titre section nouvelle mesure
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle mesure (Ancrage)'**
+  String get soil_sheet_new_measure;
+
+  /// Label champ input temp
+  ///
+  /// In fr, this message translates to:
+  /// **'Température (°C)'**
+  String get soil_sheet_input_label;
+
+  /// Erreur validation input
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur invalide (-10.0 à 45.0)'**
+  String get soil_sheet_input_error;
+
+  /// Hint input
+  ///
+  /// In fr, this message translates to:
+  /// **'0.0'**
+  String get soil_sheet_input_hint;
+
+  /// Bouton annuler
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get soil_sheet_action_cancel;
+
+  /// Bouton sauvegarder
+  ///
+  /// In fr, this message translates to:
+  /// **'Sauvegarder'**
+  String get soil_sheet_action_save;
+
+  /// Snack valeur invalide
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur invalide. Entrez -10.0 à 45.0'**
+  String get soil_sheet_snack_invalid;
+
+  /// Snack succès sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Mesure enregistrée comme ancrage'**
+  String get soil_sheet_snack_success;
+
+  /// Snack erreur sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur sauvegarde : {error}'**
+  String soil_sheet_snack_error(Object error);
+
   /// Type tâche achat
   ///
   /// In fr, this message translates to:

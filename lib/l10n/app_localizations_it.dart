@@ -723,6 +723,106 @@ class AppLocalizationsIt extends AppLocalizations {
   String get task_kind_repair => 'Repair 🛠️';
 
   @override
+  String get soil_temp_title => 'Soil Temperature';
+
+  @override
+  String soil_temp_chart_error(Object error) {
+    return 'Chart error: $error';
+  }
+
+  @override
+  String get soil_temp_about_title => 'About Soil Temperature';
+
+  @override
+  String get soil_temp_about_content =>
+      'The soil temperature displayed here is estimated by the application based on climatic and seasonal data, using a built-in calculation formula.\n\nThis estimation provides a realistic trend of soil temperature when no direct measurement is available.';
+
+  @override
+  String get soil_temp_formula_label => 'Calculation formula used:';
+
+  @override
+  String get soil_temp_formula_content =>
+      'Soil Temperature = f(air temperature, season, soil inertia)\n(Exact formula defined in the application code)';
+
+  @override
+  String get soil_temp_current_label => 'Current Temperature';
+
+  @override
+  String get soil_temp_action_measure => 'Edit / Measure';
+
+  @override
+  String get soil_temp_measure_hint =>
+      'You can manually enter the soil temperature in the \'Edit / Measure\' tab.';
+
+  @override
+  String soil_temp_catalog_error(Object error) {
+    return 'Catalog error: $error';
+  }
+
+  @override
+  String soil_temp_advice_error(Object error) {
+    return 'Advice error: $error';
+  }
+
+  @override
+  String get soil_temp_db_empty => 'Plant database is empty.';
+
+  @override
+  String get soil_temp_reload_plants => 'Reload plants';
+
+  @override
+  String get soil_temp_no_advice => 'No plants with germination data found.';
+
+  @override
+  String get soil_advice_status_ideal => 'Optimal';
+
+  @override
+  String get soil_advice_status_sow_now => 'Sow Now';
+
+  @override
+  String get soil_advice_status_sow_soon => 'Soon';
+
+  @override
+  String get soil_advice_status_wait => 'Wait';
+
+  @override
+  String get soil_sheet_title => 'Soil Temperature';
+
+  @override
+  String soil_sheet_last_measure(String temp, String date) {
+    return 'Last measure: $temp°C ($date)';
+  }
+
+  @override
+  String get soil_sheet_new_measure => 'New measure (Anchor)';
+
+  @override
+  String get soil_sheet_input_label => 'Temperature (°C)';
+
+  @override
+  String get soil_sheet_input_error => 'Invalid value (-10.0 to 45.0)';
+
+  @override
+  String get soil_sheet_input_hint => '0.0';
+
+  @override
+  String get soil_sheet_action_cancel => 'Cancel';
+
+  @override
+  String get soil_sheet_action_save => 'Save';
+
+  @override
+  String get soil_sheet_snack_invalid => 'Invalid value. Enter -10.0 to 45.0';
+
+  @override
+  String get soil_sheet_snack_success => 'Measure saved as anchor';
+
+  @override
+  String soil_sheet_snack_error(Object error) {
+    return 'Save error: $error';
+  }
+
+  @override
   String get task_kind_buy => 'Buy 🛒';
 
   @override
