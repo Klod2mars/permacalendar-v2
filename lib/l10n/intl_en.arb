@@ -1,11 +1,5 @@
 {
-  "@@locale": "en",
-  "appTitle": "PermaCalendar",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
-  "common_validate": "Validate",
-  "common_cancel": "Cancel",
-  "settings_title": "Settings",
-  "settings_language": "Language"
+    "@@locale": "en",
+    "appTitle": "PermaCalendar",
+    "settings_title": "Settings"
 }
