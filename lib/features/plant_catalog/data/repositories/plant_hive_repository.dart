@@ -546,8 +546,9 @@ class PlantHiveRepository {
   }
 
   /// Helper safe cast Hive Map<dynamic, dynamic> to Map<String, dynamic>
-  Map<String, dynamic>? _castMap(Map? map) {
-    if (map == null) return null;
+  /// Helper safe cast Hive Map<dynamic, dynamic> to Map<String, dynamic>
+  Map<String, dynamic> _castMap(Map? map) {
+    if (map == null) return {};
     return Map<String, dynamic>.from(map);
   }
 
@@ -622,8 +623,8 @@ class PlantHiveRepository {
     return _getOptionalStringListValue(json, key) ?? defaultValue;
   }
 
-  /// Récupère une liste de String optionnelle
-  List<String>? _getOptionalStringListValue(
+  /// Récupère une liste de String optionnelle (mais sûre -> [])
+  List<String> _getOptionalStringListValue(
       Map<String, dynamic> json, String key) {
     try {
       final value = json[key];
@@ -662,14 +663,17 @@ class PlantHiveRepository {
   }
 
   /// Récupère une Map optionnelle
-  Map<String, dynamic>? _getOptionalMapValue(
+  /// Récupère une Map optionnelle (mais sûre -> {})
+  Map<String, dynamic> _getOptionalMapValue(
       Map<String, dynamic> json, String key) {
     try {
       final value = json[key];
       if (value is Map<String, dynamic>) return value;
-      return null;
+      // Also handle if it's a Map but not <String, dynamic> explicitly
+      if (value is Map) return Map<String, dynamic>.from(value);
+      return {};
     } catch (e) {
-      return null;
+      return {};
     }
   }
 

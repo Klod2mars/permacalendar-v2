@@ -138,6 +138,8 @@ class PlantingDetailScreen extends ConsumerWidget {
           varieties: {},
           metadata: {},
         );
+    
+    final plantJson = _normalizePlantFreezedJson(plantSafe.toJson());
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -172,7 +174,7 @@ class PlantingDetailScreen extends ConsumerWidget {
 
         // PAS-À-PAS : instant UI handled locally in widget; onMarkDone logs Activity V3
         PlantingStepsWidget(
-          plant: Plant.fromJson(plantSafe.toJson()),
+          plant: Plant.fromJson(plantJson),
           planting: planting,
           onAddCareAction: (String action) async {
             await ref.read(plantingProvider.notifier).addCareAction(
@@ -542,4 +544,16 @@ class PlantingDetailScreen extends ConsumerWidget {
 
   String _formatDate(DateTime d) =>
       '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+
+  Map<String, dynamic> _normalizePlantFreezedJson(Map<String, dynamic> j) {
+    final out = Map<String, dynamic>.from(j);
+    out['culturalTips'] = out['culturalTips'] ?? <String>[];
+    out['sowingMonths'] = out['sowingMonths'] ?? <String>[];
+    out['harvestMonths'] = out['harvestMonths'] ?? <String>[];
+    out['companionPlanting'] = out['companionPlanting'] ??
+        {'beneficial': <String>[], 'avoid': <String>[], 'notes': ''};
+    out['notificationSettings'] =
+        out['notificationSettings'] ?? <String, dynamic>{};
+    return out;
+  }
 }

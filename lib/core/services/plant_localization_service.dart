@@ -60,8 +60,24 @@ class PlantLocalizationService {
        waterNeeds: _translateEnum('waterNeeds', plant.waterNeeds),
        plantingSeason: _translateSeasonList(plant.plantingSeason), 
        harvestSeason: _translateSeasonList(plant.harvestSeason),
-       notificationSettings: _mergeNotificationMessages(plant.notificationSettings, loc['notificationSettings']),
+       notificationSettings: _mergeNotificationMessages(plant.notificationSettings, loc['notificationSettings']) ?? {},
+       companionPlanting: _normalizeCompanionPlanting(plant.companionPlanting, loc['companionPlanting']),
     );
+  }
+
+  Map<String, dynamic> _normalizeCompanionPlanting(Map<String, dynamic>? original, dynamic locData) {
+    final base = Map<String, dynamic>.from(original ?? {});
+    base['beneficial'] = _normalizeListField(base['beneficial']);
+    base['avoid'] = _normalizeListField(base['avoid']);
+    base['notes'] = base['notes'] ?? '';
+
+    if (locData is Map) {
+       if (locData['notes'] != null) base['notes'] = locData['notes'];
+       // We usually don't localize IDs in beneficial/avoid, but if needed:
+       // if (locData['beneficial'] != null) base['beneficial'] = _normalizeListField(locData['beneficial']);
+       // if (locData['avoid'] != null) base['avoid'] = _normalizeListField(locData['avoid']);
+    }
+    return base;
   }
 
   // Helper from Audit to ensure List<String>
@@ -170,7 +186,7 @@ class PlantLocalizationService {
   }
 
   Map<String, dynamic>? _mergeNotificationMessages(Map<String, dynamic>? original, Map<String, dynamic>? loc) {
-    if (original == null) return null;
+    if (original == null) return {};
     if (loc == null) return original; // No localized messages
 
     // Create a copy to modify

@@ -389,20 +389,23 @@ class Plant extends HiveObject {
               [],
       marketPricePerKg: (json['marketPricePerKg'] as num).toDouble(),
       defaultUnit: json['defaultUnit'],
-      nutritionPer100g: Map<String, dynamic>.from(json['nutritionPer100g']),
-      germination: Map<String, dynamic>.from(json['germination']),
-      growth: Map<String, dynamic>.from(json['growth']),
-      watering: Map<String, dynamic>.from(json['watering']),
-      thinning: Map<String, dynamic>.from(json['thinning']),
-      weeding: Map<String, dynamic>.from(json['weeding']),
+      nutritionPer100g:
+          Map<String, dynamic>.from(json['nutritionPer100g'] ?? {}),
+      germination: Map<String, dynamic>.from(json['germination'] ?? {}),
+      growth: Map<String, dynamic>.from(json['growth'] ?? {}),
+      watering: Map<String, dynamic>.from(json['watering'] ?? {}),
+      thinning: Map<String, dynamic>.from(json['thinning'] ?? {}),
+      weeding: Map<String, dynamic>.from(json['weeding'] ?? {}),
       culturalTips:
           (json['culturalTips'] as List?)?.map((e) => e.toString()).toList() ??
               [],
-      biologicalControl: Map<String, dynamic>.from(json['biologicalControl']),
+      biologicalControl:
+          Map<String, dynamic>.from(json['biologicalControl'] ?? {}),
       harvestTime: json['harvestTime'],
-      companionPlanting: Map<String, dynamic>.from(json['companionPlanting']),
+      companionPlanting:
+          Map<String, dynamic>.from(json['companionPlanting'] ?? {}),
       notificationSettings:
-          Map<String, dynamic>.from(json['notificationSettings']),
+          Map<String, dynamic>.from(json['notificationSettings'] ?? {}),
       imageUrl: json['imageUrl'] ?? json['image'],
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
