@@ -1,7 +1,8 @@
 import 'package:excel/excel.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
+
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 // NEW IMPORTS
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,18 +20,15 @@ import 'package:permacalendar/core/models/activity_v3.dart';
 
 class ExcelGeneratorService {
   /// Main Entry Point
-  Future<List<int>> generateExport(ExportConfig config) async {
+  Future<List<int>> generateExport(ExportConfig config, AppLocalizations l10n) async {
     // Run in main isolate because we need Hive access
-    return generateExportInMainIsolate(config);
+    return generateExportInMainIsolate(config, l10n);
   }
 
-  // Legacy/Unused stub for compute
-  static Future<List<int>> _generateExcelTask(ExportConfig config) async {
-    throw UnimplementedError("Use generateExportInMainIsolate instead");
-  }
+
 
   // Real implementation running in main isolate (accessing Hive)
-  Future<List<int>> generateExportInMainIsolate(ExportConfig config) async {
+  Future<List<int>> generateExportInMainIsolate(ExportConfig config, AppLocalizations l10n) async {
     final excel = Excel.createExcel();
     // META Sheet Removed per user request
     // if (excel.sheets.containsKey('Sheet1')) {
@@ -190,14 +188,14 @@ class ExcelGeneratorService {
     // 3. Generate Content Sheets
     if (config.format == ExportFormat.separateSheets) {
       if (config.isBlockEnabled(ExportBlockType.garden)) {
-        _fillSheet(excel, 'Gardens', ExportBlockType.garden, gardens, config);
+        _fillSheet(excel, l10n.export_block_garden.split(' (').first, ExportBlockType.garden, gardens, config, l10n);
       }
       if (config.isBlockEnabled(ExportBlockType.gardenBed)) {
-        _fillSheet(excel, 'Parcelles', ExportBlockType.gardenBed, beds, config);
+        _fillSheet(excel, l10n.export_block_garden_bed.split(' (').first, ExportBlockType.gardenBed, beds, config, l10n);
       }
       if (config.isBlockEnabled(ExportBlockType.harvest)) {
-        _fillSheet(excel, 'Recoltes', ExportBlockType.harvest, filteredHarvests,
-            config, extraData: {
+        _fillSheet(excel, l10n.export_block_harvest.split(' (').first, ExportBlockType.harvest, filteredHarvests,
+            config, l10n, extraData: {
           'beds': beds,
           'gardens': gardens,
           'plants': plantMap,
@@ -205,14 +203,14 @@ class ExcelGeneratorService {
         });
       }
       if (config.isBlockEnabled(ExportBlockType.activity)) {
-        _fillSheet(excel, 'Activites', ExportBlockType.activity,
-            filteredActivities, config);
+        _fillSheet(excel, l10n.export_block_activity.split(' (').first, ExportBlockType.activity,
+            filteredActivities, config, l10n);
       }
     } else {
       // FLAT TABLE MODE
       if (config.isBlockEnabled(ExportBlockType.harvest)) {
         _fillSheet(excel, 'Global_Export', ExportBlockType.harvest,
-            filteredHarvests, config, extraData: {
+            filteredHarvests, config, l10n, extraData: {
           'beds': beds,
           'gardens': gardens,
           'plants': plantMap,
@@ -221,7 +219,7 @@ class ExcelGeneratorService {
         });
       } else if (config.isBlockEnabled(ExportBlockType.activity)) {
         _fillSheet(excel, 'Global_Export', ExportBlockType.activity,
-            filteredActivities, config,
+            filteredActivities, config, l10n,
             extraData: {'flat': true});
       }
     }
@@ -237,71 +235,21 @@ class ExcelGeneratorService {
     return excel.encode() ?? [];
   }
 
-  void _generateMetaSheet(Excel excel, ExportConfig config) {
-    var sheet = excel['META'];
-    sheet.appendRow([TextCellValue('Export Metrics Application')]);
-    sheet.appendRow(
-        [TextCellValue('Version Schema'), TextCellValue(ExportSchema.version)]);
-    sheet.appendRow([
-      TextCellValue('Date Export'),
-      TextCellValue(DateTime.now().toIso8601String())
-    ]);
-    sheet.appendRow([TextCellValue('Preset'), TextCellValue(config.name)]);
-    sheet.appendRow([TextCellValue('')]);
-    sheet.appendRow([TextCellValue('Scope')]);
-    sheet.appendRow([
-      TextCellValue('Gardens'),
-      IntCellValue(config.scope.gardenIds.length)
-    ]);
-    sheet.appendRow([
-      TextCellValue('Start Date'),
-      TextCellValue(config.scope.dateRange?.start.toString() ?? 'All')
-    ]);
-    sheet.appendRow([
-      TextCellValue('End Date'),
-      TextCellValue(config.scope.dateRange?.end.toString() ?? 'All')
-    ]);
-
-    sheet.appendRow([TextCellValue('')]);
-    sheet.appendRow([TextCellValue('Dictionary')]);
-    sheet.appendRow([
-      TextCellValue('Column ID'),
-      TextCellValue('Label'),
-      TextCellValue('Description')
-    ]);
-
-    for (var block in config.blocks) {
-      if (!block.isEnabled) continue;
-
-      // Include forced fields for Harvest block in Dictionary
-      List<String> effectiveFieldIds = List.from(block.selectedFieldIds);
-      if (block.type == ExportBlockType.harvest) {
-        final required = ['harvest_garden_name', 'harvest_bed_name'];
-        for (var req in required) {
-          if (!effectiveFieldIds.contains(req)) {
-            effectiveFieldIds.add(req);
-          }
-        }
-      }
-
-      for (var fieldId in effectiveFieldIds) {
-        final def = ExportSchema.getFieldById(block.type, fieldId);
-        if (def != null) {
-          sheet.appendRow([
-            TextCellValue(def.id),
-            TextCellValue(def.label),
-            TextCellValue(def.description)
-          ]);
-        }
-      }
-    }
-  }
-
   void _fillSheet(Excel excel, String sheetName, ExportBlockType type,
-      List<dynamic> data, ExportConfig config,
+      List<dynamic> data, ExportConfig config, AppLocalizations l10n,
       {Map<String, dynamic>? extraData}) {
     var sheet = excel[sheetName];
-    final dateFormat = DateFormat('dd/MM/yyyy HH:mm', 'fr_FR');
+    // Use localized date format (e.g., 'dd/MM/yyyy HH:mm' for FR, maybe different for others, 
+    // but mostly we want consistent ISO-like or locale aware)
+    // Using default locale from l10n isn't directly available safely as a string code 'fr_FR' without parsing.
+    // We can assume 'fr_FR' for now as per requirement or use standard.
+    // Requirement says: "Date format string: DateFormat('d MMMM yyyy – HH\'h\'mm', 'fr_FR') will need to be localized."
+    // But that was for filename. Here for Excel content 'dd/MM/yyyy HH:mm' is standard.
+    // Let's keep 'dd/MM/yyyy HH:mm' but remove explicit 'fr_FR' so it defaults to system or use 'en_US' effectively? 
+    // Actually the request implies consistency.
+    // Let's use `l10n.localeName` if available or just valid standard. 
+    // `DateFormat.yMd().add_Hms()`?
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
     // 1. Headers
     List<String> fieldIds = config.getSelectedFieldsFor(type);
@@ -319,8 +267,8 @@ class ExcelGeneratorService {
     }
     List<CellValue> headerRow = [];
     for (var fid in fieldIds) {
-      final def = ExportSchema.getFieldById(type, fid);
-      headerRow.add(TextCellValue(def?.label ?? fid));
+      // Localization of headers
+      headerRow.add(TextCellValue(_getFieldLabel(fid, l10n)));
     }
     sheet.appendRow(headerRow);
     
@@ -347,7 +295,6 @@ class ExcelGeneratorService {
     }
 
     // 2. Data Rows
-    List<GardenBed> beds = (extraData?['beds'] as List<GardenBed>?) ?? [];
     List<Garden> gardens = (extraData?['gardens'] as List<Garden>?) ?? [];
     List<dynamic> activities = (extraData?['activities'] as List<dynamic>?) ?? [];
 
@@ -385,7 +332,7 @@ class ExcelGeneratorService {
         resolvedGardenName = garden?.name;
         // FALLBACK: If name not found, show ID to prove we tried
         if (resolvedGardenName == null || resolvedGardenName.isEmpty) {
-          resolvedGardenName = 'Unknown (${item.gardenId})';
+          resolvedGardenName = '${l10n.export_excel_unknown} (${item.gardenId})';
         }
         
         resolvedGardenId = item.gardenId;
@@ -407,7 +354,7 @@ class ExcelGeneratorService {
             if (chosen != null) {
               resolvedBedId = chosen.gardenBedId;
               resolvedBedName =
-                  GardenBoxes.getGardenBedById(resolvedBedId!)?.name;
+                  GardenBoxes.getGardenBedById(resolvedBedId)?.name;
             }
           }
         } catch (_) {
@@ -429,7 +376,7 @@ class ExcelGeneratorService {
             if (planting != null) {
               resolvedBedId = planting.gardenBedId;
               resolvedBedName =
-                  GardenBoxes.getGardenBedById(resolvedBedId!)?.name;
+                  GardenBoxes.getGardenBedById(resolvedBedId)?.name;
             }
           }
         }
@@ -551,7 +498,7 @@ class ExcelGeneratorService {
               break;
             case 'activity_title':
               // ActivityV3 doesn't have a title, synthesize one from Type
-              value = _mapActivityTypeToTitle(item.type); 
+              value = _mapActivityTypeToTitle(item.type, l10n); 
               break;
             case 'activity_desc':
               value = item.description;
@@ -610,7 +557,7 @@ class ExcelGeneratorService {
           List<CellValue>.generate(fieldIds.length, (_) => TextCellValue(''));
 
       // Label TOTAL en colonne 0
-      totalsRow[0] = TextCellValue('TOTAL');
+      totalsRow[0] = TextCellValue(l10n.export_excel_total);
 
       // Positionner les totaux si les colonnes existent
       final qtyIndex = fieldIds.indexOf('harvest_qty');
@@ -645,37 +592,62 @@ class ExcelGeneratorService {
     }
   }
 
-  String _mapActivityTypeToTitle(String type) {
+  String _mapActivityTypeToTitle(String type, AppLocalizations l10n) {
     switch (type) {
-      case 'gardenCreated':
-        return 'Création de jardin';
-      case 'gardenUpdated':
-        return 'Mise à jour du jardin';
-      case 'gardenDeleted':
-        return 'Suppression de jardin';
-      case 'gardenBedCreated':
-        return 'Création de parcelle';
-      case 'gardenBedUpdated':
-        return 'Mise à jour de parcelle';
-      case 'gardenBedDeleted':
-        return 'Suppression de parcelle';
-      case 'plantingCreated':
-        return 'Nouvelle plantation';
-      case 'plantingUpdated':
-        return 'Mise à jour plantation';
-      case 'plantingDeleted':
-        return 'Suppression plantation';
-      case 'harvestCompleted':
-        return 'Récolte';
-      case 'maintenanceCompleted':
-        return 'Entretien';
-      case 'weatherUpdate':
-        return 'Météo';
-      case 'error':
-        return 'Erreur';
-      default:
-        // Try to make it readable if unknown (camelCase to words)
-        return type;
+      case 'gardenCreated': return l10n.export_activity_type_garden_created;
+      case 'gardenUpdated': return l10n.export_activity_type_garden_updated;
+      case 'gardenDeleted': return l10n.export_activity_type_garden_deleted;
+      case 'gardenBedCreated': return l10n.export_activity_type_bed_created;
+      case 'gardenBedUpdated': return l10n.export_activity_type_bed_updated;
+      case 'gardenBedDeleted': return l10n.export_activity_type_bed_deleted;
+      case 'plantingCreated': return l10n.export_activity_type_planting_created;
+      case 'plantingUpdated': return l10n.export_activity_type_planting_updated;
+      case 'plantingDeleted': return l10n.export_activity_type_planting_deleted;
+      case 'harvestCompleted': return l10n.export_activity_type_harvest;
+      case 'maintenanceCompleted': return l10n.export_activity_type_maintenance;
+      case 'weatherUpdate': return l10n.export_activity_type_weather;
+      case 'error': return l10n.export_activity_type_error;
+      default: return type;
+    }
+  }
+
+  String _getFieldLabel(String fieldId, AppLocalizations l10n) {
+    switch (fieldId) {
+      case 'garden_name': return l10n.export_field_garden_name;
+      case 'garden_id': return l10n.export_field_garden_id;
+      case 'garden_surface': return l10n.export_field_garden_surface;
+      case 'garden_creation_date': return l10n.export_field_garden_creation;
+
+      case 'bed_name': return l10n.export_field_bed_name;
+      case 'bed_id': return l10n.export_field_bed_id;
+      case 'bed_surface': return l10n.export_field_bed_surface;
+      case 'bed_plant_count': return l10n.export_field_bed_plant_count;
+
+      case 'plant_name': return l10n.export_field_plant_name;
+      case 'plant_id': return l10n.export_field_plant_id;
+      case 'plant_scientific': return l10n.export_field_plant_scientific;
+      case 'plant_family': return l10n.export_field_plant_family;
+      case 'plant_variety': return l10n.export_field_plant_variety;
+
+      case 'harvest_date': return l10n.export_field_harvest_date;
+      case 'harvest_qty': return l10n.export_field_harvest_qty;
+      case 'harvest_plant_name': return l10n.export_field_harvest_plant_name;
+      case 'harvest_price': return l10n.export_field_harvest_price;
+      case 'harvest_value': return l10n.export_field_harvest_value;
+      case 'harvest_notes': return l10n.export_field_harvest_notes;
+      case 'harvest_garden_name': return l10n.export_field_harvest_garden_name;
+      case 'harvest_garden_id': return l10n.export_field_harvest_garden_id;
+      case 'harvest_bed_name': return l10n.export_field_harvest_bed_name;
+      case 'harvest_bed_id': return l10n.export_field_harvest_bed_id;
+
+      case 'activity_date': return l10n.export_field_activity_date;
+      case 'activity_type': return l10n.export_field_activity_type;
+      case 'activity_title': return l10n.export_field_activity_title;
+      case 'activity_desc': return l10n.export_field_activity_desc;
+      case 'activity_entity': return l10n.export_field_activity_entity;
+      case 'activity_entity_id': return l10n.export_field_activity_entity_id;
+
+      default: return fieldId;
     }
   }
 }

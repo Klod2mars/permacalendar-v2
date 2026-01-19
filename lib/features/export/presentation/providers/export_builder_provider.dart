@@ -7,6 +7,7 @@ import '../../data/services/excel_generator_service.dart';
 import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/models/export_schema.dart';
 import 'package:permacalendar/core/data/hive/garden_boxes.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 /// State of the Export Builder
 class ExportBuilderState {
@@ -140,10 +141,10 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
     await _save(newConfig);
   }
 
-  Future<List<int>> generate() async {
+  Future<List<int>> generate(AppLocalizations l10n) async {
     state = state.copyWith(isGenerating: true);
     try {
-      final bytes = await _service.generateExportInMainIsolate(state.config);
+      final bytes = await _service.generateExportInMainIsolate(state.config, l10n);
       state = state.copyWith(isGenerating: false);
       return bytes;
     } catch (e) {

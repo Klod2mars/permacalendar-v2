@@ -1972,4 +1972,339 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nut_protein => 'Protein';
+
+  @override
+  String get export_builder_title => 'Export Builder';
+
+  @override
+  String get export_scope_section => '1. Scope';
+
+  @override
+  String get export_scope_period => 'Period';
+
+  @override
+  String get export_scope_period_all => 'All History';
+
+  @override
+  String get export_filter_garden_title => 'Filter by Garden';
+
+  @override
+  String get export_filter_garden_all => 'All Gardens';
+
+  @override
+  String export_filter_garden_count(Object count) {
+    return '$count garden(s) selected';
+  }
+
+  @override
+  String get export_filter_garden_edit => 'Edit selection';
+
+  @override
+  String get export_filter_garden_select_dialog_title => 'Select Gardens';
+
+  @override
+  String get export_blocks_section => '2. Data Blocks';
+
+  @override
+  String get export_block_activity => 'Activities (Journal)';
+
+  @override
+  String get export_block_harvest => 'Harvests (Production)';
+
+  @override
+  String get export_block_garden => 'Gardens (Structure)';
+
+  @override
+  String get export_block_garden_bed => 'Plots (Structure)';
+
+  @override
+  String get export_block_plant => 'Plants (Catalog)';
+
+  @override
+  String get export_block_desc_activity =>
+      'Complete history of interventions and events';
+
+  @override
+  String get export_block_desc_harvest => 'Production data and yields';
+
+  @override
+  String get export_block_desc_garden => 'Metadata of selected gardens';
+
+  @override
+  String get export_block_desc_garden_bed =>
+      'Plot details (area, orientation...)';
+
+  @override
+  String get export_block_desc_plant => 'List of used plants';
+
+  @override
+  String get export_columns_section => '3. Details & Columns';
+
+  @override
+  String export_columns_count(Object count) {
+    return '$count columns selected';
+  }
+
+  @override
+  String get export_format_section => '4. File Format';
+
+  @override
+  String get export_format_separate => 'Separate Sheets (Standard)';
+
+  @override
+  String get export_format_separate_subtitle =>
+      'One sheet per data type (Recommended)';
+
+  @override
+  String get export_format_flat => 'Single Table (Flat / BI)';
+
+  @override
+  String get export_format_flat_subtitle => 'One large table for Pivot Tables';
+
+  @override
+  String get export_action_generate => 'Generate Excel Export';
+
+  @override
+  String get export_generating => 'Generating...';
+
+  @override
+  String get export_success_title => 'Export Complete';
+
+  @override
+  String get export_success_share_text => 'Here is your PermaCalendar export';
+
+  @override
+  String export_error_snack(Object error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get export_field_garden_name => 'Garden Name';
+
+  @override
+  String get export_field_garden_id => 'Garden ID';
+
+  @override
+  String get export_field_garden_surface => 'Area (m²)';
+
+  @override
+  String get export_field_garden_creation => 'Creation Date';
+
+  @override
+  String get export_field_bed_name => 'Plot Name';
+
+  @override
+  String get export_field_bed_id => 'Plot ID';
+
+  @override
+  String get export_field_bed_surface => 'Area (m²)';
+
+  @override
+  String get export_field_bed_plant_count => 'Plant Count';
+
+  @override
+  String get export_field_plant_name => 'Common Name';
+
+  @override
+  String get export_field_plant_id => 'Plant ID';
+
+  @override
+  String get export_field_plant_scientific => 'Scientific Name';
+
+  @override
+  String get export_field_plant_family => 'Family';
+
+  @override
+  String get export_field_plant_variety => 'Variety';
+
+  @override
+  String get export_field_harvest_date => 'Harvest Date';
+
+  @override
+  String get export_field_harvest_qty => 'Quantity (kg)';
+
+  @override
+  String get export_field_harvest_plant_name => 'Plant';
+
+  @override
+  String get export_field_harvest_price => 'Price/kg';
+
+  @override
+  String get export_field_harvest_value => 'Total Value';
+
+  @override
+  String get export_field_harvest_notes => 'Notes';
+
+  @override
+  String get export_field_harvest_garden_name => 'Garden';
+
+  @override
+  String get export_field_harvest_garden_id => 'Garden ID';
+
+  @override
+  String get export_field_harvest_bed_name => 'Plot';
+
+  @override
+  String get export_field_harvest_bed_id => 'Plot ID';
+
+  @override
+  String get export_field_activity_date => 'Date';
+
+  @override
+  String get export_field_activity_type => 'Type';
+
+  @override
+  String get export_field_activity_title => 'Title';
+
+  @override
+  String get export_field_activity_desc => 'Description';
+
+  @override
+  String get export_field_activity_entity => 'Target Entity';
+
+  @override
+  String get export_field_activity_entity_id => 'Target ID';
+
+  @override
+  String get export_activity_type_garden_created => 'Garden Creation';
+
+  @override
+  String get export_activity_type_garden_updated => 'Garden Update';
+
+  @override
+  String get export_activity_type_garden_deleted => 'Garden Deletion';
+
+  @override
+  String get export_activity_type_bed_created => 'Plot Creation';
+
+  @override
+  String get export_activity_type_bed_updated => 'Plot Update';
+
+  @override
+  String get export_activity_type_bed_deleted => 'Plot Deletion';
+
+  @override
+  String get export_activity_type_planting_created => 'New Planting';
+
+  @override
+  String get export_activity_type_planting_updated => 'Planting Update';
+
+  @override
+  String get export_activity_type_planting_deleted => 'Planting Deletion';
+
+  @override
+  String get export_activity_type_harvest => 'Harvest';
+
+  @override
+  String get export_activity_type_maintenance => 'Maintenance';
+
+  @override
+  String get export_activity_type_weather => 'Weather';
+
+  @override
+  String get export_activity_type_error => 'Error';
+
+  @override
+  String get export_excel_total => 'TOTAL';
+
+  @override
+  String get export_excel_unknown => 'Unknown';
+
+  @override
+  String get export_field_advanced_suffix => ' (Advanced)';
+
+  @override
+  String get export_field_desc_garden_name => 'Name given to the garden';
+
+  @override
+  String get export_field_desc_garden_id => 'Unique technical identifier';
+
+  @override
+  String get export_field_desc_garden_surface => 'Total garden area';
+
+  @override
+  String get export_field_desc_garden_creation =>
+      'Creation date in the application';
+
+  @override
+  String get export_field_desc_bed_name => 'Name of the plot';
+
+  @override
+  String get export_field_desc_bed_id => 'Unique technical identifier';
+
+  @override
+  String get export_field_desc_bed_surface => 'Surface area of the plot';
+
+  @override
+  String get export_field_desc_bed_plant_count =>
+      'Number of crops in place (current)';
+
+  @override
+  String get export_field_desc_plant_name => 'Common name of the plant';
+
+  @override
+  String get export_field_desc_plant_id => 'Unique technical identifier';
+
+  @override
+  String get export_field_desc_plant_scientific => 'Botanical denomination';
+
+  @override
+  String get export_field_desc_plant_family => 'Botanical family';
+
+  @override
+  String get export_field_desc_plant_variety => 'Specific variety';
+
+  @override
+  String get export_field_desc_harvest_date => 'Date of the harvest event';
+
+  @override
+  String get export_field_desc_harvest_qty => 'Harvested weight in kg';
+
+  @override
+  String get export_field_desc_harvest_plant_name =>
+      'Name of the harvested plant';
+
+  @override
+  String get export_field_desc_harvest_price => 'Configured price per kg';
+
+  @override
+  String get export_field_desc_harvest_value => 'Quantity * Price/kg';
+
+  @override
+  String get export_field_desc_harvest_notes =>
+      'Observations entered during harvest';
+
+  @override
+  String get export_field_desc_harvest_garden_name =>
+      'Name of the source garden (if available)';
+
+  @override
+  String get export_field_desc_harvest_garden_id => 'Unique garden identifier';
+
+  @override
+  String get export_field_desc_harvest_bed_name => 'Source plot (if available)';
+
+  @override
+  String get export_field_desc_harvest_bed_id => 'Plot identifier';
+
+  @override
+  String get export_field_desc_activity_date => 'Date of the activity';
+
+  @override
+  String get export_field_desc_activity_type =>
+      'Action category (Sowing, Harvest, Care...)';
+
+  @override
+  String get export_field_desc_activity_title => 'Summary of the action';
+
+  @override
+  String get export_field_desc_activity_desc => 'Complete details';
+
+  @override
+  String get export_field_desc_activity_entity =>
+      'Name of the object concerned (Plant, Plot...)';
+
+  @override
+  String get export_field_desc_activity_entity_id =>
+      'ID of the object concerned';
 }

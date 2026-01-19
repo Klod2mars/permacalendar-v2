@@ -3669,6 +3669,642 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Protéines'**
   String get nut_protein;
+
+  /// No description provided for @export_builder_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Générateur d\'Export'**
+  String get export_builder_title;
+
+  /// No description provided for @export_scope_section.
+  ///
+  /// In fr, this message translates to:
+  /// **'1. Périmètre'**
+  String get export_scope_section;
+
+  /// No description provided for @export_scope_period.
+  ///
+  /// In fr, this message translates to:
+  /// **'Période'**
+  String get export_scope_period;
+
+  /// No description provided for @export_scope_period_all.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout l\'historique'**
+  String get export_scope_period_all;
+
+  /// No description provided for @export_filter_garden_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer par Jardin'**
+  String get export_filter_garden_title;
+
+  /// No description provided for @export_filter_garden_all.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les jardins'**
+  String get export_filter_garden_all;
+
+  /// No description provided for @export_filter_garden_count.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} jardin(s) sélectionné(s)'**
+  String export_filter_garden_count(Object count);
+
+  /// No description provided for @export_filter_garden_edit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la sélection'**
+  String get export_filter_garden_edit;
+
+  /// No description provided for @export_filter_garden_select_dialog_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner les jardins'**
+  String get export_filter_garden_select_dialog_title;
+
+  /// No description provided for @export_blocks_section.
+  ///
+  /// In fr, this message translates to:
+  /// **'2. Données à inclure'**
+  String get export_blocks_section;
+
+  /// No description provided for @export_block_activity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activités (Journal)'**
+  String get export_block_activity;
+
+  /// No description provided for @export_block_harvest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récoltes (Production)'**
+  String get export_block_harvest;
+
+  /// No description provided for @export_block_garden.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardins (Structure)'**
+  String get export_block_garden;
+
+  /// No description provided for @export_block_garden_bed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelles (Structure)'**
+  String get export_block_garden_bed;
+
+  /// No description provided for @export_block_plant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantes (Catalogue)'**
+  String get export_block_plant;
+
+  /// No description provided for @export_block_desc_activity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique complet des interventions et événements'**
+  String get export_block_desc_activity;
+
+  /// No description provided for @export_block_desc_harvest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Données de production et rendements'**
+  String get export_block_desc_harvest;
+
+  /// No description provided for @export_block_desc_garden.
+  ///
+  /// In fr, this message translates to:
+  /// **'Métadonnées des jardins sélectionnés'**
+  String get export_block_desc_garden;
+
+  /// No description provided for @export_block_desc_garden_bed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détails des parcelles (surface, orientation...)'**
+  String get export_block_desc_garden_bed;
+
+  /// No description provided for @export_block_desc_plant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste des plantes utilisées'**
+  String get export_block_desc_plant;
+
+  /// No description provided for @export_columns_section.
+  ///
+  /// In fr, this message translates to:
+  /// **'3. Détails & Colonnes'**
+  String get export_columns_section;
+
+  /// No description provided for @export_columns_count.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} colonnes sélectionnées'**
+  String export_columns_count(Object count);
+
+  /// No description provided for @export_format_section.
+  ///
+  /// In fr, this message translates to:
+  /// **'4. Format du fichier'**
+  String get export_format_section;
+
+  /// No description provided for @export_format_separate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Feuilles séparées (Standard)'**
+  String get export_format_separate;
+
+  /// No description provided for @export_format_separate_subtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une feuille par type de donnée (Recommandé)'**
+  String get export_format_separate_subtitle;
+
+  /// No description provided for @export_format_flat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Table Unique (Flat / BI)'**
+  String get export_format_flat;
+
+  /// No description provided for @export_format_flat_subtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une seule grande table pour Tableaux Croisés Dynamiques'**
+  String get export_format_flat_subtitle;
+
+  /// No description provided for @export_action_generate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Générer Export Excel'**
+  String get export_action_generate;
+
+  /// No description provided for @export_generating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Génération en cours...'**
+  String get export_generating;
+
+  /// No description provided for @export_success_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Export terminé'**
+  String get export_success_title;
+
+  /// No description provided for @export_success_share_text.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voici votre export PermaCalendar'**
+  String get export_success_share_text;
+
+  /// No description provided for @export_error_snack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur: {error}'**
+  String export_error_snack(Object error);
+
+  /// No description provided for @export_field_garden_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du jardin'**
+  String get export_field_garden_name;
+
+  /// No description provided for @export_field_garden_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID Jardin'**
+  String get export_field_garden_id;
+
+  /// No description provided for @export_field_garden_surface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface (m²)'**
+  String get export_field_garden_surface;
+
+  /// No description provided for @export_field_garden_creation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date création'**
+  String get export_field_garden_creation;
+
+  /// No description provided for @export_field_bed_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom parcelle'**
+  String get export_field_bed_name;
+
+  /// No description provided for @export_field_bed_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID Parcelle'**
+  String get export_field_bed_id;
+
+  /// No description provided for @export_field_bed_surface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface (m²)'**
+  String get export_field_bed_surface;
+
+  /// No description provided for @export_field_bed_plant_count.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nb Plantes'**
+  String get export_field_bed_plant_count;
+
+  /// No description provided for @export_field_plant_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom commun'**
+  String get export_field_plant_name;
+
+  /// No description provided for @export_field_plant_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID Plante'**
+  String get export_field_plant_id;
+
+  /// No description provided for @export_field_plant_scientific.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom scientifique'**
+  String get export_field_plant_scientific;
+
+  /// No description provided for @export_field_plant_family.
+  ///
+  /// In fr, this message translates to:
+  /// **'Famille'**
+  String get export_field_plant_family;
+
+  /// No description provided for @export_field_plant_variety.
+  ///
+  /// In fr, this message translates to:
+  /// **'Variété'**
+  String get export_field_plant_variety;
+
+  /// No description provided for @export_field_harvest_date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date Récolte'**
+  String get export_field_harvest_date;
+
+  /// No description provided for @export_field_harvest_qty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité (kg)'**
+  String get export_field_harvest_qty;
+
+  /// No description provided for @export_field_harvest_plant_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plante'**
+  String get export_field_harvest_plant_name;
+
+  /// No description provided for @export_field_harvest_price.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix/kg'**
+  String get export_field_harvest_price;
+
+  /// No description provided for @export_field_harvest_value.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur Totale'**
+  String get export_field_harvest_value;
+
+  /// No description provided for @export_field_harvest_notes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes'**
+  String get export_field_harvest_notes;
+
+  /// No description provided for @export_field_harvest_garden_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin'**
+  String get export_field_harvest_garden_name;
+
+  /// No description provided for @export_field_harvest_garden_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID Jardin'**
+  String get export_field_harvest_garden_id;
+
+  /// No description provided for @export_field_harvest_bed_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle'**
+  String get export_field_harvest_bed_name;
+
+  /// No description provided for @export_field_harvest_bed_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID Parcelle'**
+  String get export_field_harvest_bed_id;
+
+  /// No description provided for @export_field_activity_date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date'**
+  String get export_field_activity_date;
+
+  /// No description provided for @export_field_activity_type.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get export_field_activity_type;
+
+  /// No description provided for @export_field_activity_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get export_field_activity_title;
+
+  /// No description provided for @export_field_activity_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get export_field_activity_desc;
+
+  /// No description provided for @export_field_activity_entity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entité Cible'**
+  String get export_field_activity_entity;
+
+  /// No description provided for @export_field_activity_entity_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID Cible'**
+  String get export_field_activity_entity_id;
+
+  /// No description provided for @export_activity_type_garden_created.
+  ///
+  /// In fr, this message translates to:
+  /// **'Création de jardin'**
+  String get export_activity_type_garden_created;
+
+  /// No description provided for @export_activity_type_garden_updated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise à jour du jardin'**
+  String get export_activity_type_garden_updated;
+
+  /// No description provided for @export_activity_type_garden_deleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression de jardin'**
+  String get export_activity_type_garden_deleted;
+
+  /// No description provided for @export_activity_type_bed_created.
+  ///
+  /// In fr, this message translates to:
+  /// **'Création de parcelle'**
+  String get export_activity_type_bed_created;
+
+  /// No description provided for @export_activity_type_bed_updated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise à jour de parcelle'**
+  String get export_activity_type_bed_updated;
+
+  /// No description provided for @export_activity_type_bed_deleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression de parcelle'**
+  String get export_activity_type_bed_deleted;
+
+  /// No description provided for @export_activity_type_planting_created.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle plantation'**
+  String get export_activity_type_planting_created;
+
+  /// No description provided for @export_activity_type_planting_updated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise à jour plantation'**
+  String get export_activity_type_planting_updated;
+
+  /// No description provided for @export_activity_type_planting_deleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression plantation'**
+  String get export_activity_type_planting_deleted;
+
+  /// No description provided for @export_activity_type_harvest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte'**
+  String get export_activity_type_harvest;
+
+  /// No description provided for @export_activity_type_maintenance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entretien'**
+  String get export_activity_type_maintenance;
+
+  /// No description provided for @export_activity_type_weather.
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo'**
+  String get export_activity_type_weather;
+
+  /// No description provided for @export_activity_type_error.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur'**
+  String get export_activity_type_error;
+
+  /// No description provided for @export_excel_total.
+  ///
+  /// In fr, this message translates to:
+  /// **'TOTAL'**
+  String get export_excel_total;
+
+  /// No description provided for @export_excel_unknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu'**
+  String get export_excel_unknown;
+
+  /// No description provided for @export_field_advanced_suffix.
+  ///
+  /// In fr, this message translates to:
+  /// **' (Avancé)'**
+  String get export_field_advanced_suffix;
+
+  /// No description provided for @export_field_desc_garden_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom donné au jardin'**
+  String get export_field_desc_garden_name;
+
+  /// No description provided for @export_field_desc_garden_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant unique technique'**
+  String get export_field_desc_garden_id;
+
+  /// No description provided for @export_field_desc_garden_surface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface totale du jardin'**
+  String get export_field_desc_garden_surface;
+
+  /// No description provided for @export_field_desc_garden_creation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de création dans l\'application'**
+  String get export_field_desc_garden_creation;
+
+  /// No description provided for @export_field_desc_bed_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de la parcelle'**
+  String get export_field_desc_bed_name;
+
+  /// No description provided for @export_field_desc_bed_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant unique technique'**
+  String get export_field_desc_bed_id;
+
+  /// No description provided for @export_field_desc_bed_surface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface de la parcelle'**
+  String get export_field_desc_bed_surface;
+
+  /// No description provided for @export_field_desc_bed_plant_count.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre de cultures en place (actuel)'**
+  String get export_field_desc_bed_plant_count;
+
+  /// No description provided for @export_field_desc_plant_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom usuel de la plante'**
+  String get export_field_desc_plant_name;
+
+  /// No description provided for @export_field_desc_plant_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant unique technique'**
+  String get export_field_desc_plant_id;
+
+  /// No description provided for @export_field_desc_plant_scientific.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dénomination botanique'**
+  String get export_field_desc_plant_scientific;
+
+  /// No description provided for @export_field_desc_plant_family.
+  ///
+  /// In fr, this message translates to:
+  /// **'Famille botanique'**
+  String get export_field_desc_plant_family;
+
+  /// No description provided for @export_field_desc_plant_variety.
+  ///
+  /// In fr, this message translates to:
+  /// **'Variété spécifique'**
+  String get export_field_desc_plant_variety;
+
+  /// No description provided for @export_field_desc_harvest_date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de l\'événement de récolte'**
+  String get export_field_desc_harvest_date;
+
+  /// No description provided for @export_field_desc_harvest_qty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poids récolté en kg'**
+  String get export_field_desc_harvest_qty;
+
+  /// No description provided for @export_field_desc_harvest_plant_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de la plante récoltée'**
+  String get export_field_desc_harvest_plant_name;
+
+  /// No description provided for @export_field_desc_harvest_price.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix au kg configuré'**
+  String get export_field_desc_harvest_price;
+
+  /// No description provided for @export_field_desc_harvest_value.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité * Prix/kg'**
+  String get export_field_desc_harvest_value;
+
+  /// No description provided for @export_field_desc_harvest_notes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Observations saisies lors de la récolte'**
+  String get export_field_desc_harvest_notes;
+
+  /// No description provided for @export_field_desc_harvest_garden_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du jardin d\'origine (si disponible)'**
+  String get export_field_desc_harvest_garden_name;
+
+  /// No description provided for @export_field_desc_harvest_garden_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant unique du jardin'**
+  String get export_field_desc_harvest_garden_id;
+
+  /// No description provided for @export_field_desc_harvest_bed_name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle d\'origine (si disponible)'**
+  String get export_field_desc_harvest_bed_name;
+
+  /// No description provided for @export_field_desc_harvest_bed_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant parcelle'**
+  String get export_field_desc_harvest_bed_id;
+
+  /// No description provided for @export_field_desc_activity_date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de l\'activité'**
+  String get export_field_desc_activity_date;
+
+  /// No description provided for @export_field_desc_activity_type.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie d\'action (Semis, Récolte, Soin...)'**
+  String get export_field_desc_activity_type;
+
+  /// No description provided for @export_field_desc_activity_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résumé de l\'action'**
+  String get export_field_desc_activity_title;
+
+  /// No description provided for @export_field_desc_activity_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détails complets'**
+  String get export_field_desc_activity_desc;
+
+  /// No description provided for @export_field_desc_activity_entity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de l\'objet concerné (Plante, Parcelle...)'**
+  String get export_field_desc_activity_entity;
+
+  /// No description provided for @export_field_desc_activity_entity_id.
+  ///
+  /// In fr, this message translates to:
+  /// **'ID de l\'objet concerné'**
+  String get export_field_desc_activity_entity_id;
 }
 
 class _AppLocalizationsDelegate
