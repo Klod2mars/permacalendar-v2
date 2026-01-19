@@ -104,28 +104,6 @@ class GardenDetailScreen extends ConsumerWidget {
                     onSelected: (value) =>
                         _handleMenuAction(context, ref, value, garden.id),
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        value: 'edit',
-                        child: Row(
-                          children: [
-                            Icon(Icons.edit),
-                            SizedBox(width: 8),
-                            Text('Modifier'), // TODO: Use l10n.garden_action_edit but needs context in builder or pre-calc
-                          ],
-                        ),
-                      ),
-                      PopupMenuItem(
-                        value: 'toggle_status',
-                        child: Row(
-                          children: [
-                            Icon(garden.isActive
-                                ? Icons.archive
-                                : Icons.unarchive),
-                            const SizedBox(width: 8),
-                            Text(garden.isActive ? l10n.garden_action_archive : l10n.garden_action_unarchive),
-                          ],
-                        ),
-                      ),
                       PopupMenuItem(
                         value: 'delete',
                         child: Row(
@@ -627,20 +605,8 @@ class GardenDetailScreen extends ConsumerWidget {
 
   void _handleMenuAction(
       BuildContext context, WidgetRef ref, String action, String gardenId) {
-    switch (action) {
-      case 'edit':
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Édition à implémenter')),
-        );
-        break;
-      case 'toggle_status':
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Toggle status à implémenter')),
-        );
-        break;
-      case 'delete':
-        _showDeleteConfirmation(context, ref, gardenId);
-        break;
+    if (action == 'delete') {
+      _showDeleteConfirmation(context, ref, gardenId);
     }
   }
 
@@ -676,18 +642,9 @@ class GardenDetailScreen extends ConsumerWidget {
                     ),
                   );
 
-                  // Return to garden list first
-                  context.pop();
-
-                  // Check if we need to redirect to create
-                  if (!context.mounted) return;
-
-                  // Verification post-suppression
-                  final hasGardens =
-                      ref.read(gardenProvider).activeGardens.isNotEmpty;
-                  if (!hasGardens) {
-                    context.pushReplacement(AppRoutes.gardenCreate);
-                  }
+                  // REDIRECTION CHANGE: Go directly to home dashboard
+                  context.go(AppRoutes.home);
+                  
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
