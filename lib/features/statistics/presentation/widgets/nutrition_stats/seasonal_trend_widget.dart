@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class SeasonalTrendWidget extends StatelessWidget {
   final int month;
@@ -18,33 +20,21 @@ class SeasonalTrendWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final l10n = AppLocalizations.of(context)!;
+
     // 1. Identify Top Contributors for this month
     final sortedEntries = monthlyData.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
-    final top3 = sortedEntries.take(3).map((e) => _formatKey(e.key)).join(", ");
+    final top3 = sortedEntries.take(3).map((e) => _formatKey(e.key, l10n)).join(", ");
 
-    // 2. Calculate "Intensity" of this month vs Annual Average (Simple approach)
-    // Average monthly production = Annual / 12 (approx)
-    // Intensity = ThisMonthTotalMass / (AnnualTotalMass / 12)
-    // Note: This is rough, as mass depends heavily on *what* is harvested (pumpkins vs herbs).
-    // Let's stick to qualitative.
-
-    final monthNames = [
-      '',
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre'
-    ];
+    String monthName;
+    try {
+      final dt = DateTime(2024, month);
+      monthName = DateFormat.MMMM(l10n.localeName).format(dt);
+    } catch (_) {
+      monthName = month.toString();
+    }
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -57,18 +47,18 @@ class SeasonalTrendWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Dynamique de ${monthNames[month]}",
+            l10n.nutrition_month_dynamics_title(monthName),
             style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
           Text(
-            "Production dominante : $top3",
+            "${l10n.nutrition_dominant_production} $top3",
             style: const TextStyle(color: Colors.white70, fontSize: 14),
           ),
           const SizedBox(height: 4),
           Text(
-            "Ces nutriments proviennent de vos récoltes du mois.",
+            l10n.nutrition_nutrients_origin,
             style: const TextStyle(
                 color: Colors.white38,
                 fontSize: 12,
@@ -79,22 +69,26 @@ class SeasonalTrendWidget extends StatelessWidget {
     );
   }
 
-  String _formatKey(String key) {
+  String _formatKey(String key, AppLocalizations l10n) {
     switch (key) {
       case 'calcium_mg':
-        return 'Calcium';
+        return l10n.nut_calcium;
       case 'potassium_mg':
-        return 'Potassium';
+        return l10n.nut_potassium;
       case 'magnesium_mg':
-        return 'Magnésium';
+        return l10n.nut_magnesium;
       case 'iron_mg':
-        return 'Fer';
+        return l10n.nut_iron;
+      case 'zinc_mg':
+        return l10n.nut_zinc;
+      case 'manganese_mg':
+        return l10n.nut_manganese;
       case 'vitamin_c_mg':
-        return 'Vitamine C';
+        return l10n.nut_vitamin_c;
       case 'fiber_g':
-        return 'Fibres';
+        return l10n.nut_fiber;
       case 'protein_g':
-        return 'Protéines';
+        return l10n.nut_protein;
       default:
         return key.split('_')[0].capitalize();
     }

@@ -3538,11 +3538,137 @@ abstract class AppLocalizations {
   /// **'Rapide'**
   String get stats_type_fast;
 
-  /// Type culture long terme
+  /// No description provided for @stats_type_long_term.
   ///
   /// In fr, this message translates to:
   /// **'Long terme'**
   String get stats_type_long_term;
+
+  /// Titre écrant nutrition
+  ///
+  /// In fr, this message translates to:
+  /// **'Signature Nutritionnelle'**
+  String get nutrition_page_title;
+
+  /// Titre dynamique saisonnière
+  ///
+  /// In fr, this message translates to:
+  /// **'Dynamique Saisonnière'**
+  String get nutrition_seasonal_dynamics_title;
+
+  /// Desc dynamique saisonnière
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorez la production minérale et vitaminique de votre jardin, mois par mois.'**
+  String get nutrition_seasonal_dynamics_desc;
+
+  /// Vide mois
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune récolte en ce mois'**
+  String get nutrition_no_harvest_month;
+
+  /// Titre minéraux majeurs
+  ///
+  /// In fr, this message translates to:
+  /// **'Structure & Minéraux Majeurs'**
+  String get nutrition_major_minerals_title;
+
+  /// Titre oligo éléments
+  ///
+  /// In fr, this message translates to:
+  /// **'Vitalité & Oligo-éléments'**
+  String get nutrition_trace_elements_title;
+
+  /// Pas de données chart
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de données cette période'**
+  String get nutrition_no_data_period;
+
+  /// Vide chart majeurs
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun minéral majeur'**
+  String get nutrition_no_major_minerals;
+
+  /// Vide chart oligo
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun oligo-élément'**
+  String get nutrition_no_trace_elements;
+
+  /// Titre dynamique mois
+  ///
+  /// In fr, this message translates to:
+  /// **'Dynamique de {month}'**
+  String nutrition_month_dynamics_title(String month);
+
+  /// Label production dominante
+  ///
+  /// In fr, this message translates to:
+  /// **'Production dominante :'**
+  String get nutrition_dominant_production;
+
+  /// Note origine nutriments
+  ///
+  /// In fr, this message translates to:
+  /// **'Ces nutriments proviennent de vos récoltes du mois.'**
+  String get nutrition_nutrients_origin;
+
+  /// No description provided for @nut_calcium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calcium'**
+  String get nut_calcium;
+
+  /// No description provided for @nut_potassium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Potassium'**
+  String get nut_potassium;
+
+  /// No description provided for @nut_magnesium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Magnésium'**
+  String get nut_magnesium;
+
+  /// No description provided for @nut_iron.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fer'**
+  String get nut_iron;
+
+  /// No description provided for @nut_zinc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zinc'**
+  String get nut_zinc;
+
+  /// No description provided for @nut_manganese.
+  ///
+  /// In fr, this message translates to:
+  /// **'Manganèse'**
+  String get nut_manganese;
+
+  /// No description provided for @nut_vitamin_c.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vitamine C'**
+  String get nut_vitamin_c;
+
+  /// No description provided for @nut_fiber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fibres'**
+  String get nut_fiber;
+
+  /// No description provided for @nut_protein.
+  ///
+  /// In fr, this message translates to:
+  /// **'Protéines'**
+  String get nut_protein;
 }
 
 class _AppLocalizationsDelegate

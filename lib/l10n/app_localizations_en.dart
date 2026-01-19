@@ -1905,4 +1905,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stats_type_long_term => 'Long Term';
+
+  @override
+  String get nutrition_page_title => 'Nutrition Signature';
+
+  @override
+  String get nutrition_seasonal_dynamics_title => 'Seasonal Dynamics';
+
+  @override
+  String get nutrition_seasonal_dynamics_desc =>
+      'Explore the mineral and vitamin production of your garden, month by month.';
+
+  @override
+  String get nutrition_no_harvest_month => 'No harvest this month';
+
+  @override
+  String get nutrition_major_minerals_title => 'Structure & Major Minerals';
+
+  @override
+  String get nutrition_trace_elements_title => 'Vitality & Trace Elements';
+
+  @override
+  String get nutrition_no_data_period => 'No data for this period';
+
+  @override
+  String get nutrition_no_major_minerals => 'No major minerals';
+
+  @override
+  String get nutrition_no_trace_elements => 'No trace elements';
+
+  @override
+  String nutrition_month_dynamics_title(String month) {
+    return 'Dynamics of $month';
+  }
+
+  @override
+  String get nutrition_dominant_production => 'Dominant production:';
+
+  @override
+  String get nutrition_nutrients_origin =>
+      'These nutrients come from your harvests of the month.';
+
+  @override
+  String get nut_calcium => 'Calcium';
+
+  @override
+  String get nut_potassium => 'Potassium';
+
+  @override
+  String get nut_magnesium => 'Magnesium';
+
+  @override
+  String get nut_iron => 'Iron';
+
+  @override
+  String get nut_zinc => 'Zinc';
+
+  @override
+  String get nut_manganese => 'Manganese';
+
+  @override
+  String get nut_vitamin_c => 'Vitamin C';
+
+  @override
+  String get nut_fiber => 'Fiber';
+
+  @override
+  String get nut_protein => 'Protein';
 }

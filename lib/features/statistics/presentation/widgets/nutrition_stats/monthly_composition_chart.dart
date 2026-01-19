@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class MonthlyCompositionChart extends StatefulWidget {
   final Map<String, double> data;
@@ -25,10 +26,12 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
       return SizedBox(
         height: 200,
         child: Center(
-            child: Text("Pas de données cette période",
-                style: TextStyle(color: Colors.white24))),
+            child: Text(AppLocalizations.of(context)!.nutrition_no_data_period,
+                style: const TextStyle(color: Colors.white24))),
       );
     }
+
+    final l10n = AppLocalizations.of(context)!;
 
     // Filter keys based on mode
     final keys = widget.isMajorMinerals
@@ -45,8 +48,8 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
         child: Center(
             child: Text(
                 widget.isMajorMinerals
-                    ? "Aucun minéral majeur"
-                    : "Aucun oligo-élément",
+                    ? l10n.nutrition_no_major_minerals
+                    : l10n.nutrition_no_trace_elements,
                 style: const TextStyle(color: Colors.white24))),
       );
     }
@@ -90,7 +93,7 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: filteredData.entries.map((e) {
               final color = _getColor(e.key);
-              final label = _getLabel(e.key);
+              final label = _getLabel(e.key, l10n);
               final pct = (e.value / totalMass * 100).toStringAsFixed(1);
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -154,20 +157,20 @@ class _MonthlyCompositionChartState extends State<MonthlyCompositionChart> {
     }
   }
 
-  String _getLabel(String key) {
+  String _getLabel(String key, AppLocalizations l10n) {
     switch (key) {
       case 'calcium_mg':
-        return 'Calcium';
+        return l10n.nut_calcium;
       case 'potassium_mg':
-        return 'Potassium';
+        return l10n.nut_potassium;
       case 'magnesium_mg':
-        return 'Magnésium';
+        return l10n.nut_magnesium;
       case 'iron_mg':
-        return 'Fer';
+        return l10n.nut_iron;
       case 'zinc_mg':
-        return 'Zinc';
+        return l10n.nut_zinc;
       case 'manganese_mg':
-        return 'Manganèse';
+        return l10n.nut_manganese;
       default:
         return key;
     }

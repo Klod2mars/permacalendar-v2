@@ -737,6 +737,27 @@
   "stats_table_revenue": "Rev/Harvest",
   "stats_table_type": "Type",
   "stats_type_fast": "Fast",
-  "stats_type_long_term": "Long Term"
+  "stats_type_long_term": "Long Term",
+  "nutrition_page_title": "Nutrition Signature",
+  "nutrition_seasonal_dynamics_title": "Seasonal Dynamics",
+  "nutrition_seasonal_dynamics_desc": "Explore the mineral and vitamin production of your garden, month by month.",
+  "nutrition_no_harvest_month": "No harvest this month",
+  "nutrition_major_minerals_title": "Structure & Major Minerals",
+  "nutrition_trace_elements_title": "Vitality & Trace Elements",
+  "nutrition_no_data_period": "No data for this period",
+  "nutrition_no_major_minerals": "No major minerals",
+  "nutrition_no_trace_elements": "No trace elements",
+  "nutrition_month_dynamics_title": "Dynamics of {month}",
+  "nutrition_dominant_production": "Dominant production:",
+  "nutrition_nutrients_origin": "These nutrients come from your harvests of the month.",
+  "nut_calcium": "Calcium",
+  "nut_potassium": "Potassium",
+  "nut_magnesium": "Magnesium",
+  "nut_iron": "Iron",
+  "nut_zinc": "Zinc",
+  "nut_manganese": "Manganese",
+  "nut_vitamin_c": "Vitamin C",
+  "nut_fiber": "Fiber",
+  "nut_protein": "Protein"
 }
 

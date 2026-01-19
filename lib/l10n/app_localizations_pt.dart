@@ -1917,4 +1917,71 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get stats_type_long_term => 'Long terme';
+
+  @override
+  String get nutrition_page_title => 'Signature Nutritionnelle';
+
+  @override
+  String get nutrition_seasonal_dynamics_title => 'Dynamique Saisonnière';
+
+  @override
+  String get nutrition_seasonal_dynamics_desc =>
+      'Explorez la production minérale et vitaminique de votre jardin, mois par mois.';
+
+  @override
+  String get nutrition_no_harvest_month => 'Aucune récolte en ce mois';
+
+  @override
+  String get nutrition_major_minerals_title => 'Structure & Minéraux Majeurs';
+
+  @override
+  String get nutrition_trace_elements_title => 'Vitalité & Oligo-éléments';
+
+  @override
+  String get nutrition_no_data_period => 'Pas de données cette période';
+
+  @override
+  String get nutrition_no_major_minerals => 'Aucun minéral majeur';
+
+  @override
+  String get nutrition_no_trace_elements => 'Aucun oligo-élément';
+
+  @override
+  String nutrition_month_dynamics_title(String month) {
+    return 'Dynamique de $month';
+  }
+
+  @override
+  String get nutrition_dominant_production => 'Production dominante :';
+
+  @override
+  String get nutrition_nutrients_origin =>
+      'Ces nutriments proviennent de vos récoltes du mois.';
+
+  @override
+  String get nut_calcium => 'Calcium';
+
+  @override
+  String get nut_potassium => 'Potassium';
+
+  @override
+  String get nut_magnesium => 'Magnésium';
+
+  @override
+  String get nut_iron => 'Fer';
+
+  @override
+  String get nut_zinc => 'Zinc';
+
+  @override
+  String get nut_manganese => 'Manganèse';
+
+  @override
+  String get nut_vitamin_c => 'Vitamine C';
+
+  @override
+  String get nut_fiber => 'Fibres';
+
+  @override
+  String get nut_protein => 'Protéines';
 }

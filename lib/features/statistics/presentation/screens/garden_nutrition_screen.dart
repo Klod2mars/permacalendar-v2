@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
@@ -36,11 +37,12 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
   @override
   Widget build(BuildContext context) {
     final seasonalAsync = ref.watch(seasonalNutritionProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
-        title: const Text('Signature Nutritionnelle'),
+        title: Text(l10n.nutrition_page_title),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -63,19 +65,19 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: const Text(
-                  'Dynamique Saisonnière',
-                  style: TextStyle(
+                child: Text(
+                  l10n.nutrition_seasonal_dynamics_title,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                 child: Text(
-                  'Explorez la production minérale et vitaminique de votre jardin, mois par mois.',
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
+                  l10n.nutrition_seasonal_dynamics_desc,
+                  style: const TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ),
               const SizedBox(height: 8),
@@ -105,12 +107,12 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                             alignment: Alignment.center,
                             child: Column(
                               children: [
-                                Icon(Icons.eco_outlined,
+                                const Icon(Icons.eco_outlined,
                                     size: 48, color: Colors.white24),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 Text(
-                                  "Aucune récolte en ce mois",
-                                  style: TextStyle(color: Colors.white38),
+                                  l10n.nutrition_no_harvest_month,
+                                  style: const TextStyle(color: Colors.white38),
                                 ),
                               ],
                             ),
@@ -125,9 +127,9 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
 
                           // PIE CHARTS
                           if (monthlyStats.contributionCount > 0) ...[
-                            const Text(
-                              'Structure & Minéraux Majeurs',
-                              style: TextStyle(
+                             Text(
+                              l10n.nutrition_major_minerals_title,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -144,9 +146,9 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                               ),
                             ),
                             const SizedBox(height: 24),
-                            const Text(
-                              'Vitalité & Oligo-éléments',
-                              style: TextStyle(
+                             Text(
+                              l10n.nutrition_trace_elements_title,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),

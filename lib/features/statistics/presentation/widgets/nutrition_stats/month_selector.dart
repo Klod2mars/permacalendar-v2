@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class MonthSelector extends StatelessWidget {
   final int selectedMonth;
@@ -12,21 +14,9 @@ class MonthSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final months = [
-      'Jan',
-      'Fév',
-      'Mar',
-      'Avr',
-      'Mai',
-      'Juin',
-      'Juil',
-      'Août',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Déc'
-    ];
-
+    // 2024 is a leap year. Using it to generate months
+    final l10n = AppLocalizations.of(context)!;
+    
     return SizedBox(
       height: 60,
       child: ListView.builder(
@@ -36,6 +26,15 @@ class MonthSelector extends StatelessWidget {
         itemBuilder: (context, index) {
           final monthIndex = index + 1;
           final isSelected = monthIndex == selectedMonth;
+          
+          String monthName;
+          try {
+            // Using MMM for short name (Jan, Feb, etc.)
+            monthName = DateFormat.MMM(l10n.localeName).format(DateTime(2024, monthIndex)).replaceAll('.', '');
+          } catch (_) {
+             final months = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+             monthName = months[index];
+          }
 
           return GestureDetector(
             onTap: () => onMonthSelected(monthIndex),
@@ -53,7 +52,7 @@ class MonthSelector extends StatelessWidget {
                 ),
               ),
               child: Text(
-                months[index],
+                monthName,
                 style: TextStyle(
                   color: isSelected ? Colors.black : Colors.white70,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
