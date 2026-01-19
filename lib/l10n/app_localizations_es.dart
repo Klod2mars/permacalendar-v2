@@ -33,7 +33,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settings_commune_title => 'Ubicación para el clima';
 
   @override
-  String get settings_choose_commune => 'Elegir una ubicación';
+  String get settings_choose_commune => 'Elegir ubicación';
 
   @override
   String get settings_search_commune_hint => 'Buscar una ubicación...';
@@ -117,7 +117,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get calibration_organic_subtitle =>
-      'Modo unificado: Imagen, El Cielo, Módulos';
+      'Modo unificado: Imagen, Cielo, Módulos';
 
   @override
   String get calibration_organic_disabled =>
@@ -176,11 +176,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get plant_detail_popup_share => 'Compartir';
 
   @override
-  String get plant_detail_share_todo => 'Compartir no implementado';
+  String get plant_detail_share_todo => 'Compartir no implementado todavía';
 
   @override
   String get plant_detail_add_to_garden_todo =>
-      'Añadir al jardín no implementado';
+      'Añadir al jardín no implementado todavía';
 
   @override
   String get plant_detail_section_culture => 'Detalles de cultivo';
@@ -292,14 +292,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get common_cancel => 'Cancelar';
 
   @override
-  String get common_save => 'Enregistrer';
+  String get common_save => 'Guardar';
 
   @override
   String get empty_action_create => 'Crear';
 
   @override
   String get user_guide_text =>
-      '1 — Bienvenido a Sowing\n(Traducción en curso...)\nSowing es una aplicación diseñada para acompañar a los jardineros en el seguimiento vivo y concreto de sus cultivos.\n...';
+      '1 — Bienvenido a Sowing\nSowing es una aplicación diseñada para apoyar a los jardineros en el seguimiento animado y concreto de sus cultivos.\nLe permite:\n• organizar sus jardines y parcelas,\n• seguir sus plantaciones a lo largo de su ciclo de vida,\n• planificar sus tareas en el momento adecuado,\n• mantener un recuerdo de lo que se ha hecho,\n• tener en cuenta el clima local y el ritmo de las estaciones.\nLa aplicación funciona principalmente sin conexión y mantiene sus datos directamente en su dispositivo.\nEste manual describe el uso común de Sowing: primeros pasos, creación de jardines, plantaciones, calendario, clima, exportación de datos y mejores prácticas.\n\n2 — Comprendiendo la interfaz\nEl tablero\nAl abrir, Sowing muestra un tablero visual y orgánico.\nToma la forma de una imagen de fondo animada por burbujas interactivas. Cada burbuja da acceso a una función principal de la aplicación:\n• jardines,\n• clima aéreo,\n• clima del suelo,\n• calendario,\n• actividades,\n• estadísticas,\n• ajustes.\nNavegación general\nSimplemente toque una burbuja para abrir la sección correspondiente.\nDentro de las páginas, encontrará dependiendo del contexto:\n• menús contextuales,\n• botones \"+\" para añadir un elemento,\n• botones de edición o eliminación.\n\n3 — Inicio rápido\nAbrir la aplicación\nAl iniciar, el tablero se muestra automáticamente.\nConfigurar el clima\nEn los ajustes, elija su ubicación.\nEsta información permite a Sowing mostrar el clima local adaptado a su jardín. Si no se selecciona ninguna ubicación, se utiliza una predeterminada.\nCrear su primer jardín\nAl usar por primera vez, Sowing le guía automáticamente para crear su primer jardín.\nTambién puede crear un jardín manualmente desde el tablero.\nEn la pantalla principal, toque la hoja verde ubicada en el área más libre, a la derecha de las estadísticas y ligeramente arriba. Esta área deliberadamente discreta le permite iniciar la creación de un jardín.\nPuede crear hasta cinco jardines.\nEste enfoque es parte de la experiencia Sowing: no hay un botón \"+\" permanente y central. La aplicación invita más bien a la exploración y el descubrimiento progresivo del espacio.\nLas áreas vinculadas a los jardines también son accesibles desde el menú Ajustes.\nCalibración orgánica del tablero\nUn modo de calibración orgánica permite:\n• visualizar la ubicación real de las zonas interactivas,\n• moverlas simplemente deslizando el dedo.\nAsí puede posicionar sus jardines y módulos exactamente donde quiera en la imagen: arriba, abajo o en el lugar que mejor le convenga.\nUna vez validada, esta organización se guarda y se mantiene en la aplicación.\nCrear una parcela\nEn una ficha de jardín:\n• elija \"Añadir una parcela\",\n• indique su nombre, su área y, si es necesario, algunas notas,\n• guarde.\nAñadir una plantación\nEn una parcela:\n• presione el botón \"+\",\n• elija una planta del catálogo,\n• indique la fecha, la cantidad e información útil,\n• valide.\n\n4 — El tablero orgánico\nEl tablero es el punto central de Sowing.\nPermite:\n• tener una visión general de su actividad,\n• acceder rápidamente a las funciones principales,\n• navegar intuitivamente.\nDependiendo de sus ajustes, algunas burbujas pueden mostrar información sintética, como el clima o las tareas próximas.\n\n5 — Jardines, parcelas y plantaciones\nLos jardines\nUn jardín representa un lugar real: huerto, invernadero, huerto frutal, balcón, etc.\nPuede:\n• crear varios jardines,\n• modificar su información,\n• eliminarlos si es necesario.\nLas parcelas\nUna parcela es una zona precisa dentro de un jardín.\nPermite estructurar el espacio, organizar cultivos y agrupar varias plantaciones en el mismo lugar.\nLas plantaciones\nUna plantación corresponde a la introducción de una planta en una parcela, en una fecha dada.\nAl crear una plantación, Sowing ofrece dos modos.\nSembrar\nEl modo \"Sembrar\" corresponde a poner una semilla en la tierra.\nEn este caso:\n• el progreso comienza en 0%,\n• se propone un seguimiento paso a paso, particularmente útil para jardineros principiantes,\n• una barra de progreso visualiza el avance del ciclo de cultivo.\nEste seguimiento permite estimar:\n• el inicio probable del período de cosecha,\n• la evolución del cultivo a lo largo del tiempo, de una manera simple y visual.\nPlantar\nEl modo \"Plantar\" está destinado a plantas ya desarrolladas (plantas de un invernadero o compradas en un centro de jardinería).\nEn este caso:\n• la planta comienza con un progreso de aproximadamente 30%,\n• el seguimiento es inmediatamente más avanzado,\n• la estimación del período de cosecha se ajusta en consecuencia.\nElección de fecha\nAl plantar, puede elegir libremente la fecha.\nEsto permite por ejemplo:\n• rellenar una plantación realizada anteriormente,\n• corregir una fecha si la aplicación no se usó en el momento de la siembra o plantación.\nPor defecto, se utiliza la fecha actual.\nSeguimiento e historial\nCada plantación tiene:\n• un seguimiento de progreso,\n• información sobre su ciclo de vida,\n• etapas de cultivo,\n• notas personales.\nTodas las acciones (siembra, plantación, cuidado, cosecha) se registran automáticamente en el historial del jardín.\n\n6 — Catálogo de plantas\nEl catálogo reúne todas las plantas disponibles al crear una plantación.\nConstituye una base de referencia escalable, diseñada para cubrir usos actuales mientras permanece personalizable.\nFunciones principales:\n• búsqueda simple y rápida,\n• reconocimiento de nombres comunes y científicos,\n• visualización de fotos cuando están disponibles.\nPlantas personalizadas\nPuede crear sus propias plantas personalizadas desde:\nAjustes → Catálogo de plantas.\nEntonces es posible:\n• crear una nueva planta,\n• rellenar los parámetros esenciales (nombre, tipo, información útil),\n• añadir una imagen para facilitar la identificación.\nLas plantas personalizadas son entonces utilizables como cualquier otra planta en el catálogo.\n\n7 — Calendario y tareas\nLa vista de calendario\nEl calendario muestra:\n• tareas planificadas,\n• plantaciones importantes,\n• períodos de cosecha estimados.\nCrear una tarea\nDesde el calendario:\n• cree una nueva tarea,\n• indique un título, una fecha y una descripción,\n• elija una posible recurrencia.\nLas tareas pueden asociarse con un jardín o una parcela.\nGestión de tareas\nPuede:\n• modificar una tarea,\n• eliminarla,\n• exportarla para compartirla.\n\n8 — Actividades e historial\nEsta sección constituye la memoria viva de sus jardines.\nSelección de un jardín\nDesde el tablero, mantenga presionado un jardín para seleccionarlo.\nEl jardín activo se resalta con un halo verde claro y un banner de confirmación.\nEsta selección permite filtrar la información mostrada.\nActividades recientes\nLa pestaña \"Actividades\" muestra cronológicamente:\n• creaciones,\n• plantaciones,\n• cuidados,\n• cosechas,\n• acciones manuales.\nHistorial por jardín\nLa pestaña \"Historial\" presenta el historial completo del jardín seleccionado, año tras año.\nPermite en particular:\n• encontrar plantaciones pasadas,\n• verificar si una planta ya se ha cultivado en un lugar dado,\n• organizar mejor la rotación de cultivos.\n\n9 — Clima aéreo y clima del suelo\nClima aéreo\nEl clima aéreo proporciona información esencial:\n• temperatura exterior,\n• precipitaciones (lluvia, nieve, sin lluvia),\n• alternancia día / noche.\nEstos datos ayudan a anticipar riesgos climáticos y adaptar intervenciones.\nClima del suelo\nSowing integra un módulo de clima del suelo.\nEl usuario puede rellenar una temperatura medida. A partir de estos datos, la aplicación estima dinámicamente la evolución de la temperatura del suelo a lo largo del tiempo.\nEsta información permite:\n• saber qué plantas son realmente cultivables en un momento dado,\n• ajustar la siembra a las condiciones reales en lugar de un calendario teórico.\nClima en tiempo real en el tablero\nUn módulo central en forma de ovoide muestra de un vistazo:\n• el estado del cielo,\n• día o noche,\n• la fase y posición de la luna para la ubicación seleccionada.\nNavegación en el tiempo\nDeslizando el dedo de izquierda a derecha sobre el ovoide, navega por las previsiones hora por hora, hasta más de 12 horas por adelantado.\nLa temperatura y las precipitaciones se ajustan dinámicamente durante el gesto.\n\n10 — Recomendaciones\nSowing puede ofrecer recomendaciones adaptadas a su situación.\nSe basan en:\n• la temporada,\n• el clima,\n• el estado de sus plantaciones.\nCada recomendación especifica:\n• qué hacer,\n• cuándo actuar,\n• por qué se sugiere la acción.\n\n11 — Exportación y uso compartido\nExportación PDF — calendario y tareas\nLas tareas del calendario se pueden exportar a PDF.\nEsto permite:\n• compartir información clara,\n• transmitir una intervención planificada,\n• mantener un rastro legible y fechado.\nExportación Excel — cosechas y estadísticas\nLos datos de cosecha se pueden exportar en formato Excel para:\n• analizar los resultados,\n• producir informes,\n• seguir la evolución a lo largo del tiempo.\nUso compartido de documentos\nLos documentos generados se pueden compartir a través de las aplicaciones disponibles en su dispositivo (mensajería, almacenamiento, transferencia a una computadora, etc.).\n\n12 — Copia de seguridad y mejores prácticas\nLos datos se almacenan localmente en su dispositivo.\nMejores prácticas recomendadas:\n• haga una copia de seguridad antes de una actualización importante,\n• exporte sus datos regularmente,\n• mantenga la aplicación y el dispositivo actualizados.\n\n13 — Ajustes\nEl menú Ajustes permite adaptar Sowing a sus usos.\nPuede notablemente:\n• elegir el idioma,\n• seleccionar su ubicación,\n• acceder al catálogo de plantas,\n• personalizar el tablero.\nPersonalización del tablero\nEs posible:\n• reposicionar cada módulo,\n• ajustar el espacio visual,\n• cambiar la imagen de fondo,\n• importar su propia imagen (función próximamente).\nInformación legal\nDesde los ajustes, puede consultar:\n• la guía de usuario,\n• la política de privacidad,\n• las condiciones de uso.\n\n14 — Preguntas frecuentes\nLas zonas táctiles no están bien alineadas\nDependiendo del teléfono o los ajustes de pantalla, algunas zonas pueden parecer desplazadas.\nUn modo de calibración orgánica permite:\n• visualizar las zonas táctiles,\n• reposicionarlas deslizándolas,\n• guardar la configuración para su dispositivo.\n¿Puedo usar Sowing sin conexión?\nSí. Sowing funciona sin conexión para la gestión de jardines, plantaciones, tareas e historial.\nSolo se utiliza una conexión:\n• para la recuperación de datos meteorológicos,\n• durante la exportación o uso compartido de documentos.\nNo se transmiten otros datos.\n\n15 — Observación final\nSowing está diseñado como un compañero de jardinería: simple, vivo y escalable.\nTómese el tiempo para observar, anotar y confiar en su experiencia tanto como en la herramienta.';
 
   @override
   String get privacy_policy_text =>
@@ -310,37 +310,42 @@ class AppLocalizationsEs extends AppLocalizations {
       'Al usar Sowing, usted acepta:\n\n• Usar la aplicación de manera responsable\n• No intentar eludir sus limitaciones\n• Respetar los derechos de propiedad intelectual\n• Usar solo sus propios datos\n\nEsta aplicación se proporciona tal cual, sin garantía.\n\nEl equipo de Sowing permanece atento a cualquier mejora o evolución futura.';
 
   @override
-  String get calibration_auto_apply => 'Automatically apply for this device';
+  String get calibration_auto_apply =>
+      'Aplicar automáticamente para este dispositivo';
 
   @override
-  String get calibration_calibrate_now => 'Calibrate now';
+  String get calibration_calibrate_now => 'Calibrar ahora';
 
   @override
-  String get calibration_save_profile => 'Save current calibration as profile';
+  String get calibration_save_profile =>
+      'Guardar calibración actual como perfil';
 
   @override
-  String get calibration_export_profile => 'Export profile (JSON copy)';
+  String get calibration_export_profile => 'Exportar perfil (copia JSON)';
 
   @override
-  String get calibration_import_profile => 'Import profile from clipboard';
+  String get calibration_import_profile => 'Importar perfil desde portapapeles';
 
   @override
-  String get calibration_reset_profile => 'Reset profile for this device';
+  String get calibration_reset_profile =>
+      'Restablecer perfil para este dispositivo';
 
   @override
-  String get calibration_refresh_profile => 'Refresh profile preview';
+  String get calibration_refresh_profile =>
+      'Actualizar vista previa del perfil';
 
   @override
   String calibration_key_device(String key) {
-    return 'Device key: $key';
+    return 'Clave del dispositivo: $key';
   }
 
   @override
-  String get calibration_no_profile => 'No profile saved for this device.';
+  String get calibration_no_profile =>
+      'No hay perfil guardado para este dispositivo.';
 
   @override
   String get calibration_image_settings_title =>
-      'Background Image Settings (Persistent)';
+      'Ajustes de imagen de fondo (Persistente)';
 
   @override
   String get calibration_pos_x => 'Pos X';
@@ -352,287 +357,290 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calibration_zoom => 'Zoom';
 
   @override
-  String get calibration_reset_image => 'Reset Image Defaults';
+  String get calibration_reset_image =>
+      'Restablecer valores predeterminados de imagen';
 
   @override
-  String get calibration_dialog_confirm_title => 'Confirm';
+  String get calibration_dialog_confirm_title => 'Confirmar';
 
   @override
   String get calibration_dialog_delete_profile =>
-      'Delete calibration profile for this device?';
+      '¿Eliminar perfil de calibración para este dispositivo?';
 
   @override
-  String get calibration_action_delete => 'Delete';
+  String get calibration_action_delete => 'Eliminar';
 
   @override
   String get calibration_snack_no_profile =>
-      'No profile found for this device.';
+      'No se encontró perfil para este dispositivo.';
 
   @override
-  String get calibration_snack_profile_copied => 'Profile copied to clipboard.';
+  String get calibration_snack_profile_copied =>
+      'Perfil copiado al portapapeles.';
 
   @override
-  String get calibration_snack_clipboard_empty => 'Clipboard empty.';
+  String get calibration_snack_clipboard_empty => 'Portapapeles vacío.';
 
   @override
   String get calibration_snack_profile_imported =>
-      'Profile imported and saved for this device.';
+      'Perfil importado y guardado para este dispositivo.';
 
   @override
   String calibration_snack_import_error(String error) {
-    return 'JSON import error: $error';
+    return 'Error de importación JSON: $error';
   }
 
   @override
   String get calibration_snack_profile_deleted =>
-      'Profile deleted for this device.';
+      'Perfil eliminado para este dispositivo.';
 
   @override
   String get calibration_snack_no_calibration =>
-      'No calibration saved. Calibrate from dashboard first.';
+      'No hay calibración guardada. Calibre desde el tablero primero.';
 
   @override
   String get calibration_snack_saved_as_profile =>
-      'Current calibration saved as profile for this device.';
+      'Calibración actual guardada como perfil para este dispositivo.';
 
   @override
   String calibration_snack_save_error(String error) {
-    return 'Error while saving: $error';
+    return 'Error al guardar: $error';
   }
 
   @override
-  String get calibration_overlay_saved => 'Calibration saved';
+  String get calibration_overlay_saved => 'Calibración guardada';
 
   @override
   String calibration_overlay_error_save(String error) {
-    return 'Calibration save error: $error';
+    return 'Error al guardar calibración: $error';
   }
 
   @override
   String get calibration_instruction_image =>
-      'Drag to move, pinch to zoom the background image.';
+      'Arrastre para mover, pellizque para hacer zoom en la imagen de fondo.';
 
   @override
   String get calibration_instruction_sky =>
-      'Adjust the day/night ovoid (center, size, rotation).';
+      'Ajuste el ovoide día/noche (centro, tamaño, rotación).';
 
   @override
   String get calibration_instruction_modules =>
-      'Move the modules (bubbles) to the desired location.';
+      'Mueva los módulos (burbujas) a la ubicación deseada.';
 
   @override
-  String get calibration_instruction_none => 'Select a tool to start.';
+  String get calibration_instruction_none =>
+      'Seleccione una herramienta para comenzar.';
 
   @override
-  String get calibration_tool_image => 'Image';
+  String get calibration_tool_image => 'Imagen';
 
   @override
-  String get calibration_tool_sky => 'Sky';
+  String get calibration_tool_sky => 'Cielo';
 
   @override
-  String get calibration_tool_modules => 'Modules';
+  String get calibration_tool_modules => 'Módulos';
 
   @override
-  String get calibration_action_validate_exit => 'Validate & Exit';
+  String get calibration_action_validate_exit => 'Validar y salir';
 
   @override
-  String get garden_management_create_title => 'Créer un jardin';
+  String get garden_management_create_title => 'Crear un jardín';
 
   @override
-  String get garden_management_edit_title => 'Modifier le jardin';
+  String get garden_management_edit_title => 'Editar jardín';
 
   @override
-  String get garden_management_name_label => 'Nom du jardin';
+  String get garden_management_name_label => 'Nombre del jardín';
 
   @override
-  String get garden_management_desc_label => 'Description';
+  String get garden_management_desc_label => 'Descripción';
 
   @override
-  String get garden_management_image_label => 'Image du jardin (optionnel)';
+  String get garden_management_image_label => 'Imagen del jardín (Opcional)';
 
   @override
-  String get garden_management_image_url_label => 'URL de l\'image';
+  String get garden_management_image_url_label => 'URL de la imagen';
 
   @override
   String get garden_management_image_preview_error =>
-      'Impossible de charger l\'image';
+      'No se puede cargar la imagen';
 
   @override
-  String get garden_management_create_submit => 'Créer le jardin';
+  String get garden_management_create_submit => 'Crear jardín';
 
   @override
-  String get garden_management_create_submitting => 'Création...';
+  String get garden_management_create_submitting => 'Creando...';
 
   @override
-  String get garden_management_created_success => 'Jardin créé avec succès';
+  String get garden_management_created_success => 'Jardín creado con éxito';
 
   @override
-  String get garden_management_create_error => 'Échec de la création du jardin';
+  String get garden_management_create_error => 'Error al crear jardín';
 
   @override
-  String get garden_management_delete_confirm_title => 'Supprimer le jardin';
+  String get garden_management_delete_confirm_title => 'Eliminar jardín';
 
   @override
   String get garden_management_delete_confirm_body =>
-      'Êtes-vous sûr de vouloir supprimer ce jardin ? Cette action supprimera également toutes les parcelles et plantations associées. Cette action est irréversible.';
+      '¿Está seguro de que desea eliminar este jardín? Esto también eliminará todas las parcelas y plantaciones asociadas. Esta acción es irreversible.';
 
   @override
-  String get garden_management_delete_success => 'Jardin supprimé avec succès';
+  String get garden_management_delete_success => 'Jardín eliminado con éxito';
 
   @override
-  String get garden_management_archived_tag => 'Jardin archivé';
+  String get garden_management_archived_tag => 'Jardín archivado';
 
   @override
-  String get garden_management_beds_title => 'Parcelles';
+  String get garden_management_beds_title => 'Parcelas del jardín';
 
   @override
-  String get garden_management_no_beds_title => 'Aucune parcelle';
+  String get garden_management_no_beds_title => 'Sin parcelas';
 
   @override
   String get garden_management_no_beds_desc =>
-      'Créez des parcelles pour organiser vos plantations';
+      'Cree parcelas para organizar sus plantaciones';
 
   @override
-  String get garden_management_add_bed_label => 'Créer une parcelle';
+  String get garden_management_add_bed_label => 'Crear parcela';
 
   @override
-  String get garden_management_stats_beds => 'Parcelles';
+  String get garden_management_stats_beds => 'Parcelas';
 
   @override
-  String get garden_management_stats_area => 'Surface totale';
+  String get garden_management_stats_area => 'Área total';
 
   @override
-  String get dashboard_weather_stats => 'Weather Details';
+  String get dashboard_weather_stats => 'Detalles del clima';
 
   @override
-  String get dashboard_soil_temp => 'Soil Temp';
+  String get dashboard_soil_temp => 'Temp. suelo';
 
   @override
-  String get dashboard_air_temp => 'Temperature';
+  String get dashboard_air_temp => 'Temperatura';
 
   @override
-  String get dashboard_statistics => 'Statistics';
+  String get dashboard_statistics => 'Estadísticas';
 
   @override
-  String get dashboard_calendar => 'Calendar';
+  String get dashboard_calendar => 'Calendario';
 
   @override
-  String get dashboard_activities => 'Activities';
+  String get dashboard_activities => 'Actividades';
 
   @override
-  String get dashboard_weather => 'Weather';
+  String get dashboard_weather => 'Clima';
 
   @override
-  String get dashboard_settings => 'Settings';
+  String get dashboard_settings => 'Ajustes';
 
   @override
   String dashboard_garden_n(int number) {
-    return 'Garden $number';
+    return 'Jardín $number';
   }
 
   @override
   String dashboard_garden_created(String name) {
-    return 'Garden \"$name\" created successfully';
+    return 'Jardín \"$name\" creado con éxito';
   }
 
   @override
-  String get dashboard_garden_create_error => 'Error creating garden.';
+  String get dashboard_garden_create_error => 'Error al crear jardín.';
 
   @override
-  String get calendar_title => 'Growing Calendar';
+  String get calendar_title => 'Calendario de cultivo';
 
   @override
-  String get calendar_refreshed => 'Calendar refreshed';
+  String get calendar_refreshed => 'Calendario actualizado';
 
   @override
-  String get calendar_new_task_tooltip => 'New Task';
+  String get calendar_new_task_tooltip => 'Nueva tarea';
 
   @override
-  String get calendar_task_saved_title => 'Task saved';
+  String get calendar_task_saved_title => 'Tarea guardada';
 
   @override
-  String get calendar_ask_export_pdf => 'Do you want to send it as PDF?';
+  String get calendar_ask_export_pdf => '¿Desea enviarla como PDF?';
 
   @override
-  String get calendar_task_modified => 'Task modified';
+  String get calendar_task_modified => 'Tarea modificada';
 
   @override
-  String get calendar_delete_confirm_title => 'Delete task?';
+  String get calendar_delete_confirm_title => '¿Eliminar tarea?';
 
   @override
   String calendar_delete_confirm_content(String title) {
-    return '\"$title\" will be deleted.';
+    return '\"$title\" será eliminada.';
   }
 
   @override
-  String get calendar_task_deleted => 'Task deleted';
+  String get calendar_task_deleted => 'Tarea eliminada';
 
   @override
   String calendar_restore_error(Object error) {
-    return 'Restore error: $error';
+    return 'Error de restauración: $error';
   }
 
   @override
   String calendar_delete_error(Object error) {
-    return 'Delete error: $error';
+    return 'Error de eliminación: $error';
   }
 
   @override
-  String get calendar_action_assign => 'Send / Assign to...';
+  String get calendar_action_assign => 'Enviar / Asignar a...';
 
   @override
-  String get calendar_assign_title => 'Assign / Send';
+  String get calendar_assign_title => 'Asignar / Enviar';
 
   @override
-  String get calendar_assign_hint => 'Enter name or email';
+  String get calendar_assign_hint => 'Ingrese nombre o correo electrónico';
 
   @override
-  String get calendar_assign_field => 'Name or Email';
+  String get calendar_assign_field => 'Nombre o correo electrónico';
 
   @override
   String calendar_task_assigned(String name) {
-    return 'Task assigned to $name';
+    return 'Tarea asignada a $name';
   }
 
   @override
   String calendar_assign_error(Object error) {
-    return 'Assignment error: $error';
+    return 'Error de asignación: $error';
   }
 
   @override
   String calendar_export_error(Object error) {
-    return 'PDF Export error: $error';
+    return 'Error de exportación PDF: $error';
   }
 
   @override
-  String get calendar_previous_month => 'Previous month';
+  String get calendar_previous_month => 'Mes anterior';
 
   @override
-  String get calendar_next_month => 'Next month';
+  String get calendar_next_month => 'Mes siguiente';
 
   @override
-  String get calendar_limit_reached => 'Limit reached';
+  String get calendar_limit_reached => 'Límite alcanzado';
 
   @override
-  String get calendar_drag_instruction => 'Swipe to navigate';
+  String get calendar_drag_instruction => 'Deslizar para navegar';
 
   @override
-  String get common_refresh => 'Refresh';
+  String get common_refresh => 'Actualizar';
 
   @override
-  String get common_yes => 'Yes';
+  String get common_yes => 'Sí';
 
   @override
   String get common_no => 'No';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => 'Eliminar';
 
   @override
-  String get common_edit => 'Edit';
+  String get common_edit => 'Editar';
 
   @override
-  String get common_undo => 'Undo';
+  String get common_undo => 'Deshacer';
 
   @override
   String common_error_prefix(Object error) {
@@ -640,313 +648,307 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => 'Reintentar';
 
   @override
-  String get calendar_no_events => 'No events today';
+  String get calendar_no_events => 'Sin eventos hoy';
 
   @override
   String calendar_events_of(String date) {
-    return 'Events of $date';
+    return 'Eventos del $date';
   }
 
   @override
-  String get calendar_section_plantings => 'Plantings';
+  String get calendar_section_plantings => 'Plantaciones';
 
   @override
-  String get calendar_section_harvests => 'Expected harvests';
+  String get calendar_section_harvests => 'Cosechas esperadas';
 
   @override
-  String get calendar_section_tasks => 'Scheduled tasks';
+  String get calendar_section_tasks => 'Tareas programadas';
 
   @override
-  String get calendar_filter_tasks => 'Tasks';
+  String get calendar_filter_tasks => 'Tareas';
 
   @override
-  String get calendar_filter_maintenance => 'Maintenance';
+  String get calendar_filter_maintenance => 'Mantenimiento';
 
   @override
-  String get calendar_filter_harvests => 'Harvests';
+  String get calendar_filter_harvests => 'Cosechas';
 
   @override
-  String get calendar_filter_urgent => 'Urgent';
+  String get calendar_filter_urgent => 'Urgente';
 
   @override
-  String get common_general_error => 'An error occurred';
+  String get common_general_error => 'Ocurrió un error';
 
   @override
   String get common_error => 'Error';
 
   @override
-  String get task_editor_title_new => 'New Task';
+  String get task_editor_title_new => 'Nueva tarea';
 
   @override
-  String get task_editor_title_edit => 'Edit Task';
+  String get task_editor_title_edit => 'Editar tarea';
 
   @override
-  String get task_editor_title_field => 'Title *';
+  String get task_editor_title_field => 'Título *';
 
   @override
-  String get activity_screen_title => 'Activités & Historique';
+  String get activity_screen_title => 'Actividades e Historial';
 
   @override
   String activity_tab_recent_garden(String gardenName) {
-    return 'Récentes ($gardenName)';
+    return 'Reciente ($gardenName)';
   }
 
   @override
-  String get activity_tab_recent_global => 'Récentes (Global)';
+  String get activity_tab_recent_global => 'Reciente (Global)';
 
   @override
-  String get activity_tab_history => 'Historique';
+  String get activity_tab_history => 'Historial';
 
   @override
-  String get activity_history_section_title => 'Historique — ';
+  String get activity_history_section_title => 'Historial — ';
 
   @override
   String get activity_history_empty =>
-      'Aucun jardin sélectionné.\nPour consulter l’historique d’un jardin, sélectionnez-le par un appui long depuis le tableau de bord.';
+      'Ningún jardín seleccionado.\nPara ver el historial de un jardín, manténgalo presionado desde el tablero.';
 
   @override
-  String get activity_empty_title => 'Aucune activité trouvée';
+  String get activity_empty_title => 'No se encontraron actividades';
 
   @override
   String get activity_empty_subtitle =>
-      'Les activités de jardinage apparaîtront ici';
+      'Las actividades de jardinería aparecerán aquí';
 
   @override
-  String get activity_error_loading => 'Erreur lors du chargement';
+  String get activity_error_loading => 'Error al cargar actividades';
 
   @override
-  String get activity_priority_important => 'Important';
+  String get activity_priority_important => 'Importante';
 
   @override
   String get activity_priority_normal => 'Normal';
 
   @override
-  String get activity_time_just_now => 'À l\'instant';
+  String get activity_time_just_now => 'Ahora mismo';
 
   @override
   String activity_time_minutes_ago(int minutes) {
-    return 'Il y a $minutes min';
+    return 'hace $minutes min';
   }
 
   @override
   String activity_time_hours_ago(int hours) {
-    return 'Il y a $hours h';
+    return 'hace $hours h';
   }
 
   @override
   String activity_time_days_ago(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Il y a $count jours',
-      one: 'Il y a 1 jour',
-    );
-    return '$_temp0';
+    return 'hace $count días';
   }
 
   @override
   String activity_metadata_garden(String name) {
-    return 'Jardin: $name';
+    return 'Jardín: $name';
   }
 
   @override
   String activity_metadata_bed(String name) {
-    return 'Parcelle: $name';
+    return 'Parcela: $name';
   }
 
   @override
   String activity_metadata_plant(String name) {
-    return 'Plante: $name';
+    return 'Planta: $name';
   }
 
   @override
   String activity_metadata_quantity(String quantity) {
-    return 'Quantité: $quantity';
+    return 'Cantidad: $quantity';
   }
 
   @override
   String activity_metadata_date(String date) {
-    return 'Date: $date';
+    return 'Fecha: $date';
   }
 
   @override
   String activity_metadata_maintenance(String type) {
-    return 'Maintenance: $type';
+    return 'Mantenimiento: $type';
   }
 
   @override
   String activity_metadata_weather(String weather) {
-    return 'Météo: $weather';
+    return 'Clima: $weather';
   }
 
   @override
-  String get task_editor_error_title_required => 'Required';
+  String get task_editor_error_title_required => 'Requerido';
 
   @override
-  String get history_hint_title => 'Pour consulter l’historique d’un jardin';
+  String get history_hint_title => 'Para ver el historial de un jardín';
 
   @override
   String get history_hint_body =>
-      'Sélectionnez-le par un appui long depuis le tableau de bord.';
+      'Selecciónelo manteniendo presionado desde el tablero.';
 
   @override
-  String get history_hint_action => 'Aller au tableau de bord';
+  String get history_hint_action => 'Ir al tablero';
 
   @override
   String activity_desc_garden_created(String name) {
-    return 'Jardin \"$name\" créé';
+    return 'Jardín \"$name\" creado';
   }
 
   @override
   String activity_desc_bed_created(String name) {
-    return 'Parcelle \"$name\" créée';
+    return 'Parcela \"$name\" creada';
   }
 
   @override
   String activity_desc_planting_created(String name) {
-    return 'Plantation de \"$name\" ajoutée';
+    return 'Plantación de \"$name\" añadida';
   }
 
   @override
   String activity_desc_germination(String name) {
-    return 'Germination de \"$name\" confirmée';
+    return 'Germinación de \"$name\" confirmada';
   }
 
   @override
   String activity_desc_harvest(String name) {
-    return 'Récolte de \"$name\" enregistrée';
+    return 'Cosecha de \"$name\" registrada';
   }
 
   @override
   String activity_desc_maintenance(String type) {
-    return 'Maintenance : $type';
+    return 'Mantenimiento: $type';
   }
 
   @override
   String activity_desc_garden_deleted(String name) {
-    return 'Jardin \"$name\" supprimé';
+    return 'Jardín \"$name\" eliminado';
   }
 
   @override
   String activity_desc_bed_deleted(String name) {
-    return 'Parcelle \"$name\" supprimée';
+    return 'Parcela \"$name\" eliminada';
   }
 
   @override
   String activity_desc_planting_deleted(String name) {
-    return 'Plantation de \"$name\" supprimée';
+    return 'Plantación de \"$name\" eliminada';
   }
 
   @override
   String activity_desc_garden_updated(String name) {
-    return 'Jardin \"$name\" mis à jour';
+    return 'Jardín \"$name\" actualizado';
   }
 
   @override
   String activity_desc_bed_updated(String name) {
-    return 'Parcelle \"$name\" mise à jour';
+    return 'Parcela \"$name\" actualizada';
   }
 
   @override
   String activity_desc_planting_updated(String name) {
-    return 'Plantation de \"$name\" mise à jour';
+    return 'Plantación de \"$name\" actualizada';
   }
 
   @override
-  String get planting_steps_title => 'Pas-à-pas';
+  String get planting_steps_title => 'Paso a paso';
 
   @override
-  String get planting_steps_add_button => 'Ajouter';
+  String get planting_steps_add_button => 'Añadir';
 
   @override
-  String get planting_steps_see_less => 'Voir moins';
+  String get planting_steps_see_less => 'Ver menos';
 
   @override
-  String get planting_steps_see_all => 'Voir tout';
+  String get planting_steps_see_all => 'Ver todo';
 
   @override
-  String get planting_steps_empty => 'Aucune étape recommandée';
+  String get planting_steps_empty => 'No hay pasos recomendados';
 
   @override
   String planting_steps_more(int count) {
-    return '+ $count autres étapes';
+    return '+ $count pasos más';
   }
 
   @override
-  String get planting_steps_prediction_badge => 'Prédiction';
+  String get planting_steps_prediction_badge => 'Predicción';
 
   @override
   String planting_steps_date_prefix(String date) {
-    return 'Le $date';
+    return 'El $date';
   }
 
   @override
-  String get planting_steps_done => 'Fait';
+  String get planting_steps_done => 'Hecho';
 
   @override
-  String get planting_steps_mark_done => 'Marquer fait';
+  String get planting_steps_mark_done => 'Marcar como hecho';
 
   @override
-  String get planting_steps_dialog_title => 'Ajouter étape';
+  String get planting_steps_dialog_title => 'Añadir paso';
 
   @override
-  String get planting_steps_dialog_hint => 'Ex: Paillage léger';
+  String get planting_steps_dialog_hint => 'Ej: Acolchado ligero';
 
   @override
-  String get planting_steps_dialog_add => 'Ajouter';
+  String get planting_steps_dialog_add => 'Añadir';
 
   @override
-  String get planting_status_sown => 'Semé';
+  String get planting_status_sown => 'Sembrado';
 
   @override
-  String get planting_status_planted => 'Planté';
+  String get planting_status_planted => 'Plantado';
 
   @override
-  String get planting_status_growing => 'En croissance';
+  String get planting_status_growing => 'En crecimiento';
 
   @override
-  String get planting_status_ready => 'Prêt à récolter';
+  String get planting_status_ready => 'Listo para cosechar';
 
   @override
-  String get planting_status_harvested => 'Récolté';
+  String get planting_status_harvested => 'Cosechado';
 
   @override
-  String get planting_status_failed => 'Échoué';
+  String get planting_status_failed => 'Fallido';
 
   @override
   String planting_card_sown_date(String date) {
-    return 'Semé le $date';
+    return 'Sembrado el $date';
   }
 
   @override
   String planting_card_planted_date(String date) {
-    return 'Planté le $date';
+    return 'Plantado el $date';
   }
 
   @override
   String planting_card_harvest_estimate(String date) {
-    return 'Récolte estimée : $date';
+    return 'Est. cosecha: $date';
   }
 
   @override
-  String get planting_info_title => 'Informations botaniques';
+  String get planting_info_title => 'Info botánica';
 
   @override
-  String get planting_info_tips_title => 'Conseils de culture';
+  String get planting_info_tips_title => 'Consejos de cultivo';
 
   @override
-  String get planting_info_maturity => 'Maturité';
+  String get planting_info_maturity => 'Madurez';
 
   @override
   String planting_info_days(Object days) {
-    return '$days jours';
+    return '$days días';
   }
 
   @override
-  String get planting_info_spacing => 'Espacement';
+  String get planting_info_spacing => 'Espaciamiento';
 
   @override
   String planting_info_cm(Object cm) {
@@ -954,1158 +956,1158 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get planting_info_depth => 'Profondeur';
+  String get planting_info_depth => 'Profundidad';
 
   @override
-  String get planting_info_exposure => 'Exposition';
+  String get planting_info_exposure => 'Exposición';
 
   @override
-  String get planting_info_water => 'Arrosage';
+  String get planting_info_water => 'Agua';
 
   @override
-  String get planting_info_season => 'Saison plantation';
+  String get planting_info_season => 'Temporada de siembra';
 
   @override
   String get planting_info_scientific_name_none =>
-      'Nom scientifique non disponible';
+      'Nombre científico no disponible';
 
   @override
-  String get planting_info_culture_title => 'Informations de culture';
+  String get planting_info_culture_title => 'Información de cultivo';
 
   @override
-  String get planting_info_germination => 'Temps de germination';
+  String get planting_info_germination => 'Tiempo de germinación';
 
   @override
-  String get planting_info_harvest_time => 'Temps de récolte';
+  String get planting_info_harvest_time => 'Tiempo de cosecha';
 
   @override
-  String get planting_info_none => 'Non spécifié';
+  String get planting_info_none => 'No especificado';
 
   @override
-  String get planting_tips_none => 'Aucun conseil disponible';
+  String get planting_tips_none => 'No hay consejos disponibles';
 
   @override
-  String get planting_history_title => 'Historique des actions';
+  String get planting_history_title => 'Historial de acciones';
 
   @override
-  String get planting_history_action_planting => 'Plantation';
+  String get planting_history_action_planting => 'Plantación';
 
   @override
-  String get planting_history_todo =>
-      'L\'historique détaillé sera disponible prochainement';
+  String get planting_history_todo => 'Historial detallado próximamente';
 
   @override
-  String get task_editor_garden_all => 'All Gardens';
+  String get task_editor_garden_all => 'Todos los jardines';
 
   @override
-  String get task_editor_zone_label => 'Zone (Bed)';
+  String get task_editor_zone_label => 'Zona (Parcela)';
 
   @override
-  String get task_editor_zone_none => 'No specific zone';
+  String get task_editor_zone_none => 'Sin zona específica';
 
   @override
-  String get task_editor_zone_empty => 'No beds for this garden';
+  String get task_editor_zone_empty => 'No hay parcelas para este jardín';
 
   @override
-  String get task_editor_description_label => 'Description';
+  String get task_editor_description_label => 'Descripción';
 
   @override
-  String get task_editor_date_label => 'Start Date';
+  String get task_editor_date_label => 'Fecha de inicio';
 
   @override
-  String get task_editor_time_label => 'Time';
+  String get task_editor_time_label => 'Hora';
 
   @override
-  String get task_editor_duration_label => 'Estimated Duration';
+  String get task_editor_duration_label => 'Duración estimada';
 
   @override
-  String get task_editor_duration_other => 'Other';
+  String get task_editor_duration_other => 'Otro';
 
   @override
-  String get task_editor_type_label => 'Task Type';
+  String get task_editor_type_label => 'Tipo de tarea';
 
   @override
-  String get task_editor_priority_label => 'Priority';
+  String get task_editor_priority_label => 'Prioridad';
 
   @override
-  String get task_editor_urgent_label => 'Urgent';
+  String get task_editor_urgent_label => 'Urgente';
 
   @override
-  String get task_editor_option_none => 'None (Save Only)';
+  String get task_editor_option_none => 'Ninguno (Solo guardar)';
 
   @override
-  String get task_editor_option_share => 'Share (Text)';
+  String get task_editor_option_share => 'Compartir (Texto)';
 
   @override
-  String get task_editor_option_pdf => 'Export — PDF';
+  String get task_editor_option_pdf => 'Exportar — PDF';
 
   @override
-  String get task_editor_option_docx => 'Export — Word (.docx)';
+  String get task_editor_option_docx => 'Exportar — Word (.docx)';
 
   @override
-  String get task_editor_export_label => 'Output / Share';
+  String get task_editor_export_label => 'Salida / Compartir';
 
   @override
-  String get task_editor_photo_placeholder => 'Add Photo (Coming Soon)';
+  String get task_editor_photo_placeholder => 'Añadir foto (Próximamente)';
 
   @override
-  String get task_editor_action_create => 'Create';
+  String get task_editor_action_create => 'Crear';
 
   @override
-  String get task_editor_action_save => 'Save';
+  String get task_editor_action_save => 'Guardar';
 
   @override
-  String get task_editor_action_cancel => 'Cancel';
+  String get task_editor_action_cancel => 'Cancelar';
 
   @override
-  String get task_editor_assignee_label => 'Assigned to';
+  String get task_editor_assignee_label => 'Asignado a';
 
   @override
   String task_editor_assignee_add(String name) {
-    return 'Add \"$name\" to favorites';
+    return 'Añadir \"$name\" a favoritos';
   }
 
   @override
-  String get task_editor_assignee_none => 'No results.';
+  String get task_editor_assignee_none => 'Sin resultados.';
 
   @override
-  String get task_editor_recurrence_label => 'Recurrence';
+  String get task_editor_recurrence_label => 'Recurrencia';
 
   @override
-  String get task_editor_recurrence_none => 'None';
+  String get task_editor_recurrence_none => 'Ninguna';
 
   @override
-  String get task_editor_recurrence_interval => 'Every X days';
+  String get task_editor_recurrence_interval => 'Cada X días';
 
   @override
-  String get task_editor_recurrence_weekly => 'Weekly (Days)';
+  String get task_editor_recurrence_weekly => 'Semanalmente (Días)';
 
   @override
-  String get task_editor_recurrence_monthly => 'Monthly (same day)';
+  String get task_editor_recurrence_monthly => 'Mensualmente (mismo día)';
 
   @override
-  String get task_editor_recurrence_repeat_label => 'Repeat every ';
+  String get task_editor_recurrence_repeat_label => 'Repetir cada ';
 
   @override
   String get task_editor_recurrence_days_suffix => ' d';
 
   @override
-  String get task_kind_generic => 'Generic';
+  String get task_kind_generic => 'Genérico';
 
   @override
-  String get task_kind_repair => 'Repair 🛠️';
+  String get task_kind_repair => 'Reparación 🛠️';
 
   @override
-  String get soil_temp_title => 'Soil Temperature';
+  String get soil_temp_title => 'Temperatura del suelo';
 
   @override
   String soil_temp_chart_error(Object error) {
-    return 'Chart error: $error';
+    return 'Error de gráfico: $error';
   }
 
   @override
-  String get soil_temp_about_title => 'About Soil Temperature';
+  String get soil_temp_about_title => 'Acerca de la temp. del suelo';
 
   @override
   String get soil_temp_about_content =>
-      'The soil temperature displayed here is estimated by the application based on climatic and seasonal data, using a built-in calculation formula.\n\nThis estimation provides a realistic trend of soil temperature when no direct measurement is available.';
+      'La temperatura del suelo mostrada aquí es estimada por la aplicación basándose en datos climáticos y estacionales, utilizando una fórmula de cálculo integrada.\n\nEsta estimación proporciona una tendencia realista de la temperatura del suelo cuando no hay medición directa disponible.';
 
   @override
-  String get soil_temp_formula_label => 'Calculation formula used:';
+  String get soil_temp_formula_label => 'Fórmula de cálculo utilizada:';
 
   @override
   String get soil_temp_formula_content =>
-      'Soil Temperature = f(air temperature, season, soil inertia)\n(Exact formula defined in the application code)';
+      'Temp. Suelo = f(temp. aire, estación, inercia del suelo)\n(Fórmula exacta definida en el código de la aplicación)';
 
   @override
-  String get soil_temp_current_label => 'Current Temperature';
+  String get soil_temp_current_label => 'Temperatura actual';
 
   @override
-  String get soil_temp_action_measure => 'Edit / Measure';
+  String get soil_temp_action_measure => 'Editar / Medir';
 
   @override
   String get soil_temp_measure_hint =>
-      'You can manually enter the soil temperature in the \'Edit / Measure\' tab.';
+      'Puede ingresar manualmente la temperatura del suelo en la pestaña \'Editar / Medir\'.';
 
   @override
   String soil_temp_catalog_error(Object error) {
-    return 'Catalog error: $error';
+    return 'Error del catálogo: $error';
   }
 
   @override
   String soil_temp_advice_error(Object error) {
-    return 'Advice error: $error';
+    return 'Error de consejo: $error';
   }
 
   @override
-  String get soil_temp_db_empty => 'Plant database is empty.';
+  String get soil_temp_db_empty => 'La base de datos de plantas está vacía.';
 
   @override
-  String get soil_temp_reload_plants => 'Reload plants';
+  String get soil_temp_reload_plants => 'Recargar plantas';
 
   @override
-  String get soil_temp_no_advice => 'No plants with germination data found.';
+  String get soil_temp_no_advice =>
+      'No se encontraron plantas con datos de germinación.';
 
   @override
-  String get soil_advice_status_ideal => 'Optimal';
+  String get soil_advice_status_ideal => 'Óptimo';
 
   @override
-  String get soil_advice_status_sow_now => 'Sow Now';
+  String get soil_advice_status_sow_now => 'Sembrar ahora';
 
   @override
-  String get soil_advice_status_sow_soon => 'Soon';
+  String get soil_advice_status_sow_soon => 'Pronto';
 
   @override
-  String get soil_advice_status_wait => 'Wait';
+  String get soil_advice_status_wait => 'Esperar';
 
   @override
-  String get soil_sheet_title => 'Soil Temperature';
+  String get soil_sheet_title => 'Temperatura del suelo';
 
   @override
   String soil_sheet_last_measure(String temp, String date) {
-    return 'Last measure: $temp°C ($date)';
+    return 'Última medida: $temp°C ($date)';
   }
 
   @override
-  String get soil_sheet_new_measure => 'New measure (Anchor)';
+  String get soil_sheet_new_measure => 'Nueva medida (Ancla)';
 
   @override
-  String get soil_sheet_input_label => 'Temperature (°C)';
+  String get soil_sheet_input_label => 'Temperatura (°C)';
 
   @override
-  String get soil_sheet_input_error => 'Invalid value (-10.0 to 45.0)';
+  String get soil_sheet_input_error => 'Valor inválido (-10.0 a 45.0)';
 
   @override
   String get soil_sheet_input_hint => '0.0';
 
   @override
-  String get soil_sheet_action_cancel => 'Cancel';
+  String get soil_sheet_action_cancel => 'Cancelar';
 
   @override
-  String get soil_sheet_action_save => 'Save';
+  String get soil_sheet_action_save => 'Guardar';
 
   @override
-  String get soil_sheet_snack_invalid => 'Invalid value. Enter -10.0 to 45.0';
+  String get soil_sheet_snack_invalid =>
+      'Valor inválido. Ingrese entre -10.0 y 45.0';
 
   @override
-  String get soil_sheet_snack_success => 'Measure saved as anchor';
+  String get soil_sheet_snack_success => 'Medida guardada como ancla';
 
   @override
   String soil_sheet_snack_error(Object error) {
-    return 'Save error: $error';
+    return 'Error al guardar: $error';
   }
 
   @override
-  String get weather_screen_title => 'Weather';
+  String get weather_screen_title => 'Clima';
 
   @override
-  String get weather_provider_credit => 'Data provided by Open-Meteo';
+  String get weather_provider_credit => 'Datos proporcionados por Open-Meteo';
 
   @override
-  String get weather_error_loading => 'Unable to load weather';
+  String get weather_error_loading => 'No se puede cargar el clima';
 
   @override
-  String get weather_action_retry => 'Retry';
+  String get weather_action_retry => 'Reintentar';
 
   @override
-  String get weather_header_next_24h => 'NEXT 24H';
+  String get weather_header_next_24h => 'PRÓXIMAS 24H';
 
   @override
-  String get weather_header_daily_summary => 'DAILY SUMMARY';
+  String get weather_header_daily_summary => 'RESUMEN DIARIO';
 
   @override
-  String get weather_header_precipitations => 'PRECIPITATION (24h)';
+  String get weather_header_precipitations => 'PRECIPITACIÓN (24h)';
 
   @override
-  String get weather_label_wind => 'WIND';
+  String get weather_label_wind => 'VIENTO';
 
   @override
-  String get weather_label_pressure => 'PRESSURE';
+  String get weather_label_pressure => 'PRESIÓN';
 
   @override
-  String get weather_label_sun => 'SUN';
+  String get weather_label_sun => 'SOL';
 
   @override
   String get weather_label_astro => 'ASTRO';
 
   @override
-  String get weather_data_speed => 'Speed';
+  String get weather_data_speed => 'Velocidad';
 
   @override
-  String get weather_data_gusts => 'Gusts';
+  String get weather_data_gusts => 'Ráfagas';
 
   @override
-  String get weather_data_sunrise => 'Sunrise';
+  String get weather_data_sunrise => 'Amanecer';
 
   @override
-  String get weather_data_sunset => 'Sunset';
+  String get weather_data_sunset => 'Atardecer';
 
   @override
-  String get weather_data_rain => 'Rain';
+  String get weather_data_rain => 'Lluvia';
 
   @override
-  String get weather_data_max => 'Max';
+  String get weather_data_max => 'Máx';
 
   @override
-  String get weather_data_min => 'Min';
+  String get weather_data_min => 'Mín';
 
   @override
-  String get weather_data_wind_max => 'Max Wind';
+  String get weather_data_wind_max => 'Viento Máx';
 
   @override
-  String get weather_pressure_high => 'High';
+  String get weather_pressure_high => 'Alta';
 
   @override
-  String get weather_pressure_low => 'Low';
+  String get weather_pressure_low => 'Baja';
 
   @override
-  String get weather_today_label => 'Today';
+  String get weather_today_label => 'Hoy';
 
   @override
-  String get moon_phase_new => 'New Moon';
+  String get moon_phase_new => 'Luna Nueva';
 
   @override
-  String get moon_phase_waxing_crescent => 'Waxing Crescent';
+  String get moon_phase_waxing_crescent => 'Luna Creciente';
 
   @override
-  String get moon_phase_first_quarter => 'First Quarter';
+  String get moon_phase_first_quarter => 'Cuarto Creciente';
 
   @override
-  String get moon_phase_waxing_gibbous => 'Waxing Gibbous';
+  String get moon_phase_waxing_gibbous => 'Gibosa Creciente';
 
   @override
-  String get moon_phase_full => 'Full Moon';
+  String get moon_phase_full => 'Luna Llena';
 
   @override
-  String get moon_phase_waning_gibbous => 'Waning Gibbous';
+  String get moon_phase_waning_gibbous => 'Gibosa Menguante';
 
   @override
-  String get moon_phase_last_quarter => 'Last Quarter';
+  String get moon_phase_last_quarter => 'Cuarto Menguante';
 
   @override
-  String get moon_phase_waning_crescent => 'Waning Crescent';
+  String get moon_phase_waning_crescent => 'Luna Menguante';
 
   @override
-  String get wmo_code_0 => 'Clear sky';
+  String get wmo_code_0 => 'Despejado';
 
   @override
-  String get wmo_code_1 => 'Mainly clear';
+  String get wmo_code_1 => 'Mayormente despejado';
 
   @override
-  String get wmo_code_2 => 'Partly cloudy';
+  String get wmo_code_2 => 'Parcialmente nublado';
 
   @override
-  String get wmo_code_3 => 'Overcast';
+  String get wmo_code_3 => 'Nublado';
 
   @override
-  String get wmo_code_45 => 'Fog';
+  String get wmo_code_45 => 'Niebla';
 
   @override
-  String get wmo_code_48 => 'Depositing rime fog';
+  String get wmo_code_48 => 'Niebla con escarcha';
 
   @override
-  String get wmo_code_51 => 'Light drizzle';
+  String get wmo_code_51 => 'Llovizna ligera';
 
   @override
-  String get wmo_code_53 => 'Moderate drizzle';
+  String get wmo_code_53 => 'Llovizna moderada';
 
   @override
-  String get wmo_code_55 => 'Dense drizzle';
+  String get wmo_code_55 => 'Llovizna densa';
 
   @override
-  String get wmo_code_61 => 'Slight rain';
+  String get wmo_code_61 => 'Lluvia ligera';
 
   @override
-  String get wmo_code_63 => 'Moderate rain';
+  String get wmo_code_63 => 'Lluvia moderada';
 
   @override
-  String get wmo_code_65 => 'Heavy rain';
+  String get wmo_code_65 => 'Lluvia fuerte';
 
   @override
-  String get wmo_code_66 => 'Light freezing rain';
+  String get wmo_code_66 => 'Lluvia helada ligera';
 
   @override
-  String get wmo_code_67 => 'Heavy freezing rain';
+  String get wmo_code_67 => 'Lluvia helada fuerte';
 
   @override
-  String get wmo_code_71 => 'Slight snow fall';
+  String get wmo_code_71 => 'Nevada ligera';
 
   @override
-  String get wmo_code_73 => 'Moderate snow fall';
+  String get wmo_code_73 => 'Nevada moderada';
 
   @override
-  String get wmo_code_75 => 'Heavy snow fall';
+  String get wmo_code_75 => 'Nevada fuerte';
 
   @override
-  String get wmo_code_77 => 'Snow grains';
+  String get wmo_code_77 => 'Granos de nieve';
 
   @override
-  String get wmo_code_80 => 'Slight rain showers';
+  String get wmo_code_80 => 'Chubascos de lluvia ligeros';
 
   @override
-  String get wmo_code_81 => 'Moderate rain showers';
+  String get wmo_code_81 => 'Chubascos de lluvia moderados';
 
   @override
-  String get wmo_code_82 => 'Violent rain showers';
+  String get wmo_code_82 => 'Chubascos de lluvia violentos';
 
   @override
-  String get wmo_code_85 => 'Slight snow showers';
+  String get wmo_code_85 => 'Chubascos de nieve ligeros';
 
   @override
-  String get wmo_code_86 => 'Heavy snow showers';
+  String get wmo_code_86 => 'Chubascos de nieve fuertes';
 
   @override
-  String get wmo_code_95 => 'Thunderstorm';
+  String get wmo_code_95 => 'Tormenta';
 
   @override
-  String get wmo_code_96 => 'Thunderstorm with slight hail';
+  String get wmo_code_96 => 'Tormenta con granizo ligero';
 
   @override
-  String get wmo_code_99 => 'Thunderstorm with heavy hail';
+  String get wmo_code_99 => 'Tormenta con granizo fuerte';
 
   @override
-  String get wmo_code_unknown => 'Unknown conditions';
+  String get wmo_code_unknown => 'Condiciones desconocidas';
 
   @override
-  String get task_kind_buy => 'Buy 🛒';
+  String get task_kind_buy => 'Comprar 🛒';
 
   @override
-  String get task_kind_clean => 'Clean 🧹';
+  String get task_kind_clean => 'Limpiar 🧹';
 
   @override
-  String get task_kind_watering => 'Watering 💧';
+  String get task_kind_watering => 'Regar 💧';
 
   @override
-  String get task_kind_seeding => 'Seeding 🌱';
+  String get task_kind_seeding => 'Sembrar 🌱';
 
   @override
-  String get task_kind_pruning => 'Pruning ✂️';
+  String get task_kind_pruning => 'Podar ✂️';
 
   @override
-  String get task_kind_weeding => 'Weeding 🌿';
+  String get task_kind_weeding => 'Deshierbar 🌿';
 
   @override
-  String get task_kind_amendment => 'Amendment 🪵';
+  String get task_kind_amendment => 'Enmienda 🪵';
 
   @override
-  String get task_kind_treatment => 'Treatment 🧪';
+  String get task_kind_treatment => 'Tratamiento 🧪';
 
   @override
-  String get task_kind_harvest => 'Harvest 🧺';
+  String get task_kind_harvest => 'Cosechar 🧺';
 
   @override
-  String get task_kind_winter_protection => 'Winter Protection ❄️';
+  String get task_kind_winter_protection => 'Protección invernal ❄️';
 
   @override
-  String get garden_detail_title_error => 'Erreur';
+  String get garden_detail_title_error => 'Error';
 
   @override
   String get garden_detail_subtitle_not_found =>
-      'Le jardin demande n\'existe pas ou a été supprimé.';
+      'El jardín solicitado no existe o ha sido eliminado.';
 
   @override
   String garden_detail_subtitle_error_beds(Object error) {
-    return 'Impossible de charger les planches: $error';
+    return 'No se pueden cargar las parcelas: $error';
   }
 
   @override
-  String get garden_action_edit => 'Modifier';
+  String get garden_action_edit => 'Editar';
 
   @override
-  String get garden_action_archive => 'Archiver';
+  String get garden_action_archive => 'Archivar';
 
   @override
-  String get garden_action_unarchive => 'Désarchiver';
+  String get garden_action_unarchive => 'Desarchivar';
 
   @override
-  String get garden_action_delete => 'Supprimer';
+  String get garden_action_delete => 'Eliminar';
 
   @override
   String garden_created_at(Object date) {
-    return 'Créé le $date';
+    return 'Creado el $date';
   }
 
   @override
-  String get garden_bed_delete_confirm_title => 'Supprimer la parcelle';
+  String get garden_bed_delete_confirm_title => 'Eliminar parcela';
 
   @override
   String garden_bed_delete_confirm_body(Object bedName) {
-    return 'Êtes-vous sûr de vouloir supprimer \"$bedName\" ? Cette action est irréversible.';
+    return '¿Está seguro de que desea eliminar \"$bedName\"? Esta acción es irreversible.';
   }
 
   @override
-  String get garden_bed_deleted_snack => 'Parcelle supprimée';
+  String get garden_bed_deleted_snack => 'Parcela eliminada';
 
   @override
   String garden_bed_delete_error(Object error) {
-    return 'Erreur lors de la suppression: $error';
+    return 'Error al eliminar la parcela: $error';
   }
 
   @override
-  String get common_back => 'Retour';
+  String get common_back => 'Atrás';
 
   @override
-  String get garden_action_disable => 'Désactiver';
+  String get garden_action_disable => 'Deshabilitar';
 
   @override
-  String get garden_action_enable => 'Activer';
+  String get garden_action_enable => 'Habilitar';
 
   @override
-  String get garden_action_modify => 'Modifier';
+  String get garden_action_modify => 'Modificar';
 
   @override
-  String get bed_create_title_new => 'Nouvelle parcelle';
+  String get bed_create_title_new => 'Nueva parcela';
 
   @override
-  String get bed_create_title_edit => 'Modifier la parcelle';
+  String get bed_create_title_edit => 'Editar parcela';
 
   @override
-  String get bed_form_name_label => 'Nom de la parcelle *';
+  String get bed_form_name_label => 'Nombre de la parcela *';
 
   @override
-  String get bed_form_name_hint => 'Ex: Parcelle Nord, Planche 1';
+  String get bed_form_name_hint => 'Ej: Parcela Norte, Zona 1';
 
   @override
-  String get bed_form_size_label => 'Surface (m²) *';
+  String get bed_form_size_label => 'Área (m²) *';
 
   @override
-  String get bed_form_size_hint => 'Ex: 10.5';
+  String get bed_form_size_hint => 'Ej: 10.5';
 
   @override
-  String get bed_form_desc_label => 'Description';
+  String get bed_form_desc_label => 'Descripción';
 
   @override
-  String get bed_form_desc_hint => 'Description...';
+  String get bed_form_desc_hint => 'Descripción...';
 
   @override
-  String get bed_form_submit_create => 'Créer';
+  String get bed_form_submit_create => 'Crear';
 
   @override
-  String get bed_form_submit_edit => 'Modifier';
+  String get bed_form_submit_edit => 'Guardar';
 
   @override
-  String get bed_snack_created => 'Parcelle créée avec succès';
+  String get bed_snack_created => 'Parcela creada con éxito';
 
   @override
-  String get bed_snack_updated => 'Parcelle modifiée avec succès';
+  String get bed_snack_updated => 'Parcela actualizada con éxito';
 
   @override
-  String get bed_form_error_name_required => 'Le nom est obligatoire';
+  String get bed_form_error_name_required => 'Se requiere el nombre';
 
   @override
   String get bed_form_error_name_length =>
-      'Le nom doit contenir au moins 2 caractères';
+      'El nombre debe tener al menos 2 caracteres';
 
   @override
-  String get bed_form_error_size_required => 'La surface est obligatoire';
+  String get bed_form_error_size_required => 'Se requiere el área';
 
   @override
-  String get bed_form_error_size_invalid =>
-      'Veuillez entrer une surface valide';
+  String get bed_form_error_size_invalid => 'Por favor ingrese un área válida';
 
   @override
-  String get bed_form_error_size_max =>
-      'La surface ne peut pas dépasser 1000 m²';
+  String get bed_form_error_size_max => 'El área no puede exceder los 1000 m²';
 
   @override
-  String get status_sown => 'Semé';
+  String get status_sown => 'Sembrado';
 
   @override
-  String get status_planted => 'Planté';
+  String get status_planted => 'Plantado';
 
   @override
-  String get status_growing => 'En croissance';
+  String get status_growing => 'En crecimiento';
 
   @override
-  String get status_ready_to_harvest => 'Prêt à récolter';
+  String get status_ready_to_harvest => 'Listo para cosechar';
 
   @override
-  String get status_harvested => 'Récolté';
+  String get status_harvested => 'Cosechado';
 
   @override
-  String get status_failed => 'Échoué';
+  String get status_failed => 'Fallido';
 
   @override
   String bed_card_sown_on(Object date) {
-    return 'Semé le $date';
+    return 'Sembrado el $date';
   }
 
   @override
-  String get bed_card_harvest_start => 'vers début récolte';
+  String get bed_card_harvest_start => 'inicio cosecha aprox.';
 
   @override
-  String get bed_action_harvest => 'Récolter';
+  String get bed_action_harvest => 'Cosechar';
 
   @override
-  String get lifecycle_error_title => 'Erreur lors du calcul du cycle de vie';
+  String get lifecycle_error_title => 'Error al calcular ciclo';
 
   @override
-  String get lifecycle_error_prefix => 'Erreur : ';
+  String get lifecycle_error_prefix => 'Error: ';
 
   @override
-  String get lifecycle_cycle_completed => 'du cycle complété';
+  String get lifecycle_cycle_completed => 'ciclo completado';
 
   @override
-  String get lifecycle_stage_germination => 'Germination';
+  String get lifecycle_stage_germination => 'Germinación';
 
   @override
-  String get lifecycle_stage_growth => 'Croissance';
+  String get lifecycle_stage_growth => 'Crecimiento';
 
   @override
-  String get lifecycle_stage_fruiting => 'Fructification';
+  String get lifecycle_stage_fruiting => 'Fructificación';
 
   @override
-  String get lifecycle_stage_harvest => 'Récolte';
+  String get lifecycle_stage_harvest => 'Cosecha';
 
   @override
-  String get lifecycle_stage_unknown => 'Inconnu';
+  String get lifecycle_stage_unknown => 'Desconocido';
 
   @override
-  String get lifecycle_harvest_expected => 'Récolte prévue';
+  String get lifecycle_harvest_expected => 'Cosecha esperada';
 
   @override
   String lifecycle_in_days(Object days) {
-    return 'Dans $days jours';
+    return 'En $days días';
   }
 
   @override
-  String get lifecycle_passed => 'Passée';
+  String get lifecycle_passed => 'Pasado';
 
   @override
-  String get lifecycle_now => 'Maintenant !';
+  String get lifecycle_now => '¡Ahora!';
 
   @override
-  String get lifecycle_next_action => 'Prochaine action';
+  String get lifecycle_next_action => 'Siguiente acción';
 
   @override
-  String get lifecycle_update => 'Mettre à jour le cycle';
+  String get lifecycle_update => 'Actualizar ciclo';
 
   @override
   String lifecycle_days_ago(Object days) {
-    return 'Il y a $days jours';
+    return 'hace $days días';
   }
 
   @override
-  String get planting_detail_title => 'Détails de la plantation';
+  String get planting_detail_title => 'Detalles de la siembra';
 
   @override
-  String get companion_beneficial => 'Plantes amies';
+  String get companion_beneficial => 'Plantas beneficiosas';
 
   @override
-  String get companion_avoid => 'Plantes à éviter';
+  String get companion_avoid => 'Plantas a evitar';
 
   @override
-  String get common_close => 'Fermer';
+  String get common_close => 'Cerrar';
 
   @override
-  String get bed_detail_surface => 'Surface';
+  String get bed_detail_surface => 'Área';
 
   @override
-  String get bed_detail_details => 'Détails';
+  String get bed_detail_details => 'Detalles';
 
   @override
-  String get bed_detail_notes => 'Notes';
+  String get bed_detail_notes => 'Notas';
 
   @override
-  String get bed_detail_current_plantings => 'Plantations actuelles';
+  String get bed_detail_current_plantings => 'Plantaciones actuales';
 
   @override
-  String get bed_detail_no_plantings_title => 'Aucune plantation';
+  String get bed_detail_no_plantings_title => 'Sin plantaciones';
 
   @override
   String get bed_detail_no_plantings_desc =>
-      'Cette parcelle n\'a pas encore de plantations.';
+      'Esta parcela aún no tiene plantaciones.';
 
   @override
-  String get bed_detail_add_planting => 'Ajouter une plantation';
+  String get bed_detail_add_planting => 'Añadir plantación';
 
   @override
-  String get bed_delete_planting_confirm_title => 'Supprimer la plantation ?';
+  String get bed_delete_planting_confirm_title => '¿Eliminar plantación?';
 
   @override
   String get bed_delete_planting_confirm_body =>
-      'Cette action est irréversible. Voulez-vous vraiment supprimer cette plantation ?';
+      'Esta acción es irreversible. ¿Realmente desea eliminar esta plantación?';
 
   @override
   String harvest_title(Object plantName) {
-    return 'Récolte :$plantName';
+    return 'Cosecha: $plantName';
   }
 
   @override
-  String get harvest_weight_label => 'Poids récolté (kg) *';
+  String get harvest_weight_label => 'Peso cosechado (kg) *';
 
   @override
-  String get harvest_price_label => 'Prix estimé (€/kg)';
+  String get harvest_price_label => 'Precio estimado (€/kg)';
 
   @override
   String get harvest_price_helper =>
-      'Sera mémorisé pour les prochaines récoltes de cette plante';
+      'Se recordará para futuras cosechas de esta planta';
 
   @override
-  String get harvest_notes_label => 'Notes / Qualité';
+  String get harvest_notes_label => 'Notas / Calidad';
 
   @override
-  String get harvest_action_save => 'Enregistrer';
+  String get harvest_action_save => 'Guardar';
 
   @override
-  String get harvest_snack_saved => 'Récolte enregistrée';
+  String get harvest_snack_saved => 'Cosecha registrada';
 
   @override
-  String get harvest_snack_error => 'Erreur lors de l\'enregistrement';
+  String get harvest_snack_error => 'Error al registrar cosecha';
 
   @override
-  String get harvest_form_error_required => 'Requis';
+  String get harvest_form_error_required => 'Requerido';
 
   @override
-  String get harvest_form_error_positive => 'Invalide (> 0)';
+  String get harvest_form_error_positive => 'Inválido (> 0)';
 
   @override
-  String get harvest_form_error_positive_or_zero => 'Invalide (>= 0)';
+  String get harvest_form_error_positive_or_zero => 'Inválido (>= 0)';
 
   @override
-  String get info_exposure_full_sun => 'Plein soleil';
+  String get info_exposure_full_sun => 'Pleno sol';
 
   @override
-  String get info_exposure_partial_sun => 'Mi-ombre';
+  String get info_exposure_partial_sun => 'Sol parcial';
 
   @override
-  String get info_exposure_shade => 'Ombre';
+  String get info_exposure_shade => 'Sombra';
 
   @override
-  String get info_water_low => 'Faible';
+  String get info_water_low => 'Bajo';
 
   @override
-  String get info_water_medium => 'Moyen';
+  String get info_water_medium => 'Medio';
 
   @override
-  String get info_water_high => 'Élevé';
+  String get info_water_high => 'Alto';
 
   @override
-  String get info_water_moderate => 'Modéré';
+  String get info_water_moderate => 'Moderado';
 
   @override
-  String get info_season_spring => 'Printemps';
+  String get info_season_spring => 'Primavera';
 
   @override
-  String get info_season_summer => 'Été';
+  String get info_season_summer => 'Verano';
 
   @override
-  String get info_season_autumn => 'Automne';
+  String get info_season_autumn => 'Otoño';
 
   @override
-  String get info_season_winter => 'Hiver';
+  String get info_season_winter => 'Invierno';
 
   @override
-  String get info_season_all => 'Toute saison';
+  String get info_season_all => 'Todas las estaciones';
 
   @override
-  String get common_duplicate => 'Dupliquer';
+  String get common_duplicate => 'Duplicar';
 
   @override
-  String get planting_delete_title => 'Supprimer la plantation';
+  String get planting_delete_title => 'Eliminar plantación';
 
   @override
   String get planting_delete_confirm_body =>
-      'Êtes-vous sûr de vouloir supprimer cette plantation ? Cette action est irréversible.';
+      '¿Está seguro de que desea eliminar esta plantación? Esta acción es irreversible.';
 
   @override
-  String get planting_creation_title => 'Nouvelle culture';
+  String get planting_creation_title => 'Nueva plantación';
 
   @override
-  String get planting_creation_title_edit => 'Modifier la culture';
+  String get planting_creation_title_edit => 'Editar plantación';
 
   @override
-  String get planting_quantity_seeds => 'Nombre de graines';
+  String get planting_quantity_seeds => 'Número de semillas';
 
   @override
-  String get planting_quantity_plants => 'Nombre de plants';
+  String get planting_quantity_plants => 'Número de plantas';
 
   @override
-  String get planting_quantity_required => 'La quantité est requise';
+  String get planting_quantity_required => 'Se requiere la cantidad';
 
   @override
   String get planting_quantity_positive =>
-      'La quantité doit être un nombre positif';
+      'La cantidad debe ser un número positivo';
 
   @override
   String planting_plant_selection_label(Object plantName) {
-    return 'Plante : $plantName';
+    return 'Planta: $plantName';
   }
 
   @override
-  String get planting_no_plant_selected => 'Aucune plante sélectionnée';
+  String get planting_no_plant_selected => 'Ninguna planta seleccionada';
 
   @override
-  String get planting_custom_plant_title => 'Plante personnalisée';
+  String get planting_custom_plant_title => 'Planta personalizada';
 
   @override
-  String get planting_plant_name_label => 'Nom de la plante';
+  String get planting_plant_name_label => 'Nombre de la planta';
 
   @override
-  String get planting_plant_name_hint => 'Ex: Tomate cerise';
+  String get planting_plant_name_hint => 'Ej: Tomate Cherry';
 
   @override
-  String get planting_plant_name_required => 'Le nom de la plante est requis';
+  String get planting_plant_name_required =>
+      'Se requiere el nombre de la planta';
 
   @override
-  String get planting_notes_label => 'Notes (optionnel)';
+  String get planting_notes_label => 'Notas (opcional)';
 
   @override
-  String get planting_notes_hint => 'Informations supplémentaires...';
+  String get planting_notes_hint => 'Información adicional...';
 
   @override
-  String get planting_tips_title => 'Conseils';
+  String get planting_tips_title => 'Consejos';
 
   @override
   String get planting_tips_catalog =>
-      '• Utilisez le catalogue pour sélectionner une plante.';
+      '• Utilice el catálogo para seleccionar una planta.';
 
   @override
   String get planting_tips_type =>
-      '• Choisissez \"Semé\" pour les graines, \"Planté\" pour les plants.';
+      '• Elija \"Sembrado\" para semillas, \"Plantado\" para plántulas.';
 
   @override
   String get planting_tips_notes =>
-      '• Ajoutez des notes pour suivre les conditions spéciales.';
+      '• Añada notas para rastrear condiciones especiales.';
 
   @override
   String get planting_date_future_error =>
-      'La date de plantation ne peut pas être dans le futur';
+      'La fecha de plantación no puede estar en el futuro';
 
   @override
-  String get planting_success_create => 'Culture créée avec succès';
+  String get planting_success_create => 'Plantación creada con éxito';
 
   @override
-  String get planting_success_update => 'Culture modifiée avec succès';
+  String get planting_success_update => 'Plantación actualizada con éxito';
 
   @override
-  String get stats_screen_title => 'Statistiques';
+  String get stats_screen_title => 'Estadísticas';
 
   @override
   String get stats_screen_subtitle =>
-      'Analysez en temps réel et exportez vos données.';
+      'Analiza en tiempo real y exporta tus datos.';
 
   @override
-  String get kpi_alignment_title => 'Alignement au Vivant';
+  String get kpi_alignment_title => 'Alineación Viva';
 
   @override
   String get kpi_alignment_description =>
-      'Cet outil évalue à quel point tu réalises tes semis, plantations et récoltes dans la fenêtre idéale recommandée par l\'Agenda Intelligent.';
+      'Esta herramienta evalúa cuán cerca están tus siembras, plantaciones y cosechas de las ventanas ideales recomendadas por la Agenda Inteligente.';
 
   @override
   String get kpi_alignment_cta =>
-      'Commence à planter et récolter pour voir ton alignement !';
+      '¡Comienza a plantar y cosechar para ver tu alineación!';
 
   @override
-  String get kpi_alignment_aligned => 'aligné';
+  String get kpi_alignment_aligned => 'alineado';
 
   @override
   String get kpi_alignment_total => 'Total';
 
   @override
-  String get kpi_alignment_aligned_actions => 'Alignées';
+  String get kpi_alignment_aligned_actions => 'Alineado';
 
   @override
-  String get kpi_alignment_misaligned_actions => 'Décalées';
+  String get kpi_alignment_misaligned_actions => 'Desalineado';
 
   @override
-  String get kpi_alignment_calculating => 'Calcul de l\'alignement...';
+  String get kpi_alignment_calculating => 'Calculando alineación...';
 
   @override
-  String get kpi_alignment_error => 'Erreur lors du calcul';
+  String get kpi_alignment_error => 'Error durante el cálculo';
 
   @override
-  String get pillar_economy_title => 'Économie du jardin';
+  String get pillar_economy_title => 'Economía del Jardín';
 
   @override
-  String get pillar_nutrition_title => 'Équilibre Nutritionnel';
+  String get pillar_nutrition_title => 'Equilibrio Nutricional';
 
   @override
-  String get pillar_export_title => 'Export';
+  String get pillar_export_title => 'Exportar';
 
   @override
-  String get pillar_economy_label => 'Valeur totale des récoltes';
+  String get pillar_economy_label => 'Valor total de cosecha';
 
   @override
-  String get pillar_nutrition_label => 'Signature Nutritionnelle';
+  String get pillar_nutrition_label => 'Firma Nutricional';
 
   @override
-  String get pillar_export_label => 'Récupérez vos données';
+  String get pillar_export_label => 'Recuperar sus datos';
 
   @override
-  String get pillar_export_button => 'Exporter';
+  String get pillar_export_button => 'Exportar';
 
   @override
-  String get stats_economy_title => 'Économie du Jardin';
+  String get stats_economy_title => 'Economía del Jardín';
 
   @override
   String get stats_economy_no_harvest =>
-      'Aucune récolte sur la période sélectionnée.';
+      'Sin cosecha en el período seleccionado.';
 
   @override
   String get stats_economy_no_harvest_desc =>
-      'Aucune donnée sur la période sélectionnée.';
+      'Sin datos para el período seleccionado.';
 
   @override
-  String get stats_kpi_total_revenue => 'Revenu Total';
+  String get stats_kpi_total_revenue => 'Ingresos Totales';
 
   @override
-  String get stats_kpi_total_volume => 'Volume Total';
+  String get stats_kpi_total_volume => 'Volumen Total';
 
   @override
-  String get stats_kpi_avg_price => 'Prix Moyen';
+  String get stats_kpi_avg_price => 'Precio Promedio';
 
   @override
-  String get stats_top_cultures_title => 'Top Cultures (Valeur)';
+  String get stats_top_cultures_title => 'Mejores Cultivos (Valor)';
 
   @override
-  String get stats_top_cultures_no_data => 'Aucune donnée';
+  String get stats_top_cultures_no_data => 'Sin datos';
 
   @override
-  String get stats_top_cultures_percent_revenue => 'du revenu';
+  String get stats_top_cultures_percent_revenue => 'de ingresos';
 
   @override
-  String get stats_monthly_revenue_title => 'Revenu Mensuel';
+  String get stats_monthly_revenue_title => 'Ingresos Mensuales';
 
   @override
-  String get stats_monthly_revenue_no_data => 'Pas de données mensuelles';
+  String get stats_monthly_revenue_no_data => 'Sin datos mensuales';
 
   @override
-  String get stats_dominant_culture_title => 'Culture Dominante par Mois';
+  String get stats_dominant_culture_title => 'Cultivo Dominante por Mes';
 
   @override
-  String get stats_annual_evolution_title => 'Évolution Annuelle';
+  String get stats_annual_evolution_title => 'Tendencia Anual';
 
   @override
-  String get stats_crop_distribution_title => 'Répartition par Culture';
+  String get stats_crop_distribution_title => 'Distribución de Cultivos';
 
   @override
-  String get stats_crop_distribution_others => 'Autres';
+  String get stats_crop_distribution_others => 'Otros';
 
   @override
-  String get stats_key_months_title => 'Mois Clés du Jardin';
+  String get stats_key_months_title => 'Meses Clave del Jardín';
 
   @override
-  String get stats_most_profitable => 'Le plus rentable';
+  String get stats_most_profitable => 'Más Rentable';
 
   @override
-  String get stats_least_profitable => 'Le moins rentable';
+  String get stats_least_profitable => 'Menos Rentable';
 
   @override
-  String get stats_auto_summary_title => 'Synthèse Automatique';
+  String get stats_auto_summary_title => 'Resumen Automático';
 
   @override
-  String get stats_revenue_history_title => 'Historique du Revenu';
+  String get stats_revenue_history_title => 'Historial de Ingresos';
 
   @override
-  String get stats_profitability_cycle_title => 'Cycle de Rentabilité';
+  String get stats_profitability_cycle_title => 'Ciclo de Rentabilidad';
 
   @override
-  String get stats_table_crop => 'Culture';
+  String get stats_table_crop => 'Cultivo';
 
   @override
-  String get stats_table_days => 'Jours (Moy)';
+  String get stats_table_days => 'Días (Prom)';
 
   @override
-  String get stats_table_revenue => 'Rev/Récolte';
+  String get stats_table_revenue => 'Ing/Cosecha';
 
   @override
-  String get stats_table_type => 'Type';
+  String get stats_table_type => 'Tipo';
 
   @override
-  String get stats_type_fast => 'Rapide';
+  String get stats_type_fast => 'Rápido';
 
   @override
-  String get stats_type_long_term => 'Long terme';
+  String get stats_type_long_term => 'Largo Plazo';
 
   @override
-  String get nutrition_page_title => 'Signature Nutritionnelle';
+  String get nutrition_page_title => 'Firma Nutricional';
 
   @override
-  String get nutrition_seasonal_dynamics_title => 'Dynamique Saisonnière';
+  String get nutrition_seasonal_dynamics_title => 'Dinámicas Estacionales';
 
   @override
   String get nutrition_seasonal_dynamics_desc =>
-      'Explorez la production minérale et vitaminique de votre jardin, mois par mois.';
+      'Explore la producción de minerales y vitaminas de su jardín, mes a mes.';
 
   @override
-  String get nutrition_no_harvest_month => 'Aucune récolte en ce mois';
+  String get nutrition_no_harvest_month => 'Sin cosecha este mes';
 
   @override
-  String get nutrition_major_minerals_title => 'Structure & Minéraux Majeurs';
+  String get nutrition_major_minerals_title => 'Estructura y Minerales Mayores';
 
   @override
-  String get nutrition_trace_elements_title => 'Vitalité & Oligo-éléments';
+  String get nutrition_trace_elements_title => 'Vitalidad y Oligoelementos';
 
   @override
-  String get nutrition_no_data_period => 'Pas de données cette période';
+  String get nutrition_no_data_period => 'Sin datos para este período';
 
   @override
-  String get nutrition_no_major_minerals => 'Aucun minéral majeur';
+  String get nutrition_no_major_minerals => 'Sin minerales mayores';
 
   @override
-  String get nutrition_no_trace_elements => 'Aucun oligo-élément';
+  String get nutrition_no_trace_elements => 'Sin oligoelementos';
 
   @override
   String nutrition_month_dynamics_title(String month) {
-    return 'Dynamique de $month';
+    return 'Dinámicas de $month';
   }
 
   @override
-  String get nutrition_dominant_production => 'Production dominante :';
+  String get nutrition_dominant_production => 'Producción dominante:';
 
   @override
   String get nutrition_nutrients_origin =>
-      'Ces nutriments proviennent de vos récoltes du mois.';
+      'Estos nutrientes provienen de sus cosechas del mes.';
 
   @override
-  String get nut_calcium => 'Calcium';
+  String get nut_calcium => 'Calcio';
 
   @override
-  String get nut_potassium => 'Potassium';
+  String get nut_potassium => 'Potasio';
 
   @override
-  String get nut_magnesium => 'Magnésium';
+  String get nut_magnesium => 'Magnesio';
 
   @override
-  String get nut_iron => 'Fer';
+  String get nut_iron => 'Hierro';
 
   @override
   String get nut_zinc => 'Zinc';
 
   @override
-  String get nut_manganese => 'Manganèse';
+  String get nut_manganese => 'Manganeso';
 
   @override
-  String get nut_vitamin_c => 'Vitamine C';
+  String get nut_vitamin_c => 'Vitamina C';
 
   @override
-  String get nut_fiber => 'Fibres';
+  String get nut_fiber => 'Fibra';
 
   @override
-  String get nut_protein => 'Protéines';
+  String get nut_protein => 'Proteína';
 
   @override
-  String get export_builder_title => 'Générateur d\'Export';
+  String get export_builder_title => 'Constructor de Exportación';
 
   @override
-  String get export_scope_section => '1. Périmètre';
+  String get export_scope_section => '1. Alcance';
 
   @override
-  String get export_scope_period => 'Période';
+  String get export_scope_period => 'Período';
 
   @override
-  String get export_scope_period_all => 'Tout l\'historique';
+  String get export_scope_period_all => 'Todo el Historial';
 
   @override
-  String get export_filter_garden_title => 'Filtrer par Jardin';
+  String get export_filter_garden_title => 'Filtrar por Jardín';
 
   @override
-  String get export_filter_garden_all => 'Tous les jardins';
+  String get export_filter_garden_all => 'Todos los jardines';
 
   @override
   String export_filter_garden_count(Object count) {
-    return '$count jardin(s) sélectionné(s)';
+    return '$count jardín(es) seleccionado(s)';
   }
 
   @override
-  String get export_filter_garden_edit => 'Modifier la sélection';
+  String get export_filter_garden_edit => 'Editar selección';
 
   @override
-  String get export_filter_garden_select_dialog_title =>
-      'Sélectionner les jardins';
+  String get export_filter_garden_select_dialog_title => 'Seleccionar Jardines';
 
   @override
-  String get export_blocks_section => '2. Données à inclure';
+  String get export_blocks_section => '2. Bloques de Datos';
 
   @override
-  String get export_block_activity => 'Activités (Journal)';
+  String get export_block_activity => 'Actividades (Diario)';
 
   @override
-  String get export_block_harvest => 'Récoltes (Production)';
+  String get export_block_harvest => 'Cosechas (Producción)';
 
   @override
-  String get export_block_garden => 'Jardins (Structure)';
+  String get export_block_garden => 'Jardines (Estructura)';
 
   @override
-  String get export_block_garden_bed => 'Parcelles (Structure)';
+  String get export_block_garden_bed => 'Parcelas (Estructura)';
 
   @override
-  String get export_block_plant => 'Plantes (Catalogue)';
+  String get export_block_plant => 'Plantas (Catálogo)';
 
   @override
   String get export_block_desc_activity =>
-      'Historique complet des interventions et événements';
+      'Historial completo de intervenciones y eventos';
 
   @override
-  String get export_block_desc_harvest => 'Données de production et rendements';
+  String get export_block_desc_harvest => 'Datos de producción y rendimientos';
 
   @override
-  String get export_block_desc_garden => 'Métadonnées des jardins sélectionnés';
+  String get export_block_desc_garden => 'Metadatos de jardines seleccionados';
 
   @override
   String get export_block_desc_garden_bed =>
-      'Détails des parcelles (surface, orientation...)';
+      'Detalles de parcelas (área, orientación...)';
 
   @override
-  String get export_block_desc_plant => 'Liste des plantes utilisées';
+  String get export_block_desc_plant => 'Lista de plantas utilizadas';
 
   @override
-  String get export_columns_section => '3. Détails & Colonnes';
+  String get export_columns_section => '3. Detalles y Columnas';
 
   @override
   String export_columns_count(Object count) {
-    return '$count colonnes sélectionnées';
+    return '$count columnas seleccionadas';
   }
 
   @override
-  String get export_format_section => '4. Format du fichier';
+  String get export_format_section => '4. Formato de Archivo';
 
   @override
-  String get export_format_separate => 'Feuilles séparées (Standard)';
+  String get export_format_separate => 'Hojas Separadas (Estándar)';
 
   @override
   String get export_format_separate_subtitle =>
-      'Une feuille par type de donnée (Recommandé)';
+      'Una hoja por tipo de dato (Recomendado)';
 
   @override
-  String get export_format_flat => 'Table Unique (Flat / BI)';
+  String get export_format_flat => 'Tabla Única (Plana / BI)';
 
   @override
   String get export_format_flat_subtitle =>
-      'Une seule grande table pour Tableaux Croisés Dynamiques';
+      'Una tabla grande para Tablas Dinámicas';
 
   @override
-  String get export_action_generate => 'Générer Export Excel';
+  String get export_action_generate => 'Generar Exportación Excel';
 
   @override
-  String get export_generating => 'Génération en cours...';
+  String get export_generating => 'Generando...';
 
   @override
-  String get export_success_title => 'Export terminé';
+  String get export_success_title => 'Exportación Completa';
 
   @override
-  String get export_success_share_text => 'Voici votre export PermaCalendar';
+  String get export_success_share_text =>
+      'Aquí está su exportación de PermaCalendar';
 
   @override
   String export_error_snack(Object error) {
-    return 'Erreur: $error';
+    return 'Error: $error';
   }
 
   @override
-  String get export_field_garden_name => 'Nom du jardin';
+  String get export_field_garden_name => 'Nombre del Jardín';
 
   @override
-  String get export_field_garden_id => 'ID Jardin';
+  String get export_field_garden_id => 'ID del Jardín';
 
   @override
-  String get export_field_garden_surface => 'Surface (m²)';
+  String get export_field_garden_surface => 'Área (m²)';
 
   @override
-  String get export_field_garden_creation => 'Date création';
+  String get export_field_garden_creation => 'Fecha de Creación';
 
   @override
-  String get export_field_bed_name => 'Nom parcelle';
+  String get export_field_bed_name => 'Nombre de la Parcela';
 
   @override
   String get export_field_bed_id => 'ID Parcelle';
