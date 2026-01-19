@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 
 class FastVsLongTable extends StatelessWidget {
@@ -10,6 +11,7 @@ class FastVsLongTable extends StatelessWidget {
   Widget build(BuildContext context) {
     if (metrics.isEmpty) return const SizedBox.shrink();
 
+    final l10n = AppLocalizations.of(context)!;
     // Sort by avgDays DESC
     final sorted = List<FastLongMetrics>.from(metrics)
       ..sort((a, b) => b.avgDaysToHarvest.compareTo(a.avgDaysToHarvest));
@@ -18,7 +20,7 @@ class FastVsLongTable extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Cycle de Rentabilité',
+          l10n.stats_profitability_cycle_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -36,25 +38,30 @@ class FastVsLongTable extends StatelessWidget {
               headingTextStyle: const TextStyle(
                   color: Colors.white70, fontWeight: FontWeight.bold),
               dataTextStyle: const TextStyle(color: Colors.white),
-              columns: const [
-                DataColumn(label: Text('Culture')),
-                DataColumn(label: Text('Jours (Moy)')),
-                DataColumn(label: Text('Rev/Récolte')),
-                DataColumn(label: Text('Type')),
+              columns: [
+                DataColumn(label: Text(l10n.stats_table_crop)),
+                DataColumn(label: Text(l10n.stats_table_days)),
+                DataColumn(label: Text(l10n.stats_table_revenue)),
+                DataColumn(label: Text(l10n.stats_table_type)),
               ],
               rows: sorted.map((m) {
                 Color typeColor = Colors.white;
-                if (m.classification == 'Rapide')
+                String typeText = m.classification;
+                
+                if (m.classification == 'Rapide' || m.classification == 'Fast') {
                   typeColor = Colors.greenAccent;
-                if (m.classification == 'Long terme')
+                  typeText = l10n.stats_type_fast;
+                } else if (m.classification == 'Long terme' || m.classification == 'Long Term') {
                   typeColor = Colors.orangeAccent;
+                  typeText = l10n.stats_type_long_term;
+                }
 
                 return DataRow(cells: [
                   DataCell(Text(m.plantName)),
                   DataCell(Text('${m.avgDaysToHarvest.toStringAsFixed(0)}j')),
                   DataCell(
                       Text('${m.avgRevenuePerHarvest.toStringAsFixed(2)} €')),
-                  DataCell(Text(m.classification,
+                  DataCell(Text(typeText,
                       style: TextStyle(color: typeColor))),
                 ]);
               }).toList(),

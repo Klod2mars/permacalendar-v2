@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class HistoricalRevenueWidget extends StatelessWidget {
   final List<SeriesPoint> revenueSeries;
@@ -14,12 +15,13 @@ class HistoricalRevenueWidget extends StatelessWidget {
 
     final maxY =
         revenueSeries.fold(0.0, (m, e) => e.value > m ? e.value : m) * 1.2;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Historique du Revenu',
+          l10n.stats_revenue_history_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -58,7 +60,7 @@ class HistoricalRevenueWidget extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
-                            _formatDate(date, revenueSeries.length > 12),
+                            _formatDate(date, revenueSeries.length > 12, l10n.localeName),
                             style: const TextStyle(
                                 color: Colors.white54, fontSize: 10),
                           ),
@@ -110,7 +112,7 @@ class HistoricalRevenueWidget extends StatelessWidget {
                     return touchedSpots.map((LineBarSpot touchedSpot) {
                       final point = revenueSeries[touchedSpot.x.toInt()];
                       return LineTooltipItem(
-                        '${DateFormat('MMMM yyyy', 'fr_FR').format(point.date)}\n',
+                        '${DateFormat.yMMMM(l10n.localeName).format(point.date)}\n',
                         const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                         children: [
@@ -140,10 +142,10 @@ class HistoricalRevenueWidget extends StatelessWidget {
     return (length / 6).ceilToDouble();
   }
 
-  String _formatDate(DateTime date, bool showYear) {
+  String _formatDate(DateTime date, bool showYear, String locale) {
     if (showYear) {
-      return DateFormat('MM/yy').format(date);
+      return DateFormat('MM/yy', locale).format(date);
     }
-    return DateFormat('MMM').format(date);
+    return DateFormat('MMM', locale).format(date);
   }
 }

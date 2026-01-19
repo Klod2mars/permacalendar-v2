@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/utils/formatters.dart';
@@ -15,12 +16,13 @@ class AnnualRevenueLine extends StatelessWidget {
 
     final maxY =
         revenueSeries.fold(0.0, (m, e) => e.value > m ? e.value : m) * 1.2;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Évolution Annuelle',
+          l10n.stats_annual_evolution_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -54,7 +56,7 @@ class AnnualRevenueLine extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
-                            DateFormat('MMM').format(date),
+                            DateFormat('MMM', l10n.localeName).format(date),
                             style: const TextStyle(
                                 color: Colors.white54, fontSize: 10),
                           ),
@@ -99,7 +101,7 @@ class AnnualRevenueLine extends StatelessWidget {
                     return touchedSpots.map((LineBarSpot touchedSpot) {
                       final point = revenueSeries[touchedSpot.x.toInt()];
                       return LineTooltipItem(
-                        '${DateFormat('MMMM yyyy').format(point.date)}\n',
+                        '${DateFormat.yMMMM(l10n.localeName).format(point.date)}\n',
                         const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                         children: [

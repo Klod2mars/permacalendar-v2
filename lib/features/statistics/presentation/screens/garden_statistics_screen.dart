@@ -6,6 +6,10 @@ import '../providers/statistics_filters_provider.dart';
 
 
 
+// Importer la localisation
+// Importer la localisation
+import 'package:permacalendar/l10n/app_localizations.dart';
+
 class GardenStatisticsScreen extends ConsumerStatefulWidget {
   final String? gardenId;
   const GardenStatisticsScreen({super.key, this.gardenId});
@@ -35,6 +39,7 @@ class _GardenStatisticsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -49,7 +54,7 @@ class _GardenStatisticsScreenState
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
-                'Statistiques',
+                l10n.stats_screen_title,
                 style: TextStyle(
                   color: Colors.greenAccent.withOpacity(0.8),
                   letterSpacing: 1.2,
@@ -67,7 +72,7 @@ class _GardenStatisticsScreenState
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      'Analysez en temps réel et exportez vos données.',
+                      l10n.stats_screen_subtitle,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.7),
                         fontSize: 16,

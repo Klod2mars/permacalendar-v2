@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 import '../../../../../core/utils/formatters.dart';
 
@@ -9,12 +10,13 @@ class EconomyKpiRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       children: [
         Expanded(
           child: _buildKpiCard(
             context,
-            'Revenu Total',
+            l10n.stats_kpi_total_revenue,
             formatCurrency(details.totalValue),
             Icons.euro,
             Colors.green,
@@ -24,7 +26,7 @@ class EconomyKpiRow extends StatelessWidget {
         Expanded(
           child: _buildKpiCard(
             context,
-            'Volume Total',
+            l10n.stats_kpi_total_volume,
             '${details.totalKg.toStringAsFixed(1)} kg',
             Icons.scale,
             Colors.blue,
@@ -34,7 +36,7 @@ class EconomyKpiRow extends StatelessWidget {
         Expanded(
           child: _buildKpiCard(
             context,
-            'Prix Moyen',
+            l10n.stats_kpi_avg_price,
             formatPricePerKg(details.weightedAvgPrice),
             Icons.price_change,
             Colors.orange,

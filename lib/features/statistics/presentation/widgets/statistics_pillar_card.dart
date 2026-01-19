@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../enums/pillar_type.dart';
 import '../../application/providers/statistics_kpi_providers.dart';
 import '../../application/providers/vitamin_distribution_provider.dart';
@@ -23,10 +24,11 @@ class StatisticsPillarCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final iconAndTitle = switch (type) {
-      PillarType.economieVivante => {'icon': '🧺', 'title': 'Économie du jardin'},
-      PillarType.sante => {'icon': '🥗', 'title': 'Équilibre Nutritionnel'},
-      PillarType.patrimoine => {'icon': '📜', 'title': 'Export'},
+      PillarType.economieVivante => {'icon': '🧺', 'title': l10n.pillar_economy_title},
+      PillarType.sante => {'icon': '🥗', 'title': l10n.pillar_nutrition_title},
+      PillarType.patrimoine => {'icon': '📜', 'title': l10n.pillar_export_title},
     };
 
     return Center(
@@ -167,7 +169,7 @@ class StatisticsPillarCard extends ConsumerWidget {
                                         maxWidth: contentMaxWidth,
                                         maxHeight: diameter * 0.6),
                                     child: _buildSummaryContent(
-                                        type, diameter, context, ref),
+                                        type, diameter, context, ref, l10n),
                                   ),
                                 ),
 
@@ -175,7 +177,7 @@ class StatisticsPillarCard extends ConsumerWidget {
 
                                 // petit label descriptif
                                 Text(
-                                  _getKpiLabel(),
+                                  _getKpiLabel(l10n),
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
@@ -203,7 +205,7 @@ class StatisticsPillarCard extends ConsumerWidget {
   }
 
   Widget _buildSummaryContent(
-      PillarType type, double diameter, BuildContext context, WidgetRef ref) {
+      PillarType type, double diameter, BuildContext context, WidgetRef ref, AppLocalizations l10n) {
     final neon = const Color(0xFF00FF88);
 
     switch (type) {
@@ -337,7 +339,7 @@ class StatisticsPillarCard extends ConsumerWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: diameter * 0.05, vertical: diameter * 0.02),
-                    child: Text('Exporter',
+                    child: Text(l10n.pillar_export_button,
                         style: TextStyle(
                             color: Colors.white, fontSize: diameter * 0.04)),
                   ),
@@ -349,15 +351,15 @@ class StatisticsPillarCard extends ConsumerWidget {
     }
   }
 
-  String _getKpiLabel() {
+  String _getKpiLabel(AppLocalizations l10n) {
     switch (type) {
       case PillarType.economieVivante:
-        return 'Valeur totale des récoltes';
+        return l10n.pillar_economy_label;
       case PillarType.sante:
-        return 'Signature Nutritionnelle';
+        return l10n.pillar_nutrition_label;
 
       case PillarType.patrimoine:
-        return 'Récupérez vos données';
+        return l10n.pillar_export_label;
     }
   }
 }

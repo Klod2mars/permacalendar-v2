@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 import '../../../../../core/utils/formatters.dart';
 
@@ -15,12 +17,13 @@ class TopPlantPerMonthGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (monthlyRevenue.isEmpty) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Culture Dominante par Mois',
+          l10n.stats_dominant_culture_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -42,7 +45,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
             final yearMonth = monthRev.year * 100 + monthRev.month;
             final ranking = topPlantPerMonth[yearMonth];
 
-            return _buildMonthCell(context, monthRev.month, ranking);
+            return _buildMonthCell(context, monthRev.month, ranking, l10n.localeName);
           },
         ),
       ],
@@ -50,22 +53,18 @@ class TopPlantPerMonthGrid extends StatelessWidget {
   }
 
   Widget _buildMonthCell(
-      BuildContext context, int month, PlantRanking? ranking) {
-    const months = [
-      'Jan',
-      'Fév',
-      'Mar',
-      'Avr',
-      'Mai',
-      'Juin',
-      'Juil',
-      'Août',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Déc'
-    ];
-    final monthName = (month >= 1 && month <= 12) ? months[month - 1] : '';
+      BuildContext context, int month, PlantRanking? ranking, String locale) {
+    
+    String monthName = '';
+    try {
+      monthName = DateFormat.MMM(locale).format(DateTime(2024, month)).replaceAll('.', '');
+    } catch (_) {
+       const months = [
+        'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin',
+        'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'
+      ];
+      monthName = (month >= 1 && month <= 12) ? months[month - 1] : '';
+    }
 
     return Container(
       decoration: BoxDecoration(

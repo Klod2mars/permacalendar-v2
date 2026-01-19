@@ -1324,11 +1324,233 @@ abstract class AppLocalizations {
   /// **'Titre *'**
   String get task_editor_title_field;
 
+  /// Titre de l'écran des activités
+  ///
+  /// In fr, this message translates to:
+  /// **'Activités & Historique'**
+  String get activity_screen_title;
+
+  /// Titre onglet récentes pour un jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Récentes ({gardenName})'**
+  String activity_tab_recent_garden(String gardenName);
+
+  /// Titre onglet récentes global
+  ///
+  /// In fr, this message translates to:
+  /// **'Récentes (Global)'**
+  String get activity_tab_recent_global;
+
+  /// Titre onglet historique
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique'**
+  String get activity_tab_history;
+
+  /// Titre section historique
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique — '**
+  String get activity_history_section_title;
+
+  /// Message vide historique
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun jardin sélectionné.\nPour consulter l’historique d’un jardin, sélectionnez-le par un appui long depuis le tableau de bord.'**
+  String get activity_history_empty;
+
+  /// Titre vide activités
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune activité trouvée'**
+  String get activity_empty_title;
+
+  /// Sous-titre vide activités
+  ///
+  /// In fr, this message translates to:
+  /// **'Les activités de jardinage apparaîtront ici'**
+  String get activity_empty_subtitle;
+
+  /// Erreur chargement
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du chargement'**
+  String get activity_error_loading;
+
+  /// Priorité importante
+  ///
+  /// In fr, this message translates to:
+  /// **'Important'**
+  String get activity_priority_important;
+
+  /// Priorité normale
+  ///
+  /// In fr, this message translates to:
+  /// **'Normal'**
+  String get activity_priority_normal;
+
+  /// Temps: à l'instant
+  ///
+  /// In fr, this message translates to:
+  /// **'À l\'instant'**
+  String get activity_time_just_now;
+
+  /// Temps: minutes
+  ///
+  /// In fr, this message translates to:
+  /// **'Il y a {minutes} min'**
+  String activity_time_minutes_ago(int minutes);
+
+  /// Temps: heures
+  ///
+  /// In fr, this message translates to:
+  /// **'Il y a {hours} h'**
+  String activity_time_hours_ago(int hours);
+
+  /// Temps: jours
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Il y a 1 jour} other{Il y a {count} jours}}'**
+  String activity_time_days_ago(int count);
+
+  /// Metadata jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin: {name}'**
+  String activity_metadata_garden(String name);
+
+  /// Metadata parcelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle: {name}'**
+  String activity_metadata_bed(String name);
+
+  /// Metadata plante
+  ///
+  /// In fr, this message translates to:
+  /// **'Plante: {name}'**
+  String activity_metadata_plant(String name);
+
+  /// Metadata quantité
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité: {quantity}'**
+  String activity_metadata_quantity(String quantity);
+
+  /// Metadata date
+  ///
+  /// In fr, this message translates to:
+  /// **'Date: {date}'**
+  String activity_metadata_date(String date);
+
+  /// Metadata maintenance
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintenance: {type}'**
+  String activity_metadata_maintenance(String type);
+
+  /// Metadata météo
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo: {weather}'**
+  String activity_metadata_weather(String weather);
+
   /// Erreur validation titre
   ///
   /// In fr, this message translates to:
   /// **'Requis'**
   String get task_editor_error_title_required;
+
+  /// Titre carte hint historique
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour consulter l’historique d’un jardin'**
+  String get history_hint_title;
+
+  /// Corps carte hint historique
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionnez-le par un appui long depuis le tableau de bord.'**
+  String get history_hint_body;
+
+  /// Action carte hint historique
+  ///
+  /// In fr, this message translates to:
+  /// **'Aller au tableau de bord'**
+  String get history_hint_action;
+
+  /// Desc act création jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin \"{name}\" créé'**
+  String activity_desc_garden_created(String name);
+
+  /// Desc act création parcelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle \"{name}\" créée'**
+  String activity_desc_bed_created(String name);
+
+  /// Desc act création plantation
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantation de \"{name}\" ajoutée'**
+  String activity_desc_planting_created(String name);
+
+  /// Desc act germination
+  ///
+  /// In fr, this message translates to:
+  /// **'Germination de \"{name}\" confirmée'**
+  String activity_desc_germination(String name);
+
+  /// Desc act récolte
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte de \"{name}\" enregistrée'**
+  String activity_desc_harvest(String name);
+
+  /// Desc act maintenance
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintenance : {type}'**
+  String activity_desc_maintenance(String type);
+
+  /// Desc act suppression jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin \"{name}\" supprimé'**
+  String activity_desc_garden_deleted(String name);
+
+  /// Desc act suppression parcelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle \"{name}\" supprimée'**
+  String activity_desc_bed_deleted(String name);
+
+  /// Desc act suppression plantation
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantation de \"{name}\" supprimée'**
+  String activity_desc_planting_deleted(String name);
+
+  /// Desc act màj jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Jardin \"{name}\" mis à jour'**
+  String activity_desc_garden_updated(String name);
+
+  /// Desc act màj parcelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcelle \"{name}\" mise à jour'**
+  String activity_desc_bed_updated(String name);
+
+  /// Desc act màj plantation
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantation de \"{name}\" mise à jour'**
+  String activity_desc_planting_updated(String name);
 
   /// Titre widget Pas-à-pas
   ///
@@ -3051,6 +3273,276 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Culture modifiée avec succès'**
   String get planting_success_update;
+
+  /// Titre écran statistiques
+  ///
+  /// In fr, this message translates to:
+  /// **'Statistiques'**
+  String get stats_screen_title;
+
+  /// Sous-titre écran statistiques
+  ///
+  /// In fr, this message translates to:
+  /// **'Analysez en temps réel et exportez vos données.'**
+  String get stats_screen_subtitle;
+
+  /// Titre KPI Alignement
+  ///
+  /// In fr, this message translates to:
+  /// **'Alignement au Vivant'**
+  String get kpi_alignment_title;
+
+  /// Description KPI Alignement
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet outil évalue à quel point tu réalises tes semis, plantations et récoltes dans la fenêtre idéale recommandée par l\'Agenda Intelligent.'**
+  String get kpi_alignment_description;
+
+  /// CTA KPI Alignement
+  ///
+  /// In fr, this message translates to:
+  /// **'Commence à planter et récolter pour voir ton alignement !'**
+  String get kpi_alignment_cta;
+
+  /// Label aligné
+  ///
+  /// In fr, this message translates to:
+  /// **'aligné'**
+  String get kpi_alignment_aligned;
+
+  /// Label Total
+  ///
+  /// In fr, this message translates to:
+  /// **'Total'**
+  String get kpi_alignment_total;
+
+  /// Label Actions Alignées
+  ///
+  /// In fr, this message translates to:
+  /// **'Alignées'**
+  String get kpi_alignment_aligned_actions;
+
+  /// Label Actions Décalées
+  ///
+  /// In fr, this message translates to:
+  /// **'Décalées'**
+  String get kpi_alignment_misaligned_actions;
+
+  /// Message calcul alignement
+  ///
+  /// In fr, this message translates to:
+  /// **'Calcul de l\'alignement...'**
+  String get kpi_alignment_calculating;
+
+  /// Message erreur alignement
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du calcul'**
+  String get kpi_alignment_error;
+
+  /// Titre Pilier Économie
+  ///
+  /// In fr, this message translates to:
+  /// **'Économie du jardin'**
+  String get pillar_economy_title;
+
+  /// Titre Pilier Nutrition
+  ///
+  /// In fr, this message translates to:
+  /// **'Équilibre Nutritionnel'**
+  String get pillar_nutrition_title;
+
+  /// Titre Pilier Export
+  ///
+  /// In fr, this message translates to:
+  /// **'Export'**
+  String get pillar_export_title;
+
+  /// Label Pilier Économie
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur totale des récoltes'**
+  String get pillar_economy_label;
+
+  /// Label Pilier Nutrition
+  ///
+  /// In fr, this message translates to:
+  /// **'Signature Nutritionnelle'**
+  String get pillar_nutrition_label;
+
+  /// Label Pilier Export
+  ///
+  /// In fr, this message translates to:
+  /// **'Récupérez vos données'**
+  String get pillar_export_label;
+
+  /// Bouton Pilier Export
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter'**
+  String get pillar_export_button;
+
+  /// Titre écran économie
+  ///
+  /// In fr, this message translates to:
+  /// **'Économie du Jardin'**
+  String get stats_economy_title;
+
+  /// Message vide économie
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune récolte sur la période sélectionnée.'**
+  String get stats_economy_no_harvest;
+
+  /// Sous-titre vide économie
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune donnée sur la période sélectionnée.'**
+  String get stats_economy_no_harvest_desc;
+
+  /// KPI Revenu Total
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenu Total'**
+  String get stats_kpi_total_revenue;
+
+  /// KPI Volume Total
+  ///
+  /// In fr, this message translates to:
+  /// **'Volume Total'**
+  String get stats_kpi_total_volume;
+
+  /// KPI Prix Moyen
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix Moyen'**
+  String get stats_kpi_avg_price;
+
+  /// Titre Top Cultures
+  ///
+  /// In fr, this message translates to:
+  /// **'Top Cultures (Valeur)'**
+  String get stats_top_cultures_title;
+
+  /// Vide Top Cultures
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune donnée'**
+  String get stats_top_cultures_no_data;
+
+  /// Suffixe pourcentage revenu
+  ///
+  /// In fr, this message translates to:
+  /// **'du revenu'**
+  String get stats_top_cultures_percent_revenue;
+
+  /// Titre Revenu Mensuel
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenu Mensuel'**
+  String get stats_monthly_revenue_title;
+
+  /// Vide Revenu Mensuel
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de données mensuelles'**
+  String get stats_monthly_revenue_no_data;
+
+  /// Titre Culture Dominante
+  ///
+  /// In fr, this message translates to:
+  /// **'Culture Dominante par Mois'**
+  String get stats_dominant_culture_title;
+
+  /// Titre Évolution Annuelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Évolution Annuelle'**
+  String get stats_annual_evolution_title;
+
+  /// Titre Répartition Culture
+  ///
+  /// In fr, this message translates to:
+  /// **'Répartition par Culture'**
+  String get stats_crop_distribution_title;
+
+  /// Label Autres pie chart
+  ///
+  /// In fr, this message translates to:
+  /// **'Autres'**
+  String get stats_crop_distribution_others;
+
+  /// Titre Mois Clés
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois Clés du Jardin'**
+  String get stats_key_months_title;
+
+  /// Label plus rentable
+  ///
+  /// In fr, this message translates to:
+  /// **'Le plus rentable'**
+  String get stats_most_profitable;
+
+  /// Label moins rentable
+  ///
+  /// In fr, this message translates to:
+  /// **'Le moins rentable'**
+  String get stats_least_profitable;
+
+  /// Titre Synthèse Automatique
+  ///
+  /// In fr, this message translates to:
+  /// **'Synthèse Automatique'**
+  String get stats_auto_summary_title;
+
+  /// Titre Historique Revenu
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique du Revenu'**
+  String get stats_revenue_history_title;
+
+  /// Titre Cycle Rentabilité
+  ///
+  /// In fr, this message translates to:
+  /// **'Cycle de Rentabilité'**
+  String get stats_profitability_cycle_title;
+
+  /// Header colonne Culture
+  ///
+  /// In fr, this message translates to:
+  /// **'Culture'**
+  String get stats_table_crop;
+
+  /// Header colonne Jours
+  ///
+  /// In fr, this message translates to:
+  /// **'Jours (Moy)'**
+  String get stats_table_days;
+
+  /// Header colonne Revenu
+  ///
+  /// In fr, this message translates to:
+  /// **'Rev/Récolte'**
+  String get stats_table_revenue;
+
+  /// Header colonne Type
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get stats_table_type;
+
+  /// Type culture rapide
+  ///
+  /// In fr, this message translates to:
+  /// **'Rapide'**
+  String get stats_type_fast;
+
+  /// Type culture long terme
+  ///
+  /// In fr, this message translates to:
+  /// **'Long terme'**
+  String get stats_type_long_term;
 }
 
 class _AppLocalizationsDelegate

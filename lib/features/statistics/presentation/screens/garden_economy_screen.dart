@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../application/economy_details_provider.dart';
@@ -61,11 +62,12 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
     // 3. Watch Data
     final details = ref.watch(economyDetailsProvider(queryParams));
     final harvestState = ref.watch(harvestRecordsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E), // Dark theme
       appBar: AppBar(
-        title: const Text('Économie du Jardin'),
+        title: Text(l10n.stats_economy_title),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -96,12 +98,12 @@ class _GardenEconomyScreenState extends ConsumerState<GardenEconomyScreen> {
                           EconomyKpiRow(details: details),
                           const SizedBox(height: 24),
                           if (details.harvestCount == 0)
-                            const Center(
+                            Center(
                                 child: Padding(
-                              padding: EdgeInsets.all(32.0),
+                              padding: const EdgeInsets.all(32.0),
                               child: Text(
-                                  'Aucune récolte sur la période sélectionnée.',
-                                  style: TextStyle(color: Colors.white54)),
+                                  l10n.stats_economy_no_harvest,
+                                  style: const TextStyle(color: Colors.white54)),
                             ))
                           else ...[
                             // Module 1: Plantes les plus rentables

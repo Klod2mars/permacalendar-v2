@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 import '../../../../../core/utils/formatters.dart';
 
@@ -11,14 +13,15 @@ class MonthlyRevenueChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (monthlyRevenue.isEmpty) {
-      return const SizedBox(
+      return SizedBox(
         height: 200,
         child: Center(
-            child: Text('Pas de données mensuelles',
-                style: TextStyle(color: Colors.white54))),
+            child: Text(AppLocalizations.of(context)!.stats_monthly_revenue_no_data,
+                style: const TextStyle(color: Colors.white54))),
       );
     }
 
+    final l10n = AppLocalizations.of(context)!;
     final maxY = monthlyRevenue.fold(
             0.0, (m, e) => e.totalValue > m ? e.totalValue : m) *
         1.2;
@@ -27,7 +30,7 @@ class MonthlyRevenueChart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Revenu Mensuel',
+          l10n.stats_monthly_revenue_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -46,7 +49,7 @@ class MonthlyRevenueChart extends StatelessWidget {
                   getTooltipItem: (group, groupIndex, rod, rodIndex) {
                     final monthData = monthlyRevenue[group.x.toInt()];
                     return BarTooltipItem(
-                      '${_monthName(monthData.month)}\n',
+                      '${_monthName(monthData.month, l10n.localeName)}\n',
                       const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -73,14 +76,11 @@ class MonthlyRevenueChart extends StatelessWidget {
                     getTitlesWidget: (double value, TitleMeta meta) {
                       if (value.toInt() >= 0 &&
                           value.toInt() < monthlyRevenue.length) {
-                        // Show only if not too crowded?
-                        // For 12 months, usually ok.
-                        // Use simplified month letter
                         final m = monthlyRevenue[value.toInt()].month;
                         return Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            _monthShortName(m),
+                            _monthShortName(m, l10n.localeName),
                             style: const TextStyle(
                                 color: Colors.white54, fontSize: 10),
                           ),
@@ -129,28 +129,35 @@ class MonthlyRevenueChart extends StatelessWidget {
     );
   }
 
-  String _monthName(int month) {
-    const months = [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre'
-    ];
-    if (month >= 1 && month <= 12) return months[month - 1];
-    return '';
+  String _monthName(int month, String locale) {
+    // 2024 is a leap year, doesn't matter for month name
+    final dt = DateTime(2024, month);
+    try {
+      return DateFormat.MMMM(locale).format(dt);
+    } catch (_) {
+      // Fallback if locale format fails or intl not initialized for specific locale logic
+      final months = [
+        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+        'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      ];
+      if (month >= 1 && month <= 12) return months[month - 1];
+      return '';
+    }
   }
 
-  String _monthShortName(int month) {
-    const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-    if (month >= 1 && month <= 12) return months[month - 1];
-    return '';
+  String _monthShortName(int month, String locale) {
+    final dt = DateTime(2024, month);
+    try {
+      // Try to get 1st letter of month name for compactness or just MMM
+      // The original code used 1 letter. "J", "F", "M". 
+      // Let's use DateFormat.ABBR_MONTH (MMM) usually 3 letters.
+      // If we strictly want 1 letter, we can substring.
+      // Given font size 10, 3 chars is fine.
+      return DateFormat.MMM(locale).format(dt).toUpperCase();
+    } catch (_) {
+      const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+      if (month >= 1 && month <= 12) return months[month - 1];
+      return '';
+    }
   }
 }

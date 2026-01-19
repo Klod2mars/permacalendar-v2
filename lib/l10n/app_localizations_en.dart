@@ -685,7 +685,172 @@ class AppLocalizationsEn extends AppLocalizations {
   String get task_editor_title_field => 'Title *';
 
   @override
+  String get activity_screen_title => 'Activities & History';
+
+  @override
+  String activity_tab_recent_garden(String gardenName) {
+    return 'Recent ($gardenName)';
+  }
+
+  @override
+  String get activity_tab_recent_global => 'Recent (Global)';
+
+  @override
+  String get activity_tab_history => 'History';
+
+  @override
+  String get activity_history_section_title => 'History — ';
+
+  @override
+  String get activity_history_empty =>
+      'No garden selected.\nTo view a garden\'s history, long-press it from the dashboard.';
+
+  @override
+  String get activity_empty_title => 'No activities found';
+
+  @override
+  String get activity_empty_subtitle => 'Gardening activities will appear here';
+
+  @override
+  String get activity_error_loading => 'Error loading activities';
+
+  @override
+  String get activity_priority_important => 'Important';
+
+  @override
+  String get activity_priority_normal => 'Normal';
+
+  @override
+  String get activity_time_just_now => 'Just now';
+
+  @override
+  String activity_time_minutes_ago(int minutes) {
+    return '$minutes min ago';
+  }
+
+  @override
+  String activity_time_hours_ago(int hours) {
+    return '$hours h ago';
+  }
+
+  @override
+  String activity_time_days_ago(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days ago',
+      one: '1 day ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String activity_metadata_garden(String name) {
+    return 'Garden: $name';
+  }
+
+  @override
+  String activity_metadata_bed(String name) {
+    return 'Plot: $name';
+  }
+
+  @override
+  String activity_metadata_plant(String name) {
+    return 'Plant: $name';
+  }
+
+  @override
+  String activity_metadata_quantity(String quantity) {
+    return 'Quantity: $quantity';
+  }
+
+  @override
+  String activity_metadata_date(String date) {
+    return 'Date: $date';
+  }
+
+  @override
+  String activity_metadata_maintenance(String type) {
+    return 'Maintenance: $type';
+  }
+
+  @override
+  String activity_metadata_weather(String weather) {
+    return 'Weather: $weather';
+  }
+
+  @override
   String get task_editor_error_title_required => 'Required';
+
+  @override
+  String get history_hint_title => 'To view a garden\'s history';
+
+  @override
+  String get history_hint_body =>
+      'Select it by long-pressing from the dashboard.';
+
+  @override
+  String get history_hint_action => 'Go to dashboard';
+
+  @override
+  String activity_desc_garden_created(String name) {
+    return 'Garden \"$name\" created';
+  }
+
+  @override
+  String activity_desc_bed_created(String name) {
+    return 'Bed \"$name\" created';
+  }
+
+  @override
+  String activity_desc_planting_created(String name) {
+    return 'Planting of \"$name\" added';
+  }
+
+  @override
+  String activity_desc_germination(String name) {
+    return 'Germination of \"$name\" confirmed';
+  }
+
+  @override
+  String activity_desc_harvest(String name) {
+    return 'Harvest of \"$name\" recorded';
+  }
+
+  @override
+  String activity_desc_maintenance(String type) {
+    return 'Maintenance: $type';
+  }
+
+  @override
+  String activity_desc_garden_deleted(String name) {
+    return 'Garden \"$name\" deleted';
+  }
+
+  @override
+  String activity_desc_bed_deleted(String name) {
+    return 'Bed \"$name\" deleted';
+  }
+
+  @override
+  String activity_desc_planting_deleted(String name) {
+    return 'Planting of \"$name\" deleted';
+  }
+
+  @override
+  String activity_desc_garden_updated(String name) {
+    return 'Garden \"$name\" updated';
+  }
+
+  @override
+  String activity_desc_bed_updated(String name) {
+    return 'Bed \"$name\" updated';
+  }
+
+  @override
+  String activity_desc_planting_updated(String name) {
+    return 'Planting of \"$name\" updated';
+  }
 
   @override
   String get planting_steps_title => 'Step-by-step';
@@ -1601,4 +1766,143 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get planting_success_update => 'Planting updated successfully';
+
+  @override
+  String get stats_screen_title => 'Statistics';
+
+  @override
+  String get stats_screen_subtitle =>
+      'Analyze in real-time and export your data.';
+
+  @override
+  String get kpi_alignment_title => 'Living Alignment';
+
+  @override
+  String get kpi_alignment_description =>
+      'This tool evaluates how closely your sowing, planting, and harvesting align with the ideal windows recommended by the Intelligent Agenda.';
+
+  @override
+  String get kpi_alignment_cta =>
+      'Start planting and harvesting to see your alignment!';
+
+  @override
+  String get kpi_alignment_aligned => 'aligned';
+
+  @override
+  String get kpi_alignment_total => 'Total';
+
+  @override
+  String get kpi_alignment_aligned_actions => 'Aligned';
+
+  @override
+  String get kpi_alignment_misaligned_actions => 'Misaligned';
+
+  @override
+  String get kpi_alignment_calculating => 'Calculating alignment...';
+
+  @override
+  String get kpi_alignment_error => 'Error during calculation';
+
+  @override
+  String get pillar_economy_title => 'Garden Economy';
+
+  @override
+  String get pillar_nutrition_title => 'Nutritional Balance';
+
+  @override
+  String get pillar_export_title => 'Export';
+
+  @override
+  String get pillar_economy_label => 'Total harvest value';
+
+  @override
+  String get pillar_nutrition_label => 'Nutritional Signature';
+
+  @override
+  String get pillar_export_label => 'Retrieve your data';
+
+  @override
+  String get pillar_export_button => 'Export';
+
+  @override
+  String get stats_economy_title => 'Garden Economy';
+
+  @override
+  String get stats_economy_no_harvest => 'No harvest in the selected period.';
+
+  @override
+  String get stats_economy_no_harvest_desc =>
+      'No data for the selected period.';
+
+  @override
+  String get stats_kpi_total_revenue => 'Total Revenue';
+
+  @override
+  String get stats_kpi_total_volume => 'Total Volume';
+
+  @override
+  String get stats_kpi_avg_price => 'Average Price';
+
+  @override
+  String get stats_top_cultures_title => 'Top Crops (Value)';
+
+  @override
+  String get stats_top_cultures_no_data => 'No data';
+
+  @override
+  String get stats_top_cultures_percent_revenue => 'of revenue';
+
+  @override
+  String get stats_monthly_revenue_title => 'Monthly Revenue';
+
+  @override
+  String get stats_monthly_revenue_no_data => 'No monthly data';
+
+  @override
+  String get stats_dominant_culture_title => 'Dominant Crop by Month';
+
+  @override
+  String get stats_annual_evolution_title => 'Annual Trend';
+
+  @override
+  String get stats_crop_distribution_title => 'Crop Distribution';
+
+  @override
+  String get stats_crop_distribution_others => 'Others';
+
+  @override
+  String get stats_key_months_title => 'Key Garden Months';
+
+  @override
+  String get stats_most_profitable => 'Most Profitable';
+
+  @override
+  String get stats_least_profitable => 'Least Profitable';
+
+  @override
+  String get stats_auto_summary_title => 'Auto Summary';
+
+  @override
+  String get stats_revenue_history_title => 'Revenue History';
+
+  @override
+  String get stats_profitability_cycle_title => 'Profitability Cycle';
+
+  @override
+  String get stats_table_crop => 'Crop';
+
+  @override
+  String get stats_table_days => 'Days (Avg)';
+
+  @override
+  String get stats_table_revenue => 'Rev/Harvest';
+
+  @override
+  String get stats_table_type => 'Type';
+
+  @override
+  String get stats_type_fast => 'Fast';
+
+  @override
+  String get stats_type_long_term => 'Long Term';
 }

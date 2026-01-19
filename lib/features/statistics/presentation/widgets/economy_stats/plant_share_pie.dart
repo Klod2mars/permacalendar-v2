@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class PlantSharePie extends StatelessWidget {
   final Map<String, double> plantShare;
@@ -10,6 +11,7 @@ class PlantSharePie extends StatelessWidget {
   Widget build(BuildContext context) {
     if (plantShare.isEmpty) return const SizedBox.shrink();
 
+    final l10n = AppLocalizations.of(context)!;
     // Limit to top 5 + "Autres" for readability
     final entries = plantShare.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
@@ -24,7 +26,7 @@ class PlantSharePie extends StatelessWidget {
 
     final dataPoints = [...topEntries];
     if (otherShare > 0) {
-      dataPoints.add(MapEntry('Autres', otherShare));
+      dataPoints.add(MapEntry(l10n.stats_crop_distribution_others, otherShare));
     }
 
     final colors = [
@@ -40,7 +42,7 @@ class PlantSharePie extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Répartition par Culture',
+          l10n.stats_crop_distribution_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 import '../../../../../core/utils/formatters.dart';
 
@@ -20,6 +22,7 @@ class KeyMonthsWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final l10n = AppLocalizations.of(context)!;
     final best = monthlyRevenue[mostProfitableIndex];
     final worst = (leastProfitableIndex != -1 &&
             leastProfitableIndex < monthlyRevenue.length)
@@ -30,7 +33,7 @@ class KeyMonthsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Mois Clés du Jardin',
+          l10n.stats_key_months_title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -42,10 +45,11 @@ class KeyMonthsWidget extends StatelessWidget {
             Expanded(
               child: _buildMonthCard(
                 context,
-                'Le plus rentable',
+                l10n.stats_most_profitable,
                 best,
                 Colors.greenAccent,
                 Icons.trending_up,
+                l10n.localeName
               ),
             ),
             if (worst != null && worst != best) ...[
@@ -53,10 +57,11 @@ class KeyMonthsWidget extends StatelessWidget {
               Expanded(
                 child: _buildMonthCard(
                   context,
-                  'Le moins rentable',
+                  l10n.stats_least_profitable,
                   worst,
                   Colors.orangeAccent,
                   Icons.trending_down,
+                  l10n.localeName
                 ),
               ),
             ],
@@ -72,6 +77,7 @@ class KeyMonthsWidget extends StatelessWidget {
     MonthRevenue data,
     Color color,
     IconData icon,
+    String locale
   ) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -100,7 +106,7 @@ class KeyMonthsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            _monthName(data.month),
+            _monthName(data.month, locale),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -129,22 +135,17 @@ class KeyMonthsWidget extends StatelessWidget {
     );
   }
 
-  String _monthName(int month) {
-    const months = [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre'
-    ];
-    if (month >= 1 && month <= 12) return months[month - 1];
-    return '';
+  String _monthName(int month, String locale) {
+    final dt = DateTime(2024, month);
+    try {
+      return DateFormat.MMMM(locale).format(dt);
+    } catch (_) {
+      const months = [
+        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+        'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      ];
+      if (month >= 1 && month <= 12) return months[month - 1];
+      return '';
+    }
   }
 }

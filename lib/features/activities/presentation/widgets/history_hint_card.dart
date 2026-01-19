@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class HistoryHintCard extends StatelessWidget {
   final VoidCallback onGoToDashboard;
@@ -13,6 +14,7 @@ class HistoryHintCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -31,13 +33,13 @@ class HistoryHintCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Pour consulter l’historique d’un jardin',
+                        l10n.history_hint_title,
                         style: theme.textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Sélectionnez-le par un appui long depuis le tableau de bord.',
+                        l10n.history_hint_body,
                         style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.textTheme.bodyMedium?.color
                                 ?.withOpacity(0.8)),
@@ -63,7 +65,7 @@ class HistoryHintCard extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: onGoToDashboard,
-                child: const Text('Aller au tableau de bord'),
+                child: Text(l10n.history_hint_action),
               ),
             ),
           ],

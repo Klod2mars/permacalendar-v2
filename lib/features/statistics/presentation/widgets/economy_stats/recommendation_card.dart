@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class RecommendationCard extends StatelessWidget {
   final String recommendationText;
@@ -32,7 +33,7 @@ class RecommendationCard extends StatelessWidget {
               const Icon(Icons.auto_awesome, color: Colors.amberAccent),
               const SizedBox(width: 8),
               Text(
-                'Synthèse Automatique',
+                AppLocalizations.of(context)!.stats_auto_summary_title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
