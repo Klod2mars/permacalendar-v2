@@ -1543,4 +1543,84 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get info_season_all => 'Toute saison';
+
+  @override
+  String get common_duplicate => 'Dupliquer';
+
+  @override
+  String get planting_delete_title => 'Supprimer la plantation';
+
+  @override
+  String get planting_delete_confirm_body =>
+      'Êtes-vous sûr de vouloir supprimer cette plantation ? Cette action est irréversible.';
+
+  @override
+  String get planting_creation_title => 'Nouvelle culture';
+
+  @override
+  String get planting_creation_title_edit => 'Modifier la culture';
+
+  @override
+  String get planting_quantity_seeds => 'Nombre de graines';
+
+  @override
+  String get planting_quantity_plants => 'Nombre de plants';
+
+  @override
+  String get planting_quantity_required => 'La quantité est requise';
+
+  @override
+  String get planting_quantity_positive =>
+      'La quantité doit être un nombre positif';
+
+  @override
+  String planting_plant_selection_label(Object plantName) {
+    return 'Plante : $plantName';
+  }
+
+  @override
+  String get planting_no_plant_selected => 'Aucune plante sélectionnée';
+
+  @override
+  String get planting_custom_plant_title => 'Plante personnalisée';
+
+  @override
+  String get planting_plant_name_label => 'Nom de la plante';
+
+  @override
+  String get planting_plant_name_hint => 'Ex: Tomate cerise';
+
+  @override
+  String get planting_plant_name_required => 'Le nom de la plante est requis';
+
+  @override
+  String get planting_notes_label => 'Notes (optionnel)';
+
+  @override
+  String get planting_notes_hint => 'Informations supplémentaires...';
+
+  @override
+  String get planting_tips_title => 'Conseils';
+
+  @override
+  String get planting_tips_catalog =>
+      '• Utilisez le catalogue pour sélectionner une plante.';
+
+  @override
+  String get planting_tips_type =>
+      '• Choisissez \"Semé\" pour les graines, \"Planté\" pour les plants.';
+
+  @override
+  String get planting_tips_notes =>
+      '• Ajoutez des notes pour suivre les conditions spéciales.';
+
+  @override
+  String get planting_date_future_error =>
+      'La date de plantation ne peut pas être dans le futur';
+
+  @override
+  String get planting_success_create => 'Culture créée avec succès';
+
+  @override
+  String get planting_success_update => 'Culture modifiée avec succès';
 }

@@ -1524,4 +1524,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get info_season_all => 'All seasons';
+
+  @override
+  String get common_duplicate => 'Duplicate';
+
+  @override
+  String get planting_delete_title => 'Delete Planting';
+
+  @override
+  String get planting_delete_confirm_body =>
+      'Are you sure you want to delete this planting? This action is irreversible.';
+
+  @override
+  String get planting_creation_title => 'New Planting';
+
+  @override
+  String get planting_creation_title_edit => 'Edit Planting';
+
+  @override
+  String get planting_quantity_seeds => 'Number of seeds';
+
+  @override
+  String get planting_quantity_plants => 'Number of plants';
+
+  @override
+  String get planting_quantity_required => 'Quantity is required';
+
+  @override
+  String get planting_quantity_positive => 'Quantity must be a positive number';
+
+  @override
+  String planting_plant_selection_label(Object plantName) {
+    return 'Plant: $plantName';
+  }
+
+  @override
+  String get planting_no_plant_selected => 'No plant selected';
+
+  @override
+  String get planting_custom_plant_title => 'Custom Plant';
+
+  @override
+  String get planting_plant_name_label => 'Plant Name';
+
+  @override
+  String get planting_plant_name_hint => 'Ex: Cherry Tomato';
+
+  @override
+  String get planting_plant_name_required => 'Plant name is required';
+
+  @override
+  String get planting_notes_label => 'Notes (optional)';
+
+  @override
+  String get planting_notes_hint => 'Additional information...';
+
+  @override
+  String get planting_tips_title => 'Tips';
+
+  @override
+  String get planting_tips_catalog => '• Use the catalog to select a plant.';
+
+  @override
+  String get planting_tips_type =>
+      '• Choose \"Sown\" for seeds, \"Planted\" for seedlings.';
+
+  @override
+  String get planting_tips_notes => '• Add notes to track special conditions.';
+
+  @override
+  String get planting_date_future_error =>
+      'Planting date cannot be in the future';
+
+  @override
+  String get planting_success_create => 'Planting created successfully';
+
+  @override
+  String get planting_success_update => 'Planting updated successfully';
 }

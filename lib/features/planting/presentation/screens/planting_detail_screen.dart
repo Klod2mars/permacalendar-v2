@@ -19,6 +19,7 @@ import '../widgets/planting_info_widget.dart';
 import '../widgets/planting_steps_widget.dart';
 
 import '../../domain/plant_step.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Écran principal de détail d'une plantation.
 /// Orchestration : header + lifecycle + status + botanical info + steps + notes
@@ -37,38 +38,38 @@ class PlantingDetailScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Détails de la plantation',
+        title: AppLocalizations.of(context)!.planting_detail_title,
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) => _handleAction(value, context, ref),
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'edit',
                 child: Row(
                   children: [
                     Icon(Icons.edit),
                     SizedBox(width: 8),
-                    Text('Modifier'),
+                    Text(AppLocalizations.of(context)!.common_edit),
                   ],
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'duplicate',
                 child: Row(
                   children: [
                     Icon(Icons.copy),
                     SizedBox(width: 8),
-                    Text('Dupliquer'),
+                    Text(AppLocalizations.of(context)!.common_duplicate),
                   ],
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'delete',
                 child: Row(
                   children: [
                     Icon(Icons.delete, color: Colors.red),
                     SizedBox(width: 8),
-                    Text('Supprimer', style: TextStyle(color: Colors.red)),
+                    Text(AppLocalizations.of(context)!.common_delete, style: TextStyle(color: Colors.red)),
                   ],
                 ),
               ),
@@ -472,13 +473,13 @@ class PlantingDetailScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Supprimer la plantation'),
-        content: const Text(
-            'Êtes-vous sûr de vouloir supprimer cette plantation ? Cette action est irréversible.'),
+        title: Text(AppLocalizations.of(context)!.planting_delete_title),
+        content: Text(
+            AppLocalizations.of(context)!.planting_delete_confirm_body),
         actions: [
           TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Annuler')),
+              child: Text(AppLocalizations.of(context)!.common_cancel)),
           ElevatedButton(
             onPressed: () async {
               Navigator.of(ctx).pop();
@@ -501,7 +502,7 @@ class PlantingDetailScreen extends ConsumerWidget {
               }
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Supprimer'),
+            child: Text(AppLocalizations.of(context)!.common_delete),
           ),
         ],
       ),

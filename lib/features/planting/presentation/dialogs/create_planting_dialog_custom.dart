@@ -9,6 +9,7 @@ import '../../../../shared/widgets/custom_input.dart';
 import '../../providers/planting_provider.dart';
 import '../../../plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/providers/activity_tracker_v3_provider.dart';
 
 /// Usage:
@@ -115,8 +116,8 @@ class _CreatePlantingDialogCustomState
                     Expanded(
                       child: Text(
                         (widget.planting == null || _isPreset)
-                            ? 'Nouvelle culture'
-                            : 'Modifier la culture',
+                            ? AppLocalizations.of(context)!.planting_creation_title
+                            : AppLocalizations.of(context)!.planting_creation_title_edit,
                         style: theme.textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),
@@ -146,7 +147,7 @@ class _CreatePlantingDialogCustomState
                           _buildCustomPlantTile(theme),
                           const SizedBox(height: 8),
                           ExpansionTile(
-                            title: Text('Notes (optionnel)',
+                            title: Text(AppLocalizations.of(context)!.planting_notes_label,
                                 style: theme.textTheme.bodyMedium),
                             initiallyExpanded: _notesExpanded,
                             onExpansionChanged: (v) =>
@@ -157,7 +158,7 @@ class _CreatePlantingDialogCustomState
                                     horizontal: 12.0),
                                 child: CustomTextField(
                                   controller: _notesController,
-                                  hint: 'Informations supplémentaires...',
+                                  hint: AppLocalizations.of(context)!.planting_notes_hint,
                                   maxLines: 3,
                                 ),
                               ),
@@ -170,7 +171,7 @@ class _CreatePlantingDialogCustomState
                                 Icon(Icons.lightbulb_outline,
                                     color: theme.colorScheme.primary, size: 18),
                                 const SizedBox(width: 8),
-                                Text('Conseils',
+                                Text(AppLocalizations.of(context)!.planting_tips_title,
                                     style: theme.textTheme.titleSmall),
                               ],
                             ),
@@ -185,15 +186,15 @@ class _CreatePlantingDialogCustomState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        '• Utilisez le catalogue pour sélectionner une plante.',
+                                        AppLocalizations.of(context)!.planting_tips_catalog,
                                         style: theme.textTheme.bodySmall),
                                     const SizedBox(height: 6),
                                     Text(
-                                        '• Choisissez "Semer" pour les graines, "Planter" pour les plants.',
+                                        AppLocalizations.of(context)!.planting_tips_type,
                                         style: theme.textTheme.bodySmall),
                                     const SizedBox(height: 6),
                                     Text(
-                                        '• Ajoutez des notes pour suivre les conditions spéciales.',
+                                        AppLocalizations.of(context)!.planting_tips_notes,
                                         style: theme.textTheme.bodySmall),
                                   ],
                                 ),
@@ -214,7 +215,7 @@ class _CreatePlantingDialogCustomState
                     TextButton(
                       onPressed:
                           _isLoading ? null : () => Navigator.of(context).pop(),
-                      child: const Text('Annuler'),
+                      child: Text(AppLocalizations.of(context)!.common_cancel),
                     ),
                     const SizedBox(width: 8),
                     ElevatedButton(
@@ -225,8 +226,8 @@ class _CreatePlantingDialogCustomState
                               height: 16,
                               child: CircularProgressIndicator(strokeWidth: 2))
                           : Text((widget.planting == null || _isPreset)
-                              ? 'Créer'
-                              : 'Modifier'),
+                              ? AppLocalizations.of(context)!.empty_action_create
+                              : AppLocalizations.of(context)!.common_edit),
                     ),
                   ],
                 ),
@@ -243,6 +244,8 @@ class _CreatePlantingDialogCustomState
   // --------------------
   Widget _buildActionBlock(ThemeData theme) {
     final bool isSown = _status == 'Semé';
+    final sownLabel = AppLocalizations.of(context)!.planting_status_sown;
+    final plantedLabel = AppLocalizations.of(context)!.planting_status_planted;
 
     return Container(
       padding: const EdgeInsets.all(8),
@@ -275,16 +278,16 @@ class _CreatePlantingDialogCustomState
                     borderRadius: BorderRadius.circular(8),
                     fillColor: theme.colorScheme.primary.withOpacity(0.12),
                     selectedBorderColor: theme.colorScheme.primary,
-                    children: const [
+                    children: [
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        child: Text('Semé'),
+                            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        child: Text(sownLabel),
                       ),
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        child: Text('Planté'),
+                            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        child: Text(plantedLabel),
                       ),
                     ],
                   ),
@@ -308,17 +311,17 @@ class _CreatePlantingDialogCustomState
           const SizedBox(height: 8),
           CustomTextField(
             controller: _quantityController,
-            hint: isSown ? 'Nombre de graines' : 'Nombre de plants',
+            hint: isSown ? AppLocalizations.of(context)!.planting_quantity_seeds : AppLocalizations.of(context)!.planting_quantity_plants,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             validator: (value) {
               if (value == null || value.trim().isEmpty)
-                return 'La quantité est requise';
+                return AppLocalizations.of(context)!.planting_quantity_required;
               final q = int.tryParse(value);
               if (q == null || q <= 0)
-                return 'La quantité doit être un nombre positif';
+                return AppLocalizations.of(context)!.planting_quantity_positive;
               return null;
             },
           ),
@@ -330,13 +333,13 @@ class _CreatePlantingDialogCustomState
   Widget _buildPlantReminder(ThemeData theme) {
     final plantName = _selectedPlantId != null
         ? _getPlantName(_selectedPlantId!)
-        : 'Aucune plante sélectionnée';
+        : AppLocalizations.of(context)!.planting_no_plant_selected;
     return ListTile(
       dense: true,
       contentPadding: const EdgeInsets.symmetric(horizontal: 8),
       leading: const Icon(Icons.eco),
       title: _selectedPlantId != null
-          ? Text('Plante : $plantName')
+          ? Text(AppLocalizations.of(context)!.planting_plant_selection_label(plantName))
           : Text(plantName, style: theme.textTheme.bodyMedium),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: _showPlantCatalog,
@@ -345,7 +348,7 @@ class _CreatePlantingDialogCustomState
 
   Widget _buildCustomPlantTile(ThemeData theme) {
     return ExpansionTile(
-      title: Text('Plante personnalisée', style: theme.textTheme.bodyMedium),
+      title: Text(AppLocalizations.of(context)!.planting_custom_plant_title, style: theme.textTheme.bodyMedium),
       initiallyExpanded: _customPlantExpanded,
       onExpansionChanged: (v) => setState(() => _customPlantExpanded = v),
       childrenPadding:
@@ -353,8 +356,8 @@ class _CreatePlantingDialogCustomState
       children: [
         CustomTextField(
           controller: _plantNameController,
-          label: 'Nom de la plante',
-          hint: 'Ex: Tomate cerise',
+          label: AppLocalizations.of(context)!.planting_plant_name_label,
+          hint: AppLocalizations.of(context)!.planting_plant_name_hint,
           onChanged: (text) {
             if (text.trim().isNotEmpty && _selectedPlantId != null) {
               setState(() {
@@ -365,7 +368,7 @@ class _CreatePlantingDialogCustomState
           validator: (value) {
             if (_plantNameController.text.trim().isNotEmpty) {
               if (value == null || value.trim().isEmpty)
-                return 'Le nom de la plante est requis';
+                return AppLocalizations.of(context)!.planting_plant_name_required;
             }
             return null;
           },
@@ -444,17 +447,17 @@ class _CreatePlantingDialogCustomState
           : _notesController.text.trim();
 
       if (quantity <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('La quantité doit être un nombre positif'),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)!.planting_quantity_positive),
             backgroundColor: Colors.orange));
         setState(() => _isLoading = false);
         return;
       }
 
       if (_plantedDate.isAfter(DateTime.now())) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content:
-                Text('La date de plantation ne peut pas être dans le futur'),
+                Text(AppLocalizations.of(context)!.planting_date_future_error),
             backgroundColor: Colors.orange));
         setState(() => _isLoading = false);
         return;
@@ -522,8 +525,8 @@ class _CreatePlantingDialogCustomState
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text((widget.planting == null || _isPreset)
-                ? 'Culture créée avec succès'
-                : 'Culture modifiée avec succès'),
+                ? AppLocalizations.of(context)!.planting_success_create
+                : AppLocalizations.of(context)!.planting_success_update),
             backgroundColor: Colors.green));
         ref.refresh(recentActivitiesProvider);
       }

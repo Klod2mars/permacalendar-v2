@@ -2907,6 +2907,150 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Toute saison'**
   String get info_season_all;
+
+  /// No description provided for @common_duplicate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dupliquer'**
+  String get common_duplicate;
+
+  /// No description provided for @planting_delete_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la plantation'**
+  String get planting_delete_title;
+
+  /// No description provided for @planting_delete_confirm_body.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer cette plantation ? Cette action est irréversible.'**
+  String get planting_delete_confirm_body;
+
+  /// No description provided for @planting_creation_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle culture'**
+  String get planting_creation_title;
+
+  /// No description provided for @planting_creation_title_edit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la culture'**
+  String get planting_creation_title_edit;
+
+  /// No description provided for @planting_quantity_seeds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre de graines'**
+  String get planting_quantity_seeds;
+
+  /// No description provided for @planting_quantity_plants.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre de plants'**
+  String get planting_quantity_plants;
+
+  /// No description provided for @planting_quantity_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'La quantité est requise'**
+  String get planting_quantity_required;
+
+  /// No description provided for @planting_quantity_positive.
+  ///
+  /// In fr, this message translates to:
+  /// **'La quantité doit être un nombre positif'**
+  String get planting_quantity_positive;
+
+  /// No description provided for @planting_plant_selection_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plante : {plantName}'**
+  String planting_plant_selection_label(Object plantName);
+
+  /// No description provided for @planting_no_plant_selected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune plante sélectionnée'**
+  String get planting_no_plant_selected;
+
+  /// No description provided for @planting_custom_plant_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plante personnalisée'**
+  String get planting_custom_plant_title;
+
+  /// No description provided for @planting_plant_name_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de la plante'**
+  String get planting_plant_name_label;
+
+  /// No description provided for @planting_plant_name_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex: Tomate cerise'**
+  String get planting_plant_name_hint;
+
+  /// No description provided for @planting_plant_name_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nom de la plante est requis'**
+  String get planting_plant_name_required;
+
+  /// No description provided for @planting_notes_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes (optionnel)'**
+  String get planting_notes_label;
+
+  /// No description provided for @planting_notes_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Informations supplémentaires...'**
+  String get planting_notes_hint;
+
+  /// No description provided for @planting_tips_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseils'**
+  String get planting_tips_title;
+
+  /// No description provided for @planting_tips_catalog.
+  ///
+  /// In fr, this message translates to:
+  /// **'• Utilisez le catalogue pour sélectionner une plante.'**
+  String get planting_tips_catalog;
+
+  /// No description provided for @planting_tips_type.
+  ///
+  /// In fr, this message translates to:
+  /// **'• Choisissez \"Semé\" pour les graines, \"Planté\" pour les plants.'**
+  String get planting_tips_type;
+
+  /// No description provided for @planting_tips_notes.
+  ///
+  /// In fr, this message translates to:
+  /// **'• Ajoutez des notes pour suivre les conditions spéciales.'**
+  String get planting_tips_notes;
+
+  /// No description provided for @planting_date_future_error.
+  ///
+  /// In fr, this message translates to:
+  /// **'La date de plantation ne peut pas être dans le futur'**
+  String get planting_date_future_error;
+
+  /// No description provided for @planting_success_create.
+  ///
+  /// In fr, this message translates to:
+  /// **'Culture créée avec succès'**
+  String get planting_success_create;
+
+  /// No description provided for @planting_success_update.
+  ///
+  /// In fr, this message translates to:
+  /// **'Culture modifiée avec succès'**
+  String get planting_success_update;
 }
 
 class _AppLocalizationsDelegate
