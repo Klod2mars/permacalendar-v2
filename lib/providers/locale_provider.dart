@@ -11,6 +11,7 @@ class LocaleNotifier extends Notifier<Locale> {
     Locale('es'),
     Locale('pt', 'BR'),
     Locale('de'),
+    Locale('it'),
   ];
 
   @override
@@ -32,6 +33,7 @@ class LocaleNotifier extends Notifier<Locale> {
       initializeDateFormatting('es'),
       initializeDateFormatting('pt_BR'),
       initializeDateFormatting('de'),
+      initializeDateFormatting('it'),
     ]);
 
     if (languageCode != null) {

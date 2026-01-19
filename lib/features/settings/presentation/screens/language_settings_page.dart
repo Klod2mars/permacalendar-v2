@@ -52,6 +52,13 @@ class LanguageSettingsPage extends ConsumerWidget {
             l10n.language_german,
             currentLocale,
           ),
+          _buildLanguageTile(
+            context,
+            ref,
+            const Locale('it'),
+            'Italiano', // Hardcoded as per instructions to avoid ARB modification
+            currentLocale,
+          ),
         ],
       ),
     );
