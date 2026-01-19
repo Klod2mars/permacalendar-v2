@@ -143,7 +143,19 @@
     "harvest_snack_error",
     "harvest_form_error_required",
     "harvest_form_error_positive",
-    "harvest_form_error_positive_or_zero"
+    "harvest_form_error_positive_or_zero",
+    "info_exposure_full_sun",
+    "info_exposure_partial_sun",
+    "info_exposure_shade",
+    "info_water_low",
+    "info_water_medium",
+    "info_water_high",
+    "info_water_moderate",
+    "info_season_spring",
+    "info_season_summer",
+    "info_season_autumn",
+    "info_season_winter",
+    "info_season_all"
   ],
 
   "es": [
@@ -290,7 +302,19 @@
     "harvest_snack_error",
     "harvest_form_error_required",
     "harvest_form_error_positive",
-    "harvest_form_error_positive_or_zero"
+    "harvest_form_error_positive_or_zero",
+    "info_exposure_full_sun",
+    "info_exposure_partial_sun",
+    "info_exposure_shade",
+    "info_water_low",
+    "info_water_medium",
+    "info_water_high",
+    "info_water_moderate",
+    "info_season_spring",
+    "info_season_summer",
+    "info_season_autumn",
+    "info_season_winter",
+    "info_season_all"
   ],
 
   "it": [
@@ -437,7 +461,19 @@
     "harvest_snack_error",
     "harvest_form_error_required",
     "harvest_form_error_positive",
-    "harvest_form_error_positive_or_zero"
+    "harvest_form_error_positive_or_zero",
+    "info_exposure_full_sun",
+    "info_exposure_partial_sun",
+    "info_exposure_shade",
+    "info_water_low",
+    "info_water_medium",
+    "info_water_high",
+    "info_water_moderate",
+    "info_season_spring",
+    "info_season_summer",
+    "info_season_autumn",
+    "info_season_winter",
+    "info_season_all"
   ],
 
   "pt": [
@@ -584,6 +620,18 @@
     "harvest_snack_error",
     "harvest_form_error_required",
     "harvest_form_error_positive",
-    "harvest_form_error_positive_or_zero"
+    "harvest_form_error_positive_or_zero",
+    "info_exposure_full_sun",
+    "info_exposure_partial_sun",
+    "info_exposure_shade",
+    "info_water_low",
+    "info_water_medium",
+    "info_water_high",
+    "info_water_moderate",
+    "info_season_spring",
+    "info_season_summer",
+    "info_season_autumn",
+    "info_season_winter",
+    "info_season_all"
   ]
 }

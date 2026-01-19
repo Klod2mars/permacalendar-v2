@@ -612,6 +612,19 @@
   "planting_tips_none": "No tips available",
   "planting_history_title": "Action History",
   "planting_history_action_planting": "Planting",
-  "planting_history_todo": "Detailed history coming soon"
+  "planting_history_todo": "Detailed history coming soon",
+
+  "info_exposure_full_sun": "Full sun",
+  "info_exposure_partial_sun": "Partial sun",
+  "info_exposure_shade": "Shade",
+  "info_water_low": "Low",
+  "info_water_medium": "Medium",
+  "info_water_high": "High",
+  "info_water_moderate": "Moderate",
+  "info_season_spring": "Spring",
+  "info_season_summer": "Summer",
+  "info_season_autumn": "Autumn",
+  "info_season_winter": "Winter",
+  "info_season_all": "All seasons"
 }
 

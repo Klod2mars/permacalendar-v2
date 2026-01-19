@@ -1212,7 +1212,20 @@
   "harvest_snack_error": "Erreur lors de l'enregistrement",
   "harvest_form_error_required": "Requis",
   "harvest_form_error_positive": "Invalide (> 0)",
-  "harvest_form_error_positive_or_zero": "Invalide (>= 0)"
+  "harvest_form_error_positive_or_zero": "Invalide (>= 0)",
+
+  "info_exposure_full_sun": "Plein soleil",
+  "info_exposure_partial_sun": "Mi-ombre",
+  "info_exposure_shade": "Ombre",
+  "info_water_low": "Faible",
+  "info_water_medium": "Moyen",
+  "info_water_high": "Élevé",
+  "info_water_moderate": "Modéré",
+  "info_season_spring": "Printemps",
+  "info_season_summer": "Été",
+  "info_season_autumn": "Automne",
+  "info_season_winter": "Hiver",
+  "info_season_all": "Toute saison"
 }
 
 

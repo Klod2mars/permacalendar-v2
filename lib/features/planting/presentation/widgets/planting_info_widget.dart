@@ -88,12 +88,12 @@ class PlantingInfoWidget extends StatelessWidget {
         _InfoItem(
             l10n.planting_info_depth, l10n.planting_info_cm(plant.depth), Icons.vertical_align_bottom),
       if (plant.sunExposure.isNotEmpty)
-        _InfoItem(l10n.planting_info_exposure, plant.sunExposure, Icons.wb_sunny),
+        _InfoItem(l10n.planting_info_exposure, _getLocalizedExposure(context, plant.sunExposure), Icons.wb_sunny),
       if (plant.waterNeeds.isNotEmpty)
-        _InfoItem(l10n.planting_info_water, plant.waterNeeds, Icons.water_drop),
+        _InfoItem(l10n.planting_info_water, _getLocalizedWater(context, plant.waterNeeds), Icons.water_drop),
       if (plant.plantingSeason.isNotEmpty)
         _InfoItem(
-            l10n.planting_info_season, plant.plantingSeason, Icons.calendar_today),
+            l10n.planting_info_season, _getLocalizedSeason(context, plant.plantingSeason), Icons.calendar_today),
     ];
 
     return Wrap(
@@ -132,6 +132,51 @@ class PlantingInfoWidget extends StatelessWidget {
           )
           .toList(),
     );
+  }
+
+  String _getLocalizedExposure(BuildContext context, String value) {
+    if (value.isEmpty) return value;
+    final l10n = AppLocalizations.of(context)!;
+    final lower = value.toLowerCase();
+    if (lower.contains('plein')) return l10n.info_exposure_full_sun;
+    if (lower.contains('mi-ombre') || lower.contains('partial')) return l10n.info_exposure_partial_sun;
+    if (lower.contains('ombre') || lower.contains('shade')) return l10n.info_exposure_shade;
+    return value;
+  }
+
+  String _getLocalizedWater(BuildContext context, String value) {
+    if (value.isEmpty) return value;
+    final l10n = AppLocalizations.of(context)!;
+    final lower = value.toLowerCase();
+    if (lower.contains('faible') || lower.contains('low')) return l10n.info_water_low;
+    if (lower.contains('élevé') || lower.contains('high')) return l10n.info_water_high;
+    if (lower.contains('modéré') || lower.contains('moderate')) return l10n.info_water_moderate;
+    if (lower.contains('moyen') || lower.contains('medium')) return l10n.info_water_medium;
+    return value;
+  }
+
+  String _getLocalizedSeason(BuildContext context, String value) {
+    if (value.isEmpty) return value;
+    final l10n = AppLocalizations.of(context)!;
+    final lower = value.toLowerCase();
+    // Handle "Toute saison"
+    if (lower.contains('toute') || lower.contains('all')) return l10n.info_season_all;
+    
+    // Handle multiple seasons (comma separated) or single
+    // For simplicity, we check keywords. If multiple, we might want to return as is or try to replace each.
+    // Given the UI displays them simply, let's try to map the most specific ones.
+    
+    List<String> parts = value.split(RegExp(r'[,/]\s*'));
+    List<String> localizedParts = parts.map((part) {
+      final p = part.toLowerCase().trim();
+      if (p.contains('printemps') || p.contains('spring')) return l10n.info_season_spring;
+      if (p.contains('été') || p.contains('summer')) return l10n.info_season_summer;
+      if (p.contains('automne') || p.contains('autumn')) return l10n.info_season_autumn;
+      if (p.contains('hiver') || p.contains('winter')) return l10n.info_season_winter;
+      return part;
+    }).toList();
+    
+    return localizedParts.join(', ');
   }
 }
 

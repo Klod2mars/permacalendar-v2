@@ -1495,4 +1495,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get harvest_form_error_positive_or_zero => 'Invalide (>= 0)';
+
+  @override
+  String get info_exposure_full_sun => 'Plein soleil';
+
+  @override
+  String get info_exposure_partial_sun => 'Mi-ombre';
+
+  @override
+  String get info_exposure_shade => 'Ombre';
+
+  @override
+  String get info_water_low => 'Faible';
+
+  @override
+  String get info_water_medium => 'Moyen';
+
+  @override
+  String get info_water_high => 'Élevé';
+
+  @override
+  String get info_water_moderate => 'Modéré';
+
+  @override
+  String get info_season_spring => 'Printemps';
+
+  @override
+  String get info_season_summer => 'Été';
+
+  @override
+  String get info_season_autumn => 'Automne';
+
+  @override
+  String get info_season_winter => 'Hiver';
+
+  @override
+  String get info_season_all => 'Toute saison';
 }

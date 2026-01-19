@@ -2835,6 +2835,78 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Invalide (>= 0)'**
   String get harvest_form_error_positive_or_zero;
+
+  /// No description provided for @info_exposure_full_sun.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plein soleil'**
+  String get info_exposure_full_sun;
+
+  /// No description provided for @info_exposure_partial_sun.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mi-ombre'**
+  String get info_exposure_partial_sun;
+
+  /// No description provided for @info_exposure_shade.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ombre'**
+  String get info_exposure_shade;
+
+  /// No description provided for @info_water_low.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faible'**
+  String get info_water_low;
+
+  /// No description provided for @info_water_medium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moyen'**
+  String get info_water_medium;
+
+  /// No description provided for @info_water_high.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élevé'**
+  String get info_water_high;
+
+  /// No description provided for @info_water_moderate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modéré'**
+  String get info_water_moderate;
+
+  /// No description provided for @info_season_spring.
+  ///
+  /// In fr, this message translates to:
+  /// **'Printemps'**
+  String get info_season_spring;
+
+  /// No description provided for @info_season_summer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Été'**
+  String get info_season_summer;
+
+  /// No description provided for @info_season_autumn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Automne'**
+  String get info_season_autumn;
+
+  /// No description provided for @info_season_winter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hiver'**
+  String get info_season_winter;
+
+  /// No description provided for @info_season_all.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toute saison'**
+  String get info_season_all;
 }
 
 class _AppLocalizationsDelegate
