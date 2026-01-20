@@ -1,0 +1,855 @@
+[
+    {
+        "id": "gobo",
+        "commonName": "Gobo",
+        "scientificName": "Arctium lappa L.",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 30,
+        "depth": 2.5,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Medium",
+        "description": "Biennial plant grown for its long fleshy taproot, consumed as a vegetable and recognized for its culinary and traditional uses.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 72,
+            "proteinG": 1.53,
+            "carbohydratesG": 17.34,
+            "sugarsG": 2.9,
+            "fatG": 0.15,
+            "fiberG": 3.0,
+            "vitaminCmg": 3,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 23,
+            "vitaminB6mg": 0.24,
+            "potassiumMg": 308,
+            "magnesiumMg": 38,
+            "calciumMg": 41,
+            "ironMg": 0.8,
+            "phosphorusMg": 51,
+            "sodiumMg": 5
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 21,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -20
+        },
+        "watering": {
+            "frequency": "1-2 times/week (more frequent in bare soil or dry weather)",
+            "amount": "Abundant watering to moisten soil deeply",
+            "method": "At base, without excessively wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "20-40 cm between plants, 40-100 cm between rows",
+            "when": "As soon as first true leaves appear"
+        },
+        "weeding": {
+            "method": "Early shallow hoeing or manual",
+            "frequency": "Regular at start of culture",
+            "recommendation": "Thick mulch to limit competition, crusting and evaporation"
+        },
+        "culturalTips": [
+            "Also known as: burdock, great burdock, edible burdock.",
+            "The term 'gobo' corresponds to the Japanese culinary name for Arctium lappa root.",
+            "Root plant grown as legume in Asia, also used as traditional medicinal plant in Europe.",
+            "Requires deep, loose and stone-free soil to allow development of straight and long root.",
+            "Transplanting is not recommended as it causes deformation of taproot.",
+            "Crop rotation recommended of 3 to 4 years, avoiding other Asteraceae.",
+            "Avoid overly compact or asphyxiating soils which strongly slow down root development."
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle or horsetail manure in preventive spray against fungal diseases",
+                "Garlic decoction as repellent against some insects",
+                "Fern infusion used empirically against various pests"
+            ],
+            "beneficialInsects": [
+                "Ground beetles for predation of slugs",
+                "Hoverflies and ladybugs contributing to balance of insect populations",
+                "Earthworms improving soil structure and favoring taproot penetration"
+            ],
+            "companionPlants": [
+                "Pea",
+                "Bush beans",
+                "Marigold",
+                "Phacelia"
+            ]
+        },
+        "harvestTime": "90-150 days after sowing, preferably before bolting",
+        "companionPlanting": {
+            "beneficial": [
+                "pea",
+                "bean",
+                "phacelia",
+                "rye",
+                "marigold",
+                "borage"
+            ],
+            "avoid": [
+                "lettuce",
+                "chicory",
+                "sunflower",
+                "artichoke",
+                "parsnip",
+                "salsify"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "soil_dry_surface_5cm"
+                ],
+                "message": "Watering recommended for gobo: provide water deeply."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Thinning gobo: keep about 30 cm between each plant."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Weeding and hoeing advised for gobo, especially at start of culture."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Humid conditions: preventive treatment with horsetail manure advised."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Ideal harvest period for gobo reached."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Low temperature: gobo germination may be slowed down."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Optimal conditions for gobo emergence (15–20 °C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "haricot_rames",
+        "commonName": "Pole Bean",
+        "scientificName": "Phaseolus vulgaris L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 67,
+        "spacing": 10,
+        "depth": 3,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium",
+        "description": "Productive climbing legume, ideal for small spaces thanks to its vertical growth. Requires support (poles, nets or tipis).",
+        "sowingMonths": [
+            "M",
+            "J",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 35,
+            "proteinG": 1.95,
+            "carbohydratesG": 7.6,
+            "sugarsG": 3.6,
+            "fatG": 0.29,
+            "fiberG": 3.2,
+            "vitaminCmg": 9.7,
+            "vitaminEmg": 0.1,
+            "vitaminB9ug": 33,
+            "potassiumMg": 146,
+            "magnesiumMg": 18,
+            "calciumMg": 44
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 21,
+                "max": 32
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "1-2 times/week (more frequent during flowering)",
+            "amount": "Deep watering to keep soil cool",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "7-10 cm between plants, 45-90 cm between rows",
+            "when": "Generally no thinning (direct sowing at good distance)"
+        },
+        "weeding": {
+            "method": "Manual or mulch",
+            "frequency": "Every 2-3 weeks",
+            "recommendation": "Thick mulch (straw, hay) after soil warms up"
+        },
+        "culturalTips": [
+            "Install supports (poles, tipis) before sowing to avoid damaging roots",
+            "Harvest every 2-3 days to stimulate appearance of new flowers",
+            "Avoid handling plants or harvesting when foliage is wet",
+            "Rotation of 3-4 years without other Fabaceae (peas, broad beans)",
+            "Prefer morning watering to limit nocturnal humidity on leaves"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (growth and aphid repellent)",
+                "Garlic decoction (preventive fungal diseases)",
+                "Tansy infusion"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies and Lacewings",
+                "Ground beetles against slugs"
+            ],
+            "companionPlants": [
+                "Nasturtium (aphid trap)",
+                "Marigold",
+                "Tagetes"
+            ]
+        },
+        "harvestTime": "60-75 days after sowing depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "corn",
+                "squash",
+                "onion",
+                "garlic",
+                "scallion",
+                "marigold",
+                "nasturtium",
+                "dill"
+            ],
+            "avoid": [
+                "pea",
+                "broad bean",
+                "tomato (if too dense)",
+                "other beans"
+            ]
+        },
+        "sowingMonths3": [
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring,Summer",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "stage == flowering"
+                ],
+                "message": "Crucial watering for your beans: they are in flowering/fruiting period."
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 0,
+                "message": "Check spacing of 7-10 cm between your plants."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Weeding and mulch verification for your pole beans."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Anthracnose risk: avoid wetting foliage and watch for spots."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Harvest start! Pick regularly to prolong production."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Cold alert: bean growth compromised below 5°C."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 30,
+                    "message": "Ideal temperature for bean emergence (21-30°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "haricot_coco",
+        "commonName": "Coco Bean",
+        "scientificName": "Phaseolus vulgaris L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 105,
+        "spacing": 45,
+        "depth": 2.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high",
+        "description": "Annual legume producing tasty white beans. Appreciated for richness in fiber and ability to fix nitrogen in soil.",
+        "sowingMonths": [
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 131,
+            "proteinG": 9.63,
+            "carbohydratesG": 13.7,
+            "sugarsG": null,
+            "fatG": 0.5,
+            "fiberG": 15.8,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": 71.4,
+            "potassiumMg": 480,
+            "magnesiumMg": null,
+            "calciumMg": null,
+            "ironMg": 2.7,
+            "zincMg": 1.2,
+            "copperMg": 0.26
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 0
+        },
+        "watering": {
+            "frequency": "1-2 times/week (more frequent during flowering)",
+            "amount": "Keep soil cool without excess",
+            "method": "At base, without wetting foliage",
+            "bestTime": "Morning or evening"
+        },
+        "thinning": {
+            "distance": "8-10 cm in row, 40-50 cm between rows",
+            "when": "After emergence (stage 2-3 leaves)"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (light hoeing)",
+            "frequency": "Regular until mulch installation",
+            "recommendation": "Thick mulch (straw, hay) once soil well warmed"
+        },
+        "culturalTips": [
+            "Crop rotation (3-4 years minimum without legumes)",
+            "Do not transplant (fragile taproot)",
+            "Avoid nitrogen inputs (plant fixes it itself)",
+            "Earth up plants when they reach 15-20 cm to stabilize them"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Garlic decoction (against seed fly)",
+                "Diluted black soap (against aphids)",
+                "Nettle manure (general fortifier)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs and hoverflies (against aphids)",
+                "Ground beetles (slug predators)",
+                "Earthworms (drainage improvement)"
+            ],
+            "companionPlants": [
+                "Savory (keeps aphids away)",
+                "Marigold",
+                "Cosmos"
+            ]
+        },
+        "harvestTime": "70-90 days (fresh) to 120 days (dry) after sowing",
+        "companionPlanting": {
+            "beneficial": [
+                "savory",
+                "potato",
+                "corn",
+                "dill",
+                "marigold",
+                "cosmos"
+            ],
+            "avoid": [
+                "onion",
+                "garlic",
+                "leek",
+                "pea",
+                "fennel"
+            ]
+        },
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "stage == flowering",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Important watering: your coco beans are in flower/setting."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Thinning or spacing check (8-10 cm between plants)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Weeding and hoeing recommended for your beans."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Anthracnose or mildew risk: monitor foliage."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Harvest of fresh beans can begin."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Low temperature: bean emergence risk of being blocked."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 25,
+                    "message": "Ideal conditions for coco bean sowing."
+                }
+            }
+        }
+    },
+    {
+        "id": "yellow_bean",
+        "commonName": "Yellow Bean",
+        "scientificName": "Phaseolus vulgaris L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 55,
+        "spacing": 10,
+        "depth": 2.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium",
+        "description": "Dwarf mangetout bean variety with tender yellow pods, rich in fibers and vitamin C. Easy to grow and productive.",
+        "sowingMonths": [
+            "M",
+            "J",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 2.0,
+            "carbohydratesG": 7.0,
+            "sugarsG": 3.0,
+            "fatG": 0.0,
+            "fiberG": 3.0,
+            "vitaminCmg": 23,
+            "vitaminEmg": 0.1,
+            "vitaminB9ug": 37,
+            "potassiumMg": 210,
+            "magnesiumMg": 25,
+            "calciumMg": 40
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "1-2 times/week (mulched soil) to 3 times (bare soil)",
+            "amount": "Regular, especially during flowering and pod formation",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "5-10 cm between plants, 45-70 cm between rows",
+            "when": "After complete emergence of seedlings"
+        },
+        "weeding": {
+            "method": "Manual or shallow hoeing",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Organic mulch (straw, hay) to limit competition"
+        },
+        "culturalTips": [
+            "Do not transplant (fragile taproot)",
+            "Frequent harvest every 2-3 days to stimulate production",
+            "Crop rotation of 4 to 5 years recommended",
+            "Sow in warmed soil (> 15°C) to avoid rot"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (growth)",
+                "Comfrey manure (fruiting)",
+                "Horsetail decoction (cryptogamic prevention)",
+                "Diluted black soap (against aphids)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies and Lacewings",
+                "Ground beetles (slug predators)",
+                "Aphid parasitoids"
+            ],
+            "companionPlants": [
+                "Nasturtium",
+                "Marigold",
+                "Tagetes",
+                "Phacelia"
+            ]
+        },
+        "harvestTime": "50-60 days after sowing depending on weather",
+        "companionPlanting": {
+            "beneficial": [
+                "corn",
+                "squash",
+                "onion",
+                "garlic",
+                "chives",
+                "carrot",
+                "nasturtium",
+                "marigold"
+            ],
+            "avoid": [
+                "pea",
+                "broad bean",
+                "soybean",
+                "lupin"
+            ]
+        },
+        "plantingSeason": "Spring,Summer",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 22",
+                    "stage == flowering"
+                ],
+                "message": "Crucial watering: your beans are in flower or pod formation."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Check emergence: thin to leave 10 cm between plants."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and hoeing recommended for your beans."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Anthracnose risk: spray of horsetail decoction advised."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 50,
+                "message": "First harvest possible: pick young and brittle pods."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Cold alert: protect your beans with thermal fleece."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 25,
+                    "message": "Ideal temperature for successful sowing today."
+                }
+            }
+        }
+    },
+    {
+        "id": "lentil",
+        "commonName": "Lentil",
+        "scientificName": "Lens culinaris",
+        "family": "Fabaceae",
+        "daysToMaturity": 105,
+        "spacing": 10,
+        "depth": 3.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Low to Medium",
+        "description": "Annual legume rich in protein and minerals, grown for its edible seeds.",
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 116,
+            "proteinG": 9.0,
+            "carbohydratesG": 20.0,
+            "sugarsG": 1.8,
+            "fatG": 0.38,
+            "fiberG": 7.9,
+            "vitaminCmg": 1.5,
+            "vitaminEmg": 0.11,
+            "vitaminB9ug": 181,
+            "potassiumMg": 369,
+            "magnesiumMg": 36,
+            "calciumMg": 19
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Moderate, especially during flowering",
+            "amount": "Cool but not soggy soil",
+            "method": "At base or drip, avoid sprinkling",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "5-10 cm in row, 18-25 cm between rows",
+            "when": "As soon as plants are manageable"
+        },
+        "weeding": {
+            "method": "Manual (weeding, hoeing)",
+            "frequency": "Regular to avoid competition",
+            "recommendation": "Aerating mulch to limit splashing"
+        },
+        "culturalTips": [
+            "Crop rotation (4-6 years without legumes)",
+            "Do not add nitrogen fertilizer (natural fixation)",
+            "Associate with cereals to serve as natural stakes",
+            "Avoid soils that are too wet or waterlogged"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Black soap (against aphids)",
+                "Horsetail decoction (preventive diseases)",
+                "Nettle manure (general vigor)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies and lacewings (predators of aphids)",
+                "Ground beetles against slugs"
+            ],
+            "companionPlants": [
+                "Oat",
+                "Barley",
+                "Phacelia (pollinator attraction)"
+            ]
+        },
+        "harvestTime": "90-120 days after sowing (brown and dry pods)",
+        "companionPlanting": {
+            "beneficial": [
+                "oat",
+                "barley",
+                "rye",
+                "mustard",
+                "radish",
+                "phacelia",
+                "borage",
+                "marigold",
+                "coriander"
+            ],
+            "avoid": [
+                "pea",
+                "broad bean",
+                "bean",
+                "lupin",
+                "alfalfa",
+                "clover"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 20",
+                    "stage == flowering"
+                ],
+                "message": "Moderate watering advised for your lentils (sensitive phase)"
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 20,
+                "message": "Check spacing of your lentils (5-10 cm)"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Weeding necessary to limit weed competition"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_aphids == true"
+                ],
+                "message": "Application of black soap recommended against aphids"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "Check pod dryness for harvest"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Alert: Minimum growth temperature reached for lentils (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Ideal temperature for emergence of your lentils"
+                }
+            }
+        }
+    }
+]

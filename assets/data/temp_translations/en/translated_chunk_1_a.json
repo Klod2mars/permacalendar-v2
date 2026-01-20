@@ -1,0 +1,853 @@
+[
+    {
+        "id": "cauliflower",
+        "commonName": "Cauliflower",
+        "scientificName": "Brassica oleracea var. botrytis",
+        "family": "Brassicaceae",
+        "daysToMaturity": 90,
+        "spacing": 75,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High",
+        "description": "Cruciferous vegetable demanding in water and nutrients, forming a compact white or colored head, rich in vitamins C and K.",
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.9,
+            "carbohydratesG": 5.0,
+            "sugarsG": 1.9,
+            "fatG": 0.3,
+            "fiberG": 2.0,
+            "vitaminCmg": 48.2,
+            "vitaminKmcg": 15.5,
+            "vitaminB9ug": 57,
+            "vitaminAmcg": 0,
+            "calciumMg": 22,
+            "ironMg": 0.4,
+            "magnesiumMg": 15,
+            "potassiumMg": 299,
+            "manganeseMg": 0.15,
+            "phosphorusMg": 44,
+            "glucosinolatesMg": 70,
+            "cholineMg": 45
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2 times/week (more in case of heat or drought)",
+            "amount": "20-25 mm/week",
+            "method": "At base, soil constantly moist but not soggy",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "10 cm in all directions at 3-4 leaf stage, then 70-80 cm in all directions at transplanting (6-8 leaves)",
+            "when": "After emergence (3-4 leaves), then before head formation (6-8 leaves)"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (hoeing), stale seedbed before",
+            "frequency": "Regularly, especially 15 days after planting and before row closure",
+            "recommendation": "Systematic thick mulch to limit evaporation and competition"
+        },
+        "culturalTips": [
+            "Long rotation: 3 to 4 years without Brassicaceae in same spot",
+            "Amend soil with mature compost before planting",
+            "Avoid water or thermal stress (risk of bolting or no head)",
+            "Never transplant or work during high heat periods",
+            "Monitor nitrogen supply: excess favors leaves over head"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Comfrey or nettle manure (preventive)",
+                "Black soap (against aphids, respecting organic doses)",
+                "Insect net against cabbage fly and flea beetles"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Insectivorous birds",
+                "Ground beetles (against larvae and caterpillars)"
+            ],
+            "companionPlants": [
+                "borage",
+                "mint",
+                "fennel (natural repellents against some pests)"
+            ]
+        },
+        "harvestTime": "About 90 days after planting, depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "borage",
+                "mint",
+                "fennel",
+                "celery",
+                "beans",
+                "onions",
+                "garlic",
+                "fennel (natural repellents against some pests)"
+            ],
+            "avoid": [
+                "other brassicaceae (cabbage, broccoli, turnip...), strawberries"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring, Autumn (depending on variety)",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for cauliflower: maintain soil moist (20-25 mm/week)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "First thinning: leave 10 cm between plants at 3-4 leaf stage"
+            },
+            "transplanting": {
+                "enabled": true,
+                "daysAfterPlanting": 35,
+                "message": "Transplanting recommended at 6-8 leaf stage, space by 70-80 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and hoeing recommended, remember to mulch"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature < 25"
+                ],
+                "message": "Apply nettle manure or install insect net preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Monitor head formation: harvest imminent"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum temperature for cauliflower reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "celery_branch",
+        "commonName": "Celery",
+        "scientificName": "Apium graveolens var. dulce",
+        "family": "Apiaceae",
+        "daysToMaturity": 120,
+        "spacing": 35,
+        "depth": 0.3,
+        "sunExposure": "Partial shade to full sun",
+        "waterNeeds": "High",
+        "description": "Crunchy and refreshing vegetable, rich in fibers and minerals. Demanding in water and cool soil, thrives in organic culture with mulching and strict rotation.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "carbohydratesG": 2.5,
+            "proteinG": 0.7,
+            "fatG": 0.2,
+            "fiberG": 1.6,
+            "vitaminKmcg": 29.3,
+            "vitaminCmg": 3.1,
+            "vitaminB9ug": 36,
+            "vitaminAmcg": 449,
+            "potassiumMg": 260
+        },
+        "germination": {
+            "minTemperature": 16,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 12,
+                "max": 14,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Every 2 to 3 days depending on heat",
+            "amount": "20-30 mm/week",
+            "method": "Water at base, without wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "30-40 cm between plants",
+            "when": "When seedlings have 3 true leaves"
+        },
+        "weeding": {
+            "method": "Shallow manual hoeing",
+            "frequency": "Regularly at start of culture",
+            "recommendation": "Early organic mulching highly recommended to reduce weeding and keep moisture"
+        },
+        "culturalTips": [
+            "Mandatory crop rotation (3-4 years without celery in same spot)",
+            "Earth up plants 15 days before harvest to blanch stalks and sweeten flavor",
+            "Avoid any soil work or handling in wet weather to limit fungal diseases",
+            "Protect young plants from slugs and snails (Ferramol or biological traps)",
+            "Never let soil dry out: celery is very sensitive to water stress"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Diluted nettle manure at 10% (1x/month as preventive watering against fungal diseases)",
+                "Bordeaux mixture in emergency (only if allowed in local organic)",
+                "Horsetail infusion against foliage diseases"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies (larvae eat aphids)",
+                "Ground beetles against slugs (favor soil biodiversity)"
+            ],
+            "companionPlants": [
+                "cabbage",
+                "leek",
+                "tomato",
+                "onion",
+                "avoid water-hungry plants like zucchini"
+            ]
+        },
+        "harvestTime": "About 120 days after sowing, or 90 days after transplanting",
+        "companionPlanting": {
+            "beneficial": [
+                "cabbage",
+                "leek",
+                "onion",
+                "tomato",
+                "spinach",
+                "lettuce"
+            ],
+            "avoid": [
+                "corn",
+                "water-hungry plants like zucchini",
+                "plants very demanding in water or nitrogen",
+                "potatoes"
+            ],
+            "notes": [
+                "avoid water-hungry plants like zucchini"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 22",
+                    "no_rain_last_3_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Watering needed for your celery: 20-30 mm this week, at base without wetting leaves"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 28,
+                "message": "Thinning needed: keep one plant every 30-40 cm, eliminate weakest"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding or mulching to check — celery hates competition"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "forecast_rainy_days > 2"
+                ],
+                "message": "Preventive treatment with nettle manure recommended to avoid fungal diseases"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Harvest period approaching — think about earthing up plants to blanch stalks"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimal temperature for celery reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 18,
+                    "message": "Optimal germination temperature reached (18°C) — good time to sow"
+                }
+            }
+        }
+    },
+    {
+        "id": "chard",
+        "commonName": "Chard",
+        "scientificName": "Beta vulgaris subsp. vulgaris",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 60,
+        "spacing": 40,
+        "depth": 1,
+        "sunExposure": "Full sun or partial shade",
+        "waterNeeds": "High",
+        "description": "Leaf vegetable with fleshy stalks, rich in vitamins and minerals. Also called Swiss chard, eaten raw or cooked, leaves and stalks.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.8,
+            "carbohydratesG": 0.9,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminKmcg": 830,
+            "vitaminAmcg": 365,
+            "vitaminCmg": 18,
+            "vitaminB9ug": 9,
+            "potassiumMg": 380,
+            "magnesiumMg": 80,
+            "ironMg": 1.8,
+            "manganeseMg": 0.4,
+            "sodiumMg": 160
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Regularly, 2-3 times/week in hot period",
+            "amount": "20-30 mm/week (depending on heat and soil type)",
+            "method": "At base, avoid foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "40 cm between plants (20-30 cm if weak plants)",
+            "when": "At 2-3 leaves, about 3 weeks after sowing"
+        },
+        "weeding": {
+            "method": "Manual or mechanical before sowing, then mulching to limit maintenance",
+            "frequency": "Regularly at start, then reduced thanks to mulch",
+            "recommendation": "Light mulch to keep moisture and limit weeds"
+        },
+        "culturalTips": [
+            "Rotation: wait 3 years before replanting in same spot",
+            "Remove floral stems to avoid plant exhaustion",
+            "Mulch in summer to keep moisture and avoid water stress",
+            "Water regularly to prevent stalks from becoming fibrous",
+            "Avoid planting next to leeks"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail manure spray against downy mildew and rust",
+                "Comfrey infusion to strengthen plants"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Beneficial hoverflies",
+                "Earthworms for living soil"
+            ],
+            "companionPlants": [
+                "carrots",
+                "turnips",
+                "bush beans"
+            ]
+        },
+        "harvestTime": "60-90 days after sowing, depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "turnip",
+                "bush bean",
+                "cabbage",
+                "lettuce",
+                "radish",
+                "carrots",
+                "turnips",
+                "bush beans"
+            ],
+            "avoid": [
+                "beetroot (same family)",
+                "leek"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for your chard: keep soil cool (20-30 mm/week)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thinning to do: keep 1 vigorous plant every 40 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Light weeding recommended before mulching"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Preventive treatment with horsetail manure recommended against fungal diseases"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "First harvests possible for your chard (outer leaves)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum temperature for chard reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "chives",
+        "commonName": "Chives",
+        "scientificName": "Allium schoenoprasum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 60,
+        "spacing": 15,
+        "depth": 0.5,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Moderate",
+        "description": "Perennial aromatic plant, rich in vitamins and with natural repellent properties against some pests.",
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 13.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 3.3,
+            "carbohydratesG": 4.4,
+            "sugarsG": 1.9,
+            "fatG": 0.7,
+            "fiberG": 2.5,
+            "vitaminCmg": 58.1,
+            "vitaminKmcg": 212.7,
+            "vitaminB9ug": 105,
+            "vitaminAmcg": 218,
+            "calciumMg": 92,
+            "ironMg": 1.6,
+            "magnesiumMg": 42,
+            "potassiumMg": 296,
+            "manganeseMg": 0.27,
+            "phosphorusMg": 58,
+            "quercetinMg": 35,
+            "allicinPrecursorsMg": 15
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Every 3 days in hot period (more frequent in pot)",
+            "amount": "Keep soil cool without excess",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "15 cm between each plant",
+            "when": "At time of definitive planting"
+        },
+        "weeding": {
+            "method": "Gentle manual, light mulching after plant establishment",
+            "frequency": "Regular control, especially at start of culture",
+            "recommendation": "Avoid mulching too early in spring to limit slugs"
+        },
+        "culturalTips": [
+            "Crop rotation: avoid planting near peas and beans",
+            "Protect in winter with fleece if temperature < -10°C",
+            "Avoid stagnant moisture to prevent grey mold",
+            "Do not consume raw in excess for people sensitive to alliaceous plants",
+            "Accepts self-sowing — manage according to available space"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Soapy water with black soap against aphids",
+                "Garlic infusion (preventive)",
+                "Comfrey manure (natural fortifier)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Hoverflies",
+                "Lacewings"
+            ],
+            "companionPlants": [
+                "carrot",
+                "tomato",
+                "cucumber",
+                "repels some pests naturally"
+            ]
+        },
+        "harvestTime": "60 days after sowing, then regular harvest all summer",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "tomato",
+                "cucumber",
+                "celery",
+                "potato",
+                "strawberry",
+                "repels some pests naturally"
+            ],
+            "avoid": [
+                "beetroot",
+                "beans",
+                "peas"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Spring, Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for your chives: maintain soil cool, avoid excess"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning done? Check 15 cm between each plant."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Weed control recommended — consider light mulching if plants well established"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Grey mold risk — aerate plants and check watering"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "First harvest possible! Cut stems at one third to favor regrowth."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -10,
+                    "message": "Attention extreme frost (< -10°C) — protect chives with fleece"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions reached (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "coriander",
+        "commonName": "Coriander",
+        "scientificName": "Coriandrum sativum",
+        "family": "Apiaceae",
+        "daysToMaturity": 45,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Moderate but regular",
+        "description": "Annual aromatic plant, prized for its fresh leaves and seeds. Sensitive to water stress which stimulates rapid bolting.",
+        "marketPricePerKg": 15.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 2.1,
+            "carbohydratesG": 3.7,
+            "sugarsG": 0.9,
+            "fatG": 0.5,
+            "fiberG": 2.8,
+            "vitaminCmg": 27.0,
+            "vitaminKmcg": 310.0,
+            "vitaminB9ug": 62,
+            "vitaminAmcg": 337,
+            "calciumMg": 67,
+            "ironMg": 1.8,
+            "magnesiumMg": 26,
+            "potassiumMg": 521,
+            "manganeseMg": 0.23,
+            "phosphorusMg": 48,
+            "linaloolMg": 80,
+            "quercetinMg": 55
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 17,
+                "max": 20
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "1 time/week (more often in pot or hot/dry weather)",
+            "amount": "Soil kept moist without stagnation",
+            "method": "Water at base, avoid wetting leaves",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "10-15 cm between plants",
+            "when": "From first weeks after germination, at few leaves stage"
+        },
+        "weeding": {
+            "method": "Manual (not to disturb roots), mulching possible",
+            "frequency": "Regular, especially at start of growth",
+            "recommendation": "Mulch to limit weeds and maintain moisture"
+        },
+        "culturalTips": [
+            "Avoid premature bolting by maintaining regular watering",
+            "Crop rotation: do not replant coriander in same spot each year",
+            "Prefers well drained soil",
+            "Tolerates partial shade but prefers full sun",
+            "Do not let soil dry completely to prolong leaf harvest"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Organic manures in case of strong attack (e.g. nettle manure)",
+                "Natural decoctions (e.g. garlic, tansy)"
+            ],
+            "beneficialInsects": [
+                "Hedgehogs against slugs and snails",
+                "Ground beetles against slugs and other pest invertebrates"
+            ],
+            "companionPlants": [
+                "not specified",
+                "but avoid competition with invasive plants"
+            ]
+        },
+        "harvestTime": "30-45 days after germination for leaves, 90-100 days for seeds",
+        "companionPlanting": {
+            "beneficial": [
+                "onion",
+                "cabbage",
+                "cucumber",
+                "broccoli",
+                "onions",
+                "cabbages",
+                "cucumbers",
+                "broccoli (repellent effect against some pests)"
+            ],
+            "avoid": [
+                "competition",
+                "invasive plants",
+                "invasive or strong root competition plants",
+                "other apiaceae",
+                "fennel"
+            ],
+            "notes": [
+                "but avoid competition with invasive plants"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days",
+                    "in_pot"
+                ],
+                "message": "Watering needed for coriander: maintain soil moist, especially in pot or hot weather"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning recommended: space plants by 10-15 cm for good development"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding recommended: coriander is vulnerable to weed competition"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "slug_activity_detected"
+                ],
+                "message": "Monitor slugs/snails: favor hedgehogs and beetles, avoid chemical products"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 35,
+                "message": "Leaf harvest possible from 5 weeks. Cut outer stems to prolong production."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Attention: minimum temperature for coriander reached (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 22,
+                    "message": "Optimal germination conditions (18-22°C)"
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,856 @@
+[
+    {
+        "id": "shallot",
+        "commonName": "Shallot",
+        "scientificName": "Allium cepa var. aggregatum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 90,
+        "spacing": 15,
+        "depth": 2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Low",
+        "description": "Aromatic bulb close to onion, grown for its clustered cloves. Fears stagnant moisture and requires well-drained soil.",
+        "sowingMonths": [
+            "F"
+        ],
+        "harvestMonths": [
+            "J"
+        ],
+        "marketPricePerKg": 6.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 72,
+            "proteinG": 2.5,
+            "carbohydratesG": 16.8,
+            "sugarsG": 7.9,
+            "fatG": 0.1,
+            "fiberG": 2.6,
+            "vitaminCmg": 8.0,
+            "vitaminB6mg": 0.24,
+            "vitaminB9ug": 34,
+            "vitaminAmcg": 6,
+            "calciumMg": 37,
+            "ironMg": 1.2,
+            "magnesiumMg": 21,
+            "potassiumMg": 303,
+            "manganeseMg": 0.29,
+            "phosphorusMg": 60
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 3
+        },
+        "watering": {
+            "frequency": "Only in case of prolonged drought",
+            "amount": "Moderate watering, soil slightly moist",
+            "method": "At base, without wetting foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "15 cm between plants, 30 cm between rows",
+            "when": "At planting, no further thinning necessary if well spaced"
+        },
+        "weeding": {
+            "method": "Manual or very shallow hoeing",
+            "frequency": "Regular, as soon as weeds appear",
+            "recommendation": "Light mulch possible, but avoid if risk of collar moisture"
+        },
+        "culturalTips": [
+            "Crop rotation of 3 to 5 years, avoid replanting alliums in same spot",
+            "Prefer culture after leafy vegetables, fruit vegetables or legumes",
+            "Never plant in poorly drained soil; prefer raised beds if necessary",
+            "Avoid excess nitrogen which favors foliage at expense of bulbs",
+            "Plant bulbs with tip pointing up, 2 cm deep"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Organic Bordeaux mixture (preventive against downy mildew)",
+                "Insect nets (against onion fly)",
+                "Marigolds (against nematodes)"
+            ],
+            "beneficialInsects": [
+                "Non-specific natural beneficials (favored by biodiversity)"
+            ],
+            "companionPlants": [
+                "carrot",
+                "savory",
+                "dill (natural repellents against onion fly)"
+            ]
+        },
+        "harvestTime": "About 90 days after planting, when foliage yellows and dries",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "savory",
+                "dill",
+                "marigold",
+                "dill (natural repellents against onion fly)"
+            ],
+            "avoid": [
+                "garlic",
+                "other alliums (risk of common diseases)",
+                "onion",
+                "leek"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul"
+        ],
+        "plantingSeason": "Autumn or Spring (depending on variety)",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "Only in case of drought",
+                "conditions": [
+                    "no_rain_last_15_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Moderate watering necessary for your shallots: at base, without wetting foliage."
+            },
+            "thinning": {
+                "enabled": false,
+                "message": "Thinning done at planting (15 cm between plants, 30 cm between rows)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Manual weeding recommended: watch out for shallow shallot roots."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 18"
+                ],
+                "message": "Risk of downy mildew: apply organic Bordeaux mixture preventively."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Harvest imminent: watch for yellowing of shallot foliage."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 3,
+                    "message": "Attention: minimum temperature for shallots reached (3°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimal germination temperature reached (15°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "spinach",
+        "commonName": "Spinach",
+        "scientificName": "Spinacia oleracea",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 45,
+        "spacing": 8,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "High",
+        "description": "Leaf vegetable rich in iron, vitamins and antioxidants, ideal for fresh and quick culture. Prefers cool temperatures and moist but well-drained soil.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 4.35,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 2.9,
+            "carbohydratesG": 3.6,
+            "fiberG": 2.2,
+            "fatG": 0.4,
+            "vitaminK1mcg": 483,
+            "vitaminCmg": 28,
+            "vitaminB9ug": 194,
+            "ironMg": 2.7,
+            "calciumMg": 99,
+            "magnesiumMg": 79,
+            "manganeseMg": 0.9,
+            "vitaminAmcg": 5626
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Every 2-3 days without rain",
+            "amount": "10-20 mm/week",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "8 cm between plants, 25-30 cm between rows",
+            "when": "When plants have 3-4 leaves"
+        },
+        "weeding": {
+            "method": "Manual or mechanical hoeing",
+            "frequency": "Regular, depending on weed growth",
+            "recommendation": "Mulching recommended to limit weeds and conserve moisture"
+        },
+        "culturalTips": [
+            "Crop rotation: wait at least 3 years before replanting spinach in same spot",
+            "Soil rich in organic matter, well drained, slightly acidic",
+            "Avoid watering on foliage to prevent fungal diseases",
+            "Prefer sunny to partial shade exposure",
+            "Watch out for unfavorable associations: fennel, beetroot, jerusalem artichoke"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail decoction (damping-off prevention)",
+                "Baking soda + black soap (against downy mildew)",
+                "Charcoal incorporated into soil (antifungal effect)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Ground beetles (slug and insect egg predators)",
+                "Hoverflies (larvae eat aphids)"
+            ],
+            "companionPlants": [
+                "lettuce",
+                "radish",
+                "pea",
+                "strawberry",
+                "cabbages (favor growth or share space efficiently)"
+            ]
+        },
+        "harvestTime": "40-50 days after sowing, depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "radish",
+                "pea",
+                "strawberry",
+                "cabbage",
+                "celery",
+                "onion",
+                "garlic",
+                "cabbages (favor growth or share space efficiently)"
+            ],
+            "avoid": [
+                "beetroot",
+                "fennel",
+                "jerusalem artichoke"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Spring,Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "no_rain_last_2_days",
+                    "temperature > 20"
+                ],
+                "message": "Watering necessary for your spinach: 10-20 mm this week, at base only"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning necessary: keep one plant every 10 to 12 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Weeding recommended + think about mulching to limit regrowth"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Risk of downy mildew: spray baking soda + black soap preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "Your spinach is ready to harvest! Pick outer leaves first."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum growth temperature for spinach reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 18,
+                    "message": "Optimal germination conditions for spinach (15-18°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "sweet_corn",
+        "commonName": "Sweet Corn",
+        "scientificName": "Zea mays var. saccharata",
+        "family": "Poaceae",
+        "daysToMaturity": 70,
+        "spacing": 30,
+        "depth": 2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate",
+        "description": "Cereal vegetable grown for its sweet cobs, demanding in heat and nitrogen, ideal in Three Sisters association (corn-beans-squash).",
+        "marketPricePerKg": 4.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 86,
+            "proteinG": 3.2,
+            "carbohydratesG": 19.0,
+            "sugarsG": 3.4,
+            "fatG": 1.2,
+            "fiberG": 2.7,
+            "vitaminCmg": 6.8,
+            "vitaminKmcg": 0.3,
+            "vitaminB9ug": 46,
+            "vitaminAmcg": 9,
+            "calciumMg": 2,
+            "ironMg": 0.5,
+            "magnesiumMg": 37,
+            "potassiumMg": 270,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 89,
+            "luteinZeaxanthinMcg": 962
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Once a week (more in drought)",
+            "amount": "15-20 mm/week",
+            "method": "Watering at base, avoid foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "30 cm between plants, 70 cm between rows",
+            "when": "At 2-3 leaf stage, keep strongest plant"
+        },
+        "weeding": {
+            "method": "Shallow manual hoeing + organic mulch",
+            "frequency": "Once a week at start, then as needed",
+            "recommendation": "Earth up bases to 15-20 cm height to stabilize and limit weeds"
+        },
+        "culturalTips": [
+            "Sow or plant in blocks or squares (minimum 4 rows) to ensure wind pollination",
+            "Avoid planting isolated — pollination fails",
+            "Prefer soil rich in organic matter (compost or decomposed manure before planting)",
+            "Rotation: do not cultivate in same spot before 4 years, ideally after legumes",
+            "Beneficial association: Three Sisters system (corn + climbing beans + squash)",
+            "Do not overwater: risk of root rot and fungal diseases"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail decoction against powdery mildew",
+                "Nettle manure as preventive fortifier",
+                "Garlic decoction against rust"
+            ],
+            "beneficialInsects": [
+                "Trichogramma against corn borer",
+                "Ladybugs and lacewings against aphids and other pests"
+            ],
+            "companionPlants": [
+                "climbing beans",
+                "squash (three sisters system)",
+                "sunflowers (windbreak)"
+            ]
+        },
+        "harvestTime": "65-80 days after sowing, depending on variety and climatic conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "climbing beans",
+                "squash",
+                "cucumber",
+                "sunflower",
+                "pea",
+                "squash (three sisters system)",
+                "sunflowers (windbreak)"
+            ],
+            "avoid": [
+                "beetroot",
+                "celery",
+                "solitary plants (inefficient pollination)"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_7_days"
+                ],
+                "message": "Watering necessary for your sweet corn: 15-20 mm this week"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning necessary: keep 30 cm between plants, eliminate weakest"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Hoeing and weed control recommended for your sweet corn"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 20"
+                ],
+                "message": "Preventive treatment advised: nettle manure or horsetail decoction"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Harvest period approaching for your sweet corn — check cob maturity"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Attention: minimum temperature for sweet corn reached (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimal germination conditions for sweet corn (20-25°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "thyme",
+        "commonName": "Thyme",
+        "scientificName": "Thymus vulgaris",
+        "family": "Lamiaceae",
+        "daysToMaturity": 60,
+        "spacing": 30,
+        "depth": 0.3,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Low",
+        "description": "Perennial aromatic plant, drought resistant, ideal in permaculture for its repellent action against some pests and minimal water needs.",
+        "marketPricePerKg": 18.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 101,
+            "proteinG": 5.6,
+            "carbohydratesG": 24.5,
+            "sugarsG": 1.7,
+            "fatG": 1.7,
+            "fiberG": 14.0,
+            "vitaminCmg": 160.1,
+            "vitaminKmcg": 490.0,
+            "vitaminB9ug": 274,
+            "vitaminAmcg": 238,
+            "calciumMg": 405,
+            "ironMg": 17.4,
+            "magnesiumMg": 160,
+            "potassiumMg": 609,
+            "manganeseMg": 1.72,
+            "phosphorusMg": 65,
+            "thymolMg": 650,
+            "rosmarinicAcidMg": 45
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 30,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Very occasional (only in drought or in pot)",
+            "amount": "About 20 liters/m² every 6 days in mulched garden under 30°C",
+            "method": "Watering at base, never on foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "30 cm between plants",
+            "when": "When plants reach 5-10 cm, after 2 months growth"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (gentle hoeing)",
+            "frequency": "Regular at start of culture, then reduced with mulch",
+            "recommendation": "Mulching with straw, grass clippings or dead leaves to limit weeds and feed soil"
+        },
+        "culturalTips": [
+            "Avoid constant moisture to prevent root rot",
+            "Prefer light, calcareous, poor and well-drained soil",
+            "Prune annually at flowering to stimulate regrowth and maintain shape",
+            "Renew plants every 4 years in humid climate to preserve flavor",
+            "Associate with rosemary (similar needs, complementary repellent effect)",
+            "Crop rotation recommended to avoid soil depletion",
+            "Avoid chemical fertilizers or excess compost — light fertilization suffices"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Neem manure (in case of targeted infestation)",
+                "Diluted black soap (against rare aphids)",
+                "Aromatic plant decoctions (preventive)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (general predators)",
+                "Lacewings (against aphids)",
+                "Hoverflies (pollinators and beneficials)"
+            ],
+            "companionPlants": [
+                "rosemary",
+                "lavender",
+                "sage",
+                "mediterranean plants with low water needs"
+            ]
+        },
+        "harvestTime": "From flowering, 2 to 3 months after planting — harvest possible all year in mild climate",
+        "companionPlanting": {
+            "beneficial": [
+                "rosemary",
+                "lavender",
+                "sage",
+                "cabbage",
+                "carrot",
+                "tomato (protects against some pests)",
+                "mediterranean plants with low water needs"
+            ],
+            "avoid": [
+                "plants hungry for water (e.g. zucchini, lettuce) — water incompatibility"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "6 days",
+                "conditions": [
+                    "temperature > 30",
+                    "no_rain_last_7_days",
+                    "in_pot == true"
+                ],
+                "message": "Light watering recommended for your thyme: 20 liters/m² at base, only if soil dry"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Thinning necessary: keep one plant every 30 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manual weeding recommended around young thyme plants"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "observed_pest == true"
+                ],
+                "message": "Reinforced surveillance: risk of rot or fungal disease — aerate and avoid watering foliage"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "First harvest possible: cut floral stems to favor regrowth"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Attention: minimum temperature for thyme reached (10°C) — protect in case of frost"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "tomato",
+        "commonName": "Tomato",
+        "scientificName": "Solanum lycopersicum",
+        "family": "Solanaceae",
+        "daysToMaturity": 80,
+        "spacing": 60,
+        "depth": 0.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium",
+        "description": "Popular fruit vegetable, rich in vitamins and antioxidants.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 0.9,
+            "carbohydratesG": 3.9,
+            "sugarsG": 2.6,
+            "fatG": 0.2,
+            "fiberG": 1.2,
+            "vitaminCmg": 14,
+            "vitaminEmg": 0.5,
+            "vitaminB9ug": 15,
+            "potassiumMg": 250,
+            "magnesiumMg": 10,
+            "calciumMg": 8
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 22,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 26
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "2-3 times/week in hot weather",
+            "amount": "3-5 liters per plant/week",
+            "method": "At base, never on foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "50-70 cm between plants, 70-100 cm between rows",
+            "when": "When plants reach 15-25 cm"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (hoeing, weeding)",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Thick mulch after planting"
+        },
+        "culturalTips": [
+            "Crop rotation (3-4 years without solanaceae in same spot)",
+            "Avoid watering on leaves",
+            "Remove lower leaves touching ground",
+            "Space plants correctly for aeration",
+            "Choose resistant varieties (Tigerella, Rose claire, Paoline)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifier and anti-aphid)",
+                "Garlic decoction",
+                "Tansy infusion"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Parasitoid wasps (Aphidius spp.)",
+                "Nematodes Steinernema feltiae against leafminers"
+            ],
+            "companionPlants": [
+                "marigold",
+                "basil against nematodes"
+            ]
+        },
+        "harvestTime": "50-100 days after planting depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "cabbage",
+                "radish",
+                "beetroot",
+                "lettuce",
+                "onion",
+                "leek",
+                "spinach",
+                "basil",
+                "parsley",
+                "marigold",
+                "nasturtium",
+                "basil against nematodes"
+            ],
+            "avoid": [
+                "cucumber",
+                "fennel",
+                "pea",
+                "potatoes"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering necessary for your tomatoes: 3-5 liters per plant"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thinning necessary: keep 50-70 cm between plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding recommended for your tomatoes"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Preventive treatment with nettle manure recommended"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Harvest period approaching for your tomatoes"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Attention: minimum temperature for tomatoes reached (12°C)"
+                },
+                "germination_optimal": {
+                    "min": 22,
+                    "max": 25,
+                    "message": "Optimal germination conditions (22-25°C)"
+                }
+            }
+        }
+    }
+]

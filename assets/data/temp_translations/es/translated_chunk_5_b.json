@@ -1,0 +1,813 @@
+[
+    {
+        "id": "gobo",
+        "commonName": "Gobo (Bardana)",
+        "scientificName": "Arctium lappa L.",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 30,
+        "depth": 2.5,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Planta bianual cultivada por su larga raíz pivotante carnosa, consumida como verdura y reconocida por sus usos culinarios y tradicionales.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 72,
+            "proteinG": 1.53,
+            "carbohydratesG": 17.34,
+            "sugarsG": 2.9,
+            "fatG": 0.15,
+            "fiberG": 3.0,
+            "vitaminCmg": 3,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 23,
+            "vitaminB6mg": 0.24,
+            "potassiumMg": 308,
+            "magnesiumMg": 38,
+            "calciumMg": 41,
+            "ironMg": 0.8,
+            "phosphorusMg": 51,
+            "sodiumMg": 5
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 21,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -20
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (más frecuente en suelo desnudo o tiempo seco)",
+            "amount": "Riego abundante para humedecer el suelo en profundidad",
+            "method": "Al pie, sin mojar excesivamente el follaje",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "20-40 cm entre plantas, 40-100 cm entre filas",
+            "when": "Desde aparición de primeras hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Binado superficial precoz o manual",
+            "frequency": "Regular al inicio del cultivo",
+            "recommendation": "Acolchado espeso para limitar competencia, compactación y evaporación"
+        },
+        "culturalTips": [
+            "También conocida como: bardana, gran bardana, lampazo.",
+            "El término « gobo » corresponde a la denominación culinaria japonesa de la raíz de Arctium lappa.",
+            "Planta de raíz cultivada como verdura en Asia, también utilizada como planta medicinal tradicional en Europa.",
+            "Requiere suelo profundo, suelto y sin piedras para permitir desarrollo de una raíz recta y larga.",
+            "El trasplante está desaconsejado pues provoca deformación de la raíz pivotante.",
+            "Rotación de cultivos recomendada de 3 a 4 años, evitando otras Asteráceas.",
+            "Evitar suelos demasiado compactos o asfixiantes que frenan fuertemente el desarrollo radicular."
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga o de cola de caballo en pulverización preventiva contra enfermedades fúngicas",
+                "Decocción de ajo como repelente contra ciertos insectos",
+                "Infusión de helecho utilizada empíricamente contra diversos parásitos"
+            ],
+            "beneficialInsects": [
+                "Cárabos para depredación de limacos",
+                "Sírfidos y coccinelles contribuyendo al equilibrio de poblaciones de insectos",
+                "Lombrices mejorando estructura del suelo y favoreciendo penetración del pivote"
+            ],
+            "companionPlants": [
+                "Guisante",
+                "Judías enanas",
+                "Caléndula",
+                "Facelia"
+            ]
+        },
+        "harvestTime": "90-150 días tras siembra, preferiblemente antes de subida a flor",
+        "companionPlanting": {
+            "beneficial": [
+                "guisante",
+                "judía",
+                "facelia",
+                "centeno",
+                "caléndula",
+                "borraja"
+            ],
+            "avoid": [
+                "lechuga",
+                "achicoria",
+                "girasol",
+                "alcachofa",
+                "chirivía",
+                "salsifí"
+            ]
+        },
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño,Hiver",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "soil_dry_surface_5cm"
+                ],
+                "message": "Riego recomendado para el gobo: aporte agua en profundidad."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Aclareo del gobo: conserve aprox 30 cm entre cada planta."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Deshierbe y binado aconsejados para el gobo, sobre todo al inicio."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Condiciones húmedas: tratamiento preventivo con purín de cola de caballo aconsejado."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Periodo de cosecha ideal del gobo alcanzado."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Temperatura baja: la germinación del gobo puede ralentizarse."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Condiciones óptimas para la levée del gobo (15–20 °C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "haricot_rames",
+        "commonName": "Judía de Enrame",
+        "scientificName": "Phaseolus vulgaris L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 67,
+        "spacing": 10,
+        "depth": 3,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Leguminosa trepadora productiva, ideal para pequeños espacios gracias a su crecimiento vertical. Requiere soporte (tutores, redes o tipis).",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 35,
+            "proteinG": 1.95,
+            "carbohydratesG": 7.6,
+            "sugarsG": 3.6,
+            "fatG": 0.29,
+            "fiberG": 3.2,
+            "vitaminCmg": 9.7,
+            "vitaminEmg": 0.1,
+            "vitaminB9ug": 33,
+            "potassiumMg": 146,
+            "magnesiumMg": 18,
+            "calciumMg": 44
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 21,
+                "max": 32
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (más frecuente durante floración)",
+            "amount": "Riego profundo para mantener suelo fresco",
+            "method": "Al pie, evitar mojar follaje",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "7-10 cm entre plantas, 45-90 cm entre filas",
+            "when": "Generalmente sin aclareo (siembra directa a buena distancia)"
+        },
+        "weeding": {
+            "method": "Manual o acolchado",
+            "frequency": "Cada 2-3 semanas",
+            "recommendation": "Acolchado espeso (paja, heno) tras calentamiento del suelo"
+        },
+        "culturalTips": [
+            "Instalar soportes (tutores, tipis) antes de la siembra para no dañar raíces",
+            "Cosechar cada 2-3 días para estimular aparición de nuevas flores",
+            "Evitar manipular plantas o cosechar cuando follaje mojado",
+            "Rotación de 3-4 años sin otras Fabáceas (guisantes, habas)",
+            "Privilegiar riego matinal para limitar humedad nocturna en hojas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (crecimiento y repelente pulgones)",
+                "Decocción de ajo (preventivo enfermedades criptogámicas)",
+                "Infusión de tanaisie"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Syrphes y Crisopas",
+                "Cárabos contra limacos"
+            ],
+            "companionPlants": [
+                "Capuchina (trampa pulgones)",
+                "Caléndula",
+                "Tagete"
+            ]
+        },
+        "harvestTime": "60-75 días tras siembra según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz",
+                "calabaza",
+                "cebolla",
+                "ajo",
+                "ciboulette",
+                "caléndula",
+                "capuchina",
+                "eneldo"
+            ],
+            "avoid": [
+                "guisante",
+                "haba",
+                "tomate (si muy denso)",
+                "otras judías"
+            ]
+        },
+        "sowingMonths": [
+            "M",
+            "J",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "plantingSeason": "Primavera,Verano",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "stage == flowering"
+                ],
+                "message": "Riego crucial para sus judías: están en periodo floración/fructificación."
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 0,
+                "message": "Verifique espaciamiento de 7-10 cm entre sus plantas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Deshierbe y verificación acolchado para sus judías de enrame."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Riesgo de antracnosis: evite mojar follaje y vigile manchas."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Inicio de cosecha! Recoja regularmente para prolongar producción."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Alerta frío: crecimiento judías comprometido bajo 5°C."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 30,
+                    "message": "Temperatura ideal para levée de sus judías (21-30°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "haricot_coco",
+        "commonName": "Judía Coco",
+        "scientificName": "Phaseolus vulgaris L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 105,
+        "spacing": 45,
+        "depth": 2.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Leguminosa anual que produce granos blancos sabrosos. Apreciada por su riqueza en fibra y capacidad de fijar nitrógeno en suelo.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 131,
+            "proteinG": 9.63,
+            "carbohydratesG": 13.7,
+            "sugarsG": null,
+            "fatG": 0.5,
+            "fiberG": 15.8,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": 71.4,
+            "potassiumMg": 480,
+            "magnesiumMg": null,
+            "calciumMg": null,
+            "ironMg": 2.7,
+            "zincMg": 1.2,
+            "copperMg": 0.26
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 0
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (más frecuente en floración)",
+            "amount": "Mantener suelo fresco sin exceso",
+            "method": "Al pie, sin mojar follaje",
+            "bestTime": "Mañana o noche"
+        },
+        "thinning": {
+            "distance": "8-10 cm en la línea, 40-50 cm entre filas",
+            "when": "Tras levée (estadio 2-3 hojas)"
+        },
+        "weeding": {
+            "method": "Manual o mecánico (binado ligero)",
+            "frequency": "Regular hasta colocación acolchado",
+            "recommendation": "Acolchado espeso (paja, heno) una vez suelo bien caliente"
+        },
+        "culturalTips": [
+            "Rotación cultivos (3-4 años mínimo sin leguminosas)",
+            "No repicar (raíz pivotante frágil)",
+            "Evitar aportes nitrógeno (planta lo fija ella misma)",
+            "Aporcar pies cuando alcanzan 15-20 cm para estabilizarlos"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Decocción de ajo (contra mosca de siembras)",
+                "Jabón negro diluido (contra pulgones)",
+                "Purín de ortiga (fortificante general)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles y sírfidos (contra pulgones)",
+                "Cárabos (depredadores limacos)",
+                "Lombrices (mejora drenaje)"
+            ],
+            "companionPlants": [
+                "Ajedrea (aleja pulgones)",
+                "Caléndula",
+                "Cosmos"
+            ]
+        },
+        "harvestTime": "70-90 días (fresco) a 120 días (seco) tras siembra",
+        "companionPlanting": {
+            "beneficial": [
+                "ajedrea",
+                "patata",
+                "maíz",
+                "eneldo",
+                "caléndula",
+                "cosmos"
+            ],
+            "avoid": [
+                "cebolla",
+                "ajo",
+                "puerro",
+                "guisante",
+                "hinojo"
+            ]
+        },
+        "sowingMonths": [
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "A",
+            "S",
+            "O"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "stage == flowering",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego importante: sus judías coco están en flor/cuajado."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Aclareo o verificación espaciamiento (8-10 cm entre plantas)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Deshierbe y binado recomendados para sus judías."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Riesgo de antracnosis o mildiu: vigile follaje."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "La cosecha de granos frescos puede comenzar."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Temperatura baja: la levée de la judía puede bloquearse."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 25,
+                    "message": "Condiciones ideales para siembra judía coco."
+                }
+            }
+        }
+    },
+    {
+        "id": "yellow_bean",
+        "commonName": "Judía Amarilla",
+        "scientificName": "Phaseolus vulgaris L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 55,
+        "spacing": 10,
+        "depth": 2.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Variedad de judía enana de vainas amarillas tiernas, rica en fibras y vitamina C. Fácil de cultivar y productiva.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 2.0,
+            "carbohydratesG": 7.0,
+            "sugarsG": 3.0,
+            "fatG": 0.0,
+            "fiberG": 3.0,
+            "vitaminCmg": 23,
+            "vitaminEmg": 0.1,
+            "vitaminB9ug": 37,
+            "potassiumMg": 210,
+            "magnesiumMg": 25,
+            "calciumMg": 40
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (suelo acolchado) a 3 veces (suelo desnudo)",
+            "amount": "Regular, sobre todo en floración y formación de vainas",
+            "method": "Al pie, evitar mojar follaje",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "5-10 cm entre plantas, 45-70 cm entre filas",
+            "when": "Tras levée completa de plántulas"
+        },
+        "weeding": {
+            "method": "Manual o binado superficial",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado orgánico (paja, heno) para limitar competencia"
+        },
+        "culturalTips": [
+            "No repicar (raíz pivotante frágil)",
+            "Cosecha frecuente cada 2-3 días para estimular producción",
+            "Rotación cultivos de 4 a 5 años recomendada",
+            "Sembrar en suelo caliente (> 15°C) para evitar podredumbre"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (crecimiento)",
+                "Purín de consuelda (fructificación)",
+                "Decocción de cola de caballo (prevención criptogámica)",
+                "Jabón negro diluido (contra pulgones)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Syrphes y Crisopas",
+                "Cárabos (depredadores limacos)",
+                "Parasitoides de pulgones"
+            ],
+            "companionPlants": [
+                "Capuchina",
+                "Caléndula",
+                "Tagetes",
+                "Facelia"
+            ]
+        },
+        "harvestTime": "50-60 días tras siembra según clima",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz",
+                "calabaza",
+                "cebolla",
+                "ajo",
+                "ciboulette",
+                "zanahoria",
+                "capuchina",
+                "caléndula"
+            ],
+            "avoid": [
+                "guisante",
+                "haba",
+                "soja",
+                "lupino"
+            ]
+        },
+        "sowingMonths": [
+            "M",
+            "J",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "plantingSeason": "Primavera,Verano",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 22",
+                    "stage == flowering"
+                ],
+                "message": "Riego crucial: sus judías están en flor o formación vainas."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Verifique levée: aclare para dejar 10 cm entre plantas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y binado recomendados para sus judías."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Riesgo antracnosis: pulverización decocción cola de caballo aconsejada."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 50,
+                "message": "Primera cosecha posible: recoja vainas jóvenes y crujientes."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Alerta frío: proteja sus judías con velo térmico."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 25,
+                    "message": "Temperatura ideal para siembra exitosa hoy."
+                }
+            }
+        }
+    },
+    {
+        "id": "lentil",
+        "commonName": "Lenteja",
+        "scientificName": "Lens culinaris",
+        "family": "Fabaceae",
+        "daysToMaturity": 105,
+        "spacing": 10,
+        "depth": 3.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Bajo",
+        "description": "Leguminosa anual fijadora de nitrógeno, poco exigente en agua. Produce pequeñas vainas conteniendo semillas ricas en proteínas y hierro.",
+        "marketPricePerKg": 4.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 116,
+            "proteinG": 9.0,
+            "carbohydratesG": 20.0,
+            "sugarsG": 1.8,
+            "fatG": 0.4,
+            "fiberG": 7.9,
+            "vitaminCmg": 1.5,
+            "vitaminB9ug": 181,
+            "potassiumMg": 369,
+            "magnesiumMg": 36,
+            "calciumMg": 19
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 12,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 24
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Riego ligero en floración si sequía prolongada",
+            "amount": "Mantener suelo ligeramente húmedo al inicio, luego seco",
+            "method": "Al pie, evitar exceso humedad",
+            "bestTime": "Mañana"
+        },
+        "thinning": {
+            "distance": "5-10 cm entre plantas, 30 cm entre filas",
+            "when": "Inútil si siembra espaciada"
+        },
+        "weeding": {
+            "method": "Binado superficial",
+            "frequency": "Regular al inicio del ciclo",
+            "recommendation": "Deshierbe manual aconsejado pues cultivo poco cubriente"
+        },
+        "culturalTips": [
+            "No requiere soporte (porte en mata)",
+            "Suelo suelto y poco fertilizado preferible",
+            "Cosechar cuando las plantas amarillean y vainas suenan",
+            "Secado de plantas cosechadas al sol antes de trillar"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Aceite de neem",
+                "Jabón negro"
+            ],
+            "beneficialInsects": [
+                "Coccinelles (pulgones)",
+                "Trichogrammas"
+            ],
+            "companionPlants": [
+                "Cereales (centeno, trigo)",
+                "Patata",
+                "Pepino"
+            ]
+        },
+        "harvestTime": "100-110 días",
+        "companionPlanting": {
+            "beneficial": [
+                "patata",
+                "pepino",
+                "trigo",
+                "centeno",
+                "cebada"
+            ],
+            "avoid": [
+                "cebolla",
+                "ajo",
+                "otras leguminosas"
+            ]
+        },
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "flowering_stage",
+                    "drought"
+                ],
+                "message": "Si floración y sequía: riego ligero posible"
+            },
+            "thinning": {
+                "enabled": false,
+                "message": "Aclareo raramente necesario si siembra bien dosificada"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Binado necesario: lenteja teme competencia adventicias"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_weevils"
+                ],
+                "message": "Vigilancia gorgojos en almacenamiento"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "Plantas amarillean? Vainas secas? Cosecha inminente"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -5,
+                    "message": "Alerta helada fuerte sobre cultivo joven"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Tiempo ideal germinación lentejas"
+                }
+            }
+        }
+    }
+]

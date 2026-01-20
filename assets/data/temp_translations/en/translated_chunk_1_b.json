@@ -1,0 +1,887 @@
+[
+    {
+        "id": "courgette",
+        "commonName": "Zucchini",
+        "scientificName": "Cucurbita pepo",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 45,
+        "spacing": 75,
+        "depth": 2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High",
+        "description": "Vigorous fruit vegetable, productive and easy to grow in rich well-drained soil, ideal for permaculture and organic farming.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.6,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 17,
+            "proteinG": 1.2,
+            "carbohydratesG": 3.1,
+            "sugarsG": 2.5,
+            "fatG": 0.3,
+            "fiberG": 1.0,
+            "vitaminCmg": 17.9,
+            "vitaminKmcg": 4.3,
+            "vitaminB9ug": 29,
+            "vitaminAmcg": 10,
+            "calciumMg": 16,
+            "ironMg": 0.4,
+            "magnesiumMg": 18,
+            "potassiumMg": 261,
+            "manganeseMg": 0.1,
+            "phosphorusMg": 38,
+            "luteinZeaxanthinMcg": 2125
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 22,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "1 time/week (heavy in summer)",
+            "amount": "5-8 liters per plant/week",
+            "method": "Water at base, never on foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "70-80 cm between plants",
+            "when": "When plants have 2-3 true leaves, keep only strongest"
+        },
+        "weeding": {
+            "method": "Regular manual + organic mulching",
+            "frequency": "Every 2 weeks or as needed",
+            "recommendation": "Mulch from planting to limit evaporation and weeds"
+        },
+        "culturalTips": [
+            "Crop rotation: wait 2-3 years before replanting cucurbits in same spot",
+            "Never water foliage to avoid fungal diseases",
+            "Harvest by cutting stalk with clean shears",
+            "Do not plant too early: avoid cool wet spring periods",
+            "Ensure good aeration between plants to limit powdery and downy mildew"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying and preventive)",
+                "Horsetail manure (anti-fungal)",
+                "Baking soda (sprayed against powdery mildew)",
+                "Black soap (against aphids)",
+                "Pine oil or pyrethrum (targeted bio insecticide)"
+            ],
+            "beneficialInsects": [
+                "Ladybug larvae (against aphids)",
+                "Hoverflies (aphid predators)",
+                "Parasitic wasps (against caterpillars)"
+            ],
+            "companionPlants": [
+                "bean",
+                "corn",
+                "radish",
+                "nasturtium (trap)",
+                "onion",
+                "garlic (natural repellents)"
+            ]
+        },
+        "harvestTime": "45-60 days after planting, depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "bean",
+                "corn",
+                "radish",
+                "nasturtium",
+                "onion",
+                "garlic",
+                "lettuce",
+                "spinach",
+                "nasturtium (trap)",
+                "garlic (natural repellents)"
+            ],
+            "avoid": [
+                "other cucurbits (cucumber, pumpkin, melon)",
+                "potatoes"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Spring (after last frosts)",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Heavy watering needed for zucchini: 5-8 liters per plant, at base only"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning needed: keep one plant every 70-80 cm, remove weaker"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manual weeding and mulch check recommended for your zucchini"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Preventive treatment with nettle or horsetail manure recommended against fungal diseases"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "First harvests possible for your zucchini! Cut stalk with shears."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Attention: minimum temperature for zucchini reached (12°C) - risk of slowing or stress"
+                },
+                "germination_optimal": {
+                    "min": 22,
+                    "max": 25,
+                    "message": "Optimal germination conditions reached (22-25°C) - good time to sow!"
+                }
+            }
+        }
+    },
+    {
+        "id": "cucumber",
+        "commonName": "Cucumber",
+        "scientificName": "Cucumis sativus",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 55,
+        "spacing": 70,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High",
+        "description": "Vegetable demanding in water, fast growing, ideal in permaculture with mulching and trellis.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.9,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.7,
+            "carbohydratesG": 3.6,
+            "sugarsG": 1.7,
+            "fatG": 0.1,
+            "fiberG": 0.5,
+            "vitaminCmg": 2.8,
+            "vitaminKmcg": 16.4,
+            "vitaminB9ug": 7,
+            "vitaminAmcg": 5,
+            "calciumMg": 16,
+            "ironMg": 0.3,
+            "magnesiumMg": 13,
+            "potassiumMg": 147,
+            "manganeseMg": 0.08,
+            "phosphorusMg": 24,
+            "waterG": 95.2,
+            "cucurbitacineMg": 0.05
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 28
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "2-3 times/week (more if hot or dry wind)",
+            "amount": "2-5 liters per plant per watering",
+            "method": "Always at base, never slightly on foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "60-80 cm between plants",
+            "when": "As soon as first true leaves appear"
+        },
+        "weeding": {
+            "method": "Manual + mulching (straw, hay, wood chips)",
+            "frequency": "Regularly, as needed",
+            "recommendation": "Thick mulch highly recommended to limit weeds and conserve moisture"
+        },
+        "culturalTips": [
+            "Crop rotation on 3-4 years (avoid after other cucurbits)",
+            "Use trellis or support to favor aeration and avoid deformed fruits",
+            "Avoid poorly drained soils to prevent root rot",
+            "Harvest at maturity to avoid bitterness",
+            "Sow in pockets of 3-4 seeds then thin to the strongest"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Comfrey manure (nourishing and fortifying)",
+                "Tansy infusion (anti-aphid)",
+                "Garlic decoction (natural fungicide)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Hoverflies (aphid predators)",
+                "Parasitic wasps (against caterpillars and aphids)"
+            ],
+            "companionPlants": [
+                "nasturtiums (aphid trap)",
+                "radish",
+                "onion",
+                "lettuce"
+            ]
+        },
+        "harvestTime": "50-65 days after planting depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "radish",
+                "onion",
+                "lettuce",
+                "nasturtium",
+                "bean",
+                "corn",
+                "beetroot",
+                "nasturtiums (aphid trap)"
+            ],
+            "avoid": [
+                "strong aromatics like sage",
+                "other cucurbits (zucchini, squash, melon)",
+                "potatoes"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "wind_dry"
+                ],
+                "message": "Watering needed for your cucumbers: 2-5 liters per plant, at base"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning needed: keep 1 plant every 60-80 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding + check mulch for your cucumbers"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Apply comfrey manure or tansy infusion preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Harvest period approaching for your cucumbers — harvest young to avoid bitterness"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Attention: minimum temperature for cucumbers reached (12°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimal germination conditions (20-25°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "dill",
+        "commonName": "Dill",
+        "scientificName": "Anethum graveolens",
+        "family": "Apiaceae",
+        "daysToMaturity": 70,
+        "spacing": 25,
+        "depth": 0.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate",
+        "description": "Annual aromatic plant with fine cut leaves, used in kitchen and traditional medicine. Attracts pollinators and repels some pests.",
+        "marketPricePerKg": 16.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 40,
+            "proteinG": 3.5,
+            "carbohydratesG": 7.0,
+            "sugarsG": 1.2,
+            "fatG": 1.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 85.0,
+            "vitaminKmcg": 620.0,
+            "vitaminB9ug": 150,
+            "vitaminAmcg": 75,
+            "calciumMg": 208,
+            "ironMg": 6.6,
+            "magnesiumMg": 55,
+            "potassiumMg": 335,
+            "manganeseMg": 1.26,
+            "phosphorusMg": 66,
+            "carvoneMg": 95,
+            "apigeninMg": 30
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Water moderately, only when soil starts drying",
+            "amount": "Soil slightly moist, avoid soaking",
+            "method": "Under mulch if possible, at base without wetting foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "15-25 cm between plants, 20-30 cm between rows",
+            "when": "When plants are 5-10 cm high or have 4-5 true leaves"
+        },
+        "weeding": {
+            "method": "Manual pulling (sensitive fine roots)",
+            "frequency": "Regularly, per weed growth",
+            "recommendation": "Mulch to limit weeds and conserve moisture"
+        },
+        "culturalTips": [
+            "Light, well drained soil, rich in organic matter",
+            "Avoid excess water to prevent root rot",
+            "Do not plant near other Apiaceae (e.g. fennel)",
+            "Sow in batches to spread harvest and avoid premature bolting",
+            "Crop rotation recommended to preserve soil health"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Organic manures in case of strong attack (e.g. nettle)",
+                "Natural decoctions (e.g. garlic, tansy)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Beneficial hoverflies",
+                "Pollinators attracted by white bloom"
+            ],
+            "companionPlants": [
+                "onions",
+                "cabbages",
+                "cucumbers",
+                "broccoli (repellent effect against some pests)"
+            ]
+        },
+        "harvestTime": "60-80 days after sowing, depending on climatic conditions and variety",
+        "companionPlanting": {
+            "beneficial": [
+                "onion",
+                "cabbage",
+                "cucumber",
+                "broccoli",
+                "onions",
+                "cabbages",
+                "cucumbers",
+                "broccoli (repellent effect against some pests)"
+            ],
+            "avoid": [
+                "other apiaceae",
+                "fennel"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "variable",
+                "conditions": [
+                    "soil_dry_top_2cm"
+                ],
+                "message": "Moderate watering needed: soil should stay slightly moist, not soggy"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thin to 15-25 cm between plants as soon as 5-10 cm high or 4-5 leaves"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding recommended — careful with dill fine roots"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "aphid_sighting",
+                    "humidity > 70"
+                ],
+                "message": "Apply nettle manure or attract ladybugs in case of aphids"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Harvest of dill leaves possible — cut before flowering for best flavor"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Attention: minimal temperature for dill reached (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 22,
+                    "message": "Optimal germination conditions (18-22°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "eggplant",
+        "commonName": "Eggplant",
+        "scientificName": "Solanum melongena",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 60,
+        "depth": 0.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High",
+        "description": "Fruit vegetable of solanaceae family, appreciated for firm flesh and subtle taste, ideal in hot climate and rich soil.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.6,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.0,
+            "carbohydratesG": 5.7,
+            "sugarsG": 3.2,
+            "fatG": 0.2,
+            "fiberG": 3.0,
+            "vitaminCmg": 2.2,
+            "vitaminKmcg": 3.5,
+            "vitaminB9ug": 22,
+            "vitaminAmcg": 1,
+            "calciumMg": 9,
+            "ironMg": 0.2,
+            "magnesiumMg": 14,
+            "potassiumMg": 229,
+            "manganeseMg": 0.23,
+            "phosphorusMg": 24,
+            "nasuninMg": 85
+        },
+        "germination": {
+            "minTemperature": 20,
+            "optimalTemperature": {
+                "min": 25,
+                "max": 28
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 12,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 24,
+                "max": 28
+            },
+            "minTemperature": 15
+        },
+        "watering": {
+            "frequency": "Every 3-4 days on mulched soil, 2-3 times/week in hot weather",
+            "amount": "1-4 liters per plant depending on stage and temperature",
+            "method": "Water at base, without wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "50-70 cm between plants",
+            "when": "At seedling stage or right after germination, keeping strongest plants"
+        },
+        "weeding": {
+            "method": "Mulching (straw, grass clips, leaves) + gentle manual weeding",
+            "frequency": "Every 1 or 2 weeks",
+            "recommendation": "Thick mulch indispensable to limit evaporation and weeds"
+        },
+        "culturalTips": [
+            "Rotation: avoid replanting solanaceae (tomatoes, peppers, potatoes) in same spot for 3-4 years",
+            "Do not cover collar when planting to avoid Sclerotinia",
+            "Systematic mulching to keep moisture and prevent diseases",
+            "Favor plant aeration to limit downy mildew and fungi",
+            "Choose well drained soil, light and rich in organic matter, in full sun"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying and anti-aphid)",
+                "Horsetail manure (preventive against fungi)",
+                "Black soap or essential oils in case of attack"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Parasitic wasps",
+                "Lacewings"
+            ],
+            "companionPlants": [
+                "basil",
+                "marigolds (against some pests)"
+            ]
+        },
+        "harvestTime": "90-120 days after planting according to variety and climate",
+        "companionPlanting": {
+            "beneficial": [
+                "basil",
+                "marigolds",
+                "bean",
+                "lettuce",
+                "spinach",
+                "onion",
+                "marigolds (against some pests)"
+            ],
+            "avoid": [
+                "other solanaceae in same spot",
+                "peppers",
+                "potatoes",
+                "tomatoes"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for your eggplants: 2-4 liters per plant, at base, early morning"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning recommended: keep 50-70 cm between strongest plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Check mulch and weed manually if necessary"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Apply horsetail manure preventively against fungal diseases"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Harvest period approaching for your eggplants"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 15,
+                    "message": "Attention: minimum temperature for eggplants reached (15°C)"
+                },
+                "germination_optimal": {
+                    "min": 25,
+                    "max": 28,
+                    "message": "Optimal germination conditions for eggplant (25-28°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "garlic",
+        "commonName": "Garlic",
+        "scientificName": "Allium sativum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 240,
+        "spacing": 15,
+        "depth": 5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Low",
+        "description": "Aromatic bulb with culinary and medicinal properties, grown in permaculture for its resistance and moderate water needs.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "O"
+        ],
+        "harvestMonths": [
+            "J"
+        ],
+        "marketPricePerKg": 8.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 149,
+            "proteinG": 6.4,
+            "carbohydratesG": 33.1,
+            "sugarsG": 1.0,
+            "fatG": 0.5,
+            "fiberG": 2.1,
+            "vitaminCmg": 31.2,
+            "vitaminB6mg": 1.2,
+            "vitaminB9ug": 3,
+            "calciumMg": 181,
+            "ironMg": 1.7,
+            "magnesiumMg": 25,
+            "potassiumMg": 401,
+            "manganeseMg": 1.7,
+            "phosphorusMg": 153,
+            "seleniumMcg": 14.2
+        },
+        "germination": {
+            "minTemperature": 8,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 1
+        },
+        "watering": {
+            "frequency": "Every 10-15 days in case of drought",
+            "amount": "Abundant but rare watering",
+            "method": "At base, never on foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "10-15 cm between plants, 20-30 cm between rows",
+            "when": "Not necessary — planted directly at right density"
+        },
+        "weeding": {
+            "method": "Manual or shallow hoeing",
+            "frequency": "Regular check in Spring",
+            "recommendation": "Organic mulch (straw, dead leaves, wood chips) highly recommended"
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant garlic in same spot before 3-4 years",
+            "Avoid heavy and poorly drained soils to prevent rot",
+            "Mulch generously to keep moisture and stabilize soil temperature",
+            "Space plants for good aeration and avoid downy mildew/rust",
+            "Do not water unless prolonged drought — garlic fears excess moisture"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying)",
+                "Horsetail decoction (anti-fungal)",
+                "Black soap or essential oils in case of attack"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (against aphids)",
+                "Auxiliaries favored by surrounding biodiversity"
+            ],
+            "companionPlants": [
+                "carrot",
+                "beetroot",
+                "tomato",
+                "lettuce",
+                "avoid legumes"
+            ]
+        },
+        "harvestTime": "About 8 months after planting (according to variety and climate)",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "beetroot",
+                "tomato",
+                "lettuce",
+                "rose",
+                "raspberry"
+            ],
+            "avoid": [
+                "asparagus",
+                "legumes",
+                "onions",
+                "leeks"
+            ],
+            "notes": [
+                "avoid legumes"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "May",
+            "Oct"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul"
+        ],
+        "plantingSeason": "Autumn",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "12 days",
+                "conditions": [
+                    "no_rain_last_15_days",
+                    "temperature > 25"
+                ],
+                "message": "Occasional watering needed for your garlic — at base, abundant but rare"
+            },
+            "thinning": {
+                "enabled": false,
+                "message": "Thinning not necessary — correct density from planting"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weed control recommended — think about mulching to reduce maintenance"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Fungal disease risk — apply horsetail decoction preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 240,
+                "message": "Harvest period approaching for your garlic — watch for yellowing leaves"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 1,
+                    "message": "Attention: minimum temperature for garlic reached (1°C)"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimal germination conditions reached (15°C)"
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,833 @@
+[
+    {
+        "id": "black_radish",
+        "commonName": "Black Radish",
+        "scientificName": "Raphanus sativus var. niger",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 10,
+        "depth": 1,
+        "sunExposure": "Full sun, Partial shade",
+        "waterNeeds": "Moderate to regular",
+        "description": "Robust root vegetable, ideal for organic farming and permaculture. Black root with white flesh, crisp and pungent, rich in vitamins and minerals.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 1.8,
+            "carbohydratesG": 7.7,
+            "sugarsG": 4.3,
+            "fatG": 0.1,
+            "fiberG": 2.5,
+            "vitaminCmg": 24.5,
+            "vitaminKmcg": 0.3,
+            "vitaminB9ug": 28,
+            "calciumMg": 40,
+            "ironMg": 0.8,
+            "magnesiumMg": 16,
+            "potassiumMg": 300,
+            "manganeseMg": 0.1,
+            "phosphorusMg": 35,
+            "glucosinolatesMg": 120
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 6
+        },
+        "watering": {
+            "frequency": "Every 2-3 days in summer, depending on rain in spring/autumn",
+            "amount": "2-4 liters per m²/week (adjust to soil)",
+            "method": "Gentle watering at base, prevent folio wetting",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "10 cm between plants, 20-30 cm between rows",
+            "when": "As soon as first true leaves appear (seedling stage)"
+        },
+        "weeding": {
+            "method": "Manual, accompanied by mulching (straw, dead leaves)",
+            "frequency": "Regular check, especially at start",
+            "recommendation": "Mulch after thinning to limit weeds and simplify maintenance"
+        },
+        "culturalTips": [
+            "Crop rotation: wait at least 2 years before replanting radishes or crucifers in same spot",
+            "Avoid associations with carrots, cucumbers and cabbages",
+            "Do not overwater foliage to prevent powdery mildew",
+            "Favor loose, well-drained soils to avoid root rot",
+            "Alternate with crops like beans, lettuce or tomatoes to regenerate soil"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying and repellent)",
+                "Garlic decoction (against pests)",
+                "Mature compost to strengthen soil health"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (aphid predators)",
+                "Parasitic wasps (against cabbage fly caterpillars)"
+            ],
+            "companionPlants": [
+                "lettuce",
+                "spinach",
+                "bean (beneficial non-competitive associations)"
+            ]
+        },
+        "harvestTime": "60 days after sowing (depending on variety)",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "spinach",
+                "bean",
+                "tomato",
+                "fava bean",
+                "bean (beneficial non-competitive associations)"
+            ],
+            "avoid": [
+                "other crucifers in immediate rotation",
+                "carrot",
+                "cabbage",
+                "cucumber"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring, Autumn",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "soil_type == 'sandy'"
+                ],
+                "message": "Watering needed for black radishes: keep soil cool without excess"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 10,
+                "message": "Thinning needed: keep 1 plant every 10 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding recommended + check mulch state"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "pest_alert == 'aphids'"
+                ],
+                "message": "Apply nettle manure or garlic decoction preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Harvest imminent for your black radishes (60 days)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 6,
+                    "message": "Warning: minimum temperature for black radish reached (6°C)"
+                },
+                "germination_optimal": {
+                    "min": 19,
+                    "max": 19,
+                    "message": "Optimal germination conditions reached (19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "broccoli",
+        "commonName": "Broccoli",
+        "scientificName": "Brassica oleracea var. italica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 70,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "High",
+        "description": "Ideal vegetable for permaculture and organic farming, appreciating reasoned care and integration into diversified systems.",
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 34,
+            "proteinG": 2.8,
+            "carbohydratesG": 6.6,
+            "sugarsG": 1.7,
+            "fatG": 0.4,
+            "fiberG": 2.6,
+            "vitaminCmg": 89.2,
+            "vitaminKmcg": 101.6,
+            "vitaminB9ug": 63,
+            "vitaminAmcg": 31,
+            "calciumMg": 47,
+            "ironMg": 0.7,
+            "magnesiumMg": 21,
+            "potassiumMg": 316,
+            "manganeseMg": 0.21,
+            "phosphorusMg": 66,
+            "glucosinolatesMg": 85,
+            "sulforaphanePotential": true
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1-2 times/week (2-3 times in high heat)",
+            "amount": "Keep soil always cool",
+            "method": "Drip irrigation ideal, avoid excesses",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "40-60 cm between plants, 45-80 cm between rows",
+            "when": "At 4-5 leaf stage, keep most robust plants"
+        },
+        "weeding": {
+            "method": "Manual weeding, constant mulching",
+            "frequency": "Regular, especially before weeds seeds set",
+            "recommendation": "Thick mulch for moisture retention and weed suppression. Occultation by tarping for perennials."
+        },
+        "culturalTips": [
+            "Crop rotation: at least 4 years (avoid brassicaceae in same spot)",
+            "Do not plant after or before other cabbages",
+            "Enrich soil with compost and natural amendments to avoid deficiencies (boron, manganese, calcium)",
+            "Watch out for overwatering (fungal risks)",
+            "Transplant as soon as 4-5 leaves"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Fern manure",
+                "Black soap against aphids"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Hoverflies",
+                "Birds (against slugs and caterpillars)",
+                "Auxiliary beetles"
+            ],
+            "companionPlants": [
+                "marigold",
+                "aromatic plants (natural repellents)"
+            ]
+        },
+        "harvestTime": "70-90 days after planting depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "marigold",
+                "aromatics",
+                "lettuce",
+                "celery",
+                "beetroot",
+                "onion",
+                "leek",
+                "radish",
+                "marigold",
+                "aromatic plants (natural repellents)"
+            ],
+            "avoid": [
+                "other cabbages",
+                "brassicaceae family plants in same spot"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring, Autumn (depending on climate)",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for broccoli: soil to maintain cool (1-2 times/week, more if hot)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 28,
+                "message": "Thinning needed: keep strongest plants at 40-60 cm spacing"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manual weeding recommended + check mulch"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Monitor aphids and cabbage whites – favor biodiversity and auxiliaries"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 75,
+                "message": "Harvest period approaching for your broccoli"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Attention: minimum temperature for broccoli reached (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "brussels_sprout",
+        "commonName": "Brussels Sprout",
+        "scientificName": "Brassica oleracea var. gemmifera",
+        "family": "Brassicaceae",
+        "daysToMaturity": 120,
+        "spacing": 60,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium",
+        "description": "Cruciferous vegetable forming small heads along its stem, rich in fibers, vitamins C and K. Grown in permaculture, benefits from strict rotation and protective associations.",
+        "marketPricePerKg": 4.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 3.4,
+            "carbohydratesG": 9.0,
+            "sugarsG": 2.2,
+            "fatG": 0.3,
+            "fiberG": 3.8,
+            "vitaminCmg": 85.0,
+            "vitaminKmcg": 177.0,
+            "vitaminB9ug": 61,
+            "vitaminAmcg": 38,
+            "calciumMg": 42,
+            "ironMg": 1.4,
+            "magnesiumMg": 23,
+            "potassiumMg": 389,
+            "manganeseMg": 0.34,
+            "phosphorusMg": 69,
+            "glucosinolatesMg": 95,
+            "kaempferolMg": 25
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "Regular after transplanting, then 2 times/week in case of drought",
+            "amount": "20-30 mm/week (10-15 mm per watering)",
+            "method": "At base, moist but not soggy soil",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "6-8 cm after emergence (2-3 leaves), then 50-70 cm between plants and 60-80 cm between rows at transplanting (6-8 leaves)",
+            "when": "First thinning at 2-3 leaves, definitive transplant at 6-8 leaves"
+        },
+        "weeding": {
+            "method": "Selective manual weeding + mulching (straw, wood chips, dead leaves)",
+            "frequency": "Depends on weed pressure, priority to mulch",
+            "recommendation": "Leave non-competing weeds to favor biodiversity"
+        },
+        "culturalTips": [
+            "Rotation: do not grow brassicaceae on same plot before 5-6 years",
+            "Plant after legumes (peas, beans) for nitrogen enriched soil",
+            "Stake plants in case of wind or excessive growth",
+            "Avoid nitrogen excess after head formation (favors leaves over sprouts)",
+            "Monitor slugs and flea beetles, especially in cool soils"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bacillus thuringiensis (BT) against caterpillars",
+                "Diluted black soap against aphids",
+                "Garlic decoction against aphids and fungi"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Ground beetles and hedgehogs against slugs",
+                "Insectivorous birds against various pests"
+            ],
+            "companionPlants": [
+                "lemon balm",
+                "sage",
+                "rosemary",
+                "coriander",
+                "marigolds",
+                "tomatoes"
+            ]
+        },
+        "harvestTime": "About 120 days after sowing, depending on variety and climate",
+        "companionPlanting": {
+            "beneficial": [
+                "lemon balm",
+                "sage",
+                "rosemary",
+                "coriander",
+                "marigolds",
+                "tomatoes",
+                "legumes (peas, beans)",
+                "marigolds"
+            ],
+            "avoid": [
+                "other brassicaceae (radish, turnip, arugula, mustard) on same plot"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "soil_moisture < 40%"
+                ],
+                "message": "Watering recommended: 10-15 mm, at base, split in 2 times this week"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "First thinning: keep 6-8 cm between plants (2-3 leaves)"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Check mulch and weed manually competing weeds"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature < 20"
+                ],
+                "message": "Apply Bacillus thuringiensis if caterpillars present, or black soap against aphids"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "First Brussels sprouts should be ready to harvest within 2-3 weeks"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Warning: minimum germination temperature reached (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "cabbage",
+        "commonName": "Cabbage",
+        "scientificName": "Brassica oleracea var. capitata",
+        "family": "Brassicaceae",
+        "daysToMaturity": 90,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "High",
+        "description": "Leaf vegetable forming a compact head, rich in fibers, vitamins C and K. Demanding culture regarding water and nutrients.",
+        "marketPricePerKg": 2.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.3,
+            "carbohydratesG": 5.8,
+            "sugarsG": 3.2,
+            "fatG": 0.1,
+            "fiberG": 2.5,
+            "vitaminCmg": 36.6,
+            "vitaminKmcg": 76.0,
+            "vitaminB9ug": 53,
+            "vitaminAmcg": 5,
+            "calciumMg": 40,
+            "ironMg": 0.5,
+            "magnesiumMg": 12,
+            "potassiumMg": 170,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 26,
+            "glucosinolatesMg": 65,
+            "myrosinaseActivity": true
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Every 2-3 days in dry periods, daily in heatwave",
+            "amount": "4-6 liters per plant/week",
+            "method": "Water at base, never on foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "50 cm between plants in all directions",
+            "when": "When plants have 6 to 8 leaves"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (shallow hoeing)",
+            "frequency": "Every 1-2 weeks at start of cycle",
+            "recommendation": "Thick organic mulching to limit evaporation and weeds"
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant cabbages in same spot before 3-4 years",
+            "Light earthing up one month after transplant to anchor roots",
+            "Avoid water stress (lack or excess) to prevent head splitting",
+            "Favor biodiversity with nectar-rich flowers to attract auxiliaries",
+            "Do not compost diseased parts to avoid disease spread"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying and repellent)",
+                "Horsetail decoction (strengthens tissues against fungi)",
+                "Neem oil (against aphids and flea beetles)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (polyvalent predators)",
+                "Hoverflies (larvae eat aphids)"
+            ],
+            "companionPlants": [
+                "marigold",
+                "celery",
+                "lettuce",
+                "beetroot",
+                "chamomile (natural repellents)"
+            ]
+        },
+        "harvestTime": "About 90 days after planting, depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "celery",
+                "lettuce",
+                "beetroot",
+                "chamomile",
+                "marigold",
+                "mint",
+                "sage",
+                "thyme",
+                "chamomile (natural repellents)"
+            ],
+            "avoid": [
+                "other brassicaceae (cabbages, turnips, radishes)",
+                "strawberries",
+                "peppers",
+                "tomatoes"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring, Autumn",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for cabbages: 4-6 liters/plant, at base, early morning"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Thinning needed: keep 50 cm between plants, 6-8 leaves"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Weeding and hoeing recommended, consider mulching if not done"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "presence_aphids"
+                ],
+                "message": "Apply nettle manure or neem oil preventively against aphids"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Your cabbages are approaching maturity: check head firmness"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum temperature for cabbages reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "carrot",
+        "commonName": "Carrot",
+        "scientificName": "Daucus carota subsp. sativus",
+        "family": "Apiaceae",
+        "daysToMaturity": 90,
+        "spacing": 8,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to High",
+        "description": "Crunchy and sweet root vegetable, rich in beta-carotene, grown in organic and permaculture with soft techniques respectful of the ecosystem.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 2.1,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 41,
+            "proteinG": 0.9,
+            "carbohydratesG": 9.6,
+            "sugarsG": 4.7,
+            "fatG": 0.2,
+            "fiberG": 2.8,
+            "vitaminAmcg": 835,
+            "vitaminKmcg": 13.2,
+            "vitaminCmg": 5.9,
+            "vitaminB9ug": 19,
+            "calciumMg": 33,
+            "ironMg": 0.3,
+            "magnesiumMg": 12,
+            "potassiumMg": 320,
+            "manganeseMg": 0.14,
+            "phosphorusMg": 35,
+            "betaCaroteneMcg": 8285
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 9
+        },
+        "watering": {
+            "frequency": "Every 4 to 5 days (or more frequently before emergence)",
+            "amount": "Heavy watering, especially during root thickening phase",
+            "method": "At base, keep soil moist but not soggy",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "4 cm for short carrots, 8 cm for long carrots",
+            "when": "At seedling stage, or delayed until small carrots form"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (hoeing, weeding)",
+            "frequency": "Regular, especially at start of culture",
+            "recommendation": "Combine with thinning; hoe to loosen soil and keep moisture"
+        },
+        "culturalTips": [
+            "Avoid compact or poorly drained soils to prevent deformed or rotting roots",
+            "Do not mulch too early if slugs or rodents present",
+            "Avoid nitrogen excess (favors leaves over root)",
+            "Practice crop rotation to avoid carrot fly",
+            "Sow after first generation of flies (May-June)",
+            "Associate with leek, coriander, dill or marigolds to repel carrot fly"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Coffee grounds as repellent",
+                "Algae powder",
+                "Tansy or wormwood branches"
+            ],
+            "beneficialInsects": [
+                "Lacewings against aphids",
+                "Ladybugs against aphids"
+            ],
+            "companionPlants": [
+                "leek",
+                "coriander",
+                "dill",
+                "marigolds (against carrot fly)"
+            ]
+        },
+        "harvestTime": "90-120 days after sowing depending on variety and desired size",
+        "companionPlanting": {
+            "beneficial": [
+                "leek",
+                "coriander",
+                "dill",
+                "marigold",
+                "lettuce",
+                "radish",
+                "onion",
+                "garlic",
+                "cabbage",
+                "marigolds (against carrot fly)"
+            ],
+            "avoid": [
+                "other umbellifers (celery, parsley) without rotation",
+                "nitrogen-hungry plants"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "no_rain_last_3_days",
+                    "temperature > 20"
+                ],
+                "message": "Watering needed for carrots: maintain soil moist, especially in thickening phase"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Thinning recommended: leave 4-8 cm between plants depending on variety"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding or hoeing recommended to avoid competition"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "carrot_fly_risk_high"
+                ],
+                "message": "Install insect net or apply natural repellents (tansy, coffee grounds)"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "First harvests possible. Check root size."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 9,
+                    "message": "Attention: minimum temperature for carrot growth reached (9°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    }
+]

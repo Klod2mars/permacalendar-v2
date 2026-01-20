@@ -1,0 +1,1077 @@
+{
+  "batch_index": 7,
+  "plants": [
+    {
+      "id": "radis",
+      "commonName": "Radis de 18 jours",
+      "scientificName": "Raphanus sativus L. var. sativus",
+      "family": "Brassicaceae",
+      "daysToMaturity": 18,
+      "spacing": 5,
+      "depth": 1.2,
+      "sunExposure": "Plein soleil à mi-ombre",
+      "waterNeeds": "Moyen",
+      "description": "Petit radis croquant à croissance ultra-rapide, idéal pour les récoltes précoces de printemps et d'automne.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A",
+        "A",
+        "S"
+      ],
+      "harvestMonths": [
+        "M",
+        "A",
+        "M",
+        "S",
+        "O"
+      ],
+      "marketPricePerKg": 2.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 16,
+        "proteinG": 0.68,
+        "carbohydratesG": 3.4,
+        "sugarsG": 1.86,
+        "fatG": 0.1,
+        "fiberG": 1.6,
+        "vitaminCmg": 14.8,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 25,
+        "potassiumMg": 233,
+        "magnesiumMg": 10,
+        "calciumMg": 25
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 18,
+          "max": 30
+        },
+        "germinationTime": {
+          "min": 3,
+          "max": 4,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 10,
+          "max": 20
+        },
+        "minTemperature": -2
+      },
+      "watering": {
+        "frequency": "2-3 fois/semaine en sols légers",
+        "amount": "Maintenir le sol humide sur 10-15 cm",
+        "method": "Au pied, éviter de mouiller excessivement le feuillage",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "2-5 cm entre plants, 10-20 cm entre rangs",
+        "when": "Dès l'apparition des premières feuilles"
+      },
+      "weeding": {
+        "method": "Manuel",
+        "frequency": "Hebdomadaire",
+        "recommendation": "Paillage fin (paille ou herbe sèche) pour limiter la croûte de battance"
+      },
+      "culturalTips": [
+        "Rotation des cultures (3-4 ans sans Brassicacées)",
+        "Éviter les excès d'azote qui favorisent le feuillage au détriment de la racine",
+        "Utiliser des voiles anti-insectes dès le semis contre l'altise et la mouche du chou",
+        "Maintenir une humidité régulière pour éviter que les radis ne deviennent piquants ou creux"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (fortifiant)",
+          "Décoction de prêle (fongistatique)",
+          "Savon noir contre les pucerons"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Syrphes et chrysopes",
+          "Carabes contre les larves au sol"
+        ],
+        "companionPlants": [
+          "Laitue",
+          "Carotte",
+          "Pois"
+        ]
+      },
+      "harvestTime": "18-25 jours après le semis",
+      "companionPlanting": {
+        "beneficial": [
+          "carotte",
+          "laitue",
+          "épinard",
+          "pois",
+          "concombre",
+          "courge",
+          "oignon",
+          "ail",
+          "poireau"
+        ],
+        "avoid": [
+          "hysope",
+          "chou",
+          "navet",
+          "moutarde"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "Aug",
+        "Sep"
+      ],
+      "harvestMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ],
+      "plantingSeason": "Printemps,Automne",
+      "harvestSeason": "Printemps,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "3 days",
+          "conditions": [
+            "temperature > 20",
+            "soil_dry_surface"
+          ],
+          "message": "Arrosage nécessaire : maintenez le sol frais pour éviter des radis trop piquants."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 7,
+          "message": "Éclaircissement recommandé : laissez 2 à 5 cm entre chaque radis."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "10 days",
+          "message": "Vérifiez la présence d'adventices et l'état de la croûte du sol."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "dry_weather"
+          ],
+          "message": "Alerte Altises : installez un filet ou maintenez le feuillage humide."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 18,
+          "message": "Vos radis de 18 jours devraient être prêts à être récoltés !"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 5,
+            "message": "Température basse : la germination pourrait être ralentie."
+          },
+          "germination_optimal": {
+            "min": 18,
+            "max": 30,
+            "message": "Conditions de germination optimales atteintes."
+          }
+        }
+      }
+    },
+    {
+      "id": "radis_daikon",
+      "commonName": "Radis Daikon",
+      "scientificName": "Raphanus sativus L. var. longipinnatus",
+      "family": "Brassicaceae",
+      "daysToMaturity": 60,
+      "spacing": 12,
+      "depth": 1.75,
+      "sunExposure": "Plein soleil à mi-ombre",
+      "waterNeeds": "Moyen",
+      "description": "Radis oriental à longue racine blanche, croquant et légèrement piquant, idéal pour l'automne.",
+      "sowingMonths": [
+        "A",
+        "M",
+        "J",
+        "S"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S",
+        "O",
+        "N"
+      ],
+      "marketPricePerKg": 4.2,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 19,
+        "proteinG": 1.3,
+        "carbohydratesG": 4.5,
+        "sugarsG": 2.5,
+        "fatG": 0.05,
+        "fiberG": 3.5,
+        "vitaminCmg": 22,
+        "vitaminEmg": 0.0,
+        "vitaminB9ug": 28,
+        "potassiumMg": 230,
+        "magnesiumMg": 16,
+        "calciumMg": 27
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 15,
+          "max": 25
+        },
+        "germinationTime": {
+          "min": 3,
+          "max": 7,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 22
+        },
+        "minTemperature": -4
+      },
+      "watering": {
+        "frequency": "1-2 fois/semaine (plus en cas de levée)",
+        "amount": "Humidité régulière, sol frais",
+        "method": "Au pied ou en rang, éviter l'aspersion sur feuillage âgé",
+        "bestTime": "Tôt le matin"
+      },
+      "thinning": {
+        "distance": "10-15 cm entre plants, 30 cm entre rangs",
+        "when": "Dès l'apparition des premières feuilles vraies"
+      },
+      "weeding": {
+        "method": "Manuel (binage et sarclage) ou faux-semis",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage végétal (paille, tontes séchées) pour garder la fraîcheur"
+      },
+      "culturalTips": [
+        "Rotation des cultures de 3-4 ans sans Brassicacées",
+        "Éviter les sols pierreux pour prévenir les racines fourchues",
+        "Ne pas repiquer pour éviter la déformation de la racine pivot",
+        "Maintenir une humidité constante pour éviter le goût trop piquant",
+        "Utiliser un voile insect-proof contre l'altise et la mouche du chou"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie dilué (fortifiant)",
+          "Tisane de prêle (préventif maladies)",
+          "Macération d'ail (répulsif insectes)"
+        ],
+        "beneficialInsects": [
+          "Carabes contre les limaces",
+          "Syrphes et Chrysopes contre les pucerons",
+          "Coccinelles",
+          "Hyménoptères parasitoïdes"
+        ],
+        "companionPlants": [
+          "Pois",
+          "Laitue",
+          "Oignon",
+          "Ail"
+        ]
+      },
+      "harvestTime": "50-70 jours après semis selon le calibre souhaité",
+      "companionPlanting": {
+        "beneficial": [
+          "pois",
+          "haricots",
+          "fèves",
+          "oignon",
+          "ciboulette",
+          "ail",
+          "laitue",
+          "épinard"
+        ],
+        "avoid": [
+          "chou",
+          "navet",
+          "brocoli",
+          "roquette",
+          "moutarde",
+          "colza"
+        ]
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "harvestMonths3": [
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov"
+      ],
+      "plantingSeason": "Printemps, Fin d'été",
+      "harvestSeason": "Été, Automne, Hiver",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "4 days",
+          "conditions": [
+            "temperature > 22",
+            "soil_dryness_detected"
+          ],
+          "message": "Arrosage du Daikon : maintenez le sol frais pour éviter les racines creuses."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 15,
+          "message": "Éclaircissage nécessaire : laissez 10-15 cm entre vos radis Daikon."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et binage recommandés pour vos radis."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "pest_alert_altises",
+            "dry_weather"
+          ],
+          "message": "Attention aux altises : installez un voile ou maintenez le sol humide."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 55,
+          "message": "Vérifiez le diamètre au collet (4-8 cm), la récolte approche !"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": -4,
+            "message": "Risque de gel pour le feuillage du Daikon (-4°C). Récoltez ou protégez."
+          },
+          "germination_optimal": {
+            "min": 15,
+            "max": 25,
+            "message": "Température idéale pour la levée rapide de vos graines."
+          }
+        }
+      }
+    },
+    {
+      "id": "radis_violet_hiver",
+      "commonName": "Radis violet d'hiver",
+      "scientificName": "Raphanus sativus L.",
+      "family": "Brassicaceae",
+      "daysToMaturity": 75,
+      "spacing": 10,
+      "depth": 1.5,
+      "sunExposure": "Soleil ou mi-ombre",
+      "waterNeeds": "Moyen",
+      "description": "Radis d'hiver à peau violette et chair blanche, croquant et légèrement piquant. Excellente conservation.",
+      "sowingMonths": [
+        "J",
+        "J",
+        "A"
+      ],
+      "harvestMonths": [
+        "S",
+        "O",
+        "N",
+        "D"
+      ],
+      "marketPricePerKg": 2.8,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 16,
+        "proteinG": 0.6,
+        "carbohydratesG": 3.4,
+        "sugarsG": 2.0,
+        "fatG": 0.1,
+        "fiberG": 1.6,
+        "vitaminCmg": 17,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 29,
+        "potassiumMg": 270,
+        "magnesiumMg": 12,
+        "calciumMg": 29
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 15,
+          "max": 18
+        },
+        "germinationTime": {
+          "min": 3,
+          "max": 7,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 12,
+          "max": 20
+        },
+        "minTemperature": -3
+      },
+      "watering": {
+        "frequency": "1-2 fois/semaine selon météo",
+        "amount": "Maintenir le sol frais sans saturation",
+        "method": "Au pied pour limiter les maladies foliaires",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "8-12 cm entre plants, 25 cm entre rangs",
+        "when": "Dès l'apparition des premières vraies feuilles"
+      },
+      "weeding": {
+        "method": "Manuel ou binage régulier",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage fin après la levée pour conserver l'humidité"
+      },
+      "culturalTips": [
+        "Rotation des cultures de 3-4 ans sans Brassicacées",
+        "Éviter les fumures fraîches qui font fourcher les racines",
+        "Maintenir une humidité régulière pour éviter que le radis ne devienne trop piquant",
+        "Protéger avec un voile anti-insectes contre les altises"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (vigueur)",
+          "Décoction d'ail (répulsif)",
+          "Purin de prêle (prévention fongique)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Syrphes (larves prédatrices)",
+          "Carabes contre les limaces"
+        ],
+        "companionPlants": [
+          "Laitue",
+          "Carotte",
+          "Oignon"
+        ]
+      },
+      "harvestTime": "60-90 jours après semis selon climat",
+      "companionPlanting": {
+        "beneficial": [
+          "laitue",
+          "carotte",
+          "oignon",
+          "ciboulette",
+          "épinard",
+          "mâche",
+          "phacélie"
+        ],
+        "avoid": [
+          "chou",
+          "navet",
+          "rutabaga",
+          "moutarde",
+          "roquette"
+        ]
+      },
+      "sowingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "harvestMonths3": [
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "plantingSeason": "Été",
+      "harvestSeason": "Automne,Hiver",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "4 days",
+          "conditions": [
+            "temperature > 20",
+            "no_rain_last_3_days"
+          ],
+          "message": "Vérifiez l'humidité du sol pour vos radis violets : un sol frais évite le goût piquant."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 15,
+          "message": "Éclaircissement : laissez 10 cm entre chaque radis violet pour un bon développement."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "15 days",
+          "message": "Désherbage et binage conseillés pour vos radis d'hiver."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "dry_weather"
+          ],
+          "message": "Attention aux altises (puces de terre) : maintenez le sol humide ou posez un voile."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 70,
+          "message": "Vos radis violets devraient être prêts à être récoltés."
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": -3,
+            "message": "Risque de gel pour vos radis : couvrez ou récoltez avant les grands froids."
+          },
+          "germination_optimal": {
+            "min": 15,
+            "max": 18,
+            "message": "Température idéale pour la levée de vos radis (15-18°C)."
+          }
+        }
+      }
+    },
+    {
+      "id": "watermelon_radish",
+      "commonName": "Radis Watermelon",
+      "scientificName": "Raphanus sativus L.",
+      "family": "Brassicaceae",
+      "daysToMaturity": 60,
+      "spacing": 5,
+      "depth": 1.0,
+      "sunExposure": "Plein soleil à mi-ombre",
+      "waterNeeds": "Moyen à élevé",
+      "description": "Radis d'hiver asiatique spectaculaire à chair rose vif et peau blanche, au goût doux et croquant.",
+      "sowingMonths": [
+        "M",
+        "A",
+        "M",
+        "J",
+        "A",
+        "S"
+      ],
+      "harvestMonths": [
+        "M",
+        "J",
+        "S",
+        "O",
+        "N"
+      ],
+      "marketPricePerKg": 4.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 20,
+        "proteinG": 0.6,
+        "carbohydratesG": 4.0,
+        "sugarsG": 2.8,
+        "fatG": 0.1,
+        "fiberG": 2.2,
+        "vitaminCmg": 15,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 0,
+        "potassiumMg": 230,
+        "magnesiumMg": 10,
+        "calciumMg": 33
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 15,
+          "max": 24
+        },
+        "germinationTime": {
+          "min": 3,
+          "max": 10,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 22
+        },
+        "minTemperature": 2
+      },
+      "watering": {
+        "frequency": "Tous les 1-3 jours (sol nu) ou 3-5 jours (paillé)",
+        "amount": "Maintenir le sol frais et régulièrement humide",
+        "method": "Au pied ou goutte-à-goutte pour éviter les maladies foliaires",
+        "bestTime": "Matin ou soir"
+      },
+      "thinning": {
+        "distance": "3-6 cm entre plants, 25-30 cm entre rangs",
+        "when": "Dès l'apparition des premières feuilles après la levée"
+      },
+      "weeding": {
+        "method": "Manuel ou mécanique (binage régulier)",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage conseillé pour limiter les adventices et garder l'humidité"
+      },
+      "culturalTips": [
+        "Rotation des cultures (3-4 ans sans Brassicacées)",
+        "Éviter les excès d'azote (favorise le feuillage au détriment de la racine)",
+        "Semer de préférence en fin d'été pour éviter la montée à graine prématurée",
+        "Maintenir une humidité constante pour éviter que la racine ne devienne fibreuse"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (fortifiant)",
+          "Purin de consoude (soutien croissance)",
+          "Tisane de prêle (préventif fongique)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Syrphes (larves prédatrices)",
+          "Chrysopes (prédateurs généralistes)"
+        ],
+        "companionPlants": [
+          "Laitue",
+          "Épinard",
+          "Oignon",
+          "Ciboulette"
+        ]
+      },
+      "harvestTime": "55-65 jours après semis",
+      "companionPlanting": {
+        "beneficial": [
+          "Laitue",
+          "Salade",
+          "Épinard",
+          "Mâche",
+          "Oignon",
+          "Ciboulette",
+          "Aneth",
+          "Bourrache"
+        ],
+        "avoid": [
+          "Chou",
+          "Navet",
+          "Moutarde",
+          "Autres radis"
+        ]
+      },
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "harvestMonths3": [
+        "May",
+        "Jun",
+        "Sep",
+        "Oct",
+        "Nov"
+      ],
+      "plantingSeason": "Printemps, Fin d'été",
+      "harvestSeason": "Printemps, Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "2 days",
+          "conditions": [
+            "temperature > 20",
+            "no_rain_last_1_day"
+          ],
+          "message": "Arrosage pour vos radis Watermelon : maintenez le sol frais pour éviter les racines fibreuses."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 12,
+          "message": "Éclaircissement nécessaire : laissez 3 à 6 cm entre chaque radis."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et binage recommandés pour vos radis."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 75"
+          ],
+          "message": "Risque de maladies fongiques : une décoction de prêle peut être utile."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 55,
+          "message": "Vérifiez le calibre de vos radis Watermelon (5-8 cm) pour la récolte."
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 5,
+            "message": "Attention : température minimale de germination atteinte (5°C)."
+          },
+          "germination_optimal": {
+            "min": 15,
+            "max": 24,
+            "message": "Conditions idéales pour la levée de vos radis (15-24°C)."
+          }
+        }
+      }
+    },
+    {
+      "id": "cherry_tomato",
+      "commonName": "Tomate cerise rouge",
+      "scientificName": "Solanum lycopersicum var. cerasiforme",
+      "family": "Solanaceae",
+      "daysToMaturity": 70,
+      "spacing": 50,
+      "depth": 0.7,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen à élevé",
+      "description": "Petite tomate croquante et sucrée, idéale pour l'apéritif. Très productive et plus résistante que les variétés classiques.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A",
+        "M"
+      ],
+      "harvestMonths": [
+        "J",
+        "J",
+        "A",
+        "S",
+        "O"
+      ],
+      "marketPricePerKg": 5.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 18,
+        "proteinG": 1.0,
+        "carbohydratesG": 4.0,
+        "sugarsG": 3.0,
+        "fatG": 0.2,
+        "fiberG": 1.0,
+        "vitaminCmg": 14,
+        "vitaminEmg": 1.0,
+        "vitaminB9ug": 15,
+        "potassiumMg": 237,
+        "magnesiumMg": 11,
+        "calciumMg": 10
+      },
+      "germination": {
+        "minTemperature": 15,
+        "optimalTemperature": {
+          "min": 24,
+          "max": 32
+        },
+        "germinationTime": {
+          "min": 5,
+          "max": 10,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 20,
+          "max": 25
+        },
+        "minTemperature": 10
+      },
+      "watering": {
+        "frequency": "1-2 fois/semaine (profond)",
+        "amount": "25-50 mm par semaine",
+        "method": "Au pied, éviter de mouiller le feuillage",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "40-60 cm entre plants, 80-100 cm entre rangs",
+        "when": "Stade 2 vraies feuilles pour le repiquage"
+      },
+      "weeding": {
+        "method": "Manuel ou binage",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage épais (paille, foin, BRF) pour limiter l'évaporation"
+      },
+      "culturalTips": [
+        "Rotation des cultures de 3-4 ans sans solanacées",
+        "Supprimer les feuilles basses pour améliorer l'aération",
+        "La taille des gourmands est facultative sur la cerise",
+        "Utiliser des tuteurs solides ou des cages",
+        "Récolte régulière pour stimuler la production"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (croissance)",
+          "Purin de consoude (fructification)",
+          "Décoction de prêle (anti-fongique)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Syrphes et Chrysopes",
+          "Abeilles pour la pollinisation"
+        ],
+        "companionPlants": [
+          "Basilic",
+          "Ciboulette",
+          "Souci",
+          "Œillet d'inde"
+        ]
+      },
+      "harvestTime": "60-80 jours après repiquage",
+      "companionPlanting": {
+        "beneficial": [
+          "basilic",
+          "ciboulette",
+          "laitue",
+          "oignon",
+          "ail",
+          "poireau",
+          "bourrache",
+          "souci",
+          "œillet d'inde"
+        ],
+        "avoid": [
+          "pomme de terre",
+          "aubergine",
+          "poivron",
+          "fenouil",
+          "maïs"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May"
+      ],
+      "harvestMonths3": [
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "3 days",
+          "conditions": [
+            "temperature > 25",
+            "no_rain_last_2_days"
+          ],
+          "message": "Arrosage nécessaire : 25-50 mm/semaine au pied, sans mouiller les feuilles."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 21,
+          "message": "Vérifiez le stade de croissance : repiquage recommandé à 2 vraies feuilles."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et vérification du paillage recommandés."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 70"
+          ],
+          "message": "Risque de mildiou élevé : application préventive de décoction de prêle conseillée."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 65,
+          "message": "La récolte de vos tomates cerises approche !"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 10,
+            "message": "Attention: croissance ralentie sous 10°C, protégez vos plants."
+          },
+          "germination_optimal": {
+            "min": 24,
+            "max": 32,
+            "message": "Température idéale pour la levée des graines (24-32°C)."
+          }
+        }
+      }
+    },
+    {
+      "id": "tomato_coeur_de_boeuf",
+      "commonName": "Tomate Cœur de Bœuf",
+      "scientificName": "Solanum lycopersicum L.",
+      "family": "Solanaceae",
+      "daysToMaturity": 90,
+      "spacing": 50,
+      "depth": 0.5,
+      "sunExposure": "Plein soleil, abrité du vent",
+      "waterNeeds": "Moyen à élevé",
+      "description": "Variété ancienne produisant de gros fruits charnus en forme de cœur. Chair dense, savoureuse et contenant peu de graines.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S",
+        "O"
+      ],
+      "marketPricePerKg": 4.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 15,
+        "proteinG": 0.68,
+        "carbohydratesG": 2.8,
+        "sugarsG": 2.2,
+        "fatG": 0.1,
+        "fiberG": 1.2,
+        "vitaminCmg": 14.3,
+        "vitaminEmg": 1.11,
+        "vitaminB9ug": 20.5,
+        "potassiumMg": 251,
+        "magnesiumMg": 10.1,
+        "calciumMg": 8.24
+      },
+      "germination": {
+        "minTemperature": 18,
+        "optimalTemperature": {
+          "min": 20,
+          "max": 25
+        },
+        "germinationTime": {
+          "min": 7,
+          "max": 14,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 20,
+          "max": 26
+        },
+        "minTemperature": 5
+      },
+      "watering": {
+        "frequency": "2-3 fois/semaine (environ 2.9 mm/jour)",
+        "amount": "Ajuster pour couvrir 80-100% des besoins hydriques",
+        "method": "Au pied, irrigation localisée (goutte-à-goutte) recommandée",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "50 cm entre plants, 80 cm entre rangs",
+        "when": "Au moment du repiquage (6-8 semaines après semis)"
+      },
+      "weeding": {
+        "method": "Manuel, binage et paillage organique",
+        "frequency": "Régulière avant installation du paillage",
+        "recommendation": "Paillage organique (foin, paille, BRF) pour limiter le mildiou"
+      },
+      "culturalTips": [
+        "Rotation des cultures de 3 à 4 ans minimum",
+        "Éviter absolument de mouiller le feuillage",
+        "Supprimer les feuilles basses pour aérer",
+        "Utiliser un tuteurage solide pour supporter le poids des fruits",
+        "Pratiquer le repiquage pour favoriser un système racinaire puissant"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (croissance et azote)",
+          "Purin de prêle (renforcement contre maladies cryptogamiques)",
+          "Purin de consoude (potassium pour la fructification)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles et syrphes contre les pucerons",
+          "Chrysopes",
+          "Micro-hyménoptères parasitoïdes contre les aleurodes"
+        ],
+        "companionPlants": [
+          "Basilic (confusion olfactive)",
+          "Œillet d'Inde (pucerons et nématodes)",
+          "Capucine (plante piège)"
+        ]
+      },
+      "harvestTime": "80-100 jours après plantation",
+      "companionPlanting": {
+        "beneficial": [
+          "basilic",
+          "œillet d'inde",
+          "capucine",
+          "phacélie",
+          "bourrache",
+          "cosmos"
+        ],
+        "avoid": [
+          "pomme de terre",
+          "aubergine",
+          "poivron"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
+      "harvestMonths3": [
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été, Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "3 days",
+          "conditions": [
+            "temperature > 25",
+            "no_rain_last_2_days"
+          ],
+          "message": "Arrosage nécessaire : maintenez une humidité régulière pour vos Cœurs de Bœuf."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 21,
+          "message": "Vérifiez l'espacement (50cm) et l'aération du feuillage."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "15 days",
+          "message": "Renouvelez le paillage organique si nécessaire."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 70"
+          ],
+          "message": "Risque de mildiou élevé : appliquez une décoction de prêle en prévention."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 85,
+          "message": "Vos tomates Cœur de Bœuf arrivent à maturité, surveillez la souplesse du fruit."
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 5,
+            "message": "Alerte froid : protégez vos plants (température critique < 5°C)."
+          },
+          "germination_optimal": {
+            "min": 20,
+            "max": 25,
+            "message": "Conditions optimales pour la levée de vos graines."
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,881 @@
+[
+    {
+        "id": "courgette",
+        "commonName": "Calabacín",
+        "scientificName": "Cucurbita pepo",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 45,
+        "spacing": 75,
+        "depth": 2,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza de fruto vigorosa, productiva y fácil de cultivar en suelo rico y bien drenado, ideal en permacultura y cultivo biológico.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.6,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 17,
+            "proteinG": 1.2,
+            "carbohydratesG": 3.1,
+            "sugarsG": 2.5,
+            "fatG": 0.3,
+            "fiberG": 1.0,
+            "vitaminCmg": 17.9,
+            "vitaminKmcg": 4.3,
+            "vitaminB9ug": 29,
+            "vitaminAmcg": 10,
+            "calciumMg": 16,
+            "ironMg": 0.4,
+            "magnesiumMg": 18,
+            "potassiumMg": 261,
+            "manganeseMg": 0.1,
+            "phosphorusMg": 38,
+            "luteinZeaxanthinMcg": 2125
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 22,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 8,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "1 vez/semana (copioso en verano)",
+            "amount": "5-8 litros por planta/semana",
+            "method": "Riego al pie, nunca sobre el follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "70-80 cm entre plantas",
+            "when": "Cuando las plantas tengan 2-3 hojas verdaderas, conservar solo las más vigorosas"
+        },
+        "weeding": {
+            "method": "Manual regular + acolchado orgánico (paja, BRF)",
+            "frequency": "Cada 2 semanas o según necesidad",
+            "recommendation": "Acolchar desde la plantación para limitar evaporación y malas hierbas"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: esperar 2-3 años antes de replantar cucurbitáceas en el mismo lugar",
+            "Nunca regar sobre el follaje para evitar enfermedades fúngicas",
+            "Cosechar cortando el pedúnculo con tijeras limpias",
+            "No plantar demasiado pronto: evitar periodos frescos y húmedos de primavera",
+            "Asegurar buena aireación entre plantas para limitar oídio y mildiu"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante y preventivo)",
+                "Purín de cola de caballo (antifúngico)",
+                "Bicarbonato de sodio (en pulverización contra oídio)",
+                "Jabón negro (contra pulgones)",
+                "Aceite de pino o piretro (insecticida bio selectivo)"
+            ],
+            "beneficialInsects": [
+                "Larvas de mariquitas (contra pulgones)",
+                "Sírfidos (depredadores de pulgones)",
+                "Avispas parasitoides (contra orugas)"
+            ],
+            "companionPlants": [
+                "Judía",
+                "Maíz",
+                "Rábano",
+                "Capuchina (trampa)",
+                "Cebolla",
+                "Ajo (repelentes naturales)"
+            ]
+        },
+        "harvestTime": "45-60 días tras plantación, según variedad y condiciones",
+        "companionPlanting": {
+            "beneficial": [
+                "judía",
+                "maíz",
+                "rábano",
+                "capuchina",
+                "cebolla",
+                "ajo",
+                "lechuga",
+                "espinaca",
+                "capuchina (trampa)",
+                "ajo (repelentes naturales)"
+            ],
+            "avoid": [
+                "otras cucurbitáceas (pepino, calabaza, melón)",
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera (tras las últimas heladas)",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego copioso necesario para sus calabacines: 5-8 litros por planta, al pie únicamente"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclareo necesario: conservar 1 planta cada 70-80 cm, guardar las más vigorosas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe manual y verificación del acolchado recomendados para sus calabacines"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Tratamiento preventivo con purín de ortiga o cola de caballo recomendado contra enfermedades fúngicas"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "¡Primeras cosechas posibles para sus calabacines! Corte el pedúnculo con tijeras."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Atención: temperatura mínima para calabacines alcanzada (12°C) - riesgo de ralentización o estrés"
+                },
+                "germination_optimal": {
+                    "min": 22,
+                    "max": 25,
+                    "message": "Condiciones óptimas de germinación alcanzadas (22-25°C) - ¡buen momento para sembrar!"
+                }
+            }
+        }
+    },
+    {
+        "id": "cucumber",
+        "commonName": "Pepino",
+        "scientificName": "Cucumis sativus",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 55,
+        "spacing": 70,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza exigente en agua, crecimiento rápido, ideal en permacultura con acolchado y entutorado.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.9,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.7,
+            "carbohydratesG": 3.6,
+            "sugarsG": 1.7,
+            "fatG": 0.1,
+            "fiberG": 0.5,
+            "vitaminCmg": 2.8,
+            "vitaminKmcg": 16.4,
+            "vitaminB9ug": 7,
+            "vitaminAmcg": 5,
+            "calciumMg": 16,
+            "ironMg": 0.3,
+            "magnesiumMg": 13,
+            "potassiumMg": 147,
+            "manganeseMg": 0.08,
+            "phosphorusMg": 24,
+            "waterG": 95.2,
+            "cucurbitacineMg": 0.05
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 28
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "2-3 veces/semana (más en caso de calor o viento seco)",
+            "amount": "2-5 litros por planta por riego",
+            "method": "Siempre al pie, nunca sobre el follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "60-80 cm entre plantas",
+            "when": "Desde la aparición de las primeras hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Manual + acolchado (paja, heno, BRF)",
+            "frequency": "Regular, según necesidad",
+            "recommendation": "Acolchado grueso fuertemente recomendado para limitar malas hierbas y conservar humedad"
+        },
+        "culturalTips": [
+            "Rotación de cultivos cada 3-4 años (evitar tras otras cucurbitáceas)",
+            "Utilizar un entutorado o soporte para favorecer la aireación y evitar frutos deformes",
+            "Evitar suelos mal drenados para prevenir podredumbre radicular",
+            "Cosechar a madurez para evitar amargor",
+            "Sembrar en golpes de 3-4 semillas y aclarar a la más vigorosa"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de consuelda (nutritivo y fortificante)",
+                "Infusión de tanaisie (antipulgones)",
+                "Decocción de ajo (fungicida natural)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Sírfidos (depredadores de pulgones)",
+                "Avispas parasitoides (contra orugas y pulgones)"
+            ],
+            "companionPlants": [
+                "Capuchinas (trampa para pulgones)",
+                "Rábano",
+                "Cebolla",
+                "Lechuga"
+            ]
+        },
+        "harvestTime": "50-65 días tras plantación según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "rábano",
+                "cebolla",
+                "lechuga",
+                "capuchina",
+                "judía",
+                "maíz",
+                "remolacha",
+                "capuchinas (trampa para pulgones)"
+            ],
+            "avoid": [
+                "aromáticas fuertes como la salvia",
+                "otras cucurbitáceas (calabacines, calabazas, melones)",
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "wind_dry"
+                ],
+                "message": "Riego necesario para sus pepinos: 2-5 litros por planta, al pie"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclareo necesario: conservar 1 planta cada 60-80 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe manual + verificar el acolchado para sus pepinos"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Aplicar purín de consuelda o infusión de tanaisie en prevención"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Periodo de cosecha se acerca para sus pepinos — cosechar jóvenes para evitar amargor"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Atención: temperatura mínima para los pepinos alcanzada (12°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Condiciones óptimas de germinación (20-25°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "dill",
+        "commonName": "Eneldo",
+        "scientificName": "Anethum graveolens",
+        "family": "Apiaceae",
+        "daysToMaturity": 70,
+        "spacing": 25,
+        "depth": 0.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Moderado",
+        "description": "Planta aromática anual de finas hojas recortadas, utilizada en cocina y medicina tradicional. Atrae polinizadores y repele ciertos insectos dañinos.",
+        "marketPricePerKg": 16.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 40,
+            "proteinG": 3.5,
+            "carbohydratesG": 7.0,
+            "sugarsG": 1.2,
+            "fatG": 1.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 85.0,
+            "vitaminKmcg": 620.0,
+            "vitaminB9ug": 150,
+            "vitaminAmcg": 75,
+            "calciumMg": 208,
+            "ironMg": 6.6,
+            "magnesiumMg": 55,
+            "potassiumMg": 335,
+            "manganeseMg": 1.26,
+            "phosphorusMg": 66,
+            "carvoneMg": 95,
+            "apigeninMg": 30
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Regar moderadamente, solo cuando la tierra empiece a secarse",
+            "amount": "Suelo ligeramente húmedo, evitar el encharcamiento",
+            "method": "Bajo acolchado si es posible, al pie sin mojar follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "15-25 cm entre plantas, 20-30 cm entre filas",
+            "when": "Cuando las plantas midan 5-10 cm o tengan 4-5 hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Arranque manual (raíces finas sensibles)",
+            "frequency": "Regularmente, según crecimiento de adventicias",
+            "recommendation": "Acolchado para limitar malas hierbas y conservar humedad"
+        },
+        "culturalTips": [
+            "Suelo ligero, bien drenado, rico en materia orgánica",
+            "Evitar exceso de agua para prevenir podredumbres radiculares",
+            "No plantar cerca de otras Apiáceas (ej: hinojo)",
+            "Sembrar escalonadamente para repartir la cosecha y evitar subida prematura a semilla",
+            "Rotación de cultivos recomendada para preservar salud del suelo"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purines bio en caso de ataque fuerte (ej: purín de ortiga)",
+                "Decocciones naturales (ej: ajo, tanaisie)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas contra pulgones",
+                "Sírfidos como auxiliaires naturales",
+                "Polinizadores atraídos por floración blanca"
+            ],
+            "companionPlants": [
+                "Cebollas",
+                "Coles",
+                "Pepinos",
+                "Brócolis (efecto repelente contra ciertas plagas)"
+            ]
+        },
+        "harvestTime": "60-80 días tras siembra, según condiciones climáticas y variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "cebolla",
+                "col",
+                "pepino",
+                "brócoli",
+                "cebollas",
+                "coles",
+                "pepinos",
+                "brócolis (efecto repelente contra ciertas plagas)"
+            ],
+            "avoid": [
+                "otras apiáceas",
+                "hinojo"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "variable",
+                "conditions": [
+                    "soil_dry_top_2cm"
+                ],
+                "message": "Riego moderado necesario: el suelo debe permanecer ligeramente húmedo, no empapado"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Aclarar a 15-25 cm entre plantas desde 5-10 cm de altura o 4-5 hojas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe manual recomendado — atención a las raíces finas del eneldo"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "aphid_sighting",
+                    "humidity > 70"
+                ],
+                "message": "Aplicar purín de ortiga o atraer mariquitas en caso de pulgones"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Cosecha posible de hojas de eneldo — cortar antes de floración para más sabor"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Atención: temperatura mínima para eneldo alcanzada (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 22,
+                    "message": "Condiciones óptimas de germinación (18-22°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "eggplant",
+        "commonName": "Berenjena",
+        "scientificName": "Solanum melongena",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 60,
+        "depth": 0.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza de fruto de la familia de las solanáceas, apreciada por su carne firme y sabor sutil, ideal en clima cálido y suelo rico.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.6,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.0,
+            "carbohydratesG": 5.7,
+            "sugarsG": 3.2,
+            "fatG": 0.2,
+            "fiberG": 3.0,
+            "vitaminCmg": 2.2,
+            "vitaminKmcg": 3.5,
+            "vitaminB9ug": 22,
+            "vitaminAmcg": 1,
+            "calciumMg": 9,
+            "ironMg": 0.2,
+            "magnesiumMg": 14,
+            "potassiumMg": 229,
+            "manganeseMg": 0.23,
+            "phosphorusMg": 24,
+            "nasuninMg": 85
+        },
+        "germination": {
+            "minTemperature": 20,
+            "optimalTemperature": {
+                "min": 25,
+                "max": 28
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 12,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 24,
+                "max": 28
+            },
+            "minTemperature": 15
+        },
+        "watering": {
+            "frequency": "Cada 3-4 días en suelo acolchado, 2-3 veces/semana con calor",
+            "amount": "1-4 litros por planta según estadio y temperatura",
+            "method": "Riego al pie, sin mojar el follaje",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "50-70 cm entre plantas",
+            "when": "En estadio de siembra o justo tras germinación, conservando las más vigorosas"
+        },
+        "weeding": {
+            "method": "Acolchado (paja, césped, hojas) + deshierbe manual suave",
+            "frequency": "Cada 1 a 2 semanas",
+            "recommendation": "Acolchado grueso indispensable para limitar evaporación y malas hierbas"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: evitar replantar solanáceas (tomates, pimientos, patatas) en el mismo lugar durante 3-4 años",
+            "No cubrir el cuello al plantar para evitar la Sclerotinia",
+            "Acolchar sistemáticamente para conservar humedad y prevenir enfermedades",
+            "Favorecer aireación de las plantas para limitar mildiu y hongos",
+            "Elegir un suelo bien drenado, ligero y rico en materia orgánica, a pleno sol"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante y anti-pulgones)",
+                "Purín de cola de caballo (preventivo contra hongos)",
+                "Jabón negro o aceites esenciales en caso de ataque"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Avispas parasitoides",
+                "Crisopas"
+            ],
+            "companionPlants": [
+                "Albahaca",
+                "Caléndula (contra ciertas plagas)"
+            ]
+        },
+        "harvestTime": "90-120 días tras plantación según variedad y clima",
+        "companionPlanting": {
+            "beneficial": [
+                "albahaca",
+                "caléndula",
+                "judía",
+                "lechuga",
+                "espinaca",
+                "cebolla",
+                "soucis (contra ciertas plagas)"
+            ],
+            "avoid": [
+                "otras solanáceas en el mismo lugar",
+                "pimiento",
+                "patata",
+                "tomate"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario para sus berenjenas: 2-4 litros por planta, al pie, temprano en la mañana"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclareo recomendado: conservar 50-70 cm entre plantas más vigorosas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Verifique el acolchado y deshierbe manualmente si es necesario"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Aplique un purín de cola de caballo en prevención contra enfermedades criptogámicas"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Periodo de cosecha se acerca para sus berenjenas"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 15,
+                    "message": "Atención: temperatura mínima para berenjenas alcanzada (15°C)"
+                },
+                "germination_optimal": {
+                    "min": 25,
+                    "max": 28,
+                    "message": "Condiciones óptimas de germinación para la berenjena (25-28°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "garlic",
+        "commonName": "Ajo",
+        "scientificName": "Allium sativum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 240,
+        "spacing": 15,
+        "depth": 5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Bajo",
+        "description": "Bulbo aromático con propiedades culinarias y medicinales, cultivado en permacultura por su resistencia y necesidades moderadas de agua.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "O"
+        ],
+        "harvestMonths": [
+            "J"
+        ],
+        "marketPricePerKg": 8.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 149,
+            "proteinG": 6.4,
+            "carbohydratesG": 33.1,
+            "sugarsG": 1.0,
+            "fatG": 0.5,
+            "fiberG": 2.1,
+            "vitaminCmg": 31.2,
+            "vitaminB6mg": 1.2,
+            "vitaminB9ug": 3,
+            "calciumMg": 181,
+            "ironMg": 1.7,
+            "magnesiumMg": 25,
+            "potassiumMg": 401,
+            "manganeseMg": 1.7,
+            "phosphorusMg": 153,
+            "seleniumMcg": 14.2
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Raramente, solo en caso de sequía prolongada",
+            "amount": "Moderado, evitar exceso de humedad",
+            "method": "Al pie si es necesario",
+            "bestTime": "Mañana"
+        },
+        "thinning": {
+            "distance": "10-15 cm entre dientes",
+            "when": "Al plantar"
+        },
+        "weeding": {
+            "method": "Manual (binado regular)",
+            "frequency": "Regular para evitar competencia",
+            "recommendation": "Mantener suelo limpio, evitar acolchado excesivo que retenga humedad en invierno"
+        },
+        "culturalTips": [
+            "No regar en exceso (riesgo de podredumbre)",
+            "Atar los tallos antes de la cosecha para favorecer el bulbo",
+            "Secar bien al sol tras cosecha",
+            "Evitar suelos pesados y húmedos",
+            "Planter dientes externos (los más grandes)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Ninguno específico necesario generalmente",
+                "Purín de cola de caballo si riesgo de roya"
+            ],
+            "beneficialInsects": [
+                "No específico"
+            ],
+            "companionPlants": [
+                "Fresa",
+                "Tomate",
+                "Zanahoria",
+                "Remolacha"
+            ]
+        },
+        "harvestTime": "Aprox. 8-9 meses tras plantación",
+        "companionPlanting": {
+            "beneficial": [
+                "fresa",
+                "tomate",
+                "zanahoria",
+                "remolacha",
+                "árboles frutales",
+                "lechuga",
+                "camomille"
+            ],
+            "avoid": [
+                "leguminosas (judía, guisante, haba)",
+                "col",
+                "espárrago"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "May",
+            "Oct"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul"
+        ],
+        "plantingSeason": "Otoño, Invierno",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "14 days",
+                "conditions": [
+                    "soil_dry",
+                    "no_rain_last_14_days"
+                ],
+                "message": "Verifique si el ajo necesita agua (solo en gran sequía)."
+            },
+            "thinning": {
+                "enabled": false,
+                "message": ""
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Deshierbe el ajo para evitar competencia."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "temp > 15"
+                ],
+                "message": "Vigile la roya en condiciones húmedas."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 240,
+                "message": "Cosecha de ajo próxima. Deje secar en el suelo."
+            },
+            "temperature_alert": {
+                "enabled": false,
+                "cold_alert": {
+                    "threshold": -10,
+                    "message": "Ajo resistente al frío."
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 15,
+                    "message": ""
+                }
+            }
+        }
+    }
+]

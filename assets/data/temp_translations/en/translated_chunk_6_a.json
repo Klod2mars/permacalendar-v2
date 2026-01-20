@@ -1,0 +1,869 @@
+[
+    {
+        "id": "lupin",
+        "commonName": "Lupin",
+        "scientificName": "Lupinus polyphyllus / Lupinus albus",
+        "family": "Fabaceae",
+        "daysToMaturity": 130,
+        "spacing": 50,
+        "depth": 4,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Medium",
+        "description": "Nitrogen-fixing legume, grown for its nutritious seeds or spectacular ornamental flowering.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 371,
+            "proteinG": 36.17,
+            "carbohydratesG": 40.37,
+            "sugarsG": 2.12,
+            "fatG": 9.74,
+            "fiberG": 18.9,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 355,
+            "potassiumMg": 1013,
+            "magnesiumMg": 198,
+            "calciumMg": 176
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 15,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -20
+        },
+        "watering": {
+            "frequency": "1-2 times/week during establishment",
+            "amount": "Deep watering in dry periods",
+            "method": "At base or drip irrigation",
+            "bestTime": "Morning"
+        },
+        "thinning": {
+            "distance": "45-60 cm between plants",
+            "when": "Seedling stage (delicate transplanting due to taproot)"
+        },
+        "weeding": {
+            "method": "Manual, shallow hoeing",
+            "frequency": "Every 3 weeks",
+            "recommendation": "Mulching (straw, RCW, coarse compost)"
+        },
+        "culturalTips": [
+            "Crop rotation (4-5 years without Fabaceae)",
+            "Requires no nitrogen input (symbiotic fixation)",
+            "Soak seeds 12-24h before sowing to facilitate germination",
+            "Avoid overly calcareous soils (prefers pH < 7)",
+            "Beware of soil crusting which blocks emergence"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifier)",
+                "Horsetail decoction (fungal diseases)",
+                "Black soap (against aphids)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs and syrphes (against aphids)",
+                "Ground beetles and rove beetles (soil predators)",
+                "Various pollinators (attracted by flowers)"
+            ],
+            "companionPlants": [
+                "Cucurbits",
+                "Leafy vegetables",
+                "Solanaceae"
+            ]
+        },
+        "harvestTime": "110-150 days after sowing depending on species",
+        "companionPlanting": {
+            "beneficial": [
+                "cucumber",
+                "zucchini",
+                "squash",
+                "lettuce",
+                "spinach",
+                "tomato",
+                "pepper",
+                "eggplant"
+            ],
+            "avoid": [
+                "cabbage",
+                "broccoli",
+                "potatoes",
+                "pea",
+                "beans",
+                "broad beans"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "dry_soil"
+                ],
+                "message": "Watering recommended for your lupins (dry period)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 20,
+                "message": "Thinning: space your lupins 45-60 cm apart"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Check for weeds and condition of mulch"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_aphids"
+                ],
+                "message": "Aphid alert: black soap spray or nettle manure possible"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 130,
+                "message": "Check maturity of lupin pods (dry and brown)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 2,
+                    "message": "Risk for germination: minimum temperature of 2°C reached"
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 15,
+                    "message": "Optimal conditions for lupin germination (10-15°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "white_onion",
+        "image": "oignons_blanc.png",
+        "commonName": "White Onion",
+        "scientificName": "Allium cepa L.",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 125,
+        "spacing": 12,
+        "depth": 1.2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium",
+        "description": "Crisp white bulb onion, appreciated for its mild flavor. Grown as annual for bulbs or green onions (scallions).",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "S",
+            "O"
+        ],
+        "harvestMonths": [
+            "M",
+            "J",
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 0.9,
+            "carbohydratesG": 9,
+            "sugarsG": 4,
+            "fatG": 0.13,
+            "fiberG": 2,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": 24
+        },
+        "germination": {
+            "minTemperature": 6,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 21,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "Every 2-4 days in hot weather, otherwise 7-10 days",
+            "amount": "Light and frequent watering (avoid soil saturation)",
+            "method": "At base or drip irrigation, avoid sprinkling",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "10-15 cm in row, 30-40 cm between rows",
+            "when": "Pencil stage or after emergence for dense sowings"
+        },
+        "weeding": {
+            "method": "Manual",
+            "frequency": "Regular",
+            "recommendation": "Organic mulch (straw, hay) to limit weeds"
+        },
+        "culturalTips": [
+            "Rotation of 3-4 years minimum before returning to an Allium plot",
+            "Stop watering 10-20 days before harvest to improve conservation",
+            "Avoid heavy or poorly drained soils",
+            "Do not bury bulbs too deeply",
+            "Limit excess nitrogen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle or horsetail manure",
+                "Garlic decoction against thrips"
+            ],
+            "beneficialInsects": [
+                "Lacewings",
+                "Hoverflies",
+                "Ground beetles",
+                "Rove beetles"
+            ],
+            "companionPlants": [
+                "Carrot",
+                "Lettuce",
+                "Strawberry"
+            ]
+        },
+        "harvestTime": "100-150 days after sowing depending on use",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "lettuce",
+                "beetroot",
+                "strawberry",
+                "dill",
+                "coriander"
+            ],
+            "avoid": [
+                "garlic",
+                "leek",
+                "shallot",
+                "pole bean",
+                "alfalfa"
+            ]
+        },
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "soil_moisture < 30%"
+                ],
+                "message": "Watering your onions: prefer light application at base."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Thinning: space your onions 10-15 cm apart."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Weeding necessary to avoid competition."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Fungal disease risk: monitor foliage."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Watch for falling tops to start harvest."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Attention: critical frost for bulbs in ground (-3°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Ideal temperature for your onion emergence."
+                }
+            }
+        }
+    },
+    {
+        "id": "red_onion",
+        "commonName": "Red Onion",
+        "scientificName": "Allium cepa L.",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 110,
+        "spacing": 8,
+        "depth": 1.2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium",
+        "description": "Onion variety appreciated for its bright color and slightly sweet flavor, ideal for fresh consumption or storage.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 38,
+            "proteinG": 1.1,
+            "carbohydratesG": 7.55,
+            "sugarsG": 6.7,
+            "fatG": 0.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 7.4,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 19,
+            "potassiumMg": 146,
+            "magnesiumMg": 10,
+            "calciumMg": 22
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "About 20-25 mm / week",
+            "amount": "Reduce and then stop 2-3 weeks before harvest",
+            "method": "At base / drip, avoid foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "5-8 cm between plants, 20-40 cm between rows",
+            "when": "When plants have 3-4 leaves"
+        },
+        "weeding": {
+            "method": "Manual or early hoeing",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Mulching (straw, low nitrogen hay, mature RCW)"
+        },
+        "culturalTips": [
+            "Crop rotation (3-4 years without Allium)",
+            "Stop watering before harvest to encourage conservation",
+            "Practice curing (drying on ground) after lifting",
+            "Avoid overly fresh organic manures"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (stimulation at start)",
+                "Garlic decoction (fungal prevention)",
+                "Tansy infusion"
+            ],
+            "beneficialInsects": [
+                "Ground beetles and rove beetles against soil pests",
+                "Syrphes against aphids",
+                "Lacewings"
+            ],
+            "companionPlants": [
+                "Carrot",
+                "Beetroot",
+                "Lettuce"
+            ]
+        },
+        "harvestTime": "100-120 days after planting",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "beetroot",
+                "lettuce",
+                "spinach",
+                "strawberry"
+            ],
+            "avoid": [
+                "garlic",
+                "leek",
+                "chives",
+                "climbing beans",
+                "climbing peas",
+                "cabbage"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Late winter, Spring",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 20",
+                    "phase_vegetative"
+                ],
+                "message": "Watering need for onions: keep soil cool (20-25mm/week)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Thinning or transplanting: check if plants have 3-4 leaves"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Crucial weeding: onion fears weed competition"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Downy mildew risk: check aeration and treat preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "Harvest sign: check if 50% of tops are down"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Attention: frost risk for young onion plants"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Ideal temperature for your onion emergence"
+                }
+            }
+        }
+    },
+    {
+        "id": "watermelon",
+        "commonName": "Watermelon",
+        "scientificName": "Citrullus lanatus",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 90,
+        "spacing": 135,
+        "depth": 1.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high",
+        "description": "Refreshing fruit filled with water (91%), rich in lycopene and citrulline.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 0.61,
+            "carbohydratesG": 7.6,
+            "sugarsG": 6.2,
+            "fatG": 0.2,
+            "fiberG": 0.4,
+            "vitaminCmg": 8.1,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 3,
+            "potassiumMg": 112,
+            "magnesiumMg": 10,
+            "calciumMg": 7
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 29
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 30
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Regular for young plants, then deep and spaced",
+            "amount": "5-10 litres per plant/week (depending on heat)",
+            "method": "At base or drip irrigation, avoid foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "90-180 cm between plants, 180-300 cm between rows",
+            "when": "After last frosts, soil > 18°C"
+        },
+        "weeding": {
+            "method": "Manual or thick mulch",
+            "frequency": "Every 2 weeks (more frequent at start)",
+            "recommendation": "Thick structured mulch (straw, dead leaves, cardboard)"
+        },
+        "culturalTips": [
+            "Use biodegradable pots to avoid root stress",
+            "Prefer light soil rich in organic matter",
+            "Practice minimum 3 year rotation",
+            "Install dry mulch to prevent direct fruit contact with soil"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (aphids and vigor)",
+                "Black soap (aphids and whiteflies)",
+                "Garlic decoction (general repellent)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs and syrphes against aphids",
+                "Lacewings against whiteflies",
+                "Bees for pollination and fruit set"
+            ],
+            "companionPlants": [
+                "Basil",
+                "Marigold",
+                "Calendula",
+                "Low legumes"
+            ]
+        },
+        "harvestTime": "80-100 days after emergence depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "basil",
+                "marigold",
+                "calendula",
+                "bush beans",
+                "phacelia",
+                "borage"
+            ],
+            "avoid": [
+                "cucumber",
+                "zucchini",
+                "melon",
+                "squash",
+                "tomato",
+                "potato"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Deep watering necessary for your watermelons: 5-10 liters per plant"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Check spacing: ensure at least 90cm between plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and mulch check for your watermelons"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Powdery mildew risk: aerate well and avoid wetting foliage"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Harvest approaching: check if tendril is dry and sound is hollow"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Attention: watermelon growth slowed below 12°C"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 29,
+                    "message": "Optimal germination conditions (21-29°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "courge_patisson",
+        "image": "patisson.jpg",
+        "commonName": "Patisson Squash",
+        "scientificName": "Cucurbita pepo L.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 65,
+        "spacing": 90,
+        "depth": 1.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high",
+        "description": "Original summer squash shaped like a priest's hat, appreciated for its tender flesh and taste reminiscent of artichoke.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 1.0,
+            "carbohydratesG": 3.5,
+            "sugarsG": 2.2,
+            "fatG": 0.2,
+            "fiberG": 1.5,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 21,
+            "potassiumMg": 140,
+            "magnesiumMg": 19,
+            "calciumMg": 15
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 27
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 30
+            },
+            "minTemperature": 8
+        },
+        "watering": {
+            "frequency": "1-2 times/week (deep)",
+            "amount": "Slow and abundant application",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "80-100 cm between plants",
+            "when": "When plants have 2-3 true leaves"
+        },
+        "weeding": {
+            "method": "Manual (watch out for shallow roots)",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Thick mulch (straw, hay, dry clippings)"
+        },
+        "culturalTips": [
+            "Crop rotation (3-4 years without cucurbits)",
+            "Harvest young to stimulate production of new flowers",
+            "Avoid watering on leaves to limit powdery mildew",
+            "Use airy mulch to protect fruits from direct contact with soil"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (growth)",
+                "Horsetail manure (fungal prevention)",
+                "Garlic decoction (aphid repellent)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Syrphes and Lacewings",
+                "Ground beetles against slugs"
+            ],
+            "companionPlants": [
+                "Marigold",
+                "Borage",
+                "Phacelia"
+            ]
+        },
+        "harvestTime": "55-70 days for young fruits, 90 days for storage",
+        "companionPlanting": {
+            "beneficial": [
+                "sweet corn",
+                "beans",
+                "onion",
+                "garlic",
+                "chives",
+                "marigold",
+                "borage",
+                "phacelia",
+                "lettuce",
+                "spinach"
+            ],
+            "avoid": [
+                "zucchini",
+                "cucumber",
+                "melon",
+                "potatoes"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "période_floraison"
+                ],
+                "message": "Deep watering necessary for your patissons (avoid leaves)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Check spacing: keep one vigorous plant every 80-100 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and mulch check around patissons"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity_high",
+                    "alternating_hot_cold"
+                ],
+                "message": "Powdery mildew risk: preventively apply horsetail decoction"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Harvest of young patissons (5-10cm) can begin"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 8,
+                    "message": "Coolness alert: patisson suffers below 8°C"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 27,
+                    "message": "Ideal temperature for emergence of your patissons"
+                }
+            }
+        }
+    }
+]

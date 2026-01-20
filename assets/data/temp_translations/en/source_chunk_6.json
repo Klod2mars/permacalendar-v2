@@ -1,0 +1,1753 @@
+{
+  "batch_index": 6,
+  "plants": [
+    {
+      "id": "lupin",
+      "commonName": "Lupin",
+      "scientificName": "Lupinus polyphyllus / Lupinus albus",
+      "family": "Fabaceae",
+      "daysToMaturity": 130,
+      "spacing": 50,
+      "depth": 4,
+      "sunExposure": "Plein soleil à mi-ombre",
+      "waterNeeds": "Moyen",
+      "description": "Légumineuse fixatrice d'azote, cultivée pour ses graines nutritives ou sa floraison ornementale spectaculaire.",
+      "sowingMonths": [
+        "M",
+        "A",
+        "S"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S"
+      ],
+      "marketPricePerKg": 4.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 371,
+        "proteinG": 36.17,
+        "carbohydratesG": 40.37,
+        "sugarsG": 2.12,
+        "fatG": 9.74,
+        "fiberG": 18.9,
+        "vitaminCmg": 0,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 355,
+        "potassiumMg": 1013,
+        "magnesiumMg": 198,
+        "calciumMg": 176
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 10,
+          "max": 15
+        },
+        "germinationTime": {
+          "min": 5,
+          "max": 15,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 25
+        },
+        "minTemperature": -20
+      },
+      "watering": {
+        "frequency": "1-2 fois/semaine lors de l'implantation",
+        "amount": "Arrosage profond en période sèche",
+        "method": "Au pied ou goutte-à-goutte",
+        "bestTime": "Le matin"
+      },
+      "thinning": {
+        "distance": "45-60 cm entre plants",
+        "when": "Stade plantule (repiquage délicat dû au pivot)"
+      },
+      "weeding": {
+        "method": "Manuel, binage superficiel",
+        "frequency": "Toutes les 3 semaines",
+        "recommendation": "Paillage (paille, BRF, compost grossier)"
+      },
+      "culturalTips": [
+        "Rotation des cultures (4-5 ans sans Fabacées)",
+        "Ne nécessite aucun apport d'azote (fixation symbiotique)",
+        "Trempage des graines 12-24h avant semis pour faciliter la levée",
+        "Éviter les sols trop calcaires (préfère pH < 7)",
+        "Attention à la croûte de battance qui bloque la levée"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (fortifiant)",
+          "Décoction de prêle (maladies cryptogamiques)",
+          "Savon noir (contre pucerons)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles et syrphes (contre pucerons)",
+          "Carabes et staphylins (prédateurs du sol)",
+          "Pollinisateurs variés (attirés par les fleurs)"
+        ],
+        "companionPlants": [
+          "Cucurbitacées",
+          "Légumes-feuilles",
+          "Solanacées"
+        ]
+      },
+      "harvestTime": "110-150 jours après semis selon l'espèce",
+      "companionPlanting": {
+        "beneficial": [
+          "concombre",
+          "courgette",
+          "courge",
+          "laitue",
+          "épinard",
+          "tomate",
+          "poivron",
+          "aubergine"
+        ],
+        "avoid": [
+          "chou",
+          "brocoli",
+          "pommes de terre",
+          "pois",
+          "haricots",
+          "fèves"
+        ]
+      },
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Aug",
+        "Sep"
+      ],
+      "harvestMonths3": [
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été, Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "7 days",
+          "conditions": [
+            "temperature > 25",
+            "dry_soil"
+          ],
+          "message": "Arrosage recommandé pour vos lupins (période sèche)"
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 20,
+          "message": "Éclaircissement : espacez vos lupins de 45-60 cm"
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "21 days",
+          "message": "Vérifiez la présence d'adventices et l'état du paillage"
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "presence_of_aphids"
+          ],
+          "message": "Alerte pucerons : pulvérisation de savon noir ou purin d'ortie possible"
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 130,
+          "message": "Vérifiez la maturité des gousses de lupin (sèches et brunes)"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 2,
+            "message": "Risque pour la germination : température minimale de 2°C atteinte"
+          },
+          "germination_optimal": {
+            "min": 10,
+            "max": 15,
+            "message": "Conditions optimales pour la germination des lupins (10-15°C)"
+          }
+        }
+      }
+    },
+    {
+      "id": "white_onion",
+      "image": "oignons_blanc.png",
+      "commonName": "Oignon blanc",
+      "scientificName": "Allium cepa L.",
+      "family": "Amaryllidaceae",
+      "daysToMaturity": 125,
+      "spacing": 12,
+      "depth": 1.2,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen",
+      "description": "Oignon à bulbe blanc croquant, apprécié pour sa saveur douce. Cultivé en annuelle pour ses bulbes ou en jeunes pousses (cébettes).",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A",
+        "S",
+        "O"
+      ],
+      "harvestMonths": [
+        "M",
+        "J",
+        "J",
+        "A",
+        "S"
+      ],
+      "marketPricePerKg": 2.8,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 36,
+        "proteinG": 0.9,
+        "carbohydratesG": 9,
+        "sugarsG": 4,
+        "fatG": 0.13,
+        "fiberG": 2,
+        "vitaminCmg": null,
+        "vitaminEmg": null,
+        "vitaminB9ug": null,
+        "potassiumMg": null,
+        "magnesiumMg": null,
+        "calciumMg": 24
+      },
+      "germination": {
+        "minTemperature": 6,
+        "optimalTemperature": {
+          "min": 15,
+          "max": 20
+        },
+        "germinationTime": {
+          "min": 7,
+          "max": 21,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 22
+        },
+        "minTemperature": -3
+      },
+      "watering": {
+        "frequency": "Tous les 2-4 jours par temps chaud, sinon 7-10 jours",
+        "amount": "Apports légers et fréquents (éviter la saturation du sol)",
+        "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "10-15 cm sur le rang, 30-40 cm entre les rangs",
+        "when": "Stade crayon ou après levée pour les semis denses"
+      },
+      "weeding": {
+        "method": "Manuel",
+        "frequency": "Régulière",
+        "recommendation": "Paillage organique (paille, foin) pour limiter les adventices"
+      },
+      "culturalTips": [
+        "Rotation de 3-4 ans minimum avant de revenir sur une parcelle d'Allium",
+        "Stopper l'arrosage 10-20 jours avant la récolte pour améliorer la conservation",
+        "Éviter les sols lourds ou mal drainés",
+        "Ne pas enterrer les bulbes trop profondément",
+        "Limiter les excès d'azote"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie ou de prêle",
+          "Décoction d'ail contre les thrips"
+        ],
+        "beneficialInsects": [
+          "Chrysopes",
+          "Syrphes",
+          "Carabes",
+          "Staphylins"
+        ],
+        "companionPlants": [
+          "Carotte",
+          "Laitue",
+          "Fraisier"
+        ]
+      },
+      "harvestTime": "100-150 jours après semis selon l'usage",
+      "companionPlanting": {
+        "beneficial": [
+          "carotte",
+          "laitue",
+          "betterave",
+          "fraisier",
+          "aneth",
+          "coriandre"
+        ],
+        "avoid": [
+          "ail",
+          "poireau",
+          "échalote",
+          "haricot à rames",
+          "luzerne"
+        ]
+      },
+      "plantingSeason": "Printemps,Automne",
+      "harvestSeason": "Été,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "4 days",
+          "conditions": [
+            "temperature > 22",
+            "soil_moisture < 30%"
+          ],
+          "message": "Arrosage de vos oignons : privilégiez un apport léger au pied."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 30,
+          "message": "Éclaircissement : espacez vos oignons de 10-15 cm."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "15 days",
+          "message": "Désherbage nécessaire pour éviter la concurrence."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 80"
+          ],
+          "message": "Risque de maladies fongiques : surveillez le feuillage."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 110,
+          "message": "Surveillez la chute des fanes pour débuter la récolte."
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": -3,
+            "message": "Attention : gel critique pour les bulbes en terre (-3°C)."
+          },
+          "germination_optimal": {
+            "min": 15,
+            "max": 20,
+            "message": "Température idéale pour la levée de vos oignons."
+          }
+        }
+      }
+    },
+    {
+      "id": "red_onion",
+      "commonName": "Oignon rouge",
+      "scientificName": "Allium cepa L.",
+      "family": "Amaryllidaceae",
+      "daysToMaturity": 110,
+      "spacing": 8,
+      "depth": 1.2,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen",
+      "description": "Variété d'oignon appréciée pour sa couleur vive et sa saveur légèrement sucrée, idéale pour la consommation crue ou la garde.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A",
+        "A",
+        "S"
+      ],
+      "harvestMonths": [
+        "J",
+        "J",
+        "A",
+        "S"
+      ],
+      "marketPricePerKg": 2.8,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 38,
+        "proteinG": 1.1,
+        "carbohydratesG": 7.55,
+        "sugarsG": 6.7,
+        "fatG": 0.1,
+        "fiberG": 2.1,
+        "vitaminCmg": 7.4,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 19,
+        "potassiumMg": 146,
+        "magnesiumMg": 10,
+        "calciumMg": 22
+      },
+      "germination": {
+        "minTemperature": 7,
+        "optimalTemperature": {
+          "min": 20,
+          "max": 25
+        },
+        "germinationTime": {
+          "min": 7,
+          "max": 14,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 20
+        },
+        "minTemperature": -3
+      },
+      "watering": {
+        "frequency": "Environ 20-25 mm / semaine",
+        "amount": "Réduire puis stopper 2-3 semaines avant récolte",
+        "method": "Au pied / goutte-à-goutte, éviter le feuillage",
+        "bestTime": "Tôt le matin"
+      },
+      "thinning": {
+        "distance": "5-8 cm entre plants, 20-40 cm entre rangs",
+        "when": "Lorsque les plants ont 3-4 feuilles"
+      },
+      "weeding": {
+        "method": "Manuel ou binage précoce",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage (paille, foin peu azoté, BRF mûr)"
+      },
+      "culturalTips": [
+        "Rotation des cultures (3-4 ans sans Allium)",
+        "Stopper les arrosages avant la récolte pour favoriser la conservation",
+        "Pratiquer le ressuyage (séchage au sol) après arrachage",
+        "Éviter les fumures organiques trop fraîches"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (stimulation au début)",
+          "Décoction d'ail (prévention fongique)",
+          "Infusion de tanaisie"
+        ],
+        "beneficialInsects": [
+          "Carabes et staphylins contre les ravageurs du sol",
+          "Syrphes contre les pucerons",
+          "Chrysopes"
+        ],
+        "companionPlants": [
+          "Carotte",
+          "Betterave",
+          "Laitue"
+        ]
+      },
+      "harvestTime": "100-120 jours après plantation",
+      "companionPlanting": {
+        "beneficial": [
+          "carotte",
+          "betterave",
+          "laitue",
+          "épinard",
+          "fraise"
+        ],
+        "avoid": [
+          "ail",
+          "poireau",
+          "ciboulette",
+          "haricots grimpants",
+          "pois à rames",
+          "chou"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "Aug",
+        "Sep"
+      ],
+      "harvestMonths3": [
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingSeason": "Fin d'hiver, Printemps",
+      "harvestSeason": "Été,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "7 days",
+          "conditions": [
+            "temperature > 20",
+            "phase_vegetative"
+          ],
+          "message": "Besoin en eau pour les oignons : maintenez le sol frais (20-25mm/semaine)"
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 30,
+          "message": "Éclaircissement ou repiquage : vérifiez si les plants ont 3-4 feuilles"
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage crucial : l'oignon craint la concurrence des adventices"
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 80"
+          ],
+          "message": "Risque de mildiou : vérifiez l'aération et traitez préventivement"
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 100,
+          "message": "Signe de récolte : vérifiez si 50% des feuilles sont couchées"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": -3,
+            "message": "Attention : risque de gel pour les jeunes plants d'oignons"
+          },
+          "germination_optimal": {
+            "min": 20,
+            "max": 25,
+            "message": "Température idéale pour la levée de vos oignons"
+          }
+        }
+      }
+    },
+    {
+      "id": "watermelon",
+      "commonName": "Pastèque",
+      "scientificName": "Citrullus lanatus",
+      "family": "Cucurbitaceae",
+      "daysToMaturity": 90,
+      "spacing": 135,
+      "depth": 1.5,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen à élevé",
+      "description": "Fruit rafraîchissant gorgé d'eau (91%), riche en lycopène et en citrulline.",
+      "sowingMonths": [
+        "M",
+        "A",
+        "M",
+        "J"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S"
+      ],
+      "marketPricePerKg": 2.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 30,
+        "proteinG": 0.61,
+        "carbohydratesG": 7.6,
+        "sugarsG": 6.2,
+        "fatG": 0.2,
+        "fiberG": 0.4,
+        "vitaminCmg": 8.1,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 3,
+        "potassiumMg": 112,
+        "magnesiumMg": 10,
+        "calciumMg": 7
+      },
+      "germination": {
+        "minTemperature": 18,
+        "optimalTemperature": {
+          "min": 21,
+          "max": 29
+        },
+        "germinationTime": {
+          "min": 7,
+          "max": 10,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 22,
+          "max": 30
+        },
+        "minTemperature": 12
+      },
+      "watering": {
+        "frequency": "Régulier pour jeunes plants, puis profond et espacé",
+        "amount": "5-10 litres par plant/semaine (selon chaleur)",
+        "method": "Au pied ou goutte-à-goutte, éviter le feuillage",
+        "bestTime": "Tôt le matin ou soir"
+      },
+      "thinning": {
+        "distance": "90-180 cm entre plants, 180-300 cm entre rangs",
+        "when": "Après les dernières gelées, sol > 18°C"
+      },
+      "weeding": {
+        "method": "Manuel ou paillage épais",
+        "frequency": "Toutes les 2 semaines (plus fréquent au début)",
+        "recommendation": "Paillage épais structuré (paille, feuilles mortes, cartons)"
+      },
+      "culturalTips": [
+        "Utiliser des godets biodégradables pour éviter le stress racinaire",
+        "Privilégier un sol léger et riche en matière organique",
+        "Pratiquer une rotation de 3 ans minimum",
+        "Installer un mulch sec pour éviter le contact direct du fruit avec le sol"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (pucerons et vigueur)",
+          "Savon noir (pucerons et aleurodes)",
+          "Décoction d'ail (répulsif général)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles et syrphes contre pucerons",
+          "Chrysopes contre aleurodes",
+          "Abeilles pour la pollinisation et la nouaison"
+        ],
+        "companionPlants": [
+          "Basilic",
+          "Souci",
+          "Calendula",
+          "Légumineuses basses"
+        ]
+      },
+      "harvestTime": "80-100 jours après levée selon variété",
+      "companionPlanting": {
+        "beneficial": [
+          "basilic",
+          "souci",
+          "calendula",
+          "haricots nains",
+          "phacélie",
+          "bourrache"
+        ],
+        "avoid": [
+          "concombre",
+          "courgette",
+          "melon",
+          "courge",
+          "tomate",
+          "pomme de terre"
+        ]
+      },
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
+      "harvestMonths3": [
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "3 days",
+          "conditions": [
+            "temperature > 25",
+            "no_rain_last_2_days"
+          ],
+          "message": "Arrosage profond nécessaire pour vos pastèques : 5-10 litres par plant"
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 25,
+          "message": "Vérifiez l'espacement : assurez-vous d'avoir au moins 90cm entre les plants"
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et vérification du paillage pour vos pastèques"
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 70"
+          ],
+          "message": "Risque d'oïdium : aérez bien et évitez de mouiller le feuillage"
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 80,
+          "message": "La récolte approche : vérifiez si la vrille est sèche et si le son est mat"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 12,
+            "message": "Attention : croissance de la pastèque ralentie sous 12°C"
+          },
+          "germination_optimal": {
+            "min": 21,
+            "max": 29,
+            "message": "Conditions optimales de germination (21-29°C)"
+          }
+        }
+      }
+    },
+    {
+      "id": "courge_patisson",
+      "image": "patisson.jpg",
+      "commonName": "Courge pâtisson",
+      "scientificName": "Cucurbita pepo L.",
+      "family": "Cucurbitaceae",
+      "daysToMaturity": 65,
+      "spacing": 90,
+      "depth": 1.5,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen à élevé",
+      "description": "Courge d'été originale en forme de bonnet de prêtre, appréciée pour sa chair tendre et son goût rappelant l'artichaut.",
+      "sowingMonths": [
+        "A",
+        "M",
+        "J"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S"
+      ],
+      "marketPricePerKg": 4.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 18,
+        "proteinG": 1.0,
+        "carbohydratesG": 3.5,
+        "sugarsG": 2.2,
+        "fatG": 0.2,
+        "fiberG": 1.5,
+        "vitaminCmg": 0,
+        "vitaminEmg": 0,
+        "vitaminB9ug": 21,
+        "potassiumMg": 140,
+        "magnesiumMg": 19,
+        "calciumMg": 15
+      },
+      "germination": {
+        "minTemperature": 15,
+        "optimalTemperature": {
+          "min": 21,
+          "max": 27
+        },
+        "germinationTime": {
+          "min": 5,
+          "max": 10,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 18,
+          "max": 30
+        },
+        "minTemperature": 8
+      },
+      "watering": {
+        "frequency": "1-2 fois/semaine (profond)",
+        "amount": "Apport lent et abondant",
+        "method": "Au pied, éviter de mouiller le feuillage",
+        "bestTime": "Tôt le matin"
+      },
+      "thinning": {
+        "distance": "80-100 cm entre plants",
+        "when": "Lorsque les plants ont 2-3 vraies feuilles"
+      },
+      "weeding": {
+        "method": "Manuel (attention aux racines superficielles)",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage épais (paille, foin, tontes sèches)"
+      },
+      "culturalTips": [
+        "Rotation des cultures (3-4 ans sans cucurbitacées)",
+        "Récolter jeune pour stimuler la production de nouvelles fleurs",
+        "Éviter l'arrosage sur les feuilles pour limiter l'oïdium",
+        "Utiliser un paillage aéré pour protéger les fruits du contact direct avec le sol"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (croissance)",
+          "Purin de prêle (prévention fongique)",
+          "Décoction d'ail (répulsif pucerons)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Syrphes et Chrysopes",
+          "Carabes contre les limaces"
+        ],
+        "companionPlants": [
+          "Souci",
+          "Bourrache",
+          "Phacélie"
+        ]
+      },
+      "harvestTime": "55-70 jours pour les jeunes fruits, 90 jours pour la conservation",
+      "companionPlanting": {
+        "beneficial": [
+          "maïs doux",
+          "haricots",
+          "oignon",
+          "ail",
+          "ciboulette",
+          "souci",
+          "bourrache",
+          "phacélie",
+          "salade",
+          "épinard"
+        ],
+        "avoid": [
+          "courgette",
+          "concombre",
+          "melon",
+          "pommes de terre"
+        ]
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun"
+      ],
+      "harvestMonths3": [
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "4 days",
+          "conditions": [
+            "temperature > 22",
+            "période_floraison"
+          ],
+          "message": "Arrosage profond nécessaire pour vos pâtissons (éviter les feuilles)"
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 15,
+          "message": "Vérifiez l'espacement : gardez un plant vigoureux tous les 80-100 cm"
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et vérification du paillage autour des pâtissons"
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidité élevée",
+            "alternance chaud/froid"
+          ],
+          "message": "Risque d'oïdium : appliquez préventivement une décoction de prêle"
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 55,
+          "message": "La récolte des jeunes pâtissons (5-10cm) peut commencer"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 8,
+            "message": "Alerte fraîcheur : le pâtisson souffre en dessous de 8°C"
+          },
+          "germination_optimal": {
+            "min": 21,
+            "max": 27,
+            "message": "Température idéale pour la levée de vos pâtissons"
+          }
+        }
+      }
+    },
+    {
+      "id": "petit_pois",
+      "commonName": "Petit pois",
+      "scientificName": "Pisum sativum L.",
+      "family": "Fabaceae",
+      "daysToMaturity": 75,
+      "spacing": 4,
+      "depth": 3,
+      "sunExposure": "Soleil (supporte mi-ombre légère)",
+      "waterNeeds": "Moyen",
+      "description": "Légumineuse annuelle printanière, appréciée pour ses grains tendres et sucrés. Améliore le sol en fixant l'azote.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A"
+      ],
+      "harvestMonths": [
+        "M",
+        "J",
+        "J"
+      ],
+      "marketPricePerKg": 4.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 67,
+        "proteinG": 5.36,
+        "carbohydratesG": 7,
+        "sugarsG": 5.67,
+        "fatG": 0.4,
+        "fiberG": 5.7,
+        "vitaminCmg": 40,
+        "vitaminEmg": 0.1,
+        "vitaminB9ug": 65,
+        "potassiumMg": 271,
+        "magnesiumMg": 33,
+        "calciumMg": 25
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 10,
+          "max": 18
+        },
+        "germinationTime": {
+          "min": 6,
+          "max": 10,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 20
+        },
+        "minTemperature": -5
+      },
+      "watering": {
+        "frequency": "Régulier, surtout de la floraison à la formation des gousses",
+        "amount": "Maintenir le sol frais, éviter les excès stagnants",
+        "method": "Au pied, éviter de mouiller le feuillage",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "2-5 cm entre plants, 30-60 cm entre rangs",
+        "when": "Après la levée si le semis est trop dense"
+      },
+      "weeding": {
+        "method": "Manuel ou binage léger (attention aux racines superficielles)",
+        "frequency": "Toutes les 2-3 semaines",
+        "recommendation": "Paillage (paille, foin ou tonte sèche) pour garder la fraîcheur"
+      },
+      "culturalTips": [
+        "Installer des tuteurs pour les variétés à rames dès le semis",
+        "Rotation des cultures : attendre 4-5 ans avant de replanter des Fabacées",
+        "Éviter les apports d'azote (fumier frais), le pois fixe son propre azote",
+        "Semer en sol ressuyé pour éviter la pourriture des graines",
+        "Pratiquer la congélation des semences 15 jours pour éliminer la bruche"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (fortifiant)",
+          "Décoction de prêle (préventif oïdium et mildiou)",
+          "Purin de prêle"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre les pucerons",
+          "Syrphes et Chrysopes (larves prédatrices)",
+          "Vers de terre pour le drainage et l'aération du sol"
+        ],
+        "companionPlants": [
+          "Carotte",
+          "Laitue",
+          "Radis",
+          "Épinard"
+        ]
+      },
+      "harvestTime": "60-90 jours après semis selon la variété",
+      "companionPlanting": {
+        "beneficial": [
+          "carotte",
+          "laitue",
+          "épinard",
+          "radis",
+          "navet",
+          "concombre",
+          "maïs"
+        ],
+        "avoid": [
+          "ail",
+          "oignon",
+          "échalote",
+          "poireau",
+          "ciboulette"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
+      "harvestMonths3": [
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Printemps,Été",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "4 days",
+          "conditions": [
+            "stage == flowering",
+            "no_rain_last_3_days"
+          ],
+          "message": "Arrosage crucial pour vos petits pois : maintenez le sol frais pendant la floraison."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 15,
+          "message": "Vérifiez la densité de vos petits pois : gardez 2 à 5 cm entre chaque plant."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "20 days",
+          "message": "Désherbage et binage léger recommandés pour vos pois."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "temperature > 20",
+            "humidity > 60"
+          ],
+          "message": "Risque d'oïdium : une pulvérisation de décoction de prêle est conseillée."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 65,
+          "message": "Vérifiez vos gousses : la récolte des petits pois approche !"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 5,
+            "message": "Température basse : la germination des petits pois risque d'être ralentie."
+          },
+          "germination_optimal": {
+            "min": 10,
+            "max": 18,
+            "message": "Conditions idéales pour la levée de vos petits pois (10-18°C)."
+          }
+        }
+      }
+    },
+    {
+      "id": "red_chili",
+      "image": "piment.jpg",
+      "commonName": "Piment rouge",
+      "scientificName": "Capsicum annuum L.",
+      "family": "Solanaceae",
+      "daysToMaturity": 80,
+      "spacing": 50,
+      "depth": 0.7,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen",
+      "description": "Piment fort rouge riche en capsaïcine et vitamine C, cultivé pour ses fruits piquants.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S",
+        "O"
+      ],
+      "marketPricePerKg": 6.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 43,
+        "proteinG": 1.9,
+        "carbohydratesG": 8.8,
+        "sugarsG": 5.3,
+        "fatG": 0.44,
+        "fiberG": 1.5,
+        "vitaminCmg": 144,
+        "vitaminEmg": 0.69,
+        "vitaminB9ug": 23,
+        "potassiumMg": 322,
+        "magnesiumMg": 23,
+        "calciumMg": 14
+      },
+      "germination": {
+        "minTemperature": 18,
+        "optimalTemperature": {
+          "min": 22,
+          "max": 28
+        },
+        "germinationTime": {
+          "min": 8,
+          "max": 20,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 22,
+          "max": 28
+        },
+        "minTemperature": 12
+      },
+      "watering": {
+        "frequency": "1-2 fois/semaine (plus en cas de forte chaleur)",
+        "amount": "2-4 litres par plant/semaine",
+        "method": "Au pied, sans mouiller le feuillage",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "45-60 cm entre plants, 60-80 cm entre rangs",
+        "when": "Lors du repiquage (3-4 feuilles vraies)"
+      },
+      "weeding": {
+        "method": "Manuel (binage, sarclage)",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage épais (paille, foin, tontes sèches) après plantation"
+      },
+      "culturalTips": [
+        "Rotation des cultures (3-4 ans sans solanacées)",
+        "Utiliser du purin de consoude pour favoriser la floraison",
+        "Maintenir une température stable au-dessus de 15°C pour éviter l'arrêt de croissance",
+        "Éviter les apports excessifs d'azote qui favorisent le feuillage au détriment des fruits",
+        "Récoltes régulières pour stimuler la production de nouveaux fruits"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Savon noir dilué (contre pucerons et aleurodes)",
+          "Purin d'ortie (fortifiant)",
+          "Décoction de prêle (préventif fongique)"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Syrphes et Chrysopes",
+          "Parasitoïdes (Encarsia) contre aleurodes"
+        ],
+        "companionPlants": [
+          "Basilic",
+          "Soucis et Tagètes",
+          "Oignon et Ail"
+        ]
+      },
+      "harvestTime": "70-90 jours après plantation",
+      "companionPlanting": {
+        "beneficial": [
+          "basilic",
+          "oignon",
+          "ail",
+          "cébette",
+          "soucis",
+          "tagètes",
+          "bourrache",
+          "phacélie",
+          "laitue",
+          "épinard"
+        ],
+        "avoid": [
+          "tomate",
+          "aubergine",
+          "pomme de terre",
+          "fenouil",
+          "maïs"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
+      "harvestMonths3": [
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "3 days",
+          "conditions": [
+            "temperature > 25",
+            "no_rain_last_2_days"
+          ],
+          "message": "Arrosage pour vos piments : sol frais recommandé (2-4L par plant)"
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 15,
+          "message": "Vérifiez l'espacement : assurez 45-60 cm entre vos plants de piments"
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et vérification du paillage pour vos piments"
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "humidity > 70"
+          ],
+          "message": "Risque de mildiou ou botrytis : pulvérisation de décoction de prêle recommandée"
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 75,
+          "message": "Vos piments devraient commencer à rougir, préparez la récolte"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 12,
+            "message": "Alerte froid : le piment arrête sa croissance en dessous de 12-15°C"
+          },
+          "germination_optimal": {
+            "min": 22,
+            "max": 28,
+            "message": "Température idéale pour la levée de vos piments (22-28°C)"
+          }
+        }
+      }
+    },
+    {
+      "id": "split_pea",
+      "commonName": "Pois cassé",
+      "scientificName": "Pisum sativum L. subsp. sativum",
+      "family": "Fabaceae",
+      "daysToMaturity": 90,
+      "spacing": 40,
+      "depth": 2.5,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen",
+      "description": "Légumineuse rustique de saison fraîche, riche en protéines et fibres, consommée sèche.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A"
+      ],
+      "harvestMonths": [
+        "J",
+        "J",
+        "A"
+      ],
+      "marketPricePerKg": 2.9,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 344,
+        "proteinG": 24.6,
+        "carbohydratesG": 52.0,
+        "sugarsG": 2.75,
+        "fatG": 1.24,
+        "fiberG": 15.5,
+        "vitaminCmg": 0,
+        "vitaminEmg": 0.1,
+        "vitaminB9ug": 65,
+        "potassiumMg": 981,
+        "magnesiumMg": 115,
+        "calciumMg": 56,
+        "ironMg": 4.2,
+        "phosphorusMg": 366,
+        "zincMg": 2.6
+      },
+      "germination": {
+        "minTemperature": 4,
+        "optimalTemperature": {
+          "min": 15,
+          "max": 20
+        },
+        "germinationTime": {
+          "min": 7,
+          "max": 14,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 21
+        },
+        "minTemperature": -4
+      },
+      "watering": {
+        "frequency": "Régulier durant la floraison et la formation des gousses",
+        "amount": "Maintenir le sol frais sans saturation",
+        "method": "Au pied, éviter de mouiller le feuillage",
+        "bestTime": "Tôt le matin"
+      },
+      "thinning": {
+        "distance": "3 cm sur la ligne, 40 cm entre les rangs",
+        "when": "Dès que les plants atteignent 3-4 cm"
+      },
+      "weeding": {
+        "method": "Manuel ou mécanique (binage)",
+        "frequency": "2 fois en début de culture",
+        "recommendation": "Paillage (paille, foin) pour limiter l'évaporation"
+      },
+      "culturalTips": [
+        "Rotation longue obligatoire (5-6 ans) pour éviter les maladies racinaires",
+        "Éviter les apports d'azote frais (fumier)",
+        "Semer en sol bien ressuyé pour éviter la pourriture des graines",
+        "Pratiquer le binage dès la levée pour casser la croûte de battance"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Décoction de prêle (prévention cryptogamique)",
+          "Purin d'ortie (fortifiant)",
+          "Macération d'ail"
+        ],
+        "beneficialInsects": [
+          "Coccinelles et syrphes contre les pucerons",
+          "Hyménoptères parasitoïdes contre les bruches",
+          "Vers de terre pour la structure du sol"
+        ],
+        "companionPlants": [
+          "Carotte",
+          "Laitue",
+          "Brassica (choux)"
+        ]
+      },
+      "harvestTime": "80-100 jours après le semis",
+      "companionPlanting": {
+        "beneficial": [
+          "carotte",
+          "laitue",
+          "chou",
+          "blé",
+          "orge",
+          "avoine",
+          "phacélie"
+        ],
+        "avoid": [
+          "féverole",
+          "pois chiche",
+          "lentille",
+          "ail",
+          "oignon",
+          "échalote"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
+      "harvestMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "plantingSeason": "Fin hiver, Printemps",
+      "harvestSeason": "Été",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "4 days",
+          "conditions": [
+            "stage == floraison",
+            "no_rain_last_3_days"
+          ],
+          "message": "Période critique : Arrosage nécessaire pour vos pois (floraison/gousses)"
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 15,
+          "message": "Vérification du désherbage et binage : vos pois atteignent 4cm"
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "20 days",
+          "message": "Désherbage recommandé pour limiter la concurrence"
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "temperature > 20",
+            "stage == floraison"
+          ],
+          "message": "Vigilance Bruche du pois : temps chaud et sec favorable au ravageur"
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 85,
+          "message": "Vérifiez si les gousses sont brunes et les graines dures (récolte sèche)"
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": -4,
+            "message": "Attention : gelée sévère prévue, limite de tolérance des pois cassés"
+          },
+          "germination_optimal": {
+            "min": 15,
+            "max": 20,
+            "message": "Conditions idéales pour la levée de vos pois cassés"
+          }
+        }
+      }
+    },
+    {
+      "id": "chickpea",
+      "commonName": "Pois chiche",
+      "scientificName": "Cicer arietinum L.",
+      "family": "Fabaceae",
+      "daysToMaturity": 105,
+      "spacing": 15,
+      "depth": 6,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Faible à moyen",
+      "description": "Légumineuse annuelle rustique, très résistante à la sécheresse, cultivée pour ses graines nutritives.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A"
+      ],
+      "harvestMonths": [
+        "J",
+        "J",
+        "A",
+        "S"
+      ],
+      "marketPricePerKg": 4.2,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 164,
+        "proteinG": 9,
+        "carbohydratesG": 27,
+        "sugarsG": 5,
+        "fatG": 3,
+        "fiberG": 8,
+        "vitaminCmg": 1,
+        "vitaminEmg": 0.4,
+        "vitaminB9ug": 172,
+        "potassiumMg": 291,
+        "magnesiumMg": 48,
+        "calciumMg": 49
+      },
+      "germination": {
+        "minTemperature": 5,
+        "optimalTemperature": {
+          "min": 15,
+          "max": 25
+        },
+        "germinationTime": {
+          "min": 7,
+          "max": 30,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 15,
+          "max": 25
+        },
+        "minTemperature": -3
+      },
+      "watering": {
+        "frequency": "Modérée, surtout pendant la floraison",
+        "amount": "Maintenir frais à l'implantation, puis limité",
+        "method": "Au pied ou goutte-à-goutte",
+        "bestTime": "Tôt le matin"
+      },
+      "thinning": {
+        "distance": "10-20 cm entre plants, 30-60 cm entre rangs",
+        "when": "Semis direct recommandé, éclaircir si trop dense"
+      },
+      "weeding": {
+        "method": "Manuel ou binage",
+        "frequency": "Toutes les 3 semaines jusqu'à couverture",
+        "recommendation": "Paillage (paille, foin) pour limiter les adventices"
+      },
+      "culturalTips": [
+        "Rotation des cultures (4-6 ans sans légumineuses)",
+        "Éviter les sols avec excès d'eau (asphyxie racinaire)",
+        "Sensible à la croûte de battance pour la levée",
+        "Ne pas repiquer (racine pivotante sensible)",
+        "Besoins accrus du bouton floral au remplissage des gousses"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (soutien végétatif)",
+          "Extraits de neem (contre chenilles)",
+          "Purin de consoude"
+        ],
+        "beneficialInsects": [
+          "Coccinelles contre pucerons",
+          "Trichogrammes contre tordeuses de gousses",
+          "Carabes (prédateurs du sol)"
+        ],
+        "companionPlants": [
+          "Oignon",
+          "Coriandre",
+          "Alysson (attire les auxiliaires)"
+        ]
+      },
+      "harvestTime": "90-120 jours après la levée selon climat",
+      "companionPlanting": {
+        "beneficial": [
+          "carotte",
+          "oignon",
+          "poireau",
+          "betterave",
+          "coriandre",
+          "phacélie"
+        ],
+        "avoid": [
+          "pois",
+          "haricots",
+          "lentilles",
+          "pommes de terre",
+          "fenouil",
+          "maïs"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
+      "harvestMonths3": [
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "7 days",
+          "conditions": [
+            "stage == flowering",
+            "no_rain_last_3_days"
+          ],
+          "message": "Période critique : Arrosage recommandé pendant la floraison de vos pois chiches."
+        },
+        "thinning": {
+          "enabled": false,
+          "daysAfterPlanting": 20,
+          "message": "Vérifiez l'espacement (10-20 cm) si le semis a été dense."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "21 days",
+          "message": "Désherbage recommandé pour éviter la concurrence."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "temperature > 20"
+          ],
+          "message": "Surveillez l'apparition de la tordeuse des gousses (Helicoverpa)."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 100,
+          "message": "Les gousses jaunissent ? La récolte approche."
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": -3,
+            "message": "Alerte gel : Les pois chiches tolèrent jusqu'à -3°C."
+          },
+          "germination_optimal": {
+            "min": 15,
+            "max": 25,
+            "message": "Conditions optimales pour la levée des pois chiches (15-25°C)."
+          }
+        }
+      }
+    },
+    {
+      "id": "poivron_vert",
+      "commonName": "Poivron vert",
+      "scientificName": "Capsicum annuum L.",
+      "family": "Solanaceae",
+      "daysToMaturity": 85,
+      "spacing": 40,
+      "depth": 0.75,
+      "sunExposure": "Plein soleil",
+      "waterNeeds": "Moyen à élevé",
+      "description": "Légume-soleil croquant et coloré, exceptionnellement riche en vitamine C.",
+      "sowingMonths": [
+        "F",
+        "M",
+        "A"
+      ],
+      "harvestMonths": [
+        "J",
+        "A",
+        "S",
+        "O"
+      ],
+      "marketPricePerKg": 4.5,
+      "defaultUnit": "kg",
+      "nutritionPer100g": {
+        "energyKcal": 26,
+        "proteinG": 1.0,
+        "carbohydratesG": 6.0,
+        "sugarsG": 4.2,
+        "fatG": 0.3,
+        "fiberG": 2.1,
+        "vitaminCmg": 80,
+        "vitaminEmg": 0.37,
+        "vitaminB9ug": 10,
+        "potassiumMg": 175,
+        "magnesiumMg": 10,
+        "calciumMg": 10
+      },
+      "germination": {
+        "minTemperature": 18,
+        "optimalTemperature": {
+          "min": 22,
+          "max": 25
+        },
+        "germinationTime": {
+          "min": 8,
+          "max": 15,
+          "unit": "jours"
+        }
+      },
+      "growth": {
+        "idealTemperature": {
+          "min": 22,
+          "max": 25
+        },
+        "minTemperature": 12
+      },
+      "watering": {
+        "frequency": "2-3 fois/semaine en période chaude",
+        "amount": "2-4 litres par plant/semaine",
+        "method": "Au pied ou goutte-à-goutte, éviter le feuillage",
+        "bestTime": "Tôt le matin ou le soir"
+      },
+      "thinning": {
+        "distance": "30-45 cm entre plants, 50-60 cm entre rangs",
+        "when": "Après l'apparition de 4-6 vraies feuilles (repiquage)"
+      },
+      "weeding": {
+        "method": "Manuel, binage superficiel pour protéger les racines",
+        "frequency": "Toutes les 2 semaines",
+        "recommendation": "Paillage organique (foin, paille) pour maintenir la fraîcheur"
+      },
+      "culturalTips": [
+        "Rotation des cultures (3-4 ans sans solanacées)",
+        "Éviter les excès d'azote qui favorisent le feuillage au détriment des fruits",
+        "Une récolte régulière favorise la poursuite de la floraison",
+        "Maintenir un arrosage régulier pour éviter la pourriture apicale (nécrose)",
+        "Aérer les abris (serres) pour limiter l'humidité stagnante"
+      ],
+      "biologicalControl": {
+        "preparations": [
+          "Purin d'ortie (stimulant et répulsif pucerons)",
+          "Décoction de plantes locales",
+          "Savon noir dilué (contre pucerons et aleurodes)"
+        ],
+        "beneficialInsects": [
+          "coccinelles, syrphes et chrysopes contre les pucerons",
+          "phytoseiulus contre les acariens tétranyques",
+          "carabes et staphylins pour la régulation du sol"
+        ],
+        "companionPlants": [
+          "basilic",
+          "oignon",
+          "ciboulette",
+          "œillet d'inde"
+        ]
+      },
+      "harvestTime": "60-90 jours après plantation selon maturité souhaitée (vert ou coloré)",
+      "companionPlanting": {
+        "beneficial": [
+          "basilic",
+          "oignon",
+          "ciboulette",
+          "laitue",
+          "épinard",
+          "mâche",
+          "carotte",
+          "souci",
+          "œillet d'inde",
+          "phacélie"
+        ],
+        "avoid": [
+          "tomate",
+          "aubergine",
+          "pomme de terre",
+          "concombre",
+          "courge"
+        ]
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
+      "harvestMonths3": [
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ],
+      "plantingSeason": "Printemps",
+      "harvestSeason": "Été,Automne",
+      "notificationSettings": {
+        "watering": {
+          "enabled": true,
+          "frequency": "3 days",
+          "conditions": [
+            "temperature > 25",
+            "soil_moisture_low"
+          ],
+          "message": "Arrosage recommandé pour vos poivrons : sol maintenu frais mais non gorgé d'eau."
+        },
+        "thinning": {
+          "enabled": true,
+          "daysAfterPlanting": 25,
+          "message": "Vérifiez l'espacement de vos poivrons : 30-45 cm recommandés entre les plants."
+        },
+        "weeding": {
+          "enabled": true,
+          "frequency": "14 days",
+          "message": "Désherbage et vérification du paillage pour vos poivrons."
+        },
+        "biological_control": {
+          "enabled": true,
+          "conditions": [
+            "high_heat",
+            "humidity_low"
+          ],
+          "message": "Vigilance acariens et pucerons : favorisez les auxiliaires ou utilisez du savon noir."
+        },
+        "harvest": {
+          "enabled": true,
+          "daysAfterPlanting": 75,
+          "message": "La récolte de vos poivrons approche : coupez proprement le pédoncule au sécateur."
+        },
+        "temperature_alert": {
+          "enabled": true,
+          "cold_alert": {
+            "threshold": 12,
+            "message": "Alerte froid : la croissance du poivron ralentit sous les 12°C."
+          },
+          "germination_optimal": {
+            "min": 20,
+            "max": 28,
+            "message": "Conditions de germination optimales atteintes (20-28°C)."
+          }
+        }
+      }
+    }
+  ]
+}

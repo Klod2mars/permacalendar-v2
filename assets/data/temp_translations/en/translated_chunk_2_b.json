@@ -1,0 +1,892 @@
+[
+    {
+        "id": "navet",
+        "commonName": "Turnip",
+        "scientificName": "Brassica rapa subsp. rapa",
+        "family": "Brassicaceae",
+        "daysToMaturity": 50,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Regular",
+        "description": "Fast-growing root vegetable, crunchy and tasty, ideal in rotation and permaculture if grown with care.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "M",
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 2.4,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 28,
+            "proteinG": 0.9,
+            "carbohydratesG": 6.4,
+            "sugarsG": 3.8,
+            "fatG": 0.1,
+            "fiberG": 1.8,
+            "vitaminCmg": 21,
+            "vitaminKmcg": 0.1,
+            "vitaminB9ug": 15,
+            "vitaminAmcg": 0,
+            "calciumMg": 30,
+            "ironMg": 0.3,
+            "magnesiumMg": 11,
+            "potassiumMg": 208,
+            "manganeseMg": 0.13,
+            "phosphorusMg": 27
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 1
+        },
+        "watering": {
+            "frequency": "1 to 2 times/week in summer",
+            "amount": "Soil always cool without excess water",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "10-15 cm between plants, rows spaced 15-20 cm",
+            "when": "When young shoots are about 5 cm high"
+        },
+        "weeding": {
+            "method": "Manual hoeing/weeding",
+            "frequency": "As needed depending on weed growth",
+            "recommendation": "Mulching recommended to limit weeds and maintain moisture"
+        },
+        "culturalTips": [
+            "Use well-aerated soil, without stones, to favor root development",
+            "Avoid fresh manures (risk of clubroot)",
+            "Protect early sowings with tunnel or frame (ventilate during day)",
+            "Respect long crop rotation (avoid successive Brassicaceae)",
+            "Sow in March-April or August to avoid thermal stress"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail decoction against downy mildew",
+                "Nettle manure as fortifier and preventive"
+            ],
+            "beneficialInsects": [],
+            "companionPlants": [
+                "thyme",
+                "rosemary",
+                "lemon balm",
+                "hyssop (against flea beetles)"
+            ]
+        },
+        "harvestTime": "About 50 days after sowing depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "thyme",
+                "rosemary",
+                "lemon balm",
+                "hyssop",
+                "lettuce",
+                "pea",
+                "bean",
+                "hyssop (against flea beetles)"
+            ],
+            "avoid": [
+                "other brassicaceae (cabbage, radish, mustard)",
+                "plants hungry for nitrogen if soil poor"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Spring,Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for your turnips: maintain soil cool (1-2x/week in summer)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning recommended: leave 10-15 cm between each plant"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding or mulching recommended around turnips"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Preventive spray of horsetail decoction or nettle manure recommended"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "Harvest period approaching for your turnips (harvest young for best texture)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 1,
+                    "message": "Attention: minimum temperature for turnips reached (1°C)"
+                },
+                "germination_optimal": {
+                    "min": 19,
+                    "max": 19,
+                    "message": "Optimal germination conditions reached (19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "onion",
+        "commonName": "Onion",
+        "scientificName": "Allium cepa",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 120,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Low",
+        "description": "Bulb vegetable essential in cooking, rich in antioxidants and sulfuric compounds beneficial for health.",
+        "sowingMonths": [
+            "F",
+            "A"
+        ],
+        "harvestMonths": [
+            "J"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 40,
+            "proteinG": 1.1,
+            "carbohydratesG": 9.3,
+            "sugarsG": 4.2,
+            "fatG": 0.1,
+            "fiberG": 1.7,
+            "vitaminCmg": 7.4,
+            "vitaminB6mg": 0.12,
+            "vitaminB9ug": 19,
+            "vitaminAmcg": 1,
+            "calciumMg": 23,
+            "ironMg": 0.2,
+            "magnesiumMg": 10,
+            "potassiumMg": 146,
+            "manganeseMg": 0.13,
+            "phosphorusMg": 29
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 1
+        },
+        "watering": {
+            "frequency": "Light and regular watering after sowing, then only in case of prolonged drought or bulb swelling",
+            "amount": "Moderate, avoid excess",
+            "method": "At base, without wetting bulbs",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "10-15 cm between plants",
+            "when": "When plants have a few leaves"
+        },
+        "weeding": {
+            "method": "Regular manual weeding, hoeing to aerate soil",
+            "frequency": "Regularly at start of culture",
+            "recommendation": "Light mulch possible, but avoid covering bulbs to prevent rot"
+        },
+        "culturalTips": [
+            "Prefer light, loose and well drained soil",
+            "Full sun exposure essential",
+            "Avoid excess moisture: no fresh manure or nettle manure near onions",
+            "Crop rotation: do not replant onions in same spot before 3-4 years",
+            "Do not associate with legumes (peas, beans)",
+            "Use insect net during pest flight period",
+            "Harvest only when foliage is fully dry for good conservation"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Yellow sticky traps against aphids and thrips",
+                "Tansy decoction against fungal diseases",
+                "Horsetail decoction against downy mildew",
+                "Bordeaux mixture (targeted organic use)",
+                "Natural insecticides based on pyrethrum or neem"
+            ],
+            "beneficialInsects": [],
+            "companionPlants": [
+                "carrot",
+                "beetroot",
+                "lettuce",
+                "tomato",
+                "cabbage (avoid pea",
+                "beans)"
+            ]
+        },
+        "harvestTime": "When foliage is completely dry, generally 4 to 5 months after sowing",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "beetroot",
+                "lettuce",
+                "tomato",
+                "cabbage",
+                "radish",
+                "spinach",
+                "beans)"
+            ],
+            "avoid": [
+                "beans",
+                "legumes",
+                "pea"
+            ],
+            "notes": [
+                "cabbage (avoid pea"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Apr",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "drought_period",
+                    "bulb_swelling_stage"
+                ],
+                "message": "Moderate watering advised: avoid excess moisture to prevent bulb rot"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thinning needed: space plants 10-15 cm for good bulb development"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Weeding recommended: keep soil clean to avoid weed competition"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "pest_alert"
+                ],
+                "message": "Apply horsetail decoction or install yellow traps in case of high humidity"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Check foliage drying: harvest your onions when stems are completely dry"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 1,
+                    "message": "Attention: minimum temperature for onions reached (1°C)"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimal germination temperature reached (15°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "parsley",
+        "commonName": "Parsley",
+        "scientificName": "Petroselinum crispum",
+        "family": "Apiaceae",
+        "daysToMaturity": 90,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Partial shade (especially in summer in hot regions)",
+        "waterNeeds": "High",
+        "description": "Biennial aromatic herb, rich in vitamins, appreciated in cooking and natural medicine. Slow germination, requires cool and rich soil.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 12.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 2.9,
+            "carbohydratesG": 6.3,
+            "sugarsG": 0.9,
+            "fatG": 0.8,
+            "fiberG": 3.3,
+            "vitaminCmg": 133,
+            "vitaminKmcg": 1640,
+            "vitaminB9ug": 152,
+            "vitaminAmcg": 421,
+            "calciumMg": 138,
+            "ironMg": 6.2,
+            "magnesiumMg": 50,
+            "potassiumMg": 554,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 58,
+            "apigeninMg": 45
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 21,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Every 3 to 5 days (or 1-2 times/week), daily in strong heat",
+            "amount": "Soil always slightly moist, without excess",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Morning or evening to limit evaporation"
+        },
+        "thinning": {
+            "distance": "15-20 cm between plants",
+            "when": "As soon as first leaves are well developed (after about 3 weeks)"
+        },
+        "weeding": {
+            "method": "Manual hoeing and weeding (shallow roots)",
+            "frequency": "Weekly or depending on weed pressure",
+            "recommendation": "Mulching highly advised to limit weeds and maintain moisture"
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant in same spot for at least 3 years",
+            "Protect at end of winter with fleece if necessary",
+            "Avoid excessive watering to prevent root rot",
+            "Harvest before bolting to avoid bitterness (year 2)",
+            "Do not let fully go to seed to avoid invasion"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (natural fortifier)",
+                "Plant decoctions (e.g. horsetail, comfrey)",
+                "Natural infusions without chemicals"
+            ],
+            "beneficialInsects": [
+                "Ladybug larvae",
+                "Various beneficial insects (hoverflies, lacewings)"
+            ],
+            "companionPlants": [
+                "chives (repels carrot fly)"
+            ]
+        },
+        "harvestTime": "90 days after sowing, harvest possible all summer and until winter in mild climates",
+        "companionPlanting": {
+            "beneficial": [
+                "chives",
+                "tomato",
+                "leek",
+                "radish",
+                "carrot (with care)",
+                "chives (repels carrot fly)"
+            ],
+            "avoid": [
+                "vegetables of same family (carrot, celery, parsnip) in same spot — risk of common diseases"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spring, Autumn (in mild climates)",
+        "harvestSeason": "Summer, Autumn, Winter (under cover or in mild region)",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for your parsley: maintain soil cool, water morning or evening"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thinning to do: leave 15-20 cm between parsley plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Manual weeding recommended — shallow roots, be gentle!"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature < 20"
+                ],
+                "message": "Apply nettle manure preventively to strengthen plants"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "First harvest possible for your parsley — cut outer stems first"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum temperature for parsley reached (5°C) — protect if necessary"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimal germination conditions for parsley (20-25°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "parsnip",
+        "commonName": "Parsnip",
+        "scientificName": "Pastinaca sativa",
+        "family": "Apiaceae",
+        "daysToMaturity": 120,
+        "spacing": 20,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High",
+        "description": "Ancient root vegetable, sweet and nutritious, very sensitive to drought. Requires deep, light and well-drained soil to avoid forked roots.",
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 3.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 75,
+            "proteinG": 1.2,
+            "carbohydratesG": 18.0,
+            "sugarsG": 4.8,
+            "fatG": 0.3,
+            "fiberG": 4.9,
+            "vitaminCmg": 17.0,
+            "vitaminKmcg": 22.5,
+            "vitaminB9ug": 67,
+            "vitaminAmcg": 0,
+            "calciumMg": 36,
+            "ironMg": 0.6,
+            "magnesiumMg": 29,
+            "potassiumMg": 375,
+            "manganeseMg": 0.4,
+            "phosphorusMg": 51,
+            "folateUg": 67
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 12,
+                "max": 20,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Every 7 to 10 days in dry period (copious), light and frequent at germination stage",
+            "amount": "Abundant watering to moisten deeply",
+            "method": "At base, avoid foliage",
+            "bestTime": "Early morning (avoid evening to limit diseases)"
+        },
+        "thinning": {
+            "distance": "15-20 cm between plants, 30 cm between rows",
+            "when": "When plants have 2 to 3 true leaves (so 3-4 leaves)"
+        },
+        "weeding": {
+            "method": "Manual hoeing or weeding, stale seedbed beforehand recommended",
+            "frequency": "Regular, especially at start of culture",
+            "recommendation": "Mulching between lines to reduce competition and loosen soil"
+        },
+        "culturalTips": [
+            "Avoid nitrogen-rich fertilizers (favors foliage over root)",
+            "Use only seeds of the year (germination degraded beyond)",
+            "Strict rotation: wait 6 years before resowing in same spot",
+            "Do not cultivate after other Apiaceae (carrot, celery, fennel)",
+            "Deep, light, well-drained soil, stone-free to avoid forked roots",
+            "Avoid watering in evening to limit fungal diseases"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Lavender decoction (repellent)",
+                "Insect nets against carrot fly",
+                "Natural infusions or manures (e.g. tansy, garlic)"
+            ],
+            "beneficialInsects": [
+                "Beneficials attracted by biodiversity (ladybugs, hoverflies, lacewings)",
+                "Parasitoid wasps against pest eggs"
+            ],
+            "companionPlants": [
+                "onion",
+                "shallot",
+                "garlic (natural repellents against some insects)"
+            ]
+        },
+        "harvestTime": "4 to 6 months after sowing, ideally after first frosts to sweeten the root",
+        "companionPlanting": {
+            "beneficial": [
+                "onion",
+                "shallot",
+                "garlic",
+                "lettuce",
+                "radish",
+                "bush bean",
+                "garlic (natural repellents against some insects)"
+            ],
+            "avoid": [
+                "other apiaceae",
+                "carrot",
+                "celery",
+                "fennel"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "temperature > 20"
+                ],
+                "message": "Copious watering needed for your parsnips: moisten deeply. Avoid evening."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thin your parsnips: leave 15-20 cm between plants at 2-3 true leaves."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Weeding recommended + mulching to limit weed competition."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 18"
+                ],
+                "message": "Install insect nets if risk of carrot fly. Favor biodiversity."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Parsnip harvest possible. Ideal after first frosts to improve taste."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum growth temperature for parsnip reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 18,
+                    "message": "Optimal germination temperature reached (18°C) for your parsnips."
+                }
+            }
+        }
+    },
+    {
+        "id": "potato",
+        "commonName": "Potato",
+        "scientificName": "Solanum tuberosum",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 35,
+        "depth": 10,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate",
+        "description": "Nourishing and versatile tuber, grown in permaculture with rotation and mulching to limit diseases and weeds.",
+        "marketPricePerKg": 1.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 77,
+            "proteinG": 2.0,
+            "carbohydratesG": 17.5,
+            "sugarsG": 0.8,
+            "fatG": 0.1,
+            "fiberG": 2.2,
+            "vitaminCmg": 19.7,
+            "vitaminKmcg": 1.9,
+            "vitaminB6mg": 0.3,
+            "vitaminB9ug": 15,
+            "vitaminAmcg": 0,
+            "calciumMg": 12,
+            "ironMg": 0.8,
+            "magnesiumMg": 23,
+            "potassiumMg": 420,
+            "manganeseMg": 0.15,
+            "phosphorusMg": 57,
+            "resistantStarchG": 1.5
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 15,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1-2 times/week (adjust according to growth phase)",
+            "amount": "15-30 mm/week (3-6 mm/day depending on phase)",
+            "method": "Watering on ground, between rows, without wetting foliage",
+            "bestTime": "Early morning or late afternoon"
+        },
+        "thinning": {
+            "distance": "30-40 cm between plants, 60-75 cm between rows",
+            "when": "Not necessary if initial planting well spaced"
+        },
+        "weeding": {
+            "method": "Hoeing, manual weeding, thick mulching",
+            "frequency": "Every 2-3 weeks at start of culture",
+            "recommendation": "Mulching mandatory in permaculture to limit weeding and protect tubers. Earthing up recommended to cover tubers."
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant in same spot before 3-4 years",
+            "Light, well-drained soil, enriched with organic matter",
+            "Earth up plants to protect tubers from light",
+            "Stop watering 1 month before harvest to favor maturation",
+            "Avoid night watering to limit fungal diseases",
+            "Use rainwater if possible"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bordeaux mixture (downy mildew prevention)",
+                "Nettle manure (fortifier)",
+                "Garlic decoction (natural fungicide)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (against aphids)",
+                "Beneficial nematodes (against underground pests)"
+            ],
+            "companionPlants": [
+                "nasturtium",
+                "marigold",
+                "clover (attract beneficials",
+                "natural repellents)"
+            ]
+        },
+        "harvestTime": "About 90-120 days after planting, depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "bean",
+                "corn",
+                "garlic",
+                "onion",
+                "marigold",
+                "nasturtium",
+                "clover",
+                "clover (attract beneficials",
+                "natural repellents)"
+            ],
+            "avoid": [
+                "eggplant",
+                "cucumber",
+                "squash",
+                "pepper",
+                "tomato"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Moderate watering needed: 15-30 mm/week, at base, without wetting leaves"
+            },
+            "thinning": {
+                "enabled": false,
+                "message": "Thinning not necessary if initial planting respects 30-40 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and hoeing recommended. Think about mulching and earthing up."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Risk of downy mildew: apply Bordeaux mixture or nettle manure preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Harvest possible from now. Stop watering since 1 month."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Attention: minimum temperature for potato reached (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    }
+]

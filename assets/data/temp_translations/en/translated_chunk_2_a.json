@@ -1,0 +1,888 @@
+[
+    {
+        "id": "kale",
+        "commonName": "Kale",
+        "scientificName": "Brassica oleracea var. sabellica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "High",
+        "description": "Leaf vegetable rich in vitamins, antioxidants and minerals. Very hardy, ideal in permaculture and organic farming.",
+        "marketPricePerKg": 6.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 49,
+            "proteinG": 4.3,
+            "carbohydratesG": 8.8,
+            "sugarsG": 2.0,
+            "fatG": 0.9,
+            "fiberG": 3.6,
+            "vitaminCmg": 120.0,
+            "vitaminKmcg": 704.8,
+            "vitaminB9ug": 141,
+            "vitaminAmcg": 681,
+            "calciumMg": 150,
+            "ironMg": 1.5,
+            "magnesiumMg": 47,
+            "potassiumMg": 491,
+            "manganeseMg": 0.92,
+            "phosphorusMg": 92,
+            "luteinZeaxanthinMg": 22,
+            "quercetinMg": 7
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2-3 times/week in summer, depending on rainfall",
+            "amount": "Deep watering 1-2 times/week",
+            "method": "At base, never on foliage",
+            "bestTime": "Early morning or end of day",
+            "tip": "Mulching highly recommended to keep moisture"
+        },
+        "thinning": {
+            "distance": "30 cm for compact varieties, 80 cm for large ones",
+            "when": "At 6 to 8 leaf stage"
+        },
+        "weeding": {
+            "method": "Manual or mechanical hoeing + mulching",
+            "frequency": "Monthly or upon weed appearance",
+            "recommendation": "Thick mulch upon planting to limit weeds and evaporation"
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant Brassicaceae in same spot before 5-6 years",
+            "Soil rich in organic matter, well drained and cool",
+            "Avoid watering foliage to prevent downy mildew and rust",
+            "Monitor soil health to avoid clubroot",
+            "Favor generous spacing for good aeration"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying and repellent)",
+                "Tansy manure (against aphids and caterpillars)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Hoverflies (larvae eat aphids)",
+                "Garden birds (against caterpillars)"
+            ],
+            "companionPlants": [
+                "lemon balm",
+                "sage",
+                "rosemary",
+                "coriander",
+                "dill",
+                "marigolds",
+                "tomatoes",
+                "broom",
+                "elderberry"
+            ]
+        },
+        "harvestTime": "60 days after planting, harvest possible until frosts",
+        "companionPlanting": {
+            "beneficial": [
+                "lemon balm",
+                "sage",
+                "rosemary",
+                "coriander",
+                "dill",
+                "marigold",
+                "tomato",
+                "broom",
+                "elderberry",
+                "marigolds"
+            ],
+            "avoid": [
+                "other brassicaceae (cabbages, turnips, radishes, arugula, mustard) within 5-6 years"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring, Autumn",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for your kale: keep soil cool, never dry"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Thinning needed: 30 cm (compact) or 80 cm (large) between plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "30 days",
+                "message": "Weeding or mulch check recommended for your kale"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Preventive treatment with nettle or tansy manure recommended"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "First harvests possible for your kale!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum temperature for kale reached (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions for kale (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "leek",
+        "commonName": "Leek",
+        "scientificName": "Allium porrum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 120,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Moderate",
+        "description": "Root vegetable with mild and subtle taste, rich in fibers and vitamins. Very hardy and adapted to autumn-winter cultures.",
+        "sowingMonths": [
+            "F",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "O"
+        ],
+        "marketPricePerKg": 3.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 61,
+            "proteinG": 1.5,
+            "carbohydratesG": 14.2,
+            "sugarsG": 3.9,
+            "fatG": 0.3,
+            "fiberG": 1.8,
+            "vitaminCmg": 12,
+            "vitaminKmcg": 47,
+            "vitaminB9ug": 64,
+            "vitaminAmcg": 83,
+            "calciumMg": 59,
+            "ironMg": 2.1,
+            "magnesiumMg": 28,
+            "potassiumMg": 180,
+            "manganeseMg": 0.45,
+            "phosphorusMg": 35
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 12,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 2
+        },
+        "watering": {
+            "frequency": "Every 8-10 days without mulch, every 2-3 weeks with mulch. 2-3 times/week in strong heat.",
+            "amount": "20-30 mm of water every 7-10 days at start of culture",
+            "method": "Arrosage au pied, éviter le feuillage",
+            "bestTime": "Early morning or end of day",
+            "stopBeforeHarvest": "Stop 3-4 weeks before harvest to avoid rot"
+        },
+        "thinning": {
+            "distance": "10 cm in line, 40 cm between rows (or 7 cm at transplanting, then thin to 15 cm)",
+            "when": "When plants are well established and start to develop"
+        },
+        "weeding": {
+            "method": "Manual (hoeing, scratching)",
+            "frequency": "Regular, especially between sowing and transplanting",
+            "recommendation": "Organic mulch highly advised to limit weeds and maintain moisture"
+        },
+        "culturalTips": [
+            "Crop rotation: wait 4-5 years before replanting alliaceae in same spot",
+            "Avoid after garlic, onion, potato, carrot",
+            "Prefer rotation with lettuces, turnips, crucifers",
+            "Earth up progressively to blanch the shaft",
+            "Do not overwater to avoid rot",
+            "Well drained soil essential",
+            "Install mulch after first earthing up not to slow blanching"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (anti-aphids, fortifying)",
+                "Tansy decoction",
+                "Ashes against slugs and some insects"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (predators of thrips and aphids)"
+            ],
+            "companionPlants": [
+                "lettuces",
+                "carrots",
+                "beetroots",
+                "avoid other alliaceae in simultaneous culture"
+            ]
+        },
+        "harvestTime": "About 120 days after sowing, depending on variety and climatic conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "lettuce",
+                "beetroot",
+                "turnip",
+                "celery",
+                "radish",
+                "lettuces",
+                "carrots",
+                "beetroots"
+            ],
+            "avoid": [
+                "garlic",
+                "other alliaceae in simultaneous culture",
+                "other alliaceae in close rotation",
+                "onion",
+                "potato"
+            ],
+            "notes": [
+                "avoid other alliaceae in simultaneous culture"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "May"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul",
+            "Oct"
+        ],
+        "plantingSeason": "Spring, Autumn (depending on variety)",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "no_rain_last_10_days",
+                    "temperature > 25"
+                ],
+                "message": "Watering recommended: 20-30 mm at base. Reduce if mulched."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Thinning to plan: leave 15 cm between mature plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manual weeding recommended — consider mulching to reduce frequency"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "observed_thrips_or_aphids"
+                ],
+                "message": "Apply nettle manure or tansy decoction preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Imminent harvest — stop watering in 3-4 weeks"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 2,
+                    "message": "Attention: minimum growth temperature reached (2°C) — protect if frost announced"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 19,
+                    "message": "Optimal germination conditions reached (18-19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "lettuce",
+        "commonName": "Lettuce",
+        "scientificName": "Lactuca sativa",
+        "family": "Asteraceae",
+        "daysToMaturity": 45,
+        "spacing": 25,
+        "depth": 0.5,
+        "sunExposure": "Partial shade to full sun",
+        "waterNeeds": "High",
+        "description": "Popular leaf vegetable, rich in vitamins and minerals, grown for its tender leaves.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "proteinG": 1.3,
+            "carbohydratesG": 1.3,
+            "sugarsG": 0.8,
+            "fatG": 0.2,
+            "fiberG": 1.2,
+            "vitaminCmg": 3.7,
+            "vitaminAmcg": 2320,
+            "vitaminK1mcg": 130,
+            "vitaminB9ug": 91,
+            "calciumMg": 45,
+            "magnesiumMg": 12.5,
+            "ironMg": 0.4,
+            "manganeseMg": 0.3
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": 15,
+            "germinationTime": {
+                "min": 5,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": 20,
+            "minTemperature": 3
+        },
+        "watering": {
+            "frequency": "2-3 times/week in dry or hot climate",
+            "amount": "2-4 L/m² until rosette stage, then 3-6 L/m² at heading stage",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Morning",
+            "adaptation": "Reduce or stop in rainy period"
+        },
+        "thinning": {
+            "distance": "20-25 cm between plants, 40 cm between rows",
+            "when": "3-4 leaf stage",
+            "recommendation": "Transplant or consume removed plants"
+        },
+        "weeding": {
+            "method": "Manual, mechanical (hoeing) or thermal",
+            "frequency": "Regularly, especially when plants are young",
+            "recommendation": "Mulching (straw, dry clippings, dead leaves) to limit weeds and retain moisture"
+        },
+        "culturalTips": [
+            "Crop rotation on at least 4 years",
+            "Avoid overhead watering",
+            "Avoid plant overcrowding",
+            "Choose resistant varieties or adapted to season",
+            "Maintain light soil, well drained without excess nitrogen",
+            "Aerate the bed to limit diseases"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Garlic manure against aphids",
+                "Fern manure",
+                "Black soap against aphids",
+                "Mugwort or citrus extracts against downy mildew"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Lacewings against aphids"
+            ],
+            "pestControl": {
+                "limaces": [
+                    "Beer traps",
+                    "Physical barriers",
+                    "Lava powder/rock flour"
+                ],
+                "mildiou": [
+                    "Rotation and aeration",
+                    "Elimination of affected parts"
+                ]
+            },
+            "recommendation": "Avoid pellets even ecological ones that alter soil or beneficial fauna"
+        },
+        "harvestTime": "45-60 days after planting depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "radish",
+                "carrot",
+                "strawberry",
+                "cucumber",
+                "onion",
+                "leek",
+                "beetroot"
+            ],
+            "avoid": [
+                "celery",
+                "parsley"
+            ]
+        },
+        "varieties": {
+            "recommended": [
+                "Oak leaf",
+                "Batavia",
+                "Lollo",
+                "Romaine",
+                "Appia (resistant)"
+            ]
+        },
+        "soilRequirements": {
+            "type": "Light, well drained",
+            "pH": "6.0-7.0",
+            "nutrition": "NPK balance without excess nitrogen"
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Spring,Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for your lettuces: 2-4 L/m²"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning necessary: keep 20-25 cm between plants"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Weeding recommended for your lettuces"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Reinforced surveillance against slugs and downy mildew recommended"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 40,
+                "message": "Harvest period approaching for your lettuces"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 3,
+                    "message": "Attention: minimum temperature for lettuces reached (3°C)"
+                },
+                "germination_optimal": {
+                    "temperature": 15,
+                    "message": "Optimal germination conditions (15°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "mache",
+        "commonName": "Lamb's Lettuce",
+        "scientificName": "Valerianella locusta",
+        "family": "Valerianaceae",
+        "daysToMaturity": 60,
+        "spacing": 10,
+        "depth": 0.5,
+        "sunExposure": "Light shade / Partial shade",
+        "waterNeeds": "Moderate to regular",
+        "description": "Hardy leaf vegetable, ideal for winter, with tender and delicate rosettes, low nutrient needs but sensitive to water fluctuations and heat.",
+        "sowingMonths": [
+            "A",
+            "O"
+        ],
+        "harvestMonths": [
+            "O",
+            "N",
+            "D",
+            "J"
+        ],
+        "marketPricePerKg": 7.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 17,
+            "waterG": 94,
+            "carbohydratesG": 2.2,
+            "proteinG": 2.3,
+            "fatG": 0.4,
+            "fiberG": 2.0,
+            "vitaminB9ug": 91,
+            "vitaminAmcg": 243,
+            "vitaminCmg": 36.5,
+            "vitaminK1mcg": 486,
+            "potassiumMg": 375,
+            "ironMg": 1.8,
+            "magnesiumMg": 22,
+            "calciumMg": 80.5,
+            "omega3Mg": 100
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": 18,
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "1 to 2 times/week depending on soil and climate",
+            "amount": "8-20 mm/week (adjusted per rainfall)",
+            "method": "Water at base, early morning, avoid wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "8-15 cm between plants depending on variety, 15-20 cm between rows",
+            "when": "At 2-3 true leaves (3-4 weeks after sowing)"
+        },
+        "weeding": {
+            "method": "Shallow manual hoeing, stale seedbed before sowing, fine mulch after installation",
+            "frequency": "Every 10-14 days until ground cover",
+            "recommendation": "Mulch with 2-3 cm of mature compost or shredded leaves once plants effectively rooted"
+        },
+        "culturalTips": [
+            "Sow very shallowly (0.5–1 cm) for even emergence",
+            "Pre-cool seeds in fridge 3-5 days in case of summer heat",
+            "Avoid heavy or soggy soils (risk of damping off)",
+            "Do not supply excess nitrogen (bland taste, disease risk)",
+            "Harvest by cutting at collar to favor potential regrowth",
+            "Protect from intense cold with P17 fleece if necessary",
+            "Associate with leeks, cabbages or late carrots to optimize space"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "No foliar treatment needed if good water balance and aeration",
+                "Comfrey manure in very low dose if soil poor",
+                "Beer traps or copper barriers against slugs"
+            ],
+            "beneficialInsects": [],
+            "companionPlants": [
+                "leeks",
+                "cabbages",
+                "late carrots"
+            ]
+        },
+        "harvestTime": "6-8 weeks after sowing depending on temperature and variety",
+        "companionPlanting": {
+            "beneficial": [
+                "leek",
+                "cabbage",
+                "carrot",
+                "spinach",
+                "leeks",
+                "cabbages",
+                "late carrots"
+            ],
+            "avoid": [
+                "crops having had Sclerotinia recently",
+                "vegetables with strong root competition"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "Aug",
+            "Oct"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Late summer",
+        "harvestSeason": "Winter,Spring",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "soil_dry_top_3cm == true",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for your lamb's lettuce: 8-12 mm at base, early morning"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Thinning recommended: keep 8-15 cm between plants depending on variety"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Shallow weeding recommended — careful with fragile roots"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "temperature < 10"
+                ],
+                "message": "Risk of Botrytis or Downy mildew — aerate, avoid late watering"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "First harvests possible — cut at collar early morning"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum growth temperature reached (5°C) — protect if dropping lower"
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 18,
+                    "message": "Optimal germination conditions (10-18°C) — sow in evening if soil cool"
+                }
+            }
+        }
+    },
+    {
+        "id": "melon",
+        "commonName": "Melon",
+        "scientificName": "Cucumis melo",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 90,
+        "spacing": 100,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate",
+        "description": "Sweet and juicy fruit-vegetable, grown in permaculture with care to avoid excessive humidity and favor soil health.",
+        "marketPricePerKg": 3.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 34,
+            "proteinG": 0.8,
+            "carbohydratesG": 8.2,
+            "sugarsG": 7.9,
+            "fatG": 0.2,
+            "fiberG": 0.9,
+            "vitaminCmg": 36.7,
+            "vitaminKmcg": 2.5,
+            "vitaminB9ug": 21,
+            "vitaminAmcg": 169,
+            "calciumMg": 9,
+            "ironMg": 0.2,
+            "magnesiumMg": 12,
+            "potassiumMg": 267,
+            "manganeseMg": 0.04,
+            "phosphorusMg": 15,
+            "betaCaroteneMcg": 2020,
+            "waterG": 90.2
+        },
+        "germination": {
+            "minTemperature": 20,
+            "optimalTemperature": {
+                "min": 24,
+                "max": 28
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 24,
+                "max": 28
+            },
+            "minTemperature": 15
+        },
+        "watering": {
+            "frequency": "1 time/week (adjust to weather)",
+            "amount": "10-20 mm/week",
+            "method": "Water at base, drip irrigation ideal",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "100 cm in all directions",
+            "when": "At young plant stage, keep strongest ones"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (infrequent)",
+            "frequency": "At start of culture, then reduced thanks to mulch",
+            "recommendation": "Thick mulch (straw, hay, wood chips) to limit weeds and conserve moisture"
+        },
+        "culturalTips": [
+            "Mandatory crop rotation (4-5 years without cucurbits in same spot)",
+            "Avoid excess nitrogen to limit sensitivity to diseases",
+            "Trellis plants to keep fruits away from damp soil",
+            "Choose hardy varieties or resistant F1 hybrids",
+            "Do not plant near other cucurbits or solanaceae to avoid competition and diseases"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail decoction (preventive)",
+                "Baking soda (against powdery mildew)",
+                "Sulfur (in case of confirmed attack)",
+                "Diluted nettle manure (start of culture)",
+                "Diluted comfrey manure (flowering/fruiting)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Hoverflies",
+                "Lacewings"
+            ],
+            "companionPlants": [
+                "garlic",
+                "onion",
+                "chives",
+                "basil",
+                "marigold"
+            ]
+        },
+        "harvestTime": "About 90 days after planting depending on variety and climate",
+        "companionPlanting": {
+            "beneficial": [
+                "garlic",
+                "onion",
+                "chives",
+                "basil",
+                "marigold",
+                "pot marigold",
+                "borage",
+                "phacelia",
+                "marigolds"
+            ],
+            "avoid": [
+                "other cucurbits",
+                "solanaceae"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for your melons: 10-20 mm at base, early morning"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning recommended: keep one plant every 100 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Light weeding recommended at start of culture + mulching"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Preventive treatment with baking soda or horsetail decoction recommended"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Harvest period approaching for your melons"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 15,
+                    "message": "Attention: minimum temperature for melons reached (15°C)"
+                },
+                "germination_optimal": {
+                    "min": 24,
+                    "max": 28,
+                    "message": "Optimal germination conditions (24-28°C)"
+                }
+            }
+        }
+    }
+]

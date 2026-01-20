@@ -1,0 +1,827 @@
+[
+    {
+        "id": "black_radish",
+        "commonName": "Rábano Negro",
+        "scientificName": "Raphanus sativus var. niger",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 10,
+        "depth": 1,
+        "sunExposure": "Pleno sol, Media sombra",
+        "waterNeeds": "Moderado a regular",
+        "description": "Hortaliza de raíz robusta, ideal en agricultura biológica y permacultura. Raíz negra de carne blanca, crujiente y picante, rica en vitaminas y minerales.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 1.8,
+            "carbohydratesG": 7.7,
+            "sugarsG": 4.3,
+            "fatG": 0.1,
+            "fiberG": 2.5,
+            "vitaminCmg": 24.5,
+            "vitaminKmcg": 0.3,
+            "vitaminB9ug": 28,
+            "calciumMg": 40,
+            "ironMg": 0.8,
+            "magnesiumMg": 16,
+            "potassiumMg": 300,
+            "manganeseMg": 0.1,
+            "phosphorusMg": 35,
+            "glucosinolatesMg": 120
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 6
+        },
+        "watering": {
+            "frequency": "Cada 2-3 días en verano, según lluvia en primavera/otoño",
+            "amount": "2-4 litros por m²/semana (ajustar según suelo)",
+            "method": "Riego suave al pie, evitar el follaje",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "10 cm entre plantas, 20-30 cm entre filas",
+            "when": "Desde la aparición de las primeras hojas verdaderas (estadio planta joven)"
+        },
+        "weeding": {
+            "method": "Manual, acompañado de acolchado (paja, hojas muertas)",
+            "frequency": "Control regular, sobre todo al inicio del cultivo",
+            "recommendation": "Acolchar tras aclareo para limitar malas hierbas y conservar humedad"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: esperar al menos 2 años antes de replantar rábanos o crucíferas en el mismo lugar",
+            "Evitar asociaciones con zanahorias, pepinos y coles",
+            "No regar demasiado el follaje para prevenir el oídio",
+            "Privilegiar suelos sueltos y bien drenados para evitar podredumbre de raíces",
+            "Alternar con cultivos como habas, lechugas o tomates para regenerar el suelo"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante y repelente)",
+                "Decocción de ajo (contra plagas)",
+                "Compost maduro para reforzar la salud del suelo"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Crisopas (depredadores de pulgones)",
+                "Avispas parasitoides (contra orugas de mosca de la col)"
+            ],
+            "companionPlants": [
+                "Lechuga",
+                "Espinaca",
+                "Judía (asociaciones beneficiosas no competitivas)"
+            ]
+        },
+        "harvestTime": "60 días tras siembra (según variedad y condiciones)",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "espinaca",
+                "judía",
+                "tomate",
+                "haba",
+                "judía (asociaciones beneficiosas no competitivas)"
+            ],
+            "avoid": [
+                "otras crucíferas en rotación inmediata",
+                "zanahoria",
+                "col",
+                "pepino"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera, Otoño",
+        "harvestSeason": "Otoño, Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "soil_type == 'sandy'"
+                ],
+                "message": "Riego necesario para sus rábanos negros: mantener suelo fresco sin exceso"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 10,
+                "message": "Aclareo necesario: conservar 1 planta cada 10 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe manual recomendado + verificar estado del acolchado"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "pest_alert == 'aphids'"
+                ],
+                "message": "Aplicar purín de ortiga o decocción de ajo en prevención"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Cosecha inminente para sus rábanos negros (60 días)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 6,
+                    "message": "Atención: temperatura mínima para rábano negro alcanzada (6°C)"
+                },
+                "germination_optimal": {
+                    "min": 19,
+                    "max": 19,
+                    "message": "Condiciones óptimas de germinación alcanzadas (19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "broccoli",
+        "commonName": "Brócoli",
+        "scientificName": "Brassica oleracea var. italica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 70,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza ideal para cultivo en permacultura y bio, apreciando cuidados razonados y la integración en sistemas diversificados.",
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 34,
+            "proteinG": 2.8,
+            "carbohydratesG": 6.6,
+            "sugarsG": 1.7,
+            "fatG": 0.4,
+            "fiberG": 2.6,
+            "vitaminCmg": 89.2,
+            "vitaminKmcg": 101.6,
+            "vitaminB9ug": 63,
+            "vitaminAmcg": 31,
+            "calciumMg": 47,
+            "ironMg": 0.7,
+            "magnesiumMg": 21,
+            "potassiumMg": 316,
+            "manganeseMg": 0.21,
+            "phosphorusMg": 66,
+            "glucosinolatesMg": 85,
+            "sulforaphanePotential": true
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (2-3 veces en caso de fuerte calor)",
+            "amount": "Mantener el suelo siempre fresco",
+            "method": "Goteo ideal, evitar excesos",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "40-60 cm entre plantas, 45-80 cm entre filas",
+            "when": "En estadio de 4-5 hojas, conservar las plantas más robustas"
+        },
+        "weeding": {
+            "method": "Deshierbe manual, acolchado constante",
+            "frequency": "Regular, sobre todo antes de subida a semilla de malas hierbas",
+            "recommendation": "Acolchado grueso para retención de humedad y supresión de hierbas indeseadas. Ocultación por lonas para las perennes."
+        },
+        "culturalTips": [
+            "Respetar una rotación de cultivos de al menos 4 años (evitar brasicáceas en el mismo lugar)",
+            "No plantar tras o antes de otras coles",
+            "Enriquecer suelo con compost y enmiendas naturales para evitar carencias (boro, manganeso, calcio)",
+            "Atención al exceso de riego (riesgos de ataques fúngicos)",
+            "Repicado desde 4-5 hojas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de helecho",
+                "Jabón negro contra pulgones"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Sírfidos",
+                "Pájaros (contra babosas y orugas)",
+                "Coleópteros auxiliares"
+            ],
+            "companionPlants": [
+                "Clavel de moro (Tagetes)",
+                "Plantas aromáticas (repelentes naturales)"
+            ]
+        },
+        "harvestTime": "70-90 días tras plantación según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "tagete",
+                "aromáticas",
+                "lechuga",
+                "apio",
+                "remolacha",
+                "cebolla",
+                "puerro",
+                "rábano",
+                "clavel de moro",
+                "plantas aromáticas (repelentes naturales)"
+            ],
+            "avoid": [
+                "otras coles",
+                "plantas de la familia de las brasicáceas en el mismo lugar"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera, Otoño (según clima)",
+        "harvestSeason": "Otoño, Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego necesario para sus brócolis: suelo a mantener fresco (1-2 veces/semana, más si calor)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 28,
+                "message": "Aclareo necesario: conservar plantas robustas a 40-60 cm de espaciamiento"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe manual recomendado + verificar acolchado"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Vigilancia de pulgones y orugas de la col – favorecer biodiversidad y auxiliaires"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 75,
+                "message": "Periodo de cosecha se acerca para sus brócolis"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Atención: temperatura mínima para brócolis alcanzada (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Condiciones óptimas de germinación (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "brussels_sprout",
+        "commonName": "Col de Bruselas",
+        "scientificName": "Brassica oleracea var. gemmifera",
+        "family": "Brassicaceae",
+        "daysToMaturity": 120,
+        "spacing": 60,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Verdura crucífera que forma pequeños repollos a lo largo del tallo, rica en fibras, vitaminas C y K. Cultivada en permacultura, se beneficia de rotación estricta y asociaciones protectoras.",
+        "marketPricePerKg": 4.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 3.4,
+            "carbohydratesG": 9.0,
+            "sugarsG": 2.2,
+            "fatG": 0.3,
+            "fiberG": 3.8,
+            "vitaminCmg": 85.0,
+            "vitaminKmcg": 177.0,
+            "vitaminB9ug": 61,
+            "vitaminAmcg": 38,
+            "calciumMg": 42,
+            "ironMg": 1.4,
+            "magnesiumMg": 23,
+            "potassiumMg": 389,
+            "manganeseMg": 0.34,
+            "phosphorusMg": 69,
+            "glucosinolatesMg": 95,
+            "kaempferolMg": 25
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "Regular tras repicado, luego 2 veces/semana en caso de sequía",
+            "amount": "20-30 mm/semana (10-15 mm por riego)",
+            "method": "Al pie, suelo húmedo pero no empapado",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "6-8 cm tras emergencia (2-3 hojas), luego 50-70 cm entre plantas y 60-80 cm entre filas al repicar (6-8 hojas)",
+            "when": "Primer aclareo a 2-3 hojas, repicado definitivo a 6-8 hojas"
+        },
+        "weeding": {
+            "method": "Manual selectivo + acolchado (paja, triturado, hojas muertas)",
+            "frequency": "Según presión adventicias, prioridad al acolchado",
+            "recommendation": "Dejar las adventicias no competidoras para favorecer la biodiversidad"
+        },
+        "culturalTips": [
+            "Rotación: no cultivar brasicáceas en la misma parcela antes de 5-6 años",
+            "Plantar tras leguminosas (guisantes, habas) para un suelo enriquecido en nitrógeno",
+            "Entutorar las plantas en caso de viento o crecimiento excesivo",
+            "Evitar excesos de nitrógeno tras formación de repollos (favorece hojas en detrimento de los repollos)",
+            "Vigilar babosas y altisas, sobre todo en suelos frescos"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bacillus thuringiensis (BT) contra orugas",
+                "Jabón negro diluido contra pulgones",
+                "Decocción de ajo contra pulgones y hongos"
+            ],
+            "beneficialInsects": [
+                "Mariquitas contra pulgones",
+                "Cárabos y erizos contra babosas",
+                "Pájaros insectívoros contra diversas plagas"
+            ],
+            "companionPlants": [
+                "Melisa",
+                "Salvia",
+                "Romero",
+                "Cilantro",
+                "Tagetes",
+                "Tomates"
+            ]
+        },
+        "harvestTime": "Aprox. 120 días tras siembra, según variedad y clima",
+        "companionPlanting": {
+            "beneficial": [
+                "melisa",
+                "salvia",
+                "romero",
+                "cilantro",
+                "tagetes",
+                "tomate",
+                "leguminosas (guisantes, habas)",
+                "clavel de moro"
+            ],
+            "avoid": [
+                "otras brasicáceas (rábanos, nabos, rúcula, mostaza) en la misma parcela"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño, Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "soil_moisture < 40%"
+                ],
+                "message": "Riego recomendado: 10-15 mm, al pie, en 2 veces esta semana"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Primer aclareo: conservar 6-8 cm entre plantas (2-3 hojas)"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Verificar acolchado y deshierbar manualmente las adventicias competidoras"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature < 20"
+                ],
+                "message": "Aplicar Bacillus thuringiensis si hay orugas, o jabón negro contra pulgones"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Los primeros coles de Bruselas deberían estar listos para cosechar en 2-3 semanas"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Atención: temperatura mínima para germinación alcanzada (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Condiciones óptimas de germinación (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "cabbage",
+        "commonName": "Repollo",
+        "scientificName": "Brassica oleracea var. capitata",
+        "family": "Brassicaceae",
+        "daysToMaturity": 90,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza de hoja que forma una cabeza compacta, rica en fibras, vitaminas C y K. Cultivo exigente en agua y nutrientes.",
+        "marketPricePerKg": 2.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.3,
+            "carbohydratesG": 5.8,
+            "sugarsG": 3.2,
+            "fatG": 0.1,
+            "fiberG": 2.5,
+            "vitaminCmg": 36.6,
+            "vitaminKmcg": 76.0,
+            "vitaminB9ug": 53,
+            "vitaminAmcg": 5,
+            "calciumMg": 40,
+            "ironMg": 0.5,
+            "magnesiumMg": 12,
+            "potassiumMg": 170,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 26,
+            "glucosinolatesMg": 65,
+            "myrosinaseActivity": true
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Cada 2-3 días en periodo seco, diario si hay ola de calor",
+            "amount": "4-6 litros por planta/semana",
+            "method": "Riego al pie, nunca sobre el follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "50 cm entre plantas en todos los sentidos",
+            "when": "Cuando las plantas tengan 6 a 8 hojas"
+        },
+        "weeding": {
+            "method": "Manual o mecánico (bina superficial)",
+            "frequency": "Cada 1-2 semanas al inicio del ciclo",
+            "recommendation": "Acolchado orgánico grueso para limitar evaporación y malas hierbas"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: no replantar coles en el mismo lugar antes de 3-4 años",
+            "Aporcado ligero un mes tras repicado para anclar raíces",
+            "Evitar estrés hídrico (falta o exceso de agua) para prevenir estallido de la cabeza",
+            "Favorecer biodiversidad con flores melíferas para atraer auxiliares",
+            "No compostar partes enfermas para evitar propagación de enfermedades"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante y repelente)",
+                "Decocción de cola de caballo (refuerza tejidos contra hongos)",
+                "Aceite de neem (contra pulgones y altisas)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Crisopas (depredadores polivalentes)",
+                "Sírfidos (larvas devoran pulgones)"
+            ],
+            "companionPlants": [
+                "Tagetes",
+                "Apio",
+                "Lechuga",
+                "Remolacha",
+                "Manzanilla (repelentes naturales)"
+            ]
+        },
+        "harvestTime": "Aprox. 90 días tras plantación, según variedad y condiciones",
+        "companionPlanting": {
+            "beneficial": [
+                "apio",
+                "lechuga",
+                "remolacha",
+                "manzanilla",
+                "tagete",
+                "menta",
+                "salvia",
+                "tomillo",
+                "manzanilla (repelentes naturales)"
+            ],
+            "avoid": [
+                "otras brasicáceas (coles, nabos, rábanos)",
+                "fresa",
+                "pimiento",
+                "tomate"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera, Otoño",
+        "harvestSeason": "Otoño, Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego necesario para sus coles: 4-6 litros/planta, al pie, temprano en la mañana"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Aclareo necesario: conservar 50 cm entre plantas, 6-8 hojas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe y bina recomendados, piense en acolchar si no lo ha hecho"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "presence_aphids"
+                ],
+                "message": "Aplicar purín de ortiga o aceite de neem en prevención contra pulgones"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Sus coles se acercan a la madurez: verifique firmeza de la cabeza"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima para coles alcanzada (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Condiciones óptimas de germinación (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "carrot",
+        "commonName": "Zanahoria",
+        "scientificName": "Daucus carota subsp. sativus",
+        "family": "Apiaceae",
+        "daysToMaturity": 90,
+        "spacing": 8,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Hortaliza de raíz crujiente y dulce, rica en betacaroteno, cultivada en agricultura biológica y permacultura con técnicas suaves y respetuosas del ecosistema.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 2.1,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 41,
+            "proteinG": 0.9,
+            "carbohydratesG": 9.6,
+            "sugarsG": 4.7,
+            "fatG": 0.2,
+            "fiberG": 2.8,
+            "vitaminAmcg": 835,
+            "vitaminKmcg": 13.2,
+            "vitaminCmg": 5.9,
+            "vitaminB9ug": 19,
+            "calciumMg": 33,
+            "ironMg": 0.3,
+            "magnesiumMg": 12,
+            "potassiumMg": 320,
+            "manganeseMg": 0.14,
+            "phosphorusMg": 35,
+            "betaCaroteneMcg": 8285
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 9
+        },
+        "watering": {
+            "frequency": "Cada 4 a 5 días (o más frecuente antes de emergencia)",
+            "amount": "Riegos copiosos, sobre todo en fase de tuberización",
+            "method": "Al pie, suelo mantenido húmedo pero no empapado",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "4 cm para zanahorias cortas, 8 cm para zanahorias largas",
+            "when": "En estadio de plántula joven, o retrasado hasta formación de pequeñas zanahorias"
+        },
+        "weeding": {
+            "method": "Manual o mecánico (bina, escarda)",
+            "frequency": "Regular, sobre todo al inicio del cultivo",
+            "recommendation": "Combinar con el aclareo; binar para mullir el suelo y conservar humedad"
+        },
+        "culturalTips": [
+            "Poner el suelo a tempero y realizar una falsa siembra antes de sembrar",
+            "Sembrar claro (mezclar semillas con arena o posos de café)",
+            "Asociar con plantas protectoras (cebolla, puerro) contra la mosca de la zanahoria",
+            "Mullir bien el suelo en profundidad para facilitar el desarrollo de raíces",
+            "Rotación de cultivos de 3 a 4 años"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Purín de tanaceto (repulsivo contra mosca de la zanahoria)",
+                "Infusión de ajo o cebolla"
+            ],
+            "beneficialInsects": [
+                "Crisopas",
+                "Mariquitas",
+                "Sírfidos (depredadores de pulgones)"
+            ],
+            "companionPlants": [
+                "Cebolla",
+                "Puerro",
+                "Romero",
+                "Salvia (repelentes de plagas)"
+            ]
+        },
+        "harvestTime": "90 días tras siembra (variable según variedad y clima)",
+        "companionPlanting": {
+            "beneficial": [
+                "cebolla",
+                "puerro",
+                "romero",
+                "salvia",
+                "lechuga",
+                "tomate",
+                "guisante",
+                "rábano",
+                "cebolla",
+                "puerro"
+            ],
+            "avoid": [
+                "eneldo",
+                "apio",
+                "otras apiáceas"
+            ]
+        },
+        "sowingMonths3": [
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "soil_moisture_low",
+                    "temperature > 20"
+                ],
+                "message": "Riego necesario: mantener el suelo húmedo para evitar raíces fibrosas."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Aclareo: deje 4-8 cm entre plantas para una buena tuberización."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Deshierbe indispensable: la zanahoria teme la competencia al inicio."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "pest_alert_carrot_fly"
+                ],
+                "message": "Alerta mosca de la zanahoria: use redes o purín de tanaceto."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Sus zanahorias deberían tener buen tamaño. Verifique el cuello."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 9,
+                    "message": "Atención: temperatura baja (<9°C), crecimiento ralentizado."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Temperatura ideal de germinación (20°C)."
+                }
+            }
+        }
+    }
+]

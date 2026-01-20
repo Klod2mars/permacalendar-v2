@@ -1,0 +1,872 @@
+[
+    {
+        "id": "artichoke",
+        "commonName": "Artichoke",
+        "scientificName": "Cynara cardunculus var. scolymus",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 80,
+        "depth": 5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High",
+        "description": "Perennial plant with minimal water needs, grown for its edible flower buds. Requires rich, well-drained soil and good circulation.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 47,
+            "proteinG": 3.3,
+            "carbohydratesG": 10.5,
+            "sugarsG": 0.9,
+            "fatG": 0.2,
+            "fiberG": 5.4,
+            "vitaminCmg": 11.7,
+            "vitaminKmcg": 14.8,
+            "vitaminB9ug": 68,
+            "vitaminAmcg": 1,
+            "calciumMg": 44,
+            "ironMg": 1.3,
+            "magnesiumMg": 60,
+            "potassiumMg": 370,
+            "manganeseMg": 0.26,
+            "phosphorusMg": 90,
+            "cynarinMg": 15,
+            "luteolinMg": 8
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 20,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1 to 3 times/week in hot weather",
+            "amount": "25 to 50 mm of water per week",
+            "method": "Water at the base, avoid wetting the foliage",
+            "bestTime": "Early morning or late evening"
+        },
+        "thinning": {
+            "distance": "80 cm between plants, 1 meter between rows",
+            "when": "When offsets appear, keep only 3 shoots per plant"
+        },
+        "weeding": {
+            "method": "Manual or shallow hoeing",
+            "frequency": "In spring and early season",
+            "recommendation": "Organic mulching recommended. Intercropping (lettuce, radish, peas) advised the first year."
+        },
+        "culturalTips": [
+            "Crop rotation: let soil rest 2-3 years after artichoke crop.",
+            "Protect crowns in winter with mulch, but avoid stagnant moisture.",
+            "Stop watering in winter or cold periods.",
+            "Avoid associations with fennel and parsley.",
+            "Apply Bordeaux mixture preventively against downy mildew after humid periods."
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bordeaux mixture (preventive against downy mildew)",
+                "Slug traps",
+                "Manual removal of pests"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (against caterpillars and aphids)"
+            ],
+            "companionPlants": [
+                "lettuce",
+                "radish",
+                "peas (intercropping first year)"
+            ]
+        },
+        "harvestTime": "About 120 days after planting, depending on variety and climate",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "radish",
+                "peas",
+                "lettuces",
+                "peas (intercropping first year)"
+            ],
+            "avoid": [
+                "fennel",
+                "parsley"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Watering needed for your artichokes: 25-50 mm water this week, at base, early morning or evening."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Thinning needed: space to 80 cm, keep only 3 shoots per plant."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding recommended: shallow hoeing + check mulch."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Downy mildew risk: apply preventive Bordeaux mixture."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Harvest period approaching for your artichokes (in ~10 days)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Warning: minimum temperature for artichokes reached (7°C). Protect crowns if prolonged."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimal germination conditions for artichoke (18-20°C)."
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    },
+    {
+        "id": "asparagus",
+        "commonName": "Asparagus",
+        "scientificName": "Asparagus officinalis",
+        "family": "Asparagaceae",
+        "daysToMaturity": 1095,
+        "spacing": 70,
+        "depth": 8,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate to high (first years)",
+        "description": "Perennial vegetable with deep roots, demanding to establish but long lasting (10-15 years). Spear production starts from 3rd year. Suited to permaculture with long rotation and organic mulch.",
+        "marketPricePerKg": 6.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 20,
+            "proteinG": 2.2,
+            "carbohydratesG": 3.9,
+            "sugarsG": 1.9,
+            "fatG": 0.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 5.6,
+            "vitaminKmcg": 41.6,
+            "vitaminB9ug": 52,
+            "vitaminAmcg": 38,
+            "calciumMg": 24,
+            "ironMg": 2.1,
+            "magnesiumMg": 14,
+            "potassiumMg": 202,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 52,
+            "glutathioneMg": 28,
+            "asparagineMg": 50
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 20,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Every 10 to 14 days in sandy soil",
+            "amount": "50-75 mm per watering (~2.8 mm/day during peak growth)",
+            "method": "Drip or base watering, avoid stagnant moisture",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "70 cm between plants, 70 cm to 1.50 m between rows",
+            "when": "First thinning by removing weak stems, do not harvest first 2-3 years"
+        },
+        "weeding": {
+            "method": "Manual (hoeing), mulching with compost or green manure",
+            "frequency": "Regularly during growth",
+            "recommendation": "Cut and burn dead stems in autumn, remove weeds"
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant for 10 years in same spot",
+            "Avoid soils contaminated with violet root rot",
+            "Progressive earthing up for white asparagus; let green for green ones",
+            "Monitor fungal diseases (rust, root rot) and pests (asparagus beetle, fly)",
+            "Favor associations: peas, tomatoes, cucumbers, leeks. Avoid garlic, onion, beetroot"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Tansy manure against larvae",
+                "Nettle or garlic manure as preventive antifungal",
+                "Horsetail decoction against rust"
+            ],
+            "beneficialInsects": [
+                "Natural predators of beetles (birds, parasitic wasps)",
+                "Insectivores favored by biodiversity"
+            ],
+            "companionPlants": [
+                "peas",
+                "tomatoes",
+                "cucumbers",
+                "leeks"
+            ]
+        },
+        "harvestTime": "From 3rd year after planting (or 1st year if 2-year crowns used)",
+        "companionPlanting": {
+            "beneficial": [
+                "peas",
+                "tomatoes",
+                "cucumbers",
+                "leeks"
+            ],
+            "avoid": [
+                "garlic",
+                "beetroot",
+                "onion"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Spring",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "soil_moisture_low",
+                    "no_rain_last_10_days"
+                ],
+                "message": "Deep watering recommended: 50-75 mm, especially in dry periods or first year"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Thinning: remove weak stems. Do not harvest first 2 years."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manual weeding and mulching recommended to limit weeds"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "spring_season"
+                ],
+                "message": "Apply nettle manure or horsetail decoction preventively"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 1095,
+                "message": "First harvest possible! (3 years after sowing, or 1 year after planting 2-year crowns)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Warning: minimum growth temperature reached (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimal germination conditions (20-25°C)"
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    },
+    {
+        "id": "basil",
+        "commonName": "Basil",
+        "scientificName": "Ocimum basilicum",
+        "family": "Lamiaceae",
+        "daysToMaturity": 60,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high (moist but not soggy soil)",
+        "description": "Annual aromatic plant, prized in cooking and herbal medicine, sensitive to cold and drought.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 14.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 3.1,
+            "carbohydratesG": 2.7,
+            "sugarsG": 0.3,
+            "fatG": 0.6,
+            "fiberG": 1.6,
+            "vitaminCmg": 18.0,
+            "vitaminKmcg": 414.8,
+            "vitaminB9ug": 68,
+            "vitaminAmcg": 264,
+            "calciumMg": 177,
+            "ironMg": 3.2,
+            "magnesiumMg": 64,
+            "potassiumMg": 295,
+            "manganeseMg": 1.15,
+            "phosphorusMg": 56,
+            "eugenolMg": 850,
+            "luteinZeaxanthinMcg": 5650
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Daily in pots / 2-3 times/week in ground (depending on weather/soil)",
+            "amount": "Adapted to keep soil moist without saturation",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Early morning or early evening"
+        },
+        "thinning": {
+            "distance": "20 cm between plants",
+            "when": "At seedling stage, to avoid overcrowding and favor aeration"
+        },
+        "weeding": {
+            "method": "Gentle hoeing + mulching to limit weeds and keep moisture",
+            "frequency": "As needed depending on weeds",
+            "recommendation": "Organic mulch recommended from planting"
+        },
+        "culturalTips": [
+            "Crop rotation: do not replant in same spot 2 years in row",
+            "Never wet foliage to avoid fungal diseases (e.g. downy mildew)",
+            "Cut flower stems as they appear to encourage dense foliage",
+            "Avoid water excess, especially in heavy soil, to not weaken plant",
+            "Mist slightly every 2 days at seedling stage, then reduce to every 4 days after emergence"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (preventive and fortifying)",
+                "Black soap (against aphids)",
+                "Natural pyrethrum or essential oil insecticide (in case of infestation)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Lacewings (aphid/scale predators)",
+                "Hoverflies (larvae eat aphids)"
+            ],
+            "companionPlants": [
+                "tomato",
+                "pepper",
+                "lettuce",
+                "favors biodiversity and repels some pests"
+            ]
+        },
+        "harvestTime": "50-60 days after sowing, depending on conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "tomato",
+                "pepper",
+                "lettuce",
+                "carrot",
+                "asparagus",
+                "favors biodiversity and repels some pests"
+            ],
+            "avoid": [
+                "cucumber (competition risk)",
+                "common rue"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "1 day (pot) / 2-3 days (ground)",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Watering needed for basil: moisten soil without saturation, at base, morning or evening."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thin your basil: leave 20 cm between each for good development."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7-10 days",
+                "message": "Weeding recommended around basil. Mulch to limit regrowth."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "aphid_sighting"
+                ],
+                "message": "Apply preventive nettle manure or introduce ladybugs."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 50,
+                "message": "First harvests possible! Cut stems above a leaf pair to favor branching."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Warning: minimum temperature for basil reached (12°C). Protect your plants!"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 24,
+                    "message": "Optimal germination conditions for basil (21-24°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "bean",
+        "commonName": "Bean",
+        "scientificName": "Phaseolus vulgaris",
+        "family": "Fabaceae",
+        "daysToMaturity": 60,
+        "spacing": 30,
+        "depth": 2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "High (especially flowering)",
+        "description": "Nutritious legume, nitrogen fixer, ideal in rotation and association.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 31,
+            "proteinG": 1.8,
+            "carbohydratesG": 7.1,
+            "sugarsG": 3.3,
+            "fatG": 0.1,
+            "fiberG": 3.4,
+            "vitaminCmg": 12.2,
+            "vitaminKmcg": 43.0,
+            "vitaminB9ug": 33,
+            "vitaminAmcg": 35,
+            "calciumMg": 37,
+            "ironMg": 1.0,
+            "magnesiumMg": 25,
+            "potassiumMg": 211,
+            "manganeseMg": 0.21,
+            "phosphorusMg": 38,
+            "siliconMg": 2.0
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Variable by growth phase: 2-3 times/week growth, 3 times/week flowering, reduce 1 month before harvest",
+            "amount": "10-15 liters per m²/week in flowering phase",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "25-40 cm between plants",
+            "when": "When young plants are a few cm tall, keep strongest"
+        },
+        "weeding": {
+            "method": "Hoeing or manual weeding",
+            "frequency": "After each watering (24-48h) to break crust + mulching",
+            "recommendation": "Mulch rows to limit weeds and keep moisture"
+        },
+        "culturalTips": [
+            "Crop rotation: do not plant after other legumes",
+            "Avoid excess water to prevent root rot",
+            "Mulch to reduce evaporation and weeding",
+            "Never water foliage to avoid fungal diseases",
+            "Favor associations with corn or sunflower for climbing varieties"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifying, anti-aphid)",
+                "Horsetail decoction (anti-fungal)",
+                "Diluted milk spray (preventive against downy mildew)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Parasitic wasps",
+                "Hoverflies"
+            ],
+            "companionPlants": [
+                "corn",
+                "sunflower (support and favorable microclimate)"
+            ]
+        },
+        "harvestTime": "60 days after planting on average (depending on bush or pole variety)",
+        "companionPlanting": {
+            "beneficial": [
+                "corn",
+                "sunflower",
+                "carrot",
+                "cucumber",
+                "celery",
+                "radish",
+                "spinach",
+                "sunflower (support and favorable microclimate)"
+            ],
+            "avoid": [
+                "garlic",
+                "other legumes (peas, fava beans, lupin)",
+                "onion (in excess)"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "variable",
+                "conditions": [
+                    "phase == 'levée' → every 2-3 days",
+                    "phase == 'floraison' → 2-3 times/week",
+                    "temperature > 30 → every 1-2 days",
+                    "soil_type == 'sandy' → 3-4 times/week",
+                    "soil_type == 'clay' → 2 times/week"
+                ],
+                "message": "Adapt watering: 10-15 L/m²/week in flowering, at base, without wetting foliage."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thin to 25-40 cm between plants, keep only strongest."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "after_rain_or_watering",
+                "message": "Hoeing recommended 24-48h after watering + mulching to limit weeds."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 25"
+                ],
+                "message": "Apply nettle or horsetail manure preventively against fungal diseases."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Harvest imminent. Reduce watering progressively to avoid diseases."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Warning: minimum temperature for beans reached (10°C). Risk of slowing or frost."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimal germination conditions reached (20-25°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "beetroot",
+        "commonName": "Beetroot",
+        "scientificName": "Beta vulgaris",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 60,
+        "spacing": 20,
+        "depth": 1,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate",
+        "description": "Sweet and nutritious root vegetable, rich in iron, vitamins and antioxidants, grown in organic and permaculture with gentle techniques.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 1.6,
+            "carbohydratesG": 9.6,
+            "sugarsG": 6.8,
+            "fatG": 0.2,
+            "fiberG": 2.8,
+            "vitaminCmg": 4.9,
+            "vitaminKmcg": 0.2,
+            "vitaminB9ug": 109,
+            "vitaminAmcg": 2,
+            "calciumMg": 16,
+            "ironMg": 0.8,
+            "magnesiumMg": 23,
+            "potassiumMg": 325,
+            "manganeseMg": 0.33,
+            "phosphorusMg": 40,
+            "betaineMg": 128,
+            "nitratesMg": 150
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 22
+            },
+            "minTemperature": 6
+        },
+        "watering": {
+            "frequency": "1 time/week (adapt to climate)",
+            "amount": "2-4 liters per m²/week",
+            "method": "At base, soil kept cool without excess",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "15-25 cm between plants",
+            "when": "When plants have 4 to 5 leaves"
+        },
+        "weeding": {
+            "method": "Frequent manual hoeing and weeding",
+            "frequency": "Every 1-2 weeks",
+            "recommendation": "Mulching recommended to limit weeds and keep moisture"
+        },
+        "culturalTips": [
+            "Crop rotation 3-4 years to avoid soil depletion and diseases",
+            "Well loosened soil, without stones to avoid forked roots",
+            "Do not use fresh or non-composted manure",
+            "Avoid water excess to prevent downy mildew and root rot",
+            "Protect seedings against frost with a veil or light tunnel"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Comfrey manure (fortifying)",
+                "Nettle manure (anti-aphid and growth booster)",
+                "Aromatic infusions to strengthen natural defenses"
+            ],
+            "beneficialInsects": [
+                "Natural aphid predators (ladybugs, hoverflies)",
+                "Beneficial nematodes against pest nematodes"
+            ],
+            "companionPlants": [
+                "lettuce",
+                "onion",
+                "radish",
+                "bush bean",
+                "avoid spinach (same family)"
+            ]
+        },
+        "harvestTime": "60-90 days after sowing depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "onion",
+                "radish",
+                "bush bean",
+                "cabbage"
+            ],
+            "avoid": [
+                "other amaranthaceae",
+                "goosefoot",
+                "spinach",
+                "spinach"
+            ],
+            "notes": [
+                "avoid spinach (same family)"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_5_days",
+                    "temperature > 25"
+                ],
+                "message": "Watering recommended: 1 time/week, keep soil cool without excess"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Thinning needed: keep one plant every 15-25 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Weeding and hoeing recommended to aerate soil and limit weeds"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Downy mildew risk — apply nettle manure preventively and aerate plants"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 65,
+                "message": "Harvest period approaching for beets (60-90 days after sowing)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 6,
+                    "message": "Warning: minimal growth temperature for beetroot reached (6°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    }
+]

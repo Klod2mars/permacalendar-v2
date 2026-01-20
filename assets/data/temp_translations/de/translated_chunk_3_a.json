@@ -1,0 +1,801 @@
+[
+    {
+        "id": "courge_potiron",
+        "commonName": "Kürbis (Riesenkürbis)",
+        "scientificName": "Cucurbita spp.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 90,
+        "spacing": 150,
+        "depth": 2,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mäßig",
+        "description": "Platzbedürftiges Fruchtgemüse, ideal für Permakultur, reich an Vitaminen und Ballaststoffen. Rankend oder nicht rankend, benötigt reichen, gut drainierten Boden.",
+        "marketPricePerKg": 2.7,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 45,
+            "proteinG": 1.0,
+            "carbohydratesG": 11.7,
+            "sugarsG": 4.2,
+            "fatG": 0.1,
+            "fiberG": 2.0,
+            "vitaminCmg": 21.0,
+            "vitaminKmcg": 1.1,
+            "vitaminB9ug": 29,
+            "vitaminAmcg": 7384,
+            "calciumMg": 21,
+            "ironMg": 0.8,
+            "magnesiumMg": 12,
+            "potassiumMg": 340,
+            "manganeseMg": 0.13,
+            "phosphorusMg": 33,
+            "betaCaroteneMcg": 8860,
+            "luteinZeaxanthinMcg": 1500
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "1 Mal/Woche (ca. 15 mm)",
+            "amount": "Ca. 15 mm/Woche",
+            "method": "Gießen an der Basis, Laub meiden",
+            "bestTime": "Abends bei Hitze, morgens bei kühlem Wetter"
+        },
+        "thinning": {
+            "distance": "1 m für nicht rankende, 1.5-2 m für rankende Sorten",
+            "when": "Sobald erste echte Blätter erscheinen, kräftigste Pflanze behalten"
+        },
+        "weeding": {
+            "method": "Manuell oder mechanisch (Hacken) vor dem Mulchen",
+            "frequency": "Nach Bedarf bis zur Mulchschicht",
+            "recommendation": "Organisches Mulchen (Stroh, Heu, Rasenschnitt) zur Unkrautunterdrückung und Feuchtigkeitsspeicherung"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: 2-3 Jahre warten vor erneuter Pflanzung von Kürbisgewächsen am gleichen Ort",
+            "Nach Leguminosen pflanzen (Stickstoffanreicherung)",
+            "Vermeiden Sie Nähe zu Kartoffeln, Radieschen oder anderen Kürbisgewächsen",
+            "Ranken bei stark wachsenden Sorten kappen um Fruchtbildung zu fördern",
+            "Niemals das Laub benetzen um Mehltau zu vermeiden",
+            "Früchte vor direktem Bodenkontakt schützen (Mulch oder Unterlage)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Schachtelhalmbrühe (Pilzprävention)",
+                "Knoblauchsud (Pilz- und Insektenprävention)",
+                "Beinwelljauche (stärkend)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Schwebfliegen (Larven fressen Blattläuse)",
+                "Florfliegen (vielseitige Räuber)"
+            ],
+            "companionPlants": [
+                "Mais",
+                "Bohnen (Milpa/Drei-Schwestern-Methode)",
+                "Kapuzinerkresse (Blattlausfalle)"
+            ]
+        },
+        "harvestTime": "Ca. 90-120 Tage nach Aussaat, je nach Sorte",
+        "companionPlanting": {
+            "beneficial": [
+                "Mais",
+                "Bohne",
+                "Kapuzinerkresse",
+                "Tagetes",
+                "Minze",
+                "Bohnen (Milpa/Drei-Schwestern-Methode)",
+                "Kapuzinerkresse (Blattlausfalle)"
+            ],
+            "avoid": [
+                "andere Kürbisgewächse",
+                "Fenchel",
+                "Kartoffel",
+                "Radieschen"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "temperature > 25"
+                ],
+                "message": "Bewässerung empfohlen: 15 mm am Fuß, Laub trocken halten. Abends bei Hitze."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen nötig: nur eine kräftige Pflanze pro Standort behalten."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten vor dem Mulchen empfohlen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Präventivspritzung mit Schachtelhalm- oder Knoblauchsud gegen Pilzkrankheiten."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Erntezeit nähert sich (90-120 Tage nach Saat)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Achtung: Mindesttemperatur für Kürbis erreicht (12°C). Wachstumsstopp möglich."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 24,
+                    "message": "Optimale Keimbedingungen erreicht (21-24°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "roquette",
+        "commonName": "Rucola",
+        "scientificName": "Eruca vesicaria",
+        "family": "Brassicaceae",
+        "daysToMaturity": 30,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Halbschatten (volle Sonne im Sommer vermeiden)",
+        "waterNeeds": "Mäßig",
+        "description": "Blattgemüse mit pfeffrigem Geschmack, vitaminreich. Ideal für schnelle Kultur und Permakultur. Empfindlich gegen Hitze und Trockenheit (schießt schnell).",
+        "marketPricePerKg": 22.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 27,
+            "proteinG": 2.6,
+            "carbohydratesG": 3.0,
+            "sugarsG": 2.0,
+            "fatG": 0.5,
+            "saturatedFatG": 0.1,
+            "fiberG": 2.0,
+            "sodiumMg": 0,
+            "calciumMg": 160,
+            "vitaminCmg": 15,
+            "vitaminKmcg": 109
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 4
+        },
+        "watering": {
+            "frequency": "1 Mal/Woche oder wenn Boden oberflächlich trocken",
+            "amount": "Mäßig (Wurzelfäule vermeiden)",
+            "method": "Gießen an der Basis, Laub vermeiden",
+            "bestTime": "Früh morgens"
+        },
+        "thinning": {
+            "distance": "8 cm nach erstem Ausdünnen, dann 20-30 cm",
+            "when": "Bei 5-10 cm Höhe (ca. 15 Tage nach Aufgang)"
+        },
+        "weeding": {
+            "method": "Manuell oder leichtes Hacken",
+            "frequency": "Regelmäßig, vor allem am Anfang",
+            "recommendation": "Mulchen empfohlen zur Unkrautbegrenzung und Feuchtespeicherung"
+        },
+        "culturalTips": [
+            "Fruchtwechsel alle 3 Jahre um Krankheiten und Bodenermüdung zu vermeiden",
+            "Sommerhitze meiden — Halbschatten bevorzugen",
+            "Stickstoffdüngung begrenzen für besseren Geschmack",
+            "Mulchen hält Boden frisch und verzögert das Schießen",
+            "Einige Pflanzen blühen lassen für Biodiversität und Nützlinge"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Knoblauchsud oder Chili-Sud",
+                "Brennnessel-, Schachtelhalm-, Beinwelljauche",
+                "Pflanzliches Pyrethrum (letztes Mittel)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer gegen Blattläuse",
+                "Florfliegen gegen Blattläuse"
+            ],
+            "companionPlants": [
+                "am Rand lassen für Nützlinge",
+                "Konkurrenz mit Starkzehrern meiden"
+            ]
+        },
+        "harvestTime": "30 Tage nach Saat (regelmäßig junge Blätter schneiden)",
+        "companionPlanting": {
+            "beneficial": [
+                "Radieschen",
+                "Karotte",
+                "Kopfsalat",
+                "Spinat",
+                "Zwiebel",
+                "Lauch",
+                "Kapuzinerkresse",
+                "am Rand lassen für Nützlinge"
+            ],
+            "avoid": [
+                "Konkurrenz",
+                "Starkzehrer",
+                "große Kohlarten (Platz/Stickstoff)"
+            ],
+            "notes": [
+                "Konkurrenz mit Starkzehrern meiden"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Frühling, Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "soil_surface_dry",
+                    "temperature > 25"
+                ],
+                "message": "Bewässerung für Rucola: mäßig, früh morgens, um Schossen zu verhindern."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Ausdünnen: erst auf 8 cm, dann 20-30 cm Abstand."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Jäten oder leichtes Hacken empfohlen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "pest_alert: altises or pucerons"
+                ],
+                "message": "Knoblauchsud/Brennnesseljauche vorbeugend. Insektennetz bei Bedarf."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Erste Ernte möglich! Junge Blätter schneiden fördert Nachwuchs."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 4,
+                    "message": "Achtung: Mindesttemperatur für Rucola erreicht (4°C). Bei Frost schützen."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimale Keimtemperatur (15°C) — guter Moment zum Säen!"
+                }
+            }
+        }
+    },
+    {
+        "id": "rosemary",
+        "commonName": "Rosmarin",
+        "scientificName": "Salvia rosmarinus",
+        "family": "Lamiaceae",
+        "daysToMaturity": 90,
+        "spacing": 40,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne (min. 6h/Tag)",
+        "waterNeeds": "Gering",
+        "description": "Mediterraner aromatischer Strauch, trockenheitsstark, natürlicher Repellent. Ideal für Permakultur und Biogarten.",
+        "marketPricePerKg": 20.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 131,
+            "proteinG": 3.3,
+            "carbohydratesG": 20.7,
+            "sugarsG": 1.6,
+            "fatG": 5.9,
+            "fiberG": 14.1,
+            "vitaminCmg": 21.8,
+            "vitaminKmcg": 336.0,
+            "vitaminB9ug": 109,
+            "vitaminAmcg": 146,
+            "calciumMg": 317,
+            "ironMg": 6.7,
+            "magnesiumMg": 91,
+            "potassiumMg": 668,
+            "manganeseMg": 0.96,
+            "phosphorusMg": 66,
+            "rosmarinicAcidMg": 2400,
+            "carnosicAcidMg": 1800
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 20,
+                "max": 30,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Alle 10-14 Tage im Freiland (erwachsen), alle 2-3 Tage für Jungpflanzen",
+            "amount": "Durchdringend gießen, nur wenn Boden trocken (Topf)",
+            "method": "Am Fuß, tiefgründig, keine kleinen Schlückchen",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "40 cm zwischen Pflanzen",
+            "when": "Bei Pflanzung oder Aussaat"
+        },
+        "weeding": {
+            "method": "Manuell (Wurzeln schonen)",
+            "frequency": "Régulier am Anfang, je nach Unkraut",
+            "recommendation": "Organischer Mulch gegen Unkraut und Staunässe"
+        },
+        "culturalTips": [
+            "Niemals in den Schatten pflanzen — braucht min. 6h Sonne",
+            "Gut drainierter Boden Pflicht — Sand oder Bims beimischen",
+            "Zu reiche/schwere Böden meiden — mag kalkhaltig/arm sein",
+            "Keine Rotation nötig — Dauerkultur",
+            "Staunässe vermeiden — Gefahr von Wurzelfäule und Mehltau"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Schmierseife verdünnt (Blattläuse/Schildläuse)",
+                "Brennnesseljauche (vorbeugend/stärkend)",
+                "Manuelles Entfernen befallener Teile (leicht)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Schlupfwespen (Aphidius spp.)"
+            ],
+            "companionPlants": [
+                "Kohl",
+                "Karotte",
+                "Bohne",
+                "vertreibt Insekten durch ätherische Öle"
+            ]
+        },
+        "harvestTime": "Ganzjährig erntbar sobald etabliert (nach 3-4 Monaten)",
+        "companionPlanting": {
+            "beneficial": [
+                "Kohl",
+                "Karotte",
+                "Bohne",
+                "Paprika",
+                "Aubergine",
+                "Lavendel",
+                "Thymian",
+                "Salbei",
+                "vertreibt Insekten durch ätherische Öle"
+            ],
+            "avoid": [
+                "Pflanzen mit hohem Wasser- oder Nährstoffbedarf (z.B. Kürbis, Salat)"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Ganzjährig (Blätter)",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "no_rain_last_10_days",
+                    "temperature > 25"
+                ],
+                "message": "Tiefgründiges Gießen für Rosmarin empfohlen — Bodentrockenheit prüfen."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 7,
+                "message": "Pflanzabstand 40 cm einhalten."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manuelles Jäten empfohlen — Mulch nutzen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "presence_of_aphids"
+                ],
+                "message": "Bio-Behandlung mit Schmierseife/Brennnessel bei Blattläusen."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Rosmarin erntereif — Zweige nach Bedarf schneiden."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Achtung: Mindesttemperatur für Rosmarin erreicht (10°C)."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimale Keimtemperatur erreicht (20°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "salsify",
+        "commonName": "Haferwurzel",
+        "scientificName": "Tragopogon porrifolius",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 20,
+        "depth": 1.5,
+        "sunExposure": "Volle Sonne, Halbschatten toleriert",
+        "waterNeeds": "Gering bis mäßig",
+        "description": "Zweijähriges Wurzelgemüse mit nussigem Geschmack (Austernpflanze). Braucht lockeren Boden, nach Etablierung genügsam.",
+        "marketPricePerKg": 5.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 82,
+            "proteinG": 1.5,
+            "carbohydratesG": 18.6,
+            "sugarsG": 4.0,
+            "fatG": 0.2,
+            "fiberG": 3.3,
+            "vitaminCmg": 5.0,
+            "vitaminKmcg": 0.3,
+            "vitaminB9ug": 22,
+            "calciumMg": 30,
+            "ironMg": 0.7,
+            "magnesiumMg": 25,
+            "potassiumMg": 380,
+            "manganeseMg": 0.2,
+            "phosphorusMg": 50,
+            "inulinG": 10.0
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "Alle 2 Tage während Keimung, dann 1-2 Mal/Woche bei Trockenheit",
+            "amount": "Feiner Sprühregen anfangs, dann mäßig",
+            "method": "Sprühnebel anfangs, später am Fuß (Laub trocken lassen)",
+            "bestTime": "Früh morgens"
+        },
+        "thinning": {
+            "distance": "15-20 cm zwischen Pflanzen, 30-40 cm Reihenabstand",
+            "when": "15-20 Tage nach Aufgang (2-3 echte Blätter)"
+        },
+        "weeding": {
+            "method": "Manuell oder leicht hacken (Wurzeln schonen)",
+            "frequency": "Regelmäßig am Anfang",
+            "recommendation": "Mulchen zwischen den Reihen empfohlen"
+        },
+        "culturalTips": [
+            "Zweijährig: Ernte vor der Blüte im 2. Jahr",
+            "Blütenstängel im 1. Jahr entfernen für Wurzelwachstum",
+            "Schwere/nasse Böden meiden (Fäulnisgefahr)",
+            "Fruchtwechsel (keine Astéracées/Korbblütler vorfruchten)",
+            "Achtung vor Schnecken bei Jungpflanzen",
+            "Direktsaat (Pfahlwurzel empfindlich gegen Verpflanzen)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Schachtelhalmbrühe (Rost-Prävention)",
+                "Knoblauchsud (natürliches Fungizid)",
+                "Asche/Eierschalen gegen Schnecken",
+                "Bierfallen"
+            ],
+            "beneficialInsects": [
+                "Laufkäfer (Schneckenräuber)",
+                "Erdkröten"
+            ],
+            "companionPlants": [
+                "keine spezifischen Partner dokumentiert",
+                "lebender Mulch (Phacelia",
+                "Klee) nützlich"
+            ]
+        },
+        "harvestTime": "120-150 Tage nach Saat, Herbst Jahr 1 oder Frühling Jahr 2",
+        "companionPlanting": {
+            "beneficial": [
+                "keine spezifischen Partner dokumentiert",
+                "lebender Mulch (Phacelia",
+                "Klee) nützlich"
+            ],
+            "avoid": [
+                "schwere Böden benötigende Kulturen",
+                "Stickstoffzehrer"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Automne, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "germination_phase",
+                    "soil_dry"
+                ],
+                "message": "Feiner Sprühregen für Haferwurzel-Keimung nötig."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Ausdünnen auf 15-20 cm empfohlen."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Leichtes Jäten empfohlen (Wurzeln schonen)."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "young_plants"
+                ],
+                "message": "Schnecken überwachen — Fallen oder Schutz aufstellen."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Erntezeit möglich (vor der Blüte)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Achtung: Mindesttemperatur für Haferwurzel erreicht (7°C)."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimale Keimtemperatur erreicht (20°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "scarole",
+        "commonName": "Eskariol (Glatte Endivie)",
+        "scientificName": "Cichorium endivia",
+        "family": "Asteraceae",
+        "daysToMaturity": 90,
+        "spacing": 30,
+        "depth": 0.5,
+        "sunExposure": "Halbschatten bis volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Knackiger Blattalat mit leichter Bitternote. Wird vor der Ernte gebleicht für ein zartes Herz.",
+        "marketPricePerKg": 4.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.2,
+            "carbohydratesG": 3.1,
+            "fiberG": 2.8,
+            "fatG": 0.18,
+            "calciumMg": 46,
+            "ironMg": 0.72,
+            "potassiumMg": 245,
+            "vitaminAmcg": 94,
+            "vitaminCmg": 3.3,
+            "vitaminKmcg": 212,
+            "vitaminB9ug": 78
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 4
+        },
+        "watering": {
+            "frequency": "Alle 2-4 Tage je nach Wetter",
+            "amount": "Boden feucht halten ohne Nässe",
+            "method": "Am Fuß gießen, Laub trocken halten",
+            "bestTime": "Früh morgens"
+        },
+        "thinning": {
+            "distance": "30 cm zwischen Pflanzen, 40 cm Reihenabstand",
+            "when": "Nach Erscheinen der ersten echten Blätter"
+        },
+        "weeding": {
+            "method": "Leichtes Hacken, manuell Jäten, Mulchen",
+            "frequency": "Alle 1-2 Wochen",
+            "recommendation": "Dickes Mulchen empfohlen für Feuchtigkeit und Unkrautstopp"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Keine Korbblütler am selben Ort vor 4-5 Jahren",
+            "Bleichen: 15 Tage vor Ernte abdecken (Glocke/Topf)",
+            "Vlies bei starkem Frost nutzen",
+            "Wurzelhals beim Pflanzen nicht eingraben",
+            "Im Gewächshaus ausdünnen sobald Blätter sich berühren"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (Mehltau-Prävention)",
+                "Seifenlauge (Blattläuse)",
+                "Knoblauch-/Chilisud (Erdflöhe)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (Blattläuse)",
+                "Nematoden (Raupen)"
+            ],
+            "companionPlants": [
+                "Minze (vertreibt Erdflöhe)"
+            ]
+        },
+        "harvestTime": "Ca. 90 Tage nach Saat",
+        "companionPlanting": {
+            "beneficial": [
+                "Minze",
+                "Karotte",
+                "Radieschen",
+                "Zwiebel",
+                "Lauch",
+                "Spinat",
+                "Minze (vertreibt Erdflöhe)"
+            ],
+            "avoid": [
+                "andere Astéracées",
+                "Endivie",
+                "Laitue"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Bewässerung nötig für Eskariol: Basis befeuchten, Laub schonen."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen auf 30 cm Abstand nötig."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Jäten empfohlen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Überwachung auf Schnecken und Mehltau (Brennnesseljauche)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Ernte und Bleichen vorbereiten."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 4,
+                    "message": "Achtung: Temperaturminimum (4°C) erreicht."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimale Keimtemperatur (15°C)."
+                }
+            }
+        }
+    }
+]

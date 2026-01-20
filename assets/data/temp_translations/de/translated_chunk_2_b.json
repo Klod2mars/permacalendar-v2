@@ -1,0 +1,717 @@
+[
+    {
+        "id": "kale",
+        "commonName": "Grünkohl",
+        "scientificName": "Brassica oleracea var. sabellica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Volle Sonne bis Halbschatten",
+        "waterNeeds": "Hoch",
+        "description": "Blattgemüse reich an Vitaminen, Antioxidantien und Mineralien. Sehr robust, ideal für Permakultur und Bio-Anbau.",
+        "marketPricePerKg": 6.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 49,
+            "proteinG": 4.3,
+            "carbohydratesG": 8.8,
+            "sugarsG": 2.0,
+            "fatG": 0.9,
+            "fiberG": 3.6,
+            "vitaminCmg": 120.0,
+            "vitaminKmcg": 704.8,
+            "vitaminB9ug": 141,
+            "vitaminAmcg": 681,
+            "calciumMg": 150,
+            "ironMg": 1.5,
+            "magnesiumMg": 47,
+            "potassiumMg": 491,
+            "manganeseMg": 0.92,
+            "phosphorusMg": 92,
+            "luteinZeaxanthinMg": 22,
+            "quercetinMg": 7
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2-3 Mal/Woche im Sommer, je nach Regen",
+            "amount": "Tiefes Gießen 1-2 Mal/Woche",
+            "method": "An der Basis, niemals auf das Laub",
+            "bestTime": "Früh morgens oder abends",
+            "tip": "Mulchen dringend empfohlen zur Feuchtigkeitsbewahrung"
+        },
+        "thinning": {
+            "distance": "30 cm für kompakte Sorten, 80 cm für große",
+            "when": "Im Stadium von 6 bis 8 Blättern"
+        },
+        "weeding": {
+            "method": "Manuelles oder mechanisches Hacken + Mulchen",
+            "frequency": "Monatlich oder bei Auftreten von Unkraut",
+            "recommendation": "Dick mulchen ab Pflanzung um Unkraut und Verdunstung zu begrenzen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Keine Kreuzblütler am selben Ort vor 5-6 Jahren pflanzen",
+            "Boden reich an organischer Substanz, gut drainiert und frisch",
+            "Laub nicht gießen, um Mehltau und Rost zu vermeiden",
+            "Bodengesundheit überwachen, um Kohlhernie zu vermeiden",
+            "Großzügigen Abstand für gute Belüftung bevorzugen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (stärkend und abwehrend)",
+                "Rainfarnjauche (gegen Blattläuse und Raupen)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Schwebfliegen (Larven fressen Blattläuse)",
+                "Gartenvögel (gegen Raupen)"
+            ],
+            "companionPlants": [
+                "Melisse",
+                "Salbei",
+                "Rosmarin",
+                "Koriander",
+                "Aneth",
+                "Tagetes",
+                "Tomaten",
+                "Ginster",
+                "Holunder"
+            ]
+        },
+        "harvestTime": "60 Tage nach Pflanzung, Ernte möglich bis zum Frost",
+        "companionPlanting": {
+            "beneficial": [
+                "Melisse",
+                "Salbei",
+                "Rosmarin",
+                "Koriander",
+                "Aneth",
+                "Tagetes",
+                "Tomaten",
+                "Ginster",
+                "Holunder",
+                "Tagetes"
+            ],
+            "avoid": [
+                "andere Kreuzblütler (Kohl, Rüben, Radieschen, Rucola, Senf) innerhalb von 5-6 Jahren"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Bewässerung nötig für Ihren Grünkohl: Boden frisch halten, nie austrocknen lassen"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Ausdünnen nötig: 30 cm (kompakt) oder 80 cm (groß) zwischen Pflanzen"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "30 days",
+                "message": "Jäten oder Mulch prüfen empfohlen für Ihren Grünkohl"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Vorbeugende Behandlung mit Brennnessel- oder Rainfarnjauche empfohlen"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Erste Ernten möglich für Ihren Grünkohl!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Achtung: Mindesttemperatur für Grünkohl erreicht (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen für Grünkohl (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "leek",
+        "commonName": "Lauch",
+        "scientificName": "Allium porrum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 120,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Volle Sonne bis Halbschatten",
+        "waterNeeds": "Mäßig",
+        "description": "Wurzelgemüse mit mildem, feinem Geschmack, reich an Ballaststoffen und Vitaminen. Sehr winterhart, ideal für Herbst- und Winteranbau.",
+        "marketPricePerKg": 3.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 61,
+            "proteinG": 1.5,
+            "carbohydratesG": 14.2,
+            "sugarsG": 3.9,
+            "fatG": 0.3,
+            "fiberG": 1.8,
+            "vitaminCmg": 12,
+            "vitaminKmcg": 47,
+            "vitaminB9ug": 64,
+            "vitaminAmcg": 83,
+            "calciumMg": 59,
+            "ironMg": 2.1,
+            "magnesiumMg": 28,
+            "potassiumMg": 180,
+            "manganeseMg": 0.45,
+            "phosphorusMg": 35
+        },
+        "germination": {
+            "minTemperature": 12,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 12,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 2
+        },
+        "watering": {
+            "frequency": "Alle 8-10 Tage ohne Mulch, alle 2-3 Wochen mit Mulch. 2-3 Mal/Woche bei starker Hitze.",
+            "amount": "20-30 mm Wasser alle 7-10 Tage zu Beginn",
+            "method": "Gießen an der Basis, Laub vermeiden",
+            "bestTime": "Früh morgens oder abends",
+            "stopBeforeHarvest": "3-4 Wochen vor Ernte stoppen, um Fäulnis zu vermeiden"
+        },
+        "thinning": {
+            "distance": "10 cm in der Reihe, 40 cm zwischen Reihen (oder 7 cm beim Umsetzen, dann auf 15 cm ausdünnen)",
+            "when": "Wenn Pflanzen gut etabliert sind und wachsen"
+        },
+        "weeding": {
+            "method": "Manuell (Hacken, Jäten)",
+            "frequency": "Regelmäßig, besonders zwischen Aussaat und Umsetzen",
+            "recommendation": "Organisches Mulchen dringend geraten, um Unkraut zu begrenzen und Feuchtigkeit zu halten"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: 4-5 Jahre warten, bevor Lauchgewächse am selben Ort gepflanzt werden",
+            "Nicht nach Knoblauch, Zwiebel, Kartoffel, Karotte pflanzen",
+            "Rotation mit Salat, Rüben, Kreuzblütlern bevorzugen",
+            "Schrittweise anhäufeln, um den Schaft zu bleichen",
+            "Wasser nicht überdosieren, um Fäulnis zu vermeiden",
+            "Gut drainierter Boden unerlässlich",
+            "Mulch erst nach dem Anhäufeln ausbringen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (gegen Blattläuse, stärkend)",
+                "Rainfarntee",
+                "Asche gegen Schnecken und manche Insekten"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Florfliegen (Prädatoren von Thripsen und Blattläusen)"
+            ],
+            "companionPlants": [
+                "Kopfsalat",
+                "Karotten",
+                "Rote Bete",
+                "andere Lauchgewächse zeitgleich vermeiden"
+            ]
+        },
+        "harvestTime": "Ca. 120 Tage nach Aussaat, je nach Sorte und Klima",
+        "companionPlanting": {
+            "beneficial": [
+                "Karotte",
+                "Kopfsalat",
+                "Rote Bete",
+                "Rübe",
+                "Sellerie",
+                "Radieschen",
+                "Kopfsalate",
+                "Karotten",
+                "Rote Bete"
+            ],
+            "avoid": [
+                "Knoblauch",
+                "andere Lauchgewächse in direkter Nachbarschaft",
+                "enge Rotation mit anderen Lauchgewächsen",
+                "Zwiebel",
+                "Kartoffel"
+            ],
+            "notes": [
+                "andere Lauchgewächse zeitgleich vermeiden"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "May"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling, Herbst (je nach Sorte)",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "no_rain_last_10_days",
+                    "temperature > 25"
+                ],
+                "message": "Bewässerung empfohlen: 20-30 mm an der Basis. Reduzieren wenn gemulcht."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Ausdünnen planen: 15 cm zwischen ausgewachsenen Pflanzen lassen"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manuelles Jäten empfohlen — denken Sie an Mulchen um Frequenz zu senken"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "observed_thrips_or_aphids"
+                ],
+                "message": "Brennnesseljauche oder Rainfarntee zur Vorbeugung anwenden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Ernte steht bevor — Bewässerung in 3-4 Wochen einstellen"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 2,
+                    "message": "Achtung: Wachstumsmindesttemperatur erreicht (2°C) — schützen wenn Frost angesagt"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 19,
+                    "message": "Optimale Keimbedingungen erreicht (18-19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "lettuce",
+        "commonName": "Kopfsalat",
+        "scientificName": "Lactuca sativa",
+        "family": "Asteraceae",
+        "daysToMaturity": 45,
+        "spacing": 25,
+        "depth": 0.5,
+        "sunExposure": "Halbschatten bis volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Beliebtes Blattgemüse, reich an Vitaminen und Mineralien, angebaut für seine zarten Blätter.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "proteinG": 1.3,
+            "carbohydratesG": 1.3,
+            "sugarsG": 0.8,
+            "fatG": 0.2,
+            "fiberG": 1.2,
+            "vitaminCmg": 3.7,
+            "vitaminAmcg": 2320,
+            "vitaminK1mcg": 130,
+            "vitaminB9ug": 91,
+            "calciumMg": 45,
+            "magnesiumMg": 12.5,
+            "ironMg": 0.4,
+            "manganeseMg": 0.3
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": 15,
+            "germinationTime": {
+                "min": 5,
+                "max": 8,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": 20,
+            "minTemperature": 3
+        },
+        "watering": {
+            "frequency": "2-3 Mal/Woche bei Trockenheit oder Hitze",
+            "amount": "2-4 L/m² bis Rosettenstadium, dann 3-6 L/m² bei Kopfbildung",
+            "method": "An der Basis, Laub nicht benetzen",
+            "bestTime": "Morgens",
+            "adaptation": "Reduzieren oder stoppen bei Regenwetter"
+        },
+        "thinning": {
+            "distance": "20-25 cm zwischen Pflanzen, 40 cm zwischen Reihen",
+            "when": "3-4 Blattstadium",
+            "recommendation": "Pflanzen umsetzen oder verzehren"
+        },
+        "weeding": {
+            "method": "Manuell, mechanisch (Hacken) oder thermisch",
+            "frequency": "Regelmäßig, besonders wenn Pflanzen jung sind",
+            "recommendation": "Mulchen (Stroh, trockener Rasenschnitt, Laub) zur Unkrautbegrenzung und Feuchtigkeitsspeicherung"
+        },
+        "culturalTips": [
+            "Fruchtwechsel über mindestens 4 Jahre",
+            "Beregnung vermeiden",
+            "Überbevölkerung der Pflanzen vermeiden",
+            "Resistente oder saisonangepasste Sorten wählen",
+            "Leichten, gut drainierten Boden ohne Stickstoffüberschuss erhalten",
+            "Beet belüften um Krankheiten zu begrenzen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Knoblauchsud gegen Blattläuse",
+                "Farnjauche",
+                "Schmierseife gegen Blattläuse",
+                "Wermut- oder Zitrusauszüge gegen Mehltau"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer gegen Blattläuse",
+                "Florfliegen gegen Blattläuse"
+            ],
+            "pestControl": {
+                "limaces": [
+                    "Bierfallen",
+                    "Physische Barrieren (Schneckenkragen oder -zaun)",
+                    "Lavamehl/Urgesteinsmehl"
+                ],
+                "mildiou": [
+                    "Rotation und Belüftung",
+                    "Entfernung befallener Teile"
+                ]
+            },
+            "recommendation": "Schneckenkorn (auch Bio) vermeiden, da es Boden oder Nützlinge beeinträchtigt"
+        },
+        "harvestTime": "45-60 Tage nach Pflanzung je nach Sorte",
+        "companionPlanting": {
+            "beneficial": [
+                "Radieschen",
+                "Karotte",
+                "Erdbeere",
+                "Gurke",
+                "Zwiebel",
+                "Lauch",
+                "Rote Bete"
+            ],
+            "avoid": [
+                "Sellerie",
+                "Petersilie"
+            ]
+        },
+        "varieties": {
+            "recommended": [
+                "Eichblatt",
+                "Batavia",
+                "Lollo",
+                "Romana",
+                "Appia (resistent)"
+            ]
+        },
+        "soilRequirements": {
+            "type": "Leicht, gut drainiert",
+            "pH": "6.0-7.0",
+            "nutrition": "NPK-Gleichgewicht ohne Stickstoffüberschuss"
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Frühling, Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Bewässerung nötig für Ihren Salat: 2-4 L/m²"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen nötig: 20-25 cm Platz zwischen Pflanzen lassen"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Jäten empfohlen für Ihren Salat"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Verstärkte Überwachung auf Schnecken und Mehltau empfohlen"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 40,
+                "message": "Erntezeit nähert sich für Ihren Salat"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 3,
+                    "message": "Achtung: Mindesttemperatur für Salat erreicht (3°C)"
+                },
+                "germination_optimal": {
+                    "temperature": 15,
+                    "message": "Optimale Keimbedingungen (15°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "mache",
+        "commonName": "Feldsalat",
+        "scientificName": "Valerianella locusta",
+        "family": "Valerianaceae",
+        "daysToMaturity": 60,
+        "spacing": 10,
+        "depth": 0.5,
+        "sunExposure": "Leichter Schatten / Halbschatten",
+        "waterNeeds": "Mäßig bis regelmäßig",
+        "description": "Robustes Blattgemüse, ideal für den Winter, mit zarten Rosetten, wenig nährstoffbedürftig aber empfindlich gegen Wasserschwankungen und Hitze.",
+        "sowingMonths": [
+            "A",
+            "O"
+        ],
+        "harvestMonths": [
+            "O",
+            "N",
+            "D",
+            "J"
+        ],
+        "marketPricePerKg": 7.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 17,
+            "waterG": 94,
+            "carbohydratesG": 2.2,
+            "proteinG": 2.3,
+            "fatG": 0.4,
+            "fiberG": 2.0,
+            "vitaminB9ug": 91,
+            "vitaminAmcg": 243,
+            "vitaminCmg": 36.5,
+            "vitaminK1mcg": 486,
+            "potassiumMg": 375,
+            "ironMg": 1.8,
+            "magnesiumMg": 22,
+            "calciumMg": 80.5,
+            "omega3Mg": 100
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 8,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": 18,
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "1 bis 2 Mal/Woche je nach Boden und Klima",
+            "amount": "8-20 mm/Woche (angepasst an Niederschlag)",
+            "method": "Gießen an der Basis, früh morgens, Laub nicht benetzen",
+            "bestTime": "Früh morgens"
+        },
+        "thinning": {
+            "distance": "8-15 cm zwischen Pflanzen je nach Sorte, 15-20 cm zwischen Reihen",
+            "when": "Bei 2-3 echten Blättern (3-4 Wochen nach Aussaat)"
+        },
+        "weeding": {
+            "method": "Manuelles oberflächliches Hacken, Falsches Saatbeet vor Aussaat, feines Mulchen nach Etablierung",
+            "frequency": "Alle 10-14 Tage bis Bodenbedeckung",
+            "recommendation": "Mit 2-3 cm reifem Kompost oder zerkleinerten Blättern mulchen, sobald Pflanzen gewurzelt haben"
+        },
+        "culturalTips": [
+            "Sehr flach säen (0,5–1 cm) für gleichmäßigen Aufgang",
+            "Samen im Kühlschrank 3-5 Tage vorkühlen bei Sommerhitze",
+            "Schwere oder durchnässte Böden vermeiden (Gefahr von Umfallkrankheit)",
+            "Kein Überschuss an Stickstoff (fader Geschmack, Krankheitsrisiko)",
+            "Ernte durch Schnitt am Hals, um möglichen Neuaustrieb zu fördern",
+            "Vor starker Kälte mit Vlies P17 schützen wenn nötig",
+            "Mit Lauch, Kohl oder späten Karotten assoziieren zur Platzoptimierung"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Keine Blattbehandlung nötig bei gutem Wasserhaushalt und Belüftung",
+                "Beinwelljauche in sehr geringer Dosis bei armem Boden",
+                "Bierfallen oder Kupferbarrieren gegen Schnecken"
+            ],
+            "beneficialInsects": [],
+            "companionPlants": [
+                "Lauch",
+                "Kohl",
+                "späte Karotten"
+            ]
+        },
+        "harvestTime": "6-8 Wochen nach Aussaat je nach Temperatur und Sorte",
+        "companionPlanting": {
+            "beneficial": [
+                "Lauch",
+                "Kohl",
+                "Karotte",
+                "Spinat",
+                "Lauch",
+                "Kohl",
+                "späte Karotten"
+            ],
+            "avoid": [
+                "Kulturen mit kürzlichem Sclerotinia-Befall",
+                "Gemüse mit starker Wurzelkonkurrenz"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "Aug",
+            "Oct"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spätsommer",
+        "harvestSeason": "Winter, Frühling",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "soil_dry_top_3cm == true",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Bewässerung nötig für Ihren Feldsalat: 8-12 mm Wasser an der Basis, früh morgens"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Ausdünnen empfohlen: 8-15 cm zwischen Pflanzen behalten je nach Sorte"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Oberflächliches Jäten empfohlen — Vorsicht bei fragilen Wurzeln"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "temperature < 10"
+                ],
+                "message": "Botrytis- oder Mehltaurisiko — lüften, spätes Gießen vermeiden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "Erste Ernten möglich — am Hals schneiden, früh morgens"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 1,
+                    "message": null
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 18,
+                    "message": "Optimale Keimbedingungen (10-18°C)"
+                }
+            }
+        }
+    }
+]

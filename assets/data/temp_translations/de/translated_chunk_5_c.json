@@ -1,0 +1,993 @@
+[
+    {
+        "id": "radis",
+        "commonName": "Radieschen (18 Tage)",
+        "scientificName": "Raphanus sativus L. var. sativus",
+        "family": "Brassicaceae",
+        "daysToMaturity": 18,
+        "spacing": 5,
+        "depth": 1.2,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Kleines, schnellwachsendes Radieschen, ideal für frühe Ernten im Frühling und Herbst.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.68,
+            "carbohydratesG": 3.4,
+            "sugarsG": 1.86,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminCmg": 14.8,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 25,
+            "potassiumMg": 233,
+            "magnesiumMg": 10,
+            "calciumMg": 25
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 4,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 10,
+                "max": 20
+            },
+            "minTemperature": -2
+        },
+        "watering": {
+            "frequency": "2-3 x Woche",
+            "amount": "Gleichmäßig feucht halten",
+            "method": "Fußbewässerung (oder sanft überbrausen)",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "2-5 cm",
+            "when": "Nach Aufgang"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Wöchentlich",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Nicht zu viel N (Blattmasse)",
+            "Gegen Erdfloh schützen (Netz)",
+            "Gleichmäßig gießen gegen Schärfe/Pelzigkeit"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Schachtelhalmbrühe",
+                "Schmierseife"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Florfliegen",
+                "Laufkäfer"
+            ],
+            "companionPlants": [
+                "Salat",
+                "Karotte",
+                "Erbse"
+            ]
+        },
+        "harvestTime": "18-25 Tage nach Saat",
+        "companionPlanting": {
+            "beneficial": [
+                "Karotte",
+                "Salat",
+                "Spinat",
+                "Erbse",
+                "Gurke",
+                "Kürbis",
+                "Zwiebel",
+                "Knoblauch",
+                "Lauch"
+            ],
+            "avoid": [
+                "Ysop",
+                "Kohl",
+                "Rübe",
+                "Senf"
+            ]
+        },
+        "sowingMonths": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths": [
+            "Mar",
+            "Apr",
+            "May",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Frühling, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "soil_dry_surface"
+                ],
+                "message": "Gießen (gegen Schärfe)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 7,
+                "message": "Vereinzeln (2-5 cm)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "dry_weather"
+                ],
+                "message": "Erdfloh-Gefahr: Feucht halten."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 18,
+                "message": "Erntereif?"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Keimung langsam (<5°C)."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 30,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "radis_daikon",
+        "commonName": "Daikon-Rettich",
+        "scientificName": "Raphanus sativus L. var. longipinnatus",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 12,
+        "depth": 1.75,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Langer weißer Rettich, mild und knackig. Ideal für Herbsternte.",
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.3,
+            "carbohydratesG": 4.5,
+            "sugarsG": 2.5,
+            "fatG": 0.05,
+            "fiberG": 3.5,
+            "vitaminCmg": 22,
+            "vitaminEmg": 0.0,
+            "vitaminB9ug": 28,
+            "potassiumMg": 230,
+            "magnesiumMg": 16,
+            "calciumMg": 27
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 7,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "1-2 x Woche",
+            "amount": "Gleichmäßig feucht",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens"
+        },
+        "thinning": {
+            "distance": "10-15 cm",
+            "when": "Erste echte Blätter"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Steinfreier Boden (Wurzelform)",
+            "Nicht verpflanzen",
+            "Feucht halten",
+            "Schutznetz gegen Fliegen/Erdflöhe"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Schachtelhalmtee",
+                "Knoblauchsud"
+            ],
+            "beneficialInsects": [
+                "Laufkäfer",
+                "Syrphes",
+                "Schlupfwespen"
+            ],
+            "companionPlants": [
+                "Erbse",
+                "Salat",
+                "Zwiebel",
+                "Knoblauch"
+            ]
+        },
+        "harvestTime": "50-70 Tage nach Saat",
+        "companionPlanting": {
+            "beneficial": [
+                "Erbse",
+                "Bohne",
+                "Dicke Bohne",
+                "Zwiebel",
+                "Schnittlauch",
+                "Knoblauch",
+                "Salat",
+                "Spinat"
+            ],
+            "avoid": [
+                "Kohl",
+                "Rübe",
+                "Brokkoli",
+                "Rucola",
+                "Senf",
+                "Raps"
+            ]
+        },
+        "sowingMonths": [
+            "Apr",
+            "May",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Frühling, Spätsommer",
+        "harvestSeason": "Sommer, Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "soil_dryness_detected"
+                ],
+                "message": "Gießen: Boden feucht halten."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Vereinzeln auf 10-15 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Hacken."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "pest_alert_altises",
+                    "dry_weather"
+                ],
+                "message": "Erdfloh-Gefahr: Netz/Feuchte."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Größe prüfen (4-8 cm)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -4,
+                    "message": "Frostgefahr (-4°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 25,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "radis_violet_hiver",
+        "commonName": "Violetter Winterrettich",
+        "scientificName": "Raphanus sativus L.",
+        "family": "Brassicaceae",
+        "daysToMaturity": 75,
+        "spacing": 10,
+        "depth": 1.5,
+        "sunExposure": "Sonne/Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Lagerfähiger Winterrettich, violette Haut, weißes Fleisch.",
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.6,
+            "carbohydratesG": 3.4,
+            "sugarsG": 2.0,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminCmg": 17,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 29,
+            "potassiumMg": 270,
+            "magnesiumMg": 12,
+            "calciumMg": 29
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 7,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 12,
+                "max": 20
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "1-2 x Woche",
+            "amount": "Gleichmäßig feucht",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "8-12 cm",
+            "when": "Erste echte Blätter"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Kein frischer Dünger",
+            "Feucht halten",
+            "Schutznetz"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Knoblauchsud",
+                "Schachtelhalmbrühe"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Laufkäfer"
+            ],
+            "companionPlants": [
+                "Salat",
+                "Karotte",
+                "Zwiebel"
+            ]
+        },
+        "harvestTime": "60-90 Tage",
+        "companionPlanting": {
+            "beneficial": [
+                "Salat",
+                "Karotte",
+                "Zwiebel",
+                "Schnittlauch",
+                "Spinat",
+                "Feldsalat",
+                "Phacelie"
+            ],
+            "avoid": [
+                "Kohl",
+                "Steckrübe",
+                "Senf",
+                "Rucola"
+            ]
+        },
+        "sowingMonths": [
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths": [
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Sommer",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Feucht halten (gegen Schärfe)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Vereinzeln auf 10 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Hacken."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "dry_weather"
+                ],
+                "message": "Erdfloh-Gefahr."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Erntebereit?"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Frostgefahr (-3°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 18,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "watermelon_radish",
+        "commonName": "Wassermelonen-Rettich",
+        "scientificName": "Raphanus sativus L.",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 5,
+        "depth": 1.0,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Asiatischer Rettich, innen rosa, außen weiß. Mild und knackig.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 20,
+            "proteinG": 0.6,
+            "carbohydratesG": 4.0,
+            "sugarsG": 2.8,
+            "fatG": 0.1,
+            "fiberG": 2.2,
+            "vitaminCmg": 15,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 0,
+            "potassiumMg": 230,
+            "magnesiumMg": 10,
+            "calciumMg": 33
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": 2
+        },
+        "watering": {
+            "frequency": "1-3 Tage (offen), 3-5 Tage (gemulcht)",
+            "amount": "Gleichmäßig feucht",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "3-6 cm",
+            "when": "Nach Aufgang"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Wenig Stickstoff",
+            "Spätsommersaat bevorzugt",
+            "Gleichmäßige Feuchte"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Beinwell",
+                "Schachtelhalm"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Florfliegen"
+            ],
+            "companionPlants": [
+                "Salat",
+                "Spinat",
+                "Zwiebel",
+                "Schnittlauch"
+            ]
+        },
+        "harvestTime": "55-65 Tage nach Saat",
+        "companionPlanting": {
+            "beneficial": [
+                "Salat",
+                "Spinat",
+                "Feldsalat",
+                "Zwiebel",
+                "Schnittlauch",
+                "Dill",
+                "Borretsch"
+            ],
+            "avoid": [
+                "Kohl",
+                "Rübe",
+                "Senf"
+            ]
+        },
+        "sowingMonths": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths": [
+            "May",
+            "Jun",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Frühling, Spätsommer",
+        "harvestSeason": "Frühling, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_1_day"
+                ],
+                "message": "Feucht halten (Wurzelqualität)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 12,
+                "message": "Vereinzeln auf 3-6 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Pilzrisiko (Schachtelhalm)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Größe (5-8cm) prüfen."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Kälte (<5°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 24,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "cherry_tomato",
+        "commonName": "Kirschtomate",
+        "scientificName": "Solanum lycopersicum var. cerasiforme",
+        "family": "Solanaceae",
+        "daysToMaturity": 70,
+        "spacing": 50,
+        "depth": 0.7,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Kleine, knackige, süße Tomate. Sehr produktiv und robust.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 1.0,
+            "carbohydratesG": 4.0,
+            "sugarsG": 3.0,
+            "fatG": 0.2,
+            "fiberG": 1.0,
+            "vitaminCmg": 14,
+            "vitaminEmg": 1.0,
+            "vitaminB9ug": 15,
+            "potassiumMg": 237,
+            "magnesiumMg": 11,
+            "calciumMg": 10
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 24,
+                "max": 32
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "1-2 x Woche",
+            "amount": "25-50 mm pro Woche",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "40-60 cm",
+            "when": "Beim Auspflanzen"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Untere Blätter entfernen",
+            "Ausgeizen nicht zwingend",
+            "Stützen",
+            "Regelmäßig ernten"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennesseljauche",
+                "Beinwelljauche",
+                "Schachtelhalm"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Bienen"
+            ],
+            "companionPlants": [
+                "Basilikum",
+                "Schnittlauch",
+                "Ringelblume",
+                "Tagetes"
+            ]
+        },
+        "harvestTime": "60-80 Tage nach Pflanzung",
+        "companionPlanting": {
+            "beneficial": [
+                "Basilikum",
+                "Schnittlauch",
+                "Salat",
+                "Zwiebel",
+                "Knoblauch",
+                "Lauch",
+                "Bourrache",
+                "Ringelblume",
+                "Tagetes"
+            ],
+            "avoid": [
+                "Kartoffel",
+                "Aubergine",
+                "Paprika",
+                "Fenchel",
+                "Mais"
+            ]
+        },
+        "sowingMonths": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May"
+        ],
+        "harvestMonths": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Gießen (Fußbewässerung)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Auspflanzen wenn groß genug."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Mildiougefahr (Schachtelhalm)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 65,
+                "message": "Erntezeit beginnt bald."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Kälteschutz (<10°C)."
+                },
+                "germination_optimal": {
+                    "min": 24,
+                    "max": 32,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "tomato_coeur_de_boeuf",
+        "commonName": "Ochsenherztomate",
+        "scientificName": "Solanum lycopersicum L.",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 50,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Alte Sorte, große herzförmige Früchte. Fleischig, aromatisch, wenig Samen.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "proteinG": 0.68,
+            "carbohydratesG": 2.8,
+            "sugarsG": 2.2,
+            "fatG": 0.1,
+            "fiberG": 1.2,
+            "vitaminCmg": 14.3,
+            "vitaminEmg": 1.11,
+            "vitaminB9ug": 20.5,
+            "potassiumMg": 251,
+            "magnesiumMg": 10.1,
+            "calciumMg": 8.24
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 26
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2-3 x Woche",
+            "amount": "Tiefgründig",
+            "method": "Tröpfchenbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "50 cm",
+            "when": "Beim Auspflanzen"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Regelmäßig",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Nicht nassmachen (Blätter)",
+            "Ausgeizen/Blätter entfernen",
+            "Gut stützen",
+            "Tief pflanzen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennesseljauche",
+                "Schachtelhalm",
+                "Beinwell"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Florfliegen",
+                "Schlupfwespen"
+            ],
+            "companionPlants": [
+                "Basilikum",
+                "Tagetes",
+                "Kapuzinerkresse"
+            ]
+        },
+        "harvestTime": "80-100 Tage nach Pflanzung",
+        "companionPlanting": {
+            "beneficial": [
+                "Basilikum",
+                "Tagetes",
+                "Kapuzinerkresse",
+                "Phacelie",
+                "Borretsch",
+                "Cosmos"
+            ],
+            "avoid": [
+                "Kartoffel",
+                "Aubergine",
+                "Paprika"
+            ]
+        },
+        "sowingMonths": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths": [
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Gleichmäßig gießen."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Abstand 50cm, Luftzirkulation."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Mulch erneuern."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Mildiougefahr (Prävention)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Reife prüfen (Drucktest)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Kälteschutz (<5°C)."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Keimtemperatur gut."
+                }
+            }
+        }
+    }
+]

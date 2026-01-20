@@ -1,0 +1,1074 @@
+[
+    {
+        "id": "radis",
+        "commonName": "Radish (18 days)",
+        "scientificName": "Raphanus sativus L. var. sativus",
+        "family": "Brassicaceae",
+        "daysToMaturity": 18,
+        "spacing": 5,
+        "depth": 1.2,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Medium",
+        "description": "Small crunchy radish with ultra-fast growth, ideal for early spring and autumn harvests.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "M",
+            "A",
+            "M",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.68,
+            "carbohydratesG": 3.4,
+            "sugarsG": 1.86,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminCmg": 14.8,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 25,
+            "potassiumMg": 233,
+            "magnesiumMg": 10,
+            "calciumMg": 25
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 4,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 10,
+                "max": 20
+            },
+            "minTemperature": -2
+        },
+        "watering": {
+            "frequency": "2-3 times/week in light soils",
+            "amount": "Keep soil moist to 10-15 cm",
+            "method": "At base, avoid wetting foliage excessively",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "2-5 cm between plants, 10-20 cm between rows",
+            "when": "As soon as first leaves appear"
+        },
+        "weeding": {
+            "method": "Manual",
+            "frequency": "Weekly",
+            "recommendation": "Fine mulch (straw or dry grass) to limit crusting"
+        },
+        "culturalTips": [
+            "Crop rotation (3-4 years without Brassicaceae)",
+            "Avoid excess nitrogen which favors foliage at expense of root",
+            "Use insect-proof nets from sowing against flea beetles and cabbage fly",
+            "Maintain regular moisture to prevent radishes from becoming spicy or hollow"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifier)",
+                "Horsetail decoction (fungistatic)",
+                "Black soap against aphids"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies and lacewings",
+                "Ground beetles against soil larvae"
+            ],
+            "companionPlants": [
+                "Lettuce",
+                "Carrot",
+                "Pea"
+            ]
+        },
+        "harvestTime": "18-25 days after sowing",
+        "companionPlanting": {
+            "beneficial": [
+                "carrot",
+                "lettuce",
+                "spinach",
+                "pea",
+                "cucumber",
+                "squash",
+                "onion",
+                "garlic",
+                "leek"
+            ],
+            "avoid": [
+                "hyssop",
+                "cabbage",
+                "turnip",
+                "mustard"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Printemps,Automne",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "soil_dry_surface"
+                ],
+                "message": "Watering necessary: keep soil cool to avoid too spicy radishes."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 7,
+                "message": "Thinning recommended: leave 2 to 5 cm between each radish."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Check for weeds and soil crust condition."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "dry_weather"
+                ],
+                "message": "Flea beetle alert: install a net or keep foliage moist."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 18,
+                "message": "Your 18-day radishes should be ready to harvest!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Low temperature: germination could be slowed down."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 30,
+                    "message": "Optimal germination conditions reached."
+                }
+            }
+        }
+    },
+    {
+        "id": "radis_daikon",
+        "commonName": "Daikon Radish",
+        "scientificName": "Raphanus sativus L. var. longipinnatus",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 12,
+        "depth": 1.75,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Medium",
+        "description": "Oriental radish with long white root, crisp and slightly spicy, ideal for autumn.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.3,
+            "carbohydratesG": 4.5,
+            "sugarsG": 2.5,
+            "fatG": 0.05,
+            "fiberG": 3.5,
+            "vitaminCmg": 22,
+            "vitaminEmg": 0.0,
+            "vitaminB9ug": 28,
+            "potassiumMg": 230,
+            "magnesiumMg": 16,
+            "calciumMg": 27
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 7,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "1-2 times/week (more in case of emergence)",
+            "amount": "Regular moisture, cool soil",
+            "method": "At base or in row, avoid sprinkling on old foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "10-15 cm between plants, 30 cm between rows",
+            "when": "As soon as first true leaves appear"
+        },
+        "weeding": {
+            "method": "Manual (hoeing and weeding) or stale seedbed",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Vegetal mulch (straw, dried clippings) to keep coolness"
+        },
+        "culturalTips": [
+            "Crop rotation of 3-4 years without Brassicaceae",
+            "Avoid stony soils to prevent forked roots",
+            "Do not transplant to avoid deformation of taproot",
+            "Maintain constant moisture to avoid overly spicy taste",
+            "Use insect-proof net against flea beetle and cabbage fly"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Diluted nettle manure (fortifier)",
+                "Horsetail tea (preventive diseases)",
+                "Garlic maceration (insect repellent)"
+            ],
+            "beneficialInsects": [
+                "Ground beetles against slugs",
+                "Hoverflies and Lacewings against aphids",
+                "Ladybugs",
+                "Parasitoid wasps"
+            ],
+            "companionPlants": [
+                "Pea",
+                "Lettuce",
+                "Onion",
+                "Garlic"
+            ]
+        },
+        "harvestTime": "50-70 days after sowing depending on desired size",
+        "companionPlanting": {
+            "beneficial": [
+                "pea",
+                "beans",
+                "broad beans",
+                "onion",
+                "chives",
+                "garlic",
+                "lettuce",
+                "spinach"
+            ],
+            "avoid": [
+                "cabbage",
+                "turnip",
+                "broccoli",
+                "arugula",
+                "mustard",
+                "rapeseed"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Spring, Late Summer",
+        "harvestSeason": "Summer, Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "soil_dryness_detected"
+                ],
+                "message": "Daikon watering: maintain soil cool to avoid hollow roots."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Thinning necessary: leave 10-15 cm between your Daikon radishes."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and hoeing recommended for your radishes."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "pest_alert_altises",
+                    "dry_weather"
+                ],
+                "message": "Watch out for flea beetles: install a net or keep soil moist."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Check collar diameter (4-8 cm), harvest is approaching!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -4,
+                    "message": "Frost risk for Daikon foliage (-4°C). Harvest or protect."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 25,
+                    "message": "Ideal temperature for rapid emergence of your seeds."
+                }
+            }
+        }
+    },
+    {
+        "id": "radis_violet_hiver",
+        "commonName": "Purple Winter Radish",
+        "scientificName": "Raphanus sativus L.",
+        "family": "Brassicaceae",
+        "daysToMaturity": 75,
+        "spacing": 10,
+        "depth": 1.5,
+        "sunExposure": "Sun or partial shade",
+        "waterNeeds": "Medium",
+        "description": "Winter radish with purple skin and white flesh, crisp and slightly spicy. Excellent storage.",
+        "sowingMonths": [
+            "J",
+            "J",
+            "A"
+        ],
+        "harvestMonths": [
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.6,
+            "carbohydratesG": 3.4,
+            "sugarsG": 2.0,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminCmg": 17,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 29,
+            "potassiumMg": 270,
+            "magnesiumMg": 12,
+            "calciumMg": 29
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 7,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 12,
+                "max": 20
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "1-2 times/week depending on weather",
+            "amount": "Keep soil cool without saturation",
+            "method": "At base to limit foliar diseases",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "8-12 cm between plants, 25 cm between rows",
+            "when": "As soon as first true leaves appear"
+        },
+        "weeding": {
+            "method": "Manual or regular hoeing",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Fine mulch after emergence to conserve moisture"
+        },
+        "culturalTips": [
+            "Crop rotation of 3-4 years without Brassicaceae",
+            "Avoid fresh manures which cause roots to fork",
+            "Maintain regular moisture to prevent radish from becoming too spicy",
+            "Protect with insect-proof net against flea beetles"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (vigor)",
+                "Garlic decoction (repellent)",
+                "Horsetail manure (fungal prevention)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies (predatory larvae)",
+                "Ground beetles against slugs"
+            ],
+            "companionPlants": [
+                "Lettuce",
+                "Carrot",
+                "Onion"
+            ]
+        },
+        "harvestTime": "60-90 days after sowing depending on climate",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "carrot",
+                "onion",
+                "chives",
+                "spinach",
+                "mache",
+                "phacelia"
+            ],
+            "avoid": [
+                "cabbage",
+                "turnip",
+                "rutabaga",
+                "mustard",
+                "arugula"
+            ]
+        },
+        "sowingMonths3": [
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Summer",
+        "harvestSeason": "Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Check soil moisture for your purple radishes: cool soil avoids spicy taste."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Thinning: leave 10 cm between each purple radish for good development."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Weeding and hoeing advised for your winter radishes."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "dry_weather"
+                ],
+                "message": "Watch out for flea beetles (earth fleas): keep soil moist or place a net."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Your purple radishes should be ready to be harvested."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Frost risk for your radishes: cover or harvest before deep freezes."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 18,
+                    "message": "Ideal temperature for emergence of your radishes (15-18°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "watermelon_radish",
+        "commonName": "Watermelon Radish",
+        "scientificName": "Raphanus sativus L.",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 5,
+        "depth": 1.0,
+        "sunExposure": "Full sun to partial shade",
+        "waterNeeds": "Medium to high",
+        "description": "Spectacular Asian winter radish with bright pink flesh and white skin, with sweet and crunchy taste.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "J",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "M",
+            "J",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 20,
+            "proteinG": 0.6,
+            "carbohydratesG": 4.0,
+            "sugarsG": 2.8,
+            "fatG": 0.1,
+            "fiberG": 2.2,
+            "vitaminCmg": 15,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 0,
+            "potassiumMg": 230,
+            "magnesiumMg": 10,
+            "calciumMg": 33
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": 2
+        },
+        "watering": {
+            "frequency": "Every 1-3 days (bare soil) or 3-5 days (mulched)",
+            "amount": "Maintain soil cool and regularly moist",
+            "method": "At base or drip irrigation to avoid foliar diseases",
+            "bestTime": "Morning or evening"
+        },
+        "thinning": {
+            "distance": "3-6 cm between plants, 25-30 cm between rows",
+            "when": "As soon as first leaves appear after emergence"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (regular hoeing)",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Mulching advised to limit weeds and keep moisture"
+        },
+        "culturalTips": [
+            "Crop rotation (3-4 years without Brassicaceae)",
+            "Avoid excess nitrogen (favors foliage at expense of root)",
+            "Ideally sow in late summer to avoid premature bolting",
+            "Maintain constant moisture to avoid root becoming fibrous"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifier)",
+                "Comfrey manure (growth support)",
+                "Horsetail tea (fungal preventive)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies (predatory larvae)",
+                "Lacewings (generalist predators)"
+            ],
+            "companionPlants": [
+                "Lettuce",
+                "Spinach",
+                "Onion",
+                "Chives"
+            ]
+        },
+        "harvestTime": "55-65 days after sowing",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "salad",
+                "spinach",
+                "mache",
+                "onion",
+                "chives",
+                "dill",
+                "borage"
+            ],
+            "avoid": [
+                "cabbage",
+                "turnip",
+                "mustard",
+                "other radishes"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "May",
+            "Jun",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Spring, Late Summer",
+        "harvestSeason": "Spring, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_1_day"
+                ],
+                "message": "Watering for your Watermelon radishes: maintain soil cool to avoid fibrous roots."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 12,
+                "message": "Thinning necessary: leave 3 to 6 cm between each radish."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and hoeing recommended for your radishes."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Risk of fungal diseases: horsetail decoction may be useful."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Check size of your Watermelon radishes (5-8 cm) for harvest."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Attention: minimum germination temperature reached (5°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 24,
+                    "message": "Ideal conditions for emergence of your radishes (15-24°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "cherry_tomato",
+        "commonName": "Cherry Tomato",
+        "scientificName": "Solanum lycopersicum var. cerasiforme",
+        "family": "Solanaceae",
+        "daysToMaturity": 70,
+        "spacing": 50,
+        "depth": 0.7,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high",
+        "description": "Small crunchy and sweet tomato, ideal for aperitif. Very productive and more resistant than classic varieties.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 1.0,
+            "carbohydratesG": 4.0,
+            "sugarsG": 3.0,
+            "fatG": 0.2,
+            "fiberG": 1.0,
+            "vitaminCmg": 14,
+            "vitaminEmg": 1.0,
+            "vitaminB9ug": 15,
+            "potassiumMg": 237,
+            "magnesiumMg": 11,
+            "calciumMg": 10
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 24,
+                "max": 32
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "1-2 times/week (deep)",
+            "amount": "25-50 mm per week",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "40-60 cm between plants, 80-100 cm between rows",
+            "when": "Stage 2 true leaves for transplanting"
+        },
+        "weeding": {
+            "method": "Manual or hoeing",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Thick mulch (straw, hay, RCW) to limit evaporation"
+        },
+        "culturalTips": [
+            "Crop rotation of 3-4 years without solanaceae",
+            "Remove lower leaves to improve aeration",
+            "Pruning suckers is optional for cherry tomato",
+            "Use sturdy stakes or cages",
+            "Regular harvest to stimulate production"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (growth)",
+                "Comfrey manure (fruiting)",
+                "Horsetail decoction (anti-fungal)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies and Lacewings",
+                "Bees for pollination"
+            ],
+            "companionPlants": [
+                "Basil",
+                "Chives",
+                "Marigold",
+                "French Marigold"
+            ]
+        },
+        "harvestTime": "60-80 days after transplanting",
+        "companionPlanting": {
+            "beneficial": [
+                "basil",
+                "chives",
+                "lettuce",
+                "onion",
+                "garlic",
+                "leek",
+                "borage",
+                "marigold",
+                "french marigold"
+            ],
+            "avoid": [
+                "potato",
+                "eggplant",
+                "pepper",
+                "fennel",
+                "corn"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering necessary: 25-50 mm/week at base, without wetting leaves."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Check growth stage: transplanting recommended at 2 true leaves."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and mulch verification recommended."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "High powdery mildew risk: preventive application of horsetail decoction advised."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 65,
+                "message": "Harvest of your cherry tomatoes is approaching!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Attention: growth slowed below 10°C, protect your plants."
+                },
+                "germination_optimal": {
+                    "min": 24,
+                    "max": 32,
+                    "message": "Ideal temperature for seed emergence (24-32°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "tomato_coeur_de_boeuf",
+        "commonName": "Beef Heart Tomato",
+        "scientificName": "Solanum lycopersicum L.",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 50,
+        "depth": 0.5,
+        "sunExposure": "Full sun, sheltered from wind",
+        "waterNeeds": "Medium to high",
+        "description": "Heirloom variety producing large heart-shaped fleshy fruits. Dense, tasty flesh with few seeds.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "proteinG": 0.68,
+            "carbohydratesG": 2.8,
+            "sugarsG": 2.2,
+            "fatG": 0.1,
+            "fiberG": 1.2,
+            "vitaminCmg": 14.3,
+            "vitaminEmg": 1.11,
+            "vitaminB9ug": 20.5,
+            "potassiumMg": 251,
+            "magnesiumMg": 10.1,
+            "calciumMg": 8.24
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 26
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2-3 times/week (approx 2.9 mm/day)",
+            "amount": "Adjust to cover 80-100% of water needs",
+            "method": "At base, localized irrigation (drip) recommended",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "50 cm between plants, 80 cm between rows",
+            "when": "At transplanting (6-8 weeks after sowing)"
+        },
+        "weeding": {
+            "method": "Manual, hoeing and organic mulching",
+            "frequency": "Regular before mulch installation",
+            "recommendation": "Organic mulch (hay, straw, RCW) to limit mildew"
+        },
+        "culturalTips": [
+            "Crop rotation of 3 to 4 years minimum",
+            "Avoid wetting foliage absolutely",
+            "Remove lower leaves to aerate",
+            "Use sturdy staking to support weight of fruits",
+            "Practice transplanting to encourage powerful root system"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (growth and nitrogen)",
+                "Horsetail manure (strengthening against cryptogamic diseases)",
+                "Comfrey manure (potassium for fruiting)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs and syrphes against aphids",
+                "Lacewings",
+                "Parasitoid micro-wasps against whiteflies"
+            ],
+            "companionPlants": [
+                "Basil (olfactory confusion)",
+                "French Marigold (aphids and nematodes)",
+                "Nasturtium (trap plant)"
+            ]
+        },
+        "harvestTime": "80-100 days after planting",
+        "companionPlanting": {
+            "beneficial": [
+                "basil",
+                "french marigold",
+                "nasturtium",
+                "phacelia",
+                "borage",
+                "cosmos"
+            ],
+            "avoid": [
+                "potato",
+                "eggplant",
+                "pepper"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering necessary: maintain regular moisture for your Beef Hearts."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Check spacing (50cm) and foliage aeration."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Renew organic mulch if necessary."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "High mildew risk: apply horsetail decoction preventively."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Your Beef Heart tomatoes are ripening, check fruit suppleness."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Cold alert: protect your plants (critical temperature < 5°C)."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimal conditions for seed emergence."
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,808 @@
+[
+    {
+        "id": "chou_brocoli_romanesco",
+        "commonName": "Romanesco (Brokkoli)",
+        "scientificName": "Brassica oleracea var. botrytis (Gruppe Romanesco)",
+        "family": "Brassicaceae",
+        "daysToMaturity": null,
+        "spacing": 50,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Romanesco ist ein Zuchtform von Kohl, eine Variante des Blumenkohls. Bekannt für seine fraktalen, hellgrünen Blütenköpfe. Bisannuell, meist einjährig kultiviert. Benötigt fruchtbaren, lehmig-humosen Boden, gut drainiert, pH 6,0-7,5.",
+        "marketPricePerKg": null,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 2.4,
+            "carbohydratesG": 4.0,
+            "fatG": 0.3,
+            "fiberG": 3.0,
+            "potassiumMg": 315,
+            "calciumMg": 22,
+            "phosphorusMg": 72,
+            "ironMg": 1.1,
+            "vitaminCmg": 80,
+            "vitaminKug": 12.1,
+            "folatesUg": 23
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": null,
+                "max": null
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Nach dem Pflanzen: alle 1–2 Tage für 1–2 Wochen. Danach: tiefgründig alle 2–4 Tage, bei Hitze häufiger.",
+            "amount": null,
+            "method": "Fußbewässerung (Tropfschlauch), Blätter und Kopf trocken halten.",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "50 cm Pflanzabstand, 50-60 cm Reihenabstand",
+            "when": "Auspflanzen bei 4-5 echten Blättern."
+        },
+        "weeding": {
+            "method": "Schonendes Hacken",
+            "frequency": null,
+            "recommendation": "Mulchen (Stroh, Kompost) empfohlen gegen Austrocknung und Unkraut."
+        },
+        "culturalTips": [
+            "Reifezeit: 75-100 Tage nach Pflanzung.",
+            "Aussaat unter Glas: Feb-April; Auspflanzen: März-Mai. Sommeraussaat für Herbsternte: Mai-Juli.",
+            "Keimung bei 15-24°C Bodentemperatur.",
+            "Gefahr durch Kohlhernie: Kalkhaltigen Boden bevorzugen, pH > 7.",
+            "Fruchtwechsel: 3-4 Jahre Pause für Kohlgewächse.",
+            "Dünger: Kompost und Pflanzenjauchen (Brennnessel, Beinwell) nutzen."
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (Wachstum)",
+                "Beinwelljauche (Blütenbildung)",
+                "Schachtelhalmbrühe (Pilzschutz)",
+                "Schmierseife (Blattläuse)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Schwebfliegen",
+                "Florfliegen",
+                "Schlupfwespen"
+            ],
+            "companionPlants": [
+                "Kapuzinerkresse",
+                "Ringelblume",
+                "Schafgarbe",
+                "Dill",
+                "Fenchel",
+                "Sellerie",
+                "Spinat"
+            ]
+        },
+        "harvestTime": "75-100 Tage nach Pflanzung. Ernte wenn Köpfe fest und dicht sind, bevor sich Blüten öffnen.",
+        "companionPlanting": {
+            "beneficial": [
+                "Laitue/Salat",
+                "Spinat",
+                "Mangold",
+                "Zwiebel",
+                "Knoblauch",
+                "Lauchzwiebel",
+                "Buschbohne",
+                "Erbse",
+                "Salbei",
+                "Thymian",
+                "Kamille",
+                "Dill",
+                "Minze",
+                "Kapuzinerkresse",
+                "Ringelblume"
+            ],
+            "avoid": [
+                "andere Kohlgewächse",
+                "Starkzehrer wie Mais in direkter Nähe"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Sommer",
+        "harvestSeason": "Sommer, Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": false,
+                "frequency": null,
+                "conditions": [],
+                "message": null
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": null,
+                "message": null
+            },
+            "weeding": {
+                "enabled": false,
+                "frequency": null,
+                "message": null
+            },
+            "biological_control": {
+                "enabled": false,
+                "conditions": [],
+                "message": null
+            },
+            "harvest": {
+                "enabled": false,
+                "daysAfterPlanting": null,
+                "message": null
+            },
+            "temperature_alert": {
+                "enabled": false,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": null
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 24,
+                    "message": null
+                }
+            }
+        }
+    },
+    {
+        "id": "chou_cabus_rouge",
+        "commonName": "Rotkohl",
+        "scientificName": "Brassica oleracea var. capitata f. rubra",
+        "family": "Brassicaceae",
+        "daysToMaturity": 100,
+        "spacing": 60,
+        "depth": 1,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Kopfkohl mit festen, rot-violetten Blättern. Typisches Wintergemüse, lagerfähig.",
+        "marketPricePerKg": null,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 31,
+            "proteinG": 1.4,
+            "carbohydratesG": 7.4,
+            "sugarsG": 3.8,
+            "fatG": 0.2,
+            "fiberG": 2.1,
+            "vitaminCmg": 57,
+            "vitaminKug": 38.2,
+            "vitaminB9ug": 18,
+            "vitaminB6mg": 0.2,
+            "vitaminAug": 56,
+            "potassiumMg": 243,
+            "calciumMg": 45,
+            "magnesiumMg": 16,
+            "phosphorusMg": 30,
+            "ironMg": 1.0,
+            "sodiumMg": 27,
+            "betaCaroteneUg": 670,
+            "lycopeneUg": 20
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": null,
+                "max": null
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "1-2 mal wöchentlich",
+            "amount": null,
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "40-70 cm",
+            "when": "Nach dem Auspflanzen"
+        },
+        "weeding": {
+            "method": "Hacken oder Jäten",
+            "frequency": "Regelmäßig",
+            "recommendation": "Mulchen empfohlen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel 3-4 Jahre",
+            "Boden gleichmäßig feucht halten",
+            "Mulchen gegen Austrocknung"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Schachtelhalmbrühe",
+                "Bacillus thuringiensis",
+                "Schmierseife"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Florfliegen",
+                "Schlupfwespen"
+            ],
+            "companionPlants": [
+                "Rote Bete",
+                "Karotte",
+                "Sellerie",
+                "Spinat",
+                "Salat",
+                "Erbse",
+                "Bohne",
+                "Kräuter"
+            ]
+        },
+        "harvestTime": "80-120 Tage nach Pflanzung",
+        "companionPlanting": {
+            "beneficial": [
+                "Rote Bete",
+                "Karotte",
+                "Sellerie",
+                "Spinat",
+                "Bohne",
+                "Salat",
+                "Erbse",
+                "Minze",
+                "Kräuter"
+            ],
+            "avoid": [
+                "andere Kohlsorten"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Frühling, Sommer",
+        "harvestSeason": "Sommer, Herbst, Winter",
+        "notificationSettings": {}
+    },
+    {
+        "id": "chou-daubenton",
+        "commonName": "Ewiger Kohl (Daubenton)",
+        "scientificName": "Brassica oleracea var. ramosa",
+        "family": "Brassicaceae",
+        "daysToMaturity": 180,
+        "spacing": 90,
+        "depth": 0,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Mehrjähriger Strauchkohl (Perma-Kohl), sehr winterhart. Blätter und junge Triebe ganzjährig erntbar. Blüht selten.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 35,
+            "proteinG": 2.9,
+            "carbohydratesG": 4.4,
+            "sugarsG": 1.5,
+            "fatG": 1.5,
+            "fiberG": 4.1,
+            "vitaminCmg": 93.4,
+            "vitaminEmg": 0.8,
+            "vitaminB9ug": 62,
+            "potassiumMg": 348,
+            "magnesiumMg": 33,
+            "calciumMg": 254
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -15
+        },
+        "watering": {
+            "frequency": "Bei Trockenheit",
+            "amount": "Boden frisch halten",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "80-100 cm",
+            "when": "Nach Anwachsen"
+        },
+        "weeding": {
+            "method": "Jäten/Hacken",
+            "frequency": "Alle 3 Wochen",
+            "recommendation": "Dick mulchen"
+        },
+        "culturalTips": [
+            "Vermehrung meist durch Stecklinge",
+            "Lebensdauer 4-7 Jahre",
+            "Laufende Ernte möglich",
+            "Rückschnitt fördert Verzweigung",
+            "Jährlich Kompost geben"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Beinwelljauche",
+                "Rainfarntee"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Schlupfwespen"
+            ],
+            "companionPlants": [
+                "Ail",
+                "Oignon",
+                "Thym",
+                "Salbei",
+                "Kapuzinerkresse"
+            ]
+        },
+        "harvestTime": "Ganzjährig nach Etablierung",
+        "companionPlanting": {
+            "beneficial": [
+                "Knoblauch",
+                "Zwiebel",
+                "Schnittlauch",
+                "Kräuter",
+                "Erbse",
+                "Bohne",
+                "Capucine",
+                "Ringelblume"
+            ],
+            "avoid": [
+                "Blumenkohl",
+                "Brokkoli",
+                "Rübe",
+                "Radieschen",
+                "Senf"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Frühling, Herbst (Stecklinge)",
+        "harvestSeason": "Ganzjährig",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "dry_soil"
+                ],
+                "message": "Bodenfeuchte prüfen (Ewiger Kohl)."
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 0,
+                "message": "N/A"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Unkraut entfernen / Mulch auffüllen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_butterflies"
+                ],
+                "message": "Auf Kohlweißling-Raupen achten."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Ernte junger Triebe möglich."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -12,
+                    "message": "Extremfrost: Daubenton ist sehr winterhart (-15°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Idealtemperatur für Stecklinge."
+                }
+            }
+        }
+    },
+    {
+        "id": "mizuna",
+        "commonName": "Mizuna (Asia-Salat)",
+        "scientificName": "Brassica rapa var. nipposinica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 45,
+        "spacing": 15,
+        "depth": 1.5,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Japanischer Senfkohl mit geschlitzten Blättern. Mild-scharfer Geschmack. Schnellwachsend und kältetolerant.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 3.74,
+            "carbohydratesG": 8.16,
+            "sugarsG": null,
+            "fatG": 0.17,
+            "fiberG": null,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": null
+        },
+        "germination": {
+            "minTemperature": 4,
+            "optimalTemperature": {
+                "min": 13,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "Bei Trockenheit häufig",
+            "amount": "Gleichmäßig feucht halten",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens"
+        },
+        "thinning": {
+            "distance": "10-15 cm (Blattnutzung) bis 30 cm (ganze Pflanze)",
+            "when": "Nach Erscheinen erster echter Blätter"
+        },
+        "weeding": {
+            "method": "Jäten / Mulchen",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Mulchen empfohlen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel 3-4 Jahre",
+            "Wasser nicht auf Blätter (Pilzgefahr)",
+            "Schnittsalat (Mehrmals-Ernte)",
+            "Schutznetze gegen Erdflöhe ratsam",
+            "Humoser Boden bevorzugt"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Schachtelhalmtee",
+                "Knoblauch-Sud"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Laufkäfer",
+                "Schlupfwespen"
+            ],
+            "companionPlants": [
+                "Zwiebel",
+                "Schnittlauch",
+                "Knoblauch",
+                "Erbse"
+            ]
+        },
+        "harvestTime": "20-35 Tage (Baby-Leaf), 50-70 Tage (Kopf)",
+        "companionPlanting": {
+            "beneficial": [
+                "Erbse",
+                "Bohne",
+                "Klee",
+                "Zwiebel",
+                "Schnittlauch",
+                "Knoblauch",
+                "Karotte",
+                "Salat",
+                "Spinat"
+            ],
+            "avoid": [
+                "Kohl",
+                "Rübe",
+                "Radieschen",
+                "Rucola",
+                "Senf"
+            ]
+        },
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Frühling, Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "dry_soil_surface"
+                ],
+                "message": "Boden feucht halten (Mizuna)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Verziehen auf 10-15 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_butterfly_presence",
+                    "dry_weather"
+                ],
+                "message": "Achtung Erdflöhe/Raupen. Netze prüfen."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Ernte junger Blätter möglich."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -2,
+                    "message": "Starker Frost: Vliesabdeckung empfohlen."
+                },
+                "germination_optimal": {
+                    "min": 13,
+                    "max": 24,
+                    "message": "Gute Keimbedingungen."
+                }
+            }
+        }
+    },
+    {
+        "id": "butternut_squash",
+        "commonName": "Butternut-Kürbis",
+        "scientificName": "Cucurbita moschata",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 95,
+        "spacing": 50,
+        "depth": 2.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Birnenförmiger Moschuskürbis mit nussigem Aroma. Lagerfähig.",
+        "marketPricePerKg": 2.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 45,
+            "proteinG": 1.0,
+            "carbohydratesG": 12.0,
+            "sugarsG": 2.0,
+            "fatG": 0.1,
+            "fiberG": 2.0,
+            "sodiumMg": 4,
+            "potassiumMg": 352,
+            "calciumMg": 48,
+            "magnesiumMg": 34,
+            "phosphorusMg": 33,
+            "ironMg": 1.0,
+            "zincMg": 0.2,
+            "vitaminCmg": 21,
+            "vitaminEmg": 1.0,
+            "vitaminB6mg": 0.2,
+            "vitaminB9ug": 27,
+            "vitaminAUg": 532,
+            "betaCaroteneUg": 4226,
+            "alphaCaroteneUg": 834
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 28
+            },
+            "minTemperature": 0
+        },
+        "watering": {
+            "frequency": "1-2 x Woche (pailliert)",
+            "amount": "Reichlich, besonders bei Fruchtansatz",
+            "method": "Fußbewässerung (kein Wasser auf Blätter)",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "40-60 cm / 150 cm Reihe",
+            "when": "2-3 Blattstadium"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 2-3 Wochen (anfangs)",
+            "recommendation": "Dick mulchen!"
+        },
+        "culturalTips": [
+            "Fruchtwechsel 3-4 Jahre",
+            "Viel Kompost nötig",
+            "Anbau auf Hügelbeet möglich",
+            "Ranken nicht verletzen",
+            "Mit Stiel ernten für Lagerung"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Schachtelhalmbrühe",
+                "Brennnesseljauche",
+                "Schmierseife"
+            ],
+            "beneficialInsects": [
+                "Coccinelles",
+                "Syrphes",
+                "Chrysopes",
+                "Laufkäfer"
+            ],
+            "companionPlants": [
+                "Mais",
+                "Bohne",
+                "Ringelblume",
+                "Phacelia"
+            ]
+        },
+        "harvestTime": "80-110 Tage nach Aussaat",
+        "companionPlanting": {
+            "beneficial": [
+                "Maïs",
+                "Bohne",
+                "Ringelblume",
+                "Kapuzinerkresse",
+                "Borretsch",
+                "Phacelia"
+            ],
+            "avoid": [
+                "Kartoffel",
+                "Gurke"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain"
+                ],
+                "message": "Gießen: Butternut braucht Wasser."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 20,
+                "message": "Vereinzeln auf Endabstand."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut entfernen / Mulchen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_humidity"
+                ],
+                "message": "Mehltau-Kontrolle."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 95,
+                "message": "Erntezeit (vor Frost)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Kälteempfindlich (<5°C) !"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 30,
+                    "message": "Wärme nötig zur Keimung."
+                }
+            }
+        }
+    }
+]

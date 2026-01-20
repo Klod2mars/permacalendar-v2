@@ -1,0 +1,783 @@
+[
+    {
+        "id": "chou_brocoli_romanesco",
+        "commonName": "Brócoli Romanesco",
+        "scientificName": "Brassica oleracea var. botrytis (groupe romanesco)",
+        "family": "Brassicaceae",
+        "daysToMaturity": null,
+        "spacing": 50,
+        "depth": 0.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Col romanesco (brócoli romanesco / coliflor romanesco): bianual cultivada como anual. Inflorescencia cónica compacta con motivos fractales, color verde vivo. Confusiones posibles: otros brócolis y coliflores. Sin casos documentados de confusión con plantas tóxicas similares. Suelo aconsejado: fértil, limoso-arcilloso o limoso-arenoso, bien drenado, rico en materia orgánica, buena retención de agua sin encharcamiento. pH óptimo 6,0–7,5 (neutro a ligeramente alcalino). Exposición: pleno sol, tolera ligera media sombra en verano caluroso.",
+        "marketPricePerKg": null,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 2.4,
+            "carbohydratesG": 4.0,
+            "fatG": 0.3,
+            "fiberG": 3.0,
+            "potassiumMg": 315,
+            "calciumMg": 22,
+            "phosphorusMg": 72,
+            "ironMg": 1.1,
+            "vitaminCmg": 80,
+            "vitaminKug": 12.1,
+            "folatesUg": 23
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": null,
+                "max": null
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Tras trasplante: cada 1–2 días durante 1–2 semanas según clima; luego: riegos profundos cada 2–4 días, más frecuentes en periodo cálido o ventoso",
+            "amount": null,
+            "method": "Al pie, riego lento y profundo; evitar mojar las cabezas y el follaje (goteo, tuberías exudantes, surcos aconsejados)",
+            "bestTime": "Temprano en la mañana o por la tarde"
+        },
+        "thinning": {
+            "distance": "50 cm entre plantas, 50–60 cm entre filas",
+            "when": "Trasplante recomendado al estadio 4–5 hojas verdaderas (plantas robustas no ahiladas); espaciamiento controlado y sistema radicular fuerte"
+        },
+        "weeding": {
+            "method": "Deshierbe mecánico suave",
+            "frequency": null,
+            "recommendation": "Acolchado aconsejado (paja, heno, hojas muertas, hierba seca, compost maduro): limita evaporación, regula temperatura, reduce suciedad y adventicias; evitar acolchado demasiado fresco propicio a babosas"
+        },
+        "culturalTips": [
+            "Tiempo hasta madurez: 75–100 días tras trasplante; 100–120 días tras siembra",
+            "Siembra (clima templado): bajo abrigo fin febrero–abril; trasplante marzo–mayo; siembra de verano para cosecha otoño/invierno: mayo–julio según clima; trasplante 4–6 semanas tras siembra",
+            "Condiciones de emergencia: sustrato fino, bien drenado, húmedo sin encharcar; temperatura suelo 15–24°C; buena aireación; luz indirecta; evitar desecación superficial",
+            "Factores limitantes: costra superficial (evitar riegos violentos), sequedad sustrato, exceso agua (asfixia, caída de plántulas), temperaturas >27°C (germinación irregular; subida a flor precoz más tarde)",
+            "Fertilización natural: compost maduro de fondo 3–5 kg/m² + recordatorios ligeros; purín de ortiga (nitrógeno) y purín de consuelda (K) diluidos al pie; abonos verdes posibles: leguminosas, facelia, mezclas cereales–leguminosas",
+            "Rotación: retorno de Brassicaceae en la misma parcela tras 3–4 años; evitar brasicáceas antes/después inmediato (hernia de la col y plagas específicas)",
+            "Prevención hernia de la col: evitar suelos ácidos (pH<6), exceso humedad y rotaciones cortas; mantener pH cercano a 7 (compost + enmiendas calcáreas suaves si necesario)",
+            "Protección plagas: mallas anti-insectos/velos (piérides, mosca de la col, altises); collares en el cuello (mosca de la col); trampas cerveza/refugios trampa (babosas)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (refuerzo vegetativo; resistencia general)",
+                "Purín de consuelda (apoyo floración y firmeza de cabezas; aportes K)",
+                "Decocción de cola de caballo (prevención enfermedades criptogámicas; refuerzo tisular)",
+                "Jabón negro diluido / jabón insecticida orgánico (contra pulgones; aplicación localizada)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (larvas y adultos) contra pulgones",
+                "Sírfidos (larvas) contra pulgones",
+                "Crisopas (larvas) contra pulgones y pequeñas plagas",
+                "Avispas parasitoides (parasitismo orugas de piérides)"
+            ],
+            "companionPlants": [
+                "capuchina",
+                "caléndula",
+                "milenrama",
+                "eneldo",
+                "hinojo",
+                "umbelíferas diversas"
+            ]
+        },
+        "harvestTime": "75–100 días tras trasplante; 100–120 días tras siembra según variedad y clima. Signos: cabeza cónica compacta, motivos fractales bien formados, verde vivo, botones florales cerrados (sin florecillas amarillas). Cosecha: corte bajo la cabeza con cuchillo limpio, dejar algunas hojas protectoras; preferiblemente por la mañana con tiempo fresco. Rebrote: principalmente una sola cabeza, pocos o nulos brotes laterales útiles (rebrote limitado). Conservación: frigorífico 0–4°C 3–7 días (bolsa perforada); congelación tras blanqueo 2–3 min y enfriamiento (varios meses); lactofermentación posible.",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "ensaladas hojas",
+                "espinaca",
+                "acelga",
+                "cebolla",
+                "ajo",
+                "cebolleta",
+                "judías enanas",
+                "guisante (según clima)",
+                "salvia",
+                "tomillo",
+                "manzanilla",
+                "eneldo",
+                "menta",
+                "capuchina",
+                "caléndula",
+                "facelia"
+            ],
+            "avoid": [
+                "otras brasicáceas (cols, coliflor, kale, nabo, rábano, mostaza)",
+                "cultivos exigentes en nitrógeno de gran desarrollo (maíz, grandes cucurbitáceas, tomates en suelo pobre)"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera,Verano",
+        "harvestSeason": "Verano,Otoño,Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": false,
+                "frequency": null,
+                "conditions": [],
+                "message": null
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": null,
+                "message": null
+            },
+            "weeding": {
+                "enabled": false,
+                "frequency": null,
+                "message": null
+            },
+            "biological_control": {
+                "enabled": false,
+                "conditions": [],
+                "message": null
+            },
+            "harvest": {
+                "enabled": false,
+                "daysAfterPlanting": null,
+                "message": null
+            },
+            "temperature_alert": {
+                "enabled": false,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": null
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 24,
+                    "message": null
+                }
+            }
+        }
+    },
+    {
+        "id": "chou_cabus_rouge",
+        "commonName": "Col Lombarda",
+        "scientificName": "Brassica oleracea var. capitata f. rubra",
+        "family": "Brassicacées",
+        "daysToMaturity": 100,
+        "spacing": 60,
+        "depth": 1,
+        "sunExposure": "Sol a media sombra",
+        "waterNeeds": "Medio a alto",
+        "description": "Col que forma una cabeza densa de color rojo violáceo, adaptada a climas templados y cultivos de primavera a invierno.",
+        "marketPricePerKg": null,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 31,
+            "proteinG": 1.4,
+            "carbohydratesG": 7.4,
+            "sugarsG": 3.8,
+            "fatG": 0.2,
+            "fiberG": 2.1,
+            "vitaminCmg": 57,
+            "vitaminKug": 38.2,
+            "vitaminB9ug": 18,
+            "vitaminB6mg": 0.2,
+            "vitaminAug": 56,
+            "potassiumMg": 243,
+            "calciumMg": 45,
+            "magnesiumMg": 16,
+            "phosphorusMg": 30,
+            "ironMg": 1.0,
+            "sodiumMg": 27,
+            "betaCaroteneUg": 670,
+            "lycopeneUg": 20
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": null,
+                "max": null
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana según condiciones",
+            "amount": null,
+            "method": "Al pie, riego localizado",
+            "bestTime": "Mañana o noche"
+        },
+        "thinning": {
+            "distance": "40-70 cm según variedad",
+            "when": "Tras repicado o plantas bien establecidas"
+        },
+        "weeding": {
+            "method": "Manual o mecánico",
+            "frequency": "Regular",
+            "recommendation": "Acolchado recomendado"
+        },
+        "culturalTips": [
+            "Rotación de 3 a 4 años fuera de Brassicáceas",
+            "Mantener el suelo fresco sin exceso de agua",
+            "Acolchar para limitar estrés hídrico y adventicias"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga",
+                "Tisana de cola de caballo",
+                "Bacillus thuringiensis",
+                "Jabón negro"
+            ],
+            "beneficialInsects": [
+                "Mariquitas",
+                "Sírfidos",
+                "Crisopas",
+                "Avispas parasitoides"
+            ],
+            "companionPlants": [
+                "remolacha",
+                "zanahoria",
+                "apio",
+                "espinaca",
+                "lechuga",
+                "guisante",
+                "judía",
+                "aromáticas diversas"
+            ]
+        },
+        "harvestTime": "80-120 días tras plantación",
+        "companionPlanting": {
+            "beneficial": [
+                "remolacha",
+                "zanahoria",
+                "apio",
+                "espinaca",
+                "judía",
+                "lechuga",
+                "guisante",
+                "menta",
+                "aromáticas"
+            ],
+            "avoid": [
+                "otras Brassicáceas"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera,Verano",
+        "harvestSeason": "Verano,Otoño,Invierno",
+        "notificationSettings": {}
+    },
+    {
+        "id": "chou-daubenton",
+        "commonName": "Col Daubenton",
+        "scientificName": "Brassica oleracea var. ramosa",
+        "family": "Brassicacées",
+        "daysToMaturity": 180,
+        "spacing": 90,
+        "depth": 0,
+        "sunExposure": "Sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Hortaliza vivaz y perpetua, muy rústica, de la que se consumen los brotes jóvenes y las hojas todo el año.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 35,
+            "proteinG": 2.9,
+            "carbohydratesG": 4.4,
+            "sugarsG": 1.5,
+            "fatG": 1.5,
+            "fiberG": 4.1,
+            "vitaminCmg": 93.4,
+            "vitaminEmg": 0.8,
+            "vitaminB9ug": 62,
+            "potassiumMg": 348,
+            "magnesiumMg": 33,
+            "calciumMg": 254
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -15
+        },
+        "watering": {
+            "frequency": "Regular en tiempo seco",
+            "amount": "Mantener suelo fresco pero no encharcado",
+            "method": "Al pie, evitar mojar el follaje",
+            "bestTime": "Mañana o noche"
+        },
+        "thinning": {
+            "distance": "80-100 cm en todos los sentidos",
+            "when": "En cuanto la planta esté bien enraizada"
+        },
+        "weeding": {
+            "method": "Manual o binado regular",
+            "frequency": "Cada 3 semanas",
+            "recommendation": "Acolchado orgánico espeso (paja, BRF ligero)"
+        },
+        "culturalTips": [
+            "Multiplicación por esqueje de 'jets' muy fácil",
+            "Planta vivaz que puede producir durante 4 a 7 años",
+            "Cosechar hojas a medida de las necesidades",
+            "Podar para favorecer ramificación y evitar floración",
+            "Aportar compost maduro cada año en primavera"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (nitrógeno y refuerzo)",
+                "Purín de consuelda (crecimiento foliar)",
+                "Decocción de tanaisie (anti-orugas)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Syrphes contra pulgones",
+                "Micro-himenópteros contra la piéride"
+            ],
+            "companionPlants": [
+                "Ajo y cebolla contra enfermedades",
+                "Plantas aromáticas (tomillo, salvia) contra piéride",
+                "Capuchina (planta trampa para pulgones)"
+            ]
+        },
+        "harvestTime": "Cosecha posible todo el año una vez pie establecido",
+        "companionPlanting": {
+            "beneficial": [
+                "ajo",
+                "cebolla",
+                "ciboulette",
+                "aromáticas",
+                "guisante",
+                "habas",
+                "capuchina",
+                "caléndula"
+            ],
+            "avoid": [
+                "coliflor",
+                "brócoli",
+                "nabo",
+                "rábano",
+                "mostaza"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Primavera,Otoño",
+        "harvestSeason": "Primavera,Verano,Otoño,Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "dry_soil"
+                ],
+                "message": "Verifique humedad del suelo para su col Daubenton."
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 0,
+                "message": "N/A"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Limpiar el pie de la col Daubenton y renovar acolchado."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_butterflies"
+                ],
+                "message": "Vigile presencia de puestas de piéride bajo las hojas."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Puede empezar a cosechar los brotes jóvenes de su col."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -12,
+                    "message": "Gran frío previsto: la col Daubenton resiste hasta -15°C."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Temperatura ideal para enraizamiento de esquejes."
+                }
+            }
+        }
+    },
+    {
+        "id": "mizuna",
+        "commonName": "Mizuna",
+        "scientificName": "Brassica rapa var. nipposinica",
+        "family": "Brassicacées",
+        "daysToMaturity": 45,
+        "spacing": 15,
+        "depth": 1.5,
+        "sunExposure": "Sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Hortaliza de hoja japonesa rústica de hojas finamente recortadas, apreciada por su sabor suave y ligeramente picante.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 3.74,
+            "carbohydratesG": 8.16,
+            "sugarsG": null,
+            "fatG": 0.17,
+            "fiberG": null,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": null
+        },
+        "germination": {
+            "minTemperature": 4,
+            "optimalTemperature": {
+                "min": 13,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "Mantener suelo fresco, frecuente en tiempo seco",
+            "amount": "Regular sin exceso para evitar asfixia",
+            "method": "Al pie, riego suave (goteo)",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "10-15 cm para hojas, 30-40 cm plantas enteras",
+            "when": "Desde aparición primeras hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Manual o acolchado orgánico",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado (compost maduro, paja, césped seco) para limitar evaporación"
+        },
+        "culturalTips": [
+            "Rotación de 3-4 años sin Brassicáceas",
+            "Evitar riegos sobre follaje para prevenir oídio",
+            "Cosecha posible en 'cortar y rebrotar' (hasta 5 veces)",
+            "Usar mallas anti-insectos desde siembra contra altises",
+            "Preferir suelo rico en materia orgánica y bien drenado"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Purín de cola de caballo (preventivo fúngico)",
+                "Decocción de ajo (repelente insectos)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles y sírfidos contra pulgones",
+                "Cárabos contra babosas",
+                "Himenópteros parasitoides contra orugas"
+            ],
+            "companionPlants": [
+                "Cebolla",
+                "Ciboulette",
+                "Ajo",
+                "Guisante"
+            ]
+        },
+        "harvestTime": "20-35 días (hojas jóvenes) o 50-70 días (plantas enteras)",
+        "companionPlanting": {
+            "beneficial": [
+                "guisante",
+                "habas enanas",
+                "tréboles",
+                "cebolla",
+                "ciboulette",
+                "ajo",
+                "zanahoria",
+                "lechuga",
+                "espinaca"
+            ],
+            "avoid": [
+                "col",
+                "nabo",
+                "rábano",
+                "rúcula",
+                "mostaza"
+            ]
+        },
+        "plantingSeason": "Primavera,Otoño",
+        "harvestSeason": "Primavera,Otoño,Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "dry_soil_surface"
+                ],
+                "message": "Verifique humedad suelo para Mizuna: mantener fresco al pie."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Aclareo: espacie sus Mizunas 10-15 cm para buen desarrollo."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y verificación acolchado recomendados para Mizuna."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_butterfly_presence",
+                    "dry_weather"
+                ],
+                "message": "Alerta Altises o Piérides: verifique mallas o aplique repelente natural."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "¡Primera cosecha de hojas jóvenes de Mizuna posible!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -2,
+                    "message": "Riesgo de helada fuerte: proteja Mizunas con velo de invernaje."
+                },
+                "germination_optimal": {
+                    "min": 13,
+                    "max": 24,
+                    "message": "Condiciones ideales para levante rápido de semillas Mizuna."
+                }
+            }
+        }
+    },
+    {
+        "id": "butternut_squash",
+        "commonName": "Calabaza Butternut",
+        "scientificName": "Cucurbita moschata",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 95,
+        "spacing": 50,
+        "depth": 2.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Calabaza moscada de carne fundente y dulce, célebre por su sabor a nuez y gran capacidad de conservación.",
+        "marketPricePerKg": 2.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 45,
+            "proteinG": 1.0,
+            "carbohydratesG": 12.0,
+            "sugarsG": 2.0,
+            "fatG": 0.1,
+            "fiberG": 2.0,
+            "sodiumMg": 4,
+            "potassiumMg": 352,
+            "calciumMg": 48,
+            "magnesiumMg": 34,
+            "phosphorusMg": 33,
+            "ironMg": 1.0,
+            "zincMg": 0.2,
+            "vitaminCmg": 21,
+            "vitaminEmg": 1.0,
+            "vitaminB6mg": 0.2,
+            "vitaminB9ug": 27,
+            "vitaminAUg": 532,
+            "betaCaroteneUg": 4226,
+            "alphaCaroteneUg": 834
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Regular, abundante",
+            "amount": "Mantener suelo húmedo",
+            "method": "Al pie, evitar mojar hojas",
+            "bestTime": "Mañana"
+        },
+        "thinning": {
+            "distance": "1-2 m entre plantas",
+            "when": "Tras 2-3 hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Manual al inicio, luego cobertura",
+            "frequency": "Ocasional",
+            "recommendation": "Acolchado grueso indispensable"
+        },
+        "culturalTips": [
+            "Requiere suelo muy rico",
+            "Proteger frutos del suelo húmedo",
+            "Poda posible para limitar expansión",
+            "Cosechar antes de heladas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín ortiga",
+                "Decocción cola de caballo"
+            ],
+            "beneficialInsects": [
+                "Mariquitas"
+            ],
+            "companionPlants": [
+                "Maíz",
+                "Judía",
+                "Capuchina"
+            ]
+        },
+        "harvestTime": "90-100 días",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz",
+                "judía",
+                "capuchina",
+                "cebolla"
+            ],
+            "avoid": [
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain"
+                ],
+                "message": "Riego generoso necesario para Butternut"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 20,
+                "message": "Aclareo / verificación espacio Butternut"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Control adventicias Butternut"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity_high"
+                ],
+                "message": "Vigilancia Oídio en Butternut"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 95,
+                "message": "Cosecha Butternut inminente"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Frío: proteger Butternut <10°C"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 30,
+                    "message": "Temperatura OK germinación Butternut"
+                }
+            }
+        }
+    }
+]

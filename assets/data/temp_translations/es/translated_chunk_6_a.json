@@ -1,0 +1,825 @@
+[
+    {
+        "id": "lupin",
+        "commonName": "Altramuz",
+        "scientificName": "Lupinus polyphyllus / Lupinus albus",
+        "family": "Fabaceae",
+        "daysToMaturity": 130,
+        "spacing": 50,
+        "depth": 4,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Leguminosa fijadora de nitrógeno, cultivada por sus semillas nutritivas o su floración ornamental espectacular.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 371,
+            "proteinG": 36.17,
+            "carbohydratesG": 40.37,
+            "sugarsG": 2.12,
+            "fatG": 9.74,
+            "fiberG": 18.9,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 355,
+            "potassiumMg": 1013,
+            "magnesiumMg": 198,
+            "calciumMg": 176
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -20
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana durante implantación",
+            "amount": "Riego profundo en periodo seco",
+            "method": "Al pie o goteo",
+            "bestTime": "Por la mañana"
+        },
+        "thinning": {
+            "distance": "45-60 cm entre plantas",
+            "when": "Estadio plántula (repicado delicado debido al pivote)"
+        },
+        "weeding": {
+            "method": "Manual, binado superficial",
+            "frequency": "Cada 3 semanas",
+            "recommendation": "Acolchado (paja, BRF, compost grueso)"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (4-5 años sin Fabáceas)",
+            "No requiere aporte de nitrógeno (fijación simbiótica)",
+            "Remojo de semillas 12-24h antes de siembra para facilitar levée",
+            "Evitar suelos demasiado calcáreos (prefiere pH < 7)",
+            "Atención a la costra superficial que bloquea la levée"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Decocción de cola de caballo (enfermedades criptogámicas)",
+                "Jabón negro (contra pulgones)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles y sírfidos (contra pulgones)",
+                "Cárabos y estafilinos (depredadores del suelo)",
+                "Polinizadores variados (atraídos por las flores)"
+            ],
+            "companionPlants": [
+                "Cucurbitáceas",
+                "Hortalizas de hoja",
+                "Solanáceas"
+            ]
+        },
+        "harvestTime": "110-150 días tras siembra según especie",
+        "companionPlanting": {
+            "beneficial": [
+                "pepino",
+                "calabacín",
+                "calabaza",
+                "lechuga",
+                "espinaca",
+                "tomate",
+                "pimiento",
+                "berenjena"
+            ],
+            "avoid": [
+                "col",
+                "brócoli",
+                "patatas",
+                "guisantes",
+                "judías",
+                "habas"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "dry_soil"
+                ],
+                "message": "Riego recomendado para sus altramuces (periodo seco)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 20,
+                "message": "Aclareo: espacie sus altramuces 45-60 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Verifique presencia adventicias y estado del acolchado"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_aphids"
+                ],
+                "message": "Alerta pulgones: pulverización jabón negro o purín ortiga posible"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 130,
+                "message": "Verifique madurez de vainas de altramuz (secas y marrones)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 2,
+                    "message": "Riesgo para germinación: temperatura mínima de 2°C alcanzada"
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 15,
+                    "message": "Condiciones óptimas para germinación altramuces (10-15°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "white_onion",
+        "image": "oignons_blanc.png",
+        "commonName": "Cebolla Blanca",
+        "scientificName": "Allium cepa L.",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 125,
+        "spacing": 12,
+        "depth": 1.2,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Cebolla de bulbo blanco crujiente, apreciada por su sabor suave. Cultivada como anual para sus bulbos o brotes jóvenes (cebolletas).",
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 0.9,
+            "carbohydratesG": 9,
+            "sugarsG": 4,
+            "fatG": 0.13,
+            "fiberG": 2,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": 24
+        },
+        "germination": {
+            "minTemperature": 6,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 21,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "Cada 2-4 días en tiempo cálido, si no 7-10 días",
+            "amount": "Aportes ligeros y frecuentes (evitar saturación del suelo)",
+            "method": "Al pie o goteo, evitar aspersión",
+            "bestTime": "Temprano en la mañana o por la tarde"
+        },
+        "thinning": {
+            "distance": "10-15 cm en la línea, 30-40 cm entre filas",
+            "when": "Estadio lápiz o tras levée para siembras densas"
+        },
+        "weeding": {
+            "method": "Manual",
+            "frequency": "Regular",
+            "recommendation": "Acolchado orgánico (paja, heno) para limitar adventicias"
+        },
+        "culturalTips": [
+            "Rotación de 3-4 años mínimo antes de volver a parcela Allium",
+            "Detener riego 10-20 días antes cosecha para mejorar conservación",
+            "Evitar suelos pesados o mal drenados",
+            "No enterrar bulbos demasiado profundo",
+            "Limitar excesos de nitrógeno"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga o cola de caballo",
+                "Decocción de ajo contra trips"
+            ],
+            "beneficialInsects": [
+                "Crisopas",
+                "Sírfidos",
+                "Cárabos",
+                "Estafilinos"
+            ],
+            "companionPlants": [
+                "Zanahoria",
+                "Lechuga",
+                "Fresa"
+            ]
+        },
+        "harvestTime": "100-150 días tras siembra según uso",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "lechuga",
+                "remolacha",
+                "fresa",
+                "eneldo",
+                "coriandro"
+            ],
+            "avoid": [
+                "ajo",
+                "puerro",
+                "chalota",
+                "judía de enrame",
+                "alfalfa"
+            ]
+        },
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "S",
+            "O"
+        ],
+        "harvestMonths": [
+            "M",
+            "J",
+            "J",
+            "A",
+            "S"
+        ],
+        "plantingSeason": "Primavera,Otoño",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "soil_moisture < 30%"
+                ],
+                "message": "Riego de sus cebollas: privilegie aporte ligero al pie."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Aclareo: espacie sus cebollas 10-15 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Deshierbe necesario para evitar competencia."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Riesgo enfermedades fúngicas: vigile follaje."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Vigile caída de hojas para iniciar cosecha."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Atención: helada crítica para bulbos en tierra (-3°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Temperatura ideal para levée de sus cebollas."
+                }
+            }
+        }
+    },
+    {
+        "id": "red_onion",
+        "commonName": "Cebolla Roja",
+        "scientificName": "Allium cepa L.",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 110,
+        "spacing": 8,
+        "depth": 1.2,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Variedad de cebolla apreciada por su color vivo y sabor ligeramente dulce, ideal para consumo en crudo o guarda.",
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 38,
+            "proteinG": 1.1,
+            "carbohydratesG": 7.55,
+            "sugarsG": 6.7,
+            "fatG": 0.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 7.4,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 19,
+            "potassiumMg": 146,
+            "magnesiumMg": 10,
+            "calciumMg": 22
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "Aprox 20-25 mm / semana",
+            "amount": "Reducir y luego parar 2-3 semanas antes cosecha",
+            "method": "Al pie / goteo, evitar follaje",
+            "bestTime": "Mañana temprano"
+        },
+        "thinning": {
+            "distance": "5-8 cm entre plantas, 20-40 cm entre filas",
+            "when": "Cuando las plantas tienen 3-4 hojas"
+        },
+        "weeding": {
+            "method": "Manual o binado precoz",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado (paja, heno poco nitrogenado, BRF maduro)"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (3-4 años sin Allium)",
+            "Detener riegos antes de cosecha para favorecer conservación",
+            "Practicar secado al sol tras arranque",
+            "Evitar abonos orgánicos demasiado frescos"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (estimulación al inicio)",
+                "Decocción de ajo (prevención fúngica)",
+                "Infusión de tanaisie"
+            ],
+            "beneficialInsects": [
+                "Cárabos y estafilinos contra plagas del suelo",
+                "Sírfidos contra pulgones",
+                "Crisopas"
+            ],
+            "companionPlants": [
+                "Zanahoria",
+                "Remolacha",
+                "Lechuga"
+            ]
+        },
+        "harvestTime": "100-120 días tras plantación",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "remolacha",
+                "lechuga",
+                "espinaca",
+                "fresa"
+            ],
+            "avoid": [
+                "ajo",
+                "puerro",
+                "ciboulette",
+                "judías de enrame",
+                "guisantes de enrame",
+                "col"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Fin invierno, Primavera",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 20",
+                    "phase_vegetative"
+                ],
+                "message": "Necesidad de agua para cebollas: mantenga suelo fresco (20-25mm/semana)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Aclareo o repicado: verifique si plantas tienen 3-4 hojas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe crucial: la cebolla teme competencia de adventicias"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Riesgo de mildiu: verifique aireación y trate preventivamente"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "Signo de cosecha: verifique si 50% de hojas están tumbadas"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Atención: riesgo de helada para plantas jóvenes"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Temperatura ideal para levée de sus cebollas"
+                }
+            }
+        }
+    },
+    {
+        "id": "watermelon",
+        "commonName": "Sandía",
+        "scientificName": "Citrullus lanatus",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 90,
+        "spacing": 135,
+        "depth": 1.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Fruto refrescante lleno de agua (91%), rico en licopeno y citrulina.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 0.61,
+            "carbohydratesG": 7.6,
+            "sugarsG": 6.2,
+            "fatG": 0.2,
+            "fiberG": 0.4,
+            "vitaminCmg": 8.1,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 3,
+            "potassiumMg": 112,
+            "magnesiumMg": 10,
+            "calciumMg": 7
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 29
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 30
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Regular para plantas jóvenes, luego profundo y espaciado",
+            "amount": "5-10 litros por planta/semana (según calor)",
+            "method": "Al pie o goteo, evitar follaje",
+            "bestTime": "Temprano mañana o noche"
+        },
+        "thinning": {
+            "distance": "90-180 cm entre plantas, 180-300 cm entre filas",
+            "when": "Tras últimas heladas, suelo > 18°C"
+        },
+        "weeding": {
+            "method": "Manual o acolchado espeso",
+            "frequency": "Cada 2 semanas (más frecuente al inicio)",
+            "recommendation": "Acolchado espeso estructurado (paja, hojas muertas, cartones)"
+        },
+        "culturalTips": [
+            "Usar macetas biodegradables para evitar estrés radicular",
+            "Privilegiar suelo ligero y rico en materia orgánica",
+            "Practicar rotación de 3 años mínimo",
+            "Instalar mulch seco para evitar contacto directo fruto-suelo"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (pulgones y vigor)",
+                "Jabón negro (pulgones y moscas blancas)",
+                "Decocción de ajo (repelente general)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles y sírfidos contra pulgones",
+                "Crisopas contra moscas blancas",
+                "Abejas para polinización y cuajado"
+            ],
+            "companionPlants": [
+                "Albahaca",
+                "Caléndula",
+                "Tagetes",
+                "Leguminosas bajas"
+            ]
+        },
+        "harvestTime": "80-100 días tras levée según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "albahaca",
+                "caléndula",
+                "tagetes",
+                "judías enanas",
+                "facelia",
+                "borraja"
+            ],
+            "avoid": [
+                "pepino",
+                "calabacín",
+                "melón",
+                "calabaza",
+                "tomate",
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego profundo necesario para sus sandías: 5-10 litros por planta"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Verifique espaciamiento: asegúrese de tener al menos 90cm entre plantas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y verificación acolchado para sus sandías"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Riesgo de oídio: airee bien y evite mojar follaje"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Cosecha se acerca: verifique si el zarcillo está seco y sonido mate"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Atención: crecimiento sandía ralentizado bajo 12°C"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 29,
+                    "message": "Condiciones óptimas germinación (21-29°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "courge_patisson",
+        "image": "patisson.jpg",
+        "commonName": "Calabaza Patisson",
+        "scientificName": "Cucurbita pepo L.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 65,
+        "spacing": 90,
+        "depth": 1.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Calabaza de verano original en forma de bonete, apreciada por su carne tierna y gusto que recuerda a la alcachofa.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 1.0,
+            "carbohydratesG": 3.5,
+            "sugarsG": 2.2,
+            "fatG": 0.2,
+            "fiberG": 1.5,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 21,
+            "potassiumMg": 140,
+            "magnesiumMg": 19,
+            "calciumMg": 15
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 27
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 30
+            },
+            "minTemperature": 8
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (profundo)",
+            "amount": "Aporte lento y abundante",
+            "method": "Al pie, evitar mojar follaje",
+            "bestTime": "Mañana temprano"
+        },
+        "thinning": {
+            "distance": "80-100 cm entre plantas",
+            "when": "Cuando plantas tienen 2-3 hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Manual (atención a raíces superficiales)",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado espeso (paja, heno, tontes secas)"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (3-4 años sin cucurbitáceas)",
+            "Cosechar joven para estimular producción de nuevas flores",
+            "Evitar riego sobre hojas para limitar oídio",
+            "Utilizar paillage aireado para proteger frutos de contacto directo con suelo"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (crecimiento)",
+                "Purín de cola de caballo (prevención fúngica)",
+                "Decocción de ajo (repelente pulgones)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos y Crisopas",
+                "Cárabos contra limacos"
+            ],
+            "companionPlants": [
+                "Caléndula",
+                "Borraja",
+                "Facelia"
+            ]
+        },
+        "harvestTime": "55-70 días para frutos jóvenes, 90 días para conservación",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz dulce",
+                "judías",
+                "cebolla",
+                "ajo",
+                "ciboulette",
+                "caléndula",
+                "borraja",
+                "facelia",
+                "lechuga",
+                "espinaca"
+            ],
+            "avoid": [
+                "calabacín",
+                "pepino",
+                "melón",
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "period_flowering"
+                ],
+                "message": "Riego profundo necesario para sus patissons (evitar hojas)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Verifique espaciamiento: guarde una planta vigorosa cada 80-100 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y verificación acolchado alrededor de patissons"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_humidity",
+                    "alternating_hot_cold"
+                ],
+                "message": "Riesgo de oídio: aplique preventivamente una decocción de cola de caballo"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "La cosecha de jóvenes patissons (5-10cm) puede comenzar"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 8,
+                    "message": "Alerte frescor: el patisson sufre por debajo de 8°C"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 27,
+                    "message": "Temperatura ideal para levée de sus patissons"
+                }
+            }
+        }
+    }
+]

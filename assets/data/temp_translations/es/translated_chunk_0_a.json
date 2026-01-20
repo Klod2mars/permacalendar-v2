@@ -1,0 +1,873 @@
+[
+    {
+        "id": "artichoke",
+        "commonName": "Alcachofa",
+        "scientificName": "Cynara cardunculus var. scolymus",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 80,
+        "depth": 5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Planta perenne exigente en agua, cultivada por sus capítulos florales comestibles. Requiere suelo rico, bien drenado y buena aireación.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 47,
+            "proteinG": 3.3,
+            "carbohydratesG": 10.5,
+            "sugarsG": 0.9,
+            "fatG": 0.2,
+            "fiberG": 5.4,
+            "vitaminCmg": 11.7,
+            "vitaminKmcg": 14.8,
+            "vitaminB9ug": 68,
+            "vitaminAmcg": 1,
+            "calciumMg": 44,
+            "ironMg": 1.3,
+            "magnesiumMg": 60,
+            "potassiumMg": 370,
+            "manganeseMg": 0.26,
+            "phosphorusMg": 90,
+            "cynarinMg": 15,
+            "luteolinMg": 8
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 20,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1 a 3 veces/semana en época cálida",
+            "amount": "25 a 50 mm de agua por semana",
+            "method": "Riego al pie, evitar mojar el follaje",
+            "bestTime": "Temprano en la mañana o tarde en la noche"
+        },
+        "thinning": {
+            "distance": "80 cm entre plantas, 1 metro entre filas",
+            "when": "Cuando aparezcan los hijuelos, conservar solo 3 brotes por pie"
+        },
+        "weeding": {
+            "method": "Manual o bina superficial",
+            "frequency": "En primavera y principios de temporada",
+            "recommendation": "Acolchado orgánico recomendado. Cultivos intercalados (lechugas, rábanos, guisantes) aconsejados el primer año."
+        },
+        "culturalTips": [
+            "Rotación de cultivos: dejar reposar el suelo 2-3 años después de cultivo de alcachofa.",
+            "Proteger los pies en invierno con mantillo, pero evitar la humedad estancada.",
+            "Detener el riego en invierno o periodos fríos.",
+            "Evitar asociaciones con hinojo y perejil.",
+            "Aplicar caldo bordelés como prevención del mildiu tras periodos húmedos."
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Caldo bordelés (preventivo contra mildiu)",
+                "Trampas para caracoles",
+                "Recolección manual de parásitos"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Crisopas (contra orugas y pulgones)"
+            ],
+            "companionPlants": [
+                "Lechugas",
+                "Rábanos",
+                "Guisantes (cultivos intercalados el primer año)"
+            ]
+        },
+        "harvestTime": "Aprox. 120 días tras plantación, según variedad y clima",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "rábano",
+                "guisante",
+                "lechugas",
+                "guisantes (cultivos intercalados el primer año)"
+            ],
+            "avoid": [
+                "hinojo",
+                "perejil"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego necesario para sus alcachofas: 25-50 mm de agua esta semana, al pie."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Aclareo necesario: espaciar a 80 cm, mantener solo 3 brotes por pie."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe recomendado: bina superficial + verificar acolchado."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Riesgo de mildiu: aplicar caldo bordelés preventivo."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Periodo de cosecha se acerca para sus alcachofas (en ~10 días)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Atención: temperatura mínima para alcachofas alcanzada (7°C). Proteger pies si es prolongado."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Condiciones óptimas de germinación para alcachofa (18-20°C)."
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    },
+    {
+        "id": "asparagus",
+        "commonName": "Espárrago",
+        "scientificName": "Asparagus officinalis",
+        "family": "Asparagaceae",
+        "daysToMaturity": 1095,
+        "spacing": 70,
+        "depth": 8,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Moderado a alto (primeros años)",
+        "description": "Verdura perenne de raíces profundas, exigente en instalación pero duradera (10-15 años). Producción de turiones a partir del 3er año. Cultivo adaptado a la permacultura con rotación larga y acolchado orgánico.",
+        "marketPricePerKg": 6.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 20,
+            "proteinG": 2.2,
+            "carbohydratesG": 3.9,
+            "sugarsG": 1.9,
+            "fatG": 0.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 5.6,
+            "vitaminKmcg": 41.6,
+            "vitaminB9ug": 52,
+            "vitaminAmcg": 38,
+            "calciumMg": 24,
+            "ironMg": 2.1,
+            "magnesiumMg": 14,
+            "potassiumMg": 202,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 52,
+            "glutathioneMg": 28,
+            "asparagineMg": 50
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 20,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Cada 10 a 14 días en suelo arenoso",
+            "amount": "50-75 mm por riego (aprox. 2,8 mm/día en crecimiento máximo)",
+            "method": "Riego por goteo o al pie, evitar humedad estancada",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "70 cm entre plantas, 70 cm a 1,50 m entre filas",
+            "when": "Primer aclareo retirando tallos débiles, no cosechar los 2-3 primeros años"
+        },
+        "weeding": {
+            "method": "Manual (bina, escarda), acolchado con compost o abonos verdes",
+            "frequency": "Regularmente durante el crecimiento",
+            "recommendation": "Cortar y quemar tallos muertos en otoño, retirar malas hierbas acumuladas"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: no replantar antes de 10 años en el mismo lugar",
+            "Evitar suelos contaminados por rizoctonia violeta",
+            "Aporcado progresivo para espárragos blancos; dejar verdear para los verdes",
+            "Vigilar enfermedades criptogámicas (roya, rizoctonia) y plagas (criocero, mosca del espárrago)",
+            "Favorecer asociaciones: guisantes, tomates, pepinos, puerros. Evitar ajo, cebolla, remolacha"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de tanaceto contra larvas",
+                "Purín de ortiga o ajo como tratamiento preventivo fúngico",
+                "Decocción de cola de caballo contra la roya"
+            ],
+            "beneficialInsects": [
+                "Depredadores naturales de crioceros (pájaros, avispas parasitoides)",
+                "Auxiliares insectívoros favorecidos por la biodiversidad"
+            ],
+            "companionPlants": [
+                "Guisantes",
+                "Tomates",
+                "Pepinos",
+                "Puerros"
+            ]
+        },
+        "harvestTime": "A partir del 3er año tras plantación (o 1er año si se usan garras de 2 años)",
+        "companionPlanting": {
+            "beneficial": [
+                "guisante",
+                "tomate",
+                "pepino",
+                "puerro",
+                "guisantes",
+                "tomates",
+                "concombres",
+                "puerros"
+            ],
+            "avoid": [
+                "ajo",
+                "remolacha",
+                "cebolla"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Primavera",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "soil_moisture_low",
+                    "no_rain_last_10_days"
+                ],
+                "message": "Riego profundo recomendado: 50-75 mm, especialmente en periodo seco o primer año"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Aclareo: retirar tallos débiles. No cosechar los 2 primeros años."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe manual y acolchado recomendados para limitar adventicias"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "spring_season"
+                ],
+                "message": "Aplicación de purín de ortiga o decocción de cola de caballo recomendada como prevención"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 1095,
+                "message": "¡Primera cosecha posible! (3 años tras siembra, o 1 año tras plantar garras de 2 años)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Atención: temperatura mínima de crecimiento alcanzada (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Condiciones óptimas de germinación (20-25°C)"
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    },
+    {
+        "id": "basil",
+        "commonName": "Albahaca",
+        "scientificName": "Ocimum basilicum",
+        "family": "Lamiaceae",
+        "daysToMaturity": 60,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto (suelo húmedo pero no empapado)",
+        "description": "Planta aromática anual, apreciada en cocina y medicina suave, sensible al frío y la sequía.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 14.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 3.1,
+            "carbohydratesG": 2.7,
+            "sugarsG": 0.3,
+            "fatG": 0.6,
+            "fiberG": 1.6,
+            "vitaminCmg": 18.0,
+            "vitaminKmcg": 414.8,
+            "vitaminB9ug": 68,
+            "vitaminAmcg": 264,
+            "calciumMg": 177,
+            "ironMg": 3.2,
+            "magnesiumMg": 64,
+            "potassiumMg": 295,
+            "manganeseMg": 1.15,
+            "phosphorusMg": 56,
+            "eugenolMg": 850,
+            "luteinZeaxanthinMcg": 5650
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Diario en maceta / 2-3 veces por semana en tierra (según clima y suelo)",
+            "amount": "Adaptado para mantener suelo húmedo sin saturación",
+            "method": "Regar al pie, evitar el follaje",
+            "bestTime": "Temprano en la mañana o al inicio de la noche"
+        },
+        "thinning": {
+            "distance": "20 cm entre plantas",
+            "when": "En estadio de plántula joven, para evitar sobrepoblación y favorecer aireación"
+        },
+        "weeding": {
+            "method": "Bina suave + acolchado para limitar malas hierbas y conservar humedad",
+            "frequency": "Tan a menudo como sea necesario según desarrollo de adventicias",
+            "recommendation": "Acolchado orgánico recomendado desde plantación"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: no replantar en el mismo lugar 2 años consecutivos",
+            "Nunca mojar el follaje para evitar enfermedades fúngicas (ej: mildiu)",
+            "Cortar tallos florales en cuanto aparezcan para favorecer follaje denso",
+            "Evitar excesos de agua, especialmente en suelo pesado, para no debilitar la planta",
+            "Vaporizar ligeramente cada 2 días en estadio de siembra, luego reducir a 1 vez cada 4 días tras emergencia"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (preventivo y fortificante)",
+                "Jabón negro (contra pulgones)",
+                "Insecticida natural a base de piretro o aceites esenciales (en caso de ataque)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Crisopas (depredadores de pulgones y cochinillas)",
+                "Sírfidos (larvas devoran pulgones)"
+            ],
+            "companionPlants": [
+                "Tomate",
+                "Pimiento",
+                "Lechuga",
+                "Favorece la biodiversidad y repele ciertas plagas"
+            ]
+        },
+        "harvestTime": "50-60 días tras siembra, según condiciones de cultivo",
+        "companionPlanting": {
+            "beneficial": [
+                "tomate",
+                "pimiento",
+                "lechuga",
+                "zanahoria",
+                "espárrago",
+                "favorece la biodiversidad y repele ciertas plagas"
+            ],
+            "avoid": [
+                "pepino (riesgo de competencia)",
+                "ruda oficinal"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "1 day (en maceta) / 2-3 days (plena tierra)",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Riego necesario para su albahaca: humedezca el suelo sin saturarlo, al pie."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclare sus plantas de albahaca: deje 20 cm entre cada una."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7-10 days",
+                "message": "Deshierbe recomendado alrededor de su albahaca. Acolche para limitar rebrote."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "aphid_sighting"
+                ],
+                "message": "Aplique tratamiento preventivo con purín de ortiga o introduzca mariquitas."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 50,
+                "message": "¡Primeras cosechas posibles! Corte los tallos sobre un par de hojas."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Atención: temperatura mínima para albahaca alcanzada (12°C). ¡Proteja sus plantas!"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 24,
+                    "message": "Condiciones óptimas de germinación de albahaca (21-24°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "bean",
+        "commonName": "Judía",
+        "scientificName": "Phaseolus vulgaris",
+        "family": "Fabaceae",
+        "daysToMaturity": 60,
+        "spacing": 30,
+        "depth": 2,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto (sobre todo en floración)",
+        "description": "Leguminosa nutritiva, fijadora de nitrógeno, ideal en rotación y en asociación de cultivos.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 31,
+            "proteinG": 1.8,
+            "carbohydratesG": 7.1,
+            "sugarsG": 3.3,
+            "fatG": 0.1,
+            "fiberG": 3.4,
+            "vitaminCmg": 12.2,
+            "vitaminKmcg": 43.0,
+            "vitaminB9ug": 33,
+            "vitaminAmcg": 35,
+            "calciumMg": 37,
+            "ironMg": 1.0,
+            "magnesiumMg": 25,
+            "potassiumMg": 211,
+            "manganeseMg": 0.21,
+            "phosphorusMg": 38,
+            "siliconMg": 2.0
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Variable según fase: 2-3 veces/semana en crecimiento, 3 veces/semana en floración, reducir 1 mes antes cosecha",
+            "amount": "10-15 litros por m²/semana en fase de floración",
+            "method": "Riego al pie, evitar follaje",
+            "bestTime": "Temprano en la mañana o fin de jornada"
+        },
+        "thinning": {
+            "distance": "25-40 cm entre plantas",
+            "when": "Cuando las plantas jóvenes midan unos centímetros, conservar las más vigorosas"
+        },
+        "weeding": {
+            "method": "Escarda o bina manual",
+            "frequency": "Tras cada riego (24-48h) para romper la costra + acolchado",
+            "recommendation": "Acolchar las filas para limitar adventicias y conservar humedad"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: no plantar después de otras leguminosas",
+            "Evitar exceso de agua para prevenir podredumbre de raíces",
+            "Acolchar para reducir evaporación y deshierbe",
+            "Nunca regar el follaje para evitar enfermedades fúngicas",
+            "Privilegiar asociaciones con maíz o girasol para variedades trepadoras"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante, antipulgones)",
+                "Decocción de cola de caballo (antifúngico)",
+                "Leche diluida en pulverización (preventivo contra mildiu)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Avispas parasitoides",
+                "Sírfidos"
+            ],
+            "companionPlants": [
+                "Maíz",
+                "Girasol (soporte y microclima favorable)"
+            ]
+        },
+        "harvestTime": "60 días tras plantación en promedio (según variedad enana o trepadora)",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz",
+                "girasol",
+                "zanahoria",
+                "pepino",
+                "apio",
+                "rábano",
+                "espinaca",
+                "girasol (soporte y microclima favorable)"
+            ],
+            "avoid": [
+                "ajo",
+                "otras leguminosas (guisantes, habas, altramuz)",
+                "cebolla (en exceso)"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "variable",
+                "conditions": [
+                    "phase == 'levée' → todos 2-3 días",
+                    "phase == 'floración' → 2-3 veces/semana",
+                    "temperature > 30 → todos 1-2 días",
+                    "soil_type == 'arenoso' → 3-4 veces/semana",
+                    "soil_type == 'arcilloso' → 2 veces/semana"
+                ],
+                "message": "Adapte riego: 10-15 L/m²/semana en floración, al pie, sin mojar follaje."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclare a 25-40 cm entre plantas, conserve solo las más vigorosas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "after_rain_or_watering",
+                "message": "Bina recomendada 24-48h tras riego + acolchado para limitar malas hierbas."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 25"
+                ],
+                "message": "Aplique purín de ortiga o cola de caballo como prevención de fúngicos."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Cosecha inminente. Reduzca progresivamente riegos para evitar enfermedades."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Atención: temperatura mínima para judías alcanzada (10°C). Riesgo de paro o helada."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Condiciones óptimas de germinación alcanzadas (20-25°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "beetroot",
+        "commonName": "Remolacha",
+        "scientificName": "Beta vulgaris",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 60,
+        "spacing": 20,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Moderado",
+        "description": "Hortaliza de raíz dulce y nutritiva, rica en hierro, vitaminas y antioxidantes. Cultivada con técnicas suaves y respetuosas con el suelo.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 1.6,
+            "carbohydratesG": 9.6,
+            "sugarsG": 6.8,
+            "fatG": 0.2,
+            "fiberG": 2.8,
+            "vitaminCmg": 4.9,
+            "vitaminKmcg": 0.2,
+            "vitaminB9ug": 109,
+            "vitaminAmcg": 2,
+            "calciumMg": 16,
+            "ironMg": 0.8,
+            "magnesiumMg": 23,
+            "potassiumMg": 325,
+            "manganeseMg": 0.33,
+            "phosphorusMg": 40,
+            "betaineMg": 128,
+            "nitratesMg": 150
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 22
+            },
+            "minTemperature": 6
+        },
+        "watering": {
+            "frequency": "1 vez/semana (adaptar según clima)",
+            "amount": "2-4 litros por m²/semana",
+            "method": "Al pie, suelo mantenido fresco sin exceso",
+            "bestTime": "Temprano en la mañana o tarde en el día"
+        },
+        "thinning": {
+            "distance": "15-25 cm entre plantas",
+            "when": "Cuando las plantas tengan 4 a 5 hojas"
+        },
+        "weeding": {
+            "method": "Bina y escarda manual frecuentes",
+            "frequency": "Cada 1 a 2 semanas",
+            "recommendation": "Acolchado recomendado para limitar malas hierbas y conservar humedad"
+        },
+        "culturalTips": [
+            "Rotación de cultivos de 3 a 4 años para evitar agotamiento del suelo y enfermedades",
+            "Suelo bien mullido, sin piedras para evitar raíces bifurcadas",
+            "No utilizar estiércol fresco o no compostado",
+            "Evitar exceso de agua para prevenir mildiu y podredumbre de raíces",
+            "Proteger plantas jóvenes en caso de heladas con un velo o túnel ligero"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de consuelda (fortificante)",
+                "Purín de ortiga (antipulgones y estimulante de crecimiento)",
+                "Infusiones de plantas aromáticas para reforzar defensas naturales"
+            ],
+            "beneficialInsects": [
+                "Auxiliares naturales contra pulgones (mariquitas, sírfidos)",
+                "Nematodos beneficiosos contra nematodos plaga"
+            ],
+            "companionPlants": [
+                "Lechuga",
+                "Cebolla",
+                "Rábano",
+                "Judía enana",
+                "Evitar espinacas (misma familia)"
+            ]
+        },
+        "harvestTime": "60-90 días tras siembra según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "cebolla",
+                "rábano",
+                "judía enana",
+                "col",
+                "lechuga",
+                "oignon",
+                "radis",
+                "haricot nain",
+                "chou"
+            ],
+            "avoid": [
+                "otras amarantáceas",
+                "cenizo",
+                "acelga",
+                "espinaca"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "soil_moisture_low",
+                    "no_rain_last_7_days"
+                ],
+                "message": "Riego sugerido: 2-4 L/m² para mantener la tierra fresca."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Aclareo: deje 15-25 cm entre sus remolachas (4-5 hojas)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7-14 days",
+                "message": "Bina y escarda recomendadas para airear el suelo."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "pest_alert_aphids",
+                    "spring_season"
+                ],
+                "message": "Vigile los pulgones. Utilice purín de ortiga si es necesario."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Cosecha posible según tamaño deseado (60-90 días)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 6,
+                    "message": "Alerta frío: temperatura crítica para remolacha (6°C). Proteja cultivos."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Temperatura de germinación ideal (20°C)."
+                }
+            }
+        }
+    }
+]

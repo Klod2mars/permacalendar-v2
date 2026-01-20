@@ -1,0 +1,874 @@
+[
+    {
+        "id": "chou_brocoli_romanesco",
+        "commonName": "Romanesco Broccoli",
+        "scientificName": "Brassica oleracea var. botrytis (romanesco group)",
+        "family": "Brassicaceae",
+        "daysToMaturity": null,
+        "spacing": 50,
+        "depth": 0.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high",
+        "description": "Romanesco cabbage (Romanesco broccoli / Romanesco cauliflower): biennial grown as annual. Compact conical inflorescence with fractal patterns, bright green color. Possible confusions: other broccolis and cauliflowers. No documented case of confusion with similar toxic plant. Recommended soil: fertile, silty-clay or silty-sandy, well drained, rich in organic matter, good water retention without waterlogging. Optimal pH 6.0–7.5 (neutral to slightly alkaline). Exposure: full sun, tolerates light partial shade in hot summer.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "M",
+            "J",
+            "J"
+        ],
+        "harvestMonths": [],
+        "marketPricePerKg": null,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 2.4,
+            "carbohydratesG": 4.0,
+            "fatG": 0.3,
+            "fiberG": 3.0,
+            "potassiumMg": 315,
+            "calciumMg": 22,
+            "phosphorusMg": 72,
+            "ironMg": 1.1,
+            "vitaminCmg": 80,
+            "vitaminKug": 12.1,
+            "folatesUg": 23
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": null,
+                "max": null
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "After transplanting: every 1–2 days for 1–2 weeks depending on climate; then: deep waterings every 2–4 days, more frequent in hot or windy period",
+            "amount": null,
+            "method": "At base, slow and deep watering; avoid wetting heads and foliage (drip, soaker hoses, furrows advised)",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "50 cm between plants, 50–60 cm between rows",
+            "when": "Transplanting recommended at 4–5 true leaves stage (robust non-spindly plants); controlled spacing and strong root system"
+        },
+        "weeding": {
+            "method": "Gentle mechanical weeding",
+            "frequency": null,
+            "recommendation": "Mulching advised (straw, hay, dead leaves, dried grass, mature compost): limits evaporation and crusting, regulates temperature, reduces weeds; avoid too fresh mulch conducive to slugs"
+        },
+        "culturalTips": [
+            "Time to maturity: 75–100 days after transplanting; 100–120 days after sowing",
+            "Sowing (temperate climate): under cover late Feb–April; transplanting March–May; summer sowing for autumn/winter harvest: May–July depending on climate; transplanting 4–6 weeks after sowing",
+            "Emergence conditions: fine substrate, well drained, moist without soaking; soil temperature 15–24°C; good aeration; indirect light; avoid surface drying",
+            "Blocking factors: soil crusting (avoid violent watering), substrate dryness, excess water (asphyxia, damping off), temperatures >27°C (irregular germination; early bolting later)",
+            "Natural fertilization: mature compost at bottom 3–5 kg/m² + light boosters; diluted nettle manure (nitrogen) and comfrey manure (K) at base; green manures possible: legumes, phacelia, cereal–legume mixes",
+            "Rotation: return of Brassicaceae on same bed after 3–4 years; avoid brassicaceae as immediate predecessor/successor (clubroot and specific pests)",
+            "Clubroot prevention: avoid acidic soils (pH<6), excess moisture and too short rotations; maintain pH close to 7 (compost + mild liming amendments if needed)",
+            "Pest protection: insect-proof nets/fleece (cabbage whites, cabbage fly, flea beetles); collars at removal (cabbage fly); beer traps/shelter traps (slugs)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (vegetative strengthening; general resistance)",
+                "Comfrey manure (flowering support and head firmness; K inputs)",
+                "Horsetail decoction (fungal disease prevention; tissue strengthening)",
+                "Diluted black soap / organic insecticidal soap (against aphids; targeted application)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (larvae and adults) against aphids",
+                "Hoverflies (larvae) against aphids",
+                "Lacewings (larvae) against aphids and small pests",
+                "Parasitoid wasps (parasitism of cabbage white caterpillars)"
+            ],
+            "companionPlants": [
+                "nasturtium",
+                "marigold",
+                "yarrow",
+                "dill",
+                "fennel",
+                "various umbellifers"
+            ]
+        },
+        "harvestTime": "75–100 days after transplanting; 100–120 days after sowing depending on variety and climate. Signs: compact conical head, well-formed fractal patterns, bright green, closed flower buds (no small yellow flowers). Harvest: cut under head with clean knife, leave a few protective leaves; preferably in morning in cool weather. Regrowth: mainly a single head, few or no useful side shoots (limited regrowth). Storage: refrigerator 0–4°C 3–7 days (perforated bag); freezing after blanching 2–3 min then cooling (several months); lacto-fermentation possible (exact times not documented).",
+        "companionPlanting": {
+            "beneficial": [
+                "lettuce",
+                "leafy salads",
+                "spinach",
+                "chard",
+                "onion",
+                "garlic",
+                "scallion",
+                "bush beans",
+                "pea (depending on climate)",
+                "sage",
+                "thyme",
+                "chamomile",
+                "dill",
+                "mint",
+                "nasturtium",
+                "marigold",
+                "phacelia"
+            ],
+            "avoid": [
+                "other brassicaceae (cabbage, cauliflower, kale, turnip, radish, mustard)",
+                "nitrogen-hungry crops with strong development (corn, large cucurbits, tomatoes in poor soil)"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring,Summer",
+        "harvestSeason": "Summer,Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": false,
+                "frequency": null,
+                "conditions": [],
+                "message": null
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": null,
+                "message": null
+            },
+            "weeding": {
+                "enabled": false,
+                "frequency": null,
+                "message": null
+            },
+            "biological_control": {
+                "enabled": false,
+                "conditions": [],
+                "message": null
+            },
+            "harvest": {
+                "enabled": false,
+                "daysAfterPlanting": null,
+                "message": null
+            },
+            "temperature_alert": {
+                "enabled": false,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": null
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 24,
+                    "message": null
+                }
+            }
+        }
+    },
+    {
+        "id": "chou_cabus_rouge",
+        "image": "chou_cabu_rouge.png",
+        "commonName": "Red Cabbage",
+        "scientificName": "Brassica oleracea var. capitata f. rubra",
+        "family": "Brassicaceae",
+        "daysToMaturity": 100,
+        "spacing": 60,
+        "depth": 1,
+        "sunExposure": "Sun to partial shade",
+        "waterNeeds": "Medium to high",
+        "description": "Cabbage forming a dense purplish-red head, adapted to temperate climates and spring to winter cultures.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "M",
+            "J",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": null,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 31,
+            "proteinG": 1.4,
+            "carbohydratesG": 7.4,
+            "sugarsG": 3.8,
+            "fatG": 0.2,
+            "fiberG": 2.1,
+            "vitaminCmg": 57,
+            "vitaminKug": 38.2,
+            "vitaminB9ug": 18,
+            "vitaminB6mg": 0.2,
+            "vitaminAug": 56,
+            "potassiumMg": 243,
+            "calciumMg": 45,
+            "magnesiumMg": 16,
+            "phosphorusMg": 30,
+            "ironMg": 1.0,
+            "sodiumMg": 27,
+            "betaCaroteneUg": 670,
+            "lycopeneUg": 20
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": null,
+                "max": null
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "1-2 times/week depending on conditions",
+            "amount": null,
+            "method": "At base, localized irrigation",
+            "bestTime": "Morning or evening"
+        },
+        "thinning": {
+            "distance": "40-70 cm depending on variety",
+            "when": "After transplanting or when plants are well established"
+        },
+        "weeding": {
+            "method": "Manual or mechanical",
+            "frequency": "Regularly",
+            "recommendation": "Mulching advised"
+        },
+        "culturalTips": [
+            "Rotation of 3 to 4 years outside Brassicaceae",
+            "Keep soil cool without excess water",
+            "Mulch to limit water stress and weeds"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure",
+                "Horsetail tea",
+                "Bacillus thuringiensis",
+                "Black soap"
+            ],
+            "beneficialInsects": [
+                "Ladybugs",
+                "Hoverflies",
+                "Lacewings",
+                "Parasitoid wasps"
+            ],
+            "companionPlants": [
+                "beetroot",
+                "carrot",
+                "celery",
+                "spinach",
+                "lettuce",
+                "pea",
+                "bean",
+                "various aromatics"
+            ]
+        },
+        "harvestTime": "80-120 days after planting",
+        "companionPlanting": {
+            "beneficial": [
+                "beetroot",
+                "carrot",
+                "celery",
+                "spinach",
+                "bean",
+                "lettuce",
+                "pea",
+                "mint",
+                "aromatics"
+            ],
+            "avoid": [
+                "other Brassicaceae"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring,Summer",
+        "harvestSeason": "Summer,Autumn,Winter",
+        "notificationSettings": {}
+    },
+    {
+        "id": "chou-daubenton",
+        "commonName": "Daubenton's Kale",
+        "scientificName": "Brassica oleracea var. ramosa",
+        "family": "Brassicaceae",
+        "daysToMaturity": 180,
+        "spacing": 90,
+        "depth": 0,
+        "sunExposure": "Sun to partial shade",
+        "waterNeeds": "Medium",
+        "description": "Perennial and perpetual vegetable, very hardy, consumed for young shoots and leaves all year round.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "J",
+            "J",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "F",
+            "M",
+            "A",
+            "M",
+            "J",
+            "J",
+            "A",
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 35,
+            "proteinG": 2.9,
+            "carbohydratesG": 4.4,
+            "sugarsG": 1.5,
+            "fatG": 1.5,
+            "fiberG": 4.1,
+            "vitaminCmg": 93.4,
+            "vitaminEmg": 0.8,
+            "vitaminB9ug": 62,
+            "potassiumMg": 348,
+            "magnesiumMg": 33,
+            "calciumMg": 254
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -15
+        },
+        "watering": {
+            "frequency": "Regular in dry weather",
+            "amount": "Keep soil cool but not soggy",
+            "method": "At base, avoid wetting foliage",
+            "bestTime": "Morning or evening"
+        },
+        "thinning": {
+            "distance": "80-100 cm in all directions",
+            "when": "As soon as plant is well rooted"
+        },
+        "weeding": {
+            "method": "Manual or regular hoeing",
+            "frequency": "Every 3 weeks",
+            "recommendation": "Thick organic mulch (straw, light RCW)"
+        },
+        "culturalTips": [
+            "Propagation by cutting 'shoots' (cuttings) very easy",
+            "Perennial plant that can produce for 4 to 7 years",
+            "Harvest leaves as needed",
+            "Prune to encourage branching and avoid flowering",
+            "Add mature compost every year in spring"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (nitrogen and strengthening)",
+                "Comfrey manure (leaf growth)",
+                "Tansy decoction (anti-caterpillars)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Hoverflies against aphids",
+                "Micro-hymenoptera against cabbage white"
+            ],
+            "companionPlants": [
+                "Garlic and onion against diseases",
+                "Aromatic plants (thyme, sage) against cabbage white",
+                "Nasturtium (trap plant for aphids)"
+            ]
+        },
+        "harvestTime": "Harvest possible all year round once plant is established",
+        "companionPlanting": {
+            "beneficial": [
+                "garlic",
+                "onion",
+                "chives",
+                "aromatics",
+                "pea",
+                "fava beans",
+                "nasturtium",
+                "marigold"
+            ],
+            "avoid": [
+                "cauliflower",
+                "broccoli",
+                "turnip",
+                "radish",
+                "mustard"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Spring,Summer,Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "dry_soil"
+                ],
+                "message": "Check soil moisture for your Daubenton's kale."
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 0,
+                "message": "N/A"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Clean base of Daubenton's kale and renew mulch."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_butterflies"
+                ],
+                "message": "Monitor for cabbage white eggs under leaves."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "You can start harvesting young shoots of your kale."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -12,
+                    "message": "Heavy frost forecast: Daubenton's kale resists down to -15°C."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Ideal temperature for rooting cuttings."
+                }
+            }
+        }
+    },
+    {
+        "id": "mizuna",
+        "commonName": "Mizuna",
+        "scientificName": "Brassica rapa var. nipposinica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 45,
+        "spacing": 15,
+        "depth": 1.5,
+        "sunExposure": "Sun to partial shade",
+        "waterNeeds": "Medium",
+        "description": "Hardy Japanese leaf vegetable with finely cut leaves, appreciated for its mild and slightly peppery flavor.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "A",
+            "S",
+            "O"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 3.74,
+            "carbohydratesG": 8.16,
+            "sugarsG": null,
+            "fatG": 0.17,
+            "fiberG": null,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": null
+        },
+        "germination": {
+            "minTemperature": 4,
+            "optimalTemperature": {
+                "min": 13,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "Keep soil cool, frequent in dry weather",
+            "amount": "Regular without excess to avoid asphyxia",
+            "method": "At base, gentle irrigation (drip)",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "10-15 cm for leaves, 30-40 cm for whole plants",
+            "when": "As soon as first true leaves appear"
+        },
+        "weeding": {
+            "method": "Manual or organic mulch",
+            "frequency": "Every 2 weeks",
+            "recommendation": "Mulching (mature compost, straw, dry clippings) to limit evaporation"
+        },
+        "culturalTips": [
+            "Rotation of 3-4 years without Brassicaceae",
+            "Avoid watering on foliage to prevent powdery mildew",
+            "Harvest possible as 'cut-and-come-again' (up to 5 times)",
+            "Use insect nets from sowing against flea beetles",
+            "Prefer soil rich in organic matter and well drained"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (fortifier)",
+                "Horsetail manure (fungal preventive)",
+                "Garlic decoction (insect repellent)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs and hoverflies against aphids",
+                "Ground beetles against slugs",
+                "Parasitoid wasps against caterpillars"
+            ],
+            "companionPlants": [
+                "Onion",
+                "Chives",
+                "Garlic",
+                "Pea"
+            ]
+        },
+        "harvestTime": "20-35 days (young leaves) or 50-70 days (whole plants)",
+        "companionPlanting": {
+            "beneficial": [
+                "pea",
+                "bush beans",
+                "clover",
+                "onion",
+                "chives",
+                "garlic",
+                "carrot",
+                "lettuce",
+                "spinach"
+            ],
+            "avoid": [
+                "cabbage",
+                "turnip",
+                "radish",
+                "arugula",
+                "mustard"
+            ]
+        },
+        "plantingSeason": "Spring,Autumn",
+        "harvestSeason": "Spring,Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "dry_soil_surface"
+                ],
+                "message": "Check soil moisture for your Mizuna: keep base cool."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Thinning: space your Mizunas 10-15 cm apart for good development."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Weeding and mulch check recommended for Mizuna."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_butterfly_presence",
+                    "dry_weather"
+                ],
+                "message": "Flea beetle or Cabbage White alert: check your nets or apply natural repellent."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "First harvest of young Mizuna leaves possible!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -2,
+                    "message": "Heavy frost risk: protect your Mizunas with fleece."
+                },
+                "germination_optimal": {
+                    "min": 13,
+                    "max": 24,
+                    "message": "Ideal conditions for rapid germination of your Mizuna seeds."
+                }
+            }
+        }
+    },
+    {
+        "id": "butternut_squash",
+        "commonName": "Butternut Squash",
+        "scientificName": "Cucurbita moschata",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 95,
+        "spacing": 50,
+        "depth": 2.5,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Medium to high",
+        "description": "Butternut squash with melting and sweet flesh, famous for its nutty taste and great storage capacity.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 2.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 45,
+            "proteinG": 1.0,
+            "carbohydratesG": 12.0,
+            "sugarsG": 2.0,
+            "fatG": 0.1,
+            "fiberG": 2.0,
+            "sodiumMg": 4,
+            "potassiumMg": 352,
+            "calciumMg": 48,
+            "magnesiumMg": 34,
+            "phosphorusMg": 33,
+            "ironMg": 1.0,
+            "zincMg": 0.2,
+            "vitaminCmg": 21,
+            "vitaminEmg": 1.0,
+            "vitaminB6mg": 0.2,
+            "vitaminB9ug": 27,
+            "vitaminAUg": 532,
+            "betaCaroteneUg": 4226,
+            "alphaCaroteneUg": 834
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 28
+            },
+            "minTemperature": 0
+        },
+        "watering": {
+            "frequency": "1-2 times/week if mulched (more frequent if not mulched)",
+            "amount": "Abundant at base, sensitive to stress during flowering and fruit setting",
+            "method": "At base, preferably drip or furrow, without wetting foliage",
+            "bestTime": "Early morning or evening"
+        },
+        "thinning": {
+            "distance": "40-60 cm between plants, 150 cm between rows",
+            "when": "Stage 2-3 true leaves"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (hoeing) early",
+            "frequency": "Every 2-3 weeks until ground cover",
+            "recommendation": "Thick mulch (straw, hay, RCW, dead leaves) to limit weeds and evaporation"
+        },
+        "culturalTips": [
+            "Rotation of crops (3-4 years without cucurbits)",
+            "Initial contribution rich in mature compost or well-decomposed manure",
+            "Culture on mounds to improve drainage",
+            "Avoid handling fragile vines",
+            "Harvest with piece of peduncle for better conservation"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail decoction (fungal disease prevention)",
+                "Diluted nettle manure (stimulation and resistance)",
+                "Diluted black soap against aphids and whiteflies"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (larvae and adults) against aphids",
+                "Hoverflies (larvae) against aphids",
+                "Lacewings (larvae) against aphids and whiteflies",
+                "Ground beetles and rove beetles, slug predators"
+            ],
+            "companionPlants": [
+                "Corn (vertical structure and partial shade)",
+                "Beans (nitrogen input)",
+                "Marigold, nasturtium, borage (attraction of beneficials)",
+                "Phacelia (flower strips)"
+            ]
+        },
+        "harvestTime": "80-110 days after sowing depending on variety and climate",
+        "companionPlanting": {
+            "beneficial": [
+                "corn",
+                "bean",
+                "onion",
+                "garlic",
+                "marigold",
+                "nasturtium",
+                "borage",
+                "phacelia"
+            ],
+            "avoid": [
+                "cucumber",
+                "melon",
+                "zucchini",
+                "potato"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 25",
+                    "flowering_stage"
+                ],
+                "message": "Crucial water need for Butternut: water abundantly at base."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Check spacing: leave 40-60 cm between plants."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Weeding and mulch control recommended."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "night_temperature_drop"
+                ],
+                "message": "Risk of powdery mildew: apply horsetail decoction preventively."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Harvest approaching: check rind hardness and color."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Frost risk: protect or harvest ripe fruits."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 30,
+                    "message": "Ideal conditions for emergence (20-30°C)."
+                }
+            }
+        }
+    }
+]

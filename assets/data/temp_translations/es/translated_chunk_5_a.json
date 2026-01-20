@@ -1,0 +1,842 @@
+[
+    {
+        "id": "musquee_de_provence",
+        "commonName": "Calabaza Moscada de Provenza",
+        "scientificName": "Cucurbita moschata Duchesne ex Poir.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 110,
+        "spacing": 150,
+        "depth": 2.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Calabaza moscada tardía y corredora que produce grandes frutos acostillados de piel marrón bronce y carne naranja, dulce y perfumada.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 45,
+            "proteinG": 1.0,
+            "carbohydratesG": 12,
+            "sugarsG": 2,
+            "fatG": 0.1,
+            "fiberG": 2,
+            "vitaminCmg": 21,
+            "vitaminEmg": 1.0,
+            "vitaminB6mg": 0.2,
+            "vitaminB9ug": 27,
+            "vitaminAug": 532,
+            "betaCaroteneUg": 4226,
+            "alphaCaroteneUg": 834,
+            "potassiumMg": 352,
+            "magnesiumMg": 34,
+            "calciumMg": 48,
+            "phosphorusMg": 33,
+            "ironMg": 1.0,
+            "zincMg": 0.2,
+            "sodiumMg": 4
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 28
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2-3 veces/semana (suelo desnudo) o 1-2 veces/semana (suelo acolchado)",
+            "amount": "Riegos profundos y regulares, sobre todo en floración y engorde de frutos",
+            "method": "Al pie, sin mojar el follaje, goteo recomendado",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "150-200 cm entre plantas, 200-250 cm entre filas",
+            "when": "Al estadio 2-3 hojas verdaderas tras trasplante"
+        },
+        "weeding": {
+            "method": "Deshierbe manual al inicio o acolchado espeso",
+            "frequency": "Cada 2 semanas hasta cobertura del suelo",
+            "recommendation": "Acolchado (paja, heno, BRF maduro) para limitar evaporación y proteger frutos"
+        },
+        "culturalTips": [
+            "Rotación de cultivos de 3-4 años evitando otras cucurbitáceas",
+            "Suelo profundo, rico en materia orgánica y bien drenado",
+            "Aporte de compost maduro antes de plantación (2-5 kg/m²)",
+            "Colocar una tabla o acolchado bajo los frutos para evitar podredumbre",
+            "Evitar excesos de nitrógeno que favorecen pulgones y enfermedades"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga al inicio de crecimiento",
+                "Purín de consuelda al inicio de fructificación",
+                "Decocción de cola de caballo en prevención de oídio y mildiu",
+                "Jabón negro diluido contra pulgones y moscas blancas"
+            ],
+            "beneficialInsects": [
+                "Mariquitas",
+                "Sírfidos",
+                "Crisopas",
+                "Avispas parasitoides",
+                "Cárabos"
+            ],
+            "companionPlants": [
+                "Capuchina",
+                "Caléndula",
+                "Facelia",
+                "Trébol"
+            ]
+        },
+        "harvestTime": "100-120 días tras plantación, cuando la corteza está dura y el pedúnculo liñoso",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz",
+                "judía",
+                "cebolla",
+                "ajo",
+                "puerro",
+                "capuchina",
+                "caléndula",
+                "facelia"
+            ],
+            "avoid": [
+                "calabacín",
+                "pepino",
+                "melón",
+                "otras calabazas",
+                "tomate",
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 25",
+                    "phase == flowering"
+                ],
+                "message": "Riego reforzado recomendado para sus calabazas moscadas en floración y fructificación"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Verifique el espaciamiento: prever 1,5 a 2 m entre plantas"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe o mantenimiento del acolchado recomendado"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "night_temp < 15"
+                ],
+                "message": "Condiciones favorables a enfermedades criptogámicas, tratamiento preventivo aconsejado"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "Controle la madurez: corteza dura y pedúnculo seco para la cosecha"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Alerta frío: crecimiento detenido, proteger o cosechar antes de helada"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Temperatura ideal alcanzada para la germinación de semillas"
+                }
+            }
+        }
+    },
+    {
+        "id": "patidou",
+        "commonName": "Calabaza Patidou",
+        "scientificName": "Cucurbita pepo L.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 100,
+        "spacing": 100,
+        "depth": 2.0,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Pequeña calabaza de invierno decorativa y deliciosa, con sabor a avellana y castaña (Sweet Dumpling).",
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 1.1,
+            "carbohydratesG": 5.2,
+            "sugarsG": 4.0,
+            "fatG": 0.5,
+            "fiberG": 1.8,
+            "vitaminCmg": 14,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 0,
+            "potassiumMg": 340,
+            "magnesiumMg": 14,
+            "calciumMg": 24
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Cada 2-3 días en verano",
+            "amount": "Suelo mantenido fresco pero no encharcado",
+            "method": "Al pie, sin mojar el follaje",
+            "bestTime": "Fin de día"
+        },
+        "thinning": {
+            "distance": "90-120 cm en la línea, 130-200 cm entre filas",
+            "when": "Tras las heladas para las plantas en macetas"
+        },
+        "weeding": {
+            "method": "Manual y acolchado",
+            "frequency": "Regular hasta cobertura del suelo",
+            "recommendation": "Acolchado espeso (paja, heno, BRF) para limitar evaporación"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (4-5 años sin cucurbitáceas)",
+            "Puede cultivarse directamente sobre un montón de compost",
+            "Utilizar la técnica de las tres hermanas (maíz, judía, calabaza)",
+            "Proteger las plantas jóvenes de limaces con collares",
+            "Cosechar con el pedúnculo para mejor conservación"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Decocción de cola de caballo (anti-oídio)",
+                "Jabón negro contra pulgones"
+            ],
+            "beneficialInsects": [
+                "Mariquitas, sírfidos y crisopas contra pulgones",
+                "Abejas y abejorros para polinización",
+                "Lombrices para estructura del suelo"
+            ],
+            "companionPlants": [
+                "Maíz",
+                "Judía",
+                "Flores melíferas (facelia, caléndula, borraja)"
+            ]
+        },
+        "harvestTime": "90-110 días tras siembra",
+        "companionPlanting": {
+            "beneficial": [
+                "maíz",
+                "judía",
+                "caléndula",
+                "capuchina",
+                "borraja",
+                "facelia"
+            ],
+            "avoid": [
+                "pepino",
+                "melón",
+                "calabacín",
+                "patata"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego aconsejado para sus patidous: al pie y al final del día."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Verifique espaciamiento: los patidous son variedades corredoras (1m entre plantas)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Deshierbe y verificación de acolchado para sus calabazas."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Riesgo de oídio alto: prevea una decocción de cola de caballo en prevención."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Vigile el pedúnculo de sus patidous, debe volverse liñoso para la cosecha."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: el crecimiento de la calabaza patidou se detiene bajo 5°C."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Temperatura ideal para la levée de sus semillas de patidou (20°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "cresson",
+        "image": "cresson.jpg",
+        "commonName": "Berro de agua",
+        "scientificName": "Nasturtium officinale",
+        "family": "Brassicaceae",
+        "daysToMaturity": 75,
+        "spacing": 15,
+        "depth": 0.2,
+        "sunExposure": "Media sombra / Sol tamizado",
+        "waterNeeds": "Muy alto",
+        "description": "Planta vivaz semiacuática, reconocida por su sabor picante y su densidad nutricional excepcional en hierro y calcio.",
+        "marketPricePerKg": 6.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 11,
+            "proteinG": 2.3,
+            "carbohydratesG": 1.3,
+            "sugarsG": 0.2,
+            "fatG": 0.1,
+            "fiberG": 1.0,
+            "vitaminCmg": 43,
+            "vitaminEmg": 1.0,
+            "vitaminB9ug": 9,
+            "potassiumMg": 330,
+            "magnesiumMg": 21,
+            "calciumMg": 120
+        },
+        "germination": {
+            "minTemperature": 8,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 2,
+                "max": 7,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Diario (suelo saturado)",
+            "amount": "Mantener en agua corriente o renovada",
+            "method": "Inmersión parcial o suelo encharcado",
+            "bestTime": "En continuo (gestión del flujo)"
+        },
+        "thinning": {
+            "distance": "15-20 cm entre líneas o matas",
+            "when": "Tras formación de primeras hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Limpieza manual de estanques y canales",
+            "frequency": "Semanal",
+            "recommendation": "Controlar pureza del agua y ausencia de eutrofización"
+        },
+        "culturalTips": [
+            "Privilegiar agua en movimiento para evitar asfixia",
+            "Mantener pH neutro a ligeramente básico (cerca de 7)",
+            "Desinfectar estanques entre dos ciclos en caso de enfermedad",
+            "Evitar aportes de nitrógeno excesivos para limitar pulgones",
+            "Vigilar presencia de limacos, muy amantes de la humedad"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga diluido (vigor)",
+                "Decocción de cola de caballo (preventivo antifúngico)",
+                "Barreras de arena contra limacos"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos (larvas depredadoras)",
+                "Cárabos (contra limacos)"
+            ],
+            "companionPlants": [
+                "Lechuga",
+                "Achicoria",
+                "Rábano"
+            ]
+        },
+        "harvestTime": "60-90 días tras instalación",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "achicoria",
+                "rábano",
+                "ciboulette",
+                "ajo"
+            ],
+            "avoid": [
+                "col",
+                "nabo",
+                "rúcula",
+                "mostaza"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera, Verano",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "1 day",
+                "conditions": [
+                    "always_active",
+                    "substrate_not_saturated"
+                ],
+                "message": "Alerta humedad: El berro debe tener los pies en agua permanentemente."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Verificación de densidad: aclarar si necesario para buena aireación."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Limpieza del estanque: eliminar restos orgánicos y malas hierbas."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "excessive_humidity",
+                    "stagnant_water"
+                ],
+                "message": "Riesgo de podredumbre: verificar circulación del agua."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Primera cosecha posible: cortar tallos de 8-15 cm."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -5,
+                    "message": "Gel severo: riesgo para vegetación establecida del berro."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Ventana de germinación ideal (15-20°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "endive",
+        "commonName": "Endibia",
+        "scientificName": "Cichorium intybus L. var. foliosum",
+        "family": "Asteraceae",
+        "daysToMaturity": 155,
+        "spacing": 12,
+        "depth": 0.7,
+        "sunExposure": "Sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Planta bianual cultivada por su raíz, cuyo forzado en oscuridad produce el cogollo crujiente (chicon).",
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 17,
+            "proteinG": 0.8,
+            "carbohydratesG": 4.0,
+            "sugarsG": 0.7,
+            "fatG": 0.2,
+            "fiberG": 3.1,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": null
+        },
+        "germination": {
+            "minTemperature": 8,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "Espaciados pero abundantes en periodo seco",
+            "amount": "Mantener suelo fresco (no empapado)",
+            "method": "Al pie, evitar mojar follaje (goteo aconsejado)",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "8-15 cm entre plantas, 30-40 cm entre filas",
+            "when": "Desde aparición de primeras hojas tras levée"
+        },
+        "weeding": {
+            "method": "Manual o binado regular",
+            "frequency": "Cada 2-3 semanas",
+            "recommendation": "Acolchado (paja o heno) para limitar evaporación y adventicias"
+        },
+        "culturalTips": [
+            "Rotación larga de 4-5 años antes de volver a la misma zona",
+            "Evitar excesos de nitrógeno (riesgo raíces huecas)",
+            "Forzado de raíces indispensable en oscuridad para obtener endibias",
+            "Arrancar raíces por suelo seco para mejor conservación",
+            "Eliminar residuos de cultivo en caso de presencia de esclerotinia"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Barreras mecánicas (cenizas, arena) contra limacos",
+                "Purín de ortiga (fortificante)",
+                "Purín de consuelda (vigor)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles, sírfidos y crisopas contra pulgones",
+                "Cárabos y estafilinos contra limacos y larvas del suelo",
+                "Plantas atractivas (umbelíferas) para auxiliares"
+            ],
+            "companionPlants": [
+                "Cebolla y ciboulette (efecto repelente pulgones)",
+                "Zanahoria (partición de espacio)",
+                "Abonos verdes (facelia) para estructura del suelo"
+            ]
+        },
+        "harvestTime": "140-170 días tras siembra para raíces, luego 3-4 semanas de forzado",
+        "companionPlanting": {
+            "beneficial": [
+                "cebolla",
+                "ciboulette",
+                "zanahoria",
+                "eneldo",
+                "hinojo",
+                "facelia"
+            ],
+            "avoid": [
+                "lechuga",
+                "escarola",
+                "rizada",
+                "diente de león"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "harvestMonths3": [
+            "Oct",
+            "Nov",
+            "Dec",
+            "Jan",
+            "Feb"
+        ],
+        "plantingSeason": "Primavera,Verano",
+        "harvestSeason": "Otoño,Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 22",
+                    "dry_surface"
+                ],
+                "message": "Riego abundante necesario para sus endibias: mantenga el suelo fresco al pie."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Aclareo: deje 8-15 cm entre cada planta de endibia."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Binado recomendado para airear el suelo y limitar humedad estancada."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_humidity"
+                ],
+                "message": "Vigilancia limacos y esclerotinia: verifique estado de sus plantas."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 150,
+                "message": "Las raíces de endibia se acercan a madurez (diámetro 3-5 cm). Prepare el forzado."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Atención: umbral de tolerancia raíces en campo alcanzado (-3°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Temperatura ideal para la levée de sus siembras de endibias."
+                }
+            }
+        }
+    },
+    {
+        "id": "broad_bean",
+        "commonName": "Haba",
+        "scientificName": "Vicia faba L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 105,
+        "spacing": 20,
+        "depth": 6,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Leguminosa anual rústica, a veces conducida como bianual según fecha de siembra. Produce vainas con grandes granos ricos en proteínas y mejora estructura y fertilidad del suelo gracias a fijación simbiótica de nitrógeno.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 110,
+            "proteinG": 8,
+            "fatG": 0.4,
+            "carbohydratesG": 20,
+            "sugarsG": 2,
+            "fiberG": 5,
+            "calciumMg": 36,
+            "ironMg": 2,
+            "magnesiumMg": 43,
+            "phosphorusMg": 125,
+            "potassiumMg": 268,
+            "sodiumMg": 5,
+            "zincMg": 1,
+            "copperMg": 0.3,
+            "manganeseMg": 0.4,
+            "seleniumUg": 3,
+            "vitaminCmg": 0.3,
+            "vitaminB9ug": 104,
+            "cholineMg": 31,
+            "vitaminB1mg": 0.1,
+            "vitaminB2mg": 0.1,
+            "vitaminB3mg": 1,
+            "vitaminB6mg": 0.1,
+            "vitaminAug": 1,
+            "vitaminKug": 3
+        },
+        "germination": {
+            "minTemperature": 4,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 21
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 21,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Cada 3 a 7 días según condiciones",
+            "amount": "Aprox. 250 mm repartidos sobre el ciclo",
+            "method": "Riego al pie, evitar follaje",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "15-25 cm en la línea, 40-60 cm entre filas",
+            "when": "Siembra directa recomendada, repicado desaconsejado"
+        },
+        "weeding": {
+            "method": "Manual o binado",
+            "frequency": "Cada 2-3 semanas",
+            "recommendation": "Acolchado aconsejado para limitar evaporación y compactación"
+        },
+        "culturalTips": [
+            "Rotación de cultivos de 4 a 6 años sin leguminosas",
+            "Evitar aportes de nitrógeno solubles, riesgo de encamado",
+            "Inoculación Rhizobium posible en suelo pobre",
+            "Despuntar tallos para limitar pulgones negros",
+            "Dejar raíces en tierra tras cosecha para enriquecer suelo"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Jabón negro contra pulgones",
+                "Purín de ortiga o consuelda",
+                "Decocción de ajo o tanaisie"
+            ],
+            "beneficialInsects": [
+                "Coccinelles",
+                "Syrphes",
+                "Crisopas",
+                "Parasitoides de pulgones"
+            ],
+            "companionPlants": [
+                "Cereales",
+                "Plantas melíferas",
+                "Aliáceas"
+            ]
+        },
+        "harvestTime": "70-90 días para consumo fresco, 110-140 días para granos secos",
+        "companionPlanting": {
+            "beneficial": [
+                "trigo",
+                "cebada",
+                "avena",
+                "centeno",
+                "col",
+                "brócoli",
+                "ajo",
+                "cebolla",
+                "facelia",
+                "caléndula"
+            ],
+            "avoid": [
+                "guisante",
+                "judía",
+                "lenteja",
+                "trébol",
+                "alfalfa",
+                "tomate",
+                "patata"
+            ]
+        },
+        "plantingSeason": "Otoño o Fin Invierno",
+        "harvestSeason": "Primavera, Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "stage == flowering",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego importante durante floración y llenado de granos."
+            },
+            "thinning": {
+                "enabled": false,
+                "message": "El repicado está desaconsejado para las habas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Controle las adventicias y estado del acolchado."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_aphids == true"
+                ],
+                "message": "Presencia de pulgones detectada, intervenir con soluciones biológicas."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Verifique madurez de vainas para cosecha fresca."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -5,
+                    "message": "Temperatura baja tolerada alcanzada para la haba."
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 21,
+                    "message": "Temperatura óptima de germinación alcanzada."
+                }
+            }
+        }
+    }
+]

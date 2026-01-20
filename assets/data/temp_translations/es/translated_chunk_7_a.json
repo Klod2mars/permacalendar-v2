@@ -1,0 +1,997 @@
+[
+    {
+        "id": "radis",
+        "commonName": "Rábano de 18 días",
+        "scientificName": "Raphanus sativus L. var. sativus",
+        "family": "Brassicaceae",
+        "daysToMaturity": 18,
+        "spacing": 5,
+        "depth": 1.2,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Pequeño rábano crujiente de crecimiento ultrarrápido, ideal para cosechas tempranas de primavera y otoño.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.68,
+            "carbohydratesG": 3.4,
+            "sugarsG": 1.86,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminCmg": 14.8,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 25,
+            "potassiumMg": 233,
+            "magnesiumMg": 10,
+            "calciumMg": 25
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 30
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 4,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 10,
+                "max": 20
+            },
+            "minTemperature": -2
+        },
+        "watering": {
+            "frequency": "2-3 veces/semana en suelos ligeros",
+            "amount": "Mantener suelo húmedo en 10-15 cm",
+            "method": "Al pie, evitar mojar excesivamente el follaje",
+            "bestTime": "Mañana temprano o por la noche"
+        },
+        "thinning": {
+            "distance": "2-5 cm entre plantas, 10-20 cm entre filas",
+            "when": "Aparición de primeras hojas"
+        },
+        "weeding": {
+            "method": "Manual",
+            "frequency": "Semanal",
+            "recommendation": "Acolchado fino (paja o hierba seca) para evitar costra superficial"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (3-4 años sin Brasicáceas)",
+            "Evitar excesos de nitrógeno que favorecen follaje en detrimento de raíz",
+            "Utilizar mallas anti-insectos desde siembra contra pulguilla y mosca de la col",
+            "Mantener humedad regular para evitar que rábanos se vuelvan picantes o huecos"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Decocción de cola de caballo (fungistático)",
+                "Jabón negro contra pulgones"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos y crisopas",
+                "Cárabos contra larvas del suelo"
+            ],
+            "companionPlants": [
+                "Lechuga",
+                "Zanahoria",
+                "Guisante"
+            ]
+        },
+        "harvestTime": "18-25 días tras siembra",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "lechuga",
+                "espinaca",
+                "guisante",
+                "pepino",
+                "calabaza",
+                "cebolla",
+                "ajo",
+                "puerro"
+            ],
+            "avoid": [
+                "hisopo",
+                "col",
+                "nabo",
+                "mostaza"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera,Otoño",
+        "harvestSeason": "Primavera,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "soil_dry_surface"
+                ],
+                "message": "Riego necesario: mantenga suelo fresco para evitar rábanos picantes."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 7,
+                "message": "Aclareo recomendado: deje 2 a 5 cm entre cada rábano."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Verifique presencia adventicias y estado costra suelo."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "dry_weather"
+                ],
+                "message": "Alerta Pulguillas: instale malla o mantenga follaje húmedo."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 18,
+                "message": "¡Sus rábanos de 18 días deberían estar listos para cosecha!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Temperatura baja: la germinación podría ralentizarse."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 30,
+                    "message": "Condiciones de germinación óptimas alcanzadas."
+                }
+            }
+        }
+    },
+    {
+        "id": "radis_daikon",
+        "commonName": "Rábano Daikon",
+        "scientificName": "Raphanus sativus L. var. longipinnatus",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 12,
+        "depth": 1.75,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Medio",
+        "description": "Rábano oriental de raíz larga y blanca, crujiente y ligeramente picante, ideal para otoño.",
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.3,
+            "carbohydratesG": 4.5,
+            "sugarsG": 2.5,
+            "fatG": 0.05,
+            "fiberG": 3.5,
+            "vitaminCmg": 22,
+            "vitaminEmg": 0.0,
+            "vitaminB9ug": 28,
+            "potassiumMg": 230,
+            "magnesiumMg": 16,
+            "calciumMg": 27
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 7,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (más en caso de levée)",
+            "amount": "Humedad regular, suelo fresco",
+            "method": "Al pie o en surco, evitar aspersión sobre follaje viejo",
+            "bestTime": "Mañana temprano"
+        },
+        "thinning": {
+            "distance": "10-15 cm entre plantas, 30 cm entre filas",
+            "when": "Aparición de primeras hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Manual (binado y escarda) o falsa siembra",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado vegetal (paja, tontes secas) para mantener frescor"
+        },
+        "culturalTips": [
+            "Rotación de cultivos de 3-4 años sin Brasicáceas",
+            "Evitar suelos pedregosos para prevenir raíces bifurcadas",
+            "No repicar para evitar deformación raíz pivotante",
+            "Mantener humedad constante para evitar gusto demasiado picante",
+            "Usar malla insect-proof contra pulguilla y mosca de la col"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga diluido (fortificante)",
+                "Tisana de cola de caballo (preventivo enfermedades)",
+                "Maceración de ajo (repelente insectos)"
+            ],
+            "beneficialInsects": [
+                "Cárabos contra limacos",
+                "Sírfidos y Crisopas contra pulgones",
+                "Coccinelles",
+                "Himenópteros parasitoides"
+            ],
+            "companionPlants": [
+                "Guisante",
+                "Lechuga",
+                "Cebolla",
+                "Ajo"
+            ]
+        },
+        "harvestTime": "50-70 días tras siembra según calibre deseado",
+        "companionPlanting": {
+            "beneficial": [
+                "guisante",
+                "judía",
+                "habas",
+                "cebolla",
+                "ciboulette",
+                "ajo",
+                "lechuga",
+                "espinaca"
+            ],
+            "avoid": [
+                "col",
+                "nabo",
+                "brócoli",
+                "rúcula",
+                "mostaza",
+                "colza"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera, Fin de verano",
+        "harvestSeason": "Verano, Otoño, Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "soil_dryness_detected"
+                ],
+                "message": "Riego del Daikon: mantenga suelo fresco para evitar raíces huecas."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Aclareo necesario: deje 10-15 cm entre sus rábanos Daikon."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y binado recomendados para sus rábanos."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "pest_alert_altises",
+                    "dry_weather"
+                ],
+                "message": "Atención pulguillas: instale malla o mantenga suelo húmedo."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Verifique diámetro cuello (4-8 cm), la cosecha se acerca!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -4,
+                    "message": "Riesgo de helada follaje Daikon (-4°C). Coseche o proteja."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 25,
+                    "message": "Temperatura ideal para levée rápida de sus semillas."
+                }
+            }
+        }
+    },
+    {
+        "id": "radis_violet_hiver",
+        "commonName": "Rábano Violeta de Invierno",
+        "scientificName": "Raphanus sativus L.",
+        "family": "Brassicaceae",
+        "daysToMaturity": 75,
+        "spacing": 10,
+        "depth": 1.5,
+        "sunExposure": "Sol o media sombra",
+        "waterNeeds": "Medio",
+        "description": "Rábano de invierno de piel violeta y carne blanca, crujiente y ligeramente picante. Excelente conservación.",
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.6,
+            "carbohydratesG": 3.4,
+            "sugarsG": 2.0,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminCmg": 17,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 29,
+            "potassiumMg": 270,
+            "magnesiumMg": 12,
+            "calciumMg": 29
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 7,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 12,
+                "max": 20
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana según clima",
+            "amount": "Mantener suelo fresco sin saturación",
+            "method": "Al pie para limitar enfermedades foliares",
+            "bestTime": "Mañana temprano o noche"
+        },
+        "thinning": {
+            "distance": "8-12 cm entre plantas, 25 cm entre filas",
+            "when": "Aparición de primeras hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Manual o binado regular",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado fino tras levée para conservar humedad"
+        },
+        "culturalTips": [
+            "Rotación cultivos 3-4 años sin Brasicáceas",
+            "Evitar abonos frescos que hacen bifurcar raíces",
+            "Mantener humedad regular para evitar que rábano se vuelva muy picante",
+            "Proteger con malla anti-insectos contra pulguillas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (vigor)",
+                "Decocción de ajo (repelente)",
+                "Purín de cola de caballo (prevención fúngica)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos (larvas depredadoras)",
+                "Cárabos contra limacos"
+            ],
+            "companionPlants": [
+                "Lechuga",
+                "Zanahoria",
+                "Cebolla"
+            ]
+        },
+        "harvestTime": "60-90 días tras siembra según clima",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "zanahoria",
+                "cebolla",
+                "ciboulette",
+                "espinaca",
+                "canónigos",
+                "facelia"
+            ],
+            "avoid": [
+                "col",
+                "nabo",
+                "rutabaga",
+                "mostaza",
+                "rúcula"
+            ]
+        },
+        "sowingMonths3": [
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Verano",
+        "harvestSeason": "Otoño,Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Verifique humedad suelo para sus rábanos violetas: suelo fresco evita gusto picante."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Aclareo: deje 10 cm entre cada rábano violeta para buen desarrollo."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Deshierbe y binado aconsejados para sus rábanos de invierno."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "dry_weather"
+                ],
+                "message": "Atención pulguillas: mantenga suelo húmedo o ponga manta."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Sus rábanos violetas deberían estar listos para cosecha."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Riesgo helada para sus rábanos: cubra o coseche antes de grandes fríos."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 18,
+                    "message": "Temperatura ideal para levée de sus rábanos (15-18°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "watermelon_radish",
+        "commonName": "Rábano Sandía",
+        "scientificName": "Raphanus sativus L.",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 5,
+        "depth": 1.0,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Medio a alto",
+        "description": "Rábano de invierno asiático espectacular de carne rosa vivo y piel blanca, gusto suave y crujiente.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 20,
+            "proteinG": 0.6,
+            "carbohydratesG": 4.0,
+            "sugarsG": 2.8,
+            "fatG": 0.1,
+            "fiberG": 2.2,
+            "vitaminCmg": 15,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 0,
+            "potassiumMg": 230,
+            "magnesiumMg": 10,
+            "calciumMg": 33
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 3,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": 2
+        },
+        "watering": {
+            "frequency": "Cada 1-3 días (suelo desnudo) o 3-5 días (acolchado)",
+            "amount": "Mantener suelo fresco y regularmente húmedo",
+            "method": "Al pie o goteo para evitar enfermedades foliares",
+            "bestTime": "Mañana o noche"
+        },
+        "thinning": {
+            "distance": "3-6 cm entre plantas, 25-30 cm entre filas",
+            "when": "Aparición primeras hojas tras levée"
+        },
+        "weeding": {
+            "method": "Manual o mecánico (binado regular)",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado recomendado para limitar adventicias y guardar humedad"
+        },
+        "culturalTips": [
+            "Rotación cultivos (3-4 años sin Brasicáceas)",
+            "Evitar excesos nitrógeno (favorece follaje en detrimento raíz)",
+            "Sembrar preferentemente a final de verano para evitar subida a flor prematura",
+            "Mantener humedad constante para evitar que raíz se vuelva fibrosa"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Purín de consuelda (apoyo crecimiento)",
+                "Tisana de cola de caballo (preventivo fúngico)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos (larvas depredadoras)",
+                "Crisopas (depredadores generalistas)"
+            ],
+            "companionPlants": [
+                "Lechuga",
+                "Espinaca",
+                "Cebolla",
+                "Ciboulette"
+            ]
+        },
+        "harvestTime": "55-65 días tras siembra",
+        "companionPlanting": {
+            "beneficial": [
+                "lechuga",
+                "ensalada",
+                "espinaca",
+                "canónigos",
+                "cebolla",
+                "ciboulette",
+                "eneldo",
+                "borraja"
+            ],
+            "avoid": [
+                "Col",
+                "Nabo",
+                "Mostaza",
+                "Otros rábanos"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "May",
+            "Jun",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera, Fin verano",
+        "harvestSeason": "Primavera, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_1_day"
+                ],
+                "message": "Riego para sus rábanos Watermelon: mantenimiento suelo fresco evita raíces fibrosas."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 12,
+                "message": "Aclareo necesario: deje 3 a 6 cm entre cada rábano."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y binado recomendados para sus rábanos."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Riesgo enfermedades fúngicas: una decocción de cola de caballo puede ser útil."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Verifique calibre sus rábanos Watermelon (5-8 cm) para cosecha."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima germinación alcanzada (5°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 24,
+                    "message": "Condiciones ideales para levée de sus rábanos (15-24°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "cherry_tomato",
+        "commonName": "Tomate Cherry Rojo",
+        "scientificName": "Solanum lycopersicum var. cerasiforme",
+        "family": "Solanaceae",
+        "daysToMaturity": 70,
+        "spacing": 50,
+        "depth": 0.7,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Pequeño tomate crujiente y dulce, ideal para aperitivo. Muy productivo y más resistente que variedades clásicas.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 1.0,
+            "carbohydratesG": 4.0,
+            "sugarsG": 3.0,
+            "fatG": 0.2,
+            "fiberG": 1.0,
+            "vitaminCmg": 14,
+            "vitaminEmg": 1.0,
+            "vitaminB9ug": 15,
+            "potassiumMg": 237,
+            "magnesiumMg": 11,
+            "calciumMg": 10
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 24,
+                "max": 32
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (profundo)",
+            "amount": "25-50 mm por semana",
+            "method": "Al pie, evitar mojar follaje",
+            "bestTime": "Mañana temprano o noche"
+        },
+        "thinning": {
+            "distance": "40-60 cm entre plantas, 80-100 cm entre filas",
+            "when": "Estadio 2 hojas verdaderas para repicado"
+        },
+        "weeding": {
+            "method": "Manual o binado",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado espeso (paja, heno, BRF) para limitar evaporación"
+        },
+        "culturalTips": [
+            "Rotación cultivos 3-4 años sin solanáceas",
+            "Suprimir hojas bajas para mejorar aireación",
+            "Poda de chupones facultativa en cherry",
+            "Usar tutores sólidos o jaulas",
+            "Cosecha regular para estimular producción"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (crecimiento)",
+                "Purín de consuelda (fructificación)",
+                "Decocción de cola de caballo (anti-fúngico)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos y Crisopas",
+                "Abejas para polinización"
+            ],
+            "companionPlants": [
+                "Albahaca",
+                "Ciboulette",
+                "Caléndula",
+                "Tagete"
+            ]
+        },
+        "harvestTime": "60-80 días tras repicado",
+        "companionPlanting": {
+            "beneficial": [
+                "albahaca",
+                "ciboulette",
+                "lechuga",
+                "cebolla",
+                "ajo",
+                "puerro",
+                "borraja",
+                "caléndula",
+                "tagete"
+            ],
+            "avoid": [
+                "patata",
+                "berenjena",
+                "pimiento",
+                "hinojo",
+                "maíz"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario: 25-50 mm/semana al pie, sin mojar hojas."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Verifique estadio crecimiento: repicado recomendado a 2 hojas verdaderas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y verificación acolchado recomendados."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Riesgo mildiu elevado: aplicación preventiva decocción cola de caballo aconsejada."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 65,
+                "message": "La cosecha de sus tomates cherry se acerca!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Atención: crecimiento ralentizado bajo 10°C, proteja sus plantas."
+                },
+                "germination_optimal": {
+                    "min": 24,
+                    "max": 32,
+                    "message": "Temperatura ideal para levée de semillas (24-32°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "tomato_coeur_de_boeuf",
+        "commonName": "Tomate Corazón de Buey",
+        "scientificName": "Solanum lycopersicum L.",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 50,
+        "depth": 0.5,
+        "sunExposure": "Pleno sol, protegido del viento",
+        "waterNeeds": "Medio a alto",
+        "description": "Variedad antigua que produce grandes frutos carnosos en forma de corazón. Carne densa, sabrosa y con pocas semillas.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "proteinG": 0.68,
+            "carbohydratesG": 2.8,
+            "sugarsG": 2.2,
+            "fatG": 0.1,
+            "fiberG": 1.2,
+            "vitaminCmg": 14.3,
+            "vitaminEmg": 1.11,
+            "vitaminB9ug": 20.5,
+            "potassiumMg": 251,
+            "magnesiumMg": 10.1,
+            "calciumMg": 8.24
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 26
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2-3 veces/semana (aprox 2.9 mm/día)",
+            "amount": "Ajustar para cubrir 80-100% necesidades hídricas",
+            "method": "Al pie, irrigación localizada (goteo) recomendada",
+            "bestTime": "Mañana temprano o noche"
+        },
+        "thinning": {
+            "distance": "50 cm entre plantas, 80 cm entre filas",
+            "when": "Al momento del repicado (6-8 semanas tras siembra)"
+        },
+        "weeding": {
+            "method": "Manual, binado y acolchado orgánico",
+            "frequency": "Regular antes instalación acolchado",
+            "recommendation": "Acolchado orgánico (heno, paja, BRF) para limitar mildiu"
+        },
+        "culturalTips": [
+            "Rotación cultivos de 3 a 4 años mínimo",
+            "Evitar absolutamente mojar follaje",
+            "Suprimir hojas bajas para aerear",
+            "Usar entutorado sólido para soportar peso frutos",
+            "Practicar repicado para favorecer sistema radicular potente"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (crecimiento y nitrógeno)",
+                "Purín de cola de caballo (refuerzo contra enfermedades criptogámicas)",
+                "Purín de consuelda (potasio para fructificación)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles y sírfidos contra pulgones",
+                "Crisopas",
+                "Micro-himenópteros parasitoides contra aleurodes"
+            ],
+            "companionPlants": [
+                "Albahaca (confusión olfativa)",
+                "Tagete (pulgones y nematodos)",
+                "Capuchina (planta trampa)"
+            ]
+        },
+        "harvestTime": "80-100 días tras plantación",
+        "companionPlanting": {
+            "beneficial": [
+                "albahaca",
+                "tagete",
+                "capuchina",
+                "facelia",
+                "borraja",
+                "cosmos"
+            ],
+            "avoid": [
+                "patata",
+                "berenjena",
+                "pimiento"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario: mantenga humedad regular para sus Corazón de Buey."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Verifique espaciamiento (50cm) y aireación follaje."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Renueve acolchado orgánico si necesario."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Riesgo mildiu elevado: aplique decocción cola de caballo en prevención."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Sus tomates Corazón de Buey llegan a madurez, vigile flexibilidad del fruto."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Alerta frío: proteja sus plantas (temperatura crítica < 5°C)."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Condiciones óptimas para levée de sus semillas."
+                }
+            }
+        }
+    }
+]

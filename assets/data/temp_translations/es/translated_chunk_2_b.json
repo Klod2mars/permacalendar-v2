@@ -1,0 +1,892 @@
+[
+    {
+        "id": "navet",
+        "commonName": "Nabo",
+        "scientificName": "Brassica rapa subsp. rapa",
+        "family": "Brassicaceae",
+        "daysToMaturity": 50,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Regular",
+        "description": "Hortaliza de raíz rápida de cultivar, crujiente y sabrosa, ideal en rotación y en permacultura si se cultiva con cuidado.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "M",
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 2.4,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 28,
+            "proteinG": 0.9,
+            "carbohydratesG": 6.4,
+            "sugarsG": 3.8,
+            "fatG": 0.1,
+            "fiberG": 1.8,
+            "vitaminCmg": 21,
+            "vitaminKmcg": 0.1,
+            "vitaminB9ug": 15,
+            "vitaminAmcg": 0,
+            "calciumMg": 30,
+            "ironMg": 0.3,
+            "magnesiumMg": 11,
+            "potassiumMg": 208,
+            "manganeseMg": 0.13,
+            "phosphorusMg": 27
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 1
+        },
+        "watering": {
+            "frequency": "1 a 2 veces/semana en verano",
+            "amount": "Suelo siempre fresco sin exceso de agua",
+            "method": "Riego al pie, evitar el follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "10-15 cm entre plantas, líneas espaciadas de 15-20 cm",
+            "when": "Cuando los brotes midan aprox. 5 cm de altura"
+        },
+        "weeding": {
+            "method": "Bina/escarda manual",
+            "frequency": "A demanda según crecimiento de malas hierbas",
+            "recommendation": "Acolchado recomendado para limitar las malas hierbas y conservar la humedad"
+        },
+        "culturalTips": [
+            "Utilizar un suelo bien aireado, sin piedras, para favorecer el desarrollo radicular",
+            "Evitar abonos frescos (riesgo de hernia del nabo)",
+            "Proteger las siembras tempranas con túnel o chasis (airear de día)",
+            "Respetar una rotación larga de cultivos (evitar brasicáceas sucesivas)",
+            "Sembrar en marzo-abril o agosto para evitar el estrés térmico"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Decocción de cola de caballo contra el mildiu",
+                "Purín de ortiga como fortificante y preventivo"
+            ],
+            "beneficialInsects": [],
+            "companionPlants": [
+                "Tomillo",
+                "Romero",
+                "Melisa",
+                "Hisopo (contra las altisas)"
+            ]
+        },
+        "harvestTime": "Aprox. 50 días tras siembra según variedad y condiciones",
+        "companionPlanting": {
+            "beneficial": [
+                "tomillo",
+                "romero",
+                "melisa",
+                "hisopo",
+                "lechuga",
+                "guisante",
+                "judía",
+                "hisopo (contra las altisas)"
+            ],
+            "avoid": [
+                "otras brasicáceas (col, rábano, mostaza)",
+                "plantas exigentes en nitrógeno si suelo pobre"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera,Otoño",
+        "harvestSeason": "Primavera,Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego necesario para sus nabos: mantener el suelo fresco (1-2x/semana en verano)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclareo necesario: dejar 10-15 cm entre cada planta"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe manual o acolchado recomendado alrededor de los nabos"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Pulverización preventiva de decocción de cola de caballo o purín de ortiga recomendada"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "Periodo de cosecha se acerca para sus nabos (cosechar jóvenes para mejor textura)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 1,
+                    "message": "Atención: temperatura mínima para los nabos alcanzada (1°C)"
+                },
+                "germination_optimal": {
+                    "min": 19,
+                    "max": 19,
+                    "message": "Condiciones óptimas de germinación alcanzadas (19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "onion",
+        "commonName": "Cebolla",
+        "scientificName": "Allium cepa",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 120,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Bajo",
+        "description": "Hortaliza bulbosa esencial en cocina, rica en antioxidantes y compuestos azufrados beneficiosos para la salud.",
+        "sowingMonths": [
+            "F",
+            "A"
+        ],
+        "harvestMonths": [
+            "J"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 40,
+            "proteinG": 1.1,
+            "carbohydratesG": 9.3,
+            "sugarsG": 4.2,
+            "fatG": 0.1,
+            "fiberG": 1.7,
+            "vitaminCmg": 7.4,
+            "vitaminB6mg": 0.12,
+            "vitaminB9ug": 19,
+            "vitaminAmcg": 1,
+            "calciumMg": 23,
+            "ironMg": 0.2,
+            "magnesiumMg": 10,
+            "potassiumMg": 146,
+            "manganeseMg": 0.13,
+            "phosphorusMg": 29
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 1
+        },
+        "watering": {
+            "frequency": "Riego ligero y regular tras siembra, luego solo en caso de sequía prolongada o engrosamiento de los bulbos",
+            "amount": "Moderado, evitar el exceso",
+            "method": "Al pie, sin mojar los bulbos",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "10-15 cm entre plantas",
+            "when": "Cuando las plantas tengan algunas hojas"
+        },
+        "weeding": {
+            "method": "Escarda manual regular, binado para airear el suelo",
+            "frequency": "Regularmente al inicio del cultivo",
+            "recommendation": "Acolchado ligero posible, pero evitar cubrir los bulbos para prevenir podredumbre"
+        },
+        "culturalTips": [
+            "Preferir un suelo ligero, suelto y bien drenado",
+            "Exposición a pleno sol indispensable",
+            "Evitar el exceso de humedad: nada de estiércol fresco ni purín de ortiga cerca de las cebollas",
+            "Rotación de cultivos: no replantar cebollas en el mismo lugar antes de 3-4 años",
+            "No asociar con leguminosas (guisantes, habas)",
+            "Utilizar malla anti-insectos en periodo de vuelo de plagas",
+            "Cosechar solo cuando el follaje esté bien seco para una buena conservación"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Trampas amarillas pegajosas contra pulgones y trips",
+                "Decocción de tanaisie contra enfermedades fúngicas",
+                "Decocción de cola de caballo contra el mildiu",
+                "Caldo bordelés (uso bio selectivo)",
+                "Insecticidas naturales a base de piretro o neem"
+            ],
+            "beneficialInsects": [],
+            "companionPlants": [
+                "Carotta",
+                "Remolacha",
+                "Lechuga",
+                "Tomate",
+                "Repollo (evitar guisantes",
+                "habas)"
+            ]
+        },
+        "harvestTime": "Cuando el follaje esté completamente seco, generalmente 4 a 5 meses tras siembra",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "remolacha",
+                "lechuga",
+                "tomate",
+                "repollo",
+                "rábano",
+                "espinaca",
+                "habas)"
+            ],
+            "avoid": [
+                "habas",
+                "leguminosas",
+                "guisantes"
+            ],
+            "notes": [
+                "repollo (evitar guisantes"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Apr",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Jun",
+            "Jul"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "drought_period",
+                    "bulb_swelling_stage"
+                ],
+                "message": "Riego moderado aconsejado: evite exceso de humedad para prevenir podredumbre de bulbos"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Aclareo necesario: espaciar las plantas 10-15 cm para buen desarrollo de bulbos"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe recomendado: escardar regularmente para evitar competencia de malas hierbas"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "pest_alert"
+                ],
+                "message": "Aplicar decocción de cola de caballo o instalar trampas amarillas en caso de humedad elevada"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Verifique el secado del follaje: coseche sus cebollas cuando los tallos estén completamente secos"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 1,
+                    "message": "Atención: temperatura mínima para cebollas alcanzada (1°C)"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Temperatura óptima de germinación alcanzada (15°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "parsley",
+        "commonName": "Perejil",
+        "scientificName": "Petroselinum crispum",
+        "family": "Apiaceae",
+        "daysToMaturity": 90,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Media sombra (sobre todo en verano en regiones cálidas)",
+        "waterNeeds": "Alto",
+        "description": "Hierba aromática bianual, rica en vitaminas, apreciada en cocina y medicina natural. Germinación lenta, necesita suelo fresco y rico.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 12.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 2.9,
+            "carbohydratesG": 6.3,
+            "sugarsG": 0.9,
+            "fatG": 0.8,
+            "fiberG": 3.3,
+            "vitaminCmg": 133,
+            "vitaminKmcg": 1640,
+            "vitaminB9ug": 152,
+            "vitaminAmcg": 421,
+            "calciumMg": 138,
+            "ironMg": 6.2,
+            "magnesiumMg": 50,
+            "potassiumMg": 554,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 58,
+            "apigeninMg": 45
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 21,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Cada 3 a 5 días (o 1-2 veces/semana), diario con fuerte calor",
+            "amount": "Suelo siempre ligeramente húmedo, sin exceso",
+            "method": "Riego al pie, evitar el follaje",
+            "bestTime": "Mañana o noche para limitar la evaporación"
+        },
+        "thinning": {
+            "distance": "15-20 cm entre plantas",
+            "when": "En cuanto las primeras hojas estén bien desarrolladas (tras 3 semanas aprox.)"
+        },
+        "weeding": {
+            "method": "Bina manual y deshierbe a mano (raíces superficiales)",
+            "frequency": "Semanal o según presión de adventicias",
+            "recommendation": "Acolchado fuertemente aconsejado para limitar malas hierbas y conservar humedad"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: no replantar en el mismo lugar durante al menos 3 años",
+            "Proteger al final del invierno con un velo de invernaje si necesario",
+            "Evitar riegos excesivos para prevenir podredumbre de raíces",
+            "Cosechar antes de la subida a flor para evitar amargor (año 2)",
+            "No dejar subir completamente a semilla para evitar invasión"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante natural)",
+                "Decocciones de plantas (ej: cola de caballo, consuelda)",
+                "Infusiones naturales sin productos químicos"
+            ],
+            "beneficialInsects": [
+                "Larvas de mariquitas",
+                "Insectos auxiliaires diversos (sírfidos, crisopas)"
+            ],
+            "companionPlants": [
+                "Cebollino (repele mosca de la zanahoria)"
+            ]
+        },
+        "harvestTime": "90 días tras siembra, cosecha posible todo el verano y hasta invierno en climas suaves",
+        "companionPlanting": {
+            "beneficial": [
+                "cebollino",
+                "tomate",
+                "puerro",
+                "rábano",
+                "zanahoria (con precaución)",
+                "cebollino (repele mosca de la zanahoria)"
+            ],
+            "avoid": [
+                "hortalizas de la misma familia (zanahoria, apio, chirivía) en el mismo lugar — riesgo de enfermedades comunes"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Primavera, Otoño (en climas suaves)",
+        "harvestSeason": "Verano, Otoño, Invierno (bajo abrigo o región suave)",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario para su perejil: mantener suelo fresco, regar mañana o noche"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Aclareo a realizar: deje 15-20 cm entre plantas de perejil"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Deshierbe manual recomendado — raíces superficiales, ¡sea suave!"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature < 20"
+                ],
+                "message": "Aplicar purín de ortiga en prevención para reforzar plantas"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Primera cosecha posible para su perejil — corte los tallos exteriores en prioridad"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima para perejil alcanzada (5°C) — proteger si necesario"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Condiciones óptimas de germinación del perejil (20-25°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "parsnip",
+        "commonName": "Chirivía",
+        "scientificName": "Pastinaca sativa",
+        "family": "Apiaceae",
+        "daysToMaturity": 120,
+        "spacing": 20,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza de raíz antigua, dulce y nutritiva, muy sensible a la sequía. Exige suelo profundo, ligero y bien drenado para evitar raíces bifurcadas.",
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "O",
+            "N",
+            "D"
+        ],
+        "marketPricePerKg": 3.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 75,
+            "proteinG": 1.2,
+            "carbohydratesG": 18.0,
+            "sugarsG": 4.8,
+            "fatG": 0.3,
+            "fiberG": 4.9,
+            "vitaminCmg": 17.0,
+            "vitaminKmcg": 22.5,
+            "vitaminB9ug": 67,
+            "vitaminAmcg": 0,
+            "calciumMg": 36,
+            "ironMg": 0.6,
+            "magnesiumMg": 29,
+            "potassiumMg": 375,
+            "manganeseMg": 0.4,
+            "phosphorusMg": 51,
+            "folateUg": 67
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 12,
+                "max": 20,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Cada 7 a 10 días en periodo seco (copioso), ligero y frecuente al estadio germinación",
+            "amount": "Riego abundante para humedecer en profundidad",
+            "method": "Al pie, evitar el follaje",
+            "bestTime": "Temprano en la mañana (evitar la noche para limitar enfermedades)"
+        },
+        "thinning": {
+            "distance": "15-20 cm entre plantas, 30 cm entre filas",
+            "when": "Cuando las plantas tengan 2 a 3 hojas verdaderas (sea 3-4 hojas)"
+        },
+        "weeding": {
+            "method": "Bina o escarda manual, falsa siembra previa recomendada",
+            "frequency": "Regular, sobre todo al inicio del cultivo",
+            "recommendation": "Acolchado entre líneas para reducir competencia y mullir el suelo"
+        },
+        "culturalTips": [
+            "Evitar abonos ricos en nitrógeno (favorece follaje en detrimento de raíz)",
+            "Utilizar solo semillas del año (germinación degradada más allá)",
+            "Rotación estricta: esperar 6 años antes de resembrar en el mismo lugar",
+            "No cultivar tras otras Apiáceas (zasahoria, apio, hinojo)",
+            "Suelo profundo, ligero, bien drenado, sin piedras para evitar raíces bifurcadas",
+            "Evitar regar por la noche para limitar enfermedades fúngicas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Decocción de lavanda (repelente)",
+                "Mallas anti-insectos contra la mosca de la zanahoria",
+                "Infusiones o purines naturales (ej: tanaisie, ajo)"
+            ],
+            "beneficialInsects": [
+                "Auxiliares atraídos por biodiversidad (mariquitas, sírfidos, crisopas)",
+                "Avispas parasitoides contra huevos de plagas"
+            ],
+            "companionPlants": [
+                "Cebolla",
+                "Chalota",
+                "Ajo (repelentes naturales contra ciertos insectos)"
+            ]
+        },
+        "harvestTime": "4 a 6 meses tras siembra, idealmente tras primeras heladas para endulzar la raíz",
+        "companionPlanting": {
+            "beneficial": [
+                "cebolla",
+                "chalota",
+                "ajo",
+                "lechuga",
+                "rábano",
+                "judía enana",
+                "ajo (repelentes naturales contra ciertos insectos)"
+            ],
+            "avoid": [
+                "otras apiáceas",
+                "zanahoria",
+                "apio",
+                "hinojo"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño,Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "temperature > 20"
+                ],
+                "message": "Riego copioso necesario para sus chirivías: humedezca en profundidad. Evite la noche."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Aclare sus chirivías: deje 15-20 cm entre plantas a 2-3 hojas verdaderas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe recomendado + acolchado para limitar competencia de adventicias."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 18"
+                ],
+                "message": "Instalar mallas anti-insectos si riesgo mosca de la zanahoria. Favorecer biodiversidad."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Cosecha posible de chirivías. Ideal tras primeras heladas para mejorar sabor."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima para crecimiento de chirivía alcanzada (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 18,
+                    "message": "Temperatura óptima de germinación alcanzada (18°C) para sus chirivías."
+                }
+            }
+        }
+    },
+    {
+        "id": "potato",
+        "commonName": "Patata",
+        "scientificName": "Solanum tuberosum",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 35,
+        "depth": 10,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Moderado",
+        "description": "Tubérculo nutritivo y polivalente, cultivado en permacultura con rotación y acolchado para limitar enfermedades y malas hierbas.",
+        "marketPricePerKg": 1.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 77,
+            "proteinG": 2.0,
+            "carbohydratesG": 17.5,
+            "sugarsG": 0.8,
+            "fatG": 0.1,
+            "fiberG": 2.2,
+            "vitaminCmg": 19.7,
+            "vitaminKmcg": 1.9,
+            "vitaminB6mg": 0.3,
+            "vitaminB9ug": 15,
+            "vitaminAmcg": 0,
+            "calciumMg": 12,
+            "ironMg": 0.8,
+            "magnesiumMg": 23,
+            "potassiumMg": 420,
+            "manganeseMg": 0.15,
+            "phosphorusMg": 57,
+            "resistantStarchG": 1.5
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (ajustar según fase de crecimiento)",
+            "amount": "15-30 mm/semana (3-6 mm/día según fase)",
+            "method": "Riego al suelo, entre filas, sin mojar el follaje",
+            "bestTime": "Temprano en la mañana o al final de la tarde"
+        },
+        "thinning": {
+            "distance": "30-40 cm entre plantas, 60-75 cm entre filas",
+            "when": "No necesario si plantación inicial bien espaciada"
+        },
+        "weeding": {
+            "method": "Binado, escarda manual, acolchado grueso",
+            "frequency": "Cada 2-3 semanas al inicio del cultivo",
+            "recommendation": "Acolchado obligatorio en permacultura para limitar deshierbe y proteger tubérculos. Aporcado recomendado para cubrir tubérculos."
+        },
+        "culturalTips": [
+            "Rotación de cultivos: no replantar en el mismo lugar antes de 3-4 años",
+            "Suelo ligero, bien drenado, enriquecido en materia orgánica",
+            "Aporcar las plantas para proteger tubérculos de la luz",
+            "Parar el riego 1 mes antes de cosecha para favorecer maduración",
+            "Evitar riego nocturno para limitar enfermedades fúngicas",
+            "Utilizar agua de lluvia si es posible"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Caldo bordelés (prevención mildiu)",
+                "Purín de ortiga (fortificante)",
+                "Decocción de ajo (fungicida natural)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Crisopas (contra pulgones)",
+                "Nematodos beneficiosos (contra parásitos subterráneos)"
+            ],
+            "companionPlants": [
+                "Capuchina",
+                "Caléndula",
+                "Trébol (atraen auxiliares",
+                "repelentes naturales)"
+            ]
+        },
+        "harvestTime": "Aprox. 90-120 días tras plantación, según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "judía",
+                "maíz",
+                "ajo",
+                "cebolla",
+                "caléndula",
+                "capuchina",
+                "trébol",
+                "trébol (atraen auxiliares",
+                "repelentes naturales)"
+            ],
+            "avoid": [
+                "aubergine",
+                "concombre",
+                "courge",
+                "poivron",
+                "tomate"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego moderado necesario: 15-30 mm/semana, al pie, sin mojar hojas"
+            },
+            "thinning": {
+                "enabled": false,
+                "message": "Aclareo no necesario si plantación inicial respeta 30-40 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y binado recomendados. Piense en acolchar y aporcar."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Riesgo de mildiu: aplicar caldo bordelés o purín de ortiga en prevención"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Cosecha posible a partir de ahora. Detenga el riego desde hace 1 mes."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Atención: temperatura mínima para patata alcanzada (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Temperatura óptima de germinación alcanzada (20°C)"
+                }
+            }
+        }
+    }
+]

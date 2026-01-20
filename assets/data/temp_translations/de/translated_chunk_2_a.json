@@ -1,0 +1,869 @@
+[
+    {
+        "id": "courgette",
+        "commonName": "Zucchini",
+        "scientificName": "Cucurbita pepo",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 45,
+        "spacing": 75,
+        "depth": 2,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Kräftiges Fruchtgemüse, produktiv und einfach anzubauen in reichem, gut durchlässigem Boden, ideal für Permakultur und Bio-Anbau.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.6,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 17,
+            "proteinG": 1.2,
+            "carbohydratesG": 3.1,
+            "sugarsG": 2.5,
+            "fatG": 0.3,
+            "fiberG": 1.0,
+            "vitaminCmg": 17.9,
+            "vitaminKmcg": 4.3,
+            "vitaminB9ug": 29,
+            "vitaminAmcg": 10,
+            "calciumMg": 16,
+            "ironMg": 0.4,
+            "magnesiumMg": 18,
+            "potassiumMg": 261,
+            "manganeseMg": 0.1,
+            "phosphorusMg": 38,
+            "luteinZeaxanthinMcg": 2125
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 22,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 8,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "1 Mal/Woche (ausgiebig im Sommer)",
+            "amount": "5-8 Liter pro Pflanze/Woche",
+            "method": "Gießen an der Basis, niemals auf das Laub",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "70-80 cm zwischen Pflanzen",
+            "when": "Wenn Pflanzen 2-3 echte Blätter haben, nur die kräftigsten behalten"
+        },
+        "weeding": {
+            "method": "Regelmäßiges manuelles Jäten + organisches Mulchen (Stroh, Holzhäcksel)",
+            "frequency": "Alle 2 Wochen oder nach Bedarf",
+            "recommendation": "Sofort bei Pflanzung mulchen, um Verdunstung und Unkraut zu begrenzen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: 2-3 Jahre warten, bevor Kürbisgewächse am gleichen Ort gepflanzt werden",
+            "Niemals das Laub gießen, um Pilzkrankheiten zu vermeiden",
+            "Ernte durch Schneiden des Stiels mit sauberer Schere",
+            "Nicht zu früh pflanzen: kühle und feuchte Frühlingsperioden vermeiden",
+            "Gute Belüftung zwischen den Pflanzen sichern, um Mehltau zu begrenzen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (stärkend und vorbeugend)",
+                "Schachtelhalmjauche (Anti-Pilz)",
+                "Natron (Sprühen gegen Mehltau)",
+                "Schmierseife (gegen Blattläuse)",
+                "Kiefernöl oder Pyrethrum (gezieltes Bio-Insektizid)"
+            ],
+            "beneficialInsects": [
+                "Marienkäferlarven (gegen Blattläuse)",
+                "Schwebfliegen (Prädatoren von Blattläusen)",
+                "Parasitäre Wespen (gegen Raupen)"
+            ],
+            "companionPlants": [
+                "Bohne",
+                "Mais",
+                "Radieschen",
+                "Kapuzinerkresse (Falle)",
+                "Zwiebel",
+                "Knoblauch (natürliche Abwehrmittel)"
+            ]
+        },
+        "harvestTime": "45-60 Tage nach Pflanzung, je nach Sorte und Bedingungen",
+        "companionPlanting": {
+            "beneficial": [
+                "Bohne",
+                "Mais",
+                "Radieschen",
+                "Kapuzinerkresse",
+                "Zwiebel",
+                "Knoblauch",
+                "Kopfsalat",
+                "Spinat",
+                "Kapuzinerkresse (Falle)",
+                "Knoblauch (natürliche Abwehrmittel)"
+            ],
+            "avoid": [
+                "andere Kürbisgewächse (Gurke, Kürbis, Melone)",
+                "Kartoffeln"
+            ]
+        },
+        "sowingMonths": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Frühling (nach den letzten Frösten)",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Ausgiebige Bewässerung für Zucchini nötig: 5-8 Liter pro Pflanze, nur an der Basis"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen notwendig: behalten Sie eine Pflanze alle 70-80 cm, nur die kräftigsten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manuelles Jäten und Überprüfung des Mulchs empfohlen für Ihre Zucchini"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Vorbeugende Behandlung mit Brennnessel- oder Schachtelhalmjauche empfohlen gegen Pilzkrankheiten"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 45,
+                "message": "Erste Ernten möglich für Ihre Zucchini! Stiel mit Schere schneiden."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Achtung: Mindesttemperatur für Zucchini erreicht (12°C) - Risiko von Wachstumsstopp oder Stress"
+                },
+                "germination_optimal": {
+                    "min": 22,
+                    "max": 25,
+                    "message": "Optimale Keimbedingungen erreicht (22-25°C) - guter Moment zum Säen!"
+                }
+            }
+        }
+    },
+    {
+        "id": "cucumber",
+        "commonName": "Gurke",
+        "scientificName": "Cucumis sativus",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 55,
+        "spacing": 70,
+        "depth": 1,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Wasserbedürftiges Gemüse, schnelles Wachstum, ideal in Permakultur mit Mulch und Rankhilfe.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.9,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 16,
+            "proteinG": 0.7,
+            "carbohydratesG": 3.6,
+            "sugarsG": 1.7,
+            "fatG": 0.1,
+            "fiberG": 0.5,
+            "vitaminCmg": 2.8,
+            "vitaminKmcg": 16.4,
+            "vitaminB9ug": 7,
+            "vitaminAmcg": 5,
+            "calciumMg": 16,
+            "ironMg": 0.3,
+            "magnesiumMg": 13,
+            "potassiumMg": 147,
+            "manganeseMg": 0.08,
+            "phosphorusMg": 24,
+            "waterG": 95.2,
+            "cucurbitacineMg": 0.05
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 28
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "2-3 Mal/Woche (mehr bei Hitze oder trockenem Wind)",
+            "amount": "2-5 Liter pro Pflanze pro Gießen",
+            "method": "Immer an der Basis, niemals auf das Laub",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "60-80 cm zwischen Pflanzen",
+            "when": "Sobald die ersten echten Blätter erscheinen"
+        },
+        "weeding": {
+            "method": "Manuell + Mulchen (Stroh, Heu, Holzhäcksel)",
+            "frequency": "Regelmäßig, je nach Bedarf",
+            "recommendation": "Dickes Mulchen dringend empfohlen, um Unkraut zu begrenzen und Feuchtigkeit zu bewahren"
+        },
+        "culturalTips": [
+            "Fruchtwechsel über 3-4 Jahre (nicht nach anderen Kürbisgewächsen)",
+            "Rankhilfe verwenden, um Belüftung zu fördern und verformte Früchte zu vermeiden",
+            "Schlecht drainierte Böden vermeiden, um Wurzelfäule vorzubeugen",
+            "Reif ernten, um Bitterkeit zu vermeiden",
+            "In Horsten von 3-4 Samen säen, dann auf die kräftigste Pflanze vereinzeln"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Beinwelljauche (nährend und stärkend)",
+                "Rainfarntee (gegen Blattläuse)",
+                "Knoblauchsud (natürliches Fungizid)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Schwebfliegen (Räuber von Blattläusen)",
+                "Parasitäre Wespen (gegen Raupen und Blattläuse)"
+            ],
+            "companionPlants": [
+                "Kapuzinerkresse (Blattlausfalle)",
+                "Radieschen",
+                "Zwiebel",
+                "Kopfsalat"
+            ]
+        },
+        "harvestTime": "50-65 Tage nach Pflanzung je nach Sorte",
+        "companionPlanting": {
+            "beneficial": [
+                "Radieschen",
+                "Zwiebel",
+                "Kopfsalat",
+                "Kapuzinerkresse",
+                "Bohne",
+                "Mais",
+                "Rote Bete",
+                "Kapuzinerkresse (Blattlausfalle)"
+            ],
+            "avoid": [
+                "starke aromatische Kräuter wie Salbei",
+                "andere Kürbisgewächse (Zucchini, Kürbis, Melonen)",
+                "Kartoffeln"
+            ]
+        },
+        "sowingMonths": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "wind_dry"
+                ],
+                "message": "Bewässerung notwendig für Ihre Gurken: 2-5 Liter pro Pflanze, an der Basis"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen notwendig: 1 Pflanze alle 60-80 cm behalten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten + Mulch prüfen für Ihre Gurken"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Beinwelljauche oder Rainfarntee vorbeugend anwenden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Erntezeit nähert sich für Ihre Gurken — jung ernten, um Bitterkeit zu vermeiden"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Achtung: Mindesttemperatur für Gurken erreicht (12°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimale Keimbedingungen (20-25°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "dill",
+        "commonName": "Dill",
+        "scientificName": "Anethum graveolens",
+        "family": "Apiaceae",
+        "daysToMaturity": 70,
+        "spacing": 25,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mäßig",
+        "description": "Einjährige aromatische Pflanze mit feinen geschnittenen Blättern, genutzt in Küche und traditioneller Medizin. Zieht Bestäuber an und vertreibt bestimmte Schädlinge.",
+        "marketPricePerKg": 16.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 40,
+            "proteinG": 3.5,
+            "carbohydratesG": 7.0,
+            "sugarsG": 1.2,
+            "fatG": 1.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 85.0,
+            "vitaminKmcg": 620.0,
+            "vitaminB9ug": 150,
+            "vitaminAmcg": 75,
+            "calciumMg": 208,
+            "ironMg": 6.6,
+            "magnesiumMg": 55,
+            "potassiumMg": 335,
+            "manganeseMg": 1.26,
+            "phosphorusMg": 66,
+            "carvoneMg": 95,
+            "apigeninMg": 30
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Mäßig gießen, nur wenn die Erde zu trocknen beginnt",
+            "amount": "Erde leicht feucht, Staunässe vermeiden",
+            "method": "Unter Mulch wenn möglich, an der Basis ohne Laub zu benetzen",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "15-25 cm zwischen Pflanzen, 20-30 cm zwischen Reihen",
+            "when": "Wenn Pflanzen 5-10 cm hoch sind oder 4-5 echte Blätter haben"
+        },
+        "weeding": {
+            "method": "Manuelles Jäten (feine Wurzeln empfindlich)",
+            "frequency": "Regelmäßig, je nach Unkrautwachstum",
+            "recommendation": "Mulchen, um Unkraut zu begrenzen und Feuchtigkeit zu halten"
+        },
+        "culturalTips": [
+            "Leichten, gut drainierten, humusreichen Boden wählen",
+            "Wasserüberschuss vermeiden, um Wurzelfäule vorzubeugen",
+            "Nicht in der Nähe anderer Doldenblütler pflanzen (z.B. Fenchel)",
+            "In Sätzen säen, um Ernte zu staffeln und vorzeitiges Schossen zu vermeiden",
+            "Fruchtwechsel empfohlen, um Bodengesundheit zu erhalten"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bio-Jauchen bei starkem Befall (z.B. Brennnessel)",
+                "Natürliche Auszüge (z.B. Knoblauch, Rainfarn)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer gegen Blattläuse",
+                "Schwebfliegen als natürliche Helfer",
+                "Bestäuber angezogen durch weiße Blüten"
+            ],
+            "companionPlants": [
+                "Zwiebeln",
+                "Kohl",
+                "Gurken",
+                "Brokkoli (abwehrende Wirkung gegen bestimmte Schädlinge)"
+            ]
+        },
+        "harvestTime": "60-80 Tage nach Aussaat, je nach Klimabedingungen und Sorte",
+        "companionPlanting": {
+            "beneficial": [
+                "Zwiebel",
+                "Kohl",
+                "Gurke",
+                "Brokkoli",
+                "Zwiebeln",
+                "Kohl",
+                "Gurken",
+                "Brokkoli (abwehrende Wirkung gegen bestimmte Schädlinge)"
+            ],
+            "avoid": [
+                "andere Doldenblütler",
+                "Fenchel"
+            ]
+        },
+        "sowingMonths": [],
+        "harvestMonths": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "variable",
+                "conditions": [
+                    "soil_dry_top_2cm"
+                ],
+                "message": "Mäßige Bewässerung nötig: Boden leicht feucht halten, nicht durchnässt"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Auf 15-25 cm ausdünnen, sobald 5-10 cm Höhe oder 4-5 Blätter erreicht"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten empfohlen — Vorsicht bei den feinen Wurzeln des Dills"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "aphid_sighting",
+                    "humidity > 70"
+                ],
+                "message": "Brennnesseljauche anwenden oder Marienkäfer bei Blattläusen anlocken"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 70,
+                "message": "Ernte der Dillspitzen möglich — vor der Blüte schneiden für mehr Aroma"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Achtung: Mindesttemperatur für Dill erreicht (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 22,
+                    "message": "Optimale Keimbedingungen (18-22°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "eggplant",
+        "commonName": "Aubergine",
+        "scientificName": "Solanum melongena",
+        "family": "Solanaceae",
+        "daysToMaturity": 90,
+        "spacing": 60,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Fruchtgemüse aus der Familie der Nachtschattengewächse, geschätzt für festes Fleisch und feinen Geschmack, ideal in warmem Klima und reichem Boden.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.6,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.0,
+            "carbohydratesG": 5.7,
+            "sugarsG": 3.2,
+            "fatG": 0.2,
+            "fiberG": 3.0,
+            "vitaminCmg": 2.2,
+            "vitaminKmcg": 3.5,
+            "vitaminB9ug": 22,
+            "vitaminAmcg": 1,
+            "calciumMg": 9,
+            "ironMg": 0.2,
+            "magnesiumMg": 14,
+            "potassiumMg": 229,
+            "manganeseMg": 0.23,
+            "phosphorusMg": 24,
+            "nasuninMg": 85
+        },
+        "germination": {
+            "minTemperature": 20,
+            "optimalTemperature": {
+                "min": 25,
+                "max": 28
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 12,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 24,
+                "max": 28
+            },
+            "minTemperature": 15
+        },
+        "watering": {
+            "frequency": "Alle 3-4 Tage auf gemulchtem Boden, 2-3 Mal/Woche bei Hitze",
+            "amount": "1-4 Liter pro Pflanze je nach Stadium und Temperatur",
+            "method": "Gießen an der Basis, ohne das Laub zu benetzen",
+            "bestTime": "Früh morgens"
+        },
+        "thinning": {
+            "distance": "50-70 cm zwischen Pflanzen",
+            "when": "Im Sämlingsstadium oder direkt nach der Keimung, die kräftigsten Pflanzen behalten"
+        },
+        "weeding": {
+            "method": "Mulchen (Stroh, Grasschnitt, Laub) + sanftes manuelles Jäten",
+            "frequency": "Alle 1 bis 2 Wochen",
+            "recommendation": "Dickes Mulchen unerlässlich, um Verdunstung und Unkraut zu begrenzen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Vermeiden Sie das Pflanzen von Nachtschattengewächsen (Tomaten, Paprika, Kartoffeln) am selben Ort für 3-4 Jahre",
+            "Wurzelhals beim Pflanzen nicht bedecken, um Sklerotinia zu vermeiden",
+            "Systematisch mulchen, um Feuchtigkeit zu bewahren und Krankheiten vorzubeugen",
+            "Belüftung der Pflanzen fördern, um Mehltau und Pilze zu begrenzen",
+            "Gut drainierten, leichten und humusreichen Boden in voller Sonne wählen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (stärkend und gegen Blattläuse)",
+                "Schachtelhalmjauche (vorbeugend gegen Pilze)",
+                "Schmierseife oder ätherische Öle bei Befall"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Parasitäre Wespen",
+                "Florfliegen"
+            ],
+            "companionPlants": [
+                "Basilikum",
+                "Ringelblume (gegen bestimmte Schädlinge)"
+            ]
+        },
+        "harvestTime": "90-120 Tage nach Pflanzung je nach Sorte und Klima",
+        "companionPlanting": {
+            "beneficial": [
+                "Basilikum",
+                "Ringelblume",
+                "Bohne",
+                "Kopfsalat",
+                "Spinat",
+                "Zwiebel",
+                "Ringelblumen (gegen bestimmte Schädlinge)"
+            ],
+            "avoid": [
+                "andere Nachtschattengewächse am selben Ort",
+                "Paprika",
+                "Kartoffeln",
+                "Tomaten"
+            ]
+        },
+        "sowingMonths": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Bewässerung notwendig für Ihre Auberginen: 2-4 Liter pro Pflanze, an der Basis, früh morgens"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen empfohlen: 50-70 cm zwischen den kräftigsten Pflanzen behalten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Mulch prüfen und manuell jäten falls nötig"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Schachtelhalmjauche vorbeugend gegen Pilzkrankheiten anwenden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Erntezeit nähert sich für Ihre Auberginen"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 15,
+                    "message": "Achtung: Mindesttemperatur für Auberginen erreicht (15°C)"
+                },
+                "germination_optimal": {
+                    "min": 25,
+                    "max": 28,
+                    "message": "Optimale Keimbedingungen für Aubergine (25-28°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "garlic",
+        "commonName": "Knoblauch",
+        "scientificName": "Allium sativum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 240,
+        "spacing": 15,
+        "depth": 5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Gering",
+        "description": "Aromatischer Bulbe mit kulinarischen und medizinischen Eigenschaften, angebaut in Permakultur wegen seiner Widerstandsfähigkeit und geringen Wasserbedürfnisse.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "O"
+        ],
+        "harvestMonths": [
+            "J"
+        ],
+        "marketPricePerKg": 8.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 149,
+            "proteinG": 6.4,
+            "carbohydratesG": 33.1,
+            "sugarsG": 1.0,
+            "fatG": 0.5,
+            "fiberG": 2.1,
+            "vitaminCmg": 31.2,
+            "vitaminB6mg": 1.2,
+            "vitaminB9ug": 3,
+            "calciumMg": 181,
+            "ironMg": 1.7,
+            "magnesiumMg": 25,
+            "potassiumMg": 401,
+            "manganeseMg": 1.7,
+            "phosphorusMg": 153,
+            "seleniumMcg": 14.2
+        },
+        "germination": {
+            "minTemperature": 8,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 1
+        },
+        "watering": {
+            "frequency": "Alle 10-15 Tage bei Trockenheit",
+            "amount": "Ausgiebig aber selten gießen",
+            "method": "An der Basis, niemals auf das Laub",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "10-15 cm zwischen Pflanzen, 20-30 cm zwischen Reihen",
+            "when": "Nicht notwendig — direkt in der richtigen Dichte gepflanzt"
+        },
+        "weeding": {
+            "method": "Manuell oder oberflächliches Hacken",
+            "frequency": "Regelmäßige Kontrolle im Frühling",
+            "recommendation": "Organisches Mulchen (Stroh, Laub, Häcksel) dringend empfohlen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Knoblauch nicht vor 3-4 Jahren am gleichen Ort pflanzen",
+            "Schwere und schlecht drainierte Böden vermeiden, um Fäulnis zu verhindern",
+            "Großzügig mulchen, um Feuchtigkeit zu halten und Bodentemperatur zu stabilisieren",
+            "Pflanzenabstand wahren für gute Belüftung und Vermeidung von Mehltau/Rost",
+            "Nicht gießen außer bei längerer Trockenheit — Knoblauch fürchtet Nässee"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (stärkend)",
+                "Schachtelhalmsud (Anti-Pilz)",
+                "Schmierseife oder ätherische Öle bei Befall"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Florfliegen (gegen Blattläuse)",
+                "Bestäuber"
+            ],
+            "companionPlants": [
+                "Tomaten",
+                "Karotten",
+                "Erdbeeren",
+                "Himbeeren"
+            ]
+        },
+        "harvestTime": "Ca. 240 Tage nach Pflanzen (8-9 Monate)",
+        "companionPlanting": {
+            "beneficial": [
+                "Tomaten",
+                "Karotten",
+                "Erdbeeren",
+                "Himbeeren",
+                "Rosen",
+                "Obstbäume"
+            ],
+            "avoid": [
+                "Bohnen",
+                "Erbsen",
+                "Kohl"
+            ]
+        },
+        "sowingMonths": [],
+        "harvestMonths": [],
+        "plantingSeason": "Herbst, Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "14 days",
+                "conditions": [
+                    "no_rain_last_14_days",
+                    "soil_dry"
+                ],
+                "message": "Wenig gießen: nur bei langer Trockenheit"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "30 days",
+                "message": "Regelmäßiges Jäten im Frühling empfohlen"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Mehltau/Rust überwachen: nicht gießen, belüften"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 230,
+                "message": "Ernte in Kürze (Blätter werden gelb). Gießen einstellen."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -5,
+                    "message": "Knoblauch winterhart, aber Achtung bei extremer Kälte ohne Mulch"
+                },
+                "germination_optimal": {
+                    "min": 5,
+                    "max": 15,
+                    "message": "Optimale Pflanzzeit (Kälteperiode nötig)"
+                }
+            }
+        }
+    }
+]

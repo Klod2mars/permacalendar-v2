@@ -1,0 +1,833 @@
+[
+    {
+        "id": "black_radish",
+        "commonName": "Schwarzer Rettich",
+        "scientificName": "Raphanus sativus var. niger",
+        "family": "Brassicaceae",
+        "daysToMaturity": 60,
+        "spacing": 10,
+        "depth": 1,
+        "sunExposure": "Volle Sonne, Halbschatten",
+        "waterNeeds": "Mäßig bis regelmäßig",
+        "description": "Robustes Wurzelgemüse, ideal für biologischen Anbau und Permakultur. Schwarze Wurzel mit weißem Fleisch, knackig und scharf, reich an Vitaminen und Mineralien.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 1.8,
+            "carbohydratesG": 7.7,
+            "sugarsG": 4.3,
+            "fatG": 0.1,
+            "fiberG": 2.5,
+            "vitaminCmg": 24.5,
+            "vitaminKmcg": 0.3,
+            "vitaminB9ug": 28,
+            "calciumMg": 40,
+            "ironMg": 0.8,
+            "magnesiumMg": 16,
+            "potassiumMg": 300,
+            "manganeseMg": 0.1,
+            "phosphorusMg": 35,
+            "glucosinolatesMg": 120
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 6
+        },
+        "watering": {
+            "frequency": "Alle 2-3 Tage im Sommer, je nach Regen im Frühling/Herbst",
+            "amount": "2-4 Liter pro m²/Woche (je nach Boden anpassen)",
+            "method": "Sanftes Gießen an der Basis, Blätter vermeiden",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "10 cm zwischen Pflanzen, 20-30 cm zwischen Reihen",
+            "when": "Sobald die ersten echten Blätter erscheinen (Jungpflanzenstadium)"
+        },
+        "weeding": {
+            "method": "Manuell, begleitet von Mulchen (Stroh, Laub)",
+            "frequency": "Regelmäßige Kontrolle, besonders zu Beginn der Kultur",
+            "recommendation": "Nach dem Ausdünnen mulchen, um Unkraut zu begrenzen und Feuchtigkeit zu bewahren"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Mindestens 2 Jahre warten, bevor Rettich oder Kreuzblütler am selben Ort gepflanzt werden",
+            "Mischkulturen mit Karotten, Gurken und Kohl vermeiden",
+            "Das Laub nicht zu sehr bewässern, um Mehltau vorzubeugen",
+            "Lockere und gut drainierte Böden bevorzugen, um Wurzelfäule zu vermeiden",
+            "Abwechselnd mit Kulturen wie Bohnen, Salat oder Tomaten anbauen, um den Boden zu regenerieren"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (stärkend und abwehrend)",
+                "Knoblauchsud (gegen Schädlinge)",
+                "Reifer Kompost zur Stärkung der Bodengesundheit"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Florfliegen (Räuber von Blattläusen)",
+                "Schlupfwespen (gegen Kohlfliegenlarven)"
+            ],
+            "companionPlants": [
+                "Kopfsalat",
+                "Spinat",
+                "Bohne"
+            ]
+        },
+        "harvestTime": "60 Tage nach Aussaat (je nach Sorte und Bedingungen)",
+        "companionPlanting": {
+            "beneficial": [
+                "Kopfsalat",
+                "Spinat",
+                "Bohne",
+                "Tomate",
+                "Dicke Bohne",
+                "Bohne"
+            ],
+            "avoid": [
+                "andere Kreuzblütler in direkter Rotation",
+                "Karotte",
+                "Kohl",
+                "Gurke"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "soil_type == 'sandy'"
+                ],
+                "message": "Bewässerung für Ihren Schwarzen Rettich notwendig: Boden frisch halten ohne Überschuss"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 10,
+                "message": "Ausdünnen notwendig: 1 Pflanze alle 10 cm behalten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten empfohlen + Mulchzustand prüfen"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "pest_alert == 'aphids'"
+                ],
+                "message": "Brennnesseljauche oder Knoblauchsud vorbeugend anwenden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Ernte steht bevor für Ihren Schwarzen Rettich (60 Tage)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 6,
+                    "message": "Achtung: Mindesttemperatur für Schwarzen Rettich erreicht (6°C)"
+                },
+                "germination_optimal": {
+                    "min": 19,
+                    "max": 19,
+                    "message": "Optimale Keimbedingungen erreicht (19°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "broccoli",
+        "commonName": "Brokkoli",
+        "scientificName": "Brassica oleracea var. italica",
+        "family": "Brassicaceae",
+        "daysToMaturity": 70,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Volle Sonne bis Halbschatten",
+        "waterNeeds": "Hoch",
+        "description": "Ideales Gemüse für Permakultur und Bio-Anbau, schätzt vernünftige Pflege und Integration in diverse Systeme.",
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 34,
+            "proteinG": 2.8,
+            "carbohydratesG": 6.6,
+            "sugarsG": 1.7,
+            "fatG": 0.4,
+            "fiberG": 2.6,
+            "vitaminCmg": 89.2,
+            "vitaminKmcg": 101.6,
+            "vitaminB9ug": 63,
+            "vitaminAmcg": 31,
+            "calciumMg": 47,
+            "ironMg": 0.7,
+            "magnesiumMg": 21,
+            "potassiumMg": 316,
+            "manganeseMg": 0.21,
+            "phosphorusMg": 66,
+            "glucosinolatesMg": 85,
+            "sulforaphanePotential": true
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1-2 Mal/Woche (2-3 Mal bei starker Hitze)",
+            "amount": "Boden immer frisch halten",
+            "method": "Tröpfchenbewässerung ideal, Überschuss vermeiden",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "40-60 cm zwischen Pflanzen, 45-80 cm zwischen Reihen",
+            "when": "Im Stadium von 4-5 Blättern, die robustesten Pflanzen behalten"
+        },
+        "weeding": {
+            "method": "Manuelles Jäten, konstantes Mulchen",
+            "frequency": "Regelmäßig, besonders vor dem Samenflug der Unkräuter",
+            "recommendation": "Dickes Mulchen zur Feuchtigkeitsspeicherung und Unkrautunterdrückung. Abdeckung durch Planen bei mehrjährigen Unkräutern."
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Mindestens 4 Jahre einhalten (Kreuzblütler nicht am selben Ort)",
+            "Nicht nach oder vor anderen Kohlarten pflanzen",
+            "Boden mit Kompost und natürlichen Verbesserern anreichern, um Mängel zu vermeiden (Bor, Mangan, Calcium)",
+            "Achtung vor übermäßiger Bewässerung (Risiko von Pilzbefall)",
+            "Umsetzen sobald 4-5 Blätter vorhanden sind"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Farnjauche",
+                "Schmierseife gegen Blattläuse"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Schwebfliegen",
+                "Vögel (gegen Schnecken und Raupen)",
+                "Hilfskäfer"
+            ],
+            "companionPlants": [
+                "Tagetes",
+                "Aromatische Pflanzen (natürliche Abwehrmittel)"
+            ]
+        },
+        "harvestTime": "70-90 Tage nach Pflanzung je nach Sorte",
+        "companionPlanting": {
+            "beneficial": [
+                "Tagetes",
+                "Kräuter",
+                "Kopfsalat",
+                "Sellerie",
+                "Rote Bete",
+                "Zwiebel",
+                "Lauch",
+                "Radieschen",
+                "Tagetes",
+                "Aromatische Pflanzen (natürliche Abwehrmittel)"
+            ],
+            "avoid": [
+                "andere Kohlarten",
+                "Pflanzen der Kreuzblütler-Familie am selben Ort"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Herbst (je nach Klima)",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Bewässerung für Ihren Brokkoli notwendig: Boden frisch halten (1-2 Mal/Woche, mehr bei Hitze)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 28,
+                "message": "Ausdünnen notwendig: die robustesten Pflanzen im Abstand von 40-60 cm behalten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manuelles Jäten empfohlen + Mulch prüfen"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Überwachung auf Blattläuse und Kohlweißlinge – Biodiversität und Nützlinge fördern"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 75,
+                "message": "Erntezeit nähert sich für Ihren Brokkoli"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Achtung: Mindesttemperatur für Brokkoli erreicht (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "brussels_sprout",
+        "commonName": "Rosenkohl",
+        "scientificName": "Brassica oleracea var. gemmifera",
+        "family": "Brassicaceae",
+        "daysToMaturity": 120,
+        "spacing": 60,
+        "depth": 1,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel",
+        "description": "Kreuzblütler-Gemüse, das kleine Köpfe entlang seines Stiels bildet, reich an Ballaststoffen, Vitamin C und K. Im Permakultur-Anbau profitiert er von strikter Rotation und schützenden Assoziationen.",
+        "marketPricePerKg": 4.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 3.4,
+            "carbohydratesG": 9.0,
+            "sugarsG": 2.2,
+            "fatG": 0.3,
+            "fiberG": 3.8,
+            "vitaminCmg": 85.0,
+            "vitaminKmcg": 177.0,
+            "vitaminB9ug": 61,
+            "vitaminAmcg": 38,
+            "calciumMg": 42,
+            "ironMg": 1.4,
+            "magnesiumMg": 23,
+            "potassiumMg": 389,
+            "manganeseMg": 0.34,
+            "phosphorusMg": 69,
+            "glucosinolatesMg": 95,
+            "kaempferolMg": 25
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "Regelmäßig nach dem Umsetzen, dann 2 Mal/Woche bei Trockenheit",
+            "amount": "20-30 mm/Woche (10-15 mm pro Gießen)",
+            "method": "An der Basis, Boden feucht aber nicht durchnässt",
+            "bestTime": "Früh morgens oder am späten Nachmittag"
+        },
+        "thinning": {
+            "distance": "6-8 cm nach Aufgang (2-3 Blätter), dann 50-70 cm zwischen Pflanzen und 60-80 cm zwischen Reihen beim Umsetzen (6-8 Blätter)",
+            "when": "Erstes Ausdünnen bei 2-3 Blättern, endgültiges Umsetzen bei 6-8 Blättern"
+        },
+        "weeding": {
+            "method": "Selektives manuelles Jäten + Mulchen (Stroh, Häckselgut, Laub)",
+            "frequency": "Je nach Unkrautdruck, Priorität auf Mulchen",
+            "recommendation": "Nicht konkurrierende Unkräuter belassen, um Biodiversität zu fördern"
+        },
+        "culturalTips": [
+            "Rotation: Keine Kreuzblütler auf derselben Parzelle vor 5-6 Jahren anbauen",
+            "Nach Hülsenfrüchten (Erbsen, Bohnen) pflanzen für stickstoffreichen Boden",
+            "Pflanzen bei Wind oder übermäßigem Wachstum stützen",
+            "Stickstoffüberschuss nach Kopfbildung vermeiden (fördert Blätter statt Köpfe)",
+            "Schnecken und Erdflöhe überwachen, besonders in frischen Böden"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bacillus thuringiensis (BT) gegen Raupen",
+                "Verdünnte Schmierseife gegen Blattläuse",
+                "Knoblauchsud gegen Blattläuse und Pilze"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer gegen Blattläuse",
+                "Laufkäfer und Igel gegen Schnecken",
+                "Insektenfressende Vögel gegen diverse Schädlinge"
+            ],
+            "companionPlants": [
+                "Melisse",
+                "Salbei",
+                "Rosmarin",
+                "Koriander",
+                "Tagetes",
+                "Tomaten"
+            ]
+        },
+        "harvestTime": "Ca. 120 Tage nach Aussaat, je nach Sorte und Klima",
+        "companionPlanting": {
+            "beneficial": [
+                "Melisse",
+                "Salbei",
+                "Rosmarin",
+                "Koriander",
+                "Tagetes",
+                "Tomaten",
+                "Hülsenfrüchte (Erbsen, Bohnen)",
+                "Tagetes"
+            ],
+            "avoid": [
+                "andere Kreuzblütler (Radieschen, Rüben, Rucola, Senf) auf der gleichen Parzelle"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "soil_moisture < 40%"
+                ],
+                "message": "Bewässerung empfohlen: 10-15 mm, an der Basis, in 2 Malen diese Woche"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Erstes Ausdünnen: 6-8 cm zwischen Pflanzen lassen (2-3 Blätter)"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Mulch prüfen und konkurrierende Unkräuter manuell jäten"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature < 20"
+                ],
+                "message": "Bacillus thuringiensis anwenden wenn Raupen vorhanden, oder Schmierseife gegen Blattläuse"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Die ersten Rosenkohlköpfe sollten in 2-3 Wochen erntereif sein"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Achtung: Mindesttemperatur für Keimung erreicht (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "cabbage",
+        "commonName": "Kopfkohl",
+        "scientificName": "Brassica oleracea var. capitata",
+        "family": "Brassicaceae",
+        "daysToMaturity": 90,
+        "spacing": 50,
+        "depth": 1,
+        "sunExposure": "Volle Sonne bis Halbschatten",
+        "waterNeeds": "Hoch",
+        "description": "Blattgemüse, das einen kompakten Kopf bildet, reich an Ballaststoffen, Vitamin C und K. Anbau erfordert viel Wasser und Nährstoffe.",
+        "marketPricePerKg": 2.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.3,
+            "carbohydratesG": 5.8,
+            "sugarsG": 3.2,
+            "fatG": 0.1,
+            "fiberG": 2.5,
+            "vitaminCmg": 36.6,
+            "vitaminKmcg": 76.0,
+            "vitaminB9ug": 53,
+            "vitaminAmcg": 5,
+            "calciumMg": 40,
+            "ironMg": 0.5,
+            "magnesiumMg": 12,
+            "potassiumMg": 170,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 26,
+            "glucosinolatesMg": 65,
+            "myrosinaseActivity": true
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Alle 2-3 Tage in trockenen Perioden, täglich bei Hitze",
+            "amount": "4-6 Liter pro Pflanze/Woche",
+            "method": "Gießen an der Basis, niemals auf das Laub",
+            "bestTime": "Früh morgens oder am späten Nachmittag"
+        },
+        "thinning": {
+            "distance": "50 cm zwischen Pflanzen in alle Richtungen",
+            "when": "Wenn die Pflanzen 6 bis 8 Blätter haben"
+        },
+        "weeding": {
+            "method": "Manuell oder mechanisch (oberflächliches Hacken)",
+            "frequency": "Alle 1-2 Wochen zu Beginn des Zyklus",
+            "recommendation": "Dickes organisches Mulchen, um Verdunstung und Unkraut zu begrenzen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Kohl nicht vor 3-4 Jahren am gleichen Ort wieder anpflanzen",
+            "Einen Monat nach dem Umpflanzen leicht anhäufeln, um Wurzeln zu verankern",
+            "Wasserstress vermeiden (Mangel oder Überschuss), um das Aufplatzen des Kopfes zu verhindern",
+            "Biodiversität mit Honigpflanzen fördern, um Nützlinge anzulocken",
+            "Erkrankte Teile nicht kompostieren, um Ausbreitung von Krankheiten zu verhindern"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (stärkend und abwehrend)",
+                "Schachtelhalmsud (stärkt Gewebe gegen Pilze)",
+                "Neemöl (gegen Blattläuse und Erdflöhe)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Florfliegen (vielseitige Räuber)",
+                "Schwebfliegen (Larven fressen Blattläuse)"
+            ],
+            "companionPlants": [
+                "Tagetes",
+                "Sellerie",
+                "Kopfsalat",
+                "Rote Bete",
+                "Kamille (natürliche Abwehrmittel)"
+            ]
+        },
+        "harvestTime": "Ca. 90 Tage nach Pflanzung, je nach Sorte und Bedingungen",
+        "companionPlanting": {
+            "beneficial": [
+                "Sellerie",
+                "Kopfsalat",
+                "Rote Bete",
+                "Kamille",
+                "Tagetes",
+                "Minze",
+                "Salbei",
+                "Thymian",
+                "Kamille (natürliche Abwehrmittel)"
+            ],
+            "avoid": [
+                "andere Kreuzblütler (Kohl, Rüben, Radieschen)",
+                "Erdbeeren",
+                "Paprika",
+                "Tomaten"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Bewässerung notwendig für Ihren Kohl: 4-6 Liter/Pflanze, an der Basis, früh morgens"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Ausdünnen notwendig: 50 cm zwischen Pflanzen behalten, 6-8 Blätter"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Jäten und Hacken empfohlen, denken Sie an Mulchen wenn noch nicht erfolgt"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "presence_aphids"
+                ],
+                "message": "Brennnesseljauche oder Neemöl vorbeugend gegen Blattläuse anwenden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Ihr Kohl nähert sich der Reife: prüfen Sie die Festigkeit des Kopfes"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Achtung: Mindesttemperatur für Kohl erreicht (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "carrot",
+        "commonName": "Karotte",
+        "scientificName": "Daucus carota subsp. sativus",
+        "family": "Apiaceae",
+        "daysToMaturity": 90,
+        "spacing": 8,
+        "depth": 1,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis Hoch",
+        "description": "Knackiges und süßes Wurzelgemüse, reich an Beta-Carotin, angebaut in Bio und Permakultur mit sanften und ökosystemfreundlichen Techniken.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 2.1,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 41,
+            "proteinG": 0.9,
+            "carbohydratesG": 9.6,
+            "sugarsG": 4.7,
+            "fatG": 0.2,
+            "fiberG": 2.8,
+            "vitaminAmcg": 835,
+            "vitaminKmcg": 13.2,
+            "vitaminCmg": 5.9,
+            "vitaminB9ug": 19,
+            "calciumMg": 33,
+            "ironMg": 0.3,
+            "magnesiumMg": 12,
+            "potassiumMg": 320,
+            "manganeseMg": 0.14,
+            "phosphorusMg": 35,
+            "betaCaroteneMcg": 8285
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 9
+        },
+        "watering": {
+            "frequency": "Alle 4 bis 5 Tage (oder häufiger vor dem Aufgang)",
+            "amount": "Ausgiebige Bewässerung, besonders in der Phase der Knollenbildung",
+            "method": "An der Basis, Boden feucht aber nicht durchnässt halten",
+            "bestTime": "Früh morgens oder am späten Nachmittag"
+        },
+        "thinning": {
+            "distance": "4 cm für kurze Karotten, 8 cm für lange Karotten",
+            "when": "Im Jungpflanzenstadium, oder verzögert bis zur Bildung kleiner Karotten"
+        },
+        "weeding": {
+            "method": "Manuell oder mechanisch (Hacken, Jäten)",
+            "frequency": "Regelmäßig, besonders zu Beginn der Kultur",
+            "recommendation": "Mit Ausdünnen kombinieren; Hacken um Boden zu lockern und Feuchtigkeit zu bewahren"
+        },
+        "culturalTips": [
+            "Kompakte oder schlecht drainierte Böden vermeiden, um verformte Wurzeln oder Fäulnis zu verhindern",
+            "Nicht zu früh mulchen, wenn Schnecken oder Nager vorhanden sind",
+            "Übermäßige Stickstoffgaben vermeiden (fördert Laub statt Wurzel)",
+            "Fruchtwechsel praktizieren, um Möhrenfliege zu vermeiden",
+            "Säen nach der ersten Generation von Fliegen (Mai-Juni)",
+            "Mit Lauch, Koriander, Dill oder Tagetes assoziieren, um Möhrenfliege abzuwehren"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Kaffeesatz als Repellent",
+                "Algenpulver",
+                "Zweige von Rainfarn oder Wermut"
+            ],
+            "beneficialInsects": [
+                "Florfliegen gegen Blattläuse",
+                "Marienkäfer gegen Blattläuse"
+            ],
+            "companionPlants": [
+                "Lauch",
+                "Koriander",
+                "Dill",
+                "Tagetes (gegen Möhrenfliege)"
+            ]
+        },
+        "harvestTime": "90-120 Tage nach Aussaat je nach Sorte und gewünschter Größe",
+        "companionPlanting": {
+            "beneficial": [
+                "Lauch",
+                "Koriander",
+                "Dill",
+                "Tagetes",
+                "Kopfsalat",
+                "Radieschen",
+                "Zwiebel",
+                "Knoblauch",
+                "Kohl",
+                "Tagetes (gegen Möhrenfliege)"
+            ],
+            "avoid": [
+                "andere Doldenblütler (Sellerie, Petersilie) ohne Rotation",
+                "stickstoffbedürftige Pflanzen"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer,Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "5 days",
+                "conditions": [
+                    "no_rain_last_3_days",
+                    "temperature > 20"
+                ],
+                "message": "Bewässerung notwendig für Ihre Karotten: Boden feucht halten, besonders in der Wachstumsphase"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Ausdünnen empfohlen: 4-8 cm zwischen Pflanzen lassen je nach Sorte"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten oder Hacken empfohlen, um Konkurrenz zu vermeiden"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "mouche_carotte_risque_elevé"
+                ],
+                "message": "Insektenschutznetz installieren oder natürliche Repellents anwenden (Rainfarn, Kaffeesatz)"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Erste Ernten möglich. Prüfen Sie die Größe der Wurzeln."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 9,
+                    "message": "Achtung: Mindesttemperatur für Karottenwachstum erreicht (9°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimale Keimtemperatur erreicht (20°C)"
+                }
+            }
+        }
+    }
+]

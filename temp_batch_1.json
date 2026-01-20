@@ -1,0 +1,1689 @@
+[
+  {
+    "id": "black_radish",
+    "commonName": "Radis Noir",
+    "scientificName": "Raphanus sativus var. niger",
+    "family": "Brassicaceae",
+    "daysToMaturity": 60,
+    "spacing": 10,
+    "depth": 1,
+    "sunExposure": "Plein soleil, Mi-ombre",
+    "waterNeeds": "Modéré à régulier",
+    "description": "Légume-racine robuste, idéal en agriculture biologique et permaculture. Racine noire à chair blanche, croquante et piquante, riche en vitamines et minéraux.",
+    "marketPricePerKg": 5.5,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 36,
+      "proteinG": 1.8,
+      "carbohydratesG": 7.7,
+      "sugarsG": 4.3,
+      "fatG": 0.1,
+      "fiberG": 2.5,
+      "vitaminCmg": 24.5,
+      "vitaminKmcg": 0.3,
+      "vitaminB9ug": 28,
+      "calciumMg": 40,
+      "ironMg": 0.8,
+      "magnesiumMg": 16,
+      "potassiumMg": 300,
+      "manganeseMg": 0.1,
+      "phosphorusMg": 35,
+      "glucosinolatesMg": 120
+    },
+    "germination": {
+      "minTemperature": 7,
+      "optimalTemperature": {
+        "min": 19,
+        "max": 19
+      },
+      "germinationTime": {
+        "min": 4,
+        "max": 8,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 19,
+        "max": 19
+      },
+      "minTemperature": 6
+    },
+    "watering": {
+      "frequency": "Tous les 2-3 jours en été, selon pluie en printemps/automne",
+      "amount": "2-4 litres par m²/semaine (ajuster selon sol)",
+      "method": "Arrosage doux au pied, éviter le feuillage",
+      "bestTime": "Tôt le matin ou le soir"
+    },
+    "thinning": {
+      "distance": "10 cm entre plants, 20-30 cm entre rangs",
+      "when": "Dès l'apparition des premières vraies feuilles (stade jeune plant)"
+    },
+    "weeding": {
+      "method": "Manuel, accompagné de paillage (paille, feuilles mortes)",
+      "frequency": "Contrôle régulier, surtout en début de culture",
+      "recommendation": "Pailler après éclaircissage pour limiter les mauvaises herbes et conserver l'humidité"
+    },
+    "culturalTips": [
+      "Rotation des cultures : attendre au moins 2 ans avant de replanter des radis ou crucifères au même endroit",
+      "Éviter les associations avec carottes, concombres et choux",
+      "Ne pas trop arroser le feuillage pour prévenir l'oïdium",
+      "Privilégier les sols meubles et bien drainés pour éviter la pourriture des racines",
+      "Alterner avec des cultures comme fèves, laitues ou tomates pour régénérer le sol"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et répulsif)",
+        "Décoction d'ail (contre ravageurs)",
+        "Compost mûr pour renforcer la santé du sol"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (prédateurs de pucerons)",
+        "Guêpes parasitoïdes (contre chenilles de mouche du chou)"
+      ],
+      "companionPlants": [
+        "laitue",
+        "épinard",
+        "haricot (associations bénéfiques non compétitives)"
+      ]
+    },
+    "harvestTime": "60 jours après semis (selon variété et conditions)",
+    "companionPlanting": {
+      "beneficial": [
+        "laitue",
+        "épinard",
+        "haricot",
+        "tomate",
+        "fève",
+        "haricot (associations bénéfiques non compétitives)"
+      ],
+      "avoid": [
+        "autres crucifères en rotation immédiate",
+        "carotte",
+        "chou",
+        "concombre"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps, Automne",
+    "harvestSeason": "Automne, Hiver",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "3 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_2_days",
+          "soil_type == 'sandy'"
+        ],
+        "message": "Arrosage nécessaire pour vos radis noirs : sol à maintenir frais sans excès"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 10,
+        "message": "Éclaircissage nécessaire : conserver 1 plant tous les 10 cm"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "10 days",
+        "message": "Désherbage manuel recommandé + vérifier l'état du paillage"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 70",
+          "pest_alert == 'aphids'"
+        ],
+        "message": "Appliquer purin d'ortie ou décoction d'ail en prévention"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 55,
+        "message": "Récolte imminente pour vos radis noirs (60 jours)"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 6,
+          "message": "Attention : température minimale pour radis noir atteinte (6°C)"
+        },
+        "germination_optimal": {
+          "min": 19,
+          "max": 19,
+          "message": "Conditions optimales de germination atteintes (19°C)"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  },
+  {
+    "id": "broccoli",
+    "commonName": "Brocoli",
+    "scientificName": "Brassica oleracea var. italica",
+    "family": "Brassicaceae",
+    "daysToMaturity": 70,
+    "spacing": 50,
+    "depth": 1,
+    "sunExposure": "Plein soleil à mi-ombre",
+    "waterNeeds": "Élevé",
+    "description": "Légume idéal pour une culture en permaculture et bio, appréciant les soins raisonnés et l’intégration dans des systèmes diversifiés.",
+    "marketPricePerKg": 4.2,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 34,
+      "proteinG": 2.8,
+      "carbohydratesG": 6.6,
+      "sugarsG": 1.7,
+      "fatG": 0.4,
+      "fiberG": 2.6,
+      "vitaminCmg": 89.2,
+      "vitaminKmcg": 101.6,
+      "vitaminB9ug": 63,
+      "vitaminAmcg": 31,
+      "calciumMg": 47,
+      "ironMg": 0.7,
+      "magnesiumMg": 21,
+      "potassiumMg": 316,
+      "manganeseMg": 0.21,
+      "phosphorusMg": 66,
+      "glucosinolatesMg": 85,
+      "sulforaphanePotential": true
+    },
+    "germination": {
+      "minTemperature": 7,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 5,
+        "max": 10,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 15,
+        "max": 18
+      },
+      "minTemperature": 7
+    },
+    "watering": {
+      "frequency": "1-2 fois/semaine (2-3 fois en cas de forte chaleur)",
+      "amount": "Maintenir le sol toujours frais",
+      "method": "Goutte-à-goutte idéal, éviter les excès",
+      "bestTime": "Tôt le matin ou le soir"
+    },
+    "thinning": {
+      "distance": "40-60 cm entre plants, 45-80 cm entre rangs",
+      "when": "Au stade de 4-5 feuilles, conserver les plants les plus robustes"
+    },
+    "weeding": {
+      "method": "Désherbage manuel, paillage constant",
+      "frequency": "Régulier, surtout avant montée en graine des adventices",
+      "recommendation": "Paillage épais pour rétention d’humidité et suppression des herbes indésirables. Occultation par bâchage pour les vivaces."
+    },
+    "culturalTips": [
+      "Respecter une rotation des cultures sur au moins 4 ans (éviter les brassicacées au même endroit)",
+      "Ne pas planter après ou avant d’autres choux",
+      "Enrichir le sol en compost et amendements naturels pour éviter carences (bore, manganèse, calcium)",
+      "Attention à l’excès d’arrosage (risques d’attaques fongiques)",
+      "Repiquage dès 4-5 feuilles"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de fougère",
+        "Savon noir contre les pucerons"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes",
+        "Oiseaux (contre limaces et chenilles)",
+        "Coléoptères auxiliaires"
+      ],
+      "companionPlants": [
+        "œillet d’inde",
+        "plantes aromatiques (répulsives naturelles)"
+      ]
+    },
+    "harvestTime": "70-90 jours après plantation selon variété",
+    "companionPlanting": {
+      "beneficial": [
+        "œillet d'inde",
+        "aromatiques",
+        "laitue",
+        "céleri",
+        "betterave",
+        "oignon",
+        "poireau",
+        "radis",
+        "œillet d’inde",
+        "plantes aromatiques (répulsives naturelles)"
+      ],
+      "avoid": [
+        "autres choux",
+        "plantes de la famille des brassicacées au même endroit"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps, Automne (selon climat)",
+    "harvestSeason": "Automne, Hiver",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "5 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_3_days"
+        ],
+        "message": "Arrosage nécessaire pour vos brocolis : sol à maintenir frais (1-2 fois/semaine, plus si chaleur)"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 28,
+        "message": "Éclaircissement nécessaire : conserver les plants les plus robustes à 40-60 cm d’espacement"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "14 days",
+        "message": "Désherbage manuel recommandé + vérifier paillage"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 75"
+        ],
+        "message": "Surveillance des pucerons et piérides du chou – favoriser biodiversité et auxiliaires"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 75,
+        "message": "Période de récolte approche pour vos brocolis"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 7,
+          "message": "Attention: température minimale pour les brocolis atteinte (7°C)"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 20,
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  },
+  {
+    "id": "brussels_sprout",
+    "commonName": "Chou de Bruxelles",
+    "scientificName": "Brassica oleracea var. gemmifera",
+    "family": "Brassicaceae",
+    "daysToMaturity": 120,
+    "spacing": 60,
+    "depth": 1,
+    "sunExposure": "Plein soleil",
+    "waterNeeds": "Moyen",
+    "description": "Légume crucifère formant de petites pommes le long de sa tige, riche en fibres, vitamines C et K. Cultivé en permaculture, il bénéficie d'une rotation stricte et d'associations protectrices.",
+    "marketPricePerKg": 4.8,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 43,
+      "proteinG": 3.4,
+      "carbohydratesG": 9.0,
+      "sugarsG": 2.2,
+      "fatG": 0.3,
+      "fiberG": 3.8,
+      "vitaminCmg": 85.0,
+      "vitaminKmcg": 177.0,
+      "vitaminB9ug": 61,
+      "vitaminAmcg": 38,
+      "calciumMg": 42,
+      "ironMg": 1.4,
+      "magnesiumMg": 23,
+      "potassiumMg": 389,
+      "manganeseMg": 0.34,
+      "phosphorusMg": 69,
+      "glucosinolatesMg": 95,
+      "kaempferolMg": 25
+    },
+    "germination": {
+      "minTemperature": 7,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 5,
+        "max": 10,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 15,
+        "max": 18
+      },
+      "minTemperature": 7
+    },
+    "watering": {
+      "frequency": "Régulier après repiquage, puis 2 fois/semaine en cas de sécheresse",
+      "amount": "20-30 mm/semaine (10-15 mm par arrosage)",
+      "method": "Au pied, sol humide mais non détrempé",
+      "bestTime": "Tôt le matin ou en fin de journée"
+    },
+    "thinning": {
+      "distance": "6-8 cm après levée (2-3 feuilles), puis 50-70 cm entre plants et 60-80 cm entre rangs au repiquage (6-8 feuilles)",
+      "when": "Premier éclaircissement à 2-3 feuilles, repiquage définitif à 6-8 feuilles"
+    },
+    "weeding": {
+      "method": "Manuel sélectif + paillage (paille, broyat, feuilles mortes)",
+      "frequency": "Selon pression adventices, priorité au paillage",
+      "recommendation": "Laisser les adventices non concurrentes pour favoriser la biodiversité"
+    },
+    "culturalTips": [
+      "Rotation : ne pas cultiver de brassicacées sur la même parcelle avant 5-6 ans",
+      "Planter après des légumineuses (pois, fèves) pour un sol enrichi en azote",
+      "Tuteurer les plants en cas de vent ou croissance excessive",
+      "Éviter les excès d’azote après formation des pommes (favorise les feuilles au détriment des choux)",
+      "Surveiller limaces et altises, surtout en sols frais"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Bacillus thuringiensis (BT) contre les chenilles",
+        "Savon noir dilué contre pucerons",
+        "Décoction d’ail contre pucerons et champignons"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Carabes et hérissons contre limaces",
+        "Oiseaux insectivores contre divers ravageurs"
+      ],
+      "companionPlants": [
+        "mélisse",
+        "sauge",
+        "romarin",
+        "coriandre",
+        "œillets d’inde",
+        "tomates"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après semis, selon variété et climat",
+    "companionPlanting": {
+      "beneficial": [
+        "mélisse",
+        "sauge",
+        "romarin",
+        "coriandre",
+        "œillets d'inde",
+        "tomates",
+        "légumineuses (pois, fèves)",
+        "œillets d’inde"
+      ],
+      "avoid": [
+        "autres brassicacées (radis, navets, roquette, moutarde) sur la même parcelle"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Automne,Hiver",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "7 days",
+        "conditions": [
+          "no_rain_last_7_days",
+          "soil_moisture < 40%"
+        ],
+        "message": "Arrosage recommandé : 10-15 mm, au pied, en 2 fois cette semaine"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 14,
+        "message": "Premier éclaircissement : conserver 6-8 cm entre plants (2-3 feuilles)"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "21 days",
+        "message": "Vérifier le paillage et désherber manuellement les adventices concurrentes"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 75",
+          "temperature < 20"
+        ],
+        "message": "Appliquer Bacillus thuringiensis si chenilles présentes, ou savon noir contre pucerons"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 110,
+        "message": "Les premiers choux de Bruxelles devraient être prêts à récolter sous 2-3 semaines"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 7,
+          "message": "Attention : température minimale pour germination atteinte (7°C)"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 20,
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  },
+  {
+    "id": "cabbage",
+    "commonName": "Chou pommé",
+    "scientificName": "Brassica oleracea var. capitata",
+    "family": "Brassicaceae",
+    "daysToMaturity": 90,
+    "spacing": 50,
+    "depth": 1,
+    "sunExposure": "Plein soleil à mi-ombre",
+    "waterNeeds": "Élevé",
+    "description": "Légume-feuille formant une pomme compacte, riche en fibres, vitamines C et K. Culture exigeante en eau et en nutriments.",
+    "marketPricePerKg": 2.2,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 25,
+      "proteinG": 1.3,
+      "carbohydratesG": 5.8,
+      "sugarsG": 3.2,
+      "fatG": 0.1,
+      "fiberG": 2.5,
+      "vitaminCmg": 36.6,
+      "vitaminKmcg": 76.0,
+      "vitaminB9ug": 53,
+      "vitaminAmcg": 5,
+      "calciumMg": 40,
+      "ironMg": 0.5,
+      "magnesiumMg": 12,
+      "potassiumMg": 170,
+      "manganeseMg": 0.16,
+      "phosphorusMg": 26,
+      "glucosinolatesMg": 65,
+      "myrosinaseActivity": true
+    },
+    "germination": {
+      "minTemperature": 7,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 5,
+        "max": 10,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 15,
+        "max": 18
+      },
+      "minTemperature": 5
+    },
+    "watering": {
+      "frequency": "Tous les 2-3 jours en période sèche, quotidien en cas de canicule",
+      "amount": "4-6 litres par plant/semaine",
+      "method": "Arrosage au pied, jamais sur le feuillage",
+      "bestTime": "Tôt le matin ou en fin de journée"
+    },
+    "thinning": {
+      "distance": "50 cm entre plants en tous sens",
+      "when": "Lorsque les plants ont 6 à 8 feuilles"
+    },
+    "weeding": {
+      "method": "Manuel ou mécanique (binage superficiel)",
+      "frequency": "Toutes les 1-2 semaines en début de cycle",
+      "recommendation": "Paillage organique épais pour limiter l'évaporation et les mauvaises herbes"
+    },
+    "culturalTips": [
+      "Rotation des cultures : ne pas replanter de choux au même endroit avant 3-4 ans",
+      "Buttage léger un mois après repiquage pour ancrer les racines",
+      "Éviter le stress hydrique (manque ou excès d'eau) pour prévenir l'éclatement de la pomme",
+      "Favoriser la biodiversité avec des fleurs mellifères pour attirer les auxiliaires",
+      "Ne pas composter les parties malades pour éviter la propagation des maladies"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie (fortifiant et répulsif)",
+        "Décoction de prêle (renforce les tissus contre les champignons)",
+        "Huile de neem (contre pucerons et altises)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Chrysopes (prédateurs polyvalents)",
+        "Syrphes (larves dévorent les pucerons)"
+      ],
+      "companionPlants": [
+        "œillet d'inde",
+        "céleri",
+        "laitue",
+        "betterave",
+        "camomille (répulsifs naturels)"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après plantation, selon variété et conditions",
+    "companionPlanting": {
+      "beneficial": [
+        "céleri",
+        "laitue",
+        "betterave",
+        "camomille",
+        "œillet d'inde",
+        "menthe",
+        "sauge",
+        "thym",
+        "camomille (répulsifs naturels)"
+      ],
+      "avoid": [
+        "autres brassicacées (choux, navets, radis)",
+        "fraises",
+        "poivrons",
+        "tomates"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps, Automne",
+    "harvestSeason": "Automne, Hiver",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "2 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_3_days"
+        ],
+        "message": "Arrosage nécessaire pour vos choux : 4-6 litres/plant, au pied, tôt le matin"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 30,
+        "message": "Éclaircissage nécessaire : conserver 50 cm entre plants, 6-8 feuilles"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "10 days",
+        "message": "Désherbage et binage recommandés, pensez au paillage si pas encore fait"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 75",
+          "presence_aphids"
+        ],
+        "message": "Appliquer purin d'ortie ou huile de neem en prévention contre pucerons"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 85,
+        "message": "Vos choux approchent de maturité : vérifiez la fermeté de la pomme"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 5,
+          "message": "Attention : température minimale pour les choux atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 20,
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  },
+  {
+    "id": "carrot",
+    "commonName": "Carotte",
+    "scientificName": "Daucus carota subsp. sativus",
+    "family": "Apiaceae",
+    "daysToMaturity": 90,
+    "spacing": 8,
+    "depth": 1,
+    "sunExposure": "Plein soleil",
+    "waterNeeds": "Moyen à élevé",
+    "description": "Légume-racine croquant et sucré, riche en bêta-carotène, cultivé en agriculture biologique et permaculture avec des techniques douces et respectueuses de l'écosystème.",
+    "sowingMonths": [
+      "M",
+      "A",
+      "J"
+    ],
+    "harvestMonths": [
+      "J",
+      "A",
+      "S",
+      "O",
+      "N"
+    ],
+    "marketPricePerKg": 2.1,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 41,
+      "proteinG": 0.9,
+      "carbohydratesG": 9.6,
+      "sugarsG": 4.7,
+      "fatG": 0.2,
+      "fiberG": 2.8,
+      "vitaminAmcg": 835,
+      "vitaminKmcg": 13.2,
+      "vitaminCmg": 5.9,
+      "vitaminB9ug": 19,
+      "calciumMg": 33,
+      "ironMg": 0.3,
+      "magnesiumMg": 12,
+      "potassiumMg": 320,
+      "manganeseMg": 0.14,
+      "phosphorusMg": 35,
+      "betaCaroteneMcg": 8285
+    },
+    "germination": {
+      "minTemperature": 7,
+      "optimalTemperature": {
+        "min": 20,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 10,
+        "max": 15,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 18,
+        "max": 18
+      },
+      "minTemperature": 9
+    },
+    "watering": {
+      "frequency": "Tous les 4 à 5 jours (ou plus fréquemment avant levée)",
+      "amount": "Arrosages copieux, surtout en phase de tubérisation",
+      "method": "Au pied, sol maintenu humide mais pas détrempé",
+      "bestTime": "Tôt le matin ou en fin de journée"
+    },
+    "thinning": {
+      "distance": "4 cm pour carottes courtes, 8 cm pour carottes longues",
+      "when": "Au stade jeune plantule, ou retardé jusqu'à formation de petites carottes"
+    },
+    "weeding": {
+      "method": "Manuel ou mécanique (binage, sarclage)",
+      "frequency": "Régulier, surtout en début de culture",
+      "recommendation": "Combiner avec l'éclaircissage ; biner pour ameublir le sol et conserver l'humidité"
+    },
+    "culturalTips": [
+      "Éviter les sols compacts ou mal drainés pour prévenir racines déformées ou pourriture",
+      "Ne pas pailler trop tôt si limaces ou rongeurs présents",
+      "Éviter les apports excessifs d’azote (favorise feuillage au détriment de la racine)",
+      "Pratiquer la rotation des cultures pour éviter la mouche de la carotte",
+      "Semer après la première génération de mouches (mai-juin)",
+      "Associer avec poireau, coriandre, aneth ou œillets d’Inde pour repousser la mouche de la carotte"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Marc de café comme répulsif",
+        "Poudre d’algues",
+        "Branchages de tanaisie ou d’absinthe"
+      ],
+      "beneficialInsects": [
+        "Chrysopes contre pucerons",
+        "Coccinelles contre pucerons"
+      ],
+      "companionPlants": [
+        "poireau",
+        "coriandre",
+        "aneth",
+        "œillets d’inde (contre mouche de la carotte)"
+      ]
+    },
+    "harvestTime": "90-120 jours après semis selon variété et taille désirée",
+    "companionPlanting": {
+      "beneficial": [
+        "poireau",
+        "coriandre",
+        "aneth",
+        "œillet d'inde",
+        "laitue",
+        "radis",
+        "oignon",
+        "ail",
+        "chou",
+        "œillets d’inde (contre mouche de la carotte)"
+      ],
+      "avoid": [
+        "d'autres ombellifères (céleri, persil) sans rotation",
+        "plantes gourmandes en azote"
+      ]
+    },
+    "sowingMonths3": [
+      "Jan",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug"
+    ],
+    "harvestMonths3": [
+      "Jan",
+      "Apr",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov"
+    ],
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Été,Automne",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "5 days",
+        "conditions": [
+          "no_rain_last_3_days",
+          "temperature > 20"
+        ],
+        "message": "Arrosage nécessaire pour vos carottes : sol à maintenir humide, surtout en phase de grossissement"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 25,
+        "message": "Éclaircissage recommandé : laisser 4-8 cm entre plants selon variété"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "10 days",
+        "message": "Désherbage manuel ou binage recommandé pour éviter la concurrence"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "mouche_carotte_risque_elevé"
+        ],
+        "message": "Installer filet anti-insectes ou appliquer répulsifs naturels (tanaisie, marc de café)"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 90,
+        "message": "Premières récoltes possibles. Vérifiez la taille des racines."
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 9,
+          "message": "Attention : température minimale pour la croissance des carottes atteinte (9°C)"
+        },
+        "germination_optimal": {
+          "min": 20,
+          "max": 20,
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  {
+    "id": "cauliflower",
+    "commonName": "chou-fleur",
+    "scientificName": "Brassica oleracea var. botrytis",
+    "family": "Brassicaceae",
+    "daysToMaturity": 90,
+    "spacing": 75,
+    "depth": 1,
+    "sunExposure": "Plein soleil",
+    "waterNeeds": "Élevé",
+    "description": "Légume crucifère exigeant en eau et en nutriments, formant une pomme compacte blanche ou colorée, riche en vitamines C et K.",
+    "marketPricePerKg": 3.0,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 25,
+      "proteinG": 1.9,
+      "carbohydratesG": 5.0,
+      "sugarsG": 1.9,
+      "fatG": 0.3,
+      "fiberG": 2.0,
+      "vitaminCmg": 48.2,
+      "vitaminKmcg": 15.5,
+      "vitaminB9ug": 57,
+      "vitaminAmcg": 0,
+      "calciumMg": 22,
+      "ironMg": 0.4,
+      "magnesiumMg": 15,
+      "potassiumMg": 299,
+      "manganeseMg": 0.15,
+      "phosphorusMg": 44,
+      "glucosinolatesMg": 70,
+      "cholineMg": 45
+    },
+    "germination": {
+      "minTemperature": 7,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 5,
+        "max": 10,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 15,
+        "max": 18
+      },
+      "minTemperature": 5
+    },
+    "watering": {
+      "frequency": "2 fois/semaine (plus en cas de chaleur ou sécheresse)",
+      "amount": "20-25 mm/semaine",
+      "method": "Au pied, sol constamment humide mais non détrempé",
+      "bestTime": "Tôt le matin ou le soir"
+    },
+    "thinning": {
+      "distance": "10 cm en tous sens au stade 3-4 feuilles, puis 70-80 cm en tous sens au repiquage (6-8 feuilles)",
+      "when": "Après la levée (3-4 feuilles), puis avant formation de la pomme (6-8 feuilles)"
+    },
+    "weeding": {
+      "method": "Manuel ou mécanique (binage, sarclage), faux semis préalable",
+      "frequency": "Régulièrement, particulièrement 15 jours après plantation et avant fermeture du rang",
+      "recommendation": "Paillage épais systématique pour limiter évaporation et concurrence"
+    },
+    "culturalTips": [
+      "Rotation longue : 3 à 4 ans sans Brassicacées au même endroit",
+      "Amender le sol avec du compost mûr avant plantation",
+      "Éviter le stress hydrique ou thermique (risque de montée en graines ou absence de pomme)",
+      "Ne jamais repiquer ou travailler en période de fortes chaleurs",
+      "Surveiller l’apport d’azote : excès favorise les feuilles au détriment de la pomme"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de consoude ou d'ortie (préventif)",
+        "Savon noir (contre pucerons, en respectant dosages bio)",
+        "Voile anti-insectes contre mouche du chou et altises"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Oiseaux insectivores",
+        "Carabes (contre larves et chenilles)"
+      ],
+      "companionPlants": [
+        "bourrache",
+        "menthe",
+        "fenouil (répulsifs naturels contre certains ravageurs)"
+      ]
+    },
+    "harvestTime": "Environ 90 jours après plantation, selon variété et conditions",
+    "companionPlanting": {
+      "beneficial": [
+        "bourrache",
+        "menthe",
+        "fenouil",
+        "céleri",
+        "haricots",
+        "oignons",
+        "ail",
+        "fenouil (répulsifs naturels contre certains ravageurs)"
+      ],
+      "avoid": [
+        "autres brassicacées (chou, brocoli, navet...), fraises"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps, Automne (selon variété)",
+    "harvestSeason": "Automne, Hiver",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "3 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_2_days"
+        ],
+        "message": "Arrosage nécessaire pour vos choux-fleurs : maintenir sol humide (20-25 mm/semaine)"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 14,
+        "message": "Premier éclaircissage : laisser 10 cm entre plants au stade 3-4 feuilles"
+      },
+      "transplanting": {
+        "enabled": true,
+        "daysAfterPlanting": 35,
+        "message": "Repiquage recommandé au stade 6-8 feuilles, espacer de 70-80 cm"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "14 days",
+        "message": "Désherbage et binage recommandés, pensez au paillage"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 70",
+          "temperature < 25"
+        ],
+        "message": "Appliquer purin d'ortie ou installer voile anti-insectes en prévention"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 85,
+        "message": "Surveillez la formation de la pomme : récolte imminente"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 5,
+          "message": "Attention : température minimale pour le chou-fleur atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 20,
+          "message": "Conditions optimales de germination (18-20°C)"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  },
+  {
+    "id": "celery_branch",
+    "commonName": "Céleri branche",
+    "scientificName": "Apium graveolens var. dulce",
+    "family": "Apiaceae",
+    "daysToMaturity": 120,
+    "spacing": 35,
+    "depth": 0.3,
+    "sunExposure": "Mi-ombre à plein soleil",
+    "waterNeeds": "Élevé",
+    "description": "Légume croquant et rafraîchissant, riche en fibres et minéraux. Exigeant en eau et en sol frais, il prospère en culture bio avec paillage et rotation rigoureuse.",
+    "marketPricePerKg": 2.5,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 15,
+      "carbohydratesG": 2.5,
+      "proteinG": 0.7,
+      "fatG": 0.2,
+      "fiberG": 1.6,
+      "vitaminKmcg": 29.3,
+      "vitaminCmg": 3.1,
+      "vitaminB9ug": 36,
+      "vitaminAmcg": 449,
+      "potassiumMg": 260
+    },
+    "germination": {
+      "minTemperature": 16,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 18
+      },
+      "germinationTime": {
+        "min": 12,
+        "max": 14,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 20,
+        "max": 20
+      },
+      "minTemperature": 5
+    },
+    "watering": {
+      "frequency": "Tous les 2 à 3 jours selon chaleur",
+      "amount": "20-30 mm/semaine",
+      "method": "Arrosage au pied, sans mouiller le feuillage",
+      "bestTime": "Tôt le matin"
+    },
+    "thinning": {
+      "distance": "30-40 cm entre plants",
+      "when": "Lorsque les plantules ont 3 vraies feuilles"
+    },
+    "weeding": {
+      "method": "Binage superficiel manuel",
+      "frequency": "Régulier en début de culture",
+      "recommendation": "Paillage organique précoce fortement recommandé pour réduire le désherbage et maintenir l'humidité"
+    },
+    "culturalTips": [
+      "Rotation des cultures obligatoire (3-4 ans sans céleri au même endroit)",
+      "Butter les plants 15 jours avant récolte pour blanchir les côtes et adoucir la saveur",
+      "Éviter tout travail du sol ou manipulation par temps humide pour limiter les maladies cryptogamiques",
+      "Protéger les jeunes plants des limaces et escargots (Ferramol ou pièges biologiques)",
+      "Ne jamais laisser le sol sécher : le céleri est très sensible au stress hydrique"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin d'ortie dilué à 10% (1x/mois en arrosage préventif contre maladies fongiques)",
+        "Bouillie bordelaise en cas d'urgence (seulement si autorisé en bio local)",
+        "Infusion de prêle contre les maladies du feuillage"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre les pucerons",
+        "Syrphes (larves dévorent les pucerons)",
+        "Carabes contre les limaces (favoriser biodiversité du sol)"
+      ],
+      "companionPlants": [
+        "chou",
+        "poireau",
+        "tomate",
+        "oignon",
+        "éviter les plantes gourmandes en eau comme la courgette"
+      ]
+    },
+    "harvestTime": "Environ 120 jours après semis, ou 90 jours après repiquage",
+    "companionPlanting": {
+      "beneficial": [
+        "chou",
+        "poireau",
+        "oignon",
+        "tomate",
+        "épinard",
+        "laitue"
+      ],
+      "avoid": [
+        "maïs",
+        "plantes gourmandes en eau comme la courgette",
+        "plantes très gourmandes en eau ou en azote",
+        "pommes de terre"
+      ],
+      "notes": [
+        "éviter les plantes gourmandes en eau comme la courgette"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Automne",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "2 days",
+        "conditions": [
+          "temperature > 22",
+          "no_rain_last_3_days",
+          "soil_moisture_low"
+        ],
+        "message": "Arrosage nécessaire pour votre céleri branche : 20-30 mm cette semaine, au pied sans mouiller les feuilles"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 28,
+        "message": "Éclaircissage nécessaire : conservez un plant tous les 30-40 cm, éliminez les plus faibles"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "10 days",
+        "message": "Désherbage manuel ou paillage à vérifier — le céleri déteste la concurrence"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 75",
+          "forecast_rainy_days > 2"
+        ],
+        "message": "Traitement préventif au purin d'ortie recommandé pour éviter les maladies fongiques"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 110,
+        "message": "Période de récolte approche — pensez à butter les plants pour blanchir les tiges"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 5,
+          "message": "Attention : température minimale pour le céleri branche atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 18,
+          "message": "Température optimale de germination atteinte (18°C) — bon moment pour semer"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  },
+  {
+    "id": "chard",
+    "commonName": "Blette",
+    "scientificName": "Beta vulgaris subsp. vulgaris",
+    "family": "Amaranthaceae",
+    "daysToMaturity": 60,
+    "spacing": 40,
+    "depth": 1,
+    "sunExposure": "Plein soleil ou mi-ombre",
+    "waterNeeds": "Élevé",
+    "description": "Légume-feuille à côtes charnues, riche en vitamines et minéraux. Appelée aussi bette ou poirée, elle se consomme crue ou cuite, feuilles et tiges.",
+    "sowingMonths": [
+      "M",
+      "A",
+      "J"
+    ],
+    "harvestMonths": [
+      "J",
+      "A",
+      "S",
+      "O",
+      "N"
+    ],
+    "marketPricePerKg": 4.5,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 19,
+      "proteinG": 1.8,
+      "carbohydratesG": 0.9,
+      "fatG": 0.1,
+      "fiberG": 1.6,
+      "vitaminKmcg": 830,
+      "vitaminAmcg": 365,
+      "vitaminCmg": 18,
+      "vitaminB9ug": 9,
+      "potassiumMg": 380,
+      "magnesiumMg": 80,
+      "ironMg": 1.8,
+      "manganeseMg": 0.4,
+      "sodiumMg": 160
+    },
+    "germination": {
+      "minTemperature": 10,
+      "optimalTemperature": {
+        "min": 20,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 8,
+        "max": 10,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 19,
+        "max": 19
+      },
+      "minTemperature": 5
+    },
+    "watering": {
+      "frequency": "Régulièrement, 2-3 fois/semaine en période chaude",
+      "amount": "20-30 mm/semaine (selon chaleur et type de sol)",
+      "method": "Au pied, éviter le feuillage",
+      "bestTime": "Tôt le matin ou en fin de journée"
+    },
+    "thinning": {
+      "distance": "40 cm entre plants (20-30 cm si plants faibles)",
+      "when": "À 2-3 feuilles, environ 3 semaines après semis"
+    },
+    "weeding": {
+      "method": "Manuel ou mécanique avant semis, puis paillage pour limiter l'entretien",
+      "frequency": "Régulièrement au début, puis réduit grâce au paillage",
+      "recommendation": "Paillage léger pour conserver humidité et limiter mauvaises herbes"
+    },
+    "culturalTips": [
+      "Rotation : attendre 3 ans avant de replanter au même endroit",
+      "Supprimer les tiges florales pour éviter l'épuisement de la plante",
+      "Pailler en été pour conserver l'humidité et éviter le stress hydrique",
+      "Arroser régulièrement pour éviter que les côtes ne deviennent fibreuses",
+      "Éviter la plantation à côté des poireaux"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Purin de prêle en pulvérisation contre mildiou et rouille",
+        "Infusion de consoude pour fortifier les plants"
+      ],
+      "beneficialInsects": [
+        "Coccinelles contre pucerons",
+        "Syrphes auxiliaires",
+        "Vers de terre pour sol vivant"
+      ],
+      "companionPlants": [
+        "carottes",
+        "navets",
+        "haricots nains"
+      ]
+    },
+    "harvestTime": "60-90 jours après semis, selon variété et conditions",
+    "companionPlanting": {
+      "beneficial": [
+        "carotte",
+        "navet",
+        "haricot nain",
+        "chou",
+        "laitue",
+        "radis",
+        "carottes",
+        "navets",
+        "haricots nains"
+      ],
+      "avoid": [
+        "betterave (même famille)",
+        "poireau"
+      ]
+    },
+    "sowingMonths3": [
+      "Jan",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug"
+    ],
+    "harvestMonths3": [
+      "Jan",
+      "Apr",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov"
+    ],
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Été,Automne",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "2 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_2_days"
+        ],
+        "message": "Arrosage nécessaire pour vos blettes : sol à maintenir frais (20-30 mm/semaine)"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 21,
+        "message": "Éclaircissage à faire : conserver 1 plant vigoureux tous les 40 cm"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "10 days",
+        "message": "Désherbage léger recommandé avant paillage"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 75"
+        ],
+        "message": "Traitement préventif au purin de prêle recommandé contre maladies fongiques"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 60,
+        "message": "Premières récoltes possibles pour vos blettes (feuilles externes)"
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 5,
+          "message": "Attention : température minimale pour la blette atteinte (5°C)"
+        },
+        "germination_optimal": {
+          "min": 20,
+          "max": 20,
+          "message": "Température optimale de germination atteinte (20°C)"
+        }
+      }
+    }
+  },
+  {
+    "id": "chives",
+    "commonName": "Ciboulette",
+    "scientificName": "Allium schoenoprasum",
+    "family": "Amaryllidaceae",
+    "daysToMaturity": 60,
+    "spacing": 15,
+    "depth": 0.5,
+    "sunExposure": "Plein soleil à mi-ombre",
+    "waterNeeds": "Modéré",
+    "description": "Plante aromatique vivace, riche en vitamines et aux propriétés répulsives naturelles contre certains ravageurs.",
+    "sowingMonths": [
+      "M",
+      "A"
+    ],
+    "harvestMonths": [
+      "A",
+      "M",
+      "J",
+      "S",
+      "O"
+    ],
+    "marketPricePerKg": 13.0,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 30,
+      "proteinG": 3.3,
+      "carbohydratesG": 4.4,
+      "sugarsG": 1.9,
+      "fatG": 0.7,
+      "fiberG": 2.5,
+      "vitaminCmg": 58.1,
+      "vitaminKmcg": 212.7,
+      "vitaminB9ug": 105,
+      "vitaminAmcg": 218,
+      "calciumMg": 92,
+      "ironMg": 1.6,
+      "magnesiumMg": 42,
+      "potassiumMg": 296,
+      "manganeseMg": 0.27,
+      "phosphorusMg": 58,
+      "quercetinMg": 35,
+      "allicinPrecursorsMg": 15
+    },
+    "germination": {
+      "minTemperature": 15,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 20
+      },
+      "germinationTime": {
+        "min": 10,
+        "max": 15,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 18,
+        "max": 20
+      },
+      "minTemperature": 5
+    },
+    "watering": {
+      "frequency": "Tous les 3 jours en période chaude (plus fréquent en pot)",
+      "amount": "Maintenir le sol frais sans excès",
+      "method": "Arrosage au pied, éviter le feuillage",
+      "bestTime": "Tôt le matin ou en fin de journée"
+    },
+    "thinning": {
+      "distance": "15 cm entre chaque pied",
+      "when": "Au moment de la plantation définitive"
+    },
+    "weeding": {
+      "method": "Manuel doux, paillage léger après établissement des plants",
+      "frequency": "Contrôle régulier, surtout en début de culture",
+      "recommendation": "Éviter de pailler trop tôt au printemps pour limiter les limaces"
+    },
+    "culturalTips": [
+      "Rotation des cultures : éviter de planter près des pois et haricots",
+      "Protéger en hiver avec un voile d'hivernage si température < -10°C",
+      "Éviter l'humidité stagnante pour prévenir la moisissure grise",
+      "Ne pas consommer crue en excès pour les personnes sensibles aux alliacées",
+      "Accepte le ressemis spontané — à gérer selon l'espace disponible"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Eau savonneuse au savon noir contre les pucerons",
+        "Infusion d'ail (en prévention)",
+        "Purin de consoude (fortifiant naturel)"
+      ],
+      "beneficialInsects": [
+        "Coccinelles (contre pucerons)",
+        "Syrphes",
+        "Chrysopes"
+      ],
+      "companionPlants": [
+        "carotte",
+        "tomate",
+        "concombre",
+        "repousse certains ravageurs naturellement"
+      ]
+    },
+    "harvestTime": "60 jours après semis, puis récolte régulière tout l'été",
+    "companionPlanting": {
+      "beneficial": [
+        "carotte",
+        "tomate",
+        "concombre",
+        "céleri",
+        "pomme de terre",
+        "fraise",
+        "repousse certains ravageurs naturellement"
+      ],
+      "avoid": [
+        "betterave",
+        "haricots",
+        "pois"
+      ]
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Aug"
+    ],
+    "harvestMonths3": [
+      "Jan",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct"
+    ],
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Printemps,Été,Automne",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "3 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_2_days"
+        ],
+        "message": "Arrosage nécessaire pour votre ciboulette : maintenir sol frais, éviter excès"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 14,
+        "message": "Éclaircissement terminé ? Vérifiez 15 cm entre chaque pied."
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "7 days",
+        "message": "Contrôle des mauvaises herbes recommandé — pensez au paillage léger si plants bien établis"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 75"
+        ],
+        "message": "Risque de moisissure grise — aérez les plants et vérifiez l'arrosage"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 60,
+        "message": "Première récolte possible ! Coupez les tiges au tiers pour favoriser la repousse."
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": -10,
+          "message": "Attention gel extrême (< -10°C) — protégez la ciboulette avec un voile d'hivernage"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 20,
+          "message": "Conditions optimales de germination atteintes (18-20°C)"
+        }
+      }
+    }
+  },
+  {
+    "id": "coriander",
+    "commonName": "Coriandre",
+    "scientificName": "Coriandrum sativum",
+    "family": "Apiaceae",
+    "daysToMaturity": 45,
+    "spacing": 15,
+    "depth": 1,
+    "sunExposure": "Plein soleil à mi-ombre",
+    "waterNeeds": "Modéré mais régulier",
+    "description": "Plante aromatique annuelle, appréciée pour ses feuilles fraîches et ses graines. Sensible au stress hydrique qui provoque une montée rapide en graines.",
+    "marketPricePerKg": 15.0,
+    "defaultUnit": "kg",
+    "nutritionPer100g": {
+      "energyKcal": 23,
+      "proteinG": 2.1,
+      "carbohydratesG": 3.7,
+      "sugarsG": 0.9,
+      "fatG": 0.5,
+      "fiberG": 2.8,
+      "vitaminCmg": 27.0,
+      "vitaminKmcg": 310.0,
+      "vitaminB9ug": 62,
+      "vitaminAmcg": 337,
+      "calciumMg": 67,
+      "ironMg": 1.8,
+      "magnesiumMg": 26,
+      "potassiumMg": 521,
+      "manganeseMg": 0.23,
+      "phosphorusMg": 48,
+      "linaloolMg": 80,
+      "quercetinMg": 55
+    },
+    "germination": {
+      "minTemperature": 15,
+      "optimalTemperature": {
+        "min": 18,
+        "max": 22
+      },
+      "germinationTime": {
+        "min": 7,
+        "max": 14,
+        "unit": "jours"
+      }
+    },
+    "growth": {
+      "idealTemperature": {
+        "min": 17,
+        "max": 20
+      },
+      "minTemperature": 10
+    },
+    "watering": {
+      "frequency": "1 fois/semaine (plus souvent en pot ou par temps chaud/sec)",
+      "amount": "Sol maintenu humide sans eau stagnante",
+      "method": "Arroser au pied, éviter de mouiller les feuilles",
+      "bestTime": "Tôt le matin ou en soirée"
+    },
+    "thinning": {
+      "distance": "10-15 cm entre plants",
+      "when": "Dès les premières semaines après germination, au stade de quelques feuilles"
+    },
+    "weeding": {
+      "method": "Manuel (pour ne pas perturber les racines), paillage possible",
+      "frequency": "Régulier, surtout en début de croissance",
+      "recommendation": "Paillage pour limiter les mauvaises herbes et maintenir l'humidité"
+    },
+    "culturalTips": [
+      "Éviter la montée prématurée en graines en maintenant un arrosage régulier",
+      "Rotation des cultures : ne pas replanter la coriandre au même endroit chaque année",
+      "Préfère un sol bien drainé",
+      "Supporte la mi-ombre mais préfère le plein soleil",
+      "Ne pas laisser le sol sécher complètement pour prolonger la récolte des feuilles"
+    ],
+    "biologicalControl": {
+      "preparations": [
+        "Compost ou engrais organique (éviter les engrais chimiques)",
+        "Traitements bio en cas de maladies fongiques (rare si conditions optimales)"
+      ],
+      "beneficialInsects": [
+        "Hérissons contre limaces et escargots",
+        "Carabes contre limaces et autres invertébrés nuisibles"
+      ],
+      "companionPlants": [
+        "non spécifié",
+        "mais éviter la concurrence avec plantes envahissantes"
+      ]
+    },
+    "harvestTime": "30-45 jours après germination pour les feuilles, 90-100 jours pour les graines",
+    "companionPlanting": {
+      "beneficial": [
+        "non spécifié"
+      ],
+      "avoid": [
+        "concurrence",
+        "plantes envahissantes",
+        "plantes envahissantes ou à forte concurrence racinaire"
+      ],
+      "notes": [
+        "mais éviter la concurrence avec plantes envahissantes"
+      ]
+    },
+    "sowingMonths3": [],
+    "harvestMonths3": [],
+    "plantingSeason": "Printemps",
+    "harvestSeason": "Été",
+    "notificationSettings": {
+      "watering": {
+        "enabled": true,
+        "frequency": "7 days",
+        "conditions": [
+          "temperature > 25",
+          "no_rain_last_3_days",
+          "in_pot"
+        ],
+        "message": "Arrosage nécessaire pour votre coriandre : maintenir le sol humide, surtout en pot ou par temps chaud"
+      },
+      "thinning": {
+        "enabled": true,
+        "daysAfterPlanting": 14,
+        "message": "Éclaircissage recommandé : espacer les plants de 10-15 cm pour un bon développement"
+      },
+      "weeding": {
+        "enabled": true,
+        "frequency": "10 days",
+        "message": "Désherbage manuel recommandé : la coriandre est vulnérable à la concurrence des mauvaises herbes"
+      },
+      "biological_control": {
+        "enabled": true,
+        "conditions": [
+          "humidity > 80",
+          "slug_activity_detected"
+        ],
+        "message": "Surveiller limaces/escargots : favoriser hérissons et carabes, éviter produits chimiques"
+      },
+      "harvest": {
+        "enabled": true,
+        "daysAfterPlanting": 35,
+        "message": "Récolte des feuilles possible à partir de 5 semaines. Couper les tiges extérieures pour prolonger la production."
+      },
+      "temperature_alert": {
+        "enabled": true,
+        "cold_alert": {
+          "threshold": 10,
+          "message": "Attention : température minimale pour la coriandre atteinte (10°C)"
+        },
+        "germination_optimal": {
+          "min": 18,
+          "max": 22,
+          "message": "Conditions optimales de germination (18-22°C)"
+        }
+      }
+    },
+    "sowingMonths": [],
+    "harvestMonths": []
+  }
+]

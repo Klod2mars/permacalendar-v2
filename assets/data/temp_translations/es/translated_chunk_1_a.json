@@ -1,0 +1,842 @@
+[
+    {
+        "id": "cauliflower",
+        "commonName": "Coliflor",
+        "scientificName": "Brassica oleracea var. botrytis",
+        "family": "Brassicaceae",
+        "daysToMaturity": 90,
+        "spacing": 75,
+        "depth": 1,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Verdura crucífera exigente en agua y nutrientes, que forma una cabeza compacta blanca o coloreada, rica en vitaminas C y K.",
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.9,
+            "carbohydratesG": 5.0,
+            "sugarsG": 1.9,
+            "fatG": 0.3,
+            "fiberG": 2.0,
+            "vitaminCmg": 48.2,
+            "vitaminKmcg": 15.5,
+            "vitaminB9ug": 57,
+            "vitaminAmcg": 0,
+            "calciumMg": 22,
+            "ironMg": 0.4,
+            "magnesiumMg": 15,
+            "potassiumMg": 299,
+            "manganeseMg": 0.15,
+            "phosphorusMg": 44,
+            "glucosinolatesMg": 70,
+            "cholineMg": 45
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2 veces/semana (más en caso de calor o sequía)",
+            "amount": "20-25 mm/semana",
+            "method": "Al pie, suelo constantemente húmedo pero no empapado",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "10 cm en todos los sentidos en estadio 3-4 hojas, luego 70-80 cm en todos los sentidos al repicar (6-8 hojas)",
+            "when": "Tras la emergencia (3-4 hojas), luego antes de la formación de la cabeza (6-8 hojas)"
+        },
+        "weeding": {
+            "method": "Manual o mecánico (bina, escarda), falsa siembra previa",
+            "frequency": "Regularmente, particularmente 15 días tras plantación y antes del cierre de filas",
+            "recommendation": "Acolchado grueso sistemático para limitar evaporación y competencia"
+        },
+        "culturalTips": [
+            "Rotación larga: 3 a 4 años sin brasicáceas en el mismo lugar",
+            "Enmendar el suelo con compost maduro antes de plantar",
+            "Evitar estrés hídrico o térmico (riesgo de subida a flor o ausencia de cabeza)",
+            "Nunca repicar o trabajar en periodos de fuerte calor",
+            "Vigilar el aporte de nitrógeno: el exceso favorece las hojas en detrimento de la cabeza"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de consuelda o de ortiga (preventivo)",
+                "Jabón negro (contra pulgones, respetando dosis bio)",
+                "Malla anti-insectos contra la mosca de la col y altisas"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Pájaros insectívoros",
+                "Cárabos (contra larvas y orugas)"
+            ],
+            "companionPlants": [
+                "Borraja",
+                "Menta",
+                "Hinojo (repelentes naturales contra ciertas plagas)"
+            ]
+        },
+        "harvestTime": "Aprox. 90 días tras plantación, según variedad y condiciones",
+        "companionPlanting": {
+            "beneficial": [
+                "borraja",
+                "menta",
+                "hinojo",
+                "apio",
+                "judías",
+                "cebollas",
+                "ajo",
+                "hinojo (repelentes naturales contra ciertas plagas)"
+            ],
+            "avoid": [
+                "otras brasicáceas (col, brócoli, nabo...), fresas"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera, Otoño (según variedad)",
+        "harvestSeason": "Otoño, Invierno",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario para sus coliflores: mantener suelo húmedo (20-25 mm/semana)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Primer aclareo: dejar 10 cm entre plantas en estadio 3-4 hojas"
+            },
+            "transplanting": {
+                "enabled": true,
+                "daysAfterPlanting": 35,
+                "message": "Repicado recomendado en estadio 6-8 hojas, espaciar 70-80 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y bina recomendados, piense en acolchar"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature < 25"
+                ],
+                "message": "Aplicar purín de ortiga o instalar malla anti-insectos en prevención"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Vigile la formación de la cabeza: cosecha inminente"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima para coliflor alcanzada (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Condiciones óptimas de germinación (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "celery_branch",
+        "commonName": "Apio",
+        "scientificName": "Apium graveolens var. dulce",
+        "family": "Apiaceae",
+        "daysToMaturity": 120,
+        "spacing": 35,
+        "depth": 0.3,
+        "sunExposure": "Media sombra a pleno sol",
+        "waterNeeds": "Alto",
+        "description": "Verdura crujiente y refrescante, rica en fibra y minerales. Exigente en agua y suelo fresco, prospera en cultivo bio con acolchado y rotación rigurosa.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "carbohydratesG": 2.5,
+            "proteinG": 0.7,
+            "fatG": 0.2,
+            "fiberG": 1.6,
+            "vitaminKmcg": 29.3,
+            "vitaminCmg": 3.1,
+            "vitaminB9ug": 36,
+            "vitaminAmcg": 449,
+            "potassiumMg": 260
+        },
+        "germination": {
+            "minTemperature": 16,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 12,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Cada 2 a 3 días según calor",
+            "amount": "20-30 mm/semana",
+            "method": "Riego al pie, sin mojar el follaje",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "30-40 cm entre plantas",
+            "when": "Cuando las plántulas tengan 3 hojas verdaderas"
+        },
+        "weeding": {
+            "method": "Bina superficial manual",
+            "frequency": "Regular al inicio del cultivo",
+            "recommendation": "Acolchado orgánico precoz fuertemente recomendado para reducir deshierbe y mantener humedad"
+        },
+        "culturalTips": [
+            "Rotación de cultivos obligatoria (3-4 años sin apio en el mismo lugar)",
+            "Aporcar las plantas 15 días antes de cosecha para blanquear los tallos y suavizar sabor",
+            "Evitar todo trabajo del suelo o manipulación en tiempo húmedo para limitar enfermedades criptogámicas",
+            "Proteger plantas jóvenes de babosas y caracoles (Ferramol o trampas biológicas)",
+            "Nunca dejar secar el suelo: el apio es muy sensible al estrés hídrico"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga diluido al 10% (1x/mes en riego preventivo contra enfermedades fúngicas)",
+                "Caldo bordelés en caso de urgencia (si autorizado en bio local)",
+                "Infusión de cola de caballo contra enfermedades del follaje"
+            ],
+            "beneficialInsects": [
+                "Mariquitas contra pulgones",
+                "Sírfidos (larvas devoran pulgones)",
+                "Cárabos contra babosas (favorecer biodiversidad del suelo)"
+            ],
+            "companionPlants": [
+                "Repollo",
+                "Puerro",
+                "Tomate",
+                "Cebolla",
+                "evitar plantas exigentes en agua como el calabacín"
+            ]
+        },
+        "harvestTime": "Aprox. 120 días tras siembra, o 90 días tras repicado",
+        "companionPlanting": {
+            "beneficial": [
+                "repollo",
+                "puerro",
+                "cebolla",
+                "tomate",
+                "espinaca",
+                "lechuga"
+            ],
+            "avoid": [
+                "maíz",
+                "plantas exigentes en agua como el calabacín",
+                "plantas muy exigentes en agua o nitrógeno",
+                "patata"
+            ],
+            "notes": [
+                "evitar plantas exigentes en agua como el calabacín"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 22",
+                    "no_rain_last_3_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Riego necesario para su apio: 20-30 mm esta semana, al pie sin mojar hojas"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 28,
+                "message": "Aclareo necesario: conservar una planta cada 30-40 cm, eliminar las débiles"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe manual o acolchado a verificar — el apio detesta la competencia"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "forecast_rainy_days > 2"
+                ],
+                "message": "Tratamiento preventivo con purín de ortiga recomendado para evitar enfermedades fúngicas"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Periodo de cosecha se acerca — piense en aporcar las plantas para blanquear los tallos"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima para apio alcanzada (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 18,
+                    "message": "Temperatura óptima de germinación alcanzada (18°C) — buen momento para sembrar"
+                }
+            }
+        }
+    },
+    {
+        "id": "chard",
+        "commonName": "Acelga",
+        "scientificName": "Beta vulgaris subsp. vulgaris",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 60,
+        "spacing": 40,
+        "depth": 1,
+        "sunExposure": "Pleno sol o media sombra",
+        "waterNeeds": "Alto",
+        "description": "Hortaliza de hoja con pencas carnosas, rica en vitaminas y minerales. Se consume cruda o cocida, hojas y tallos.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.8,
+            "carbohydratesG": 0.9,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminKmcg": 830,
+            "vitaminAmcg": 365,
+            "vitaminCmg": 18,
+            "vitaminB9ug": 9,
+            "potassiumMg": 380,
+            "magnesiumMg": 80,
+            "ironMg": 1.8,
+            "manganeseMg": 0.4,
+            "sodiumMg": 160
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Regularmente, 2-3 veces/semana en periodo cálido",
+            "amount": "20-30 mm/semana (según calor y tipo de suelo)",
+            "method": "Al pie, evitar follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "40 cm entre plantas (20-30 cm si plantas débiles)",
+            "when": "A 2-3 hojas, aprox. 3 semanas tras siembra"
+        },
+        "weeding": {
+            "method": "Manual o mecánico antes de siembra, luego acolchado para limitar mantenimiento",
+            "frequency": "Regularmente al inicio, luego reducido con el acolchado",
+            "recommendation": "Acolchado ligero para conservar humedad y limitar malas hierbas"
+        },
+        "culturalTips": [
+            "Rotación: esperar 3 años antes de replantar en el mismo lugar",
+            "Suprimir los tallos florales para evitar agotamiento de la planta",
+            "Acolchar en verano para conservar humedad y evitar estrés hídrico",
+            "Regar regularmente para evitar que las pencas se vuelvan fibrosas",
+            "Evitar plantación junto a puerros"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de cola de caballo en pulverización contra mildiu y roya",
+                "Infusión de consuelda para fortificar plantas"
+            ],
+            "beneficialInsects": [
+                "Mariquitas contra pulgones",
+                "Sírfidos auxiliares",
+                "Lombrices para suelo vivo"
+            ],
+            "companionPlants": [
+                "Zanahorias",
+                "Nabos",
+                "Judías enanas"
+            ]
+        },
+        "harvestTime": "60-90 días tras siembra, según variedad y condiciones",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "nabo",
+                "judía enana",
+                "repollo",
+                "lechuga",
+                "rábano",
+                "zanahorias",
+                "nabos",
+                "judías enanas"
+            ],
+            "avoid": [
+                "remolacha (misma familia)",
+                "puerro"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario para sus acelgas: mantener suelo fresco (20-30 mm/semana)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Aclareo a realizar: conservar 1 planta vigorosa cada 40 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Deshierbe ligero recomendado antes de acolchar"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Tratamiento preventivo con purín de cola de caballo recomendado contra enfermedades fúngicas"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Primeras cosechas posibles para sus acelgas (hojas externas)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Atención: temperatura mínima para acelga alcanzada (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Temperatura óptima de germinación alcanzada (20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "chives",
+        "commonName": "Cebollino",
+        "scientificName": "Allium schoenoprasum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 60,
+        "spacing": 15,
+        "depth": 0.5,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Moderado",
+        "description": "Planta aromática perenne, rica en vitaminas y con propiedades repelentes naturales contra ciertas plagas.",
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 13.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 3.3,
+            "carbohydratesG": 4.4,
+            "sugarsG": 1.9,
+            "fatG": 0.7,
+            "fiberG": 2.5,
+            "vitaminCmg": 58.1,
+            "vitaminKmcg": 212.7,
+            "vitaminB9ug": 105,
+            "vitaminAmcg": 218,
+            "calciumMg": 92,
+            "ironMg": 1.6,
+            "magnesiumMg": 42,
+            "potassiumMg": 296,
+            "manganeseMg": 0.27,
+            "phosphorusMg": 58,
+            "quercetinMg": 35,
+            "allicinPrecursorsMg": 15
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Cada 3 días en periodo cálido (más frecuente en maceta)",
+            "amount": "Mantener el suelo fresco sin exceso",
+            "method": "Riego al pie, evitar follaje",
+            "bestTime": "Temprano en la mañana o al final del día"
+        },
+        "thinning": {
+            "distance": "15 cm entre cada pie",
+            "when": "En el momento de la plantación definitiva"
+        },
+        "weeding": {
+            "method": "Manual suave, acolchado ligero tras establecimiento de plantas",
+            "frequency": "Control regular, sobre todo al inicio del cultivo",
+            "recommendation": "Evitar acolchar demasiado pronto en primavera para limitar babosas"
+        },
+        "culturalTips": [
+            "Rotación de cultivos: evitar plantar cerca de guisantes y judías",
+            "Proteger en invierno con velo si temperatura < -10°C",
+            "Evitar humedad estancada para prevenir moho gris",
+            "No consumir crudo en exceso para personas sensibles a aliáceas",
+            "Acepta resiembra espontánea — a gestionar según espacio disponible"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Agua jabonosa con jabón negro contra pulgones",
+                "Infusión de ajo (en prevención)",
+                "Purín de consuelda (fortificante natural)"
+            ],
+            "beneficialInsects": [
+                "Mariquitas (contra pulgones)",
+                "Sírfidos",
+                "Crisopas"
+            ],
+            "companionPlants": [
+                "Zanahoria",
+                "Tomate",
+                "Pepino",
+                "Repele ciertas plagas naturalmente"
+            ]
+        },
+        "harvestTime": "60 días tras siembra, luego cosecha regular todo el verano",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "tomate",
+                "pepino",
+                "apio",
+                "patata",
+                "fresa",
+                "repele ciertas plagas naturalmente"
+            ],
+            "avoid": [
+                "remolacha",
+                "judías",
+                "guisantes"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Primavera, Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego necesario para su cebollino: mantener suelo fresco, evitar exceso"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "¿Aclareo terminado? Verifique 15 cm entre cada pie."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Control de malas hierbas recomendado — piense en acolchado ligero si plantas bien establecidas"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Riesgo de moho gris — airee las plantas y verifique el riego"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "¡Primera cosecha posible! Corte los tallos a un tercio para favorecer rebrote."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -10,
+                    "message": "Atención helada extrema (< -10°C) — proteja el cebollino con velo de invernaje"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Condiciones óptimas de germinación alcanzadas (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "coriander",
+        "commonName": "Cilantro",
+        "scientificName": "Coriandrum sativum",
+        "family": "Apiaceae",
+        "daysToMaturity": 45,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Pleno sol a media sombra",
+        "waterNeeds": "Moderado pero regular",
+        "description": "Planta aromática anual, apreciada por sus hojas frescas y sus semillas. Sensible al estrés hídrico que provoca una subida rápida a semilla.",
+        "marketPricePerKg": 15.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 2.1,
+            "carbohydratesG": 3.7,
+            "sugarsG": 0.9,
+            "fatG": 0.5,
+            "fiberG": 2.8,
+            "vitaminCmg": 27.0,
+            "vitaminKmcg": 310.0,
+            "vitaminB9ug": 62,
+            "vitaminAmcg": 337,
+            "calciumMg": 67,
+            "ironMg": 1.8,
+            "magnesiumMg": 26,
+            "potassiumMg": 521,
+            "manganeseMg": 0.23,
+            "phosphorusMg": 48,
+            "linaloolMg": 80,
+            "quercetinMg": 55
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 17,
+                "max": 20
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "1 vez/semana (más a menudo en maceta o tiempo cálido/seco)",
+            "amount": "Suelo mantenido húmedo sin agua estancada",
+            "method": "Regar al pie, evitar mojar hojas",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "10-15 cm entre plantas",
+            "when": "Desde las primeras semanas tras germinación, en estadio de algunas hojas"
+        },
+        "weeding": {
+            "method": "Manual (para no perturbar raíces), acolchado posible",
+            "frequency": "Regular, sobre todo al inicio del crecimiento",
+            "recommendation": "Acolchado para limitar malas hierbas y mantener humedad"
+        },
+        "culturalTips": [
+            "Evitar la subida prematura a semilla manteniendo riego regular",
+            "Rotación de cultivos: no replantar cilantro en el mismo lugar cada año",
+            "Prefiere suelo bien drenado",
+            "Soporta media sombra pero prefiere pleno sol",
+            "No dejar secar el suelo completamente para prolongar la cosecha de hojas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Compost o abono orgánico (evitar abonos químicos)",
+                "Tratamientos bio en caso de enfermedades fúngicas (raro si condiciones óptimas)"
+            ],
+            "beneficialInsects": [
+                "Erizos contra babosas y caracoles",
+                "Cárabos contra babosas y otros invertebrados nocivos"
+            ],
+            "companionPlants": [
+                "no especificado",
+                "pero evitar competencia con plantas invasivas"
+            ]
+        },
+        "harvestTime": "30-45 días tras germinación para hojas, 90-100 días para semillas",
+        "companionPlanting": {
+            "beneficial": [
+                "no especificado"
+            ],
+            "avoid": [
+                "competencia",
+                "plantas invasivas",
+                "plantas invasivas o de fuerte competencia radicular"
+            ],
+            "notes": [
+                "pero evitar competencia con plantas invasivas"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano, Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "1 week",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego necesario: el cilantro sube a semilla si tiene sed."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Aclareo: deje 10-15 cm para obtener bellas matas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7-10 days",
+                "message": "Limpie alrededor de los pies jóvenes para evitar competencia."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "pest_alert_slugs"
+                ],
+                "message": "Vigile las babosas en los brotes jóvenes."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Hojas listas para cosechar. Semillas en 2 meses."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Atención: < 10°C, el crecimiento se detiene."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 22,
+                    "message": "Condiciones ideales para germinar (18-22°C)."
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,844 @@
+[
+    {
+        "id": "cauliflower",
+        "commonName": "Blumenkohl",
+        "scientificName": "Brassica oleracea var. botrytis",
+        "family": "Brassicaceae",
+        "daysToMaturity": 90,
+        "spacing": 75,
+        "depth": 1,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Kreuzblütler-Gemüse, anspruchsvoll in Wasser und Nährstoffen, bildet einen kompakten weißen oder farbigen Kopfe, reich an Vitamin C und K.",
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 25,
+            "proteinG": 1.9,
+            "carbohydratesG": 5.0,
+            "sugarsG": 1.9,
+            "fatG": 0.3,
+            "fiberG": 2.0,
+            "vitaminCmg": 48.2,
+            "vitaminKmcg": 15.5,
+            "vitaminB9ug": 57,
+            "vitaminAmcg": 0,
+            "calciumMg": 22,
+            "ironMg": 0.4,
+            "magnesiumMg": 15,
+            "potassiumMg": 299,
+            "manganeseMg": 0.15,
+            "phosphorusMg": 44,
+            "glucosinolatesMg": 70,
+            "cholineMg": 45
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 18
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "2 Mal/Woche (mehr bei Hitze oder Trockenheit)",
+            "amount": "20-25 mm/Woche",
+            "method": "An der Basis, Boden konstant feucht aber nicht durchnässt",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "10 cm in alle Richtungen im 3-4 Blattstadium, dann 70-80 cm in alle Richtungen beim Umsetzen (6-8 Blätter)",
+            "when": "Nach dem Aufgang (3-4 Blätter), dann vor der Kopfbildung (6-8 Blätter)"
+        },
+        "weeding": {
+            "method": "Manuell oder mechanisch (Hacken), vorheriges Falsches Saatbeet",
+            "frequency": "Regelmäßig, besonders 15 Tage nach Pflanzung und vor Reihenschluss",
+            "recommendation": "Systematisches dickes Mulchen zur Begrenzung von Verdunstung und Konkurrenz"
+        },
+        "culturalTips": [
+            "Lange Rotation: 3 bis 4 Jahre ohne Kreuzblütler am selben Ort",
+            "Boden vor Pflanzung mit reifem Kompost verbessern",
+            "Wasser- oder Hitzestress vermeiden (Risiko von Schossen oder fehlender Kopfbildung)",
+            "Niemals bei starker Hitze umsetzen oder bearbeiten",
+            "Stickstoffzufuhr überwachen: Überschuss fördert Blätter statt Kopf"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Beinwell- oder Brennnesseljauche (vorbeugend)",
+                "Schmierseife (gegen Blattläuse, Bio-Dosierung beachten)",
+                "Insektenschutznetz gegen Kohlfliege und Erdflöhe"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Insektenfressende Vögel",
+                "Laufkäfer (gegen Larven und Raupen)"
+            ],
+            "companionPlants": [
+                "Borretsch",
+                "Minze",
+                "Fenchel (natürliche Abwehrmittel gegen bestimmte Schädlinge)"
+            ]
+        },
+        "harvestTime": "Ca. 90 Tage nach Pflanzung, je nach Sorte und Bedingungen",
+        "companionPlanting": {
+            "beneficial": [
+                "Borretsch",
+                "Minze",
+                "Fenchel",
+                "Sellerie",
+                "Bohnen",
+                "Zwiebeln",
+                "Knoblauch",
+                "Fenchel (natürliche Abwehrmittel gegen bestimmte Schädlinge)"
+            ],
+            "avoid": [
+                "andere Kreuzblütler (Kohl, Brokkoli, Rübe...), Erdbeeren"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Herbst (je nach Sorte)",
+        "harvestSeason": "Herbst, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Bewässerung notwendig für Ihren Blumenkohl: Boden feucht halten (20-25 mm/Woche)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Erstes Ausdünnen: 10 cm zwischen Pflanzen im 3-4 Blattstadium lassen"
+            },
+            "transplanting": {
+                "enabled": true,
+                "daysAfterPlanting": 35,
+                "message": "Umsetzen empfohlen im 6-8 Blattstadium, Abstand 70-80 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Jäten und Hacken empfohlen, denken Sie an Mulchen"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature < 25"
+                ],
+                "message": "Brennnesseljauche anwenden oder Insektenschutznetz zur Vorbeugung installieren"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Beobachten Sie die Kopfbildung: Ernte steht bevor"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Achtung: Mindesttemperatur für Blumenkohl erreicht (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "celery_branch",
+        "commonName": "Stangensellerie",
+        "scientificName": "Apium graveolens var. dulce",
+        "family": "Apiaceae",
+        "daysToMaturity": 120,
+        "spacing": 35,
+        "depth": 0.3,
+        "sunExposure": "Halbschatten bis volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Knackiges und erfrischendes Gemüse, reich an Ballaststoffen und Mineralien. Anspruchsvoll in Wasser und kühlen Böden, gedeiht in Bio-Kultur mit Mulchen und strikter Rotation.",
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 15,
+            "carbohydratesG": 2.5,
+            "proteinG": 0.7,
+            "fatG": 0.2,
+            "fiberG": 1.6,
+            "vitaminKmcg": 29.3,
+            "vitaminCmg": 3.1,
+            "vitaminB9ug": 36,
+            "vitaminAmcg": 449,
+            "potassiumMg": 260
+        },
+        "germination": {
+            "minTemperature": 16,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 12,
+                "max": 14,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Alle 2 bis 3 Tage nach Wärme",
+            "amount": "20-30 mm/Woche",
+            "method": "Gießen an der Basis, ohne das Laub zu benetzen",
+            "bestTime": "Früh morgens"
+        },
+        "thinning": {
+            "distance": "30-40 cm zwischen Pflanzen",
+            "when": "Wenn die Sämlinge 3 echte Blätter haben"
+        },
+        "weeding": {
+            "method": "Manuelles oberflächliches Hacken",
+            "frequency": "Regelmäßig zu Beginn der Kultur",
+            "recommendation": "Frühes organisches Mulchen dringend empfohlen, um Jäten zu reduzieren und Feuchtigkeit zu halten"
+        },
+        "culturalTips": [
+            "Fruchtwechsel obligatorisch (3-4 Jahre ohne Sellerie am gleichen Ort)",
+            "Pflanzen 15 Tage vor Ernte anhäufeln, um Rippen zu bleichen und Geschmack zu mildern",
+            "Bodenbearbeitung oder Manipulation bei feuchtem Wetter vermeiden, um Pilzkrankheiten zu begrenzen",
+            "Junge Pflanzen vor Schnecken schützen (Ferramol oder biologische Fallen)",
+            "Boden niemals austrocknen lassen: Sellerie ist sehr empfindlich gegen hydrischen Stress"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche verdünnt auf 10% (1x/Monat als vorbeugende Bewässerung gegen Pilzkrankheiten)",
+                "Bordeaux-Brühe im Notfall (nur wenn lokal Bio-zugelassen)",
+                "Schachtelhalmtee gegen Blattkrankheiten"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer gegen Blattläuse",
+                "Schwebfliegen (Larven fressen Blattläuse)",
+                "Laufkäfer gegen Schnecken (Bodenbiodiversität fördern)"
+            ],
+            "companionPlants": [
+                "Kohl",
+                "Lauch",
+                "Tomate",
+                "Zwiebel",
+                "wasserzehrende Pflanzen wie Zucchini vermeiden"
+            ]
+        },
+        "harvestTime": "Ca. 120 Tage nach Aussaat, oder 90 Tage nach Umpflanzen",
+        "companionPlanting": {
+            "beneficial": [
+                "Kohl",
+                "Lauch",
+                "Zwiebel",
+                "Tomate",
+                "Spinat",
+                "Kopfsalat"
+            ],
+            "avoid": [
+                "Mais",
+                "wasserzehrende Pflanzen wie Zucchini",
+                "sehr wasser- oder stickstoffzehrende Pflanzen",
+                "Kartoffeln"
+            ],
+            "notes": [
+                "wasserzehrende Pflanzen wie Zucchini vermeiden"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 22",
+                    "no_rain_last_3_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Bewässerung notwendig für Ihren Stangensellerie: 20-30 mm diese Woche, an der Basis ohne Blätter zu benetzen"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 28,
+                "message": "Ausdünnen notwendig: behalten Sie eine Pflanze alle 30-40 cm, entfernen Sie die schwächsten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten oder Mulch prüfen — Sellerie hasst Konkurrenz"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "forecast_rainy_days > 2"
+                ],
+                "message": "Vorbeugende Behandlung mit Brennnesseljauche empfohlen, um Pilzkrankheiten zu vermeiden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Erntezeit nähert sich — denken Sie ans Anhäufeln zum Bleichen der Stängel"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Achtung: Mindesttemperatur für Stangensellerie erreicht (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 18,
+                    "message": "Optimale Keimtemperatur erreicht (18°C) — guter Moment zum Säen"
+                }
+            }
+        }
+    },
+    {
+        "id": "chard",
+        "commonName": "Mangold",
+        "scientificName": "Beta vulgaris subsp. vulgaris",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 60,
+        "spacing": 40,
+        "depth": 1,
+        "sunExposure": "Volle Sonne oder Halbschatten",
+        "waterNeeds": "Hoch",
+        "description": "Blattstielgemüse mit fleischigen Rippen, reich an Vitaminen und Mineralien. Auch Krautstiel genannt, kann roh oder gekocht gegessen werden, Blätter und Stiele.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O",
+            "N"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.8,
+            "carbohydratesG": 0.9,
+            "fatG": 0.1,
+            "fiberG": 1.6,
+            "vitaminKmcg": 830,
+            "vitaminAmcg": 365,
+            "vitaminCmg": 18,
+            "vitaminB9ug": 9,
+            "potassiumMg": 380,
+            "magnesiumMg": 80,
+            "ironMg": 1.8,
+            "manganeseMg": 0.4,
+            "sodiumMg": 160
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 19,
+                "max": 19
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Regelmäßig, 2-3 Mal/Woche in Hitzeperioden",
+            "amount": "20-30 mm/Woche (je nach Hitze und Bodenart)",
+            "method": "An der Basis, Laub vermeiden",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "40 cm zwischen Pflanzen (20-30 cm bei schwachen Pflanzen)",
+            "when": "Bei 2-3 Blättern, ca. 3 Wochen nach Aussaat"
+        },
+        "weeding": {
+            "method": "Manuell oder mechanisch vor Aussaat, dann Mulchen zur Begrenzung der Pflege",
+            "frequency": "Regelmäßig am Anfang, dann reduziert durch Mulch",
+            "recommendation": "Leichtes Mulchen zur Feuchtigkeitsbewahrung und Unkrautbegrenzung"
+        },
+        "culturalTips": [
+            "Rotation: 3 Jahre warten, bevor am gleichen Ort wieder gepflanzt wird",
+            "Blütenstängel entfernen, um Erschöpfung der Pflanze zu vermeiden",
+            "Im Sommer mulchen, um Feuchtigkeit zu halten und Wasserstress zu vermeiden",
+            "Regelmäßig gießen, damit die Rippen nicht faserig werden",
+            "Pflanzung neben Lauch vermeiden"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Schachtelhalmjauche gesprüht gegen Mehltau und Rost",
+                "Beinwellaufguss zur Stärkung der Pflanzen"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer gegen Blattläuse",
+                "Hilfs-Schwebfliegen",
+                "Regenwürmer für lebendigen Boden"
+            ],
+            "companionPlants": [
+                "Karotten",
+                "Rüben (Navets)",
+                "Buschbohnen"
+            ]
+        },
+        "harvestTime": "60-90 Tage nach Aussaat, je nach Sorte und Bedingungen",
+        "companionPlanting": {
+            "beneficial": [
+                "Karotte",
+                "Rübe (Navet)",
+                "Buschbohne",
+                "Kohl",
+                "Kopfsalat",
+                "Radieschen",
+                "Karotten",
+                "Rüben (Navets)",
+                "Buschbohnen"
+            ],
+            "avoid": [
+                "Rote Bete (gleiche Familie)",
+                "Lauch"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer,Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Bewässerung für Mangold notwendig: Boden frisch halten (20-30 mm/Woche)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 21,
+                "message": "Ausdünnen: eine kräftige Pflanze alle 40 cm behalten"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Leichtes Jäten empfohlen vor dem Mulchen"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Vorbeugende Behandlung mit Schachtelhalmjauche empfohlen gegen Pilzkrankheiten"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Erste Ernten möglich für Ihren Mangold (äußere Blätter)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Achtung: Mindesttemperatur für Mangold erreicht (5°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimale Keimtemperatur erreicht (20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "chives",
+        "commonName": "Schnittlauch",
+        "scientificName": "Allium schoenoprasum",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 60,
+        "spacing": 15,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne bis Halbschatten",
+        "waterNeeds": "Mäßig",
+        "description": "Mehrjährige aromatische Pflanze, reich an Vitaminen und mit natürlichen abwehrenden Eigenschaften gegen bestimmte Schädlinge.",
+        "sowingMonths": [
+            "M",
+            "A"
+        ],
+        "harvestMonths": [
+            "A",
+            "M",
+            "J",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 13.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 3.3,
+            "carbohydratesG": 4.4,
+            "sugarsG": 1.9,
+            "fatG": 0.7,
+            "fiberG": 2.5,
+            "vitaminCmg": 58.1,
+            "vitaminKmcg": 212.7,
+            "vitaminB9ug": 105,
+            "vitaminAmcg": 218,
+            "calciumMg": 92,
+            "ironMg": 1.6,
+            "magnesiumMg": 42,
+            "potassiumMg": 296,
+            "manganeseMg": 0.27,
+            "phosphorusMg": 58,
+            "quercetinMg": 35,
+            "allicinPrecursorsMg": 15
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "minTemperature": 5
+        },
+        "watering": {
+            "frequency": "Alle 3 Tage in Hitzeperioden (häufiger im Topf)",
+            "amount": "Erde frisch halten ohne Überschuss",
+            "method": "Gießen an der Basis, Laub vermeiden",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "15 cm zwischen jedem Fuß",
+            "when": "Zum Zeitpunkt der endgültigen Pflanzung"
+        },
+        "weeding": {
+            "method": "Sanftes manuelles Jäten, leichtes Mulchen nach Etablierung",
+            "frequency": "Regelmäßige Kontrolle, vor allem zu Beginn",
+            "recommendation": "Im Frühling nicht zu früh mulchen, um Schnecken zu begrenzen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Nicht in der Nähe von Erbsen und Bohnen pflanzen",
+            "Im Winter mit Vlies schützen, wenn Temperatur < -10°C",
+            "Staunässe vermeiden, um Grauschimmel vorzubeugen",
+            "Nicht im Übermaß roh verzehren bei Empfindlichkeit gegen Lauchgewächse",
+            "Akzeptiert Selbstaussaat — je nach verfügbarem Platz verwalten"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Seifenlauge mit Schmierseife gegen Blattläuse",
+                "Knoblauchaufguss (vorbeugend)",
+                "Beinwelljauche (natürliches Stärkungsmittel)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Schwebfliegen",
+                "Florfliegen"
+            ],
+            "companionPlants": [
+                "Karotte",
+                "Tomate",
+                "Gurke",
+                "wehrt bestimmte Schädlinge natürlich ab"
+            ]
+        },
+        "harvestTime": "60 Tage nach Aussaat, dann regelmäßige Ernte den ganzen Sommer",
+        "companionPlanting": {
+            "beneficial": [
+                "Karotte",
+                "Tomate",
+                "Gurke",
+                "Sellerie",
+                "Kartoffel",
+                "Erdbeere",
+                "wehrt bestimmte Schädlinge natürlich ab"
+            ],
+            "avoid": [
+                "Rote Bete",
+                "Bohnen",
+                "Erbsen"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Frühling,Sommer,Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Bewässerung notwendig für Ihren Schnittlauch: Boden frisch halten, Überschuss vermeiden"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen beendet? Prüfen Sie 15 cm Abstand zwischen jedem Fuß."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7 days",
+                "message": "Unkrautkontrolle empfohlen — denken Sie an leichtes Mulchen wenn Pflanzen etabliert"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Risiko von Grauschimmel — Pflanzen belüften und Bewässerung prüfen"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Erste Ernte möglich! Schneiden Sie die Stängel auf ein Drittel, um Nachwuchs zu fördern."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -10,
+                    "message": "Achtung extremer Frost (< -10°C) — Schnittlauch mit Vlies schützen"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen erreicht (18-20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "coriander",
+        "commonName": "Koriander",
+        "scientificName": "Coriandrum sativum",
+        "family": "Apiaceae",
+        "daysToMaturity": 45,
+        "spacing": 15,
+        "depth": 1,
+        "sunExposure": "Volle Sonne bis Halbschatten",
+        "waterNeeds": "Mäßig aber regelmäßig",
+        "description": "Einjährige aromatische Pflanze, geschätzt für ihre frischen Blätter und Samen. Empfindlich gegen Wasserstress, der schnelles Schossen verursacht.",
+        "marketPricePerKg": 15.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 2.1,
+            "carbohydratesG": 3.7,
+            "sugarsG": 0.9,
+            "fatG": 0.5,
+            "fiberG": 2.8,
+            "vitaminCmg": 27.0,
+            "vitaminKmcg": 310.0,
+            "vitaminB9ug": 62,
+            "vitaminAmcg": 337,
+            "calciumMg": 67,
+            "ironMg": 1.8,
+            "magnesiumMg": 26,
+            "potassiumMg": 521,
+            "manganeseMg": 0.23,
+            "phosphorusMg": 48,
+            "linaloolMg": 80,
+            "quercetinMg": 55
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 17,
+                "max": 20
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "1 Mal/Woche (öfter im Topf oder bei heißem/trockenem Wetter)",
+            "amount": "Erde feucht halten ohne stehendes Wasser",
+            "method": "An der Basis gießen, Blätter nicht benetzen",
+            "bestTime": "Früh morgens oder abends"
+        },
+        "thinning": {
+            "distance": "10-15 cm zwischen Pflanzen",
+            "when": "In den ersten Wochen nach der Keimung, im Stadium weniger Blätter"
+        },
+        "weeding": {
+            "method": "Manuell (um Wurzeln nicht zu stören), Mulchen möglich",
+            "frequency": "Regelmäßig, besonders zu Beginn des Wachstums",
+            "recommendation": "Mulchen, um Unkraut zu begrenzen und Feuchtigkeit zu halten"
+        },
+        "culturalTips": [
+            "Vorzeitiges Schossen durch regelmäßiges Gießen vermeiden",
+            "Fruchtwechsel: Koriander nicht jedes Jahr am gleichen Ort pflanzen",
+            "Bevorzugt gut drainierten Boden",
+            "Verträgt Halbschatten, bevorzugt aber volle Sonne",
+            "Boden nicht vollständig austrocknen lassen, um die ernte der Blätter zu verlängern"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Kompost oder organischer Dünger (chemische Dünger vermeiden)",
+                "Bio-Behandlungen bei Pilzkrankheiten (selten bei optimalen Bedingungen)"
+            ],
+            "beneficialInsects": [
+                "Igel gegen Schnecken und Nacktschnecken",
+                "Laufkäfer gegen Schnecken und andere schädliche Wirbellose"
+            ],
+            "companionPlants": [
+                "nicht spezifiziert",
+                "aber Konkurrenz mit invasiven Pflanzen vermeiden"
+            ]
+        },
+        "harvestTime": "30-45 Tage nach Keimung für Blätter, 90-100 Tage für Samen",
+        "companionPlanting": {
+            "beneficial": [
+                "nicht spezifiziert"
+            ],
+            "avoid": [
+                "Konkurrenz",
+                "invasive Pflanzen",
+                "invasive Pflanzen oder solche mit starker Wurzelkonkurrenz"
+            ],
+            "notes": [
+                "aber Konkurrenz mit invasiven Pflanzen vermeiden"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_3_days",
+                    "in_pot"
+                ],
+                "message": "Bewässerung notwendig für Ihren Koriander: Boden feucht halten, besonders im Topf oder bei Hitze"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Ausdünnen empfohlen: Pflanzen auf 10-15 cm vereinzeln für gute Entwicklung"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manuelles Jäten empfohlen: Koriander ist empfindlich gegen Unkrautkonkurrenz"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "slug_activity_detected"
+                ],
+                "message": "Schnecken überwachen: Igel und Laufkäfer fördern, Chemikalien vermeiden"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 35,
+                "message": "Blatternte ab 5 Wochen möglich. Äußere Stängel schneiden, um Produktion zu verlängern."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Achtung: Mindesttemperatur für Koriander erreicht (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 22,
+                    "message": "Optimale Keimbedingungen (18-22°C)"
+                }
+            }
+        }
+    }
+]

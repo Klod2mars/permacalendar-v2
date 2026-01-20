@@ -1,0 +1,868 @@
+[
+    {
+        "id": "lupin",
+        "commonName": "Lupine",
+        "scientificName": "Lupinus polyphyllus / Lupinus albus",
+        "family": "Fabaceae",
+        "daysToMaturity": 130,
+        "spacing": 50,
+        "depth": 4,
+        "sunExposure": "Sonne bis Halbschatten",
+        "waterNeeds": "Mittel",
+        "description": "Stickstoffbindende Leguminose, angebaut für ihre nahrhaften Samen oder ihre spektakuläre Zierblüte.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 371,
+            "proteinG": 36.17,
+            "carbohydratesG": 40.37,
+            "sugarsG": 2.12,
+            "fatG": 9.74,
+            "fiberG": 18.9,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 355,
+            "potassiumMg": 1013,
+            "magnesiumMg": 198,
+            "calciumMg": 176
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 15,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -20
+        },
+        "watering": {
+            "frequency": "1-2 Mal/Woche beim Anwachsen",
+            "amount": "Tiefgründig bei Trockenheit",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens"
+        },
+        "thinning": {
+            "distance": "45-60 cm",
+            "when": "Im Keimblattstadium (Pfahlwurzel empfindlich)"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 3 Wochen",
+            "recommendation": "Mulchen (Stroh, Rindenmulch)"
+        },
+        "culturalTips": [
+            "Fruchtwechsel 4-5 Jahre (Fabaceae)",
+            "Kein Stickstoffdünger nötig",
+            "Samen 12-24h vorquellen lassen",
+            "Kalkarme Böden bevorzugt (pH < 7)",
+            "Vorsicht vor Bodenverkrustung bei der Keimung"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Schachtelhalmbrühe",
+                "Schmierseife"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Laufkäfer",
+                "Bestäuber"
+            ],
+            "companionPlants": [
+                "Kürbisgewächse",
+                "Blattgemüse",
+                "Nachtschattengewächse"
+            ]
+        },
+        "harvestTime": "110-150 Tage nach Aussaat",
+        "companionPlanting": {
+            "beneficial": [
+                "Gurke",
+                "Zucchini",
+                "Kürbis",
+                "Salat",
+                "Spinat",
+                "Tomate",
+                "Paprika",
+                "Aubergine"
+            ],
+            "avoid": [
+                "Kohl",
+                "Brokkoli",
+                "Kartoffel",
+                "Erbse",
+                "Bohne",
+                "Dicke Bohne"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 25",
+                    "dry_soil"
+                ],
+                "message": "Gießen wenn trocken."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 20,
+                "message": "Vereinzeln auf 45-60 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "presence_of_aphids"
+                ],
+                "message": "Läuse? Seife sprühen."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 130,
+                "message": "Ernte, wenn Hülsen braun."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 2,
+                    "message": "Keimgefahr (<2°C)."
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 15,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "white_onion",
+        "image": "oignons_blanc.png",
+        "commonName": "Weiße Zwiebel",
+        "scientificName": "Allium cepa L.",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 125,
+        "spacing": 12,
+        "depth": 1.2,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel",
+        "description": "Zwiebel mit knackigem weißem Fleisch und mildem Geschmack. Anbau als Frühlingszwiebel oder Lagerzwiebel.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "S",
+            "O"
+        ],
+        "harvestMonths": [
+            "M",
+            "J",
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 36,
+            "proteinG": 0.9,
+            "carbohydratesG": 9,
+            "sugarsG": 4,
+            "fatG": 0.13,
+            "fiberG": 2,
+            "vitaminCmg": null,
+            "vitaminEmg": null,
+            "vitaminB9ug": null,
+            "potassiumMg": null,
+            "magnesiumMg": null,
+            "calciumMg": 24
+        },
+        "germination": {
+            "minTemperature": 6,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 21,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 22
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "2-4 Tage (Hitze), sonst 7-10 Tage",
+            "amount": "Mäßig aber regelmäßig",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "10-15 cm",
+            "when": "Stift-Dicke"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Regelmäßig",
+            "recommendation": "Mulchen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel 3-4 Jahre",
+            "Gießen vor Ernte stoppen (Lagerfähigkeit)",
+            "Staunässe vermeiden",
+            "Nicht zu tief pflanzen",
+            "Wenig Stickstoff"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Knoblauchsud"
+            ],
+            "beneficialInsects": [
+                "Florfliegen",
+                "Syrphes",
+                "Laufkäfer"
+            ],
+            "companionPlants": [
+                "Karotte",
+                "Salat",
+                "Erdbeere"
+            ]
+        },
+        "harvestTime": "100-150 Tage nach Aussaat",
+        "companionPlanting": {
+            "beneficial": [
+                "Karotte",
+                "Salat",
+                "Rote Bete",
+                "Erdbeere",
+                "Dill",
+                "Koriander"
+            ],
+            "avoid": [
+                "Knoblauch",
+                "Lauch",
+                "Schalotte",
+                "Stangenbohne",
+                "Luzerne"
+            ]
+        },
+        "plantingSeason": "Frühling, Herbst",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "soil_moisture < 30%"
+                ],
+                "message": "Leicht gießen (Mäßigung)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Verziehen auf 10-15 cm."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "15 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Pilzgefahr: Laub trocken halten."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Wenn Laub umfällt: Ernte naht."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Frostgefahr (-3°C)."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Keimtemperatur ideal."
+                }
+            }
+        }
+    },
+    {
+        "id": "red_onion",
+        "commonName": "Rote Zwiebel",
+        "scientificName": "Allium cepa L.",
+        "family": "Amaryllidaceae",
+        "daysToMaturity": 110,
+        "spacing": 8,
+        "depth": 1.2,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel",
+        "description": "Farbintensive, mild-süße Zwiebel, ideal roh oder lagerfähig.",
+        "sowingMonths": [
+            "F",
+            "M",
+            "A",
+            "A",
+            "S"
+        ],
+        "harvestMonths": [
+            "J",
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 38,
+            "proteinG": 1.1,
+            "carbohydratesG": 7.55,
+            "sugarsG": 6.7,
+            "fatG": 0.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 7.4,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 19,
+            "potassiumMg": 146,
+            "magnesiumMg": 10,
+            "calciumMg": 22
+        },
+        "germination": {
+            "minTemperature": 7,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "Ca. 20-25 mm / Woche",
+            "amount": "2-3 Wochen vor Ernte stoppen",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens"
+        },
+        "thinning": {
+            "distance": "5-8 cm",
+            "when": "Bei 3-4 Blättern"
+        },
+        "weeding": {
+            "method": "Hacken",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Mulchen (Stroh)"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Gießen vor Ernte stoppen",
+            "Im Feld trocknen lassen",
+            "Kein frischer Mist"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Knoblauchsud",
+                "Rainfarntee"
+            ],
+            "beneficialInsects": [
+                "Laufkäfer",
+                "Syrphes",
+                "Florfliegen"
+            ],
+            "companionPlants": [
+                "Karotte",
+                "Rote Bete",
+                "Salat"
+            ]
+        },
+        "harvestTime": "100-120 Tage nach Pflanzung",
+        "companionPlanting": {
+            "beneficial": [
+                "Karotte",
+                "Rote Bete",
+                "Salat",
+                "Spinat",
+                "Erdbeere"
+            ],
+            "avoid": [
+                "Knoblauch",
+                "Lauch",
+                "Schnittlauch",
+                "Stangenbohne",
+                "Stangenerbse",
+                "Kohl"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr",
+            "Aug",
+            "Sep"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Vorfrühling, Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "temperature > 20",
+                    "phase_vegetative"
+                ],
+                "message": "Gießen (Boden frisch halten)."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Verziehen / Pflanzen (3-4 Blätter)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80"
+                ],
+                "message": "Mildiougefahr (Lüften/Prävention)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "Ernte, wenn Laub zu 50% liegt."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Frostgefahr (-3°C)."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Keimtemperatur gut."
+                }
+            }
+        }
+    },
+    {
+        "id": "watermelon",
+        "commonName": "Wassermelone",
+        "scientificName": "Citrullus lanatus",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 90,
+        "spacing": 135,
+        "depth": 1.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Erfrischende, wasserreiche Frucht (91%), reich an Lycopin.",
+        "sowingMonths": [
+            "M",
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 2.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 30,
+            "proteinG": 0.61,
+            "carbohydratesG": 7.6,
+            "sugarsG": 6.2,
+            "fatG": 0.2,
+            "fiberG": 0.4,
+            "vitaminCmg": 8.1,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 3,
+            "potassiumMg": 112,
+            "magnesiumMg": 10,
+            "calciumMg": 7
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 29
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 30
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Anfangs oft, dann tiefgründig",
+            "amount": "5-10 L / Pflanze / Woche",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens/Abends"
+        },
+        "thinning": {
+            "distance": "90-180 cm",
+            "when": "Nach Eisheiligen"
+        },
+        "weeding": {
+            "method": "Hacken / Mulchen",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Dick mulchen"
+        },
+        "culturalTips": [
+            "Vorkultur in Töpfen",
+            "Hummuser Boden",
+            "Rotation 3 Jahre",
+            "Mulch unter Früchte legen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche",
+                "Schmierseife",
+                "Knoblauchsud"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Florfliegen",
+                "Bienen"
+            ],
+            "companionPlants": [
+                "Basilikum",
+                "Ringelblume",
+                "Calendula"
+            ]
+        },
+        "harvestTime": "80-100 Tage nach Pflanzung",
+        "companionPlanting": {
+            "beneficial": [
+                "Basilikum",
+                "Ringelblume",
+                "Calendula",
+                "Buschbohne",
+                "Phacelia",
+                "Borretsch"
+            ],
+            "avoid": [
+                "Gurke",
+                "Zucchini",
+                "Melone",
+                "Kürbis",
+                "Tomate",
+                "Kartoffel"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Gießen: 5-10L/Pflanze."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Abstand prüfen (>90cm)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut jäten."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Oïdium-Gefahr: Lüften."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Reifezeit (Klangtest machen)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Zu kalt (<12°C)."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 29,
+                    "message": "Keimtemperatur gut."
+                }
+            }
+        }
+    },
+    {
+        "id": "courge_patisson",
+        "image": "patisson.jpg",
+        "commonName": "Patisson (Ufo-Kürbis)",
+        "scientificName": "Cucurbita pepo L.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 65,
+        "spacing": 90,
+        "depth": 1.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis hoch",
+        "description": "Sommerkürbis mit UFO-Form. Zartes Fleisch, artischockenartiger Geschmack.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 18,
+            "proteinG": 1.0,
+            "carbohydratesG": 3.5,
+            "sugarsG": 2.2,
+            "fatG": 0.2,
+            "fiberG": 1.5,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0,
+            "vitaminB9ug": 21,
+            "potassiumMg": 140,
+            "magnesiumMg": 19,
+            "calciumMg": 15
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 27
+            },
+            "germinationTime": {
+                "min": 5,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 30
+            },
+            "minTemperature": 8
+        },
+        "watering": {
+            "frequency": "1-2 Mal/Woche",
+            "amount": "Tiefgründig",
+            "method": "Fußbewässerung",
+            "bestTime": "Morgens"
+        },
+        "thinning": {
+            "distance": "80-100 cm",
+            "when": "Bei 2-3 echten Blättern"
+        },
+        "weeding": {
+            "method": "Manuelle",
+            "frequency": "Alle 2 Wochen",
+            "recommendation": "Dick mulchen"
+        },
+        "culturalTips": [
+            "Rotation 3-4 Jahre",
+            "Jung ernten für Nachschub",
+            "Blätter trocken halten",
+            "Mulch unter Früchte"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennesseljauche",
+                "Schachtelhalmbrühe",
+                "Knoblauchsud"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer",
+                "Syrphes",
+                "Laufkäfer"
+            ],
+            "companionPlants": [
+                "Ringelblume",
+                "Bourrache",
+                "Phacelie"
+            ]
+        },
+        "harvestTime": "55-70 Tage (jung), 90 Tage (Lagerung)",
+        "companionPlanting": {
+            "beneficial": [
+                "Mais",
+                "Bohne",
+                "Zwiebel",
+                "Knoblauch",
+                "Schnittlauch",
+                "Ringelblume",
+                "Borretsch",
+                "Phacelie",
+                "Salat",
+                "Spinat"
+            ],
+            "avoid": [
+                "Zucchini",
+                "Gurke",
+                "Melone",
+                "Kartoffel"
+            ]
+        },
+        "sowingMonths3": [
+            "Apr",
+            "May",
+            "Jun"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "temperature > 22",
+                    "période_floraison"
+                ],
+                "message": "Gießen (Blüte)!"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Platz prüfen (80-100cm)."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Unkraut entfernen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidité élevée",
+                    "alternance chaud/froid"
+                ],
+                "message": "Mehltaugefahr (Schachtelhalm)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Ernte junger Früchte möglich."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 8,
+                    "message": "Zu kalt (<8°C)."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 27,
+                    "message": "Keimtemperatur gut."
+                }
+            }
+        }
+    }
+]

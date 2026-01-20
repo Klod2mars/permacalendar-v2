@@ -1,0 +1,830 @@
+[
+    {
+        "id": "petit_pois",
+        "commonName": "Guisante",
+        "scientificName": "Pisum sativum L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 75,
+        "spacing": 4,
+        "depth": 3,
+        "sunExposure": "Sol (tolera media sombra ligera)",
+        "waterNeeds": "Medio",
+        "description": "Leguminosa anual primaveral, apreciada por sus granos tiernos y dulces. Mejora el suelo fijando el nitrógeno.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 67,
+            "proteinG": 5.36,
+            "carbohydratesG": 7,
+            "sugarsG": 5.67,
+            "fatG": 0.4,
+            "fiberG": 5.7,
+            "vitaminCmg": 40,
+            "vitaminEmg": 0.1,
+            "vitaminB9ug": 65,
+            "potassiumMg": 271,
+            "magnesiumMg": 33,
+            "calciumMg": 25
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 10,
+                "max": 18
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": -5
+        },
+        "watering": {
+            "frequency": "Regular, especialmente de floración a formación de vainas",
+            "amount": "Mantener el suelo fresco, evitar excesos estancados",
+            "method": "Al pie, evitar mojar el follaje",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "2-5 cm entre plantas, 30-60 cm entre filas",
+            "when": "Tras la levée si la siembra es demasiado densa"
+        },
+        "weeding": {
+            "method": "Manual o binado ligero (atención a raíces superficiales)",
+            "frequency": "Cada 2-3 semanas",
+            "recommendation": "Acolchado (paja, heno o césped seco) para mantener frescor"
+        },
+        "culturalTips": [
+            "Instalar tutores para las variedades de enrame desde la siembra",
+            "Rotación de cultivos: esperar 4-5 años antes de replantar Fabáceas",
+            "Evitar aportes de nitrógeno (estiércol fresco), el guisante fija su propio nitrógeno",
+            "Sembrar en suelo oreado para evitar podredumbre de semillas",
+            "Practicar congelación de semillas 15 días para eliminar el gorgojo"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (fortificante)",
+                "Decocción de cola de caballo (preventivo oídio y mildiu)",
+                "Purín de consuelda"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos y Crisopas (larvas depredadoras)",
+                "Lombrices para drenaje y aireación del suelo"
+            ],
+            "companionPlants": [
+                "Zanahoria",
+                "Lechuga",
+                "Rábano",
+                "Espinaca"
+            ]
+        },
+        "harvestTime": "60-90 días tras siembra según variedad",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "lechuga",
+                "espinaca",
+                "rábano",
+                "nabo",
+                "pepino",
+                "maíz"
+            ],
+            "avoid": [
+                "ajo",
+                "cebolla",
+                "chalota",
+                "puerro",
+                "ciboulette"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "May",
+            "Jun",
+            "Jul"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Primavera,Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "stage == flowering",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Riego crucial para sus guisantes: mantenga suelo fresco durante floración."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Verifique densidad de guisantes: guarde 2 a 5 cm entre cada planta."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Deshierbe y binado ligero recomendados para sus guisantes."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "temperature > 20",
+                    "humidity > 60"
+                ],
+                "message": "Riesgo de oídio: una pulverización de decocción de cola de caballo es aconsejada."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 65,
+                "message": "Verifique vainas: ¡la cosecha de guisantes se acerca!"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 5,
+                    "message": "Temperatura baja: la germinación de guisantes corre riesgo de ralentizarse."
+                },
+                "germination_optimal": {
+                    "min": 10,
+                    "max": 18,
+                    "message": "Condiciones ideales para levée de sus guisantes (10-18°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "red_chili",
+        "image": "piment.jpg",
+        "commonName": "Chile Rojo",
+        "scientificName": "Capsicum annuum L.",
+        "family": "Solanaceae",
+        "daysToMaturity": 80,
+        "spacing": 50,
+        "depth": 0.7,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Pimiento picante rojo rico en capsaicina y vitamina C, cultivado por sus frutos picantes.",
+        "marketPricePerKg": 6.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 1.9,
+            "carbohydratesG": 8.8,
+            "sugarsG": 5.3,
+            "fatG": 0.44,
+            "fiberG": 1.5,
+            "vitaminCmg": 144,
+            "vitaminEmg": 0.69,
+            "vitaminB9ug": 23,
+            "potassiumMg": 322,
+            "magnesiumMg": 23,
+            "calciumMg": 14
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 22,
+                "max": 28
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 20,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 28
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "1-2 veces/semana (más en caso de fuerte calor)",
+            "amount": "2-4 litros por planta/semana",
+            "method": "Al pie, sin mojar el follaje",
+            "bestTime": "Temprano en la mañana o por la noche"
+        },
+        "thinning": {
+            "distance": "45-60 cm entre plantas, 60-80 cm entre filas",
+            "when": "Durante el repocado (3-4 hojas verdaderas)"
+        },
+        "weeding": {
+            "method": "Manual (binado, escarda)",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado espeso (paja, heno, tontes secas) tras plantación"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (3-4 años sin solanáceas)",
+            "Utilizar purín de consuelda para favorecer floración",
+            "Mantener temperatura estable sobre 15°C para evitar parada de crecimiento",
+            "Evitar aportes excesivos de nitrógeno que favorecen follaje en detrimento de frutos",
+            "Cosechas regulares para estimular producción de nuevos frutos"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Jabón negro diluido (contra pulgones y moscas blancas)",
+                "Purín de ortiga (fortificante)",
+                "Decocción de cola de caballo (preventivo fúngico)"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Sírfidos y Crisopas",
+                "Parasitoides (Encarsia) contra aleurodes"
+            ],
+            "companionPlants": [
+                "Albahaca",
+                "Caléndula y Tagetes",
+                "Cebolla y Ajo"
+            ]
+        },
+        "harvestTime": "70-90 días tras plantación",
+        "companionPlanting": {
+            "beneficial": [
+                "albahaca",
+                "cebolla",
+                "ajo",
+                "cebolleta",
+                "caléndula",
+                "tagetes",
+                "borraja",
+                "facelia",
+                "lechuga",
+                "espinaca"
+            ],
+            "avoid": [
+                "tomate",
+                "berenjena",
+                "patata",
+                "hinojo",
+                "maíz"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Riego para sus chiles: suelo fresco recomendado (2-4L por planta)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Verifique espaciamiento: asegure 45-60 cm entre sus plantas de chile"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y verificación acolchado para sus chiles"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Riesgo de mildiu o botrytis: pulverización decocción cola de caballo recomendada"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 75,
+                "message": "Sus chiles deberían empezar a enrojecer, prepare la cosecha"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Alerta frío: el chile detiene su crecimiento bajo 12-15°C"
+                },
+                "germination_optimal": {
+                    "min": 22,
+                    "max": 28,
+                    "message": "Temperatura ideal para levée de sus chiles (22-28°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "split_pea",
+        "commonName": "Guisante Partido",
+        "scientificName": "Pisum sativum L. subsp. sativum",
+        "family": "Fabaceae",
+        "daysToMaturity": 90,
+        "spacing": 40,
+        "depth": 2.5,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio",
+        "description": "Leguminosa rústica de estación fresca, rica en proteínas y fibras, consumida seca.",
+        "marketPricePerKg": 2.9,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 344,
+            "proteinG": 24.6,
+            "carbohydratesG": 52.0,
+            "sugarsG": 2.75,
+            "fatG": 1.24,
+            "fiberG": 15.5,
+            "vitaminCmg": 0,
+            "vitaminEmg": 0.1,
+            "vitaminB9ug": 65,
+            "potassiumMg": 981,
+            "magnesiumMg": 115,
+            "calciumMg": 56,
+            "ironMg": 4.2,
+            "phosphorusMg": 366,
+            "zincMg": 2.6
+        },
+        "germination": {
+            "minTemperature": 4,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 14,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 21
+            },
+            "minTemperature": -4
+        },
+        "watering": {
+            "frequency": "Regular durante floración y formación de vainas",
+            "amount": "Mantener suelo fresco sin saturación",
+            "method": "Al pie, evitar mojar el follaje",
+            "bestTime": "Temprano en la mañana"
+        },
+        "thinning": {
+            "distance": "3 cm en la línea, 40 cm entre filas",
+            "when": "En cuanto las plantas alcanzan 3-4 cm"
+        },
+        "weeding": {
+            "method": "Manual o mecánico (binado)",
+            "frequency": "2 veces al inicio del cultivo",
+            "recommendation": "Acolchado (paja, heno) para limitar evaporación"
+        },
+        "culturalTips": [
+            "Rotación larga obligatoria (5-6 años) para evitar enfermedades radiculares",
+            "Evitar aportes de nitrógeno fresco (estiércol)",
+            "Sembrar en suelo bien oreado para evitar podredumbre semillas",
+            "Practicar binado desde levée para romper costra superficial"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Decocción de cola de caballo (prevención criptogámica)",
+                "Purín de ortiga (fortificante)",
+                "Maceración de ajo"
+            ],
+            "beneficialInsects": [
+                "Coccinelles y sírfidos contra pulgones",
+                "Himenópteros parasitoides contra gorgojos",
+                "Lombrices para estructura del suelo"
+            ],
+            "companionPlants": [
+                "Zanahoria",
+                "Lechuga",
+                "Brassica (choux)"
+            ]
+        },
+        "harvestTime": "80-100 días tras siembra",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "lechuga",
+                "col",
+                "trigo",
+                "cebada",
+                "avena",
+                "facelia"
+            ],
+            "avoid": [
+                "habas",
+                "garbanzo",
+                "lenteja",
+                "ajo",
+                "cebolla",
+                "chalota"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "plantingSeason": "Fin invierno, Primavera",
+        "harvestSeason": "Verano",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "4 days",
+                "conditions": [
+                    "stage == floraison",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Periodo crítico: Riego necesario para sus guisantes (floración/vainas)"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Verificación de deshierbe y binado: sus guisantes alcanzan 4cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "20 days",
+                "message": "Deshierbe recomendado para limitar competencia"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "temperature > 20",
+                    "stage == floraison"
+                ],
+                "message": "Vigilancia Gorgojo del guisante: tiempo cálido y seco favorable al parásito"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 85,
+                "message": "Verifique si vainas están marrones y granos duros (cosecha seca)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -4,
+                    "message": "Atención: helada severa prevista, límite de tolerancia guisantes partidos"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 20,
+                    "message": "Condiciones ideales para levée de sus guisantes partidos"
+                }
+            }
+        }
+    },
+    {
+        "id": "chickpea",
+        "commonName": "Garbanzo",
+        "scientificName": "Cicer arietinum L.",
+        "family": "Fabaceae",
+        "daysToMaturity": 105,
+        "spacing": 15,
+        "depth": 6,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Bajo a medio",
+        "description": "Leguminosa anual rústica, muy resistente a sequía, cultivada por sus semillas nutritivas.",
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 164,
+            "proteinG": 9,
+            "carbohydratesG": 27,
+            "sugarsG": 5,
+            "fatG": 3,
+            "fiberG": 8,
+            "vitaminCmg": 1,
+            "vitaminEmg": 0.4,
+            "vitaminB9ug": 172,
+            "potassiumMg": 291,
+            "magnesiumMg": 48,
+            "calciumMg": 49
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 30,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 25
+            },
+            "minTemperature": -3
+        },
+        "watering": {
+            "frequency": "Moderada, sobre todo durante floración",
+            "amount": "Mantener fresco a la implantación, luego limitado",
+            "method": "Al pie o goteo",
+            "bestTime": "Mañana temprano"
+        },
+        "thinning": {
+            "distance": "10-20 cm entre plantas, 30-60 cm entre filas",
+            "when": "Siembra directa recomendada, aclarar si demasiado denso"
+        },
+        "weeding": {
+            "method": "Manual o binado",
+            "frequency": "Cada 3 semanas hasta cobertura",
+            "recommendation": "Acolchado (paja, heno) para limitar adventicias"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (4-6 años sin leguminosas)",
+            "Evitar suelos con exceso de agua (asfixia radicular)",
+            "Sensible a costra superficial para la levée",
+            "No repicar (raíz pivotante sensible)",
+            "Requerimientos aumentan de botón floral a llenado de vainas"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (apoyo vegetativo)",
+                "Extractos de neem (contra orugas)",
+                "Purín de consuelda"
+            ],
+            "beneficialInsects": [
+                "Coccinelles contra pulgones",
+                "Trichogrammas contra polillas de vainas",
+                "Cárabos (depredadores del suelo)"
+            ],
+            "companionPlants": [
+                "Cebolla",
+                "Coriandro",
+                "Alysson (atrae auxiliares)"
+            ]
+        },
+        "harvestTime": "90-120 días tras levée según clima",
+        "companionPlanting": {
+            "beneficial": [
+                "zanahoria",
+                "cebolla",
+                "puerro",
+                "remolacha",
+                "coriandro",
+                "facelia"
+            ],
+            "avoid": [
+                "guisante",
+                "judías",
+                "lentejas",
+                "patatas",
+                "hinojo",
+                "maíz"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "stage == flowering",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Periodo crítico: Riego recomendado durante floración de sus garbanzos."
+            },
+            "thinning": {
+                "enabled": false,
+                "daysAfterPlanting": 20,
+                "message": "Verifique espaciamiento (10-20 cm) si siembra densa."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "21 days",
+                "message": "Deshierbe recomendado para evitar competencia."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "temperature > 20"
+                ],
+                "message": "Vigile aparición de polilla de las vainas (Helicoverpa)."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 100,
+                "message": "¿Las vainas amarillean? La cosecha se acerca."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": -3,
+                    "message": "Alerte helada: Garbanzos toleran hasta -3°C."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 25,
+                    "message": "Condiciones óptimas para levée de garbanzos (15-25°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "poivron_vert",
+        "commonName": "Pimiento Verde",
+        "scientificName": "Capsicum annuum L.",
+        "family": "Solanaceae",
+        "daysToMaturity": 85,
+        "spacing": 40,
+        "depth": 0.75,
+        "sunExposure": "Pleno sol",
+        "waterNeeds": "Medio a alto",
+        "description": "Hortaliza de fruto crujiente y coloreada, excepcionalmente rica en vitamina C.",
+        "marketPricePerKg": 4.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 26,
+            "proteinG": 1.0,
+            "carbohydratesG": 6.0,
+            "sugarsG": 4.2,
+            "fatG": 0.3,
+            "fiberG": 2.1,
+            "vitaminCmg": 80,
+            "vitaminEmg": 0.37,
+            "vitaminB9ug": 10,
+            "potassiumMg": 175,
+            "magnesiumMg": 10,
+            "calciumMg": 10
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 22,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 15,
+                "unit": "días"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 25
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "2-3 veces/semana en periodo cálido",
+            "amount": "2-4 litros por planta/semana",
+            "method": "Al pie o goteo, evitar el follaje",
+            "bestTime": "Mañana temprano o por la noche"
+        },
+        "thinning": {
+            "distance": "30-45 cm entre plantas, 50-60 cm entre filas",
+            "when": "Tras aparición de 4-6 hojas verdaderas (repicado)"
+        },
+        "weeding": {
+            "method": "Manual, binado superficial para proteger raíces",
+            "frequency": "Cada 2 semanas",
+            "recommendation": "Acolchado orgánico (heno, paja) para mantener frescor"
+        },
+        "culturalTips": [
+            "Rotación de cultivos (3-4 años sin solanáceas)",
+            "Evitar excesos de nitrógeno que favorecen follaje en detrimento de frutos",
+            "Una cosecha regular favorece continuación de la floración",
+            "Mantener riego regular para evitar podredumbre apical (necrosis)",
+            "Airear abrigos (invernaderos) para limitar humedad estancada"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Purín de ortiga (estimulante y repelente pulgones)",
+                "Decocción de plantas locales",
+                "Jabón negro diluido (contra pulgones y moscas blancas)"
+            ],
+            "beneficialInsects": [
+                "coccinelles, sírfidos y crisopas contra pulgones",
+                "phytoseiulus contra ácaros tetraníquidos",
+                "cárabos y estafilinos para regulación del suelo"
+            ],
+            "companionPlants": [
+                "albahaca",
+                "cebolla",
+                "ciboulette",
+                "tagete"
+            ]
+        },
+        "harvestTime": "60-90 días tras plantación según madurez deseada (verde o coloreado)",
+        "companionPlanting": {
+            "beneficial": [
+                "albahaca",
+                "cebolla",
+                "ciboulette",
+                "lechuga",
+                "espinaca",
+                "canónigos",
+                "zanahoria",
+                "caléndula",
+                "tagete",
+                "facelia"
+            ],
+            "avoid": [
+                "tomate",
+                "berenjena",
+                "patata",
+                "pepino",
+                "calabaza"
+            ]
+        },
+        "sowingMonths3": [
+            "Feb",
+            "Mar",
+            "Apr"
+        ],
+        "harvestMonths3": [
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Primavera",
+        "harvestSeason": "Verano,Otoño",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 25",
+                    "soil_moisture_low"
+                ],
+                "message": "Riego recomendado para sus pimientos: mantenga suelo fresco pero no encharcado."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Verifique espaciamiento de sus pimientos: 30-45 cm recomendados entre plantas."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Deshierbe y verificación acolchado para sus pimientos."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "high_heat",
+                    "humidity_low"
+                ],
+                "message": "Vigilancia ácaros y pulgones: favorezca auxiliares o use jabón negro."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 75,
+                "message": "La cosecha de sus pimientos se acerca: corte limpiamente el pedúnculo con tijera."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Alerta frío: el crecimiento del pimiento se ralentiza bajo 12°C."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 28,
+                    "message": "Condiciones de germinación óptimas alcanzadas (20-28°C)."
+                }
+            }
+        }
+    }
+]

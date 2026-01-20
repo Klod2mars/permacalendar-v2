@@ -1,0 +1,855 @@
+[
+    {
+        "id": "artichoke",
+        "commonName": "Artischocke",
+        "scientificName": "Cynara cardunculus var. scolymus",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 80,
+        "depth": 5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Hoch",
+        "description": "Mehrjährige, wasserbedürftige Pflanze, angebaut für ihre essbaren Blütenköpfe. Erfordert nährstoffreichen, gut durchlässigen Boden und gute Belüftung.",
+        "marketPricePerKg": 5.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 47,
+            "proteinG": 3.3,
+            "carbohydratesG": 10.5,
+            "sugarsG": 0.9,
+            "fatG": 0.2,
+            "fiberG": 5.4,
+            "vitaminCmg": 11.7,
+            "vitaminKmcg": 14.8,
+            "vitaminB9ug": 68,
+            "vitaminAmcg": 1,
+            "calciumMg": 44,
+            "ironMg": 1.3,
+            "magnesiumMg": 60,
+            "potassiumMg": 370,
+            "manganeseMg": 0.26,
+            "phosphorusMg": 90,
+            "cynarinMg": 15,
+            "luteolinMg": 8
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 18,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 20,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 15,
+                "max": 20
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "1 bis 3 Mal/Woche in heißen Perioden",
+            "amount": "25 bis 50 mm Wasser pro Woche",
+            "method": "An der Basis gießen, Befeuchtung der Blätter vermeiden",
+            "bestTime": "Früh morgens oder spät abends"
+        },
+        "thinning": {
+            "distance": "80 cm zwischen Pflanzen, 1 Meter zwischen Reihen",
+            "when": "Wenn Seitentriebe erscheinen, nur 3 Triebe pro Pflanze behalten"
+        },
+        "weeding": {
+            "method": "Manuell oder oberflächliches Hacken",
+            "frequency": "Im Frühling und zu Saisonbeginn",
+            "recommendation": "Organisches Mulchen empfohlen. Zwischenkulturen (Salate, Radieschen, Erbsen) im ersten Jahr ratsam."
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Boden 2-3 Jahre ruhen lassen nach Artischockenanbau.",
+            "Pflanzen im Winter mit Mulch schützen, aber stehende Nässe vermeiden.",
+            "Gießen im Winter oder kalten Perioden einstellen.",
+            "Mischkulturen mit Fenchel und Petersilie vermeiden.",
+            "Bordeaux-Brühe vorbeugend gegen Mehltau nach feuchten Perioden anwenden."
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Bordeaux-Brühe (vorbeugend gegen Mehltau)",
+                "Schneckenfallen",
+                "Manuelles Absammeln von Parasiten"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Florfliegen (gegen Raupen und Blattläuse)"
+            ],
+            "companionPlants": [
+                "Salate",
+                "Radieschen",
+                "Erbsen (Zwischenkulturen im ersten Jahr)"
+            ]
+        },
+        "harvestTime": "Ca. 120 Tage nach Pflanzung, je nach Sorte und Klima",
+        "companionPlanting": {
+            "beneficial": [
+                "Salat",
+                "Radieschen",
+                "Erbse",
+                "Salate",
+                "Erbsen (Zwischenkulturen im ersten Jahr)"
+            ],
+            "avoid": [
+                "Fenchel",
+                "Petersilie"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_3_days"
+                ],
+                "message": "Bewässerung notwendig für Ihre Artischocken: 25-50 mm Wasser diese Woche, an der Basis, früh morgens oder abends."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "Ausdünnen notwendig: auf 80 cm Abstand, nur 3 Triebe pro Pflanze behalten."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Jäten empfohlen: oberflächliches Hacken + Mulch überprüfen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75"
+                ],
+                "message": "Meltau-Risiko: Bordeaux-Brühe vorbeugend anwenden."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 110,
+                "message": "Erntezeit für Ihre Artischocken naht (in ~10 Tagen)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Achtung: Mindesttemperatur für Artischocken erreicht (7°C). Füße schützen, wenn es länger anhält."
+                },
+                "germination_optimal": {
+                    "min": 18,
+                    "max": 20,
+                    "message": "Optimale Keimbedingungen für Artischocken (18-20°C)."
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    },
+    {
+        "id": "asparagus",
+        "commonName": "Spargel",
+        "scientificName": "Asparagus officinalis",
+        "family": "Asparagaceae",
+        "daysToMaturity": 1095,
+        "spacing": 70,
+        "depth": 8,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mäßig bis Hoch (erste Jahre)",
+        "description": "Mehrjähriges Gemüse mit tiefen Wurzeln, anspruchsvoll bei der Anlage aber langlebig (10-15 Jahre). Ernte von Sprossen ab dem 3. Jahr. Geeignet für Permakultur mit langer Rotation und organischem Mulchen.",
+        "marketPricePerKg": 6.5,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 20,
+            "proteinG": 2.2,
+            "carbohydratesG": 3.9,
+            "sugarsG": 1.9,
+            "fatG": 0.1,
+            "fiberG": 2.1,
+            "vitaminCmg": 5.6,
+            "vitaminKmcg": 41.6,
+            "vitaminB9ug": 52,
+            "vitaminAmcg": 38,
+            "calciumMg": 24,
+            "ironMg": 2.1,
+            "magnesiumMg": 14,
+            "potassiumMg": 202,
+            "manganeseMg": 0.16,
+            "phosphorusMg": 52,
+            "glutathioneMg": 28,
+            "asparagineMg": 50
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 15,
+                "max": 20,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 25
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Alle 10 bis 14 Tage in sandigem Boden",
+            "amount": "50-75 mm pro Bewässerung (ca. 2,8 mm/Tag in der Hauptwachstumsphase)",
+            "method": "Tröpfchenbewässerung oder an der Basis, stehende Nässe vermeiden",
+            "bestTime": "Früh morgens oder am späten Nachmittag"
+        },
+        "thinning": {
+            "distance": "70 cm zwischen Pflanzen, 70 cm bis 1,50 m zwischen Reihen",
+            "when": "Erstes Ausdünnen durch Entfernen schwacher Stängel, in den ersten 2-3 Jahren nicht ernten"
+        },
+        "weeding": {
+            "method": "Manuell (Hacken, Jäten), Mulchen mit Kompost oder Gründüngung",
+            "frequency": "Regelmäßig während des Wachstums",
+            "recommendation": "Tote Stängel im Herbst schneiden und verbrennen, angesammeltes Unkraut entfernen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Nicht vor 10 Jahren am gleichen Ort wieder anpflanzen",
+            "Mit Violettem Wurzeltöter pilzverseuchte Böden vermeiden",
+            "Schrittweises Anhäufeln für weißen Spargel; für grünen vergrünen lassen",
+            "Auf Pilzkrankheiten (Rost, Rhizoctonia) und Schädlinge (Spargelhähnchen, Spargelfliege) achten",
+            "Mischkulturen bevorzugen: Erbsen, Tomaten, Gurken, Lauch. Knoblauch, Zwiebeln, Rote Bete vermeiden"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Rainfarnjauche gegen Larven",
+                "Brennnessel- oder Knoblauchjauche als vorbeugende Pilzbehandlung",
+                "Schachtelhalm-Sud gegen Rost"
+            ],
+            "beneficialInsects": [
+                "Natürliche Fressfeinde der Spargelhähnchen (Vögel, parasitäre Wespen)",
+                "Insektenfressende Nützlinge, gefördert durch Biodiversität"
+            ],
+            "companionPlants": [
+                "Erbse",
+                "Tomate",
+                "Gurke",
+                "Lauch"
+            ]
+        },
+        "harvestTime": "Ab dem 3. Jahr nach Pflanzung (oder 1. Jahr bei Verwendung von 2-jährigen Klauen)",
+        "companionPlanting": {
+            "beneficial": [
+                "Erbse",
+                "Tomate",
+                "Gurke",
+                "Lauch"
+            ],
+            "avoid": [
+                "Knoblauch",
+                "Rote Bete",
+                "Zwiebel"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Frühling",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "soil_moisture_low",
+                    "no_rain_last_10_days"
+                ],
+                "message": "Tiefe Bewässerung empfohlen: 50-75 mm, besonders in Trockenperioden oder im ersten Jahr"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 60,
+                "message": "Ausdünnen: schwache Stängel entfernen. Die ersten 2 Jahre nicht ernten."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manuelles Jäten und Mulchen empfohlen, um Unkraut zu begrenzen"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "spring_season"
+                ],
+                "message": "Anwendung von Brennnesseljauche oder Schachtelhalm-Sud zur Vorbeugung empfohlen"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 1095,
+                "message": "Erste Ernte möglich! (3 Jahre nach Aussaat oder 1 Jahr nach Pflanzung von 2-jährigen Klauen)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Achtung: Mindestwachstumstemperatur erreicht (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimale Keimbedingungen (20-25°C)"
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    },
+    {
+        "id": "basil",
+        "commonName": "Basilikum",
+        "scientificName": "Ocimum basilicum",
+        "family": "Lamiaceae",
+        "daysToMaturity": 60,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mittel bis Hoch (Boden feucht, aber nicht durchnässt)",
+        "description": "Einjährige aromatische Pflanze, beliebt in der Küche und sanften Medizin, empfindlich gegen Kälte und Trockenheit.",
+        "sowingMonths": [
+            "A",
+            "M"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 14.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 23,
+            "proteinG": 3.1,
+            "carbohydratesG": 2.7,
+            "sugarsG": 0.3,
+            "fatG": 0.6,
+            "fiberG": 1.6,
+            "vitaminCmg": 18.0,
+            "vitaminKmcg": 414.8,
+            "vitaminB9ug": 68,
+            "vitaminAmcg": 264,
+            "calciumMg": 177,
+            "ironMg": 3.2,
+            "magnesiumMg": 64,
+            "potassiumMg": 295,
+            "manganeseMg": 1.15,
+            "phosphorusMg": 56,
+            "eugenolMg": 850,
+            "luteinZeaxanthinMcg": 5650
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Täglich im Topf / 2-3 Mal pro Woche im Freiland (je nach Wetter und Boden)",
+            "amount": "Angepasst, um den Boden feucht zu halten ohne Sättigung",
+            "method": "An der Basis gießen, Blätter vermeiden",
+            "bestTime": "Früh morgens oder am frühen Abend"
+        },
+        "thinning": {
+            "distance": "20 cm zwischen Pflanzen",
+            "when": "Im Keimlingsstadium, um Überfüllung zu vermeiden und Belüftung zu fördern"
+        },
+        "weeding": {
+            "method": "Sanftes Hacken + Mulchen zur Unkrautbegrenzung und Feuchtigkeitsbewahrung",
+            "frequency": "So oft wie nötig je nach Unkrautentwicklung",
+            "recommendation": "Organisches Mulchen ab Pflanzung empfohlen"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: Nicht 2 Jahre hintereinander am selben Ort anpflanzen",
+            "Niemals das Laub benetzen, um Pilzkrankheiten zu vermeiden (z.B. Mehltau)",
+            "Blütenstängel sofort nach Erscheinen schneiden, um dichtes Laub zu fördern",
+            "Wasserüberschuss vermeiden, besonders in schwerem Boden, um die Pflanze nicht zu schwächen",
+            "Im Keimlingsstadium alle 2 Tage leicht besprühen, dann nach Aufgang auf 1 Mal alle 4 Tage reduzieren"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (vorbeugend und stärkend)",
+                "Schmierseife (gegen Blattläuse)",
+                "Natürliches Insektizid auf Pyrethrum- oder ätherischer Öl-Basis (bei Befall)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Florfliegen (Räuber von Blattläusen und Schildläusen)",
+                "Schwebfliegen (Larven fressen Blattläuse)"
+            ],
+            "companionPlants": [
+                "Tomate",
+                "Paprika",
+                "Kopfsalat",
+                "fördert Biodiversität und vertreibt bestimmte Schädlinge"
+            ]
+        },
+        "harvestTime": "50-60 Tage nach Aussaat, je nach Kulturbedingungen",
+        "companionPlanting": {
+            "beneficial": [
+                "Tomate",
+                "Paprika",
+                "Kopfsalat",
+                "Karotte",
+                "Spargel",
+                "fördert Biodiversität und vertreibt bestimmte Schädlinge"
+            ],
+            "avoid": [
+                "Gurke (Konkurrenzrisiko)",
+                "Weinraute"
+            ]
+        },
+        "sowingMonths3": [
+            "Mar",
+            "Apr",
+            "May",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "1 day (en pot) / 2-3 days (pleine terre)",
+                "conditions": [
+                    "temperature > 25",
+                    "no_rain_last_2_days",
+                    "soil_moisture_low"
+                ],
+                "message": "Bewässerung für Ihr Basilikum nötig: Befeuchten Sie den Boden ohne Sättigung, an der Basis, früh morgens oder abends."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Basilikum ausdünnen: lassen Sie 20 cm Platz zwischen jeder Pflanze für gute Entwicklung."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "7-10 days",
+                "message": "Jäten um Ihre Basilikumpflanzen empfohlen. Mulchen Sie, um Nachwuchs zu begrenzen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "aphid_sighting"
+                ],
+                "message": "Wenden Sie vorbeugend Brennnesseljauche an oder setzen Sie Marienkäfer ein."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 50,
+                "message": "Erste Ernten möglich! Schneiden Sie Stiele über einem Blattpaar, um Verzweigung zu fördern."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Achtung: Mindesttemperatur für Basilikum erreicht (12°C). Schützen Sie Ihre Pflanzen!"
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 24,
+                    "message": "Optimale Keimbedingungen für Basilikum (21-24°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "bean",
+        "commonName": "Bohne",
+        "scientificName": "Phaseolus vulgaris",
+        "family": "Fabaceae",
+        "daysToMaturity": 60,
+        "spacing": 30,
+        "depth": 2,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Hoch (besonders während der Blüte)",
+        "description": "Nahrhafte Hülsenfrucht, stickstofffixierend, ideal in Fruchtfolge und Mischkultur.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S"
+        ],
+        "marketPricePerKg": 4.2,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 31,
+            "proteinG": 1.8,
+            "carbohydratesG": 7.1,
+            "sugarsG": 3.3,
+            "fatG": 0.1,
+            "fiberG": 3.4,
+            "vitaminCmg": 12.2,
+            "vitaminKmcg": 43.0,
+            "vitaminB9ug": 33,
+            "vitaminAmcg": 35,
+            "calciumMg": 37,
+            "ironMg": 1.0,
+            "magnesiumMg": 25,
+            "potassiumMg": 211,
+            "manganeseMg": 0.21,
+            "phosphorusMg": 38,
+            "siliconMg": 2.0
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 25
+            },
+            "germinationTime": {
+                "min": 7,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Variabel nach Wachstumsphase: 2-3 Mal/Woche im Wachstum, 3 Mal/Woche in der Blüte, 1 Monat vor Ernte reduzieren",
+            "amount": "10-15 Liter pro m²/Woche in der Blütephase",
+            "method": "An der Basis gießen, Blätter vermeiden",
+            "bestTime": "Früh morgens oder am späten Nachmittag"
+        },
+        "thinning": {
+            "distance": "25-40 cm zwischen Pflanzen",
+            "when": "Wenn Jungpflanzen einige Zentimeter groß sind, die kräftigsten behalten"
+        },
+        "weeding": {
+            "method": "Hacken oder manuelles Jäten",
+            "frequency": "Nach jedem Gießen (24-48h) um Kruste zu brechen + Mulchen",
+            "recommendation": "Reihen mulchen um Unkraut zu begrenzen und Feuchtigkeit zu bewahren"
+        },
+        "culturalTips": [
+            "Fruchtwechsel: nicht nach anderen Hülsenfrüchten pflanzen",
+            "Wasserüberschuss vermeiden, um Wurzelfäule vorzubeugen",
+            "Mulchen, um Verdunstung und Jäten zu reduzieren",
+            "Niemals das Laub gießen, um Pilzkrankheiten zu vermeiden",
+            "Mischkulturen mit Mais oder Sonnenblume für Klettervarianten bevorzugen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Brennnesseljauche (kräftigend, gegen Blattläuse)",
+                "Schachtelhalm-Sud (Anti-Pilz)",
+                "Verdünnte Milch als Sprühung (vorbeugend gegen Mehltau)"
+            ],
+            "beneficialInsects": [
+                "Marienkäfer (gegen Blattläuse)",
+                "Parasitäre Wespen",
+                "Schwebfliegen"
+            ],
+            "companionPlants": [
+                "Mais",
+                "Sonnenblume (Stütze und günstiges Mikroklima)"
+            ]
+        },
+        "harvestTime": "Im Durchschnitt 60 Tage nach Pflanzung (je nach Zwerg- oder Klettersorte)",
+        "companionPlanting": {
+            "beneficial": [
+                "Mais",
+                "Sonnenblume",
+                "Karotte",
+                "Gurke",
+                "Sellerie",
+                "Radieschen",
+                "Spinat",
+                "Sonnenblume (Stütze und günstiges Mikroklima)"
+            ],
+            "avoid": [
+                "Knoblauch",
+                "andere Hülsenfrüchte (Erbsen, Bohnen, Lupinen)",
+                "Zwiebel (im Übermaß)"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+        ],
+        "plantingSeason": "Frühling",
+        "harvestSeason": "Sommer",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "variable",
+                "conditions": [
+                    "phase == 'levée' → tous les 2-3 jours",
+                    "phase == 'floraison' → 2-3 fois/semaine",
+                    "temperature > 30 → tous les 1-2 jours",
+                    "soil_type == 'sableux' → 3-4 fois/semaine",
+                    "soil_type == 'argileux' → 2 fois/semaine"
+                ],
+                "message": "Passen Sie die Bewässerung an: 10-15 L/m²/Woche in der Blüte, an der Basis, ohne die Blätter zu benetzen."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Auf 25-40 cm zwischen Pflanzen ausdünnen, nur die kräftigsten behalten."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "after_rain_or_watering",
+                "message": "Hacken empfohlen 24-48h nach Gießen + Mulchen um Unkraut zu begrenzen."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 75",
+                    "temperature > 25"
+                ],
+                "message": "Brennnesseljauche oder Schachtelhalm-Sud zur Vorbeugung von Pilzkrankheiten anwenden."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 55,
+                "message": "Ernte steht bevor. Bewässerung schrittweise reduzieren, um Krankheiten zu vermeiden."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Achtung: Mindesttemperatur für Bohnen erreicht (10°C). Risiko von Verlangsamung oder Frost."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 25,
+                    "message": "Optimale Keimbedingungen erreicht (20-25°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "beetroot",
+        "commonName": "Rote Bete",
+        "scientificName": "Beta vulgaris",
+        "family": "Amaranthaceae",
+        "daysToMaturity": 60,
+        "spacing": 20,
+        "depth": 1,
+        "sunExposure": "Volle Sonne",
+        "waterNeeds": "Mäßig",
+        "description": "Süßes und nahrhaftes Wurzelgemüse, reich an Eisen, Vitaminen und Antioxidantien, angebaut in Bio und Permakultur mit sanften und bodenschonenden Techniken.",
+        "sowingMonths": [
+            "A",
+            "M",
+            "J"
+        ],
+        "harvestMonths": [
+            "J",
+            "A",
+            "S",
+            "O"
+        ],
+        "marketPricePerKg": 3.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 43,
+            "proteinG": 1.6,
+            "carbohydratesG": 9.6,
+            "sugarsG": 6.8,
+            "fatG": 0.2,
+            "fiberG": 2.8,
+            "vitaminCmg": 4.9,
+            "vitaminKmcg": 0.2,
+            "vitaminB9ug": 109,
+            "vitaminAmcg": 2,
+            "calciumMg": 16,
+            "ironMg": 0.8,
+            "magnesiumMg": 23,
+            "potassiumMg": 325,
+            "manganeseMg": 0.33,
+            "phosphorusMg": 40,
+            "betaineMg": 128,
+            "nitratesMg": 150
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "Tage"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 22,
+                "max": 22
+            },
+            "minTemperature": 6
+        },
+        "watering": {
+            "frequency": "1 Mal/Woche (je nach Klima anpassen)",
+            "amount": "2-4 Liter pro m²/Woche",
+            "method": "An der Basis, Boden ohne Überschuss frisch halten",
+            "bestTime": "Früh morgens oder am späten Nachmittag"
+        },
+        "thinning": {
+            "distance": "15-25 cm zwischen Pflanzen",
+            "when": "Wenn Pflanzen 4 bis 5 Blätter haben"
+        },
+        "weeding": {
+            "method": "Häufiges manuelles Hacken und Jäten",
+            "frequency": "Alle 1 bis 2 Wochen",
+            "recommendation": "Mulchen empfohlen, um Unkraut zu begrenzen und Feuchtigkeit zu bewahren"
+        },
+        "culturalTips": [
+            "Fruchtwechsel von 3 bis 4 Jahren, um Bodenerschöpfung und Krankheiten zu vermeiden",
+            "Gut gelockerter Boden, ohne Steine, um gabelförmige Wurzeln zu vermeiden",
+            "Keinen frischen oder nicht kompostierten Mist verwenden",
+            "Wasserüberschuss vermeiden, um Mehltau und Wurzelfäule vorzubeugen",
+            "Junge Pflanzen bei Frost mit einem Vlies oder leichtem Tunnel schützen"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Beinwelljauche (stärkend)",
+                "Brennnesseljauche (gegen Blattläuse und als Wachstumsstimulator)",
+                "Kräuteraufgüsse zur Stärkung der natürlichen Abwehrkräfte"
+            ],
+            "beneficialInsects": [
+                "Natürliche Nützlinge gegen Blattläuse (Marienkäfer, Schwebfliegen)",
+                "Nützliche Nematoden gegen schädliche Nematoden"
+            ],
+            "companionPlants": [
+                "Kopfsalat",
+                "Zwiebel",
+                "Radieschen",
+                "Buschbohne",
+                "Spinat vermeiden (gleiche Familie)"
+            ]
+        },
+        "harvestTime": "60-90 Tage nach Aussaat, je nach Sorte und Bedingungen",
+        "companionPlanting": {
+            "beneficial": [
+                "Kopfsalat",
+                "Zwiebel",
+                "Radieschen",
+                "Buschbohne",
+                "Kohl"
+            ],
+            "avoid": [
+                "andere Fuchsschwanzgewächse",
+                "Gänsefuß",
+                "Spinat",
+                "Spinat"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Frühling, Sommer",
+        "harvestSeason": "Sommer, Herbst",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "temperature > 20"
+                ],
+                "message": "Bewässerung für Rote Bete: 2-4L/m² diese Woche."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Rote Bete ausdünnen (15-25cm), wenn 4-5 Blätter da sind."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Jäten/Hacken notwendig. Erde lockern."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "aphid_sighting"
+                ],
+                "message": "Bei Blattläusen: Brennnesseljauche anwenden."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 80,
+                "message": "Erntezeit nähert sich (60-90 Tage). Wurzelgröße prüfen."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 6,
+                    "message": "Kälte (6°C). Junge Rote Bete schützen."
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Keimung Rote Bete (20°C)."
+                }
+            }
+        },
+        "sowingMonths": [],
+        "harvestMonths": []
+    }
+]

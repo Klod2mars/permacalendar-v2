@@ -1,0 +1,804 @@
+[
+    {
+        "id": "courge_potiron",
+        "commonName": "Pumpkin / Squash",
+        "scientificName": "Cucurbita spp.",
+        "family": "Cucurbitaceae",
+        "daysToMaturity": 90,
+        "spacing": 150,
+        "depth": 2,
+        "sunExposure": "Full sun",
+        "waterNeeds": "Moderate",
+        "description": "Space-hungry fruit vegetable, ideal in permaculture, rich in vitamins and fibers. Trailing or bush varieties, requiring rich and well-drained soil.",
+        "marketPricePerKg": 2.7,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 45,
+            "proteinG": 1.0,
+            "carbohydratesG": 11.7,
+            "sugarsG": 4.2,
+            "fatG": 0.1,
+            "fiberG": 2.0,
+            "vitaminCmg": 21.0,
+            "vitaminKmcg": 1.1,
+            "vitaminB9ug": 29,
+            "vitaminAmcg": 7384,
+            "calciumMg": 21,
+            "ironMg": 0.8,
+            "magnesiumMg": 12,
+            "potassiumMg": 340,
+            "manganeseMg": 0.13,
+            "phosphorusMg": 33,
+            "betaCaroteneMcg": 8860,
+            "luteinZeaxanthinMcg": 1500
+        },
+        "germination": {
+            "minTemperature": 18,
+            "optimalTemperature": {
+                "min": 21,
+                "max": 24
+            },
+            "germinationTime": {
+                "min": 6,
+                "max": 10,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 24
+            },
+            "minTemperature": 12
+        },
+        "watering": {
+            "frequency": "Once a week (about 15 mm)",
+            "amount": "About 15 mm/week",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Evening in hot weather, morning in cool weather"
+        },
+        "thinning": {
+            "distance": "1 meter for bush varieties, 1.5 to 2 meters for trailing varieties",
+            "when": "As soon as first true leaves appear, keep strongest plant"
+        },
+        "weeding": {
+            "method": "Manual or mechanical (hoeing) before mulching",
+            "frequency": "As needed, until mulch installation",
+            "recommendation": "Organic mulch (straw, hay, grass clippings) to limit weeding and conserve moisture"
+        },
+        "culturalTips": [
+            "Crop rotation: wait 2 to 3 years before replanting cucurbits in same spot",
+            "Prefer cultivation after legumes (enrich soil with nitrogen)",
+            "Avoid proximity with potatoes, radishes or other cucurbits",
+            "Prune runners of vigorous varieties to favor fruiting",
+            "Never wet foliage to avoid downy and powdery mildew",
+            "Protect fruits from direct ground contact (mulch or support)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail decoction (fungal prevention)",
+                "Garlic decoction (fungal and insect prevention)",
+                "Comfrey manure (fortifier)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Hoverflies (larvae eat aphids)",
+                "Lacewings (general predators)"
+            ],
+            "companionPlants": [
+                "corn",
+                "beans (Three Sisters method)",
+                "nasturtium (aphid trap)"
+            ]
+        },
+        "harvestTime": "About 90-120 days after sowing, depending on variety",
+        "companionPlanting": {
+            "beneficial": [
+                "corn",
+                "beans",
+                "nasturtium",
+                "marigold",
+                "mint (repels some insects)",
+                "beans (Three Sisters method)",
+                "nasturtium (aphid trap)"
+            ],
+            "avoid": [
+                "other cucurbits",
+                "fennel",
+                "potatoes",
+                "radish"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Summer,Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "no_rain_last_7_days",
+                    "temperature > 25"
+                ],
+                "message": "Watering recommended: 15 mm at base, avoid foliage. Prefer evening if hot."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning necessary: keep only one vigorous plant per spot."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual or mechanical weeding recommended before mulch laying."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "temperature > 20"
+                ],
+                "message": "Preventive treatment advised: horsetail or garlic decoction to avoid fungal diseases."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Harvest period approaching for your pumpkins/squashes (90-120 days after sowing)."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 12,
+                    "message": "Attention: minimum temperature for squashes reached (12°C). Risk of slowing or frost."
+                },
+                "germination_optimal": {
+                    "min": 21,
+                    "max": 24,
+                    "message": "Optimal germination conditions reached (21-24°C)."
+                }
+            }
+        }
+    },
+    {
+        "id": "roquette",
+        "commonName": "Arugula",
+        "scientificName": "Eruca vesicaria",
+        "family": "Brassicaceae",
+        "daysToMaturity": 30,
+        "spacing": 20,
+        "depth": 0.5,
+        "sunExposure": "Partial shade (avoid full sun in summer)",
+        "waterNeeds": "Moderate",
+        "description": "Leaf vegetable with peppery taste, rich in vitamins and minerals. Ideal for quick culture and permaculture. Fears heat and drought which accelerate bolting.",
+        "marketPricePerKg": 22.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 27,
+            "proteinG": 2.6,
+            "carbohydratesG": 3.0,
+            "sugarsG": 2.0,
+            "fatG": 0.5,
+            "saturatedFatG": 0.1,
+            "fiberG": 2.0,
+            "sodiumMg": 0,
+            "calciumMg": 160,
+            "vitaminCmg": 15,
+            "vitaminKmcg": 109
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 4,
+                "max": 8,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 4
+        },
+        "watering": {
+            "frequency": "Once a week or when soil surface is dry",
+            "amount": "Moderate (avoid excess preventing root rot)",
+            "method": "Water at base, avoid foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "8 cm between plants after thinning, then 20-30 cm for optimal development",
+            "when": "At 5-10 cm height, about 15 days after emergence"
+        },
+        "weeding": {
+            "method": "Manual or light hoeing",
+            "frequency": "Regular, especially at start of culture",
+            "recommendation": "Mulching recommended to limit weeds and conserve moisture"
+        },
+        "culturalTips": [
+            "Crop rotation every 3 years to avoid diseases and soil depletion",
+            "Avoid periods of strong heat — prefer partial shade in summer",
+            "Do not over-fertilize with nitrogen to keep balanced flavor",
+            "Mulch to keep soil cool and limit bolting",
+            "Leave unharvested zones to favor biodiversity and natural pest regulation"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Garlic or chili decoction",
+                "Nettle, horsetail, comfrey manures",
+                "Vegetal pyrethrum (last resort)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs against aphids",
+                "Lacewings against aphids"
+            ],
+            "companionPlants": [
+                "leave on border to attract beneficials",
+                "avoid competition with heavy feeders"
+            ]
+        },
+        "harvestTime": "30 days after sowing (young leaves cut regularly)",
+        "companionPlanting": {
+            "beneficial": [
+                "radish",
+                "carrot",
+                "lettuce",
+                "spinach",
+                "onion",
+                "leek",
+                "nasturtium",
+                "leave on border to attract beneficials"
+            ],
+            "avoid": [
+                "competition",
+                "heavy feeders",
+                "plants very hungry for nitrogen or space (e.g. large cabbages)"
+            ],
+            "notes": [
+                "avoid competition with heavy feeders"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring, Autumn",
+        "harvestSeason": "Spring, Summer, Autumn",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "7 days",
+                "conditions": [
+                    "soil_surface_dry",
+                    "temperature > 25"
+                ],
+                "message": "Watering recommended for your arugula: moderate, early morning, to avoid bolting."
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 15,
+                "message": "Thinning necessary: space plants 8 cm, then 20-30 cm for good development."
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Manual weeding or light hoeing recommended to avoid competition."
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "pest_alert: flea beetles or aphids"
+                ],
+                "message": "Apply garlic decoction or nettle manure preventively. Install insect nets if necessary."
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 30,
+                "message": "First harvest possible! Cut young leaves to favor regrowth."
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 4,
+                    "message": "Attention: minimum temperature for arugula reached (4°C). Protect in case of frost."
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimal germination temperature reached (15°C) — good time to sow!"
+                }
+            }
+        }
+    },
+    {
+        "id": "rosemary",
+        "commonName": "Rosemary",
+        "scientificName": "Salvia rosmarinus",
+        "family": "Lamiaceae",
+        "daysToMaturity": 90,
+        "spacing": 40,
+        "depth": 0.5,
+        "sunExposure": "Full sun (min. 6h/day)",
+        "waterNeeds": "Low",
+        "description": "Mediterranean aromatic shrub, drought resistant and natural repellent against many insects. Ideal in permaculture and organic culture.",
+        "marketPricePerKg": 20.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 131,
+            "proteinG": 3.3,
+            "carbohydratesG": 20.7,
+            "sugarsG": 1.6,
+            "fatG": 5.9,
+            "fiberG": 14.1,
+            "vitaminCmg": 21.8,
+            "vitaminKmcg": 336.0,
+            "vitaminB9ug": 109,
+            "vitaminAmcg": 146,
+            "calciumMg": 317,
+            "ironMg": 6.7,
+            "magnesiumMg": 91,
+            "potassiumMg": 668,
+            "manganeseMg": 0.96,
+            "phosphorusMg": 66,
+            "rosmarinicAcidMg": 2400,
+            "carnosicAcidMg": 1800
+        },
+        "germination": {
+            "minTemperature": 15,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 20,
+                "max": 30,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 22
+            },
+            "minTemperature": 10
+        },
+        "watering": {
+            "frequency": "Every 10-14 days in open ground (adult), every 2-3 days for young plants",
+            "amount": "Deep watering, only when soil is dry for 2 cm (in pot)",
+            "method": "At base, deep, never in small repeated doses",
+            "bestTime": "Early morning or end of day"
+        },
+        "thinning": {
+            "distance": "40 cm between plants",
+            "when": "From planting or sowing, at start of growth"
+        },
+        "weeding": {
+            "method": "Manual (avoid damaging roots)",
+            "frequency": "Regular at start of season, depending on weed density",
+            "recommendation": "Organic mulch to limit weeding and avoid stagnant humidity"
+        },
+        "culturalTips": [
+            "Never plant in shade — needs min. 6h daily sun",
+            "Well drained soil mandatory — add sand or pumice if necessary",
+            "Avoid overly rich or heavy soils — prefers poor, calcareous or slightly alkaline soil",
+            "No rotation necessary — can stay in place several years",
+            "Never leave soil soggy — risk of root rot and powdery mildew"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Diluted black soap (against aphids/scale insects)",
+                "Nettle manure (preventive treatment and fortifier)",
+                "Manual cleaning of infested parts (if light infestation)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Parasitoid wasps (Aphidius spp.)"
+            ],
+            "companionPlants": [
+                "cabbages",
+                "carrots",
+                "beans",
+                "natural insect repellent thanks to essential oils"
+            ]
+        },
+        "harvestTime": "Leaves harvestable all year once plant established (after 3-4 months)",
+        "companionPlanting": {
+            "beneficial": [
+                "cabbage",
+                "carrot",
+                "bean",
+                "pepper",
+                "eggplant",
+                "lavender",
+                "thyme",
+                "sage",
+                "cabbages",
+                "carrots",
+                "beans",
+                "natural insect repellent thanks to essential oils"
+            ],
+            "avoid": [
+                "plants hungry for water or rich soil (e.g. squash, lettuce)"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "All year (leaves)",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "10 days",
+                "conditions": [
+                    "no_rain_last_10_days",
+                    "temperature > 25"
+                ],
+                "message": "Deep watering recommended for your rosemary — check soil dryness on 2 cm"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 7,
+                "message": "Thinning to 40 cm recommended from planting"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "14 days",
+                "message": "Manual weeding advised — think about mulching to reduce frequency"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70",
+                    "presence_of_aphids"
+                ],
+                "message": "Organic treatment with black soap or nettle manure recommended against aphids"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 90,
+                "message": "Your rosemary is ready to harvest — cut stems as needed, all year"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 10,
+                    "message": "Attention: minimum temperature for rosemary reached (10°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "salsify",
+        "commonName": "Salsify",
+        "scientificName": "Tragopogon porrifolius",
+        "family": "Asteraceae",
+        "daysToMaturity": 120,
+        "spacing": 20,
+        "depth": 1.5,
+        "sunExposure": "Full sun, Partial shade tolerated",
+        "waterNeeds": "Low to moderate",
+        "description": "Biennial root vegetable with subtle nutty taste, appreciated in soup or gratin. Demanding culture in loose soil but low water needs once established.",
+        "marketPricePerKg": 5.8,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 82,
+            "proteinG": 1.5,
+            "carbohydratesG": 18.6,
+            "sugarsG": 4.0,
+            "fatG": 0.2,
+            "fiberG": 3.3,
+            "vitaminCmg": 5.0,
+            "vitaminKmcg": 0.3,
+            "vitaminB9ug": 22,
+            "calciumMg": 30,
+            "ironMg": 0.7,
+            "magnesiumMg": 25,
+            "potassiumMg": 380,
+            "manganeseMg": 0.2,
+            "phosphorusMg": 50,
+            "inulinG": 10.0
+        },
+        "germination": {
+            "minTemperature": 10,
+            "optimalTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "germinationTime": {
+                "min": 10,
+                "max": 15,
+                "unit": "days"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 18,
+                "max": 18
+            },
+            "minTemperature": 7
+        },
+        "watering": {
+            "frequency": "Every 2 days during emergence, then 1-2 times/week in case of drought",
+            "amount": "Light watering in fine mist during germination, moderate afterwards",
+            "method": "Fine mist at start, then at base avoiding foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "15-20 cm between plants, 30-40 cm between rows",
+            "when": "15-20 days after emergence, when plants have 2-3 true leaves"
+        },
+        "weeding": {
+            "method": "Manual or light hoeing (avoid disturbing roots)",
+            "frequency": "Regular, especially at start of growth",
+            "recommendation": "Mulching between rows to limit weeds and conserve moisture"
+        },
+        "culturalTips": [
+            "Biennial culture: harvest roots before flowering in 2nd year",
+            "Remove flower stalks from 1st year to favor root",
+            "Avoid heavy and poorly drained soils (rot risk)",
+            "Crop rotation (avoid replanting after other Asteraceae)",
+            "Watch out for slugs and snails on young plants",
+            "Sow in open ground, no transplanting (fragile taproot)"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Horsetail manure (preventive against rust)",
+                "Garlic decoction (natural fungicide)",
+                "Ashes or crushed eggshells against slugs",
+                "Beer traps for slugs"
+            ],
+            "beneficialInsects": [
+                "Ground beetles (slug predators)",
+                "Toads (natural regulators of gastropods)"
+            ],
+            "companionPlants": [
+                "no specific companion documented",
+                "but living mulch (phacelia",
+                "clover) useful"
+            ]
+        },
+        "harvestTime": "120-150 days after sowing, in autumn of 1st year or spring of 2nd year",
+        "companionPlanting": {
+            "beneficial": [
+                "no specific companion documented",
+                "but living mulch (phacelia",
+                "clover) useful"
+            ],
+            "avoid": [
+                "crops requiring heavy soil",
+                "plants hungry for nitrogen"
+            ]
+        },
+        "sowingMonths3": [],
+        "harvestMonths3": [],
+        "plantingSeason": "Spring",
+        "harvestSeason": "Autumn,Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "2 days",
+                "conditions": [
+                    "germination_phase",
+                    "soil_dry"
+                ],
+                "message": "Fine mist watering necessary for salsify emergence"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 25,
+                "message": "Thinning to 15-20 cm recommended for your salsifies"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Light manual weeding recommended to avoid damaging roots"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 80",
+                    "young_plants"
+                ],
+                "message": "Monitor slugs and snails — install traps or protective mulch"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 120,
+                "message": "Harvest period possible for your salsifies (roots before flowering)"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 7,
+                    "message": "Attention: minimum growth temperature for salsify reached (7°C)"
+                },
+                "germination_optimal": {
+                    "min": 20,
+                    "max": 20,
+                    "message": "Optimal germination temperature reached (20°C)"
+                }
+            }
+        }
+    },
+    {
+        "id": "scarole",
+        "commonName": "Escarole",
+        "scientificName": "Cichorium endivia",
+        "family": "Asteraceae",
+        "daysToMaturity": 90,
+        "spacing": 30,
+        "depth": 0.5,
+        "sunExposure": "Partial shade to full sun",
+        "waterNeeds": "High",
+        "description": "Crunchy and slightly bitter leaf vegetable, ideal in salad. Blanched before harvest for a tender and mild heart.",
+        "marketPricePerKg": 4.0,
+        "defaultUnit": "kg",
+        "nutritionPer100g": {
+            "energyKcal": 19,
+            "proteinG": 1.2,
+            "carbohydratesG": 3.1,
+            "fiberG": 2.8,
+            "fatG": 0.18,
+            "calciumMg": 46,
+            "ironMg": 0.72,
+            "potassiumMg": 245,
+            "vitaminAmcg": 94,
+            "vitaminCmg": 3.3,
+            "vitaminKmcg": 212,
+            "vitaminB9ug": 78
+        },
+        "germination": {
+            "minTemperature": 5,
+            "optimalTemperature": {
+                "min": 15,
+                "max": 15
+            },
+            "germinationTime": {
+                "min": 8,
+                "max": 10,
+                "unit": "jours"
+            }
+        },
+        "growth": {
+            "idealTemperature": {
+                "min": 20,
+                "max": 20
+            },
+            "minTemperature": 4
+        },
+        "watering": {
+            "frequency": "Every 2 to 4 days depending on weather",
+            "amount": "Adapt to keep soil moist without excess",
+            "method": "Watering at base, without wetting foliage",
+            "bestTime": "Early morning"
+        },
+        "thinning": {
+            "distance": "30 cm between plants, 40 cm between rows",
+            "when": "As soon as first true leaves appear, post-emergence"
+        },
+        "weeding": {
+            "method": "Light hoeing, manual weeding, mulching highly advised",
+            "frequency": "Every 1 to 2 weeks",
+            "recommendation": "Thick mulch to limit weeds, converse moisture and stabilize soil temperature"
+        },
+        "culturalTips": [
+            "Mandatory rotation: do not replant Asteraceae in same spot before 4-5 years",
+            "Blanch escarole 15 days before harvest with cloche or overturned pot",
+            "Protect with fleece in case of strong frosts",
+            "Avoid burying the collar during transplanting",
+            "Thin in greenhouse/tunnel by cutting one lettuce out of two as soon as leaves touch"
+        ],
+        "biologicalControl": {
+            "preparations": [
+                "Nettle manure (downy mildew prevention)",
+                "Mild soapy water (against aphids)",
+                "Garlic or chili manures (against flea beetles)"
+            ],
+            "beneficialInsects": [
+                "Ladybugs (against aphids)",
+                "Beneficial nematodes (against caterpillars)"
+            ],
+            "companionPlants": [
+                "mint (repellent against flea beetles)"
+            ]
+        },
+        "harvestTime": "About 90 days after sowing, depending on variety and conditions",
+        "companionPlanting": {
+            "beneficial": [
+                "mint",
+                "carrot",
+                "radish",
+                "onion",
+                "leek",
+                "spinach",
+                "mint (repellent against flea beetles)"
+            ],
+            "avoid": [
+                "other asteraceae",
+                "endive",
+                "lettuce"
+            ]
+        },
+        "sowingMonths3": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct"
+        ],
+        "harvestMonths3": [
+            "Jan",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "plantingSeason": "Spring, Autumn",
+        "harvestSeason": "Autumn, Winter",
+        "notificationSettings": {
+            "watering": {
+                "enabled": true,
+                "frequency": "3 days",
+                "conditions": [
+                    "temperature > 20",
+                    "no_rain_last_2_days"
+                ],
+                "message": "Watering needed for your escaroles: moisten base without wetting foliage"
+            },
+            "thinning": {
+                "enabled": true,
+                "daysAfterPlanting": 14,
+                "message": "Thinning necessary: space plants at 30 cm"
+            },
+            "weeding": {
+                "enabled": true,
+                "frequency": "10 days",
+                "message": "Recommended weeding + think about mulching"
+            },
+            "biological_control": {
+                "enabled": true,
+                "conditions": [
+                    "humidity > 70"
+                ],
+                "message": "Risk of downy mildew: apply nettle manure and check aeration"
+            },
+            "harvest": {
+                "enabled": true,
+                "daysAfterPlanting": 75,
+                "message": "Prepare blanching: cover hearts 15 days before harvest"
+            },
+            "temperature_alert": {
+                "enabled": true,
+                "cold_alert": {
+                    "threshold": 4,
+                    "message": "Attention: minimum temperature for escarole reached (4°C) - protect with fleece"
+                },
+                "germination_optimal": {
+                    "min": 15,
+                    "max": 15,
+                    "message": "Optimal germination temperature reached (15°C)"
+                }
+            }
+        }
+    }
+]
