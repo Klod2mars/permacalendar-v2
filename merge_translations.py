@@ -40,7 +40,10 @@ def merge_chunks(lang):
         parts = basename.replace("translated_chunk_", "").replace(".json", "").split("_")
         try:
             batch_idx = int(parts[0])
-            part = parts[1]
+            if len(parts) > 1:
+                part = parts[1]
+            else:
+                part = "" # Sorts before "a"
             return (batch_idx, part)
         except:
              return (999, basename) # degradation safe
