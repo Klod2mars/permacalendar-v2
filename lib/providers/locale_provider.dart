@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import '../features/plant_catalog/data/repositories/plant_hive_repository.dart';
+import '../features/plant_catalog/providers/plant_catalog_provider.dart';
+
 class LocaleNotifier extends Notifier<Locale> {
   static const String _kLocaleKey = 'app_locale';
   static const List<Locale> supportedLocales = [
@@ -57,6 +60,15 @@ class LocaleNotifier extends Notifier<Locale> {
     }
     
     await initializeDateFormatting(locale.toString());
+
+    // Sync plant data with the new language
+    try {
+      await PlantHiveRepository().syncWithJson(locale.languageCode);
+      // Trigger UI refresh
+      ref.read(plantCatalogProvider.notifier).loadPlants();
+    } catch (e) {
+      print('Error syncing plants after locale change: $e');
+    }
   }
 }
 

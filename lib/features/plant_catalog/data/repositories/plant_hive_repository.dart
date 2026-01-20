@@ -137,19 +137,55 @@ class PlantHiveRepository {
   }
 
 
+  static bool _isSyncing = false;
+
+  /// Retrieves the correct asset path based on the language code
+  String _getAssetPath(String languageCode) {
+    // Normalization: pt_BR -> pt, en_US -> en
+    final normalizedCode = languageCode.toLowerCase().split('_')[0].split('-')[0];
+
+    const Map<String, String> langPaths = {
+      'fr': 'assets/data/plants.json',
+      'en': 'assets/data/json_multilangue_doc/plants_en.json',
+      'es': 'assets/data/json_multilangue_doc/plants_es.json',
+      'it': 'assets/data/json_multilangue_doc/plants_it.json',
+      'de': 'assets/data/json_multilangue_doc/plants_de.json',
+      'pt': 'assets/data/json_multilangue_doc/plants_pt.json',
+    };
+
+    return langPaths[normalizedCode] ?? 'assets/data/plants.json';
+  }
+
   /// Synchronise la base de données locale avec le fichier JSON (Smart Sync)
   ///
+  /// - Charge le JSON correspondant à la langue
   /// - Ajoute les nouvelles plantes
-  /// - Met à jour les plantes existantes (contenu)
-  /// - Préserve les préférences utilisateur (isActive)
-  Future<void> syncWithJson() async {
-    try {
-      developer.log('PlantHiveRepository: Début de la synchronisation JSON (Smart Sync)',
-          name: 'PlantHiveRepository');
-      print('PlantHiveRepository: syncWithJson START');
+  /// - Met à jour les plantes existantes (contenu traduit)
+  /// - Préserve les préférences utilisateur (isActive, createdAt)
+  Future<void> syncWithJson([String languageCode = 'fr']) async {
+    if (_isSyncing) {
+      print('PlantHiveRepository: Sync already in progress, skipping.');
+      return;
+    }
+    _isSyncing = true;
 
-      // 1. Charger le JSON
-      final jsonString = await rootBundle.loadString(_jsonAssetPath);
+    try {
+      developer.log('PlantHiveRepository: Début de la synchronisation JSON (Smart Sync) - Langue: $languageCode',
+          name: 'PlantHiveRepository');
+      print('PlantHiveRepository: syncWithJson START - Langue: $languageCode');
+
+      String assetPath = _getAssetPath(languageCode);
+      String jsonString;
+
+      // 1. Charger le JSON (avec fallback sur FR si échec)
+      try {
+        jsonString = await rootBundle.loadString(assetPath);
+      } catch (e) {
+        print('PlantHiveRepository: ⚠️ Echec chargement $assetPath, fallback sur fr');
+        assetPath = _getAssetPath('fr');
+        jsonString = await rootBundle.loadString(assetPath);
+      }
+
       final dynamic jsonData = json.decode(jsonString);
 
       List<dynamic> plantsList = [];
@@ -217,6 +253,8 @@ class PlantHiveRepository {
       print('!!! EXCEPTION syncWithJson: $e');
       developer.log('PlantHiveRepository: Erreur sync JSON: $e', level: 1000);
       // On ne throw pas pour ne pas bloquer l'app, juste log
+    } finally {
+      _isSyncing = false;
     }
   }
 

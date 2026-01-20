@@ -11,6 +11,7 @@ import '../../../core/services/activity_tracker_v3.dart';
 
 import '../../../core/models/activity_v3.dart';
 import '../../../core/services/plant_localization_service.dart'; // Imported Service
+import '../../../providers/locale_provider.dart';
 
 // État simplifié et moderne
 
@@ -64,9 +65,11 @@ class PlantCatalogNotifier extends Notifier<PlantCatalogState> {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
-      // Initialize Localization Service (TODO: Get actual locale from provider)
+      // Initialize Localization Service
+      // Use current locale from provider instead of hardcoded 'fr'
+      final currentLocale = ref.read(localeProvider);
       final localizationService = PlantLocalizationService();
-      await localizationService.loadLocale('fr');
+      await localizationService.loadLocale(currentLocale.languageCode);
 
       // 1. Charger le catalogue standard
       final stdRepo = PlantHiveRepository();

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/models/activity.dart';
 import 'core/models/garden.dart';
@@ -85,7 +86,11 @@ class AppInitializer {
     try {
       final plantRepo = PlantHiveRepository();
       print('🌱 Synchronizing Plant Catalog with JSON...');
-      await plantRepo.syncWithJson();
+      
+      final prefs = await SharedPreferences.getInstance();
+      final savedLang = prefs.getString('app_locale') ?? 'fr';
+      
+      await plantRepo.syncWithJson(savedLang);
     } catch (e) {
       print('⚠️ Error syncing plant data: $e');
     }
