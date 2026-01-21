@@ -22,7 +22,7 @@ class PlantLocalizationService {
     try {
       // For Sprint 1, we force 'fr' or assume file naming convention matches
       // In production, this would look up `assets/data/i18n/plants_$locale.json`
-      final path = 'assets/data/i18n/plants_$locale.json'; 
+      final path = 'assets/data/json_multilangue_doc/plants_$locale.json'; 
       final jsonString = await rootBundle.loadString(path);
       _localizedData = json.decode(jsonString);
       _currentLocale = locale;

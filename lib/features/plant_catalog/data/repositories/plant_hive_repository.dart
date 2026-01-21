@@ -174,6 +174,36 @@ class PlantHiveRepository {
           name: 'PlantHiveRepository');
       print('PlantHiveRepository: syncWithJson START - Langue: $languageCode');
 
+      // 0. Préparer le fallback map pour les images (charger les noms FR si on est pas en FR)
+      // Cela permet de retrouver les images nommées en français même si on charge un JSON allemand/anglais
+      Map<String, String> frenchFallbackMap = {};
+      if (languageCode.toLowerCase() != 'fr') {
+        try {
+          final frAssetPath = _getAssetPath('fr');
+          final frJsonString = await rootBundle.loadString(frAssetPath);
+          final dynamic frData = json.decode(frJsonString);
+          List<dynamic> frPlants = [];
+          if (frData is Map<String, dynamic>) {
+             frPlants = frData['plants'] as List? ?? [];
+          } else if (frData is List) {
+             frPlants = frData;
+          }
+          
+          for (final item in frPlants) {
+             if (item is Map) {
+                final pid = item['id']?.toString();
+                final pName = item['commonName']?.toString();
+                if (pid != null && pName != null) {
+                   frenchFallbackMap[pid] = pName;
+                }
+             }
+          }
+           developer.log('PlantHiveRepository: Loaded ${frenchFallbackMap.length} fallback names from FR', name: 'PlantHiveRepository');
+        } catch (e) {
+           print('PlantHiveRepository: Warning - Failed to load FR fallback names: $e');
+        }
+      }
+
       String assetPath = _getAssetPath(languageCode);
       String jsonString;
 
@@ -212,7 +242,7 @@ class PlantHiveRepository {
         try {
           if (plantJson is Map<String, dynamic>) {
             // Créer l'objet "candidat" depuis le JSON
-            final candidatePlant = _createPlantHiveFromJson(plantJson);
+            final candidatePlant = _createPlantHiveFromJson(plantJson, frenchFallbackMap);
             final id = candidatePlant.id;
 
             if (box.containsKey(id)) {
@@ -359,7 +389,7 @@ class PlantHiveRepository {
   ///
   /// Tolère les champs manquants en utilisant des valeurs par défaut.
   /// Permet l'ajout libre de nouvelles plantes par simple édition du JSON.
-  PlantHive _createPlantHiveFromJson(Map<String, dynamic> json) {
+  PlantHive _createPlantHiveFromJson(Map<String, dynamic> json, [Map<String, String>? fallbackImageTerms]) {
     try {
       // Récupérer l'ID d'abord (utilisé pour proposer une image par défaut si besoin)
       final id = _getStringValue(
@@ -367,6 +397,11 @@ class PlantHiveRepository {
 
       // Récupérer / normaliser les métadonnées
       final Map<String, dynamic> meta = _getMapValue(json, 'metadata', {});
+
+      // Injecter le fallback image si disponible (ex: nom FR pour les images nommées en FR)
+      if (fallbackImageTerms != null && fallbackImageTerms.containsKey(id)) {
+        meta['image_search_term'] = fallbackImageTerms[id];
+      }
 
       // === NORMALISATION LÉGÈRE POUR plants_merged_clean.json ===
       // 1) sowingMonths3 -> sowingMonths (si présent)

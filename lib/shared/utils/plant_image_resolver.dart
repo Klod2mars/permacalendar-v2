@@ -38,7 +38,8 @@ Future<String?> findPlantImageAsset(dynamic plant) async {
             meta['imagePath'] ??
             meta['photo'] ??
             meta['image_url'] ??
-            meta['imageUrl'];
+            meta['imageUrl'] ??
+            meta['image_search_term']; // Fallback injected by repository
         if (raw is String) raw = raw.trim();
       }
     } catch (_) {}
@@ -113,6 +114,24 @@ Future<String?> findPlantImageAsset(dynamic plant) async {
         addCandidate('$p$normalized');
         addCandidate('$p${normalized.toLowerCase()}');
         addCandidate('$p${normalizedSpace}');
+      }
+    }
+
+    // Try fallback search term (e.g. French name for legacy images)
+    if (plant?.metadata != null && plant!.metadata is Map) {
+      final searchTerm = plant.metadata['image_search_term'];
+      if (searchTerm != null && searchTerm is String && searchTerm.isNotEmpty) {
+        final normalized = _normalizeDiacritics(searchTerm).replaceAll(' ', '_');
+        final rawLower = searchTerm.toLowerCase().trim();
+        final exts = ['.png', '.jpg', '.jpeg', '.webp'];
+        final prefixes = ['assets/images/legumes/', 'assets/images/plants/'];
+        for (final p in prefixes) {
+          for (final e in exts) {
+            addCandidate('$p$normalized$e');
+            addCandidate('$p${normalized.toLowerCase()}$e');
+            addCandidate('$p${rawLower.replaceAll(' ', '_')}$e');
+          }
+        }
       }
     }
 
