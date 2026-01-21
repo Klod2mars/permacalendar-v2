@@ -250,6 +250,11 @@
     "description": "Titre de l'écran catalogue de plantes"
   },
 
+  "plant_catalog_search_hint": "Rechercher une plante...",
+  "@plant_catalog_search_hint": {
+    "description": "Indication visuelle dans la barre de recherche du catalogue"
+  },
+
   "plant_custom_badge": "Perso",
   "@plant_custom_badge": {
     "description": "Texte du badge pour plante personnalisée"

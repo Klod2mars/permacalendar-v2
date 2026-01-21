@@ -60,6 +60,7 @@
   "garden_archived_info": "Sie haben archivierte Gärten. Aktivieren Sie die Anzeige archivierter Gärten, um sie zu sehen.",
   "garden_add_tooltip": "Garten hinzufügen",
   "plant_catalog_title": "Pflanzenkatalog",
+  "plant_catalog_search_hint": "Pflanze suchen...",
   "plant_custom_badge": "Benutzerdefiniert",
   "plant_detail_not_found_title": "Pflanze nicht gefunden",
   "plant_detail_not_found_body": "Diese Pflanze existiert nicht oder konnte nicht geladen werden.",

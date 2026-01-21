@@ -21,6 +21,7 @@ import 'package:permacalendar/shared/utils/plant_image_resolver.dart';
 import 'package:permacalendar/features/plant_catalog/application/sowing_utils.dart';
 import 'package:permacalendar/features/plant_catalog/presentation/widgets/sowing_picker.dart';
 import 'plant_detail_screen.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -415,7 +416,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Catalogue de plantes'),
+        title: Text(AppLocalizations.of(context)!.plant_catalog_title),
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
@@ -452,8 +453,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                   controller: _searchController,
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
-                    hintText:
-                        'Rechercher une plante...',
+                    hintText: AppLocalizations.of(context)!.plant_catalog_search_hint,
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(

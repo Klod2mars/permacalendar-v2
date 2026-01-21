@@ -370,6 +370,12 @@ abstract class AppLocalizations {
   /// **'Catalogue de plantes'**
   String get plant_catalog_title;
 
+  /// Indication visuelle dans la barre de recherche du catalogue
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher une plante...'**
+  String get plant_catalog_search_hint;
+
   /// Texte du badge pour plante personnalisée
   ///
   /// In fr, this message translates to:

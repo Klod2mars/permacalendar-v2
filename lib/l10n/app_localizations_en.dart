@@ -154,6 +154,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plant_catalog_title => 'Plant Catalog';
 
   @override
+  String get plant_catalog_search_hint => 'Search for a plant...';
+
+  @override
   String get plant_custom_badge => 'Custom';
 
   @override

@@ -61,6 +61,7 @@
   "garden_archived_info": "You have archived gardens. Enable archived garden display to see them.",
   "garden_add_tooltip": "Add a garden",
   "plant_catalog_title": "Plant Catalog",
+  "plant_catalog_search_hint": "Search for a plant...",
   "plant_custom_badge": "Custom",
   "plant_detail_not_found_title": "Plant not found",
   "plant_detail_not_found_body": "This plant does not exist or could not be loaded.",
