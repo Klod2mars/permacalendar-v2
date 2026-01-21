@@ -314,7 +314,17 @@
       "amount": "2-4 litres par m²/semaine",
       "method": "Au pied, sol maintenu frais sans excès",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Jan",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug"
+    ],
+    "plantingMonths3": []
   },
   "black_radish": {
     "commonName": "Radis Noir",
@@ -2002,7 +2012,15 @@
       "amount": "Environ 15 mm/semaine",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Le soir en période chaude, le matin en temps frais"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun"
+    ]
   },
   "roquette": {
     "commonName": "Roquette",
@@ -3618,7 +3636,14 @@
       "amount": "Arrosage abondant pour humidifier le sol en profondeur",
       "method": "Au pied, sans mouiller excessivement le feuillage",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun"
+    ],
+    "plantingMonths3": []
   },
   "haricot_rames": {
     "commonName": "Haricot à rames",
@@ -3871,7 +3896,12 @@
       "amount": "Sol frais mais non détrempé",
       "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr"
+    ],
+    "plantingMonths3": []
   },
   "lupin": {
     "commonName": "Lupin",

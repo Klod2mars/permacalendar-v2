@@ -884,7 +884,8 @@
             "message": "Temperatura de germinación ideal (20°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "black_radish",
@@ -5388,7 +5389,10 @@
           "rábano"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Verano,Otoño",
@@ -5437,7 +5441,11 @@
             "message": "Condiciones óptimas de germinación alcanzadas (21-24°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "roquette",
@@ -9615,7 +9623,14 @@
             "message": "Condiciones óptimas para la levée del gobo (15–20 °C)."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
+      "plantingMonths3": []
     },
     {
       "id": "haricot_rames",
@@ -10268,7 +10283,12 @@
             "message": "Tiempo ideal germinación lentejas"
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
+      "plantingMonths3": []
     },
     {
       "id": "lupin",

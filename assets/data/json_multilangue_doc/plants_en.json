@@ -5431,7 +5431,10 @@
           "radish"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer,Autumn",
@@ -5480,7 +5483,11 @@
             "message": "Optimal germination conditions reached (21-24°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "roquette",

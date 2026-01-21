@@ -883,7 +883,8 @@
             "message": "Temperatura ideal de germinação atingida (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "black_radish",
@@ -5354,7 +5355,10 @@
           "rabanete"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Verão,Outono",
@@ -5403,7 +5407,11 @@
             "message": "Condições ideais de germinação atingidas (21-24°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "roquette",
@@ -9603,7 +9611,8 @@
             "message": "Condições ótimas para o nascimento da bardana (15–20 °C)."
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "haricot_rames",
@@ -10248,7 +10257,8 @@
             "message": "Temperatura ideal para a levada das suas lentilhas"
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "lupin",

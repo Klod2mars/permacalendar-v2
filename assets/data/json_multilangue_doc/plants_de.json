@@ -807,7 +807,15 @@
           "Spinat"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Jan",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Sommer",
       "harvestSeason": "Sommer, Herbst",
@@ -855,7 +863,8 @@
             "message": "Keimung Rote Bete (20°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "black_radish",
@@ -6186,7 +6195,10 @@
           "Radieschen"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer, Herbst",
@@ -6235,7 +6247,11 @@
             "message": "Optimale Keimbedingungen erreicht (21-24°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "roquette",
@@ -10406,7 +10422,8 @@
             "message": "Keimtemp ideal (15-20°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "haricot_rames",
@@ -11047,7 +11064,8 @@
             "message": "Keimtemperatur gut."
           }
         }
-      }
+      },
+      "plantingMonths3": []
     },
     {
       "id": "lupin",
