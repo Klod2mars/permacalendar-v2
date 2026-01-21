@@ -9,6 +9,7 @@ class NutritionNormalizer {
     // Macros
     'calories': 'calories_kcal',
     'kcal': 'calories_kcal',
+    'energy': 'calories_kcal',
     'protein': 'protein_g',
     'proteines': 'protein_g',
     'carbohydrates': 'carbs_g',
@@ -61,22 +62,34 @@ class NutritionNormalizer {
 
     nutritionPer100g.forEach((key, value) {
       if (value is num) {
-        final String lowerKey =
-            key.toString().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+        final String rawKeyLower = key.toString().toLowerCase();
+        final String cleanKey = rawKeyLower.replaceAll(RegExp(r'[^a-z0-9]'), '');
 
         // Tentative de mapping direct ou partiel
         String? canonicalKey;
 
-        // 1. Exact match après nettoyage
-        if (_keyMapping.containsKey(lowerKey)) {
-          canonicalKey = _keyMapping[lowerKey];
+        // Détection d'unité explicite dans la clé (ex: "calcium_mg", "iron_g")
+        if (rawKeyLower.endsWith('mg') || rawKeyLower.contains('(mg)')) {
+          // Déjà en mg
+        } else if (rawKeyLower.endsWith('mcg') ||
+            rawKeyLower.endsWith('ug') ||
+            rawKeyLower.contains('µg')) {
+          // Si on mappe vers du mg mais que c'est du mcg -> * 0.001
+        } else if (rawKeyLower.endsWith('g') &&
+            !rawKeyLower.endsWith('mg') &&
+            !rawKeyLower.endsWith('mcg')) {
+          // Probablement en grammes
         }
-        // 2. Heuristique pour clés complexes (ex: "Vitamin C (mg)")
+
+        // 1. Exact match après nettoyage
+        if (_keyMapping.containsKey(cleanKey)) {
+          canonicalKey = _keyMapping[cleanKey];
+        }
+        // 2. Heuristique pour clés complexes (ex: "Vitamin C (mg)", "vitaminCmg")
         else {
-          // Recherche inverse naïve ou regex si besoin, pour l'instant on reste sur le mapping strict
-          // pour éviter les faux positifs. On peut itérer sur les clés du mapping.
           for (var entry in _keyMapping.entries) {
-            if (lowerKey.contains(entry.key)) {
+            // Si la clé nettoyée contient la clé de map (ex: "vitamincmg" contient "vitaminc")
+            if (cleanKey.contains(entry.key)) {
               canonicalKey = entry.value;
               break;
             }
@@ -86,13 +99,35 @@ class NutritionNormalizer {
         if (canonicalKey != null) {
           double val = value.toDouble();
 
-          // Conversion d'unité si nécessaire (simplifiée ici, suppose que l'input suit +/- les conventions standards du JSON)
-          // Si le JSON source est très hétérogène (mg vs g mélangés pour la même clé), il faudra une logique plus robuste ici.
-          // Pour l'instant on assume que nutritionPer100g respecte les unités implicites du mapping (g pour macros, mg/mcg pour micros).
+          // Ajustement d'unité basique si conflit détecté
+          // Si la clé canonique est en 'mg' et que la clé source disait 'g', on multiplie par 1000
 
-          // Gestion spécifique des doublons/variantes pourrait aller ici
+          // Is target mg?
+          bool targetIsMg = canonicalKey.contains('_mg');
+          bool targetIsMcg = canonicalKey.contains('_mcg');
 
-          snapshot[canonicalKey!] =
+          // Is source g?
+          bool sourceIsG = (rawKeyLower.endsWith('g') &&
+              !rawKeyLower.endsWith('mg') &&
+              !rawKeyLower.endsWith('ug'));
+          // Is source mg?
+          bool sourceIsMg = rawKeyLower.contains('mg');
+          // Is source mcg?
+          bool sourceIsMcg = rawKeyLower.contains('mcg') ||
+              rawKeyLower.contains('ug') ||
+              rawKeyLower.contains('µg');
+
+          if (targetIsMg) {
+            if (sourceIsG)
+              val *= 1000.0;
+            else if (sourceIsMcg) val *= 0.001;
+          } else if (targetIsMcg) {
+            if (sourceIsG)
+              val *= 1000000.0;
+            else if (sourceIsMg) val *= 1000.0;
+          }
+
+          snapshot[canonicalKey] =
               (snapshot[canonicalKey] ?? 0.0) + (val * ratio);
         }
       }

@@ -6,7 +6,7 @@ import '../../../harvest/application/harvest_records_provider.dart';
 import '../providers/statistics_filters_provider.dart';
 import '../../application/providers/nutrition_detailed_provider.dart';
 import '../widgets/nutrition_stats/month_selector.dart';
-import '../widgets/nutrition_stats/monthly_composition_chart.dart';
+import '../widgets/nutrition_stats/nutrient_inventory_widget.dart';
 import '../widgets/nutrition_stats/seasonal_trend_widget.dart';
 import '../widgets/garden_multi_selector.dart';
 
@@ -36,7 +36,7 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final seasonalAsync = ref.watch(seasonalNutritionProvider);
+    final seasonalAsync = ref.watch(seasonalNutritionAllProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -120,52 +120,33 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                         else ...[
                           // TRENDS
                           SeasonalTrendWidget(
-                              month: _selectedMonth,
-                              monthlyData: monthlyStats.nutrientTotals,
-                              annualData: annualTotals),
+                            selectedMonth: _selectedMonth,
+                            monthlyStatsMap: state.monthlyStats,
+                            annualData: annualTotals,
+                            onMonthTap: (m) => setState(() => _selectedMonth = m),
+                          ),
                           const SizedBox(height: 24),
 
-                          // PIE CHARTS
-                          if (monthlyStats.contributionCount > 0) ...[
-                             Text(
-                              l10n.nutrition_major_minerals_title,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                          // INVENTORY
+                          Text(
+                            "Inventaire Nutritionnel",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2A2A2A),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: Colors.white.withOpacity(0.05)),
                             ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF2A2A2A),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: MonthlyCompositionChart(
-                                data: monthlyStats.nutrientTotals,
-                                isMajorMinerals: true,
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                             Text(
-                              l10n.nutrition_trace_elements_title,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF2A2A2A),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: MonthlyCompositionChart(
-                                data: monthlyStats.nutrientTotals,
-                                isMajorMinerals: false,
-                              ),
-                            ),
-                          ],
-                        ]
+                            child: NutrientInventoryWidget(data: monthlyStats.nutrientTotals),
+                          ),
+                          const SizedBox(height: 48),
+                        ],
                       ],
                     ),
                   );

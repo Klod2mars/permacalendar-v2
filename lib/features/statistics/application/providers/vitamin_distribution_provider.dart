@@ -2,6 +2,8 @@
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
 import '../../../../core/services/plant_catalog_service.dart';
+import '../../../../core/services/nutrition_normalizer.dart';
+import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 
 /// Provider pour le KPI "Distribution vitaminique" du pilier Santé
 ///
@@ -83,8 +85,8 @@ final vitaminDistributionProvider =
     final nutrition = plant.nutritionPer100g;
     if (nutrition.isEmpty) continue;
 
-    // Appliquer la formule : (poids en kg) Ã— (valeur par 100g) Ã— 10
-    final multiplier = record.weight * 10;
+    // Appliquer la formule : (poids en kg) × (valeur par 100g) × 10
+    final multiplier = record.quantityKg * 10;
 
     // Accumuler les vitamines (unités conservées)
     totalVitaminA +=
@@ -135,5 +137,71 @@ final vitaminDistributionPercentagesProvider =
     'vitaminC': (vitaminTotals['vitaminC']! / total) * 100,
     'vitaminE': (vitaminTotals['vitaminE']! / total) * 100,
     'vitaminK': (vitaminTotals['vitaminK']! / total) * 100,
+  };
+});
+
+/// Version NON FILTRÉE de vitaminDistributionProvider.
+final vitaminDistributionAllProvider =
+    FutureProvider<Map<String, double>>((ref) async {
+  final harvestRecordsState = ref.watch(harvestRecordsProvider);
+  final plantsList = ref.watch(plantsListProvider);
+
+  if (harvestRecordsState.isLoading) throw Exception('Loading records...');
+
+  final allRecords = harvestRecordsState.records;
+  if (allRecords.isEmpty) {
+    return {
+      'vitaminA': 0.0,
+      'vitaminB9': 0.0,
+      'vitaminC': 0.0,
+      'vitaminE': 0.0,
+      'vitaminK': 0.0,
+    };
+  }
+
+  double totalVitaminA = 0.0; // µg
+  double totalVitaminB9 = 0.0; // µg
+  double totalVitaminC = 0.0; // mg
+  double totalVitaminE = 0.0; // mg
+  double totalVitaminK = 0.0; // µg
+
+  for (final record in allRecords) {
+    Map<String, double> s = {};
+
+    // A. Snapshot existant
+    if (record.nutritionSnapshot != null &&
+        record.nutritionSnapshot!.isNotEmpty) {
+      s = record.nutritionSnapshot!;
+    } else {
+      // B. Calcul via Normalizer
+      var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+      if (plant == null && record.plantName != null) {
+        plant = plantsList
+            .where((p) =>
+                p.commonName.toLowerCase() == record.plantName!.toLowerCase())
+            .firstOrNull;
+      }
+      if (plant != null && plant.nutritionPer100g != null) {
+        s = NutritionNormalizer.computeSnapshot(
+            plant.nutritionPer100g, record.quantityKg);
+      }
+    }
+
+    if (s.isEmpty) continue;
+
+    // Accumuler les vitamines via clés canoniques
+    totalVitaminA += s['vitamin_a_mcg'] ?? 0.0;
+    totalVitaminB9 += s['vitamin_b9_mcg'] ?? 0.0;
+    totalVitaminC += s['vitamin_c_mg'] ?? 0.0;
+    totalVitaminE += s['vitamin_e_mg'] ?? 0.0;
+    totalVitaminK += s['vitamin_k_mcg'] ?? 0.0;
+  }
+
+  return {
+    'vitaminA': totalVitaminA,
+    'vitaminB9': totalVitaminB9,
+    'vitaminC': totalVitaminC,
+    'vitaminE': totalVitaminE,
+    'vitaminK': totalVitaminK,
   };
 });

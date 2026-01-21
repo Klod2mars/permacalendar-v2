@@ -3,6 +3,7 @@ import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
+import '../../../../core/services/nutrition_normalizer.dart';
 
 /// Modèle pour les données du Radar Chart (6 axes)
 class NutritionRadarData {
@@ -188,6 +189,135 @@ final nutritionRadarProvider = FutureProvider<NutritionRadarData>((ref) async {
 
   // Antioxidants: Principalement Vit C, E, et A.
   // On peut faire une moyenne pondérée ou simple de ces 3 là.
+  final sAntioxidants = (sVitC + sVitE + sVitA) / 3;
+
+  return NutritionRadarData(
+    energyScore: sEnergy,
+    proteinScore: sProtein,
+    fiberScore: sFiber,
+    vitaminScore: sVitamins,
+    mineralScore: sMinerals,
+    antioxidantScore: sAntioxidants,
+  );
+});
+
+/// Version NON FILTRÉE de nutritionRadarProvider.
+/// Agrège toutes les récoltes existantes, indépendamment des filtres.
+/// Utilise NutritionNormalizer pour une meilleure robustesse des données.
+final nutritionRadarAllProvider = FutureProvider<NutritionRadarData>((ref) async {
+  final harvestRecordsState = ref.watch(harvestRecordsProvider);
+  final plantsList = ref.watch(plantsListProvider);
+
+  if (harvestRecordsState.isLoading) throw Exception('Loading records...');
+
+  final allRecords = harvestRecordsState.records;
+  if (allRecords.isEmpty) return NutritionRadarData.empty();
+
+  DateTime minDate = allRecords.first.date;
+  DateTime maxDate = allRecords.first.date;
+  for (final r in allRecords) {
+    if (r.date.isBefore(minDate)) minDate = r.date;
+    if (r.date.isAfter(maxDate)) maxDate = r.date;
+  }
+  // Durée en jours (min 1 jour)
+  final durationInDays = maxDate.difference(minDate).inDays + 1;
+
+  double totalKcals = 0.0;
+  double totalProteinG = 0.0;
+  double totalFiberG = 0.0;
+
+  double totalVitAmcg = 0.0;
+  double totalVitCmg = 0.0;
+  double totalVitEmg = 0.0;
+  double totalVitKmcg = 0.0;
+  double totalVitB9ug = 0.0; // b9_mcg
+
+  double totalCaMg = 0.0;
+  double totalMgMg = 0.0;
+  double totalFeMg = 0.0;
+  double totalKMg = 0.0;
+
+  for (final record in allRecords) {
+    Map<String, double> s = {};
+
+    // A. Snapshot existant
+    if (record.nutritionSnapshot != null &&
+        record.nutritionSnapshot!.isNotEmpty) {
+      s = record.nutritionSnapshot!;
+    } else {
+      // B. Calcul via Normalizer
+      var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
+      if (plant == null && record.plantName != null) {
+        plant = plantsList
+            .where((p) =>
+                p.commonName.toLowerCase() == record.plantName!.toLowerCase())
+            .firstOrNull;
+      }
+      if (plant != null && plant.nutritionPer100g != null) {
+        s = NutritionNormalizer.computeSnapshot(
+            plant.nutritionPer100g, record.quantityKg);
+      }
+    }
+
+    if (s.isEmpty) continue;
+
+    // Accumulation robuste via clés canoniques
+    totalKcals += s['calories_kcal'] ?? 0.0;
+    totalProteinG += s['protein_g'] ?? 0.0;
+    totalFiberG += s['fiber_g'] ?? 0.0;
+
+    totalVitAmcg += s['vitamin_a_mcg'] ?? 0.0;
+    totalVitCmg += s['vitamin_c_mg'] ?? 0.0;
+    totalVitEmg += s['vitamin_e_mg'] ?? 0.0;
+    totalVitKmcg += s['vitamin_k_mcg'] ?? 0.0;
+    totalVitB9ug += s['vitamin_b9_mcg'] ?? 0.0;
+
+    totalCaMg += s['calcium_mg'] ?? 0.0;
+    totalMgMg += s['magnesium_mg'] ?? 0.0;
+    totalFeMg += s['iron_mg'] ?? 0.0;
+    totalKMg += s['potassium_mg'] ?? 0.0;
+  }
+
+  // 4. Calcul Scores
+  final needsFactor = durationInDays.toDouble();
+
+  // AJR standards (copiés du provider original)
+  const driKcal = 2000.0;
+  const driProtein = 50.0;
+  const driFiber = 30.0;
+  const driVitA = 900.0;
+  const driVitC = 90.0;
+  const driVitE = 15.0;
+  const driVitK = 120.0;
+  const driVitB9 = 400.0;
+  const driCa = 1000.0;
+  const driMg = 400.0;
+  const driFe = 18.0;
+  const driK = 4700.0;
+
+  double calcScore(double total, double dri) {
+    if (needsFactor == 0) return 0;
+    return (total / (dri * needsFactor)) * 100;
+  }
+
+  final sEnergy = calcScore(totalKcals, driKcal);
+  final sProtein = calcScore(totalProteinG, driProtein);
+  final sFiber = calcScore(totalFiberG, driFiber);
+
+  final sVitA = calcScore(totalVitAmcg, driVitA);
+  final sVitC = calcScore(totalVitCmg, driVitC);
+  final sVitE = calcScore(totalVitEmg, driVitE);
+  final sVitK = calcScore(totalVitKmcg, driVitK);
+  final sVitB9 = calcScore(totalVitB9ug, driVitB9);
+
+  final sVitamins = (sVitA + sVitC + sVitE + sVitK + sVitB9) / 5;
+
+  final sCa = calcScore(totalCaMg, driCa);
+  final sMg = calcScore(totalMgMg, driMg);
+  final sFe = calcScore(totalFeMg, driFe);
+  final sK = calcScore(totalKMg, driK);
+
+  final sMinerals = (sCa + sMg + sFe + sK) / 4;
   final sAntioxidants = (sVitC + sVitE + sVitA) / 3;
 
   return NutritionRadarData(
