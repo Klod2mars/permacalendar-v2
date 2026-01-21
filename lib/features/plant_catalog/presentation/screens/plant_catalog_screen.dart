@@ -52,19 +52,11 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         final current = ref.read(plantsListProvider);
-        if (kDebugMode) {
-          debugPrint('DEBUG_INIT: providerPlants.count = ${current.length}');
-          if (current.isNotEmpty) {
-             // Debug debug
-             // debugPrint('First plant: ${current.first.toJson()}');
-          }
-        }
         if (current.isEmpty) {
-          if (kDebugMode) debugPrint('DEBUG_INIT: triggering loadPlants()...');
           ref.read(plantCatalogProvider.notifier).loadPlants();
         }
       } catch (e, st) {
-        if (kDebugMode) debugPrint('DEBUG_INIT ERROR: $e\n$st');
+        // Validation log only if needed
       }
     });
   }
@@ -225,7 +217,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
 
     if (raw != null && raw.isNotEmpty) {
-      if (kDebugMode) debugPrint('[DEBUG_IMG] Plant ${plant.commonName} raw="$raw"');
+      // if (kDebugMode) debugPrint('[DEBUG_IMG] Plant ${plant.commonName} raw="$raw"');
       
       final isNetwork =
           RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
@@ -234,7 +226,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
       // We are more restrictive to avoid false positives with simple filenames like "brocoli"
       final bool isLocalFile = !isNetwork && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.'))); 
       
-      if (kDebugMode) debugPrint('[DEBUG_IMG] isNetwork=$isNetwork, isLocalFile=$isLocalFile');
+      // if (kDebugMode) debugPrint('[DEBUG_IMG] isNetwork=$isNetwork, isLocalFile=$isLocalFile');
 
       if (isNetwork) {
         imageWidget = Image.network(
@@ -253,7 +245,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           width: double.infinity,
           fit: BoxFit.cover,
           errorBuilder: (c, e, st) {
-             if (kDebugMode) debugPrint('Error loading file image $raw: $e');
+             // if (kDebugMode) debugPrint('Error loading file image $raw: $e');
              return _fallbackImage(height: imageHeight);
           },
         );

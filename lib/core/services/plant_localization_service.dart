@@ -27,9 +27,9 @@ class PlantLocalizationService {
       _localizedData = json.decode(jsonString);
       _currentLocale = locale;
       _isLoaded = true;
-      print('PlantLocalizationService: Loaded $locale with ${_localizedData.length} entries.');
+      // print('PlantLocalizationService: Loaded $locale with ${_localizedData.length} entries.');
     } catch (e) {
-      print('PlantLocalizationService: Error loading locale $locale: $e');
+      // print('PlantLocalizationService: Error loading locale $locale: $e');
       // If load fails, we keep empty map, so we show technical tokens (graceful degradation)
       _localizedData = {};
       _isLoaded = false;

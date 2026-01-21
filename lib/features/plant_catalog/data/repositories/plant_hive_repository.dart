@@ -164,7 +164,7 @@ class PlantHiveRepository {
   /// - Préserve les préférences utilisateur (isActive, createdAt)
   Future<void> syncWithJson([String languageCode = 'fr']) async {
     if (_isSyncing) {
-      print('PlantHiveRepository: Sync already in progress, skipping.');
+      // print('PlantHiveRepository: Sync already in progress, skipping.');
       return;
     }
     _isSyncing = true;
@@ -172,7 +172,7 @@ class PlantHiveRepository {
     try {
       developer.log('PlantHiveRepository: Début de la synchronisation JSON (Smart Sync) - Langue: $languageCode',
           name: 'PlantHiveRepository');
-      print('PlantHiveRepository: syncWithJson START - Langue: $languageCode');
+      // print('PlantHiveRepository: syncWithJson START - Langue: $languageCode');
 
       // 0. Préparer le fallback map pour les images (charger les noms FR si on est pas en FR)
       // Cela permet de retrouver les images nommées en français même si on charge un JSON allemand/anglais
@@ -200,7 +200,7 @@ class PlantHiveRepository {
           }
            developer.log('PlantHiveRepository: Loaded ${frenchFallbackMap.length} fallback names from FR', name: 'PlantHiveRepository');
         } catch (e) {
-           print('PlantHiveRepository: Warning - Failed to load FR fallback names: $e');
+           // print('PlantHiveRepository: Warning - Failed to load FR fallback names: $e');
         }
       }
 
@@ -211,7 +211,7 @@ class PlantHiveRepository {
       try {
         jsonString = await rootBundle.loadString(assetPath);
       } catch (e) {
-        print('PlantHiveRepository: ⚠️ Echec chargement $assetPath, fallback sur fr');
+        // print('PlantHiveRepository: ⚠️ Echec chargement $assetPath, fallback sur fr');
         assetPath = _getAssetPath('fr');
         jsonString = await rootBundle.loadString(assetPath);
       }
@@ -227,7 +227,7 @@ class PlantHiveRepository {
       }
 
       if (plantsList.isEmpty) {
-        print('PlantHiveRepository: JSON vide, skip sync.');
+        // print('PlantHiveRepository: JSON vide, skip sync.');
         return;
       }
 
@@ -262,12 +262,12 @@ class PlantHiveRepository {
             } else {
               // NOUVEAU : Insertion directe
               await box.put(id, candidatePlant);
-              print('PlantHiveRepository: ✨ Nouvelle plante ajoutée : ${candidatePlant.commonName} ($id)');
+              // print('PlantHiveRepository: ✨ Nouvelle plante ajoutée : ${candidatePlant.commonName} ($id)');
               addedCount++;
             }
           }
         } catch (e) {
-          print('Error syncing plant: $e');
+          // print('Error syncing plant: $e');
           errorCount++;
         }
       }
@@ -275,12 +275,12 @@ class PlantHiveRepository {
       developer.log(
           'PlantHiveRepository: Sync terminé - +$addedCount, ~$updatedCount, !$errorCount',
           name: 'PlantHiveRepository');
-      print(
-          'PlantHiveRepository: syncWithJson END - Added: $addedCount, Updated: $updatedCount, Errors: $errorCount');
+      // print(
+      //     'PlantHiveRepository: syncWithJson END - Added: $addedCount, Updated: $updatedCount, Errors: $errorCount');
 
       _isInitialized = true;
     } catch (e) {
-      print('!!! EXCEPTION syncWithJson: $e');
+      // print('!!! EXCEPTION syncWithJson: $e');
       developer.log('PlantHiveRepository: Erreur sync JSON: $e', level: 1000);
       // On ne throw pas pour ne pas bloquer l'app, juste log
     } finally {
