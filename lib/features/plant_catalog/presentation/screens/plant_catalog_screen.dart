@@ -376,40 +376,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      const SizedBox(height: 8),
-                      // Mini Summary
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        children: [
-                          if (plant.sowingMonths.isNotEmpty)
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(Icons.calendar_month,
-                                    size: 14, color: Colors.grey),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '${plant.sowingMonths.length} mois',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                          if (plant.spacing > 0)
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(Icons.straighten,
-                                    size: 14, color: Colors.grey),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '${plant.spacing}cm',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
+
                     ],
                   ),
                 ),
