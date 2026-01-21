@@ -104,7 +104,10 @@
           "salsa"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Verão, Outono",
@@ -154,7 +157,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "asparagus",
@@ -261,7 +269,9 @@
           "cebola"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Primavera",
@@ -312,7 +322,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "basil",
@@ -976,7 +991,11 @@
           "pepino"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Outono",
       "harvestSeason": "Outono, Inverno",
@@ -1139,7 +1158,12 @@
           "plantas da família das brassicáceas no mesmo local"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Outono (conforme clima)",
       "harvestSeason": "Outono, Inverno",
@@ -1189,7 +1213,14 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "brussels_sprout",
@@ -1301,7 +1332,11 @@
           "outras brassicáceas (rabanete, nabo, rúcula, mostarda) na mesma parcela"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Outono,Inverno",
@@ -1352,7 +1387,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cabbage",
@@ -1467,7 +1506,13 @@
           "tomates"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Outono",
       "harvestSeason": "Outono, Inverno",
@@ -1518,7 +1563,13 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "carrot",
@@ -1816,7 +1867,12 @@
           "outras brassicáceas (repolho, brócolis, nabo...), morangos"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Outono (conforme variedade)",
       "harvestSeason": "Outono, Inverno",
@@ -1870,7 +1926,12 @@
             "message": "Condições ideais de germinação (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "celery_branch",
@@ -1977,7 +2038,11 @@
           "evitar plantas ávidas por água como a abobrinha"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Outono",
@@ -2027,7 +2092,11 @@
             "message": "Temperatura ideal de germinação atingida (18°C) — bom momento para semear"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "chard",
@@ -2499,7 +2568,13 @@
           "mas evitar concorrência com plantas invasoras"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Verão",
@@ -2666,10 +2741,8 @@
         ]
       },
       "sowingMonths3": [
-        "Mar",
         "Apr",
-        "May",
-        "Aug"
+        "May"
       ],
       "harvestMonths3": [
         "Jan",
@@ -2726,7 +2799,11 @@
             "message": "Condições ideais de germinação atingidas (22-25°C) - bom momento para semear!"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cucumber",
@@ -3018,7 +3095,13 @@
           "funcho"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Verão",
@@ -3523,7 +3606,11 @@
           "outras brassicáceas (couves, nabos, rabanetes, rúcula, mostarda) nos 5-6 anos"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Outono",
       "harvestSeason": "Outono, Inverno",
@@ -3572,7 +3659,12 @@
             "message": "Condições ideais de germinação da couve kale (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "leek",
@@ -4237,6 +4329,7 @@
         ]
       },
       "sowingMonths3": [
+        "Feb",
         "Mar",
         "Apr",
         "May"
@@ -4292,7 +4385,11 @@
             "message": "Condições ideais de germinação (24-28°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "navet",
@@ -5091,7 +5188,10 @@
           "tomate"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Verão, Outono",
@@ -5138,7 +5238,11 @@
             "message": "Temperatura ótima de germinação atingida (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr"
+      ]
     },
     {
       "id": "courge_potiron",
@@ -5404,7 +5508,8 @@
         "May",
         "Jun",
         "Jul",
-        "Aug"
+        "Aug",
+        "Sep"
       ],
       "harvestMonths3": [
         "May",
@@ -5618,7 +5723,14 @@
             "message": "Germinação pode ser lenta/caprichosa."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "salsify",
@@ -6351,9 +6463,11 @@
         ]
       },
       "sowingMonths3": [
+        "Mar",
         "Apr",
         "May",
-        "Jun"
+        "Jun",
+        "Jul"
       ],
       "harvestMonths3": [
         "Jul",
@@ -6408,7 +6522,11 @@
             "message": "Condições ideais de germinação do milho doce (20-25°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "thyme",
@@ -6520,7 +6638,6 @@
         ]
       },
       "sowingMonths3": [
-        "Mar",
         "Apr",
         "May"
       ],
@@ -6586,7 +6703,14 @@
             "message": "Temperatura ótima de germinação atingida (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "tomato",
@@ -7401,7 +7525,15 @@
           "milho doce"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera,Outono",
       "harvestSeason": "Primavera,Outono,Inverno",
@@ -7444,7 +7576,15 @@
             "message": null
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ]
     },
     {
       "id": "chayotte",
@@ -7870,12 +8010,10 @@
         ]
       },
       "sowingMonths3": [
-        "Feb",
         "Mar",
         "Apr",
         "May",
-        "Jun",
-        "Jul"
+        "Jun"
       ],
       "harvestMonths3": [
         "Jun",
@@ -7927,7 +8065,13 @@
             "message": null
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "chou-daubenton",
@@ -8259,7 +8403,23 @@
             "message": "Condições ideais para o nascimento rápido de suas sementes de Mizuna."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "butternut_squash",
@@ -9759,7 +9919,13 @@
             "message": "Condições ideais para a sementeira do feijão coco."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "yellow_bean",
@@ -9913,7 +10079,14 @@
             "message": "Temperatura ideal para uma sementeira bem sucedida hoje."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "lentil",
@@ -10349,9 +10522,8 @@
       "sowingMonths3": [
         "Feb",
         "Mar",
-        "Apr",
-        "Sep",
-        "Oct"
+        "Aug",
+        "Sep"
       ],
       "harvestMonths3": [
         "May",
@@ -10406,7 +10578,14 @@
             "message": "Temperatura ideal para a levada de suas cebolas."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Jan",
+        "Feb",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
     },
     {
       "id": "red_onion",

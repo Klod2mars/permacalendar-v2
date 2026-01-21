@@ -104,7 +104,10 @@
           "Petersilie"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer, Herbst",
@@ -154,7 +157,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "asparagus",
@@ -261,7 +269,9 @@
           "Zwiebel"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Frühling",
@@ -312,7 +322,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "basil",
@@ -948,7 +963,11 @@
           "Gurke"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst",
       "harvestSeason": "Herbst, Winter",
@@ -1109,7 +1128,12 @@
           "Pflanzen der Kreuzblütler-Familie am selben Ort"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst (je nach Klima)",
       "harvestSeason": "Herbst, Winter",
@@ -1157,7 +1181,14 @@
             "message": "Optimale Keimbedingungen (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "brussels_sprout",
@@ -1269,7 +1300,11 @@
           "andere Kreuzblütler (Radieschen, Rüben, Rucola, Senf) auf der gleichen Parzelle"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Herbst, Winter",
@@ -1318,7 +1353,11 @@
             "message": "Optimale Keimbedingungen (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cabbage",
@@ -1433,7 +1472,13 @@
           "Tomaten"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst",
       "harvestSeason": "Herbst, Winter",
@@ -1482,7 +1527,13 @@
             "message": "Optimale Keimbedingungen (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "carrot",
@@ -1780,7 +1831,12 @@
           "andere Kreuzblütler (Kohl, Brokkoli, Rübe...), Erdbeeren"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst (je nach Sorte)",
       "harvestSeason": "Herbst, Winter",
@@ -1834,7 +1890,12 @@
             "message": "Optimale Keimbedingungen (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "celery_branch",
@@ -1941,7 +2002,11 @@
           "wasserzehrende Pflanzen wie Zucchini vermeiden"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Herbst",
@@ -1991,7 +2056,11 @@
             "message": "Optimale Keimtemperatur erreicht (18°C) — guter Moment zum Säen"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "chard",
@@ -2463,7 +2532,13 @@
           "aber Konkurrenz mit invasiven Pflanzen vermeiden"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer",
@@ -2690,7 +2765,15 @@
             "message": "Optimale Keimbedingungen erreicht (22-25°C) - guter Moment zum Säen!"
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cucumber",
@@ -3021,7 +3104,14 @@
             "message": "Optimale Keimbedingungen (18-22°C)"
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "eggplant",
@@ -3469,10 +3559,8 @@
         ]
       },
       "sowingMonths3": [
-        "Mar",
         "Apr",
-        "May",
-        "Aug"
+        "May"
       ],
       "harvestMonths3": [
         "Jan",
@@ -3529,7 +3617,11 @@
             "message": "Optimale Keimbedingungen erreicht (22-25°C) - guter Moment zum Säen!"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cucumber",
@@ -3821,7 +3913,13 @@
           "Fenchel"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer",
@@ -4345,7 +4443,11 @@
           "andere Kreuzblütler (Kohl, Rüben, Radieschen, Rucola, Senf) innerhalb von 5-6 Jahren"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst",
       "harvestSeason": "Herbst, Winter",
@@ -4394,7 +4496,12 @@
             "message": "Optimale Keimbedingungen für Grünkohl (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "leek",
@@ -5058,7 +5165,12 @@
           "Nachtschattengewächse"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer",
@@ -5106,7 +5218,11 @@
             "message": "Optimale Keimbedingungen (24-28°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "navet",
@@ -5904,7 +6020,10 @@
           "Tomate"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer, Herbst",
@@ -5951,7 +6070,11 @@
             "message": "Optimale Keimtemperatur erreicht (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr"
+      ]
     },
     {
       "id": "courge_potiron",
@@ -6217,7 +6340,15 @@
           "Konkurrenz mit Starkzehrern meiden"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst",
       "harvestSeason": "Frühling, Sommer, Herbst",
@@ -6376,7 +6507,11 @@
           "Pflanzen mit hohem Wasser- oder Nährstoffbedarf (z.B. Kürbis, Salat)"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Ganzjährig (Blätter)",
@@ -6425,7 +6560,14 @@
             "message": "Optimale Keimtemperatur erreicht (20°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "salsify",
@@ -6529,7 +6671,11 @@
           "Stickstoffzehrer"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Automne, Winter",
@@ -7190,7 +7336,13 @@
           "Einzelpflanzung"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer",
@@ -7239,7 +7391,11 @@
             "message": "Optimale Keimtemperatur (20-25°C) erreicht."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "thyme",
@@ -7347,7 +7503,10 @@
           "Feuchtigkeitsliebende Pflanzen (z.B. Gurke, Salat) - unterschiedliche Ansprüche"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling",
       "harvestSeason": "Sommer",
@@ -7397,7 +7556,14 @@
             "message": "Optimale Keimtemperatur (20°C)."
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "tomato",
@@ -8214,7 +8380,15 @@
           "Mais"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Frühling, Herbst",
       "harvestSeason": "Frühling, Herbst, Winter",
@@ -8257,7 +8431,15 @@
             "message": null
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ]
     },
     {
       "id": "chayotte",
@@ -8671,12 +8853,10 @@
         ]
       },
       "sowingMonths3": [
-        "Feb",
         "Mar",
         "Apr",
         "May",
-        "Jun",
-        "Jul"
+        "Jun"
       ],
       "harvestMonths3": [
         "Jun",
@@ -8689,7 +8869,13 @@
       ],
       "plantingSeason": "Frühling, Sommer",
       "harvestSeason": "Sommer, Herbst, Winter",
-      "notificationSettings": {}
+      "notificationSettings": {},
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "chou-daubenton",
@@ -9024,7 +9210,23 @@
             "message": "Gute Keimbedingungen."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "butternut_squash",
@@ -10032,7 +10234,14 @@
             "message": "Keimtemperatur gut."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "Oct",
+        "Nov"
+      ]
     },
     {
       "id": "gobo",
@@ -10513,7 +10722,13 @@
             "message": "Keimtemperatur gut."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "yellow_bean",
@@ -10665,7 +10880,14 @@
             "message": "Keimtemp ideal."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "lentil",
@@ -11157,7 +11379,20 @@
             "message": "Keimtemperatur ideal."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "Jan",
+        "Feb",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
     },
     {
       "id": "red_onion",
@@ -11989,7 +12224,20 @@
             "message": "Keimtemperatur ideal."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "Jan",
+        "Feb",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
     },
     {
       "id": "red_onion",

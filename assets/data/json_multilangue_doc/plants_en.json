@@ -104,7 +104,10 @@
           "parsley"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer, Autumn",
@@ -154,7 +157,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "asparagus",
@@ -261,7 +269,9 @@
           "onion"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Spring",
@@ -312,7 +322,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "basil",
@@ -976,7 +991,11 @@
           "cucumber"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring, Autumn",
       "harvestSeason": "Autumn, Winter",
@@ -1137,7 +1156,12 @@
           "brassicaceae family plants in same spot"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring, Autumn (depending on climate)",
       "harvestSeason": "Autumn, Winter",
@@ -1185,7 +1209,14 @@
             "message": "Optimal germination conditions (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "brussels_sprout",
@@ -1297,7 +1328,11 @@
           "other brassicaceae (radish, turnip, arugula, mustard) on same plot"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Autumn,Winter",
@@ -1346,7 +1381,11 @@
             "message": "Optimal germination conditions (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cabbage",
@@ -1461,7 +1500,13 @@
           "tomatoes"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring, Autumn",
       "harvestSeason": "Autumn, Winter",
@@ -1510,7 +1555,13 @@
             "message": "Optimal germination conditions (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "carrot",
@@ -1808,7 +1859,12 @@
           "other brassicaceae (cabbage, broccoli, turnip...), strawberries"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring, Autumn (depending on variety)",
       "harvestSeason": "Autumn, Winter",
@@ -1862,7 +1918,12 @@
             "message": "Optimal germination conditions (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "celery_branch",
@@ -1969,7 +2030,11 @@
           "avoid water-hungry plants like zucchini"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Autumn",
@@ -2019,7 +2084,11 @@
             "message": "Optimal germination temperature reached (18°C) — good time to sow"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "chard",
@@ -2500,7 +2569,13 @@
           "but avoid competition with invasive plants"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer",
@@ -2676,10 +2751,8 @@
         ]
       },
       "sowingMonths3": [
-        "Mar",
         "Apr",
-        "May",
-        "Aug"
+        "May"
       ],
       "harvestMonths3": [
         "Jan",
@@ -2736,7 +2809,11 @@
             "message": "Optimal germination conditions reached (22-25°C) - good time to sow!"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cucumber",
@@ -3028,7 +3105,13 @@
           "fennel"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer",
@@ -3552,7 +3635,11 @@
           "other brassicaceae (cabbages, turnips, radishes, arugula, mustard) within 5-6 years"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring, Autumn",
       "harvestSeason": "Autumn, Winter",
@@ -3601,7 +3688,12 @@
             "message": "Optimal germination conditions for kale (18-20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "leek",
@@ -4273,7 +4365,12 @@
           "solanaceae"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer",
@@ -4321,7 +4418,11 @@
             "message": "Optimal germination conditions (24-28°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "navet",
@@ -5164,7 +5265,10 @@
           "tomato"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer, Autumn",
@@ -5211,7 +5315,11 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr"
+      ]
     },
     {
       "id": "courge_potiron",
@@ -5477,7 +5585,15 @@
           "avoid competition with heavy feeders"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring, Autumn",
       "harvestSeason": "Spring, Summer, Autumn",
@@ -5639,7 +5755,11 @@
           "plants hungry for water or rich soil (e.g. squash, lettuce)"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "All year (leaves)",
@@ -5688,7 +5808,14 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "salsify",
@@ -5792,7 +5919,11 @@
           "plants hungry for nitrogen"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Autumn,Winter",
@@ -6474,7 +6605,13 @@
           "solitary plants (inefficient pollination)"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer",
@@ -6523,7 +6660,11 @@
             "message": "Optimal germination conditions for sweet corn (20-25°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "thyme",
@@ -6634,7 +6775,10 @@
           "plants hungry for water (e.g. zucchini, lettuce) — water incompatibility"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring",
       "harvestSeason": "Summer",
@@ -6684,7 +6828,14 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "tomato",
@@ -7545,7 +7696,15 @@
           "sweet corn"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring,Autumn",
       "harvestSeason": "Spring,Autumn,Winter",
@@ -7588,7 +7747,15 @@
             "message": null
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ]
     },
     {
       "id": "chayotte",
@@ -8039,11 +8206,22 @@
           "other Brassicaceae"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Spring,Summer",
       "harvestSeason": "Summer,Autumn,Winter",
-      "notificationSettings": {}
+      "notificationSettings": {},
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "chou-daubenton",
@@ -8415,7 +8593,23 @@
             "message": "Ideal conditions for rapid germination of your Mizuna seeds."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "butternut_squash",
@@ -9503,7 +9697,14 @@
             "message": "Optimal germination temperature reached."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "Oct",
+        "Nov"
+      ]
     },
     {
       "id": "gobo",
@@ -10022,7 +10223,13 @@
             "message": "Ideal conditions for coco bean sowing."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "yellow_bean",
@@ -10186,7 +10393,14 @@
             "message": "Ideal temperature for successful sowing today."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "lentil",
@@ -10698,7 +10912,20 @@
             "message": "Ideal temperature for your onion emergence."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "Jan",
+        "Feb",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
     },
     {
       "id": "red_onion",

@@ -104,7 +104,10 @@
           "prezzemolo"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate, Autunno",
@@ -154,7 +157,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "asparagus",
@@ -261,7 +269,9 @@
           "cipolla"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Primavera",
@@ -312,7 +322,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "basil",
@@ -976,7 +991,11 @@
           "cetriolo"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Autunno",
       "harvestSeason": "Autunno, Inverno",
@@ -1139,7 +1158,12 @@
           "piante della famiglia delle brassicacee nello stesso posto"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Autunno (secondo clima)",
       "harvestSeason": "Autunno, Inverno",
@@ -1189,7 +1213,14 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "brussels_sprout",
@@ -1301,7 +1332,11 @@
           "altre brassicacee (rafani, rape, rucola, senape) sulla stessa parcella"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Autunno,Inverno",
@@ -1352,7 +1387,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cabbage",
@@ -1467,7 +1506,13 @@
           "pomodori"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Autunno",
       "harvestSeason": "Autunno, Inverno",
@@ -1518,7 +1563,13 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "carrot",
@@ -1816,7 +1867,12 @@
           "altre brassicacee (cavolo, broccolo, rapa...), fragole"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Autunno (secondo varietà)",
       "harvestSeason": "Autunno, Inverno",
@@ -1872,7 +1928,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "celery_branch",
@@ -1979,7 +2040,11 @@
           "evitare le piante esigenti in acqua come la zucchina"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Autunno",
@@ -2031,7 +2096,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "chard",
@@ -2503,7 +2572,13 @@
           "ma evitare la concorrenza con piante invadenti"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate",
@@ -2679,10 +2754,8 @@
         ]
       },
       "sowingMonths3": [
-        "Mar",
         "Apr",
-        "May",
-        "Aug"
+        "May"
       ],
       "harvestMonths3": [
         "Jan",
@@ -2739,7 +2812,11 @@
             "message": "Condizioni ottimali di germinazione raggiunte (22-25°C) - buon momento per seminare!"
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "cucumber",
@@ -3031,7 +3108,13 @@
           "finocchio"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate",
@@ -3542,7 +3625,11 @@
           "altre brassicacee (cavoli, rape, rafani, rucola, senape) nei 5-6 anni"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Autunno",
       "harvestSeason": "Autunno, Inverno",
@@ -3593,7 +3680,12 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "leek",
@@ -4257,7 +4349,12 @@
           "solanacee"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate",
@@ -4307,7 +4404,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May"
+      ]
     },
     {
       "id": "navet",
@@ -5150,7 +5251,10 @@
           "pomodoro"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate, Autunno",
@@ -5199,7 +5303,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr"
+      ]
     },
     {
       "id": "courge_potiron",
@@ -5467,7 +5575,15 @@
           "evitare la competizione con piante ingombranti"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera, Autunno",
       "harvestSeason": "Primavera, Estate, Autunno",
@@ -5631,7 +5747,11 @@
           "piante esigenti in acqua o suolo ricco (es: zucche, lattughe)"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Tutto l'anno (foglie)",
@@ -5682,7 +5802,14 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "salsify",
@@ -5786,7 +5913,11 @@
           "piante esigenti in azoto"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Autunno,Inverno",
@@ -6487,7 +6618,13 @@
           "piante solitarie (impollinazione inefficace)"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate",
@@ -6538,7 +6675,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ]
     },
     {
       "id": "thyme",
@@ -6649,7 +6790,10 @@
           "piante esigenti in acqua (es: zucchina, lattuga) — incompatibilità idrica"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera",
       "harvestSeason": "Estate",
@@ -6701,7 +6845,14 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "tomato",
@@ -7562,7 +7713,15 @@
           "mais dolce"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera,Autunno",
       "harvestSeason": "Primavera,Autunno,Inverno",
@@ -7605,7 +7764,15 @@
             "message": null
           }
         }
-      }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ]
     },
     {
       "id": "chayotte",
@@ -8055,11 +8222,22 @@
           "altre Brassicacee"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": "Primavera,Estate",
       "harvestSeason": "Estate,Autunno,Inverno",
-      "notificationSettings": {}
+      "notificationSettings": {},
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "chou-daubenton",
@@ -8431,7 +8609,23 @@
             "message": "Condizioni ideali per la levata rapida dei vostri semi di Mizuna."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ]
     },
     {
       "id": "butternut_squash",
@@ -9518,7 +9712,14 @@
             "message": "Temperatura ottimale di germinazione raggiunta."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "Oct",
+        "Nov"
+      ]
     },
     {
       "id": "gobo",
@@ -10037,7 +10238,13 @@
             "message": "Condizioni ideali per la semina del fagiolo coco."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ]
     },
     {
       "id": "yellow_bean",
@@ -10201,7 +10408,14 @@
             "message": "Temperatura ideale per una semina riuscita oggi."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ]
     },
     {
       "id": "lentil",
@@ -10712,7 +10926,20 @@
             "message": "Temperatura ideale per la levata delle vostre cipolle."
           }
         }
-      }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "Jan",
+        "Feb",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
     },
     {
       "id": "red_onion",

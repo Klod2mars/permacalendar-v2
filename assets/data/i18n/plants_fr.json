@@ -56,7 +56,16 @@
       "amount": "25 à 50 mm d'eau par semaine",
       "method": "Arrosage au pied, éviter de mouiller le feuillage",
       "bestTime": "Tôt le matin ou tard le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr"
+    ],
+    "plantingMonths3": [
+      "Mar",
+      "Apr",
+      "May"
+    ]
   },
   "asparagus": {
     "commonName": "Asperge",
@@ -116,7 +125,15 @@
       "amount": "50-75 mm par arrosage (soit ~2,8 mm/jour en période de croissance maximale)",
       "method": "Arrosage goutte-à-goutte ou au pied, éviter l'humidité stagnante",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Apr"
+    ],
+    "plantingMonths3": [
+      "Mar",
+      "Apr",
+      "May"
+    ]
   },
   "basil": {
     "commonName": "Basilic",
@@ -357,7 +374,12 @@
       "amount": "2-4 litres par m²/semaine (ajuster selon sol)",
       "method": "Arrosage doux au pied, éviter le feuillage",
       "bestTime": "Tôt le matin ou le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Jun",
+      "Jul",
+      "Aug"
+    ]
   },
   "broccoli": {
     "commonName": "Brocoli",
@@ -416,7 +438,20 @@
       "amount": "Maintenir le sol toujours frais",
       "method": "Goutte-à-goutte idéal, éviter les excès",
       "bestTime": "Tôt le matin ou le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun"
+    ],
+    "plantingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug"
+    ]
   },
   "brussels_sprout": {
     "commonName": "Chou de Bruxelles",
@@ -479,7 +514,16 @@
       "amount": "20-30 mm/semaine (10-15 mm par arrosage)",
       "method": "Au pied, sol humide mais non détrempé",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun"
+    ]
   },
   "cabbage": {
     "commonName": "Chou pommé",
@@ -541,7 +585,20 @@
       "amount": "4-6 litres par plant/semaine",
       "method": "Arrosage au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun"
+    ],
+    "plantingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ]
   },
   "carrot": {
     "commonName": "Carotte",
@@ -665,7 +722,18 @@
       "amount": "20-25 mm/semaine",
       "method": "Au pied, sol constamment humide mais non détrempé",
       "bestTime": "Tôt le matin ou le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun"
+    ],
+    "plantingMonths3": [
+      "Jun",
+      "Jul",
+      "Aug"
+    ]
   },
   "celery_branch": {
     "commonName": "Céleri branche",
@@ -727,7 +795,16 @@
       "amount": "20-30 mm/semaine",
       "method": "Arrosage au pied, sans mouiller le feuillage",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Feb",
+      "Mar",
+      "Apr"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun"
+    ]
   },
   "chard": {
     "commonName": "Blette",
@@ -904,7 +981,14 @@
       "amount": "Sol maintenu humide sans eau stagnante",
       "method": "Arroser au pied, éviter de mouiller les feuilles",
       "bestTime": "Tôt le matin ou en soirée"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ]
   },
   "courgette": {
     "commonName": "Courgette",
@@ -969,7 +1053,15 @@
       "amount": "5-8 litres par plant/semaine",
       "method": "Arrosage au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun"
+    ]
   },
   "cucumber": {
     "commonName": "Concombre",
@@ -1090,7 +1182,14 @@
       "amount": "Sol légèrement humide, éviter le détrempé",
       "method": "Sous paillage si possible, au pied sans mouiller le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ]
   },
   "eggplant": {
     "commonName": "Aubergine",
@@ -1276,7 +1375,17 @@
       "amount": "Arrosage profond 1-2 fois/semaine",
       "method": "Au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May",
+      "Jun"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun",
+      "Jul"
+    ]
   },
   "leek": {
     "commonName": "Poireau",
@@ -1516,7 +1625,17 @@
       "amount": "10-20 mm/semaine",
       "method": "Arrosage au pied, goutte-à-goutte idéal",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Feb",
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "plantingMonths3": [
+      "Apr",
+      "May"
+    ]
   },
   "navet": {
     "commonName": "Navet",
@@ -1814,7 +1933,15 @@
       "amount": "15-30 mm/semaine (3-6 mm/jour selon phase)",
       "method": "Arrosage au sol, entre les rangs, sans mouiller le feuillage",
       "bestTime": "Tôt le matin ou en fin d’après-midi"
-    }
+    },
+    "plantingMonths3": [
+      "Mar",
+      "Apr"
+    ],
+    "sowingMonths3": [
+      "Mar",
+      "Apr"
+    ]
   },
   "courge_potiron": {
     "commonName": "Courge Potiron ",
@@ -1933,7 +2060,16 @@
       "amount": "Modéré (éviter l'excès pour ne pas pourrir les racines)",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep"
+    ]
   },
   "rosemary": {
     "commonName": "Romarin",
@@ -1993,7 +2129,19 @@
       "amount": "Arrosage profond, uniquement quand le sol est sec sur 2 cm (en pot)",
       "method": "Au pied, en profondeur, jamais par petites doses répétées",
       "bestTime": "Tôt le matin ou en fin de journée"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "plantingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Sep",
+      "Oct"
+    ]
   },
   "salsify": {
     "commonName": "Salsifis",
@@ -2054,7 +2202,12 @@
       "amount": "Arrosage léger en pluie fine durant la germination, modéré ensuite",
       "method": "En pluie fine au début, puis au pied sans mouiller le feuillage",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May"
+    ]
   },
   "scarole": {
     "commonName": "Scarole",
@@ -2292,7 +2445,18 @@
       "amount": "15-20 mm/semaine",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun"
+    ]
   },
   "thyme": {
     "commonName": "Thym",
@@ -2355,7 +2519,18 @@
       "amount": "Environ 20 litres/m² tous les 6 jours en potager paillé sous 30°C",
       "method": "Arrosage au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May"
+    ],
+    "plantingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Sep",
+      "Oct"
+    ]
   },
   "tomato": {
     "commonName": "Tomate",
@@ -2674,7 +2849,24 @@
       "amount": "20-25 mm par semaine en l’absence de pluie",
       "method": "Au pied, goutte-à-goutte ou tuyau suintant",
       "bestTime": null
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep"
+    ],
+    "plantingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep"
+    ]
   },
   "chayotte": {
     "commonName": "Chayotte",
@@ -2840,7 +3032,19 @@
       "amount": null,
       "method": "Au pied, irrigation localisée",
       "bestTime": "Matin ou soir"
-    }
+    },
+    "sowingMonths3": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun"
+    ],
+    "plantingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ]
   },
   "chou-daubenton": {
     "commonName": "Chou Daubenton",
@@ -2961,7 +3165,23 @@
       "amount": "Régulier sans excès pour éviter l'asphyxie",
       "method": "Au pied, irrigation douce (goutte-à-goutte)",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep"
+    ],
+    "plantingMonths3": [
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct"
+    ]
   },
   "butternut_squash": {
     "commonName": "Courge Butternut",
@@ -3328,7 +3548,14 @@
       "amount": "Environ 250 mm répartis sur le cycle",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Tôt le matin"
-    }
+    },
+    "sowingMonths3": [
+      "Feb",
+      "Mar",
+      "Apr",
+      "Oct",
+      "Nov"
+    ]
   },
   "gobo": {
     "commonName": "Gobo (Grande Bardane)",
@@ -3510,7 +3737,13 @@
       "amount": "Maintenir le sol frais sans excès",
       "method": "Au pied, sans mouiller le feuillage",
       "bestTime": "Matin ou soir"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ]
   },
   "yellow_bean": {
     "commonName": "Haricot jaune",
@@ -3572,7 +3805,14 @@
       "amount": "Régulier, surtout lors de la floraison et formation des gousses",
       "method": "Au pied, éviter le mouillage du feuillage",
       "bestTime": "Tôt le matin ou le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug"
+    ]
   },
   "lentil": {
     "commonName": "Lentille",
@@ -3751,7 +3991,20 @@
       "amount": "Apports légers et fréquents (éviter la saturation du sol)",
       "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
       "bestTime": "Tôt le matin ou le soir"
-    }
+    },
+    "sowingMonths3": [
+      "Feb",
+      "Mar",
+      "Aug",
+      "Sep"
+    ],
+    "plantingMonths3": [
+      "Jan",
+      "Feb",
+      "Oct",
+      "Nov",
+      "Dec"
+    ]
   },
   "red_onion": {
     "commonName": "Oignon rouge",
