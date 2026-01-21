@@ -2325,4 +2325,49 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get export_field_desc_activity_entity_id => 'ID de l\'objet concerné';
+
+  @override
+  String get plant_catalog_sow => 'Sembrar';
+
+  @override
+  String get plant_catalog_plant => 'Plantar';
+
+  @override
+  String get plant_catalog_show_selection => 'Mostrar selección';
+
+  @override
+  String get plant_catalog_filter_green_only => 'Verdes solo';
+
+  @override
+  String get plant_catalog_filter_green_orange => 'Verdes + Naranjas';
+
+  @override
+  String get plant_catalog_filter_all => 'Todos';
+
+  @override
+  String get plant_catalog_no_recommended =>
+      'No hay plantas recomendadas para este período.';
+
+  @override
+  String get plant_catalog_expand_window => 'Ampliar (±2 meses)';
+
+  @override
+  String get plant_catalog_missing_period_data => 'Datos de período faltantes';
+
+  @override
+  String plant_catalog_periods_prefix(String months) {
+    return 'Períodos: $months';
+  }
+
+  @override
+  String get plant_catalog_legend_green => 'Listo este mes';
+
+  @override
+  String get plant_catalog_legend_orange => 'Cerca / Pronto';
+
+  @override
+  String get plant_catalog_legend_red => 'Fuera de temporada';
+
+  @override
+  String get plant_catalog_data_unknown => 'Datos desconocidos';
 }

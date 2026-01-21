@@ -1575,7 +1575,52 @@
   "export_field_desc_activity_title": "Résumé de l'action",
   "export_field_desc_activity_desc": "Détails complets",
   "export_field_desc_activity_entity": "Nom de l'objet concerné (Plante, Parcelle...)",
-  "export_field_desc_activity_entity_id": "ID de l'objet concerné"
+  "export_field_desc_activity_entity_id": "ID de l'objet concerné",
+
+  "plant_catalog_sow": "Semer",
+  "@plant_catalog_sow": { "description": "Label du bouton Semer" },
+
+  "plant_catalog_plant": "Planter",
+  "@plant_catalog_plant": { "description": "Label du bouton Planter" },
+
+  "plant_catalog_show_selection": "Afficher sélection",
+  "@plant_catalog_show_selection": { "description": "Bouton pour afficher la sélection Semer/Planter" },
+
+  "plant_catalog_filter_green_only": "Verts seulement",
+  "@plant_catalog_filter_green_only": { "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)" },
+
+  "plant_catalog_filter_green_orange": "Verts + Oranges",
+  "@plant_catalog_filter_green_orange": { "description": "Filtre afficher les plantes vertes et oranges" },
+
+  "plant_catalog_filter_all": "Tous",
+  "@plant_catalog_filter_all": { "description": "Filtre afficher toutes les plantes" },
+
+  "plant_catalog_no_recommended": "Aucune plante recommandée sur la période.",
+  "@plant_catalog_no_recommended": { "description": "Message si aucune plante n'est recommandée pour la date/action donnée" },
+
+  "plant_catalog_expand_window": "Élargir (±2 mois)",
+  "@plant_catalog_expand_window": { "description": "Action pour élargir la fenêtre temporelle" },
+
+  "plant_catalog_missing_period_data": "Données de période manquantes",
+  "@plant_catalog_missing_period_data": { "description": "Message quand la plante n'a pas d'information de période" },
+
+  "plant_catalog_periods_prefix": "Périodes: {months}",
+  "@plant_catalog_periods_prefix": {
+    "description": "Préfixe listant les périodes available pour la plante",
+    "placeholders": { "months": { "type": "String" } }
+  },
+
+  "plant_catalog_legend_green": "Prêt ce mois",
+  "@plant_catalog_legend_green": { "description": "Légende couleur verte" },
+
+  "plant_catalog_legend_orange": "Proche / Bientôt",
+  "@plant_catalog_legend_orange": { "description": "Légende couleur orange" },
+
+  "plant_catalog_legend_red": "Hors saison",
+  "@plant_catalog_legend_red": { "description": "Légende couleur rouge" },
+
+  "plant_catalog_data_unknown": "Données inconnues",
+  "@plant_catalog_data_unknown": { "description": "Mention pour données manquantes/grises" }
 }
 
 

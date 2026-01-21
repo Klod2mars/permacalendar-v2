@@ -872,6 +872,38 @@
   "export_field_desc_activity_title": "Summary of the action",
   "export_field_desc_activity_desc": "Complete details",
   "export_field_desc_activity_entity": "Name of the object concerned (Plant, Plot...)",
-  "export_field_desc_activity_entity_id": "ID of the object concerned"
+  "export_field_desc_activity_entity_id": "ID of the object concerned",
+
+  "plant_catalog_sow": "Sow",
+  "@plant_catalog_sow": { "description": "Label for Sow button" },
+  "plant_catalog_plant": "Plant",
+  "@plant_catalog_plant": { "description": "Label for Plant button" },
+  "plant_catalog_show_selection": "Show selection",
+  "@plant_catalog_show_selection": { "description": "Button to show selection" },
+  "plant_catalog_filter_green_only": "Green only",
+  "@plant_catalog_filter_green_only": { "description": "Filter green plants only" },
+  "plant_catalog_filter_green_orange": "Green + Orange",
+  "@plant_catalog_filter_green_orange": { "description": "Filter green and orange plants" },
+  "plant_catalog_filter_all": "All",
+  "@plant_catalog_filter_all": { "description": "Filter all plants" },
+  "plant_catalog_no_recommended": "No plants recommended for this period.",
+  "@plant_catalog_no_recommended": { "description": "Message when no plants are recommended" },
+  "plant_catalog_expand_window": "Expand (±2 months)",
+  "@plant_catalog_expand_window": { "description": "Action to expand time window" },
+  "plant_catalog_missing_period_data": "Missing period data",
+  "@plant_catalog_missing_period_data": { "description": "Message for missing period data" },
+  "plant_catalog_periods_prefix": "Periods: {months}",
+  "@plant_catalog_periods_prefix": {
+    "description": "Prefix listing available periods",
+    "placeholders": { "months": { "type": "String" } }
+  },
+  "plant_catalog_legend_green": "Ready this month",
+  "@plant_catalog_legend_green": { "description": "Green legend" },
+  "plant_catalog_legend_orange": "Close / Soon",
+  "@plant_catalog_legend_orange": { "description": "Orange legend" },
+  "plant_catalog_legend_red": "Out of season",
+  "@plant_catalog_legend_red": { "description": "Red legend" },
+  "plant_catalog_data_unknown": "Unknown data",
+  "@plant_catalog_data_unknown": { "description": "Unknown data label" }
 }
 

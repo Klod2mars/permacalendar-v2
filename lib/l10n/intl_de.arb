@@ -630,5 +630,37 @@
   "export_field_garden_id": "Garten-ID",
   "export_field_garden_surface": "Fläche (m²)",
   "export_field_garden_creation": "Erstellungsdatum",
-  "export_field_bed_name": "Beetname"
+  "export_field_bed_name": "Beetname",
+
+  "plant_catalog_sow": "Säen",
+  "@plant_catalog_sow": { "description": "Label du bouton Semer" },
+  "plant_catalog_plant": "Pflanzen",
+  "@plant_catalog_plant": { "description": "Label du bouton Planter" },
+  "plant_catalog_show_selection": "Auswahl ansehen",
+  "@plant_catalog_show_selection": { "description": "Bouton pour afficher la sélection Semer/Planter" },
+  "plant_catalog_filter_green_only": "Nur Grüne",
+  "@plant_catalog_filter_green_only": { "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)" },
+  "plant_catalog_filter_green_orange": "Grün + Orange",
+  "@plant_catalog_filter_green_orange": { "description": "Filtre afficher les plantes vertes et oranges" },
+  "plant_catalog_filter_all": "Alle",
+  "@plant_catalog_filter_all": { "description": "Filtre afficher toutes les plantes" },
+  "plant_catalog_no_recommended": "Keine Pflanzen für diesen Zeitraum empfohlen.",
+  "@plant_catalog_no_recommended": { "description": "Message si aucune plante n'est recommandée pour la date/action donnée" },
+  "plant_catalog_expand_window": "Erweitern (±2 Monate)",
+  "@plant_catalog_expand_window": { "description": "Action pour élargir la fenêtre temporelle" },
+  "plant_catalog_missing_period_data": "Fehlende Zeitraumsdaten",
+  "@plant_catalog_missing_period_data": { "description": "Message quand la plante n'a pas d'information de période" },
+  "plant_catalog_periods_prefix": "Zeiträume: {months}",
+  "@plant_catalog_periods_prefix": {
+    "description": "Préfixe listant les périodes available pour la plante",
+    "placeholders": { "months": { "type": "String" } }
+  },
+  "plant_catalog_legend_green": "Bereit diesen Monat",
+  "@plant_catalog_legend_green": { "description": "Légende couleur verte" },
+  "plant_catalog_legend_orange": "Nahe / Bald",
+  "@plant_catalog_legend_orange": { "description": "Légende couleur orange" },
+  "plant_catalog_legend_red": "Außerhalb der Saison",
+  "@plant_catalog_legend_red": { "description": "Légende couleur rouge" },
+  "plant_catalog_data_unknown": "Unbekannte Daten",
+  "@plant_catalog_data_unknown": { "description": "Mention pour données manquantes/grises" }
 }

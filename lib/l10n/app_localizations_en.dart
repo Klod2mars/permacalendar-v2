@@ -2307,4 +2307,49 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get export_field_desc_activity_entity_id =>
       'ID of the object concerned';
+
+  @override
+  String get plant_catalog_sow => 'Sow';
+
+  @override
+  String get plant_catalog_plant => 'Plant';
+
+  @override
+  String get plant_catalog_show_selection => 'Show selection';
+
+  @override
+  String get plant_catalog_filter_green_only => 'Green only';
+
+  @override
+  String get plant_catalog_filter_green_orange => 'Green + Orange';
+
+  @override
+  String get plant_catalog_filter_all => 'All';
+
+  @override
+  String get plant_catalog_no_recommended =>
+      'No plants recommended for this period.';
+
+  @override
+  String get plant_catalog_expand_window => 'Expand (±2 months)';
+
+  @override
+  String get plant_catalog_missing_period_data => 'Missing period data';
+
+  @override
+  String plant_catalog_periods_prefix(String months) {
+    return 'Periods: $months';
+  }
+
+  @override
+  String get plant_catalog_legend_green => 'Ready this month';
+
+  @override
+  String get plant_catalog_legend_orange => 'Close / Soon';
+
+  @override
+  String get plant_catalog_legend_red => 'Out of season';
+
+  @override
+  String get plant_catalog_data_unknown => 'Unknown data';
 }

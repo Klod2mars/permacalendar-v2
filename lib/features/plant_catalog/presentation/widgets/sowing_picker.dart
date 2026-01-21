@@ -59,7 +59,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
           return Column(
             children: [
               ListTile(
-                title: Text(_action == ActionType.sow ? 'Semer' : 'Planter'),
+                title: Text(_action == ActionType.sow ? AppLocalizations.of(context)!.plant_catalog_sow : AppLocalizations.of(context)!.plant_catalog_plant),
                 trailing: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
               ),
               Expanded(
@@ -67,7 +67,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                   ? Center(child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Aucune plante recommandée sur la période.'),
+                        Text(AppLocalizations.of(context)!.plant_catalog_no_recommended),
                         SizedBox(height: 8),
                         TextButton(onPressed: () {
                           // expand: recompute with larger window - could be parameterized
@@ -75,7 +75,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                           Navigator.of(context).pop();
                           setState(() {});
                           _openResults();
-                        }, child: Text('Élargir (±2 mois)')),
+                        }, child: Text(AppLocalizations.of(context)!.plant_catalog_expand_window)),
                       ],
                     ))
                   : ListView.separated(
@@ -109,8 +109,8 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
 
   String _buildSubtitle(PlantFreezed plant) {
     final months = buildEligibleMonthsForAction(plant, _action);
-    if (months.isEmpty) return 'Données de période manquantes';
-    return 'Périodes: ${months.map((m)=>_monthName(m)).join(', ')}';
+    if (months.isEmpty) return AppLocalizations.of(context)!.plant_catalog_missing_period_data;
+    return AppLocalizations.of(context)!.plant_catalog_periods_prefix(months.map((m)=>_monthName(m)).join(', '));
   }
 
   String _monthName(int m) {
@@ -132,7 +132,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
               child: ToggleButtons(
                 isSelected: [_action == ActionType.sow, _action == ActionType.plant],
                 onPressed: (i) => setState(() => _action = (i==0?ActionType.sow:ActionType.plant)),
-                children: [Padding(padding: EdgeInsets.all(8), child: Text('Semer')), Padding(padding: EdgeInsets.all(8), child: Text('Planter'))],
+                children: [Padding(padding: EdgeInsets.all(8), child: Text(AppLocalizations.of(context)!.plant_catalog_sow)), Padding(padding: EdgeInsets.all(8), child: Text(AppLocalizations.of(context)!.plant_catalog_plant))],
               ),
             ),
             IconButton(icon: Icon(Icons.calendar_today), onPressed: () async {
@@ -142,9 +142,9 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
             PopupMenuButton<int>(
               onSelected: (v) => setState(() => _filterMode = v),
               itemBuilder: (_) => [
-                PopupMenuItem(value: 0, child: Text('Verts seulement')),
-                PopupMenuItem(value: 1, child: Text('Verts + Oranges')),
-                PopupMenuItem(value: 2, child: Text('Tous')),
+                PopupMenuItem(value: 0, child: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_only)),
+                PopupMenuItem(value: 1, child: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_orange)),
+                PopupMenuItem(value: 2, child: Text(AppLocalizations.of(context)!.plant_catalog_filter_all)),
               ],
               child: Icon(Icons.filter_list),
             )
@@ -153,7 +153,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
         SizedBox(height: 8),
         Row(
           children: [
-            Expanded(child: ElevatedButton(onPressed: _openResults, child: Text('Afficher sélection'))),
+            Expanded(child: ElevatedButton(onPressed: _openResults, child: Text(AppLocalizations.of(context)!.plant_catalog_show_selection))),
             SizedBox(width: 8),
             Text('${_computeResults().length}'),
           ],

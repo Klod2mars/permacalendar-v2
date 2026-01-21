@@ -4305,6 +4305,90 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'ID de l\'objet concerné'**
   String get export_field_desc_activity_entity_id;
+
+  /// Label du bouton Semer
+  ///
+  /// In fr, this message translates to:
+  /// **'Semer'**
+  String get plant_catalog_sow;
+
+  /// Label du bouton Planter
+  ///
+  /// In fr, this message translates to:
+  /// **'Planter'**
+  String get plant_catalog_plant;
+
+  /// Bouton pour afficher la sélection Semer/Planter
+  ///
+  /// In fr, this message translates to:
+  /// **'Afficher sélection'**
+  String get plant_catalog_show_selection;
+
+  /// Filtre afficher uniquement les plantes vertes (idéal ce mois)
+  ///
+  /// In fr, this message translates to:
+  /// **'Verts seulement'**
+  String get plant_catalog_filter_green_only;
+
+  /// Filtre afficher les plantes vertes et oranges
+  ///
+  /// In fr, this message translates to:
+  /// **'Verts + Oranges'**
+  String get plant_catalog_filter_green_orange;
+
+  /// Filtre afficher toutes les plantes
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get plant_catalog_filter_all;
+
+  /// Message si aucune plante n'est recommandée pour la date/action donnée
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune plante recommandée sur la période.'**
+  String get plant_catalog_no_recommended;
+
+  /// Action pour élargir la fenêtre temporelle
+  ///
+  /// In fr, this message translates to:
+  /// **'Élargir (±2 mois)'**
+  String get plant_catalog_expand_window;
+
+  /// Message quand la plante n'a pas d'information de période
+  ///
+  /// In fr, this message translates to:
+  /// **'Données de période manquantes'**
+  String get plant_catalog_missing_period_data;
+
+  /// Préfixe listant les périodes available pour la plante
+  ///
+  /// In fr, this message translates to:
+  /// **'Périodes: {months}'**
+  String plant_catalog_periods_prefix(String months);
+
+  /// Légende couleur verte
+  ///
+  /// In fr, this message translates to:
+  /// **'Prêt ce mois'**
+  String get plant_catalog_legend_green;
+
+  /// Légende couleur orange
+  ///
+  /// In fr, this message translates to:
+  /// **'Proche / Bientôt'**
+  String get plant_catalog_legend_orange;
+
+  /// Légende couleur rouge
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors saison'**
+  String get plant_catalog_legend_red;
+
+  /// Mention pour données manquantes/grises
+  ///
+  /// In fr, this message translates to:
+  /// **'Données inconnues'**
+  String get plant_catalog_data_unknown;
 }
 
 class _AppLocalizationsDelegate

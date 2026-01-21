@@ -630,5 +630,37 @@
   "export_field_garden_id": "ID del Jardín",
   "export_field_garden_surface": "Área (m²)",
   "export_field_garden_creation": "Fecha de Creación",
-  "export_field_bed_name": "Nombre de la Parcela"
+  "export_field_bed_name": "Nombre de la Parcela",
+
+  "plant_catalog_sow": "Sembrar",
+  "@plant_catalog_sow": { "description": "Label du bouton Semer" },
+  "plant_catalog_plant": "Plantar",
+  "@plant_catalog_plant": { "description": "Label du bouton Planter" },
+  "plant_catalog_show_selection": "Mostrar selección",
+  "@plant_catalog_show_selection": { "description": "Bouton pour afficher la sélection Semer/Planter" },
+  "plant_catalog_filter_green_only": "Verdes solo",
+  "@plant_catalog_filter_green_only": { "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)" },
+  "plant_catalog_filter_green_orange": "Verdes + Naranjas",
+  "@plant_catalog_filter_green_orange": { "description": "Filtre afficher les plantes vertes et oranges" },
+  "plant_catalog_filter_all": "Todos",
+  "@plant_catalog_filter_all": { "description": "Filtre afficher toutes les plantes" },
+  "plant_catalog_no_recommended": "No hay plantas recomendadas para este período.",
+  "@plant_catalog_no_recommended": { "description": "Message si aucune plante n'est recommandée pour la date/action donnée" },
+  "plant_catalog_expand_window": "Ampliar (±2 meses)",
+  "@plant_catalog_expand_window": { "description": "Action pour élargir la fenêtre temporelle" },
+  "plant_catalog_missing_period_data": "Datos de período faltantes",
+  "@plant_catalog_missing_period_data": { "description": "Message quand la plante n'a pas d'information de période" },
+  "plant_catalog_periods_prefix": "Períodos: {months}",
+  "@plant_catalog_periods_prefix": {
+    "description": "Préfixe listant les périodes available pour la plante",
+    "placeholders": { "months": { "type": "String" } }
+  },
+  "plant_catalog_legend_green": "Listo este mes",
+  "@plant_catalog_legend_green": { "description": "Légende couleur verte" },
+  "plant_catalog_legend_orange": "Cerca / Pronto",
+  "@plant_catalog_legend_orange": { "description": "Légende couleur orange" },
+  "plant_catalog_legend_red": "Fuera de temporada",
+  "@plant_catalog_legend_red": { "description": "Légende couleur rouge" },
+  "plant_catalog_data_unknown": "Datos desconocidos",
+  "@plant_catalog_data_unknown": { "description": "Mention pour données manquantes/grises" }
 }
