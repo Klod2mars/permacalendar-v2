@@ -18,6 +18,9 @@ import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_pro
 // Formulaire
 import 'custom_plant_form_screen.dart';
 import 'package:permacalendar/shared/utils/plant_image_resolver.dart';
+import 'package:permacalendar/features/plant_catalog/application/sowing_utils.dart';
+import 'package:permacalendar/features/plant_catalog/presentation/widgets/sowing_picker.dart';
+import 'plant_detail_screen.dart';
 
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -206,6 +209,15 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     return null;
   }
 
+  // -------------------------
+  // Navigation
+  // -------------------------
+  void _navigateToDetail(PlantFreezed plant) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => PlantDetailScreen(plantId: plant.id)),
+    );
+  }
+
   // Build Plant Card
   Widget _buildPlantCard(PlantFreezed plant, [int index = -1]) {
     final raw = _resolveImagePathFromPlant(plant);
@@ -288,7 +300,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
              );
           } else {
              // Afficher les détails ou rien si pas selection mode
-             // Pour l'instant rien ou snackbar
+             // Afficher les détails
+             _navigateToDetail(plant);
           }
         }
       },
@@ -301,7 +314,44 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 180.0, child: imageWidget),
+                Stack(
+                  children: [
+                    SizedBox(height: 180.0, child: imageWidget),
+                     // Season Status Indicator
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      child: FutureBuilder<SeasonInfo>(
+                        // Use immediate computation since it is sync
+                        future: Future.value(computeSeasonInfoForPlant(
+                          plant: plant,
+                          date: DateTime.now(),
+                          action: ActionType.sow, // Default to Sow for grid view
+                        )),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) return const SizedBox.shrink();
+                          final status = snapshot.data!.status;
+                          return Container(
+                            width: 16,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              color: statusToColor(status),
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -326,6 +376,40 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                      const SizedBox(height: 8),
+                      // Mini Summary
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          if (plant.sowingMonths.isNotEmpty)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.calendar_month,
+                                    size: 14, color: Colors.grey),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '${plant.sowingMonths.length} mois',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          if (plant.spacing > 0)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.straighten,
+                                    size: 14, color: Colors.grey),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '${plant.spacing}cm',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -422,6 +506,13 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                   onChanged: (_) {
                     setState(() {});
                   },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: SowingPicker(
+                  plants: sourcePlants,
+                  onPlantSelected: _navigateToDetail,
                 ),
               ),
               Padding(
