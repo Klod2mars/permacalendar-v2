@@ -2374,4 +2374,20 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get plant_catalog_data_unknown => 'Dados desconhecidos';
+
+  @override
+  String get task_editor_photo_label => 'Photo de la tâche';
+
+  @override
+  String get task_editor_photo_add => 'Ajouter une photo';
+
+  @override
+  String get task_editor_photo_change => 'Changer la photo';
+
+  @override
+  String get task_editor_photo_remove => 'Retirer la photo';
+
+  @override
+  String get task_editor_photo_help =>
+      'La photo sera jointe automatiquement au PDF / Word à la création / envoi.';
 }

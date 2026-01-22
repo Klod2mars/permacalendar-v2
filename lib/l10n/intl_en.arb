@@ -905,6 +905,12 @@
   "plant_catalog_legend_red": "Out of season",
   "@plant_catalog_legend_red": { "description": "Red legend" },
   "plant_catalog_data_unknown": "Unknown data",
-  "@plant_catalog_data_unknown": { "description": "Unknown data label" }
+  "@plant_catalog_data_unknown": { "description": "Unknown data label" },
+  
+  "task_editor_photo_label": "Task Photo",
+  "task_editor_photo_add": "Add Photo",
+  "task_editor_photo_change": "Change Photo",
+  "task_editor_photo_remove": "Remove Photo",
+  "task_editor_photo_help": "The photo will be automatically attached to PDF / Word upon creation / sending."
 }
 

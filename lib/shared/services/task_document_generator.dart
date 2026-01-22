@@ -47,25 +47,44 @@ class TaskDocumentGenerator {
 
     final bool isUrgent = task.metadata['urgent'] == true;
 
-    pdf.addPage(pw.Page(build: (pw.Context ctx) {
-      return pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text('Tâche: ${task.title}', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
-          pw.SizedBox(height: 20),
-          _buildPdfRow('Description', task.description ?? '-'),
-          _buildPdfRow('Jardin', gardenName),
-          _buildPdfRow('Parcelle / Zone', bedName),
-          _buildPdfRow('Date prévue', dateStr),
-          _buildPdfRow('Durée', '${task.metadata?['durationMinutes'] ?? '-'} min'),
-          _buildPdfRow('Type', tKind),
-          _buildPdfRow('Priorité', task.metadata?['priority']?.toString() ?? '-'),
-          _buildPdfRow('Urgent', isUrgent ? 'OUI' : 'Non'),
-          _buildPdfRow('Assigné à', task.metadata?['assignee']?.toString() ?? '-'),
-          // Ajoutez d'autres champs si nécessaire
-        ],
-      );
-    }));
+
+
+    // Image integration (Add a new page or append if possible, but keep simple: add to end of column if single page, or new page)
+    // Actually, adding to the column above is best if it fits. 
+    // To update safely, let's redefine the page build to include the image in the column.
+    // However, I am replacing lines 50-68 which is the page build.
+    
+    // Check for image
+    final imgPath = task.metadata['attachedImagePath'] as String?;
+    pw.MemoryImage? attachedImage;
+    if (imgPath != null && imgPath.isNotEmpty) {
+      final f = File(imgPath);
+      if (await f.exists()) {
+        attachedImage = pw.MemoryImage(await f.readAsBytes());
+      }
+    }
+
+    pdf.addPage(pw.MultiPage(
+      build: (pw.Context ctx) => [
+        pw.Text('Tâche: ${task.title}', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+        pw.SizedBox(height: 20),
+        _buildPdfRow('Description', task.description ?? '-'),
+        _buildPdfRow('Jardin', gardenName),
+        _buildPdfRow('Parcelle / Zone', bedName),
+        _buildPdfRow('Date prévue', dateStr),
+        _buildPdfRow('Durée', '${task.metadata?['durationMinutes'] ?? '-'} min'),
+        _buildPdfRow('Type', tKind),
+        _buildPdfRow('Priorité', task.metadata?['priority']?.toString() ?? '-'),
+        _buildPdfRow('Urgent', isUrgent ? 'OUI' : 'Non'),
+        _buildPdfRow('Assigné à', task.metadata?['assignee']?.toString() ?? '-'),
+        if (attachedImage != null) ...[
+           pw.SizedBox(height: 20),
+           pw.Text('Photo jointe:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+           pw.SizedBox(height: 10),
+           pw.Center(child: pw.Image(attachedImage, width: 380, fit: pw.BoxFit.contain)),
+        ]
+      ],
+    ));
 
     final bytes = await pdf.save();
     final tmp = await getTemporaryDirectory();
@@ -166,6 +185,16 @@ class TaskDocumentGenerator {
       ..add(TextContent('urgent', isUrgent ? "OUI" : "Non"))
       ..add(TextContent('assignee', task.metadata?['assignee']?.toString() ?? ""))
       ..add(TextContent('recurrence', hasRecurrence ? "Oui" : "Non"));
+
+    // Add Image to DOCX
+    final imgPathDocx = task.metadata['attachedImagePath'] as String?;
+    if (imgPathDocx != null && imgPathDocx.isNotEmpty) {
+      final f = File(imgPathDocx);
+      if (await f.exists()) {
+        final imgBytes = await f.readAsBytes();
+        content.add(ImageContent('attachedImage', imgBytes));
+      }
+    }
 
     // 3. Générer
     final generated = await docx.generate(content);

@@ -2355,4 +2355,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get plant_catalog_data_unknown => 'Unknown data';
+
+  @override
+  String get task_editor_photo_label => 'Task Photo';
+
+  @override
+  String get task_editor_photo_add => 'Add Photo';
+
+  @override
+  String get task_editor_photo_change => 'Change Photo';
+
+  @override
+  String get task_editor_photo_remove => 'Remove Photo';
+
+  @override
+  String get task_editor_photo_help =>
+      'The photo will be automatically attached to PDF / Word upon creation / sending.';
 }

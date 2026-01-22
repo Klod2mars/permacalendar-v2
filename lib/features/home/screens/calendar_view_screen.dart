@@ -91,7 +91,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     }
   }
 
-  Future<void> _askToExport(Activity created, ExportOption suggested) async {
+  Future<void> _askToExport(Activity created) async {
     final l10n = AppLocalizations.of(context)!;
     // Ask user if they want to export now
     final want = await showDialog<bool>(
@@ -263,9 +263,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
     if (result != null && result is Map && result['task'] != null) {
       final Activity updated = result['task'] as Activity;
-      final ExportOption exportOption =
-          result['exportOption'] as ExportOption? ?? ExportOption.none;
-
+      // ExportOption removed
+      
       await _loadCalendarData();
 
       if (mounted) {
@@ -273,13 +272,10 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             content: Text(AppLocalizations.of(context)!.calendar_task_modified)));
 
         // Handle export if option selected or just prompt
-        if (exportOption != ExportOption.none) {
-          // For now, reuse _askToExport logic which prompts user
-          // Or if user explicitly selected "Export PDF", maybe just do it?
-          // Since ExportOption is just a dropdown, let's stick to consistent flow:
-          _askToExport(updated, exportOption);
+          // Handle export if option selected or just prompt
+          // Re-prompt always for consistency in this simplified flow
+           _askToExport(updated);
         }
-      }
     }
   }
 
@@ -501,14 +497,14 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
               if (result != null && result is Map<String, dynamic> && result['task'] != null) {
                 final Activity created = result['task'] as Activity;
-                final ExportOption exportOption = result['exportOption'] as ExportOption? ?? ExportOption.none;
-
+                // ExportOption removed
+                
                 // Reload calendar to show new task
                 await _loadCalendarData();
 
                 // After the UI has settled, ask user if they want to export
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _askToExport(created, exportOption);
+                  _askToExport(created);
                 });
               }
             },

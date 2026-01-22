@@ -68,7 +68,12 @@
     "export_field_desc_activity_title",
     "export_field_desc_activity_desc",
     "export_field_desc_activity_entity",
-    "export_field_desc_activity_entity_id"
+    "export_field_desc_activity_entity_id",
+    "task_editor_photo_label",
+    "task_editor_photo_add",
+    "task_editor_photo_change",
+    "task_editor_photo_remove",
+    "task_editor_photo_help"
   ],
 
   "es": [
@@ -140,7 +145,12 @@
     "export_field_desc_activity_title",
     "export_field_desc_activity_desc",
     "export_field_desc_activity_entity",
-    "export_field_desc_activity_entity_id"
+    "export_field_desc_activity_entity_id",
+    "task_editor_photo_label",
+    "task_editor_photo_add",
+    "task_editor_photo_change",
+    "task_editor_photo_remove",
+    "task_editor_photo_help"
   ],
 
   "it": [
@@ -212,7 +222,12 @@
     "export_field_desc_activity_title",
     "export_field_desc_activity_desc",
     "export_field_desc_activity_entity",
-    "export_field_desc_activity_entity_id"
+    "export_field_desc_activity_entity_id",
+    "task_editor_photo_label",
+    "task_editor_photo_add",
+    "task_editor_photo_change",
+    "task_editor_photo_remove",
+    "task_editor_photo_help"
   ],
 
   "pt": [
@@ -284,6 +299,11 @@
     "export_field_desc_activity_title",
     "export_field_desc_activity_desc",
     "export_field_desc_activity_entity",
-    "export_field_desc_activity_entity_id"
+    "export_field_desc_activity_entity_id",
+    "task_editor_photo_label",
+    "task_editor_photo_add",
+    "task_editor_photo_change",
+    "task_editor_photo_remove",
+    "task_editor_photo_help"
   ]
 }

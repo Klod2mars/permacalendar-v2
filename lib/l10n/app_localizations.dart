@@ -4395,6 +4395,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Données inconnues'**
   String get plant_catalog_data_unknown;
+
+  /// No description provided for @task_editor_photo_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photo de la tâche'**
+  String get task_editor_photo_label;
+
+  /// No description provided for @task_editor_photo_add.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une photo'**
+  String get task_editor_photo_add;
+
+  /// No description provided for @task_editor_photo_change.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer la photo'**
+  String get task_editor_photo_change;
+
+  /// No description provided for @task_editor_photo_remove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la photo'**
+  String get task_editor_photo_remove;
+
+  /// No description provided for @task_editor_photo_help.
+  ///
+  /// In fr, this message translates to:
+  /// **'La photo sera jointe automatiquement au PDF / Word à la création / envoi.'**
+  String get task_editor_photo_help;
 }
 
 class _AppLocalizationsDelegate

@@ -6,6 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as developer;
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 import '../../core/data/hive/garden_boxes.dart';
 import '../../core/models/activity.dart';
@@ -18,7 +21,7 @@ import '../../features/garden/providers/garden_provider.dart';
 
 import '../../l10n/app_localizations.dart';
 
-enum ExportOption { none, shareText, exportPdf, exportDocx }
+
 
 class CreateTaskDialog extends ConsumerStatefulWidget {
   final DateTime? initialDate;
@@ -43,7 +46,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   bool _urgent = false;
   String _priority = 'Medium'; // Low, Medium, High
   String _assignee = '';
-  ExportOption _selectedExportOption = ExportOption.none;
+
 
   late DateTime _startDate;
   TimeOfDay? _startTime;
@@ -51,6 +54,10 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
   // Recurrence
   Map<String, dynamic>? _recurrenceMap;
+
+  final ImagePicker _picker = ImagePicker();
+  String? _attachedImagePath;
+  XFile? _pickedImage;
 
   // Available Task Kinds
   // Available Task Kinds (will be localized in build)
@@ -111,6 +118,19 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       if (a.metadata['recurrence'] is Map) {
         _recurrenceMap = Map<String, dynamic>.from(a.metadata['recurrence']);
       }
+
+      if (a.metadata['attachedImagePath'] != null) {
+        final path = a.metadata['attachedImagePath'] as String;
+        // Check if file exists in background or just set it? 
+        // Sync check might block UI slightly but File.exists is common. 
+        // For strict correctness with strict linting, we might want to do this async, 
+        // but putting it in initState without await is risky if we rely on it immediately.
+        // We will just set it and let the image widget handle errors or check in addPostFrameCallback.
+        // However, the instructions suggested: "if (await File(path).exists()) ... setState". 
+        // We can't await in initState.
+        // We'll trigger a load method.
+        _loadAttachedImage(path);
+      }
     } else {
       _startDate = widget.initialDate ?? DateTime.now();
 
@@ -127,6 +147,54 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
         }
       });
     }
+  }
+
+  Future<void> _loadAttachedImage(String path) async {
+    if (await File(path).exists()) {
+      if (mounted) {
+        setState(() {
+          _attachedImagePath = path;
+          _pickedImage = XFile(path);
+        });
+      }
+    }
+  }
+
+  Future<void> _pickImageFromGallery() async {
+    try {
+      final XFile? picked = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+        maxWidth: 1600,
+      );
+      if (picked == null) return;
+
+      final appDir = await getApplicationDocumentsDirectory();
+      final ext = p.extension(picked.path);
+      final fileName = 'task_image_${DateTime.now().millisecondsSinceEpoch}$ext';
+      final saved = await File(picked.path).copy(p.join(appDir.path, fileName));
+
+      if (_attachedImagePath != null && _attachedImagePath != saved.path) {
+        try { await File(_attachedImagePath!).delete(); } catch (_) {}
+      }
+
+      setState(() {
+        _pickedImage = XFile(saved.path);
+        _attachedImagePath = saved.path;
+      });
+    } catch (e, s) {
+      developer.log('Image pick failed: $e\n$s');
+    }
+  }
+
+  Future<void> _removeAttachedImage() async {
+    if (_attachedImagePath != null) {
+      try { await File(_attachedImagePath!).delete(); } catch (_) {}
+    }
+    setState(() {
+      _attachedImagePath = null;
+      _pickedImage = null;
+    });
   }
 
   Future<void> _shareTask() async {
@@ -310,45 +378,44 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
             'zoneGardenBedId': _selectedGardenBedId, // redundant but requested
             'taskKind': _taskKind,
             'nextRunDate': finalDate.toIso8601String(),
+            if (_attachedImagePath != null && _attachedImagePath!.isNotEmpty)
+              'attachedImagePath': _attachedImagePath,
           },
         );
+
+        Activity savedTask;
 
         if (widget.activityToEdit != null) {
           // Update Mode
           final existing = widget.activityToEdit!;
-          final updated = Activity(
+          savedTask = Activity(
              id: existing.id, // Preserve ID
              type: existing.type,
              title: newTask.title, // Update fields
              description: newTask.description,
              entityId: existing.entityId, // Preserve entity linkage if any
              entityType: existing.entityType,
-             timestamp: finalDate, // Update timestamp to new date? Or keep original? Usually timestamp is event time.
-             // For task scheduler, timestamp often doubles as "date".
+             timestamp: finalDate, 
              metadata: newTask.metadata,
              createdAt: existing.createdAt,
              updatedAt: DateTime.now(),
              isActive: existing.isActive,
           );
           
-          await GardenBoxes.activities.put(updated.id, updated);
-          developer.log('[CreateTask] Updated activity id=${updated.id}');
-          
-          if (mounted) {
-            Navigator.pop(context, {'task': updated, 'exportOption': _selectedExportOption});
-          }
+          await GardenBoxes.activities.put(savedTask.id, savedTask);
+          developer.log('[CreateTask] Updated activity id=${savedTask.id}');
         } else {
           // Create Mode
-          await GardenBoxes.activities.put(newTask.id, newTask);
-
-          // debug log for verification
-          developer.log('[CreateTask] written activity id=${newTask.id} nextRun=${newTask.metadata['nextRunDate']}');
-          
-          // Close the dialog and return the created task (and chosen export option) to the caller.
-          if (mounted) {
-             Navigator.pop(context, {'task': newTask, 'exportOption': _selectedExportOption});
-          }
+          savedTask = newTask;
+          await GardenBoxes.activities.put(savedTask.id, savedTask);
+          developer.log('[CreateTask] written activity id=${savedTask.id}');
         }
+
+        if (mounted) {
+           // Show post-save dialog instead of popping immediately
+           await _showPostSaveDialog(savedTask);
+        }
+
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -357,6 +424,74 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                 backgroundColor: Colors.red),
           );
         }
+      }
+    }
+  }
+
+  Future<void> _showPostSaveDialog(Activity task) async {
+     // Use showDialog to ask for export
+     if (!mounted) return;
+     await showDialog(
+       context: context,
+       barrierDismissible: false,
+       builder: (ctx) => AlertDialog(
+         title: const Text('Tâche enregistrée'),
+         content: const Text('Souhaitez-vous envoyer la fiche tâche à quelqu\'un ?'),
+         actions: [
+           TextButton(
+             onPressed: () {
+               Navigator.of(ctx).pop();
+               Navigator.of(context).pop({'task': task});
+             },
+             child: const Text('Non merci'),
+           ),
+           FilledButton.icon(
+             icon: const Icon(Icons.picture_as_pdf),
+             label: const Text('PDF'),
+             onPressed: () async {
+               Navigator.of(ctx).pop(); // Close dialog first
+               await _generateAndShare(task, true); // Generate PDF
+               if (mounted) Navigator.of(context).pop({'task': task});
+             },
+           ),
+           FilledButton.icon(
+              icon: const Icon(Icons.description),
+              label: const Text('Word'),
+              onPressed: () async {
+                Navigator.of(ctx).pop();
+                await _generateAndShare(task, false); // Generate Word
+                if (mounted) Navigator.of(context).pop({'task': task});
+              },
+           ),
+         ],
+       ),
+     );
+  }
+
+  Future<void> _generateAndShare(Activity task, bool isPdf) async {
+    try {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Génération du document en cours...')),
+        );
+      }
+      
+      File file;
+      String mime;
+      if (isPdf) {
+        file = await TaskDocumentGenerator.generateTaskPdf(task);
+        mime = 'application/pdf';
+      } else {
+        file = await TaskDocumentGenerator.generateTaskDocx(task);
+        mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      }
+
+      if (mounted) {
+        await TaskDocumentGenerator.shareFile(file, mime, context, shareText: 'Tâche : ${task.title}');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur: $e')));
       }
     }
   }
@@ -612,28 +747,52 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               ),
               const SizedBox(height: 16),
 
-              // Export Options
-              DropdownButtonFormField<ExportOption>(
-                value: _selectedExportOption,
-                decoration: InputDecoration(
-                  labelText: l10n.task_editor_export_label,
-                  border: const OutlineInputBorder(),
-                  prefixIcon: const Icon(Icons.share),
-                ),
-                items: [
-                   DropdownMenuItem(value: ExportOption.none, child: Text(l10n.task_editor_option_none)),
-                   DropdownMenuItem(value: ExportOption.shareText, child: Text(l10n.task_editor_option_share)),
-                   DropdownMenuItem(value: ExportOption.exportPdf, child: Text(l10n.task_editor_option_pdf)),
-                   DropdownMenuItem(value: ExportOption.exportDocx, child: Text(l10n.task_editor_option_docx)),
-                ],
-                onChanged: (v) => setState(() => _selectedExportOption = v ?? ExportOption.none),
-              ),
-              const SizedBox(height: 16),
 
-              OutlinedButton.icon(
-                onPressed: null, // Disabled as per requirements (placeholder)
-                icon: const Icon(Icons.camera_alt),
-                label: Text(l10n.task_editor_photo_placeholder),
+
+              const SizedBox(height: 12),
+              Text(l10n.task_editor_photo_label ?? 'Photo de la tâche', style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(height: 8),
+
+              if (_attachedImagePath != null)
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Image.file(
+                        File(_attachedImagePath!),
+                        width: 88,
+                        height: 88,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: _pickImageFromGallery,
+                          icon: const Icon(Icons.photo_library),
+                          label: Text(l10n.task_editor_photo_change ?? 'Changer la photo'),
+                        ),
+                        TextButton(
+                          onPressed: _removeAttachedImage,
+                          child: Text(l10n.task_editor_photo_remove ?? 'Retirer la photo'),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              else
+                ElevatedButton.icon(
+                  onPressed: _pickImageFromGallery,
+                  icon: const Icon(Icons.photo_library_outlined),
+                  label: Text(l10n.task_editor_photo_add ?? 'Ajouter une photo'),
+                ),
+
+              const SizedBox(height: 8),
+              Text(
+                l10n.task_editor_photo_help ?? 'La photo sera jointe automatiquement au PDF / Word à la création / envoi.',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
               ),
 
               const SizedBox(height: 50), // Spacing for FAB/BottomBar
