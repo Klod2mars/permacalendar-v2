@@ -911,6 +911,18 @@
   "task_editor_photo_add": "Add Photo",
   "task_editor_photo_change": "Change Photo",
   "task_editor_photo_remove": "Remove Photo",
-  "task_editor_photo_help": "The photo will be automatically attached to PDF / Word upon creation / sending."
+  "task_editor_photo_help": "The photo will be automatically attached to PDF / Word upon creation / sending.",
+  
+  "settings_backup_restore_section": "Backup & Restore",
+  "settings_backup_restore_subtitle": "Full backup of your data",
+  "settings_backup_action": "Create Backup",
+  "settings_restore_action": "Restore Backup",
+  "settings_backup_creating": "Creating Backup...",
+  "settings_backup_success": "Backup created successfully!",
+  "settings_restore_warning_title": "Warning",
+  "settings_restore_warning_content": "Restoring a backup will overwrite ALL current data (gardens, plantings, settings). This action is irreversible. The app will restart after restore.\n\nAre you sure you want to proceed?",
+  "settings_restore_success": "Restore successful! Please restart the app.",
+  "settings_backup_error": "Backup failed: {error}",
+  "settings_restore_error": "Restore failed: {error}"
 }
 

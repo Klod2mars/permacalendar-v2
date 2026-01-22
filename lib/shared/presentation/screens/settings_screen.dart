@@ -16,10 +16,10 @@ import '../../../app_router.dart';
 import '../../../features/weather/providers/commune_provider.dart';
 import '../../../core/services/open_meteo_service.dart';
 import '../widgets/settings/calibration_settings_section.dart';
+import '../widgets/settings/backup_restore_section.dart';
 import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
 import '../../../features/settings/presentation/screens/language_settings_page.dart';
-
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -43,6 +43,8 @@ class SettingsScreen extends ConsumerWidget {
           _buildQuickAccessSection(context, theme),
           const SizedBox(height: 24),
           const CalibrationSettingsSection(),
+          const SizedBox(height: 24),
+          const BackupRestoreSection(),
           const SizedBox(height: 24),
           _buildAboutSection(context, theme),
         ]),

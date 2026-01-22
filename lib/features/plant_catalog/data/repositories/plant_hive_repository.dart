@@ -6,6 +6,9 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 
 import '../models/plant_hive.dart';
 import '../../domain/entities/plant_entity.dart';
@@ -38,7 +41,7 @@ class PlantHiveRepository {
   /// Initialise le repository et ouvre la box Hive
   static Future<void> initialize() async {
     try {
-      await Hive.openBox<PlantHive>(_boxName);
+      await _openBoxWithRetry<PlantHive>(_boxName);
 
       developer.log('PlantHiveRepository: Box initialisée avec succès',
           name: 'PlantHiveRepository');
@@ -52,11 +55,34 @@ class PlantHiveRepository {
     }
   }
 
+  /// Tente d'ouvrir une box. En cas d'erreur de lock, supprime le fichier .lock et réessaie.
+  static Future<Box<T>> _openBoxWithRetry<T>(String boxName) async {
+    try {
+      return await Hive.openBox<T>(boxName);
+    } catch (e) {
+      if (e.toString().toLowerCase().contains('lock')) {
+         developer.log('[PlantHiveRepository] Lock détecté sur $boxName. Tentative de suppression du lock...', name: 'PlantHiveRepository');
+         try {
+           final appDir = await getApplicationDocumentsDirectory();
+           final lockFile = File(p.join(appDir.path, '$boxName.lock'));
+           if (await lockFile.exists()) {
+             await lockFile.delete();
+             developer.log('[PlantHiveRepository] Lock supprimé. Nouvelle tentative ouverture...', name: 'PlantHiveRepository');
+             return await Hive.openBox<T>(boxName);
+           }
+         } catch (recoveryError) {
+           developer.log('[PlantHiveRepository] Echec récupération lock: $recoveryError', name: 'PlantHiveRepository');
+         }
+      }
+      rethrow;
+    }
+  }
+
   /// Obtient la box Hive, l'initialise si nécessaire
   Future<Box<PlantHive>> _getBox() async {
     if (_box == null || !_box!.isOpen) {
       try {
-        _box = await Hive.openBox<PlantHive>(_boxName);
+        _box = await _openBoxWithRetry<PlantHive>(_boxName);
 
         developer.log('PlantHiveRepository: Box ouverte',
             name: 'PlantHiveRepository');

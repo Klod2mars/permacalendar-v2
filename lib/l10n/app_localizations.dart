@@ -1312,6 +1312,72 @@ abstract class AppLocalizations {
   /// **'Erreur'**
   String get common_error;
 
+  /// Titre section sauvegarde/restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'Sauvegarde et Restauration'**
+  String get settings_backup_restore_section;
+
+  /// Sous-titre section sauvegarde/restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'Sauvegarde intégrale de vos données'**
+  String get settings_backup_restore_subtitle;
+
+  /// Bouton créer sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une sauvegarde'**
+  String get settings_backup_action;
+
+  /// Bouton restaurer sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaurer une sauvegarde'**
+  String get settings_restore_action;
+
+  /// Loading sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Création de la sauvegarde en cours...'**
+  String get settings_backup_creating;
+
+  /// Succès sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Sauvegarde créée avec succès !'**
+  String get settings_backup_success;
+
+  /// Titre warning restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'Attention'**
+  String get settings_restore_warning_title;
+
+  /// Contenu warning restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'La restauration d\'une sauvegarde écrasera TOUTES les données actuelles (jardins, plantations, réglages). Cette action est irréversible. L\'application devra redémarrer.\n\nÊtes-vous sûr de vouloir continuer ?'**
+  String get settings_restore_warning_content;
+
+  /// Succès restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'Restauration réussie ! Veuillez redémarrer l\'application.'**
+  String get settings_restore_success;
+
+  /// Erreur sauvegarde
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la sauvegarde : {error}'**
+  String settings_backup_error(Object error);
+
+  /// Erreur restauration
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la restauration : {error}'**
+  String settings_restore_error(Object error);
+
   /// Titre dialogue nouvelle tâche
   ///
   /// In fr, this message translates to:

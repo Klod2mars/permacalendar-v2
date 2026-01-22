@@ -1,7 +1,9 @@
-﻿// lib/core/data/hive/garden_boxes.dart
-import 'dart:developer' as developer;
+﻿import 'dart:developer' as developer;
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 
 import '../../models/garden.dart';
 import '../../models/garden_bed.dart';
@@ -80,14 +82,15 @@ class GardenBoxes {
 
   static Future<void> initialize() async {
     try {
-      // Ouvrir les boxes
-      _gardensBox = await Hive.openBox<Garden>(_gardensBoxName);
-      _gardenBedsBox = await Hive.openBox<GardenBed>(_gardenBedsBoxName);
-      _plantingsBox = await Hive.openBox<Planting>(_plantingsBoxName);
-      _harvestsBox = await Hive.openBox(_harvestsBoxName);
-      _activitiesBox = await Hive.openBox(_activitiesBoxName);
-      _plantsBox = await Hive.openBox(_plantsBoxName);
-      _exportPreferencesBox = await Hive.openBox(_exportPreferencesBoxName);
+      // Ouvrir les boxes avec mécanisme de retry (récupération de lock)
+      _gardensBox = await _openBoxWithRetry<Garden>(_gardensBoxName);
+      _gardenBedsBox = await _openBoxWithRetry<GardenBed>(_gardenBedsBoxName);
+      _plantingsBox = await _openBoxWithRetry<Planting>(_plantingsBoxName);
+      _harvestsBox = await _openBoxWithRetry(_harvestsBoxName);
+      _activitiesBox = await _openBoxWithRetry(_activitiesBoxName);
+      _plantsBox = await _openBoxWithRetry(_plantsBoxName);
+      _exportPreferencesBox = await _openBoxWithRetry(_exportPreferencesBoxName);
+      
       debugPrint('[GardenBoxes] harvests box opened: ${_harvestsBox!.name}');
 
       if (verboseLogging)
@@ -95,6 +98,29 @@ class GardenBoxes {
     } catch (e) {
       if (verboseLogging)
         developer.log('[GardenBoxes] Erreur lors de l\'initialisation: $e');
+      rethrow;
+    }
+  }
+
+  /// Tente d'ouvrir une box. En cas d'erreur de lock, supprime le fichier .lock et réessaie.
+  static Future<Box<T>> _openBoxWithRetry<T>(String boxName) async {
+    try {
+      return await Hive.openBox<T>(boxName);
+    } catch (e) {
+      if (e.toString().toLowerCase().contains('lock')) {
+         developer.log('[GardenBoxes] Lock détecté sur $boxName. Tentative de suppression du lock...', level: 900);
+         try {
+           final appDir = await getApplicationDocumentsDirectory();
+           final lockFile = File(p.join(appDir.path, '$boxName.lock'));
+           if (await lockFile.exists()) {
+             await lockFile.delete();
+             developer.log('[GardenBoxes] Lock supprimé. Nouvelle tentative ouverture...', level: 500);
+             return await Hive.openBox<T>(boxName);
+           }
+         } catch (recoveryError) {
+           developer.log('[GardenBoxes] Echec récupération lock: $recoveryError', level: 1000);
+         }
+      }
       rethrow;
     }
   }

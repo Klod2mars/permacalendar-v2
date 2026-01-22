@@ -679,6 +679,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get common_error => 'Error';
 
   @override
+  String get settings_backup_restore_section => 'Backup & Restore';
+
+  @override
+  String get settings_backup_restore_subtitle => 'Full backup of your data';
+
+  @override
+  String get settings_backup_action => 'Create Backup';
+
+  @override
+  String get settings_restore_action => 'Restore Backup';
+
+  @override
+  String get settings_backup_creating => 'Creating Backup...';
+
+  @override
+  String get settings_backup_success => 'Backup created successfully!';
+
+  @override
+  String get settings_restore_warning_title => 'Warning';
+
+  @override
+  String get settings_restore_warning_content =>
+      'Restoring a backup will overwrite ALL current data (gardens, plantings, settings). This action is irreversible. The app will restart after restore.\n\nAre you sure you want to proceed?';
+
+  @override
+  String get settings_restore_success =>
+      'Restore successful! Please restart the app.';
+
+  @override
+  String settings_backup_error(Object error) {
+    return 'Backup failed: $error';
+  }
+
+  @override
+  String settings_restore_error(Object error) {
+    return 'Restore failed: $error';
+  }
+
+  @override
   String get task_editor_title_new => 'New Task';
 
   @override

@@ -1,4 +1,9 @@
-﻿import 'package:hive_flutter/hive_flutter.dart';
+﻿import 'dart:developer' as developer;
+import 'dart:io';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+
 import '../models/garden_hive.dart';
 import '../models/garden_bed_hive.dart';
 import '../models/garden_freezed.dart';
@@ -21,10 +26,33 @@ class GardenHiveRepository {
   /// Initialise la box Hive
   static Future<void> initialize() async {
     try {
-      _box = await Hive.openBox<GardenHive>(_boxName);
+      _box = await _openBoxWithRetry<GardenHive>(_boxName);
       print('[GardenHiveRepository] Box initialisée avec succès');
     } catch (e) {
       print('[GardenHiveRepository] Erreur lors de l\'initialisation: $e');
+      rethrow;
+    }
+  }
+
+  /// Tente d'ouvrir une box. En cas d'erreur de lock, supprime le fichier .lock et réessaie.
+  static Future<Box<T>> _openBoxWithRetry<T>(String boxName) async {
+    try {
+      return await Hive.openBox<T>(boxName);
+    } catch (e) {
+      if (e.toString().toLowerCase().contains('lock')) {
+         print('[GardenHiveRepository] Lock détecté sur $boxName. Tentative de suppression du lock...');
+         try {
+           final appDir = await getApplicationDocumentsDirectory();
+           final lockFile = File(p.join(appDir.path, '$boxName.lock'));
+           if (await lockFile.exists()) {
+             await lockFile.delete();
+             print('[GardenHiveRepository] Lock supprimé. Nouvelle tentative ouverture...');
+             return await Hive.openBox<T>(boxName);
+           }
+         } catch (recoveryError) {
+           print('[GardenHiveRepository] Echec récupération lock: $recoveryError');
+         }
+      }
       rethrow;
     }
   }

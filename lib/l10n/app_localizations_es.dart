@@ -689,6 +689,47 @@ class AppLocalizationsEs extends AppLocalizations {
   String get common_error => 'Error';
 
   @override
+  String get settings_backup_restore_section => 'Sauvegarde et Restauration';
+
+  @override
+  String get settings_backup_restore_subtitle =>
+      'Sauvegarde intégrale de vos données';
+
+  @override
+  String get settings_backup_action => 'Créer une sauvegarde';
+
+  @override
+  String get settings_restore_action => 'Restaurer une sauvegarde';
+
+  @override
+  String get settings_backup_creating =>
+      'Création de la sauvegarde en cours...';
+
+  @override
+  String get settings_backup_success => 'Sauvegarde créée avec succès !';
+
+  @override
+  String get settings_restore_warning_title => 'Attention';
+
+  @override
+  String get settings_restore_warning_content =>
+      'La restauration d\'une sauvegarde écrasera TOUTES les données actuelles (jardins, plantations, réglages). Cette action est irréversible. L\'application devra redémarrer.\n\nÊtes-vous sûr de vouloir continuer ?';
+
+  @override
+  String get settings_restore_success =>
+      'Restauration réussie ! Veuillez redémarrer l\'application.';
+
+  @override
+  String settings_backup_error(Object error) {
+    return 'Échec de la sauvegarde : $error';
+  }
+
+  @override
+  String settings_restore_error(Object error) {
+    return 'Échec de la restauration : $error';
+  }
+
+  @override
   String get task_editor_title_new => 'Nueva tarea';
 
   @override
