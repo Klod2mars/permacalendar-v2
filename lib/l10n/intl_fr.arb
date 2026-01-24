@@ -1223,7 +1223,7 @@
   "garden_add_tooltip": "Ajouter un jardin",
 
   "garden_detail_title_error": "Erreur",
-  "garden_detail_subtitle_not_found": "Le jardin demande n'existe pas ou a été supprimé.",
+  "garden_detail_subtitle_not_found": "Le jardin demandé n'existe pas ou a été supprimé.",
   "garden_detail_subtitle_error_beds": "Impossible de charger les planches: {error}",
   "garden_action_edit": "Modifier",
   "garden_action_archive": "Archiver",

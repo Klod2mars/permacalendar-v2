@@ -1457,7 +1457,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get garden_detail_subtitle_not_found =>
-      'Le jardin demande n\'existe pas ou a été supprimé.';
+      'Le jardin demandé n\'existe pas ou a été supprimé.';
 
   @override
   String garden_detail_subtitle_error_beds(Object error) {

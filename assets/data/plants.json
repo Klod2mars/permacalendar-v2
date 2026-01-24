@@ -97,7 +97,7 @@
         "companionPlants": [
           "salades",
           "radis",
-          "pois (cultures intercalaires la première année)"
+          "pois"
         ]
       },
       "harvestTime": "Environ 120 jours après plantation, selon variété et climat",
@@ -107,7 +107,7 @@
           "radis",
           "pois",
           "salades",
-          "pois (cultures intercalaires la première année)"
+          "pois"
         ],
         "avoid": [
           "fenouil",
@@ -437,8 +437,7 @@
         "companionPlants": [
           "tomate",
           "poivron",
-          "laitue",
-          "favorise la biodiversité et repousse certains nuisibles"
+          "laitue"
         ]
       },
       "harvestTime": "50-60 jours après semis, selon conditions de culture",
@@ -448,11 +447,10 @@
           "poivron",
           "laitue",
           "carotte",
-          "asperge",
-          "favorise la biodiversité et repousse certains nuisibles"
+          "asperge"
         ],
         "avoid": [
-          "concombre (risque de concurrence)",
+          "concombre",
           "rue officinale"
         ]
       },
@@ -617,7 +615,7 @@
         ],
         "companionPlants": [
           "maïs",
-          "tournesol (support et microclimat favorable)"
+          "tournesol"
         ]
       },
       "harvestTime": "60 jours après plantation en moyenne (selon variété naine ou grimpante)",
@@ -630,12 +628,14 @@
           "céleri",
           "radis",
           "épinard",
-          "tournesol (support et microclimat favorable)"
+          "tournesol"
         ],
         "avoid": [
           "ail",
-          "autres légumineuses (pois, fèves, lupin)",
-          "oignon (en excès)"
+          "pois",
+		  "fèves", 
+		  "lupin",
+          "oignon"
         ]
       },
       "sowingMonths3": [
@@ -807,7 +807,7 @@
           "oignon",
           "radis",
           "haricot nain",
-          "éviter les épinards (même famille)"
+          "épinards"
         ]
       },
       "harvestTime": "60-90 jours après semis selon variété et conditions",
@@ -822,8 +822,7 @@
         "avoid": [
           "autres amaranthacées",
           "chénopode",
-          "épinard",
-          "épinards"
+          "épinard"
         ],
         "notes": [
           "éviter les épinards (même famille)"
@@ -981,7 +980,7 @@
         "companionPlants": [
           "laitue",
           "épinard",
-          "haricot (associations bénéfiques non compétitives)"
+          "haricot"
         ]
       },
       "harvestTime": "60 jours après semis (selon variété et conditions)",
@@ -992,10 +991,10 @@
           "haricot",
           "tomate",
           "fève",
-          "haricot (associations bénéfiques non compétitives)"
+          "haricot"
         ],
         "avoid": [
-          "autres crucifères en rotation immédiate",
+          "autres crucifères",
           "carotte",
           "chou",
           "concombre"
@@ -1161,7 +1160,7 @@
           "poireau",
           "radis",
           "œillet d’inde",
-          "plantes aromatiques (répulsives naturelles)"
+          "plantes aromatiques"
         ],
         "avoid": [
           "autres choux",
@@ -1507,10 +1506,12 @@
           "menthe",
           "sauge",
           "thym",
-          "camomille (répulsifs naturels)"
+          "camomille"
         ],
         "avoid": [
-          "autres brassicacées (choux, navets, radis)",
+          "navets", 
+		  "radis",
+		  "choux",
           "fraises",
           "poivrons",
           "tomates"
@@ -1681,7 +1682,7 @@
           "poireau",
           "coriandre",
           "aneth",
-          "œillets d’inde (contre mouche de la carotte)"
+          "œillets d’inde"
         ]
       },
       "harvestTime": "90-120 jours après semis selon variété et taille désirée",
@@ -1695,11 +1696,12 @@
           "radis",
           "oignon",
           "ail",
-          "chou",
-          "œillets d’inde (contre mouche de la carotte)"
+          "chou"
         ],
         "avoid": [
-          "d'autres ombellifères (céleri, persil) sans rotation",
+          "Céleri",
+		  "persil",
+		  "autres ombellifères",
           "plantes gourmandes en azote"
         ]
       },
@@ -1871,7 +1873,7 @@
           "haricots",
           "oignons",
           "ail",
-          "fenouil (répulsifs naturels contre certains ravageurs)"
+          "fenouil"
         ],
         "avoid": [
           "autres brassicacées (chou, brocoli, navet...), fraises"
@@ -2042,8 +2044,6 @@
         ],
         "avoid": [
           "maïs",
-          "plantes gourmandes en eau comme la courgette",
-          "plantes très gourmandes en eau ou en azote",
           "pommes de terre"
         ],
         "notes": [
@@ -2219,12 +2219,11 @@
           "chou",
           "laitue",
           "radis",
-          "carottes",
           "navets",
           "haricots nains"
         ],
         "avoid": [
-          "betterave (même famille)",
+          "betterave",
           "poireau"
         ]
       },
@@ -2394,8 +2393,7 @@
         "companionPlants": [
           "carotte",
           "tomate",
-          "concombre",
-          "repousse certains ravageurs naturellement"
+          "concombre"
         ]
       },
       "harvestTime": "60 jours après semis, puis récolte régulière tout l'été",
@@ -2406,8 +2404,7 @@
           "concombre",
           "céleri",
           "pomme de terre",
-          "fraise",
-          "repousse certains ravageurs naturellement"
+          "fraise"
         ],
         "avoid": [
           "betterave",
@@ -2576,10 +2573,10 @@
         "avoid": [
           "concurrence",
           "plantes envahissantes",
-          "plantes envahissantes ou à forte concurrence racinaire"
+          "plantes à concurrence racinaire"
         ],
         "notes": [
-          "mais éviter la concurrence avec plantes envahissantes"
+          "éviter la concurrence avec plantes envahissantes"
         ]
       },
       "sowingMonths3": [
@@ -2741,9 +2738,9 @@
           "haricot",
           "maïs",
           "radis",
-          "capucine (piège)",
+          "capucine",
           "oignon",
-          "ail (répulsifs naturels)"
+          "ail"
         ]
       },
       "harvestTime": "45-60 jours après plantation, selon variété et conditions",
@@ -2757,11 +2754,14 @@
           "ail",
           "laitue",
           "épinard",
-          "capucine (piège)",
-          "ail (répulsifs naturels)"
+          "capucine",
+          "ail"
         ],
         "avoid": [
-          "autres cucurbitacées (concombre, potiron, melon)",
+          "autres cucurbitacées",
+		  "concombre",
+		  "potiron",
+		  "melon",
           "pommes de terre"
         ]
       },
@@ -2925,7 +2925,7 @@
           "Guêpes parasitoïdes (contre chenilles et pucerons)"
         ],
         "companionPlants": [
-          "capucines (piège à pucerons)",
+          "capucines",
           "radis",
           "oignon",
           "laitue"
@@ -2941,11 +2941,14 @@
           "haricot",
           "maïs",
           "betterave",
-          "capucines (piège à pucerons)"
+          "capucines"
         ],
         "avoid": [
           "aromatiques fortes comme la sauge",
-          "autres cucurbitacées (courgettes, courges, melons)",
+          "autres cucurbitacées",
+		  "courgettes",
+		  "courges",	
+		  "melons",
           "pommes de terre"
         ]
       },
@@ -3100,7 +3103,7 @@
           "oignons",
           "choux",
           "concombres",
-          "brocolis (effet répulsif contre certains nuisibles)"
+          "brocolis"
         ]
       },
       "harvestTime": "60-80 jours après semis, selon conditions climatiques et variété",
@@ -3113,7 +3116,7 @@
           "oignons",
           "choux",
           "concombres",
-          "brocolis (effet répulsif contre certains nuisibles)"
+          "brocolis"
         ],
         "avoid": [
           "autres apiacées",
@@ -3275,7 +3278,7 @@
         ],
         "companionPlants": [
           "basilic",
-          "soucis (contre certains ravageurs)"
+          "soucis"
         ]
       },
       "harvestTime": "90-120 jours après plantation selon variété et climat",
@@ -3287,10 +3290,10 @@
           "laitue",
           "épinard",
           "oignon",
-          "soucis (contre certains ravageurs)"
+          "soucis"
         ],
         "avoid": [
-          "autres solanacées au même endroit",
+          "autres solanacée",
           "poivrons",
           "pommes de terre",
           "tomates"
@@ -3649,8 +3652,12 @@
           "œillets d’inde"
         ],
         "avoid": [
-          "autres brassicacées (choux, navets, radis, roquette, moutarde) dans les 5-6 ans"
-        ]
+          "choux",
+		  "navets", 
+		  "radis",	
+		  "roquette",
+		  "moutarde"
+		]
       },
       "sowingMonths3": [
         "Apr",
@@ -3811,7 +3818,7 @@
           "laitues",
           "carottes",
           "betteraves",
-          "éviter les autres alliacées en culture simultanée"
+          "éviter autres alliacées"
         ]
       },
       "harvestTime": "Environ 120 jours après semis, selon variété et conditions climatiques",
@@ -4201,8 +4208,7 @@
           "carotte",
           "épinard",
           "poireaux",
-          "choux",
-          "carottes tardives"
+          "choux"
         ],
         "avoid": [
           "cultures ayant eu sclérotinia récemment",
@@ -4726,8 +4732,7 @@
           "betterave",
           "laitue",
           "tomate",
-          "chou (éviter pois",
-          "fèves)"
+          "chou"
         ]
       },
       "harvestTime": "Lorsque le feuillage est complètement sec, généralement 4 à 5 mois après semis",
@@ -4739,8 +4744,7 @@
           "tomate",
           "chou",
           "radis",
-          "épinard",
-          "fèves)"
+          "épinard"
         ],
         "avoid": [
           "fèves",
@@ -4748,7 +4752,7 @@
           "pois"
         ],
         "notes": [
-          "chou (éviter pois"
+          
         ]
       },
       "sowingMonths3": [
@@ -4908,7 +4912,7 @@
           "Insectes auxiliaires divers (syrphes, chrysopes)"
         ],
         "companionPlants": [
-          "ciboulette (repousse la mouche de la carotte)"
+          "ciboulette"
         ]
       },
       "harvestTime": "90 jours après semis, récolte possible tout l'été et jusqu'à l'hiver dans les climats doux",
@@ -4918,11 +4922,12 @@
           "tomate",
           "poireau",
           "radis",
-          "carotte (avec précaution)",
-          "ciboulette (repousse la mouche de la carotte)"
+          "ciboulette"
         ],
         "avoid": [
-          "légumes de la même famille (carotte, céleri, panais) au même endroit — risque de maladies communes"
+          "carotte",
+		  "céleri",
+          "panais"
         ]
       },
       "sowingMonths3": [
@@ -5103,7 +5108,7 @@
           "laitue",
           "radis",
           "haricot nain",
-          "ail (répulsifs naturels contre certains insectes)"
+          "ail"
         ],
         "avoid": [
           "autres apiacées",
@@ -5261,8 +5266,7 @@
         "companionPlants": [
           "capucine",
           "souci",
-          "trèfle (attirent auxiliaires",
-          "répulsifs naturels)"
+          "trèfle"
         ]
       },
       "harvestTime": "Environ 90-120 jours après plantation, selon variété",
@@ -5274,9 +5278,8 @@
           "oignon",
           "souci",
           "capucine",
-          "trèfle",
-          "trèfle (attirent auxiliaires",
-          "répulsifs naturels)"
+          "trèfle"
+          
         ],
         "avoid": [
           "aubergine",
@@ -5579,7 +5582,8 @@
         "Éviter les périodes de forte chaleur — privilégier la mi-ombre en été",
         "Ne pas trop fertiliser en azote pour conserver une saveur équilibrée",
         "Pailler pour garder le sol frais et limiter la montée à graines",
-        "Laisser des zones non récoltées pour favoriser la biodiversité et la régulation naturelle des parasites"
+        "Laisser des zones non récoltées pour favoriser la biodiversité et la régulation naturelle des parasites",
+		"laisser en bordure pour attirer auxiliaires"
       ],
       "biologicalControl": {
         "preparations": [
@@ -5605,13 +5609,12 @@
           "épinard",
           "oignon",
           "poireau",
-          "capucine",
-          "laisser en bordure pour attirer auxiliaires"
+          "capucine"
+          
         ],
         "avoid": [
-          "concurrence",
-          "plantes gourmandes",
-          "plantes très gourmandes en azote ou en espace (ex: choux volumineux)"
+          "concurrence azote",
+ 		  "concurrence eau"
         ],
         "notes": [
           "éviter la concurrence avec plantes gourmandes"
@@ -5765,8 +5768,7 @@
         "companionPlants": [
           "choux",
           "carottes",
-          "haricots",
-          "repousse naturelle des insectes grâce aux huiles essentielles"
+          "haricots"
         ]
       },
       "harvestTime": "Feuilles récoltables toute l'année une fois la plante établie (après 3-4 mois)",
@@ -5782,11 +5784,10 @@
           "sauge",
           "choux",
           "carottes",
-          "haricots",
-          "repousse naturelle des insectes grâce aux huiles essentielles"
+          "haricots"
         ],
         "avoid": [
-          "plantes gourmandes en eau ou en sol riche (ex: courges, laitues)"
+          
         ]
       },
       "sowingMonths3": [
@@ -5946,13 +5947,12 @@
       "harvestTime": "120-150 jours après semis, à l'automne de la 1ère année ou au printemps de la 2e année",
       "companionPlanting": {
         "beneficial": [
-          "aucun compagnon spécifique documenté",
-          "mais paillage vivant (phacélie",
-          "trèfle) utile"
+          "paillage vivant",
+          "trèfle",
+		  "phacélie"
         ],
         "avoid": [
-          "cultures nécessitant un sol lourd",
-          "plantes gourmandes en azote"
+          
         ]
       },
       "sowingMonths3": [
@@ -6108,7 +6108,7 @@
           "Nématodes bénéfiques (contre chenilles)"
         ],
         "companionPlants": [
-          "menthe (répulsif contre altises)"
+         
         ]
       },
       "harvestTime": "Environ 90 jours après semis, selon variété et conditions",
@@ -6120,7 +6120,7 @@
           "oignon",
           "poireau",
           "épinard",
-          "menthe (répulsif contre altises)"
+          "menthe (répulsif altises)"
         ],
         "avoid": [
           "autres astéracées",
@@ -6291,7 +6291,7 @@
         "companionPlants": [
           "carotte",
           "sarriette",
-          "aneth (répulsifs naturels contre la mouche de l’oignon)"
+          "aneth (mouche de l’oignon)"
         ]
       },
       "harvestTime": "Environ 90 jours après plantation, lorsque le feuillage jaunit et sèche",
@@ -6301,11 +6301,11 @@
           "sarriette",
           "aneth",
           "œillet d'inde",
-          "aneth (répulsifs naturels contre la mouche de l’oignon)"
+          "aneth (mouche de l’oignon)"
         ],
         "avoid": [
           "ail",
-          "autres alliacées (risque de maladies communes)",
+          "autres alliacées",
           "oignon",
           "poireau"
         ]
@@ -6464,7 +6464,7 @@
           "radis",
           "pois",
           "fraises",
-          "choux (favorisent la croissance ou partagent l'espace efficacement)"
+          "choux"
         ]
       },
       "harvestTime": "40-50 jours après semis, selon variété et conditions",
@@ -6478,7 +6478,7 @@
           "céleri",
           "oignon",
           "ail",
-          "choux (favorisent la croissance ou partagent l'espace efficacement)"
+          "choux"
         ],
         "avoid": [
           "betterave",
@@ -6639,9 +6639,8 @@
         ],
         "companionPlants": [
           "haricots grimpants",
-          "courges (système milpa)",
-          "tournesols (brise",
-          "vent)"
+          "courges (milpa)",
+          "tournesols (brise vent)"
         ]
       },
       "harvestTime": "65-80 jours après semis, selon variété et conditions climatiques",
@@ -6653,13 +6652,11 @@
           "tournesol",
           "pois",
           "courges (système milpa)",
-          "tournesols (brise",
-          "vent)"
+          "tournesols (brise vent)"
         ],
         "avoid": [
           "betterave",
-          "céleri",
-          "plantes solitaires (pollinisation inefficace)"
+          "céleri"
         ]
       },
       "sowingMonths3": [
@@ -6815,8 +6812,7 @@
         "companionPlants": [
           "romarin",
           "lavande",
-          "sauge",
-          "plantes méditerranéennes à faible besoin hydrique"
+          "sauge"
         ]
       },
       "harvestTime": "Dès la floraison, 2 à 3 mois après plantation — récolte possible toute l'année en climat doux",
@@ -6827,8 +6823,7 @@
           "sauge",
           "chou",
           "carotte",
-          "tomate (protège contre certains nuisibles)",
-          "plantes méditerranéennes à faible besoin hydrique"
+          "tomate"
         ],
         "avoid": [
           "plantes gourmandes en eau (ex: courgette, laitue) — incompatibilité hydrique"
@@ -7008,7 +7003,7 @@
           "persil",
           "œillet d'inde",
           "capucine",
-          "basilic contre nématodes"
+          "basilic"
         ],
         "avoid": [
           "concombre",
@@ -7182,11 +7177,10 @@
           "coriandre",
           "légumineuses",
           "légumes feuilles",
-          "coriandre (contre doryphores)"
+          "coriandre"
         ],
         "avoid": [
-          "cultures exigeantes en azote juste après",
-          "légumes sensibles à l'ombre"
+          
         ]
       },
       "sowingMonths3": [

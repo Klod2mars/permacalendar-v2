@@ -2653,7 +2653,7 @@ abstract class AppLocalizations {
   /// No description provided for @garden_detail_subtitle_not_found.
   ///
   /// In fr, this message translates to:
-  /// **'Le jardin demande n\'existe pas ou a été supprimé.'**
+  /// **'Le jardin demandé n\'existe pas ou a été supprimé.'**
   String get garden_detail_subtitle_not_found;
 
   /// No description provided for @garden_detail_subtitle_error_beds.
