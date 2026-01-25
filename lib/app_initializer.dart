@@ -20,6 +20,8 @@ import 'core/models/activity_v3.dart';
 import 'core/services/activity_observer_service.dart';
 import 'core/hive/type_ids.dart';
 import 'features/climate/data/initialization/soil_metrics_initialization.dart';
+// Generated Hive adapters
+import 'models/plant_localized.g.dart';
 
 class AppInitializer {
   static Future<void> initialize() async {
@@ -43,6 +45,21 @@ class AppInitializer {
         Hive.registerAdapter(PlantingHiveAdapter());
       if (!Hive.isAdapterRegistered(29))
         Hive.registerAdapter(PlantHiveAdapter());
+
+      // PlantLocalized & LocalizedPlantFields (ensure adapters exist & registered)
+      if (!Hive.isAdapterRegistered(kTypeIdPlantLocalized)) {
+        Hive.registerAdapter(PlantLocalizedAdapter());
+        print('✅ PlantLocalizedAdapter registered (typeId=$kTypeIdPlantLocalized)');
+      } else {
+        print('ℹ️ PlantLocalizedAdapter already registered (typeId=$kTypeIdPlantLocalized)');
+      }
+
+      if (!Hive.isAdapterRegistered(kTypeIdLocalizedPlantFields)) {
+        Hive.registerAdapter(LocalizedPlantFieldsAdapter());
+        print('✅ LocalizedPlantFieldsAdapter registered (typeId=$kTypeIdLocalizedPlantFields)');
+      } else {
+        print('ℹ️ LocalizedPlantFieldsAdapter already registered (typeId=$kTypeIdLocalizedPlantFields)');
+      }
 
       // Activity Adapters
       if (!Hive.isAdapterRegistered(16))

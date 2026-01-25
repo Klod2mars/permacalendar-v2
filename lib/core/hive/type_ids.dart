@@ -49,6 +49,9 @@ const int kTypeIdActivityV3 = 30;
 /// PlantLocalized - Multilingual plant data (offline packs)
 const int kTypeIdPlantLocalized = 33;
 
+/// LocalizedPlantFields - fields stored for each locale (canonical)
+const int kTypeIdLocalizedPlantFields = 133;
+
 // ============================================================================
 // EXTENDED TYPEIDS (31+) - FOR SPECIALIZED FEATURES
 // ============================================================================

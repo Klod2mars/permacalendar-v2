@@ -37,20 +37,8 @@ class PlantLocalized extends HiveObject {
   });
 }
 
-@HiveType(typeId: kTypeIdPlantLocalized + 100) // Using an offset or nested? 
-// Wait, nested objects need their own TypeId if stored as objects, or they can be JSON maps. 
-// But "HiveField" implies strictly typed.
-// TypeId 33 is for PlantLocalized. 
-// Do I need a TypeId for LocalizedPlantFields? 
-// The prompt didn't specify, but usually yes if it's a Hive class.
-// But 33+100 might conflict with future stuff? 
-// Safe bet: just store it as Map<String, dynamic> if simple, OR register another adapter.
-// The prompted plan said: "classe LocalizedPlantFields... annoter @HiveType".
-// I need a TypeId for `LocalizedPlantFields`. 
-// I'll check audit again. 
-// 34 is also available. I'll use 34 for LocalizedPlantFields.
-
-@HiveType(typeId: 34)
+// LocalizedPlantFields is a dedicated Hive class. Use the canonical typeId constant.
+@HiveType(typeId: kTypeIdLocalizedPlantFields) // 133
 class LocalizedPlantFields {
   @HiveField(0)
   final String commonName;
