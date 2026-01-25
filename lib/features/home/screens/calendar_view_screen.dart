@@ -11,6 +11,7 @@ import '../../planting/providers/planting_provider.dart';
 import '../../../core/analytics/ui_analytics.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/models/activity.dart';
+import '../../../core/repositories/repository_providers.dart';
 import '../../calendar/presentation/providers/calendar_filter_provider.dart';
 import '../../../features/home/providers/calendar_aggregation_provider.dart';
 import '../../../core/services/recurrence_service.dart';
@@ -34,6 +35,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   List<Activity> _activities = [];
   Map<DateTime, List<Activity>> _dailyTasks =
       {}; // Cache pour les tâches du mois
+  Map<String, String> _gardensCache = {}; // Cache map for Garden ID -> Name (from new repository)
 
   @override
   void initState() {
@@ -64,7 +66,18 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         'calendar_load',
         () async {
           await ref.read(plantingProvider.notifier).loadAllPlantings();
-          // Load activities
+          
+          // 1. Load Gardens from New Repository (GardenHiveRepository)
+          try {
+             // Access via provider to ensure correct box/model usage
+             final gardenRepo = ref.read(gardenRepositoryProvider);
+             final allGardens = await gardenRepo.getAllGardens();
+             _gardensCache = {for (var g in allGardens) g.id: g.name};
+          } catch (e) {
+             print('[Calendar] Error loading garden cache: $e');
+          }
+
+          // 2. Load activities
           try {
             _activities =
                 GardenBoxes.activities.values.cast<Activity>().toList();
@@ -89,6 +102,22 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         });
       }
     }
+  }
+
+  // Helper to resolve garden context
+  String _getContextString(String? gardenBedId) {
+    if (gardenBedId == null) return '';
+    final bed = GardenBoxes.getGardenBedById(gardenBedId);
+    if (bed != null) {
+      // Use the local cache populated from the new Repository
+      final gardenName = _gardensCache[bed.gardenId];
+      
+      if (gardenName != null && gardenName.isNotEmpty) {
+        return '$gardenName • ${bed.name}';
+      }
+      return bed.name;
+    }
+    return '';
   }
 
   Future<void> _askToExport(Activity created) async {
@@ -989,20 +1018,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     );
   }
 
-  // Helper to resolve garden context
-  String _getContextString(String? gardenBedId) {
-    if (gardenBedId == null) return '';
-    final bed = GardenBoxes.getGardenBedById(gardenBedId);
-    if (bed != null) {
-      final garden = GardenBoxes.getGarden(bed.gardenId);
-      final gardenName = garden?.name;
-      if (gardenName != null) {
-        return '$gardenName • ${bed.name}';
-      }
-      return bed.name;
-    }
-    return '';
-  }
+
 
   Widget _buildDayDetails(ThemeData theme, List plantings) {
     if (_selectedDate == null) return Container();
@@ -1124,7 +1140,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             String contextInfo = '';
             
             // 1. Try explicit metadata
-            // 1. Try explicit metadata
             final metaGardenName = a.metadata['gardenName']?.toString();
             final metaBedName = a.metadata['bedName']?.toString();
 
@@ -1147,21 +1162,38 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                     if (b != null) contextInfo += ' • ${b.name}';
                  }
               }
-            } 
-            
-            // 3. If still empty, try Entity-based fallback
+            }
+
+            // 2b. Fallback: Metadata has gardenBedId but seemingly no gardenId logic above worked
             if (contextInfo.isEmpty) {
-              if (a.entityType == EntityType.planting && a.entityId != null) {
+               final bedId = a.metadata['zoneGardenBedId'] ?? a.metadata['gardenBedId'];
+               if (bedId != null) {
+                 contextInfo = _getContextString(bedId);
+               }
+            }
+            
+            // 3. If still empty, try Entity-based fallback (relaxed for legacy tasks)
+            if (contextInfo.isEmpty && a.entityId != null) {
+              // Try as planting first
+              if (a.entityType == EntityType.planting || a.entityType == null) {
                  final p = GardenBoxes.plantings.get(a.entityId);
-                 if (p != null) contextInfo = _getContextString(p.gardenBedId);
-              } else if (a.entityType == EntityType.gardenBed && a.entityId != null) {
-                 contextInfo = _getContextString(a.entityId);
+                 if (p != null) {
+                    contextInfo = _getContextString(p.gardenBedId);
+                 }
+              }
+              
+              // If failed, try as garden bed
+              if (contextInfo.isEmpty && (a.entityType == EntityType.gardenBed || a.entityType == null)) {
+                 // Warning: _getContextString expects a bedId. If a.entityId is the bedId.
+                 // _getContextString calls getGardenBedById(id).
+                 final bedCheck = _getContextString(a.entityId);
+                 if (bedCheck.isNotEmpty) contextInfo = bedCheck;
               }
             }
 
             final description = a.description ?? '';
             final subtitle = contextInfo.isNotEmpty 
-                ? '$description\n$contextInfo'
+                ? '$contextInfo\n$description'
                 : description;
 
             return _buildEventCard(
