@@ -1,85 +1,84 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as fln;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter/foundation.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
-  factory NotificationService() => _instance;
+
+  factory NotificationService() {
+    return _instance;
+  }
+
   NotificationService._internal();
 
-  final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final fln.FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      fln.FlutterLocalNotificationsPlugin();
 
-  bool _isInitialized = false;
+  bool _initialized = false;
 
-  Future<void> initialize() async {
-    if (_isInitialized) return;
+  Future<void> init() async {
+    if (_initialized) return;
 
     tz.initializeTimeZones();
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    // Use 'mipmap/ic_launcher' for Android icon
+    const fln.AndroidInitializationSettings initializationSettingsAndroid =
+        fln.AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+    // Minimal Darwin settings for iOS/macOS
+    const fln.DarwinInitializationSettings initializationSettingsDarwin =
+        fln.DarwinInitializationSettings();
 
-    await _notificationsPlugin.initialize(
-      initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        // Handle notification tap
-        debugPrint('Notification tapped: ${response.payload}');
-      },
+    const fln.InitializationSettings initializationSettings = fln.InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsDarwin,
+      macOS: initializationSettingsDarwin,
     );
 
-    _isInitialized = true;
-    debugPrint('NotificationService initialized');
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    _initialized = true;
   }
 
-  Future<void> scheduleNotification({
-    required int id,
+  Future<int> scheduleNotification({
+    int? id,
     required String title,
     required String body,
     required DateTime scheduledDate,
     String? payload,
   }) async {
-    if (!_isInitialized) await initialize();
+    if (!_initialized) await init();
 
-    // Ensure date is in the future
-    if (scheduledDate.isBefore(DateTime.now())) {
-      debugPrint('Skipping notification for past date: $scheduledDate');
-      return;
-    }
+    // Use provided ID or generate a unique one (within int32 range)
+    final int notificationId = id ?? DateTime.now().millisecondsSinceEpoch.remainder(2147483647);
 
-    try {
-      await _notificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.from(scheduledDate, tz.local),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'garden_channel',
-            'Jardinage',
-            channelDescription: 'Rappels pour les travaux du jardin',
-            importance: Importance.max,
-            priority: Priority.high,
-          ),
+    // If date is in the past, the plugin might fire immediately or fail. 
+    // We pass it to zonedSchedule anyway.
+    
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      notificationId,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      const fln.NotificationDetails(
+        android: fln.AndroidNotificationDetails(
+          'planting_steps_channel',
+          'Planting Steps',
+          channelDescription: 'Reminders for planting steps',
+          importance: fln.Importance.max,
+          priority: fln.Priority.high,
         ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        payload: payload,
-      );
-      debugPrint('Scheduled notification $id for $scheduledDate: $title');
-    } catch (e) {
-      debugPrint('Error scheduling notification: $e');
-    }
+        iOS: fln.DarwinNotificationDetails(),
+      ),
+      androidScheduleMode: fln.AndroidScheduleMode.exactAllowWhileIdle,
+
+      payload: payload,
+    );
+
+    return notificationId;
   }
 
   Future<void> cancelNotification(int id) async {
-    await _notificationsPlugin.cancel(id);
-  }
-
-  Future<void> cancelAllNotifications() async {
-    await _notificationsPlugin.cancelAll();
+    if (!_initialized) await init();
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

@@ -1,9 +1,14 @@
 // lib/features/planting/presentation/widgets/planting_steps_widget.dart
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../core/models/plant.dart';
 import '../../../../core/models/planting.dart';
+import '../../../../core/models/activity.dart'; // Added
+import '../../../../core/data/hive/garden_boxes.dart'; // Added
+import '../../../../core/services/notification_service.dart';
 import '../../domain/plant_step.dart';
 import '../../domain/plant_steps_generator.dart';
 
@@ -31,6 +36,8 @@ class PlantingStepsWidget extends StatefulWidget {
 
 class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
   bool _expanded = false;
+  List<PlantStep> _customSteps = [];
+  final Uuid _uuid = const Uuid();
 
   // Local cache of steps marked done in this UI session (instant feedback)
   final Set<String> _locallyCompleted = {};
@@ -39,12 +46,97 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
       generateSteps(widget.plant, widget.planting);
 
   @override
+  void initState() {
+    super.initState();
+    _loadCustomSteps();
+  }
+
+  void _loadCustomSteps() {
+    final raw = widget.planting.metadata['customSteps'];
+    if (raw is List) {
+      _customSteps = raw.map<PlantStep>((e) {
+        try {
+          // e is expected to be a Map<String,dynamic>
+          // Safe cast/map access
+          final map = e is Map ? e : {};
+          final scheduled = map['scheduledDate'] != null
+              ? DateTime.tryParse(map['scheduledDate'].toString())
+              : null;
+          
+          return PlantStep(
+            id: map['id']?.toString() ?? _uuid.v4(),
+            title: map['title']?.toString() ?? '',
+            description: map['description']?.toString() ?? '',
+            scheduledDate: scheduled,
+            category: map['category']?.toString() ?? 'custom',
+            recommended: map['recommended'] == true,
+            completed: _isStepMarkedAsDoneByPlanting(map),
+            meta: map['meta'] is Map<String, dynamic>
+                ? Map<String, dynamic>.from(map['meta'])
+                : (map['meta'] != null ? Map<String, dynamic>.from(map['meta']) : {}),
+          );
+        } catch (_) {
+          // ignore malformed entry
+          return PlantStep(id: _uuid.v4(), title: '', category: 'custom');
+        }
+      }).toList();
+    } else {
+      _customSteps = [];
+    }
+  }
+
+  bool _isStepMarkedAsDoneByPlanting(Map raw) {
+    final title = (raw['title'] ?? '').toString();
+    return widget.planting.careActions
+        .any((a) => a.toLowerCase().contains(title.toLowerCase()));
+  }
+
+  Future<void> _saveCustomSteps() async {
+    final raw = _customSteps.map((s) => {
+          'id': s.id,
+          'title': s.title,
+          'description': s.description,
+          'scheduledDate': s.scheduledDate?.toIso8601String(),
+          'category': s.category,
+          'recommended': s.recommended,
+          'meta': s.meta ?? {},
+        }).toList();
+    widget.planting.metadata['customSteps'] = raw;
+    widget.planting.markAsUpdated();
+    await widget.planting.save(); // Planting extends HiveObject
+    if (mounted) setState(() {}); // refresh UI
+  }
+
+  List<PlantStep> _mergeGeneratedAndCustomSteps(
+      List<PlantStep> generated, List<PlantStep> custom) {
+    final result = List<PlantStep>.from(generated);
+    for (final cs in custom) {
+      // dedupe by id if present
+      result.removeWhere((r) => r.id == cs.id);
+      
+      int insertIndex = result.length;
+      // positionIndex stored in meta optional
+      final meta = cs.meta ?? {};
+      if (meta.containsKey('positionIndex') && meta['positionIndex'] is int) {
+        insertIndex = (meta['positionIndex'] as int).clamp(0, result.length);
+      } else if (cs.scheduledDate != null) {
+        final idx = result.indexWhere((s) =>
+            s.scheduledDate != null && s.scheduledDate!.isAfter(cs.scheduledDate!));
+        insertIndex = idx == -1 ? result.length : idx;
+      }
+      result.insert(insertIndex, cs);
+    }
+    return result;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    final steps = _computedSteps;
-
-    final toShow = _expanded ? steps : steps.take(3).toList();
+    
+    final generated = _computedSteps;
+    final allSteps = _mergeGeneratedAndCustomSteps(generated, _customSteps);
+    final toShow = _expanded ? allSteps : allSteps.take(3).toList();
 
     return Card(
       elevation: 0,
@@ -54,47 +146,48 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // header
+            // Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  l10n.planting_steps_title,
-                  style: theme.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w600),
+                Expanded(
+                  child: Text(
+                    l10n.planting_steps_title,
+                    style: theme.textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w600),
+                  ),
                 ),
                 Row(
                   children: [
-                    TextButton(
+                    IconButton(
+                      tooltip: 'Reporter les étapes dans votre agenda',
+                      icon: Icon(Icons.calendar_month,
+                          color: theme.colorScheme.primary),
                       onPressed: () async {
-                        // Quick add: show dialog minimal
-                        final action = await _showAddActionDialog(context);
-                        if (action != null && action.trim().isNotEmpty) {
-                          if (widget.onAddCareAction != null) {
-                            await widget.onAddCareAction!(action.trim());
-                          }
-                        }
+                        await _confirmAndExportStepsToAgenda(context, allSteps);
                       },
-                      child: Row(
-                        children: [
-                          Icon(Icons.add,
-                              size: 16, color: theme.colorScheme.primary),
-                          const SizedBox(width: 6),
-                          Text(l10n.planting_steps_add_button,
-                              style:
-                                  TextStyle(color: theme.colorScheme.primary)),
-                        ],
-                      ),
                     ),
                     const SizedBox(width: 8),
-                    TextButton(
-                      onPressed: () => setState(() => _expanded = !_expanded),
-                      child: Text(_expanded ? l10n.planting_steps_see_less : l10n.planting_steps_see_all),
+                    TextButton.icon(
+                      onPressed: () async {
+                        final created = await _showAddCustomStepDialog(context);
+                        if (created == true) {
+                          _loadCustomSteps();
+                          setState(() {});
+                        }
+                      },
+                      icon: Icon(Icons.add,
+                          size: 16, color: theme.colorScheme.primary),
+                      label: Text(
+                        'Ajouter',
+                        style: TextStyle(color: theme.colorScheme.primary),
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
+            
             const SizedBox(height: 8),
             if (toShow.isEmpty)
               Container(
@@ -118,13 +211,19 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
               )
             else
               Column(
-                children: toShow.map((s) => _buildStepTile(s)).toList(),
+                children: toShow.map((s) => _buildStepCard(s)).toList(),
               ),
-            if (!_expanded && steps.length > 3) ...[
+            
+            if (allSteps.length > 3) ...[
               const SizedBox(height: 8),
-              Text(l10n.planting_steps_more(steps.length - 3),
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+              Center(
+                child: TextButton(
+                  onPressed: () => setState(() => _expanded = !_expanded),
+                  child: Text(_expanded
+                      ? l10n.planting_steps_see_less
+                      : l10n.planting_steps_see_all),
+                ),
+              ),
             ],
           ],
         ),
@@ -132,118 +231,352 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
     );
   }
 
-  Widget _buildStepTile(PlantStep step) {
+  // Refactored to Custom Layout to fix wrapping issues
+  Widget _buildStepCard(PlantStep step) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    // consider step done if it's in planting.careActions OR marked locally
+    
     final completed = step.completed ||
         widget.planting.careActions
             .any((a) => a.toLowerCase().contains(step.title.toLowerCase())) ||
         _locallyCompleted.contains(step.id);
+    
+    final isCustom = step.category == 'custom' || (step.meta != null && step.meta!['createdBy'] == 'user');
 
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        radius: 18,
-        backgroundColor:
-            completed ? Colors.green.shade100 : Colors.grey.shade200,
-        child: Icon(
-          completed ? Icons.check : Icons.arrow_forward,
-          size: 18,
-          color: completed ? Colors.green.shade700 : Colors.black54,
-        ),
-      ),
-      title: Row(
-        children: [
-          Expanded(
-              child: Text(step.title,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w600))),
-          if (step.recommended && !completed)
-            Container(
-              margin: const EdgeInsets.only(left: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(l10n.planting_steps_prediction_badge,
-                  style: theme.textTheme.labelSmall
-                      ?.copyWith(color: Colors.blue.shade700, fontSize: 10)),
-            ),
-        ],
-      ),
-      subtitle: Column(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (step.description.isNotEmpty) Text(step.description),
-          if (step.scheduledDate != null)
-            Text(
-              l10n.planting_steps_date_prefix(_formatDate(step.scheduledDate!)),
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          // 1. Check Icon / Status
+          Padding(
+            padding: const EdgeInsets.only(top: 2, right: 12),
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: completed ? Colors.green.shade100 : Colors.grey.shade200,
+              child: Icon(
+                completed ? Icons.check : Icons.arrow_forward,
+                size: 18,
+                color: completed ? Colors.green.shade700 : Colors.black54,
+              ),
             ),
+          ),
+          
+          // 2. Content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title Line
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        step.title,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          height: 1.3
+                        ),
+                        maxLines: 3,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ],
+                ),
+                
+                // Subtitle Line (Date + Badge + Description)
+                 const SizedBox(height: 4),
+                 if (step.scheduledDate != null || (step.recommended && !completed))
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 4,
+                    children: [
+                      if (step.scheduledDate != null)
+                        Text(
+                          l10n.planting_steps_date_prefix(_formatDate(step.scheduledDate!)),
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(color: theme.colorScheme.onSurfaceVariant, fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                      if (step.recommended && !completed)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade100,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(l10n.planting_steps_prediction_badge,
+                              style: theme.textTheme.labelSmall
+                                  ?.copyWith(color: Colors.blue.shade700, fontSize: 10)),
+                        ),
+                    ],
+                  ),
+                  
+                if (step.description.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      step.description,
+                      style: const TextStyle(fontSize: 14, height: 1.35),
+                      maxLines: 6,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+
+          // 3. Action Button (Trailing)
+          // Use constrained box or column to separate it from resizing text
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                 if (completed)
+                  TextButton(
+                    onPressed: null, 
+                    style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
+                    child: Text("Fait", style: TextStyle(color: Colors.green.shade700)),
+                  )
+                else
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.green,
+                      side: const BorderSide(color: Colors.green),
+                      visualDensity: VisualDensity.compact,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _locallyCompleted.add(step.id);
+                      });
+                      if (widget.onMarkDone != null) {
+                        widget.onMarkDone!(step).catchError((e) {
+                          // ignore error
+                        }).whenComplete(() {
+                          if (mounted) setState(() {});
+                        });
+                      }
+                    },
+                    child: Text(l10n.planting_steps_mark_done), 
+                  ),
+                  
+                 if (isCustom)
+                   PopupMenuButton<String>(
+                    icon: const Icon(Icons.more_vert, size: 20),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onSelected: (val) async {
+                      if (val == 'delete') {
+                        _customSteps.removeWhere((s) => s.id == step.id);
+                        await _saveCustomSteps();
+                      }
+                    },
+                    itemBuilder: (ctx) => [
+                      const PopupMenuItem(value: 'delete', child: Text('Supprimer')),
+                    ],
+                  )
+              ],
+            ),
+          ),
         ],
       ),
-      trailing: completed
-          ? TextButton(
-              onPressed: () async {
-                // Option to unmark? For now, do nothing
-              },
-              child:
-                  Text(l10n.planting_steps_done, style: TextStyle(color: Colors.green.shade700)),
-            )
-          : ElevatedButton(
-              onPressed: () {
-                // immediate UI update
-                setState(() {
-                  _locallyCompleted.add(step.id);
-                });
-
-                // fire-and-forget: call the provided callback in background
-                // do not await here so UI is instant; handle errors silently or log
-                if (widget.onMarkDone != null) {
-                  widget.onMarkDone!(step).catchError((e, st) {
-                    // If desired, we could remove local mark on failure:
-                    // setState(() => _locallyCompleted.remove(step.id));
-                    // For now, log the error.
-                    // ignore: avoid_print
-                    print('onMarkDone error: $e');
-                  }).whenComplete(() {
-                    // ensure any long-term refresh is reflected by parent/provider
-                    // Optionally refresh widget state
-                    if (mounted) setState(() {});
-                  });
-                }
-              },
-              child: Text(l10n.planting_steps_mark_done),
-            ),
     );
   }
 
-  Future<String?> _showAddActionDialog(BuildContext context) async {
-    final TextEditingController controller = TextEditingController();
-    final l10n = AppLocalizations.of(context)!;
-    final res = await showDialog<String?>(
+  Future<bool?> _showAddCustomStepDialog(BuildContext context) async {
+    final _titleCtrl = TextEditingController();
+    final _descCtrl = TextEditingController();
+    DateTime? chosenDate;
+    String category = 'custom';
+    
+    return await showDialog<bool>(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setStateSB) {
+            return AlertDialog(
+              title: const Text('Ajouter une étape'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: _titleCtrl,
+                      decoration: const InputDecoration(labelText: 'Titre'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _descCtrl,
+                      decoration: const InputDecoration(labelText: 'Description'),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(chosenDate == null
+                              ? 'Pas de date'
+                              : _formatDate(chosenDate!)),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            final d = await showDatePicker(
+                              context: ctx,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2100),
+                            );
+                            if (d != null) {
+                              setStateSB(() {
+                                chosenDate = d;
+                              });
+                            }
+                          },
+                          child: const Text('Sélectionner date'),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(false),
+                  child: const Text('Annuler'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final title = _titleCtrl.text.trim();
+                    if (title.isEmpty) return;
+                    final newStep = PlantStep(
+                      id: _uuid.v4(),
+                      title: title,
+                      description: _descCtrl.text.trim(),
+                      scheduledDate: chosenDate,
+                      category: category,
+                      recommended: false,
+                      completed: false,
+                      meta: {'createdBy': 'user'},
+                    );
+                    _customSteps.add(newStep);
+                    await _saveCustomSteps();
+                    Navigator.of(ctx).pop(true);
+                  },
+                  child: const Text('Enregistrer'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _confirmAndExportStepsToAgenda(BuildContext context, List<PlantStep> allSteps) async {
+    final stepsWithDate = allSteps.where((s) => s.scheduledDate != null).toList();
+    if (stepsWithDate.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Aucune étape datée à exporter.')),
+      );
+      return;
+    }
+
+    final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l10n.planting_steps_dialog_title),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(hintText: l10n.planting_steps_dialog_hint),
-          autofocus: true,
-        ),
+        title: const Text('Exporter vers l\'agenda'),
+        content: Text('Voulez-vous envoyer ${stepsWithDate.length} étapes vers votre agenda (app + rappels) ?'),
         actions: [
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(null),
-              child: Text(l10n.common_cancel)),
-          ElevatedButton(
-              onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
-              child: Text(l10n.planting_steps_dialog_add)),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Annuler')),
+          ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Confirmer')),
         ],
       ),
     );
-    return res;
+
+    if (confirm == true) {
+      int count = 0;
+      final List<Map<String, dynamic>> scheduledEvents = [];
+      final notifService = NotificationService();
+      
+      // Ensure local notifications initialized
+      await notifService.init();
+
+      for (final step in stepsWithDate) {
+        // 1. Create Local Notification
+        int notifId = 0;
+        try {
+           notifId = await notifService.scheduleNotification(
+             title: 'Jardin: ${widget.plant.commonName}',
+             body: step.title,
+             scheduledDate: step.scheduledDate!,
+           );
+        } catch (e) {
+          print('Notification error for ${step.title}: $e');
+        }
+
+        // 2. Create Agenda Activity (so it appears in Calendar View)
+        try {
+          // Identify if we already exported this step? (Optional for MVP)
+          
+          final activity = Activity(
+            id: _uuid.v4(),
+            type: ActivityType.careActionAdded, // Generic "Care Action"
+            title: step.title,
+            description: '${widget.plant.commonName}: ${step.description}',
+            entityId: widget.planting.id,
+            entityType: EntityType.planting,
+            timestamp: step.scheduledDate!,
+            metadata: {
+              'status': 'planned',
+              'isCustomTask': true, // CRITICAL: Makes it visible in CalendarViewScreen list
+              'taskKind': step.category,
+              'stepId': step.id,
+              'source': 'steps_export',
+              'notifId': notifId,
+              'plantName': widget.plant.commonName, // Visual aid for logic
+            }
+          );
+          
+          await GardenBoxes.activities.put(activity.id, activity);
+          
+          scheduledEvents.add({
+             'id': activity.id,
+             'stepId': step.id,
+             'scheduledDate': step.scheduledDate!.toIso8601String(),
+             'notifId': notifId,
+             'source': 'local_export',
+             'custom': step.category == 'custom'
+           });
+           
+          count++;
+        } catch (e) {
+          print('Activity creation error: $e');
+        }
+      }
+
+      // Save metadata
+      final existingEvents = widget.planting.metadata['scheduledEvents'];
+      List<dynamic> currentList = [];
+      if (existingEvents is List) {
+        currentList = List.from(existingEvents);
+      }
+      currentList.addAll(scheduledEvents);
+      widget.planting.metadata['scheduledEvents'] = currentList;
+      widget.planting.markAsUpdated();
+      await widget.planting.save();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('$count étapes ajoutées à l\'agenda.')),
+        );
+      }
+    }
   }
 
   String _formatDate(DateTime d) {
