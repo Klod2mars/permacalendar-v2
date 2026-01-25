@@ -21,7 +21,7 @@ import 'core/services/activity_observer_service.dart';
 import 'core/hive/type_ids.dart';
 import 'features/climate/data/initialization/soil_metrics_initialization.dart';
 // Generated Hive adapters
-import 'models/plant_localized.g.dart';
+import 'models/plant_localized.dart';
 
 class AppInitializer {
   static Future<void> initialize() async {
