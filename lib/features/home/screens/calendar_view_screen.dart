@@ -1129,15 +1129,26 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
               if (a.metadata['bedName'] != null) {
                 contextInfo += ' • ${a.metadata['bedName']}';
               }
+            } else if (a.metadata['gardenId'] != null) {
+              // 2. Try Fallback: Resolve Garden from ID stored in metadata
+              final g = GardenBoxes.getGarden(a.metadata['gardenId']);
+              if (g != null) {
+                 contextInfo = g.name;
+                 // Also try to resolve Bed if present (using zoneGardenBedId from create dialog)
+                 final bedId = a.metadata['zoneGardenBedId'] ?? a.metadata['gardenBedId'];
+                 if (bedId != null) {
+                    final b = GardenBoxes.getGardenBedById(bedId);
+                    if (b != null) contextInfo += ' • ${b.name}';
+                 }
+              }
             } else {
-              // 2. Try Fallback resolution
+              // 3. Entity-based fallback
               if (a.entityType == EntityType.planting && a.entityId != null) {
                  final p = GardenBoxes.plantings.get(a.entityId);
                  if (p != null) contextInfo = _getContextString(p.gardenBedId);
               } else if (a.entityType == EntityType.gardenBed && a.entityId != null) {
                  contextInfo = _getContextString(a.entityId);
               }
-            
             }
 
             final description = a.description ?? '';

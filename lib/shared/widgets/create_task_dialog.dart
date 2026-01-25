@@ -375,7 +375,9 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
             'priority': _priority,
             'assignee': _assignee,
             'gardenId': _selectedGardenId,
-            'zoneGardenBedId': _selectedGardenBedId, // redundant but requested
+            'gardenName': _selectedGardenId != null ? GardenBoxes.getGarden(_selectedGardenId!)?.name : null,
+            'zoneGardenBedId': _selectedGardenBedId,
+            'bedName': _selectedGardenBedId != null ? GardenBoxes.getGardenBedById(_selectedGardenBedId!)?.name : null,
             'taskKind': _taskKind,
             'nextRunDate': finalDate.toIso8601String(),
             if (_attachedImagePath != null && _attachedImagePath!.isNotEmpty)
