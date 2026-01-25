@@ -32,11 +32,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
 
     return AppBar(
-      title: Text(
-        title,
-        style: theme.textTheme.titleLarge?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: foregroundColor ?? theme.colorScheme.onPrimary,
+      title: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          title,
+          maxLines: 1,
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: foregroundColor ?? theme.colorScheme.onPrimary,
+          ),
         ),
       ),
       centerTitle: centerTitle,

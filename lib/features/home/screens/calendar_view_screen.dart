@@ -497,33 +497,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       appBar: CustomAppBar(
         title: l10n.calendar_title,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () async {
-              try {
-                await _loadCalendarData();
-                ref.invalidate(calendarAggregationProvider(_selectedMonth));
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l10n.calendar_refreshed),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l10n.common_error_prefix(e)),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              }
-            },
-            tooltip: l10n.common_refresh,
-          ),
+
           IconButton(
             icon: const Icon(Icons.add_task),
             tooltip: l10n.calendar_new_task_tooltip,
@@ -557,8 +531,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       ),
       body: Column(
         children: [
-          // Filtres
-          _buildFilterBar(theme),
+
           // Sélecteur de mois
           _buildMonthSelector(theme),
 
@@ -1389,48 +1362,5 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     }
   }
 
-  Widget _buildFilterBar(ThemeData theme) {
-    final filter = ref.watch(calendarFilterProvider);
-    final notifier = ref.read(calendarFilterProvider.notifier);
-    final l10n = AppLocalizations.of(context)!;
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: [
-          FilterChip(
-            label: Text(l10n.calendar_filter_tasks),
-            selected: filter.showTasksOnly,
-            onSelected: (_) => notifier.toggleTasksOnly(),
-            avatar: const Icon(Icons.task_alt, size: 16),
-          ),
-          const SizedBox(width: 8),
-          FilterChip(
-            label: Text(l10n.calendar_filter_maintenance),
-            selected: filter.showMaintenanceOnly,
-            onSelected: (_) => notifier.toggleMaintenanceOnly(),
-            avatar: const Icon(Icons.build, size: 16),
-          ),
-          const SizedBox(width: 8),
-          FilterChip(
-            label: Text(l10n.calendar_filter_harvests),
-            selected: filter.showHarvestsOnly,
-            onSelected: (_) => notifier.toggleHarvestsOnly(),
-            avatar: const Icon(Icons.shopping_basket, size: 16),
-          ),
-          const SizedBox(width: 8),
-          FilterChip(
-            label: Text(l10n.calendar_filter_urgent),
-            selected: filter.showUrgentOnly,
-            onSelected: (_) => notifier.toggleUrgentOnly(),
-            backgroundColor:
-                filter.showUrgentOnly ? Colors.red.withOpacity(0.2) : null,
-            selectedColor: Colors.red.withOpacity(0.4),
-            avatar: const Icon(Icons.warning, size: 16, color: Colors.red),
-          ),
-        ],
-      ),
-    );
-  }
 }
