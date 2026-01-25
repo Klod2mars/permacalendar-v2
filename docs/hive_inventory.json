@@ -1,0 +1,1770 @@
+{
+  "boxes": {
+    "activities_v3": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\export\\data\\services\\excel_generator_service.dart",
+        "line": 130
+      }
+    ],
+    "app_settings": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\.scripts\\purge_settings_box.dart",
+        "line": 53
+      }
+    ],
+    "gardens": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 185
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 188
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 143
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 172
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 97
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 131
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 281
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 345
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 389
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 440
+      }
+    ],
+    "gardens_freezed": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 157
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 159
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 169
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 177
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 167
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 207
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 264
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 331
+      }
+    ],
+    "gardens_hive": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 316
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 319
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 146
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 175
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\export\\data\\services\\excel_generator_service.dart",
+        "line": 44
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 223
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 306
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 347
+      }
+    ],
+    "gardens_v2": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 251
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 254
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 144
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\di\\garden_module.dart",
+        "line": 173
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 180
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 293
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+        "line": 346
+      }
+    ],
+    "health_check_test": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\monitoring\\health_check_service.dart",
+        "line": 303
+      }
+    ],
+    "intelligent_cache": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\monitoring\\health_check_service.dart",
+        "line": 352
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\performance\\intelligent_cache_service.dart",
+        "line": 164
+      }
+    ],
+    "migration_info": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\data_migration_service.dart",
+        "line": 15
+      }
+    ],
+    "planting_hive": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\statistics\\application\\providers\\alignment\\alignment_raw_data_provider.dart",
+        "line": 101
+      }
+    ],
+    "plantings": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\statistics\\application\\providers\\alignment\\alignment_raw_data_provider.dart",
+        "line": 95
+      }
+    ],
+    "plants_box": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\plant_catalog\\multilingual_sync_test.dart",
+        "line": 71
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\plant_catalog\\multilingual_sync_test.dart",
+        "line": 128
+      }
+    ],
+    "settings": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\.scripts\\clear_old_hive_settings.dart",
+        "line": 29
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\.scripts\\purge_settings_box.dart",
+        "line": 121
+      }
+    ],
+    "test_activities": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\models\\activity_test.dart",
+        "line": 37
+      }
+    ]
+  },
+  "box_vars": {
+    "APP_SETTINGS_BOX_NAME": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 50
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 83
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 108
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 148
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 194
+      }
+    ],
+    "APP_SETTINGS_LEGACY_BOX_NAME": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 55
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 68
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 107
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 159
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+        "line": 192
+      }
+    ],
+    "_activitiesBox": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 140
+      }
+    ],
+    "_boxName": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.dart",
+        "line": 38
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.dart",
+        "line": 44
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.dart",
+        "line": 46
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\repositories\\dashboard_slots_repository.dart",
+        "line": 16
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\repositories\\dashboard_slots_repository.dart",
+        "line": 31
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\activity_tracker_v3.dart",
+        "line": 43
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\germination_service.dart",
+        "line": 12
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 13
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 22
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 36
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\datasources\\soil_metrics_local_ds.dart",
+        "line": 160
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\datasources\\soil_metrics_local_ds.dart",
+        "line": 162
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\repositories\\custom_plant_repository.dart",
+        "line": 16
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\weather\\providers\\commune_provider.dart",
+        "line": 23
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\weather\\providers\\commune_provider.dart",
+        "line": 36
+      }
+    ],
+    "_gardensBox": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 134
+      }
+    ],
+    "_germinationEventsBox": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 128
+      }
+    ],
+    "_growthCyclesBoxName": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\plant_boxes.dart",
+        "line": 42
+      }
+    ],
+    "_plantingsBox": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 131
+      }
+    ],
+    "_plantsBox": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 137
+      }
+    ],
+    "_plantsBoxName": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\plant_boxes.dart",
+        "line": 40
+      }
+    ],
+    "_varietiesBoxName": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\plant_boxes.dart",
+        "line": 41
+      }
+    ],
+    "backupBoxName": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 426
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 532
+      }
+    ],
+    "boxName": [
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\data_migration_service.dart",
+        "line": 137
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 108
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 118
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 31
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 33
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 39
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 51
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 457
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 459
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\migration\\garden_data_migration.dart",
+        "line": 509
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\repositories\\garden_hive_repository.dart",
+        "line": 40
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\repositories\\garden_hive_repository.dart",
+        "line": 50
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\legacy_cleanup_service.dart",
+        "line": 72
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\legacy_cleanup_service.dart",
+        "line": 137
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\legacy_cleanup_service.dart",
+        "line": 172
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\legacy_cleanup_service.dart",
+        "line": 262
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\data\\plants_repository.dart",
+        "line": 15
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\repositories\\plant_hive_repository.dart",
+        "line": 61
+      },
+      {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\repositories\\plant_hive_repository.dart",
+        "line": 71
+      }
+    ]
+  },
+  "const_strings": {
+    "APP_SETTINGS_BOX_NAME": [
+      {
+        "value": "app_settings",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\constants.dart",
+        "line": 3
+      }
+    ],
+    "APP_SETTINGS_LEGACY_BOX_NAME": [
+      {
+        "value": "app_settings_v2",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\constants.dart",
+        "line": 4
+      }
+    ],
+    "_activitiesBox": [
+      {
+        "value": "activities",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 9
+      }
+    ],
+    "_activitiesBoxName": [
+      {
+        "value": "activities",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 21
+      }
+    ],
+    "_archiveFolder": [
+      {
+        "value": "hive_archives",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\data_archival_service.dart",
+        "line": 31
+      }
+    ],
+    "_backupPrefix": [
+      {
+        "value": "permacalendar_backup_",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\backup\\full_backup_service.dart",
+        "line": 17
+      }
+    ],
+    "_boxName": [
+      {
+        "value": "sky_calibration_v1",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.dart",
+        "line": 27
+      },
+      {
+        "value": "dashboard_slots",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\repositories\\dashboard_slots_repository.dart",
+        "line": 8
+      },
+      {
+        "value": "gardens_hive",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\repositories\\garden_hive_repository.dart",
+        "line": 15
+      },
+      {
+        "value": "activities_v3",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\activity_tracker_v3.dart",
+        "line": 22
+      },
+      {
+        "value": "germination_events",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\germination_service.dart",
+        "line": 6
+      },
+      {
+        "value": "weather_settings",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 6
+      },
+      {
+        "value": "soil_metrics.box",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\datasources\\soil_metrics_local_ds.dart",
+        "line": 137
+      },
+      {
+        "value": "custom_plants_box",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\repositories\\custom_plant_repository.dart",
+        "line": 9
+      },
+      {
+        "value": "plants_box",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\repositories\\plant_hive_repository.dart",
+        "line": 34
+      },
+      {
+        "value": "settings",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\weather\\providers\\commune_provider.dart",
+        "line": 10
+      }
+    ],
+    "_exportPreferencesBoxName": [
+      {
+        "value": "export_preferences",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 23
+      }
+    ],
+    "_gardenBedsBoxName": [
+      {
+        "value": "garden_beds",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 18
+      }
+    ],
+    "_gardensBox": [
+      {
+        "value": "gardens",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 7
+      }
+    ],
+    "_gardensBoxName": [
+      {
+        "value": "gardens",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 17
+      }
+    ],
+    "_germinationEventsBox": [
+      {
+        "value": "germination_events",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 5
+      }
+    ],
+    "_growthCyclesBoxName": [
+      {
+        "value": "growth_cycles",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\plant_boxes.dart",
+        "line": 9
+      }
+    ],
+    "_harvestsBoxName": [
+      {
+        "value": "harvests",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 20
+      }
+    ],
+    "_jsonAssetPath": [
+      {
+        "value": "assets/data/plants_tokenized.json",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\repositories\\plant_hive_repository.dart",
+        "line": 36
+      }
+    ],
+    "_kLocaleKey": [
+      {
+        "value": "app_locale",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\providers\\locale_provider.dart",
+        "line": 10
+      }
+    ],
+    "_key": [
+      {
+        "value": "current_config",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.dart",
+        "line": 28
+      }
+    ],
+    "_keyAlignX": [
+      {
+        "value": "organic_dashboard_image_align_x",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\home\\presentation\\providers\\dashboard_image_settings_provider.dart",
+        "line": 6
+      }
+    ],
+    "_keyAlignY": [
+      {
+        "value": "organic_dashboard_image_align_y",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\home\\presentation\\providers\\dashboard_image_settings_provider.dart",
+        "line": 7
+      }
+    ],
+    "_keyCommune": [
+      {
+        "value": "selected_commune",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 7
+      }
+    ],
+    "_keyLat": [
+      {
+        "value": "selected_lat",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 8
+      }
+    ],
+    "_keyLon": [
+      {
+        "value": "selected_lon",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\commune_storage.dart",
+        "line": 9
+      }
+    ],
+    "_keySelectedCommune": [
+      {
+        "value": "selected_commune_name",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\weather\\providers\\commune_provider.dart",
+        "line": 11
+      }
+    ],
+    "_keyZoom": [
+      {
+        "value": "organic_dashboard_image_zoom",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\home\\presentation\\providers\\dashboard_image_settings_provider.dart",
+        "line": 8
+      }
+    ],
+    "_logName": [
+      {
+        "value": "GardenEventBus",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\events\\garden_event_bus.dart",
+        "line": 35
+      },
+      {
+        "value": "GardenDataAggregationService",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\garden_data_aggregation_service.dart",
+        "line": 40
+      },
+      {
+        "value": "EventSystemValidator",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\garden_event_system_validator.dart",
+        "line": 18
+      },
+      {
+        "value": "DataConsistencyManager",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\aggregation\\data_consistency_manager.dart",
+        "line": 16
+      },
+      {
+        "value": "GardenAggregationHub",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\aggregation\\garden_aggregation_hub.dart",
+        "line": 22
+      },
+      {
+        "value": "LegacyDataAdapter",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\aggregation\\legacy_data_adapter.dart",
+        "line": 14
+      },
+      {
+        "value": "MigrationProgressTracker",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\aggregation\\migration_progress_tracker.dart",
+        "line": 14
+      },
+      {
+        "value": "ModernDataAdapter",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\aggregation\\modern_data_adapter.dart",
+        "line": 34
+      },
+      {
+        "value": "DataArchivalService",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\data_archival_service.dart",
+        "line": 30
+      },
+      {
+        "value": "DataIntegrityValidator",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\data_integrity_validator.dart",
+        "line": 30
+      },
+      {
+        "value": "DualWriteService",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\dual_write_service.dart",
+        "line": 28
+      },
+      {
+        "value": "LegacyCleanupService",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\legacy_cleanup_service.dart",
+        "line": 26
+      },
+      {
+        "value": "MigrationHealthChecker",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\migration_health_checker.dart",
+        "line": 27
+      },
+      {
+        "value": "MigrationOrchestrator",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\migration_orchestrator.dart",
+        "line": 35
+      },
+      {
+        "value": "ReadSwitchService",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\migration\\read_switch_service.dart",
+        "line": 29
+      }
+    ],
+    "_migrationVersionKey": [
+      {
+        "value": "hive_migration_version",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\data_migration_service.dart",
+        "line": 7
+      }
+    ],
+    "_plantingsBox": [
+      {
+        "value": "plantings",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 6
+      }
+    ],
+    "_plantingsBoxName": [
+      {
+        "value": "plantings",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 19
+      }
+    ],
+    "_plantsAssetPath": [
+      {
+        "value": "assets/data/plants_merged_clean.json",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\plant_catalog_service.dart",
+        "line": 10
+      }
+    ],
+    "_plantsBox": [
+      {
+        "value": "plants",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\hive_service.dart",
+        "line": 8
+      }
+    ],
+    "_plantsBoxName": [
+      {
+        "value": "plants",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\garden_boxes.dart",
+        "line": 22
+      },
+      {
+        "value": "plants",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\plant_boxes.dart",
+        "line": 7
+      }
+    ],
+    "_prefix": [
+      {
+        "value": "[UI_ANALYTICS]",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\analytics\\ui_analytics.dart",
+        "line": 8
+      }
+    ],
+    "_prefsFileName": [
+      {
+        "value": "app_preferences.json",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\services\\backup\\full_backup_service.dart",
+        "line": 16
+      }
+    ],
+    "_scopeKey": [
+      {
+        "value": "garden:demo",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\presentation\\screens\\ph_input_sheet.dart",
+        "line": 26
+      }
+    ],
+    "_varietiesBoxName": [
+      {
+        "value": "plant_varieties",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\data\\hive\\plant_boxes.dart",
+        "line": 8
+      }
+    ],
+    "activities": [
+      {
+        "value": "/activities",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 44
+      }
+    ],
+    "appDescription": [
+      {
+        "value": "Application de gestion de jardinage en permaculture",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 7
+      }
+    ],
+    "appName": [
+      {
+        "value": "PermaCalendar 2.0",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 4
+      }
+    ],
+    "appVersion": [
+      {
+        "value": "2.0.0",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 5
+      }
+    ],
+    "authEndpoint": [
+      {
+        "value": "/auth",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 58
+      }
+    ],
+    "backendApiKeyEnv": [
+      {
+        "value": "BACKEND_API_KEY",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 65
+      }
+    ],
+    "buildNumber": [
+      {
+        "value": "1.0.0+1",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 6
+      }
+    ],
+    "calendar": [
+      {
+        "value": "/calendar",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 46
+      }
+    ],
+    "dateFormat": [
+      {
+        "value": "dd/MM/yyyy",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 44
+      }
+    ],
+    "dateTimeFormat": [
+      {
+        "value": "dd/MM/yyyy HH:mm",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 45
+      }
+    ],
+    "defaultBackendUrl": [
+      {
+        "value": "https://api.permacalendar.com",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 56
+      }
+    ],
+    "defaultBedIcon": [
+      {
+        "value": "ðŸŸ«",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 88
+      }
+    ],
+    "defaultGardenIcon": [
+      {
+        "value": "ðŸŒ±",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 86
+      }
+    ],
+    "defaultHarvestIcon": [
+      {
+        "value": "ðŸ¥•",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 89
+      }
+    ],
+    "defaultPlantIcon": [
+      {
+        "value": "ðŸŒ¿",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 87
+      }
+    ],
+    "deleteSuccessMessage": [
+      {
+        "value": "Supprimé avec succès",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 107
+      }
+    ],
+    "errorColorHex": [
+      {
+        "value": "#F44336",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 81
+      }
+    ],
+    "export": [
+      {
+        "value": "/export",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 50
+      }
+    ],
+    "firstLaunchKey": [
+      {
+        "value": "first_launch",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 52
+      }
+    ],
+    "gardenBeds": [
+      {
+        "value": "/garden/:gardenId/beds",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 38
+      }
+    ],
+    "gardenCreate": [
+      {
+        "value": "/gardens/create",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 37
+      }
+    ],
+    "gardenDetail": [
+      {
+        "value": "/gardens/:id",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 36
+      }
+    ],
+    "gardenLimitReachedMessage": [
+      {
+        "value": "Vous ne pouvez pas Créer plus de $maxGardensPerUser jardins",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 25
+      }
+    ],
+    "gardens": [
+      {
+        "value": "/gardens",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 35
+      }
+    ],
+    "gardensEndpoint": [
+      {
+        "value": "/gardens",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 59
+      }
+    ],
+    "healthEndpoint": [
+      {
+        "value": "/health",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 57
+      }
+    ],
+    "home": [
+      {
+        "value": "/",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 34
+      }
+    ],
+    "kStingerBaseUrl": [
+      {
+        "value": "https://packs.permacalendar.app",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\services\\pack_manager.dart",
+        "line": 12
+      }
+    ],
+    "languageKey": [
+      {
+        "value": "language",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 51
+      }
+    ],
+    "lastSyncKey": [
+      {
+        "value": "last_sync",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 53
+      }
+    ],
+    "minimumGardenRequiredMessage": [
+      {
+        "value": "Vous devez avoir au moins $minGardensPerUser jardin",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 27
+      }
+    ],
+    "networkErrorMessage": [
+      {
+        "value": "Erreur de connexion réseau",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 99
+      }
+    ],
+    "notFoundErrorMessage": [
+      {
+        "value": "Élément non trouvé",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 102
+      }
+    ],
+    "plantDetail": [
+      {
+        "value": "/plants/:id",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 41
+      }
+    ],
+    "plantingDetail": [
+      {
+        "value": "/plantings/:id",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 42
+      }
+    ],
+    "plants": [
+      {
+        "value": "/plants",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 40
+      }
+    ],
+    "plantsEndpoint": [
+      {
+        "value": "/plants",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 60
+      }
+    ],
+    "primaryColorHex": [
+      {
+        "value": "#4CAF50",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 79
+      }
+    ],
+    "saveSuccessMessage": [
+      {
+        "value": "Sauvegardé avec succès",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 106
+      }
+    ],
+    "secondaryColorHex": [
+      {
+        "value": "#8BC34A",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 80
+      }
+    ],
+    "serverErrorMessage": [
+      {
+        "value": "Erreur serveur, veuillez réessayer",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 100
+      }
+    ],
+    "settings": [
+      {
+        "value": "/settings",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 45
+      }
+    ],
+    "soilTemperature": [
+      {
+        "value": "/soil-temperature",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 51
+      }
+    ],
+    "statistics": [
+      {
+        "value": "/statistics",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 49
+      }
+    ],
+    "successColorHex": [
+      {
+        "value": "#4CAF50",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 83
+      }
+    ],
+    "syncSuccessMessage": [
+      {
+        "value": "Synchronisation réussie",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 109
+      }
+    ],
+    "themeKey": [
+      {
+        "value": "theme_mode",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 50
+      }
+    ],
+    "timeFormat": [
+      {
+        "value": "HH:mm",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 46
+      }
+    ],
+    "unauthorizedErrorMessage": [
+      {
+        "value": "Accès non autorisé",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 103
+      }
+    ],
+    "updateSuccessMessage": [
+      {
+        "value": "Mis à jour avec succès",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 108
+      }
+    ],
+    "userPreferencesKey": [
+      {
+        "value": "user_preferences",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 49
+      }
+    ],
+    "validationErrorMessage": [
+      {
+        "value": "Données invalides",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 101
+      }
+    ],
+    "version": [
+      {
+        "value": "1.0.0",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\export\\domain\\models\\export_schema.dart",
+        "line": 5
+      }
+    ],
+    "warningColorHex": [
+      {
+        "value": "#FF9800",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 82
+      }
+    ],
+    "weather": [
+      {
+        "value": "/weather",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_router.dart",
+        "line": 47
+      }
+    ],
+    "weatherApiKeyEnv": [
+      {
+        "value": "WEATHER_API_KEY",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 64
+      }
+    ],
+    "weatherEndpoint": [
+      {
+        "value": "/weather",
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\utils\\constants.dart",
+        "line": 61
+      }
+    ]
+  },
+  "adapters": {
+    "ActivityAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\activity.g.dart",
+        "line": 9,
+        "model": "Activity",
+        "typeId": 16
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 49,
+          "snippet": "Hive.registerAdapter(ActivityAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\models\\activity_test.dart",
+          "line": 25,
+          "snippet": "Hive.registerAdapter(ActivityAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\screens\\calendar_view_screen_task_test.dart",
+          "line": 21,
+          "snippet": "Hive.registerAdapter(ActivityAdapter());"
+        }
+      ]
+    },
+    "ActivityTypeAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\activity.g.dart",
+        "line": 73,
+        "model": "ActivityType",
+        "typeId": 17
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 51,
+          "snippet": "Hive.registerAdapter(ActivityTypeAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\models\\activity_test.dart",
+          "line": 28,
+          "snippet": "Hive.registerAdapter(ActivityTypeAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\screens\\calendar_view_screen_task_test.dart",
+          "line": 23,
+          "snippet": "Hive.registerAdapter(ActivityTypeAdapter());"
+        }
+      ]
+    },
+    "ActivityV3Adapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\activity_v3.g.dart",
+        "line": 9,
+        "model": "ActivityV3",
+        "typeId": 30
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 58,
+          "snippet": "Hive.registerAdapter(ActivityV3Adapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\providers\\calendar_aggregation_provider_test.dart",
+          "line": 49,
+          "snippet": "Hive.registerAdapter(ActivityV3Adapter());"
+        }
+      ]
+    },
+    "AppSettingsAdapter": {
+      "defined": null,
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\integration\\app_settings_migration_test.dart",
+          "line": 34,
+          "snippet": "Hive.registerAdapter(AppSettingsAdapter());"
+        }
+      ]
+    },
+    "EntityTypeAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\activity.g.dart",
+        "line": 187,
+        "model": "EntityType",
+        "typeId": 18
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 53,
+          "snippet": "Hive.registerAdapter(EntityTypeAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\models\\activity_test.dart",
+          "line": 31,
+          "snippet": "Hive.registerAdapter(EntityTypeAdapter());"
+        }
+      ]
+    },
+    "GardenAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_v2.g.dart",
+        "line": 9,
+        "model": "Garden",
+        "typeId": 10
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 32,
+          "snippet": "Hive.registerAdapter(GardenAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\garden_bed\\garden_bed_scoped_provider_simple_test.dart",
+          "line": 23,
+          "snippet": "Hive.registerAdapter(GardenAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\garden_bed\\garden_bed_scoped_provider_test.dart",
+          "line": 23,
+          "snippet": "Hive.registerAdapter(GardenAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\screens\\calendar_view_screen_task_test.dart",
+          "line": 25,
+          "snippet": "Hive.registerAdapter(GardenAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\planting\\harvest_integration_test.dart",
+          "line": 35,
+          "snippet": "Hive.registerAdapter(GardenAdapter());"
+        }
+      ]
+    },
+    "GardenBedAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_bed_v2.g.dart",
+        "line": 9,
+        "model": "GardenBed",
+        "typeId": 11
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 34,
+          "snippet": "Hive.registerAdapter(GardenBedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\garden_bed\\garden_bed_scoped_provider_simple_test.dart",
+          "line": 26,
+          "snippet": "Hive.registerAdapter(GardenBedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\garden_bed\\garden_bed_scoped_provider_test.dart",
+          "line": 26,
+          "snippet": "Hive.registerAdapter(GardenBedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\screens\\calendar_view_screen_task_test.dart",
+          "line": 26,
+          "snippet": "Hive.registerAdapter(GardenBedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\planting\\harvest_integration_test.dart",
+          "line": 37,
+          "snippet": "Hive.registerAdapter(GardenBedAdapter());"
+        }
+      ]
+    },
+    "GardenBedHiveAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_bed_hive.g.dart",
+        "line": 9,
+        "model": "GardenBedHive",
+        "typeId": 26
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 41,
+          "snippet": "Hive.registerAdapter(GardenBedHiveAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 218,
+          "snippet": "Hive.registerAdapter(GardenBedHiveAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 276,
+          "snippet": "Hive.registerAdapter(GardenBedHiveAdapter());"
+        }
+      ]
+    },
+    "GardenFreezedAdapter": {
+      "defined": null,
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 126,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 175,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 217,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 275,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 340,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 364,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 385,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 418,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\data\\migration\\garden_data_migration_test.dart",
+          "line": 436,
+          "snippet": "Hive.registerAdapter(GardenFreezedAdapter());"
+        }
+      ]
+    },
+    "GardenHiveAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_hive.g.dart",
+        "line": 9,
+        "model": "GardenHive",
+        "typeId": 25
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 39,
+          "snippet": "Hive.registerAdapter(GardenHiveAdapter());"
+        }
+      ]
+    },
+    "GerminationEventAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\germination_event.g.dart",
+        "line": 9,
+        "model": "GerminationEvent",
+        "typeId": 6
+      },
+      "registered": []
+    },
+    "GrowthCycleAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\growth_cycle.g.dart",
+        "line": 9,
+        "model": "GrowthCycle",
+        "typeId": 5
+      },
+      "registered": []
+    },
+    "LocalizedPlantFieldsAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\models\\plant_localized.g.dart",
+        "line": 61,
+        "model": "LocalizedPlantFields",
+        "typeId": 133
+      },
+      "registered": []
+    },
+    "MockPlantingAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\providers\\calendar_aggregation_provider_test.dart",
+        "line": 14,
+        "model": "Planting",
+        "typeId": 3
+      },
+      "registered": []
+    },
+    "PlantAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\plant_v2.g.dart",
+        "line": 9,
+        "model": "Plant",
+        "typeId": 12
+      },
+      "registered": []
+    },
+    "PlantHiveAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\plant_catalog\\data\\models\\plant_hive.g.dart",
+        "line": 9,
+        "model": "PlantHive",
+        "typeId": 29
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 45,
+          "snippet": "Hive.registerAdapter(PlantHiveAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\services\\aggregation\\modern_data_adapter_test.dart",
+          "line": 43,
+          "snippet": "Hive.registerAdapter(PlantHiveAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\plant_catalog\\multilingual_sync_test.dart",
+          "line": 58,
+          "snippet": "Hive.registerAdapter(PlantHiveAdapter());"
+        }
+      ]
+    },
+    "PlantLocalizedAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\models\\plant_localized.g.dart",
+        "line": 9,
+        "model": "PlantLocalized",
+        "typeId": 33
+      },
+      "registered": []
+    },
+    "PlantVarietyAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\plant_variety.g.dart",
+        "line": 9,
+        "model": "PlantVariety",
+        "typeId": 4
+      },
+      "registered": []
+    },
+    "PlantingAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\planting_v2.g.dart",
+        "line": 9,
+        "model": "Planting",
+        "typeId": 14
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 35,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\core\\services\\aggregation\\modern_data_adapter_test.dart",
+          "line": 40,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\garden_bed\\garden_bed_scoped_provider_simple_test.dart",
+          "line": 29,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\garden_bed\\garden_bed_scoped_provider_test.dart",
+          "line": 29,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\providers\\calendar_aggregation_provider_test.dart",
+          "line": 45,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\home\\screens\\calendar_view_screen_task_test.dart",
+          "line": 27,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\test\\features\\planting\\harvest_integration_test.dart",
+          "line": 38,
+          "snippet": "Hive.registerAdapter(PlantingAdapter());"
+        }
+      ]
+    },
+    "PlantingHiveAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\planting_hive.g.dart",
+        "line": 9,
+        "model": "PlantingHive",
+        "typeId": 27
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 43,
+          "snippet": "Hive.registerAdapter(PlantingHiveAdapter());"
+        }
+      ]
+    },
+    "SkyCalibrationConfigAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.g.dart",
+        "line": 9,
+        "model": "SkyCalibrationConfig",
+        "typeId": 44
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\app_initializer.dart",
+          "line": 70,
+          "snippet": "Hive.registerAdapter(SkyCalibrationConfigAdapter());"
+        },
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\sky_calibration_config.dart",
+          "line": 32,
+          "snippet": "Hive.registerAdapter(SkyCalibrationConfigAdapter());"
+        }
+      ]
+    },
+    "SoilMetricsDtoAdapter": {
+      "defined": {
+        "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\datasources\\soil_metrics_local_ds.g.dart",
+        "line": 9,
+        "model": "SoilMetricsDto",
+        "typeId": 28
+      },
+      "registered": [
+        {
+          "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\features\\climate\\data\\initialization\\soil_metrics_initialization.dart",
+          "line": 25,
+          "snippet": "Hive.registerAdapter(SoilMetricsDtoAdapter());"
+        }
+      ]
+    }
+  },
+  "hive_types": [
+    {
+      "model": "Activity",
+      "typeId": 16,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\activity.dart",
+      "line": 85
+    },
+    {
+      "model": "Garden",
+      "typeId": 0,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden.dart",
+      "line": 34
+    },
+    {
+      "model": "GardenBed",
+      "typeId": 1,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_bed.dart",
+      "line": 7
+    },
+    {
+      "model": "GardenBedHive",
+      "typeId": 26,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_bed_hive.dart",
+      "line": 6
+    },
+    {
+      "model": "GardenBed",
+      "typeId": 11,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_bed_v2.dart",
+      "line": 6
+    },
+    {
+      "model": "GardenHive",
+      "typeId": 25,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_hive.dart",
+      "line": 8
+    },
+    {
+      "model": "Garden",
+      "typeId": 10,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\garden_v2.dart",
+      "line": 40
+    },
+    {
+      "model": "GerminationEvent",
+      "typeId": 6,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\germination_event.dart",
+      "line": 7
+    },
+    {
+      "model": "GrowthCycle",
+      "typeId": 5,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\growth_cycle.dart",
+      "line": 6
+    },
+    {
+      "model": "Plant",
+      "typeId": 2,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\plant.dart",
+      "line": 6
+    },
+    {
+      "model": "Planting",
+      "typeId": 3,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\planting.dart",
+      "line": 6
+    },
+    {
+      "model": "PlantingHive",
+      "typeId": 27,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\planting_hive.dart",
+      "line": 6
+    },
+    {
+      "model": "Planting",
+      "typeId": 14,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\planting_v2.dart",
+      "line": 6
+    },
+    {
+      "model": "Plant",
+      "typeId": 12,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\plant_v2.dart",
+      "line": 6
+    },
+    {
+      "model": "PlantVariety",
+      "typeId": 4,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\core\\models\\plant_variety.dart",
+      "line": 6
+    },
+    {
+      "model": "LocalizedPlantFields",
+      "typeId": 34,
+      "file": "C:\\Users\\roman\\Documents\\apppklod\\permacalendarv2\\lib\\models\\plant_localized.dart",
+      "line": 53
+    }
+  ],
+  "scanned_files_count": 456
+}
