@@ -1154,14 +1154,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get soil_temp_about_content =>
-      'La temperatura del suolo visualizzata qui è stimata dall\'applicazione in base ai dati climatici e stagionali, utilizzando una formula di calcolo integrata.\n\nQuesta stima fornisce una tendenza realistica della temperatura del suolo quando non è disponibile alcuna misurazione diretta.';
+      'La temperatura del suolo visualizzata qui è stimata dall\'app in base a dati climatici e stagionali, secondo la seguente formula:\n\nQuesta stima fornisce una tendenza realistica della temperatura del suolo quando non sono disponibili misurazioni dirette.';
 
   @override
   String get soil_temp_formula_label => 'Formula di calcolo usata:';
 
   @override
   String get soil_temp_formula_content =>
-      'Temp. Suolo = f(temp. aria, stagione, inerzia suolo)\n(Formula esatta definita nel codice dell\'applicazione)';
+      'T_suolo(n+1) = T_suolo(n) + α × (T_aria(n) − T_suolo(n))\n\nDove:\n• α : coefficiente di diffusione termica (predefinito 0,15 — intervallo raccomandato 0,10–0,20).\n• T_suolo(n) : temperatura attuale del suolo (°C).\n• T_aria(n) : temperatura attuale dell\'aria (°C).\n\nLa formula è implementata nel codice dell\'app (ComputeSoilTempNextDayUsecase).';
 
   @override
   String get soil_temp_current_label => 'Temperatura attuale';

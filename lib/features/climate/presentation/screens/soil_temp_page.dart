@@ -13,6 +13,7 @@ class SoilTempPage extends ConsumerWidget {
   const SoilTempPage({super.key, this.scopeKey = "garden:demo"});
 
   @override
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
@@ -21,11 +22,8 @@ class SoilTempPage extends ConsumerWidget {
     final adviceAsync = ref.watch(sowingAdviceProvider(scopeKey));
 
     return Scaffold(
-      backgroundColor:
-          Colors.transparent, // Background handled by parent/stack usually?
-      // If used as full page, we might need a background. Assuming standard app background.
-      // Let's use a dark nice background if running standalone, but usually this app has a global background.
-      // I'll put a container with gradient just in case.
+      backgroundColor: Colors.transparent,
+      // Use a gradient container for the background
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -38,230 +36,261 @@ class SoilTempPage extends ConsumerWidget {
           ),
         ),
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
+          // Use CustomScrollView to allow the whole page to scroll if content expands
+          child: CustomScrollView(
+            slivers: [
+              // 1. TOP SECTION (Header, Chart, Info, Measure)
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon:
-                            const Icon(Icons.arrow_back, color: Colors.white)),
-                    const SizedBox(width: 8),
-                    Text(l10n.soil_temp_title,
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-
-              // Chart Section
-              Container(
-                height: 200,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: forecastAsync.when(
-                  data: (data) => _buildChart(data, theme, locale),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                   error: (e, s) => Center(
-                      child: Text(l10n.soil_temp_chart_error(e),
-                          style: const TextStyle(color: Colors.white))),
-                ),
-              ),
-
-              // --- Info Section (Collapsed by default) ---
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Theme(
-                  data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                  child: ExpansionTile(
-                    leading: const Icon(Icons.info_outline, color: Colors.white70, size: 20),
-                    title: Text(
-                      l10n.soil_temp_about_title,
-                      style: theme.textTheme.titleSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                    // Header
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () => Navigator.pop(context),
+                              icon: const Icon(Icons.arrow_back, color: Colors.white)),
+                          const SizedBox(width: 8),
+                          Text(l10n.soil_temp_title,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                  color: Colors.white, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
-                    childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                    children: [
-                       Text(
-                        l10n.soil_temp_about_content,
-                        style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        l10n.soil_temp_formula_label,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                            color: Colors.amber, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        l10n.soil_temp_formula_content,
-                         style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70, fontStyle: FontStyle.italic),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
 
-              const SizedBox(height: 4),
+                    // Chart Section
+                    Container(
+                      height: 200,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: forecastAsync.when(
+                        data: (data) => _buildChart(data, theme, locale),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                        error: (e, s) => Center(
+                            child: Text(l10n.soil_temp_chart_error(e),
+                                style: const TextStyle(color: Colors.white))),
+                      ),
+                    ),
 
-              // --- Mesure du sol (affichage & bouton) ---
-              Consumer(
-                builder: (context, ref, child) {
-                  final soilTempAsync =
-                      ref.watch(soilTempProviderByScope(scopeKey));
-                  final double displayedTemp = soilTempAsync.value ?? 0.0;
-
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                    // --- Info Section (Collapsed by default, now scrollable if expanded) ---
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Theme(
+                        data: Theme.of(context)
+                            .copyWith(dividerColor: Colors.transparent),
+                        child: ExpansionTile(
+                          leading: const Icon(Icons.info_outline,
+                              color: Colors.white70, size: 20),
+                          title: Text(
+                            l10n.soil_temp_about_title,
+                            style: theme.textTheme.titleSmall?.copyWith(
+                                color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                          childrenPadding:
+                              const EdgeInsets.fromLTRB(16, 0, 16, 16),
                           children: [
-                            Expanded(
-                                child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            Text(
+                              l10n.soil_temp_about_content,
+                              style: theme.textTheme.bodySmall
+                                  ?.copyWith(color: Colors.white70),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              l10n.soil_temp_formula_label,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              l10n.soil_temp_formula_content,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                  color: Colors.white70,
+                                  fontStyle: FontStyle.italic),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    // --- Measure / Measure Button ---
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final soilTempAsync =
+                            ref.watch(soilTempProviderByScope(scopeKey));
+                        final double displayedTemp = soilTempAsync.value ?? 0.0;
+
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Text(l10n.soil_temp_current_label,
-                                      style: theme.textTheme.titleMedium
-                                          ?.copyWith(color: Colors.white)),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    '${displayedTemp.toStringAsFixed(1)}°C',
-                                    style: theme.textTheme.headlineSmall?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(l10n.soil_temp_current_label,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(color: Colors.white)),
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          '${displayedTemp.toStringAsFixed(1)}°C',
+                                          style: theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  ConstrainedBox(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 240),
+                                    child: ElevatedButton.icon(
+                                      onPressed: () => showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (_) => const SoilTempSheet(),
+                                      ),
+                                      icon: const Icon(Icons.thermostat),
+                                      label: Text(l10n.soil_temp_action_measure),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.amber,
+                                        foregroundColor: Colors.black,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(32)),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 240),
-                              child: ElevatedButton.icon(
-                                onPressed: () => showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (_) => const SoilTempSheet(),
-                                ),
-                                icon: const Icon(Icons.thermostat),
-                                label: Text(l10n.soil_temp_action_measure),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.amber,
-                                  foregroundColor: Colors.black,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 14),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(32)),
-                                ),
+                              const SizedBox(height: 8),
+                              Text(
+                                l10n.soil_temp_measure_hint,
+                                style: theme.textTheme.bodySmall
+                                    ?.copyWith(color: Colors.white54, fontSize: 11),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              ),
+
+              // 2. ADVICE LIST SECTION
+              adviceAsync.when(
+                data: (adviceList) {
+                  // Check for catalog error
+                  final catalogError = ref.watch(plantCatalogErrorProvider);
+                  if (catalogError != null) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(l10n.soil_temp_catalog_error(catalogError),
+                            style: const TextStyle(color: Colors.redAccent),
+                            textAlign: TextAlign.center),
+                      ),
+                    );
+                  }
+
+                  final allPlants = ref.watch(plantsListProvider);
+                  final isLoading = ref.watch(plantCatalogLoadingProvider);
+
+                  // Empty DB check
+                  if (allPlants.isEmpty) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.inventory_2_outlined,
+                              color: Colors.white24, size: 64),
+                          const SizedBox(height: 16),
+                          Text(
+                            l10n.soil_temp_db_empty,
+                            style: const TextStyle(color: Colors.white70),
+                          ),
+                          const SizedBox(height: 16),
+                          isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.amber)
+                              : ElevatedButton.icon(
+                                  onPressed: () {
+                                    ref
+                                        .read(plantCatalogProvider.notifier)
+                                        .seedDefaultPlants();
+                                  },
+                                  icon: const Icon(Icons.refresh),
+                                  label: Text(l10n.soil_temp_reload_plants),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white24,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  // Empty advice check
+                  if (adviceList.isEmpty) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: Text(
+                          l10n.soil_temp_no_advice,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.white54),
                         ),
-                        const SizedBox(height: 8),
-                        // Concise instruction
-                         Text(
-                          l10n.soil_temp_measure_hint,
-                          style: theme.textTheme.bodySmall?.copyWith(color: Colors.white54, fontSize: 11),
-                        ),
-                      ],
+                      ),
+                    );
+                  }
+
+                  // Valid list
+                  return SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final item = adviceList[index];
+                          return _buildAdviceCard(item, theme, l10n);
+                        },
+                        childCount: adviceList.length,
+                      ),
                     ),
                   );
                 },
-              ),
-              const SizedBox(height: 16),
-
-
-              // Advice List
-              Expanded(
-                child: adviceAsync.when(
-                  data: (adviceList) {
-                    // 1. Vérifier si erreurs dans catalogue
-                    final catalogError = ref.watch(plantCatalogErrorProvider);
-                    if (catalogError != null) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(l10n.soil_temp_catalog_error(catalogError),
-                              style: const TextStyle(color: Colors.redAccent),
-                              textAlign: TextAlign.center),
-                        ),
-                      );
-                    }
-
-                    // 2. Vérifier si DB vide
-                    final allPlants = ref.watch(plantsListProvider);
-                    final isLoading = ref.watch(plantCatalogLoadingProvider);
-
-                    if (allPlants.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.inventory_2_outlined,
-                                color: Colors.white24, size: 64),
-                            const SizedBox(height: 16),
-                             Text(
-                              l10n.soil_temp_db_empty,
-                              style: const TextStyle(color: Colors.white70),
-                            ),
-                            const SizedBox(height: 16),
-                            isLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.amber)
-                                : ElevatedButton.icon(
-                                    onPressed: () {
-                                      ref
-                                          .read(plantCatalogProvider.notifier)
-                                          .seedDefaultPlants();
-                                    },
-                                    icon: const Icon(Icons.refresh),
-                                    label: Text(l10n.soil_temp_reload_plants),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white24,
-                                      foregroundColor: Colors.white,
-                                    ),
-                                  ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    // 3. Si liste conseils vide mais plantes existent -> Aucune correspondance
-                    if (adviceList.isEmpty) {
-                      return Center(
-                        child:Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Text(
-                            l10n.soil_temp_no_advice,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.white54),
-                          ),
-                        ),
-                      );
-                    }
-
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: adviceList.length,
-                      itemBuilder: (context, index) {
-                        final item = adviceList[index];
-                        return _buildAdviceCard(item, theme, l10n);
-                      },
-                    );
-                  },
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (e, s) => Center(
-                      child: Text(l10n.soil_temp_advice_error(e),
-                          style: const TextStyle(color: Colors.white))),
+                loading: () => const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+                error: (e, s) => SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(l10n.soil_temp_advice_error(e),
+                        style: const TextStyle(color: Colors.white)),
+                  ),
                 ),
               ),
+
+              // Bottom spacing
+              const SliverToBoxAdapter(child: SizedBox(height: 20)),
             ],
           ),
         ),

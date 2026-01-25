@@ -1163,14 +1163,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get soil_temp_about_content =>
-      'La température du sol affichée ici est estimée par l’application à partir de données climatiques et saisonnières, selon une formule de calcul intégrée.\n\nCette estimation permet de donner une tendance réaliste de la température du sol lorsque aucune mesure directe n’est disponible.';
+      'La température du sol affichée ici est estimée par l’application à partir de données climatiques et saisonnières, selon la formule suivante :\n\nCette estimation permet de donner une tendance réaliste de la température du sol lorsque aucune mesure directe n’est disponible.';
 
   @override
   String get soil_temp_formula_label => 'Formule de calcul utilisée :';
 
   @override
   String get soil_temp_formula_content =>
-      'Température du sol = f(température de l’air, saison, inertie du sol)\n(Formule exacte définie dans le code de l’application)';
+      'T_sol(n+1) = T_sol(n) + α × (T_air(n) − T_sol(n))\n\nAvec :\n• α : coefficient de diffusion thermique (valeur par défaut 0,15 — plage recommandée 0,10–0,20).\n• T_sol(n) : température du sol actuelle (°C).\n• T_air(n) : température de l’air actuelle (°C).\n\nLa formule est implémentée dans le code de l’application (ComputeSoilTempNextDayUsecase).';
 
   @override
   String get soil_temp_current_label => 'Température actuelle';

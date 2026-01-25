@@ -1146,14 +1146,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get soil_temp_about_content =>
-      'The soil temperature displayed here is estimated by the application based on climatic and seasonal data, using a built-in calculation formula.\n\nThis estimation provides a realistic trend of soil temperature when no direct measurement is available.';
+      'The soil temperature displayed here is estimated by the app from climatic and seasonal data, according to the following formula:\n\nThis estimate gives a realistic trend of soil temperature when no direct measurement is available.';
 
   @override
   String get soil_temp_formula_label => 'Calculation formula used:';
 
   @override
   String get soil_temp_formula_content =>
-      'Soil Temperature = f(air temperature, season, soil inertia)\n(Exact formula defined in the application code)';
+      'T_soil(n+1) = T_soil(n) + α × (T_air(n) − T_soil(n))\n\nWhere:\n• α: thermal diffusion coefficient (default 0.15 — recommended range 0.10–0.20).\n• T_soil(n): current soil temperature (°C).\n• T_air(n): current air temperature (°C).\n\nThe formula is implemented in the app code (ComputeSoilTempNextDayUsecase).';
 
   @override
   String get soil_temp_current_label => 'Current Temperature';

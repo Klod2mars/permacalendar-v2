@@ -1154,14 +1154,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get soil_temp_about_content =>
-      'A temperatura do solo exibida aqui é estimada pelo aplicativo com base em dados climáticos e sazonais, usando uma fórmula de cálculo integrada.\n\nEsta estimativa fornece uma tendência realista da temperatura do solo quando nenhuma medição direta está disponível.';
+      'A temperatura do solo exibida aqui é estimada pelo aplicativo a partir de dados climáticos e sazonais, de acordo com a seguinte fórmula:\n\nEsta estimativa fornece uma tendência realista da temperatura do solo quando não há medição direta disponível.';
 
   @override
   String get soil_temp_formula_label => 'Fórmula de cálculo usada:';
 
   @override
   String get soil_temp_formula_content =>
-      'Temp. Solo = f(temp. ar, estação, inércia do solo)\n(Fórmula exata definida no código do aplicativo)';
+      'T_solo(n+1) = T_solo(n) + α × (T_ar(n) − T_solo(n))\n\nCom:\n• α : coeficiente de difusão térmica (padrão 0,15 — intervalo recomendado 0,10–0,20).\n• T_solo(n) : temperatura atual do solo (°C).\n• T_ar(n) : temperatura atual do ar (°C).\n\nA fórmula está implementada no código do aplicativo (ComputeSoilTempNextDayUsecase).';
 
   @override
   String get soil_temp_current_label => 'Temperatura atual';

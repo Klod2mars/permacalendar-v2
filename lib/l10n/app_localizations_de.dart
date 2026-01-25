@@ -1154,14 +1154,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get soil_temp_about_content =>
-      'Die hier angezeigte Bodentemperatur wird von der Anwendung basierend auf Klima- und Saisondaten unter Verwendung einer integrierten Berechnungsformel geschätzt.\n\nDiese Schätzung liefert einen realistischen Trend der Bodentemperatur, wenn keine direkte Messung verfügbar ist.';
+      'Die hier angezeigte Bodentemperatur wird von der App anhand von Klima- und Saisondaten nach folgender Formel geschätzt:\n\nDiese Schätzung liefert einen realistischen Trend der Bodentemperatur, wenn keine direkten Messungen verfügbar sind.';
 
   @override
   String get soil_temp_formula_label => 'Verwendete Berechnungsformel:';
 
   @override
   String get soil_temp_formula_content =>
-      'Bodentemp. = f(Lufttemp., Saison, Bodenträgheit)\n(Genaue Formel im Anwendungscode definiert)';
+      'T_Boden(n+1) = T_Boden(n) + α × (T_Luft(n) − T_Boden(n))\n\nWobei:\n• α: thermischer Diffusionskoeffizient (Standardwert 0,15 — empfohlener Bereich 0,10–0,20).\n• T_Boden(n): aktuelle Bodentemperatur (°C).\n• T_Luft(n): aktuelle Lufttemperatur (°C).\n\nDie Formel ist im App-Code implementiert (ComputeSoilTempNextDayUsecase).';
 
   @override
   String get soil_temp_current_label => 'Aktuelle Temperatur';
