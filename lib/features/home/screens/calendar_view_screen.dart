@@ -864,15 +864,12 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     final tasksForDay =
         _dailyTasks[DateTime(date.year, date.month, date.day)] ?? [];
 
-    // Si showTasksOnly -> on cache les indicateurs classiques sauf s'ils sont pertinents ?
-    // Le prompt dit "ne montrer que tasks".
     final bool showStd =
         !filterState.showTasksOnly && !filterState.showMaintenanceOnly;
 
-    // Filtrer les tâches à afficher (Maintenance vs Generic)
+    // Filtrer les tâches à afficher
     final visibleTasks = tasksForDay.where((t) {
       if (filterState.showMaintenanceOnly) {
-        // maintenance actions
         final k = t.metadata['taskKind'];
         return k != 'generic' && k != 'buy' && k != 'harvest';
       }
@@ -886,8 +883,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         setState(() {
           _selectedDate = date;
         });
-
-        // Log analytics
         UIAnalytics.calendarDateSelected(
           date: date,
           plantingCount: plantingCount,
@@ -912,11 +907,10 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           fit: BoxFit.scaleDown,
           alignment: Alignment.topCenter,
           child: Container(
-            width: 40, // Constraint width to ensure wrapping happens if needed
+            width: 40,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // Numéro du jour
                 Text(
                   '$day',
                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -927,8 +921,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                   ),
                 ),
                 const SizedBox(height: 2),
-
-                // Indicateurs d'événements
                 Column(
                   children: [
                     if (showStd && plantingCount > 0)
@@ -971,16 +963,18 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                     if (showStd && overdueCount > 0)
                       const Icon(Icons.warning, size: 12, color: Colors.red),
 
-                    // Tâches
                     if (hasTasks)
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: visibleTasks.take(3).map((t) {
+                            final isDone = t.metadata['status'] == 'completed';
+                            // Visual diff: Green if done, White if not (as requested)
+                            final iconColor = isDone ? Colors.green : Colors.white;
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 1),
-                              child: _buildTaskIcon(t.metadata['taskKind']),
+                              child: _buildTaskIcon(t.metadata['taskKind'], color: iconColor),
                             );
                           }).toList(),
                         ),
@@ -995,64 +989,19 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     );
   }
 
-
-
-  Future<void> _toggleActivityStatus(Activity activity) async {
-    final isCompleted = activity.metadata['status'] == 'completed';
-    final newStatus = isCompleted ? 'planned' : 'completed';
-
-    // 1. Update Activity
-    final newMeta = Map<String, dynamic>.from(activity.metadata);
-    newMeta['status'] = newStatus;
-    if (newStatus == 'completed') {
-      newMeta['completedAt'] = DateTime.now().toIso8601String();
-    } else {
-      newMeta.remove('completedAt');
-    }
-
-    final updatedActivity = activity.copyWith(metadata: newMeta);
-    await GardenBoxes.activities.put(activity.id, updatedActivity);
-
-    // 2. Update Planting if linked
-    if (activity.entityType == EntityType.planting &&
-        activity.entityId != null) {
-      final plantingBox = GardenBoxes.plantings;
-      final planting = plantingBox.get(activity.entityId);
-
-      if (planting != null) {
-        final stepId = activity.metadata['stepId'];
-
-        if (stepId != null) {
-          // Custom Step Completion Toggle
-          final customSteps = planting.metadata['customSteps'];
-          if (customSteps is List) {
-            final updatedSteps = customSteps.map((s) {
-              if (s is Map && s['id'] == stepId) {
-                return {...s, 'completed': newStatus == 'completed'};
-              }
-              return s;
-            }).toList();
-            planting.metadata['customSteps'] = updatedSteps;
-          }
-        }
-        
-        // Add to care history ONLY if completing
-        if (newStatus == 'completed') {
-          planting.addCareAction(activity.title);
-        }
-        
-        await planting.save();
+  // Helper to resolve garden context
+  String _getContextString(String? gardenBedId) {
+    if (gardenBedId == null) return '';
+    final bed = GardenBoxes.getGardenBedById(gardenBedId);
+    if (bed != null) {
+      final garden = GardenBoxes.getGarden(bed.gardenId);
+      final gardenName = garden?.name;
+      if (gardenName != null) {
+        return '$gardenName • ${bed.name}';
       }
+      return bed.name;
     }
-
-    await _loadCalendarData();
-    if (mounted) {
-      final msg = newStatus == 'completed' 
-          ? 'Tâche marquée comme terminée' 
-          : 'Tâche marquée comme à faire';
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(msg), duration: const Duration(seconds: 2)));
-    }
+    return '';
   }
 
   Widget _buildDayDetails(ThemeData theme, List plantings) {
@@ -1124,14 +1073,17 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          ...dayPlantings.map((p) => _buildEventCard(
+          ...dayPlantings.map((p) {
+             final ctx = _getContextString(p.gardenBedId);
+             return _buildEventCard(
                 p.plantName,
-                'Quantité: ${p.quantity}',
+                ctx.isNotEmpty ? 'Quantité: ${p.quantity}\n$ctx' : 'Quantité: ${p.quantity}',
                 Icons.eco,
                 Colors.green,
                 () => context.push('/plantings/${p.id}'),
                 theme,
-              )),
+              );
+          }),
           const SizedBox(height: 12),
         ],
         if (dayHarvests.isNotEmpty && !filterState.showTasksOnly) ...[
@@ -1143,14 +1095,17 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          ...dayHarvests.map((p) => _buildEventCard(
+          ...dayHarvests.map((p) {
+             final ctx = _getContextString(p.gardenBedId);
+             return _buildEventCard(
                 p.plantName,
-                'Statut: ${p.status}',
+                ctx.isNotEmpty ? 'Statut: ${p.status}\n$ctx' : 'Statut: ${p.status}',
                 Icons.agriculture,
                 Colors.orange,
                 () => context.push('/plantings/${p.id}'),
                 theme,
-              )),
+              );
+          }),
           const SizedBox(height: 12),
         ],
         if (dayActivities.isNotEmpty) ...[
@@ -1165,41 +1120,25 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           ...dayActivities.map((a) {
             final isCompleted = a.metadata['status'] == 'completed';
             
-            // --- Context Resolution Logic (Garden/Bed) ---
+            // --- Context Resolution Logic (Refined) ---
             String contextInfo = '';
-            String? gardenName = a.metadata['gardenName'];
-            String? bedName = a.metadata['bedName'];
             
-            // Try to resolve if missing
-            if (gardenName == null || bedName == null) {
-               if (a.entityType == EntityType.planting && a.entityId != null) {
-                  final planting = GardenBoxes.plantings.get(a.entityId);
-                  if (planting != null) {
-                    final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
-                    if (bed != null) {
-                      bedName = bed.name;
-                      final garden = GardenBoxes.getGarden(bed.gardenId);
-                      if (garden != null) gardenName = garden.name;
-                    }
-                  }
-               } else if (a.entityType == EntityType.gardenBed && a.entityId != null) {
-                  final bed = GardenBoxes.getGardenBedById(a.entityId!);
-                  if (bed != null) {
-                    bedName = bed.name;
-                    final garden = GardenBoxes.getGarden(bed.gardenId);
-                    if (garden != null) gardenName = garden.name;
-                  }
-               }
+            // 1. Try explicit metadata
+            if (a.metadata['gardenName'] != null) {
+              contextInfo = '${a.metadata['gardenName']}';
+              if (a.metadata['bedName'] != null) {
+                contextInfo += ' • ${a.metadata['bedName']}';
+              }
+            } else {
+              // 2. Try Fallback resolution
+              if (a.entityType == EntityType.planting && a.entityId != null) {
+                 final p = GardenBoxes.plantings.get(a.entityId);
+                 if (p != null) contextInfo = _getContextString(p.gardenBedId);
+              } else if (a.entityType == EntityType.gardenBed && a.entityId != null) {
+                 contextInfo = _getContextString(a.entityId);
+              }
+            
             }
-
-            if (gardenName != null && bedName != null) {
-              contextInfo = '$gardenName • $bedName';
-            } else if (gardenName != null) {
-              contextInfo = gardenName;
-            } else if (bedName != null) {
-              contextInfo = bedName;
-            }
-            // ---------------------------------------------
 
             final description = a.description ?? '';
             final subtitle = contextInfo.isNotEmpty 
@@ -1228,6 +1167,73 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       ],
     );
   }
+
+  Widget _buildTaskIcon(String? kind, {Color color = Colors.white}) {
+    return Icon(_getIconForKind(kind),
+        size: 10, color: color);
+  }
+
+
+
+  Future<void> _toggleActivityStatus(Activity activity) async {
+    final isCompleted = activity.metadata['status'] == 'completed';
+    final newStatus = isCompleted ? 'planned' : 'completed';
+
+    // 1. Update Activity
+    final newMeta = Map<String, dynamic>.from(activity.metadata);
+    newMeta['status'] = newStatus;
+    if (newStatus == 'completed') {
+      newMeta['completedAt'] = DateTime.now().toIso8601String();
+    } else {
+      newMeta.remove('completedAt');
+    }
+
+    final updatedActivity = activity.copyWith(metadata: newMeta);
+    await GardenBoxes.activities.put(activity.id, updatedActivity);
+
+    // 2. Update Planting if linked
+    if (activity.entityType == EntityType.planting &&
+        activity.entityId != null) {
+      final plantingBox = GardenBoxes.plantings;
+      final planting = plantingBox.get(activity.entityId);
+
+      if (planting != null) {
+        final stepId = activity.metadata['stepId'];
+
+        if (stepId != null) {
+          // Custom Step Completion Toggle
+          final customSteps = planting.metadata['customSteps'];
+          if (customSteps is List) {
+            final updatedSteps = customSteps.map((s) {
+              if (s is Map && s['id'] == stepId) {
+                return {...s, 'completed': newStatus == 'completed'};
+              }
+              return s;
+            }).toList();
+            planting.metadata['customSteps'] = updatedSteps;
+          }
+        }
+        
+        // Add to care history ONLY if completing
+        if (newStatus == 'completed') {
+          planting.addCareAction(activity.title);
+        }
+        
+        await planting.save();
+      }
+    }
+
+    await _loadCalendarData();
+    if (mounted) {
+      final msg = newStatus == 'completed' 
+          ? 'Tâche marquée comme terminée' 
+          : 'Tâche marquée comme à faire';
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(msg), duration: const Duration(seconds: 2)));
+    }
+  }
+
+
 
   Widget _buildEventCard(
     String title,
@@ -1301,11 +1307,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     );
   }
 
-  Widget _buildTaskIcon(String? kind) {
-    // White color for high visibility on calendar grid
-    return Icon(_getIconForKind(kind),
-        size: 10, color: Colors.white);
-  }
+
 
   IconData _getIconForKind(String? kind) {
     switch (kind) {
