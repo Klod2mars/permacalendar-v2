@@ -214,6 +214,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
   void _showTaskActions(Activity activity) {
     final l10n = AppLocalizations.of(context)!;
+    final isCompleted = activity.metadata['status'] == 'completed';
+    
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
@@ -221,6 +223,19 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              ListTile(
+                leading: Icon(
+                  isCompleted ? Icons.check_circle_outline : Icons.check_circle,
+                  color: isCompleted ? Colors.grey : Colors.green,
+                ),
+                title: Text(isCompleted 
+                    ? 'Marquer comme à faire' 
+                    : 'Marquer comme fait'),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  await _toggleActivityStatus(activity);
+                },
+              ),
               ListTile(
                 leading: const Icon(Icons.send),
                 title: Text(l10n.calendar_action_assign),
@@ -980,10 +995,71 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     );
   }
 
+
+
+  Future<void> _toggleActivityStatus(Activity activity) async {
+    final isCompleted = activity.metadata['status'] == 'completed';
+    final newStatus = isCompleted ? 'planned' : 'completed';
+
+    // 1. Update Activity
+    final newMeta = Map<String, dynamic>.from(activity.metadata);
+    newMeta['status'] = newStatus;
+    if (newStatus == 'completed') {
+      newMeta['completedAt'] = DateTime.now().toIso8601String();
+    } else {
+      newMeta.remove('completedAt');
+    }
+
+    final updatedActivity = activity.copyWith(metadata: newMeta);
+    await GardenBoxes.activities.put(activity.id, updatedActivity);
+
+    // 2. Update Planting if linked
+    if (activity.entityType == EntityType.planting &&
+        activity.entityId != null) {
+      final plantingBox = GardenBoxes.plantings;
+      final planting = plantingBox.get(activity.entityId);
+
+      if (planting != null) {
+        final stepId = activity.metadata['stepId'];
+
+        if (stepId != null) {
+          // Custom Step Completion Toggle
+          final customSteps = planting.metadata['customSteps'];
+          if (customSteps is List) {
+            final updatedSteps = customSteps.map((s) {
+              if (s is Map && s['id'] == stepId) {
+                return {...s, 'completed': newStatus == 'completed'};
+              }
+              return s;
+            }).toList();
+            planting.metadata['customSteps'] = updatedSteps;
+          }
+        }
+        
+        // Add to care history ONLY if completing
+        if (newStatus == 'completed') {
+          planting.addCareAction(activity.title);
+        }
+        
+        await planting.save();
+      }
+    }
+
+    await _loadCalendarData();
+    if (mounted) {
+      final msg = newStatus == 'completed' 
+          ? 'Tâche marquée comme terminée' 
+          : 'Tâche marquée comme à faire';
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(msg), duration: const Duration(seconds: 2)));
+    }
+  }
+
   Widget _buildDayDetails(ThemeData theme, List plantings) {
     if (_selectedDate == null) return Container();
 
     final date = _selectedDate!;
+    final l10n = AppLocalizations.of(context)!;
 
     final dayPlantings = plantings.where((p) {
       final plantedDate = p.plantedDate;
@@ -1000,27 +1076,11 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
           harvestDate.day == date.day;
     }).toList();
 
-    // Activities
-    // final dayActivities = _activities.where((a) { ... })
-    // REMPLACÉ par l'utilisation de _dailyTasks calculé
     final dateKey = DateTime(date.year, date.month, date.day);
     var dayActivities = _dailyTasks[dateKey] ?? [];
 
     final filterState = ref.watch(calendarFilterProvider);
 
-    // Filtrage contextuel
-    if (filterState.showTasksOnly || filterState.showMaintenanceOnly) {
-      // Si mode Tâches, on cache les plantings/harvests
-      if (filterState.showTasksOnly) {
-        // dayPlantings et dayHarvests devraient être vides ou ignorés ici ?
-        // Mais _buildDayDetails reçoit `List plantings` déjà filtré dans _buildCalendar.
-        // On doit juste s'assurer que si showTasksOnly est actif, plantings est vide.
-        // C'est déjà fait dans _buildCalendar (lignes 291+) ?
-        // Non, _buildCalendar filtre plantings mais pas ici.
-      }
-    }
-
-    // Filtrage local des tâches pour MaintenanceOnly
     if (filterState.showMaintenanceOnly) {
       dayActivities = dayActivities.where((t) {
         final k = t.metadata['taskKind'];
@@ -1028,11 +1088,6 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       }).toList();
     }
 
-    final l10n = AppLocalizations.of(context)!;
-    // ...
-    // Note: I can't put l10n here because ... wait, _buildDayDetails is a helper, needs locale passed or accessible.
-    // It's in the state, so it has context.
-    
     if (dayPlantings.isEmpty && dayHarvests.isEmpty && dayActivities.isEmpty) {
       return CustomCard(
         child: Padding(
@@ -1053,13 +1108,14 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.calendar_events_of(DateFormat('d MMMM yyyy', l10n.localeName).format(date)),
+          l10n.calendar_events_of(
+              DateFormat('d MMMM yyyy', l10n.localeName).format(date)),
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 12),
-        if (dayPlantings.isNotEmpty) ...[
+        if (dayPlantings.isNotEmpty && !filterState.showTasksOnly) ...[
           Text(
             l10n.calendar_section_plantings,
             style: theme.textTheme.titleSmall?.copyWith(
@@ -1078,7 +1134,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
               )),
           const SizedBox(height: 12),
         ],
-        if (dayHarvests.isNotEmpty) ...[
+        if (dayHarvests.isNotEmpty && !filterState.showTasksOnly) ...[
           Text(
             l10n.calendar_section_harvests,
             style: theme.textTheme.titleSmall?.copyWith(
@@ -1106,17 +1162,68 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          ...dayActivities.map((a) => _buildEventCard(
-                a.title,
-                a.description ?? 'Pas de description',
-                _getIconForKind(a.metadata['taskKind']),
-                Colors.blueGrey,
-                () {
-                  // Behavior on tap (open details/edit not impl, stay same)
-                },
-                theme,
-                onAction: () => _showTaskActions(a),
-              )),
+          ...dayActivities.map((a) {
+            final isCompleted = a.metadata['status'] == 'completed';
+            
+            // --- Context Resolution Logic (Garden/Bed) ---
+            String contextInfo = '';
+            String? gardenName = a.metadata['gardenName'];
+            String? bedName = a.metadata['bedName'];
+            
+            // Try to resolve if missing
+            if (gardenName == null || bedName == null) {
+               if (a.entityType == EntityType.planting && a.entityId != null) {
+                  final planting = GardenBoxes.plantings.get(a.entityId);
+                  if (planting != null) {
+                    final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
+                    if (bed != null) {
+                      bedName = bed.name;
+                      final garden = GardenBoxes.getGarden(bed.gardenId);
+                      if (garden != null) gardenName = garden.name;
+                    }
+                  }
+               } else if (a.entityType == EntityType.gardenBed && a.entityId != null) {
+                  final bed = GardenBoxes.getGardenBedById(a.entityId!);
+                  if (bed != null) {
+                    bedName = bed.name;
+                    final garden = GardenBoxes.getGarden(bed.gardenId);
+                    if (garden != null) gardenName = garden.name;
+                  }
+               }
+            }
+
+            if (gardenName != null && bedName != null) {
+              contextInfo = '$gardenName • $bedName';
+            } else if (gardenName != null) {
+              contextInfo = gardenName;
+            } else if (bedName != null) {
+              contextInfo = bedName;
+            }
+            // ---------------------------------------------
+
+            final description = a.description ?? '';
+            final subtitle = contextInfo.isNotEmpty 
+                ? '$description\n$contextInfo'
+                : description;
+
+            return _buildEventCard(
+              a.title,
+              subtitle,
+              _getIconForKind(a.metadata['taskKind']),
+              isCompleted ? Colors.grey : Colors.blueGrey,
+              () => _showTaskActions(a),
+              theme,
+              isCompleted: isCompleted,
+              trailing: IconButton(
+                  icon: Icon(
+                    isCompleted ? Icons.check_circle : Icons.check_circle_outline,
+                    color: isCompleted ? Colors.green.shade700 : Colors.grey,
+                  ),
+                  tooltip: isCompleted ? 'Marquer comme à faire' : 'Valider',
+                  onPressed: () => _toggleActivityStatus(a),
+                ),
+            );
+          }),
         ],
       ],
     );
@@ -1129,7 +1236,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     Color color,
     VoidCallback onTap,
     ThemeData theme, {
-    VoidCallback? onAction,
+    Widget? trailing,
+    bool isCompleted = false,
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -1151,40 +1259,40 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
+                  child: Opacity(
+                    opacity: isCompleted ? 0.6 : 1.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            decoration: isCompleted ? TextDecoration.lineThrough : null,
+                          ),
                         ),
-                      ),
-                      Text(
-                        subtitle,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
+                        if (subtitle.isNotEmpty)
+                          Text(
+                            subtitle,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-                onAction != null
-                    ? IconButton(
-                        icon: Icon(
-                          Icons.chevron_right,
-                          color: theme.colorScheme.onSurfaceVariant,
-                          size: 24,
-                        ),
-                        onPressed: onAction,
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                      )
-                    : Icon(
-                        Icons.chevron_right,
-                        color: theme.colorScheme.onSurfaceVariant,
-                        size: 20,
-                      ),
+                if (trailing != null) ...[
+                   const SizedBox(width: 8),
+                   trailing,
+                ] else 
+                   Icon(
+                    Icons.chevron_right,
+                    color: theme.colorScheme.onSurfaceVariant,
+                    size: 20,
+                  ),
               ],
             ),
           ),
@@ -1194,8 +1302,9 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
   }
 
   Widget _buildTaskIcon(String? kind) {
+    // White color for high visibility on calendar grid
     return Icon(_getIconForKind(kind),
-        size: 10, color: Colors.blueGrey.shade700);
+        size: 10, color: Colors.white);
   }
 
   IconData _getIconForKind(String? kind) {
@@ -1219,7 +1328,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       case 'repair':
         return Icons.build;
       case 'clean':
-        return Icons.cleaning_services; // ou Icons.brush
+        return Icons.cleaning_services;
       case 'buy':
         return Icons.shopping_cart;
       default:

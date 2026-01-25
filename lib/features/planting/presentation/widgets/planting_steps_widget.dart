@@ -507,6 +507,22 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
       // Ensure local notifications initialized
       await notifService.init();
 
+      // Fetch Garden context for Activities
+      String gardenName = '';
+      String bedName = '';
+      try {
+        final bed = GardenBoxes.getGardenBedById(widget.planting.gardenBedId);
+        if (bed != null) {
+          bedName = bed.name;
+          final garden = GardenBoxes.getGarden(bed.gardenId);
+          if (garden != null) {
+            gardenName = garden.name;
+          }
+        }
+      } catch (e) {
+        // ignore errors
+      }
+
       for (final step in stepsWithDate) {
         // 1. Create Local Notification
         int notifId = 0;
@@ -540,6 +556,8 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
               'source': 'steps_export',
               'notifId': notifId,
               'plantName': widget.plant.commonName, // Visual aid for logic
+              'gardenName': gardenName,
+              'bedName': bedName,
             }
           );
           
