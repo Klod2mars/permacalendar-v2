@@ -403,8 +403,10 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
   final coords = effectiveCoords!;
 
   // DEBUG: indiquer quelles coordonnées sont réellement utilisées par le provider
-  debugPrint(
-      'CURRENT PROVIDER: using coords=${coords.latitude},${coords.longitude} (${coords.resolvedName})');
+  if (kDebugMode) {
+    debugPrint(
+        'CURRENT PROVIDER: using coords=${coords.latitude},${coords.longitude} (${coords.resolvedName})');
+  }
 
   // 2. Fetch Météo
   try {
@@ -417,8 +419,10 @@ final currentWeatherProvider = FutureProvider<WeatherViewData>((ref) async {
     );
 
     // DEBUG: indiquer ce que renvoie OpenMeteoService
-    debugPrint(
-        'FETCH RESULT: hourly=${result.hourlyWeather.length}, currentTemp=${result.currentTemperatureC}');
+    if (kDebugMode) {
+      debugPrint(
+          'FETCH RESULT: hourly=${result.hourlyWeather.length}, currentTemp=${result.currentTemperatureC}');
+    }
 
     // Enrichir l'UI
     // Calculate moon phase for today (using CURRENT time or result date?)

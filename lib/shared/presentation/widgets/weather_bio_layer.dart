@@ -34,8 +34,9 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
   double _cloudCover = 0.0; // 0..100
   double _visibility = 10000.0; // m
 
-  // DEBUG / TEMP FLAGS - à désactiver après diagnostic
-  static const bool kWeatherDebug = true;
+  // DEBUG / TEMP FLAGS - désactivé par défaut pour éviter spam terminal
+  // Mettre true temporairement lors d'un diagnostic local seulement.
+  static const bool kWeatherDebug = false;
   static const double kPrecipSpawnThreshold = 0.02; // mm, seuil réduit pour tests
   static const double kPrecipProbabilityThreshold = 30.0; // % - si >=, on force spawn
 
