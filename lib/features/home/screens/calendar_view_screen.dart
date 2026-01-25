@@ -1124,25 +1124,33 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
             String contextInfo = '';
             
             // 1. Try explicit metadata
-            if (a.metadata['gardenName'] != null) {
-              contextInfo = '${a.metadata['gardenName']}';
-              if (a.metadata['bedName'] != null) {
-                contextInfo += ' • ${a.metadata['bedName']}';
+            // 1. Try explicit metadata
+            final metaGardenName = a.metadata['gardenName']?.toString();
+            final metaBedName = a.metadata['bedName']?.toString();
+
+            if (metaGardenName != null && metaGardenName.isNotEmpty) {
+              contextInfo = metaGardenName;
+              if (metaBedName != null && metaBedName.isNotEmpty) {
+                contextInfo += ' • $metaBedName';
               }
-            } else if (a.metadata['gardenId'] != null) {
-              // 2. Try Fallback: Resolve Garden from ID stored in metadata
+            } 
+            
+            // 2. If context still empty, try Garden ID from metadata
+            if (contextInfo.isEmpty && a.metadata['gardenId'] != null) {
               final g = GardenBoxes.getGarden(a.metadata['gardenId']);
               if (g != null) {
                  contextInfo = g.name;
-                 // Also try to resolve Bed if present (using zoneGardenBedId from create dialog)
+                 // Also try to resolve Bed if present
                  final bedId = a.metadata['zoneGardenBedId'] ?? a.metadata['gardenBedId'];
                  if (bedId != null) {
                     final b = GardenBoxes.getGardenBedById(bedId);
                     if (b != null) contextInfo += ' • ${b.name}';
                  }
               }
-            } else {
-              // 3. Entity-based fallback
+            } 
+            
+            // 3. If still empty, try Entity-based fallback
+            if (contextInfo.isEmpty) {
               if (a.entityType == EntityType.planting && a.entityId != null) {
                  final p = GardenBoxes.plantings.get(a.entityId);
                  if (p != null) contextInfo = _getContextString(p.gardenBedId);

@@ -11,6 +11,7 @@ import '../../../../core/data/hive/garden_boxes.dart'; // Added
 import '../../../../core/services/notification_service.dart';
 import '../../domain/plant_step.dart';
 import '../../domain/plant_steps_generator.dart';
+import '../../../../core/models/garden_bed.dart';
 
 typedef OnAddCareAction = Future<void> Function(String action);
 typedef OnMarkDone = Future<void> Function(PlantStep step);
@@ -510,8 +511,9 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
       // Fetch Garden context for Activities
       String gardenName = '';
       String bedName = '';
+      GardenBed? bed;
       try {
-        final bed = GardenBoxes.getGardenBedById(widget.planting.gardenBedId);
+        bed = GardenBoxes.getGardenBedById(widget.planting.gardenBedId);
         if (bed != null) {
           bedName = bed.name;
           final garden = GardenBoxes.getGarden(bed.gardenId);
@@ -558,6 +560,9 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
               'plantName': widget.plant.commonName, // Visual aid for logic
               'gardenName': gardenName,
               'bedName': bedName,
+              // Fallback IDs for resolution
+              'gardenId': bed?.gardenId, 
+              'gardenBedId': widget.planting.gardenBedId,
             }
           );
           
