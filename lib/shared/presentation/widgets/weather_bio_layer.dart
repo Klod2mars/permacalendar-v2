@@ -198,23 +198,34 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     final baseDensity = aesthetic.quantity; // 0..1
     double densityCurve = math.pow(baseDensity, 1.6).toDouble(); // gentle power
     
-    double spawnPerUnit = _isSnow ? 2500.0 : 3000.0; // V5 Boost: Maximum Intensity
+    // V5.1: BOOST SNOW DENSITY
+    // User requested "Double the flakes".
+    // Increased base unit from 2500 to 5000 for Snow.
+    double spawnPerUnit = _isSnow ? 5000.0 : 3000.0; 
     double spawnRateRaw = (densityCurve * spawnPerUnit) * dHSpread;
     
-    // SOFT CAP to prevent explosions
-    // V5: Raised limits to allow "Heavy Rain" over "Wide Area"
-    final softCap = _isSnow ? 12000.0 : 15000.0;
-    if (spawnRateRaw > softCap) {
-       // Logarithmic approach to limit
-       spawnRateRaw = softCap + (math.log(spawnRateRaw - softCap + 1) * 100);
+    // V5.2: Optimization - Increased caps for Snow to allow high density
+    if (!_isSnow) {
+       // Standard cap for rain
+       if (spawnRateRaw > 15000.0) {
+          spawnRateRaw = 15000.0 + (math.log(spawnRateRaw - 15000.0 + 1) * 100);
+       }
+    } else {
+       // Higher cap for snow (up to 200k) to support high quantity settings
+       if (spawnRateRaw > 200000.0) spawnRateRaw = 200000.0;
     }
     
     dSpawnRate = spawnRateRaw;
+    _lastCalculatedSpawnRate = dSpawnRate;
+
 
     // 3. WEIGHT (Heavy or Light?)
     if (_isSnow) {
-      dGravity = 0.005 + (aesthetic.weight * 0.15); 
-      dVelocityBase = 0.02 + (aesthetic.weight * 0.5); 
+      // V5 Refinement: Divide Speed by 2 (User Request)
+      // Old: 0.005 + (aesthetic.weight * 0.15)
+      // New: 0.0025 + (aesthetic.weight * 0.075)
+      dGravity = 0.0025 + (aesthetic.weight * 0.075); 
+      dVelocityBase = 0.01 + (aesthetic.weight * 0.25); 
     } else {
       // V5: Relaxed Rain Physics to allow "Beautiful Rain" (Snow-like float)
       // Old: 0.1 was min gravity. Now 0.02 to allow slow falls.
@@ -225,7 +236,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     
     // 4. SIZE (Scale)
     if (_isSnow) {
-       dSizeBase = 1.0 + (aesthetic.size * 5.0); 
+       // V5 Refinement: Base x 2 (User Request)
+       // Update: Reduced by 40% per user feedback
+       // Old: 2.0 + (size * 10.0)
+       // New: 1.2 + (size * 6.0) -> Max ~7.2
+       dSizeBase = 1.2 + (aesthetic.size * 6.0); 
     } else {
        dSizeBase = 0.5 + (aesthetic.size * 2.5); 
     }
@@ -234,7 +249,19 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     // 5. AGITATION (Chaos)
     final chaosSignal = math.sin(_time * (1.0 + aesthetic.agitation * 5.0));
     final localWind = (_windSpeed * 0.005);
-    dWindX = localWind + (chaosSignal * aesthetic.agitation * 0.02) + ((_rng.nextDouble()-0.5) * aesthetic.agitation * 0.01);
+    
+    if (_isSnow) {
+       // V5 Refinement: Drift (Sine oscillation)
+       // Update: Minimal drift (1-2%) per user feedback. "Fish swimming" fix.
+       // Update: Minimal drift (1-2%) per user feedback. "Fish swimming" fix.
+       // V5 FIX: Verticality. Remove localWind bias. Pure oscillation around 0.
+       // Old: localWind + drift + ...
+       // New: drift + chaos (No wind bias).
+       final drift = math.sin(_time * 1.5) * 0.005; 
+       dWindX = drift + (chaosSignal * aesthetic.agitation * 0.01) + ((_rng.nextDouble()-0.5) * aesthetic.agitation * 0.005);
+    } else {
+       dWindX = localWind + (chaosSignal * aesthetic.agitation * 0.02) + ((_rng.nextDouble()-0.5) * aesthetic.agitation * 0.01);
+    }
     
     // -------------------------------------------------------------------------
     // V5: LIGHTNING (Additive)
@@ -315,10 +342,18 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
          // Uniform is fine. 0.0 = Back, 1.0 = Front.
          final z = _rng.nextDouble();
          
-         // PARALLAX PHYSICS
-         // Background objects move slower.
-         // Factor: 0.4 (at z0) to 1.0 (at z1)
-         final depthFactor = 0.4 + (0.6 * z);
+         // PARALLAX PHYSICS (V5 Organic Update)
+         // Background objects should be much smaller and slower to create "Deep Space".
+         // Z: 0.0 (Back) -> 1.0 (Front)
+         
+         // 1. Speed Factor: Background moves very slowly (30% speed). Foreground 100%.
+         final speedFactor = 0.3 + (0.7 * z); 
+         
+         // 2. Size Factor: Background is tiny (40% size). Foreground large (120%).
+         final sizeFactor = 0.4 + (0.8 * z); 
+         
+         // 3. Opacity Factor: Background is ghost-like.
+         // Used later in Painter, but we burn it into physics? No, kept in painter.
 
          if (_isSnow) {
            final life = 5.0 + _rng.nextDouble() * 5.0;
@@ -326,20 +361,20 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
              x: sx, y: sy,
              z: z, // V4
              type: _ParticleType.snow,
-             vx: (dWindX + (_rng.nextDouble() - 0.5) * 0.02) * depthFactor, 
-             vy: (dVelocityBase + (_rng.nextDouble() * dVelocityVar)) * depthFactor,
+             vx: (dWindX + (_rng.nextDouble() - 0.5) * 0.02) * speedFactor, 
+             vy: (dVelocityBase + (_rng.nextDouble() * dVelocityVar)) * speedFactor,
              life: life, maxLife: life,
-             size: (dSizeBase + (_rng.nextDouble() * dSizeVar)) * depthFactor, // Background is smaller
+             size: (dSizeBase + (_rng.nextDouble() * dSizeVar)) * sizeFactor,
            ));
          } else {
            _particles.add(_BioParticle(
              x: sx, y: sy,
              z: z, // V4
              type: _ParticleType.rain,
-             vx: (dWindX + (_rng.nextDouble() - 0.5) * 0.01) * depthFactor,
-             vy: (dVelocityBase + (_rng.nextDouble() * dVelocityVar)) * depthFactor,
+             vx: (dWindX + (_rng.nextDouble() - 0.5) * 0.01) * speedFactor,
+             vy: (dVelocityBase + (_rng.nextDouble() * dVelocityVar)) * speedFactor,
              life: 1.0, maxLife: 1.0,
-             size: (dSizeBase + (_rng.nextDouble() * 0.5)) * depthFactor,
+             size: (dSizeBase + (_rng.nextDouble() * 0.5)) * sizeFactor,
            ));
          }
        }
@@ -427,6 +462,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
       final ry = calib.ry;
       final eq = (localX * localX) / (rx * rx) + (localY * localY) / (ry * ry);
       
+      // V5 FIX: Grace Period
+      // Particles spawn in a rectangle at the top. Most are "technically" outside the ellipse at T=0.
+      // We give them 1.0 second to fall into the Ovoid before killing them for being outside.
+      if (p.maxLife - p.life < 1.0) return;
+
       // SOFT COLLISION V4.1
       if (eq >= 1.0) {
          final penetration = (eq - 1.0);
@@ -514,10 +554,9 @@ class _BioParticlePainter extends CustomPainter {
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
     
-    // SNOW PAINTS (Soft, Matte, White)
-    final paintSnow = Paint()
-      ..color = Colors.white.withOpacity(0.85) // Matte White (less glare)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.5); // Soft edges
+    // SNOW PAINTS (V5 Organic)
+    // We use RadialGradients for each particle now, so this base paint is just a container.
+    final paintSnow = Paint();
     
     final paintCloud = Paint()
       ..color = Colors.white.withOpacity(0.2)
@@ -559,21 +598,30 @@ class _BioParticlePainter extends CustomPainter {
              Offset(px, py), Offset(px - p.vx * len, py - p.vy * len), paintRain);
              
       } else if (p.type == _ParticleType.snow) {
-         final snowAlpha = (lifeAlpha * 0.95 * depthAlpha).clamp(0.0, 1.0);
-         paintSnow.color = Colors.white.withOpacity(snowAlpha);
+         // V5: ORGANIC VOLUMETRIC SNOW
+         // 1. Calculate Opacity based on Depth
+         // Background (z=0) -> 0.3 opacity. Foreground (z=1) -> 0.95.
+         final baseOpacity = 0.3 + (0.65 * p.z);
+         final snowAlpha = (lifeAlpha * baseOpacity).clamp(0.0, 1.0);
          
-         // Defocus background interactively?
-         // This is expensive (changing mask filter). Only do it for very back?
-         // Or just use alpha to simulate distance.
-         // Let's rely on Alpha + Size. Blur is too heavy for loop.
+         // 2. Radial Gradient for "Fluffy" look
+         // Center: White (Opacity * 1.0)
+         // Edge: White (Opacity * 0.0)
+         // This creates a soft sphere without the cost of a blur filter (or better looking one).
          
-         // Defocus background interactively?
-         // This is expensive (changing mask filter). Only do it for very back?
-         // Or just use alpha to simulate distance.
-         // Let's rely on Alpha + Size. Blur is too heavy for loop.
+         final gradient = RadialGradient(
+            colors: [
+               Colors.white.withOpacity(snowAlpha),
+               Colors.white.withOpacity(0.0), // Soft fade to transparent
+            ],
+            stops: const [0.2, 1.0], // Core is solid-ish, huge soft edge
+         );
          
-         final radius = p.size; // Scaled by Z in physics already? Yes.
-         canvas.drawCircle(Offset(px, py), radius, paintSnow);
+         paintSnow.shader = gradient.createShader(
+            Rect.fromCircle(center: Offset(px, py), radius: p.size)
+         );
+         
+         canvas.drawCircle(Offset(px, py), p.size, paintSnow);
          
       } 
       /*

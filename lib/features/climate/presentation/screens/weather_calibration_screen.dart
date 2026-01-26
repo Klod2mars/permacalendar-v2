@@ -163,7 +163,8 @@ class _WeatherCalibrationScreenState
                     DropdownMenuItem(value: 0, child: Text('Sunny (0)')),
                     DropdownMenuItem(value: 61, child: Text('Light Rain (61)')),
                     DropdownMenuItem(value: 63, child: Text('Heavy Rain (63)')),
-                    DropdownMenuItem(value: 71, child: Text('Snow (71)')),
+                    DropdownMenuItem(value: 71, child: Text('Light Snow (71)')),
+                    DropdownMenuItem(value: 75, child: Text('Dense Snow (75)')),
                     DropdownMenuItem(value: 95, child: Text('Storm (95)')),
                   ],
                   onChanged: (val) {
@@ -251,25 +252,40 @@ class _WeatherCalibrationScreenState
             children: [
                ActionChip(
                  label: const Text('Light Rain'),
-                 onPressed: () => onUpdate(WeatherPresets.lightRain),
+                 onPressed: () {
+                    onUpdate(WeatherPresets.lightRain);
+                    ref.read(weatherCalibrationStateProvider.notifier).update((s) => s.copyWith(forcedWeatherCode: 61, isCalibrationMode: true));
+                 },
                ),
                ActionChip(
                  label: const Text('Heavy Rain'),
-                 onPressed: () => onUpdate(WeatherPresets.heavyRain),
+                 onPressed: () {
+                    onUpdate(WeatherPresets.heavyRain);
+                    ref.read(weatherCalibrationStateProvider.notifier).update((s) => s.copyWith(forcedWeatherCode: 63, isCalibrationMode: true));
+                 },
                ),
                ActionChip(
                  label: const Text('Storm'),
                  backgroundColor: Colors.orange.withOpacity(0.2),
-                 onPressed: () => onUpdate(WeatherPresets.storm),
+                 onPressed: () {
+                    onUpdate(WeatherPresets.storm);
+                    ref.read(weatherCalibrationStateProvider.notifier).update((s) => s.copyWith(forcedWeatherCode: 95, isCalibrationMode: true));
+                 },
                ),
                ActionChip(
                  label: const Text('Light Snow'),
-                 onPressed: () => onUpdate(WeatherPresets.lightSnow),
+                 onPressed: () {
+                    onUpdate(WeatherPresets.lightSnow);
+                    ref.read(weatherCalibrationStateProvider.notifier).update((s) => s.copyWith(forcedWeatherCode: 71, isCalibrationMode: true));
+                 },
                ),
                ActionChip(
                  label: const Text('Dense Snow'),
                  backgroundColor: Colors.blue.withOpacity(0.2),
-                 onPressed: () => onUpdate(WeatherPresets.denseSnow),
+                 onPressed: () {
+                    onUpdate(WeatherPresets.denseSnow);
+                    ref.read(weatherCalibrationStateProvider.notifier).update((s) => s.copyWith(forcedWeatherCode: 75, isCalibrationMode: true)); // 75 heavy snow
+                 },
                ),
             ],
           ),
@@ -278,7 +294,7 @@ class _WeatherCalibrationScreenState
         _ConfigSlider(
             label: 'Quantity (Density)',
             value: params.quantity,
-            min: 0.0, max: 1.0,
+            min: 0.0, max: 3.0, // V5.1 Expanded Range
             onChanged: (v) => onUpdate(params.copyWith(quantity: v))),
         _ConfigSlider(
             label: 'Area (Spread)',

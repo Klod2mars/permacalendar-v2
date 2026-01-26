@@ -431,6 +431,7 @@ class WeatherPresets {
   );
 
   // 3. Storm (Base for Lightning)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
   // Based on Heavy Rain (0.6) + slight boost
   static const AestheticParams storm = AestheticParams(
     quantity: 0.65, 
@@ -443,31 +444,31 @@ class WeatherPresets {
     lightning: 0.8, // Active Lightning
   );
 
-  // 4. Light Snow (Mirrored from Light Rain)
-  // Base: Light Rain (0.35 Qty, 0.15 Weight, 0.5 Size)
-  // Modifier: Slower (0.05 Weight), Larger (0.7 Size)
+  // 4. Light Snow (Validated V5.5)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
+  // Qty 0.250 + Common Snow Settings
   static const AestheticParams lightSnow = AestheticParams(
-    quantity: 0.35, // Same as Light Rain
-    area: 1.0,
-    weight: 0.05, // Very slow float
-    size: 0.7, // Larger flakes
-    agitation: 0.1,
-    clumping: 0.1, // Slight clumping for realism
-    granularity: 0.0,
+    quantity: 0.300, 
+    area: 0.816,
+    weight: 0.179, 
+    size: 0.201, 
+    agitation: 0.77, 
+    clumping: 0.104, 
+    granularity: 0.923,
     lightning: 0.0,
   );
   
-  // 5. Dense Snow (Mirrored from Heavy Rain)
-  // Base: Heavy Rain (0.60 Qty, 0.25 Weight, 0.7 Size)
-  // Modifier: Slower (0.15 Weight), Larger (0.9 Size)
+  // 5. Dense Snow (Validated V5.5)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
+  // Qty 1.150 + Common Snow Settings (Identical to Light except Quantity)
   static const AestheticParams denseSnow = AestheticParams(
-    quantity: 0.60, // Same as Heavy Rain
-    area: 1.0,
-    weight: 0.15, // Falling but not too fast
-    size: 0.9, // Very large flakes
-    agitation: 0.4, // Windy like heavy rain
-    clumping: 0.3, 
-    granularity: 0.2,
+    quantity: 0.989, 
+    area: 0.816,
+    weight: 0.179, 
+    size: 0.201, 
+    agitation: 0.77, 
+    clumping: 0.104, 
+    granularity: 0.923,
     lightning: 0.0,
   );
 }
