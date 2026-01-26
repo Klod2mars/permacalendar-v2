@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
 import '../../presentation/providers/statistics_filters_provider.dart';
-import '../../../plant_catalog/providers/plant_catalog_provider.dart';
-import '../../../../core/services/nutrition_normalizer.dart';
+import 'nutrition_aggregation_provider.dart';
+import 'package:permacalendar/core/services/nutrition_normalizer.dart';
 
 /// Statistique Mensuelle Pure (Masse brute)
 class MonthlyNutritionStats {
@@ -59,7 +59,7 @@ final seasonalNutritionProvider =
     FutureProvider<SeasonalNutritionState>((ref) async {
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
   final filters = ref.watch(statisticsFiltersProvider);
-  final plantsList = ref.watch(plantsListProvider);
+  final aggregationService = ref.watch(nutritionAggregationServiceProvider);
 
   if (harvestRecordsState.isLoading) throw Exception('Loading records...');
 
@@ -76,151 +76,74 @@ final seasonalNutritionProvider =
 
   if (filteredRecords.isEmpty) return SeasonalNutritionState.empty();
 
-  final monthlyData = <int, Map<String, double>>{};
-  final monthlyCounts = <int, int>{};
-  final monthlyQuantities = <int, double>{};
-  final annualTotals = <String, double>{};
+  final result = await aggregationService.aggregate(
+    filteredRecords,
+    startDate: startDate,
+    endDate: endDate,
+  );
 
+  // Convertir en format ViewModel existant
+  final monthlyStats = <int, MonthlyNutritionStats>{};
   for (var m = 1; m <= 12; m++) {
-    monthlyData[m] = {};
-    monthlyCounts[m] = 0;
-    monthlyQuantities[m] = 0.0;
-  }
-
-  for (final record in filteredRecords) {
-    // Récup nutrition
-    Map<String, double> nutris = {};
-
-    // A. Snapshot
-    if (record.nutritionSnapshot != null &&
-        record.nutritionSnapshot!.isNotEmpty) {
-      nutris = record.nutritionSnapshot!;
-    } else {
-      // B. Fallback Catalog
-      var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
-      if (plant == null && record.plantName != null) {
-        plant = plantsList
-            .where((p) =>
-                p.commonName.toLowerCase() == record.plantName!.toLowerCase())
-            .firstOrNull;
-      }
-
-      if (plant != null && plant.nutritionPer100g != null) {
-        nutris = NutritionNormalizer.computeSnapshot(
-            plant.nutritionPer100g, record.quantityKg);
-      }
-    }
-
-    // Skip if no nutrition data
-    if (nutris.isEmpty) continue;
-
-    final month = record.date.month;
-    monthlyCounts[month] = (monthlyCounts[month] ?? 0) + 1;
-    monthlyQuantities[month] = (monthlyQuantities[month] ?? 0.0) + record.quantityKg;
-
-    // Accumuler
-    nutris.forEach((key, val) {
-      // Mensuel
-      final mStats = monthlyData[month]!;
-      mStats[key] = (mStats[key] ?? 0.0) + val;
-
-      // Annuel
-      annualTotals[key] = (annualTotals[key] ?? 0.0) + val;
-    });
-  }
-
-  // Convertir en objets immuables
-  final finalMonthlyStats = <int, MonthlyNutritionStats>{};
-  for (var m = 1; m <= 12; m++) {
-    finalMonthlyStats[m] = MonthlyNutritionStats(
+    monthlyStats[m] = MonthlyNutritionStats(
       month: m,
-      nutrientTotals: monthlyData[m]!,
-      contributionCount: monthlyCounts[m] ?? 0,
-      totalQuantityKg: monthlyQuantities[m] ?? 0.0,
+      nutrientTotals: result.monthlyTotals[m] ?? {},
+      contributionCount: result.monthlyRecordCounts[m] ?? 0,
+      totalQuantityKg: result.monthlyMassKg[m] ?? 0.0,
     );
   }
 
+  final annualTotals = <String, double>{};
+  result.byNutrient.forEach((key, agg) {
+    if (agg.sumAvailable > 0) annualTotals[key] = agg.sumAvailable;
+  });
+
   return SeasonalNutritionState(
-    monthlyStats: finalMonthlyStats,
+    monthlyStats: monthlyStats,
     annualTotals: annualTotals,
   );
 });
 
-/// Version NON FILTRÉE de seasonalNutritionProvider.
-/// Agrège toutes les récoltes existantes, indépendamment des filtres (jardin/dates).
-/// Utilisée pour la vue "Nutriments" globale.
 final seasonalNutritionAllProvider =
     FutureProvider<SeasonalNutritionState>((ref) async {
   final harvestRecordsState = ref.watch(harvestRecordsProvider);
-  final plantsList = ref.watch(plantsListProvider);
+  final aggregationService = ref.watch(nutritionAggregationServiceProvider);
 
   if (harvestRecordsState.isLoading) throw Exception('Loading records...');
 
-  // ON PREND TOUTES LES RÉCOLTES, AUCUN FILTRE
   final allRecords = harvestRecordsState.records;
 
   if (allRecords.isEmpty) return SeasonalNutritionState.empty();
 
-  final monthlyData = <int, Map<String, double>>{};
-  final monthlyCounts = <int, int>{};
-  final monthlyQuantities = <int, double>{};
-  final annualTotals = <String, double>{};
+  // Pour "All", on prend une plage large ou on laisse le service gérer
+  // Le service a besoin de dates pour AJR, on prend min/max des records ou année courante
+  // Ici l'AJR global n'est peut-être pas affiché dans la vue "All" de la même façon.
+  final startDate = DateTime(DateTime.now().year, 1, 1);
+  final endDate = DateTime(DateTime.now().year, 12, 31);
 
+  final result = await aggregationService.aggregate(
+    allRecords,
+    startDate: startDate, // Dates arbitraires si on ne regarde que les totaux absolus
+    endDate: endDate,
+  );
+
+  final monthlyStats = <int, MonthlyNutritionStats>{};
   for (var m = 1; m <= 12; m++) {
-    monthlyData[m] = {};
-    monthlyCounts[m] = 0;
-    monthlyQuantities[m] = 0.0;
-  }
-
-  for (final record in allRecords) {
-    // Récup nutrition
-    Map<String, double> nutris = {};
-
-    if (record.nutritionSnapshot != null &&
-        record.nutritionSnapshot!.isNotEmpty) {
-      nutris = record.nutritionSnapshot!;
-    } else {
-      var plant = plantsList.where((p) => p.id == record.plantId).firstOrNull;
-      if (plant == null && record.plantName != null) {
-        plant = plantsList
-            .where((p) =>
-                p.commonName.toLowerCase() == record.plantName!.toLowerCase())
-            .firstOrNull;
-      }
-      if (plant != null && plant.nutritionPer100g != null) {
-        nutris = NutritionNormalizer.computeSnapshot(
-            plant.nutritionPer100g, record.quantityKg);
-      }
-    }
-
-    // N'INCREMENTER contributionCount QUE SI la récolte apporte des nutriments
-    if (nutris.isEmpty) continue;
-
-    final month = record.date.month;
-    monthlyCounts[month] = (monthlyCounts[month] ?? 0) + 1;
-    monthlyQuantities[month] = (monthlyQuantities[month] ?? 0.0) + record.quantityKg;
-
-    // Accumuler
-    nutris.forEach((key, val) {
-      final mStats = monthlyData[month]!;
-      mStats[key] = (mStats[key] ?? 0.0) + val;
-      annualTotals[key] = (annualTotals[key] ?? 0.0) + val;
-    });
-  }
-
-  // Convertir en objets immuables
-  final finalMonthlyStats = <int, MonthlyNutritionStats>{};
-  for (var m = 1; m <= 12; m++) {
-    finalMonthlyStats[m] = MonthlyNutritionStats(
+    monthlyStats[m] = MonthlyNutritionStats(
       month: m,
-      nutrientTotals: monthlyData[m]!,
-      contributionCount: monthlyCounts[m] ?? 0,
-      totalQuantityKg: monthlyQuantities[m] ?? 0.0,
+      nutrientTotals: result.monthlyTotals[m] ?? {},
+      contributionCount: result.monthlyRecordCounts[m] ?? 0,
+      totalQuantityKg: result.monthlyMassKg[m] ?? 0.0,
     );
   }
 
+  final annualTotals = <String, double>{};
+  result.byNutrient.forEach((key, agg) {
+    if (agg.sumAvailable > 0) annualTotals[key] = agg.sumAvailable;
+  });
+
   return SeasonalNutritionState(
-    monthlyStats: finalMonthlyStats,
+    monthlyStats: monthlyStats,
     annualTotals: annualTotals,
   );
 });

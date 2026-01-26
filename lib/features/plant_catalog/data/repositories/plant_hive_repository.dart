@@ -12,6 +12,7 @@ import 'package:path/path.dart' as p;
 
 import '../models/plant_hive.dart';
 import '../../domain/entities/plant_entity.dart';
+import 'package:permacalendar/core/services/nutrition_normalizer.dart';
 
 /// Exception personnalisée pour les erreurs du PlantHiveRepository
 class PlantHiveException implements Exception {
@@ -529,6 +530,16 @@ class PlantHiveRepository {
           'harvest': {},
           'general': {}
         };
+      }
+
+      // 5) Normalisation Nutrition & Data Confidence (via Metadata)
+      // Ne pas écraser si déjà présent dans le JSON source (peu probable)
+      // On le recalcule systématiquement pour garantir que le code Normalizer est la source de vérité
+      final rawNutrition = _getOptionalMapValue(json, 'nutritionPer100g');
+      if (rawNutrition.isNotEmpty) {
+        final canonical = NutritionNormalizer.normalizeMap(rawNutrition);
+        meta['nutrition_canonical'] = canonical;
+        meta['available_nutrients'] = canonical.keys.toList();
       }
 
       // FIN NORMALISATION
