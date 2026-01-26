@@ -13,6 +13,7 @@ import '../../../features/climate/presentation/providers/weather_time_provider.d
 import '../../../features/climate/presentation/providers/weather_config_provider.dart';
 import '../../../features/climate/domain/models/weather_config.dart';
 import '../../../features/climate/presentation/providers/weather_metrics_provider.dart';
+import '../../../features/climate/domain/utils/weather_aesthetic_mapper.dart';
 
 
 /// Layer Global pour la simulation de particules (Pluie, Neige, Nuages, Brume).
@@ -82,10 +83,8 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
 
     final calib = ref.read(skyCalibrationProvider);
     final config = ref.read(weatherConfigProvider);
-    final calibState = ref.read(weatherCalibrationStateProvider);
-
     if (dt > 0.0) {
-      _updateWeatherState(dt, calibState);
+      _updateWeatherState(dt); // No more ConfigState passed
       _processEngine(dt, calib, config);
     }
 
@@ -113,26 +112,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     setState(() {});
   }
 
-  void _updateWeatherState(double dt, WeatherCalibrationState calibState) {
-    // 1. If Calibration Mode is ON, force values
-    if (calibState.isCalibrationMode) {
-      if (calibState.forcedPrecipMm != null) {
-        _precipIntensity = calibState.forcedPrecipMm!;
-        _precipProbability = 100.0; 
-      }
-      if (calibState.forcedWindSpeed != null) {
-        _windSpeed = calibState.forcedWindSpeed!;
-      }
-      if (calibState.forcedCloudCover != null) {
-        _cloudCover = calibState.forcedCloudCover!;
-      }
-      
-      if (calibState.forcedWeatherCode != null) {
-        final code = calibState.forcedWeatherCode!;
-        _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
-      }
-    } else {
-      // 2. Read Real Weather (Fallback base)
+  void _updateWeatherState(double dt) {
       final weatherAsync = ref.read(currentWeatherProvider);
       final timeOffset = ref.read(weatherTimeOffsetProvider);
 
@@ -147,7 +127,6 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
           _updateParamsFromPoint(interpolated);
         }
       });
-    }
   }
 
   void _updateParamsFromPoint(HourlyWeatherPoint p) {
@@ -158,7 +137,30 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     _precipProbability = p.precipitationProbability.toDouble();
     final code = p.weatherCode;
     _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
+    
+    // V5 DYNAMIC INJECTION
+    // We map the physical weather point to an Aesthetic Configuration on the fly.
+    // This ensures we always strictly use the Sanctified Presets.
+    final mapperConfig = WeatherAestheticMapper.getAesthetic(p);
+    
+    if (mapperConfig != null) {
+      // We found a matching preset (Light Rain, Heavy Rain, Snow, etc.)
+      // We inject it into the current config provider TEMPORARILY for this frame logic?
+      // No, strictly speaking, the Physics Engine (_processEngine) reads from 'ref.read(weatherConfigProvider)'.
+      // If we want to be dynamic without mutating the global user config (which we shouldn't touch technically if it's "settings"),
+      // we should pass this specific aesthetic to _processEngine.
+      // BUT: The requirement says "Le système doit instancier un AestheticParams".
+      // So let's pass it to _processEngine.
+      
+      _currentDynamicAesthetic = mapperConfig;
+    } else {
+      _currentDynamicAesthetic = null; // No precip or unknown
+    }
   }
+  
+  // Dynamic aesthetic override for unnecessary global state mutation
+  AestheticParams? _currentDynamicAesthetic;
+
 
   // ===========================================================================
   // V2 ENGINE: COMPOSER (Aesthetics -> Physics)
@@ -169,8 +171,31 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     // 1. RESOLVE PHYSICS FROM AESTHETICS (V4.1 Refined - Decoupled)
     // -------------------------------------------------------------------------
     
-    // Pick the right sculpted material
-    final aesthetic = _isSnow ? config.aesthetics.snow : config.aesthetics.rain;
+    // -------------------------------------------------------------------------
+    // 1. RESOLVE PHYSICS FROM AESTHETICS (V4.1 Refined - Decoupled)
+    // -------------------------------------------------------------------------
+    
+    // CORE LOGIC: If we have a dynamic mapping (from valid precip code), use it.
+    // Otherwise, if precip is 0, we shouldn't spawn anything anyway.
+    // If we want to fallback to defaults, we can, but usually we rely on "Quantity".
+    
+    AestheticParams aesthetic;
+    
+    if (_currentDynamicAesthetic != null) {
+       aesthetic = _currentDynamicAesthetic!;
+    } else {
+       // Fallback to config if no dynamic mapping found (or if we prefer manual control in dev, but here we are in PROD mode)
+       // Actually, if code says "No Precip", mapper returns null.
+       // We should force quantity to 0.0 in that case implicitly?
+       // Let's use the config as a base BUT with quantity 0 if no dynamic aesthetic and no forced mode.
+       aesthetic = _isSnow ? config.aesthetics.snow : config.aesthetics.rain;
+       
+       // S'il n'y a pas de mapping (Ciel dégagé, Nuageux sans pluie), on coupe le robinet.
+       // Sauf test manuel (supprimé), donc on force 0.
+       if (_precipIntensity < 0.1 && _precipProbability < 10) {
+          aesthetic = aesthetic.copyWith(quantity: 0.0);
+       }
+    }
     
     // Derived Physics Values
     double dGravity = 0.5;

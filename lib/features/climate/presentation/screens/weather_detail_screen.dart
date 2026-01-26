@@ -11,7 +11,7 @@ import 'package:permacalendar/core/models/daily_weather_point.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 
-import 'weather_calibration_screen.dart';
+
 
 class WeatherDetailScreen extends ConsumerWidget {
   const WeatherDetailScreen({super.key});
@@ -140,15 +140,6 @@ class WeatherDetailScreen extends ConsumerWidget {
                                       shadows: [
                                         Shadow(blurRadius: 4, color: Colors.black26)
                                       ])),
-                              IconButton(
-                                icon: const Icon(Icons.settings,
-                                    size: 20, color: Colors.white70),
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (_) =>
-                                          const WeatherCalibrationScreen()));
-                                },
-                              ),
                             ],
                           ),
                           Text(
