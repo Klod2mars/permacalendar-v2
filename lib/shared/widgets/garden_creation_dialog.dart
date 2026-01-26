@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
+
 
 class GardenCreationDialog extends StatefulWidget {
   const GardenCreationDialog({super.key});
@@ -20,25 +22,27 @@ class _GardenCreationDialogState extends State<GardenCreationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Créer votre premier jardin'),
+      title: Text(AppLocalizations.of(context)!.garden_creation_dialog_title),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Donnez un nom à votre espace de permaculture pour commencer.',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+            Text(
+              AppLocalizations.of(context)!.garden_creation_dialog_description,
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nom du jardin',
-                hintText: 'Ex: Mon Potager',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.garden_creation_name_label,
+                hintText: AppLocalizations.of(context)!.garden_creation_name_hint,
               ),
               validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'Le nom est requis' : null,
+                  (v == null || v.trim().isEmpty)
+                      ? AppLocalizations.of(context)!.garden_creation_name_required
+                      : null,
             ),
           ],
         ),
@@ -46,7 +50,7 @@ class _GardenCreationDialogState extends State<GardenCreationDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(AppLocalizations.of(context)!.dialog_cancel),
         ),
         ElevatedButton(
           onPressed: () {
@@ -54,7 +58,7 @@ class _GardenCreationDialogState extends State<GardenCreationDialog> {
               Navigator.of(context).pop(_nameController.text.trim());
             }
           },
-          child: const Text('Créer'),
+          child: Text(AppLocalizations.of(context)!.garden_creation_create_button),
         ),
       ],
     );

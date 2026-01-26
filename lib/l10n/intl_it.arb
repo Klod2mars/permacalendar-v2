@@ -1,6 +1,12 @@
 {
   "@@locale": "it",
   "appTitle": "Sowing",
+  "garden_creation_dialog_title": "Crea il tuo primo giardino",
+  "garden_creation_dialog_description": "Dai un nome al tuo spazio di permacultura per iniziare.",
+  "garden_creation_name_label": "Nome del giardino",
+  "garden_creation_name_hint": "Es: Il mio Orto",
+  "garden_creation_name_required": "Il nome è obbligatorio",
+  "garden_creation_create_button": "Crea",
   "settings_title": "Impostazioni",
   "home_settings_fallback_label": "Impostazioni (fallback)",
   "settings_application": "Applicazione",

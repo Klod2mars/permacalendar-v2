@@ -6,6 +6,13 @@
     "description": "Titre de l'application"
   },
 
+  "garden_creation_dialog_title": "Créez votre premier jardin",
+  "garden_creation_dialog_description": "Donnez un nom à votre espace de permaculture pour commencer.",
+  "garden_creation_name_label": "Nom du jardin",
+  "garden_creation_name_hint": "Ex: Mon Potager",
+  "garden_creation_name_required": "Le nom est requis",
+  "garden_creation_create_button": "Créer",
+
   "settings_title": "Paramètres",
   "@settings_title": {
     "description": "Titre de la page des paramètres"

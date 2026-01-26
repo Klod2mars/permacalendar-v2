@@ -12,6 +12,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appTitle => 'Sowing';
 
   @override
+  String get garden_creation_dialog_title => 'Crea il tuo primo giardino';
+
+  @override
+  String get garden_creation_dialog_description =>
+      'Dai un nome al tuo spazio di permacultura per iniziare.';
+
+  @override
+  String get garden_creation_name_label => 'Nome del giardino';
+
+  @override
+  String get garden_creation_name_hint => 'Es: Il mio Orto';
+
+  @override
+  String get garden_creation_name_required => 'Il nome è obbligatorio';
+
+  @override
+  String get garden_creation_create_button => 'Crea';
+
+  @override
   String get settings_title => 'Impostazioni';
 
   @override

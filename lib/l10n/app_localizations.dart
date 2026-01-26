@@ -112,6 +112,42 @@ abstract class AppLocalizations {
   /// **'Sowing'**
   String get appTitle;
 
+  /// No description provided for @garden_creation_dialog_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créez votre premier jardin'**
+  String get garden_creation_dialog_title;
+
+  /// No description provided for @garden_creation_dialog_description.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donnez un nom à votre espace de permaculture pour commencer.'**
+  String get garden_creation_dialog_description;
+
+  /// No description provided for @garden_creation_name_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du jardin'**
+  String get garden_creation_name_label;
+
+  /// No description provided for @garden_creation_name_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex: Mon Potager'**
+  String get garden_creation_name_hint;
+
+  /// No description provided for @garden_creation_name_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nom est requis'**
+  String get garden_creation_name_required;
+
+  /// No description provided for @garden_creation_create_button.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer'**
+  String get garden_creation_create_button;
+
   /// Titre de la page des paramètres
   ///
   /// In fr, this message translates to:
