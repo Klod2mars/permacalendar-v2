@@ -12,6 +12,8 @@ import '../../../features/climate/presentation/providers/weather_time_provider.d
 // Config & Calibration imports
 import '../../../features/climate/presentation/providers/weather_config_provider.dart';
 import '../../../features/climate/domain/models/weather_config.dart';
+import '../../../features/climate/presentation/providers/weather_metrics_provider.dart';
+
 
 /// Layer Global pour la simulation de particules (Pluie, Neige, Nuages, Brume).
 /// Respecte la calibration du ciel et inclut physique de collision avec l'ovoïde.
@@ -40,9 +42,13 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
   // DEBUG / TEMP FLAGS - désactivé par défaut pour éviter spam terminal
   // Mettre true temporairement lors d'un diagnostic local seulement.
   static const bool kWeatherDebug = false;
+  
+  double _lastCalculatedSpawnRate = 0.0;
+  int _ticksCount = 0;
+  DateTime _lastMetricsUpdate = DateTime.now();
+  int _lastCollisionRate = 0;
 
   // Constants removed in favor of WeatherConfig
-
 
   // NOTE: variable additionnelle pour stocker la probabilité de précipitation
   double _precipProbability = 0.0; // 0..100
@@ -76,6 +82,27 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     if (dt > 0.0) {
       _updateWeatherState(dt, calibState);
       _processEngine(dt, calib, config);
+    }
+
+    // Metrics Throttling (2 times per second)
+    _ticksCount++;
+    if (_ticksCount % 30 == 0) {
+        final now = DateTime.now();
+        if (now.difference(_lastMetricsUpdate).inMilliseconds > 500) {
+           _lastMetricsUpdate = now;
+           // Update provider
+           final metrics = WeatherEngineMetrics(
+              particleCount: _particles.length,
+              spawnRate: _lastCalculatedSpawnRate,
+              collisionRate: _lastCollisionRate, // this is mostly cummulative current frame... actually reset it?
+           );
+           _lastCollisionRate = 0; // Reset counter for next window
+           
+           // Use Microtask to avoid build conflicts
+           Future.microtask(() {
+              if (mounted) ref.read(weatherMetricsProvider.notifier).updateMetrics(metrics);
+           });
+        }
     }
 
     setState(() {});
@@ -134,8 +161,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
 
   void _processEngine(double dt, SkyCalibrationConfig calib, WeatherConfig config) {
     // -------------------------------------------------------------------------
-    // 1. RESOLVE PHYSICS FROM AESTHETICS (The "Mapping" Layer V3 + V4 Depth)
+    // 1. RESOLVE PHYSICS FROM AESTHETICS (V4.1 Refined - Decoupled)
     // -------------------------------------------------------------------------
+    
+    // Pick the right sculpted material
+    final aesthetic = _isSnow ? config.aesthetics.snow : config.aesthetics.rain;
     
     // Derived Physics Values
     double dGravity = 0.5;
@@ -147,84 +177,84 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     double dHSpread = 1.5;
     double dWindX = 0.0;
     
-    // Pick the right sculpted material
-    final aesthetic = _isSnow ? config.aesthetics.snow : config.aesthetics.rain;
+    // V4.1: DECOUPLING QUANTITY & AREA
+    // Area Control: 0.1 (Pinpoint) -> 14.1 (Wide)
+    dHSpread = 0.1 + (aesthetic.area * 14.0); 
     
-    // --- V3 MAPPING: 5 HOLISTIC PILLARS ---
+    // Density Control (Particles per Unit Area)
+    // We want Quantity to mean "How dense is it LOCALLY".
+    // So distinct from Area.
+    // If Area is small, Quantity=1.0 -> Dense core.
+    // If Area is large, Quantity=1.0 -> Dense everywhere.
+    // This implies TotalSpawnRate = Density * Area.
     
-    // 1. QUANTITY (How much?)
-    // Controlled by 'quantity' (0-1). 
-    // Uses power curve to give fine control at low values.
-    if (_isSnow) {
-       // V4: Uncapped limits. 10 -> 4000
-       dSpawnRate = 10.0 + (math.pow(aesthetic.quantity, 1.5) * 4000.0);
-    } else {
-       // Rain needs to be dense to be seen
-       // V4: Uncapped. 20 -> 2500
-       dSpawnRate = 20.0 + (math.pow(aesthetic.quantity, 1.5) * 2500.0);
+    final baseDensity = aesthetic.quantity; // 0..1
+    double densityCurve = math.pow(baseDensity, 1.6).toDouble(); // gentle power
+    
+    double spawnPerUnit = _isSnow ? 150.0 : 400.0; // Base reference
+    double spawnRateRaw = (densityCurve * spawnPerUnit) * dHSpread;
+    
+    // SOFT CAP to prevent explosions
+    final softCap = _isSnow ? 3000.0 : 4000.0;
+    if (spawnRateRaw > softCap) {
+       // Logarithmic approach to limit
+       spawnRateRaw = softCap + (math.log(spawnRateRaw - softCap + 1) * 100);
     }
     
-    // 2. AREA (Where?)
-    // Controlled by 'area'. 0.0 = Pinpoint, 1.0 = Wide coverage
-    // We Map 0-1 to 0.1x - 15.0x Radius
-    dHSpread = 0.1 + (aesthetic.area * 14.0); 
+    dSpawnRate = spawnRateRaw;
 
     // 3. WEIGHT (Heavy or Light?)
-    // Controlled by 'weight'. Affects Gravity and Velocity.
     if (_isSnow) {
-      // Light snow floats (0.0), Heavy snow plummets (1.0)
       dGravity = 0.005 + (aesthetic.weight * 0.15); 
       dVelocityBase = 0.02 + (aesthetic.weight * 0.5); 
     } else {
-      // Mist (0.0) -> Driving Rain (1.0)
       dGravity = 0.1 + (aesthetic.weight * 0.8);
       dVelocityBase = 0.1 + (aesthetic.weight * 1.5);
     }
     dVelocityVar = dVelocityBase * 0.4;
     
     // 4. SIZE (Scale)
-    // Controlled by 'size'. Flake/Drop size.
     if (_isSnow) {
-       dSizeBase = 1.0 + (aesthetic.size * 6.0); // Up to 7.0 size
+       dSizeBase = 1.0 + (aesthetic.size * 5.0); 
     } else {
-       dSizeBase = 0.5 + (aesthetic.size * 2.5); // Up to 3.0 thickness
+       dSizeBase = 0.5 + (aesthetic.size * 2.5); 
     }
     dSizeVar = dSizeBase * 0.5;
 
     // 5. AGITATION (Chaos)
-    // Controlled by 'agitation'. Wind, Turbulence, Jitter.
-    // Inject some time-based sine wave for "Gusts" if agitation is high.
     final chaosSignal = math.sin(_time * (1.0 + aesthetic.agitation * 5.0));
     final localWind = (_windSpeed * 0.005);
-    // Agitation adds random wind + gusting
     dWindX = localWind + (chaosSignal * aesthetic.agitation * 0.02) + ((_rng.nextDouble()-0.5) * aesthetic.agitation * 0.01);
     
+    // -------------------------------------------------------------------------
+    // 2. SPAWN V4.1 (Clumping & Z-Depth)
+    // -------------------------------------------------------------------------
     
-    // AUTO-TUNING (If not in calibration mode)
-    final calibState = ref.read(weatherCalibrationStateProvider);
-    if (!calibState.isCalibrationMode) {
-      double realIntensity = _precipIntensity / 5.0; // 5mm is base max
-      if (_precipProbability > 0) {
-         realIntensity = math.max(realIntensity, 0.1); 
-      }
-      realIntensity = realIntensity.clamp(0.0, 1.0);
-      dSpawnRate *= realIntensity;
-      if (_precipIntensity <= 0 && _precipProbability < 20) dSpawnRate = 0;
-      dWindX = _windSpeed * 0.002;
+    // Calculate total spawning budget for this tick
+    int toSpawn = (dSpawnRate * dt).toInt();
+    
+    // Granularity (Burstiness)
+    const burstChance = 0.1; // 10% chance to burst
+    bool isBurst = false;
+    if (aesthetic.granularity > 0) {
+       // Reduce steady spawn, add potential bursts
+       if (_rng.nextDouble() < burstChance) {
+          isBurst = true;
+          toSpawn = (toSpawn * (1.0 + aesthetic.granularity * 5.0)).toInt();
+       } else {
+          toSpawn = (toSpawn * (1.0 - aesthetic.granularity * 0.8)).toInt();
+       }
     }
-
-    // -------------------------------------------------------------------------
-    // 2. SPAWN V4 (With Z-Depth)
-    // -------------------------------------------------------------------------
-    final toSpawn = (dSpawnRate * dt).toInt();
-    final spawnCount = math.min(toSpawn, 300); // V4: Higher cap per tick
     
-    if (spawnCount > 0) {
+    final spawnCapPerTick = 400; // Safety
+    int validSpawn = math.min(toSpawn, spawnCapPerTick);
+    
+    if (validSpawn > 0) {
        final minX = calib.cx - calib.rx * dHSpread;
        final maxX = calib.cx + calib.rx * dHSpread;
-       final startY = calib.cy - calib.ry; // Top of oval roughly
+       final startY = calib.cy - calib.ry; 
        
-       for (int i = 0; i < spawnCount; i++) {
+       for (int i = 0; i < validSpawn; i++) {
          // Randomize Start X
          final sx = minX + _rng.nextDouble() * (maxX - minX);
          final sy = startY - (_rng.nextDouble() * 0.5); 
@@ -264,11 +294,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
        }
     }
     
-    // -------------------------------------------------------------------------
-    // 3. CLOUDS (Simplified for now)
-    // -------------------------------------------------------------------------
-    // Keeping original cloud logic or mapping it later. 
-    // Focusing on Rain/Snow as requested.
+    // SImple Cloud logic preserved
     if (_cloudCover > 20) {
        if (_particles.where((p) => p.type == _ParticleType.cloud).length < config.cloud.maxClouds) {
          if (_rng.nextDouble() < 0.01) {
@@ -306,6 +332,33 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     }
   }
 
+  void _spawnParticle(double sx, double sy, double sz, double windX, double baseV, double varV, double baseS, double varS, WeatherConfig config) {
+     final depthFactor = 0.4 + (0.6 * sz);
+     
+     if (_isSnow) {
+       final life = 5.0 + _rng.nextDouble() * 5.0;
+       _particles.add(_BioParticle(
+         x: sx, y: sy,
+         z: sz,
+         type: _ParticleType.snow,
+         vx: (windX + (_rng.nextDouble() - 0.5) * 0.02) * depthFactor, 
+         vy: (baseV + (_rng.nextDouble() * varV)) * depthFactor,
+         life: life, maxLife: life,
+         size: (baseS + (_rng.nextDouble() * varS)) * depthFactor, 
+       ));
+     } else {
+       _particles.add(_BioParticle(
+         x: sx, y: sy,
+         z: sz,
+         type: _ParticleType.rain,
+         vx: (windX + (_rng.nextDouble() - 0.5) * 0.01) * depthFactor,
+         vy: (baseV + (_rng.nextDouble() * varV)) * depthFactor,
+         life: 1.0, maxLife: 1.0,
+         size: (baseS + (_rng.nextDouble() * 0.5)) * depthFactor, 
+       ));
+     }
+  }
+
   void _handleCollision(_BioParticle p, SkyCalibrationConfig calib) {
       final dx = p.x - calib.cx;
       final dy = p.y - calib.cy;
@@ -317,11 +370,17 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
       final ry = calib.ry;
       final eq = (localX * localX) / (rx * rx) + (localY * localY) / (ry * ry);
       
+      // SOFT COLLISION V4.1
       if (eq >= 1.0) {
-         // Simple deflection
-         p.vx *= 0.5; // Dampen
-         p.life -= 0.2; // Kill fast on impact
-         if (eq > 1.1) p.life = -1;
+         final penetration = (eq - 1.0);
+         if (penetration < 0.2) { // 20% margin
+            _lastCollisionRate++;
+            p.vx *= 0.6; 
+            p.vy *= 0.4; 
+            p.life -= 0.1; 
+         } else {
+            p.life = -1;
+         }
       }
   }
 
@@ -470,6 +529,3 @@ class _OrganicSkyClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant _OrganicSkyClipper old) => old.config != config;
 }
-
-// _SnowPreset removed as it is superseded by WeatherConfig
-

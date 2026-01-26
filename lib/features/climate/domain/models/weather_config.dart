@@ -314,6 +314,10 @@ class AestheticParams {
   final double weight;    // Physics feel (Gravity vs Float)
   final double size;      // Scale (Fine vs Chunky)
   final double agitation; // Chaos (Wind/Turbulence)
+  
+  // V4.1 Structural Controls
+  final double clumping;    // 0.0-1.0 (Clusters vs Uniform)
+  final double granularity; // 0.0-1.0 (Bursts vs Steady)
 
   const AestheticParams({
     this.quantity = 0.5,
@@ -321,6 +325,8 @@ class AestheticParams {
     this.weight = 0.5,
     this.size = 0.5,
     this.agitation = 0.2,
+    this.clumping = 0.0,
+    this.granularity = 0.0,
   });
 
   const AestheticParams.initialRain()
@@ -328,14 +334,18 @@ class AestheticParams {
         area = 0.5,
         weight = 0.6,
         size = 0.4,
-        agitation = 0.2;
+        agitation = 0.2,
+        clumping = 0.0,
+        granularity = 0.0;
 
   const AestheticParams.initialSnow()
       : quantity = 0.3,
         area = 0.9,
         weight = 0.1,
         size = 0.7,
-        agitation = 0.1;
+        agitation = 0.1,
+        clumping = 0.2, // Default some clumping for snow
+        granularity = 0.3;
 
   AestheticParams copyWith({
     double? quantity,
@@ -343,6 +353,8 @@ class AestheticParams {
     double? weight,
     double? size,
     double? agitation,
+    double? clumping,
+    double? granularity,
   }) {
     return AestheticParams(
       quantity: quantity ?? this.quantity,
@@ -350,6 +362,8 @@ class AestheticParams {
       weight: weight ?? this.weight,
       size: size ?? this.size,
       agitation: agitation ?? this.agitation,
+      clumping: clumping ?? this.clumping,
+      granularity: granularity ?? this.granularity,
     );
   }
 
@@ -359,6 +373,8 @@ class AestheticParams {
         'weight': weight,
         'size': size,
         'agitation': agitation,
+        'clumping': clumping,
+        'granularity': granularity,
       };
 
   factory AestheticParams.fromJson(Map<String, dynamic> json) {
@@ -368,6 +384,8 @@ class AestheticParams {
       weight: (json['weight'] as num?)?.toDouble() ?? 0.5,
       size: (json['size'] as num?)?.toDouble() ?? 0.5,
       agitation: (json['agitation'] as num?)?.toDouble() ?? 0.2,
+      clumping: (json['clumping'] as num?)?.toDouble() ?? 0.0,
+      granularity: (json['granularity'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }

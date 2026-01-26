@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/weather_config_provider.dart';
 import '../../domain/models/weather_config.dart';
+import '../providers/weather_metrics_provider.dart';
 
 import '../../../../shared/presentation/widgets/weather_bio_layer.dart';
 
@@ -41,9 +42,15 @@ class _WeatherCalibrationScreenState
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Config JSON copied to clipboard!')),
               );
-              print('--- WEATHER CONFIG JSON ---');
-              print(json);
-              print('---------------------------');
+            },
+          ),
+          IconButton(
+            icon: Icon(_showMetrics ? Icons.analytics : Icons.analytics_outlined),
+            tooltip: 'Toggle Instrumentation',
+            onPressed: () {
+               setState(() {
+                 _showMetrics = !_showMetrics;
+               });
             },
           ),
           IconButton(
@@ -74,7 +81,34 @@ class _WeatherCalibrationScreenState
                     fit: BoxFit.cover,
                  ),
               ),
-              child: const WeatherBioLayer(),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                   const WeatherBioLayer(),
+                   if (_showMetrics)
+                     Consumer(
+                       builder: (context, ref, _) {
+                         final metrics = ref.watch(weatherMetricsProvider);
+                         return Positioned(
+                           top: 8, left: 8,
+                           child: Container(
+                             padding: const EdgeInsets.all(8),
+                             color: Colors.black54,
+                             child: Column(
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                  const Text("INSTRUMENTATION", style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 10)),
+                                  Text("Particles: ${metrics.particleCount}", style: const TextStyle(color: Colors.white, fontSize: 10)),
+                                  Text("SpawnRate: ${metrics.spawnRate.toStringAsFixed(1)} /s", style: const TextStyle(color: Colors.white, fontSize: 10)),
+                                  Text("Collisions: ${metrics.collisionRate} /frame", style: const TextStyle(color: Colors.white, fontSize: 10)),
+                               ],
+                             ),
+                           ),
+                         );
+                       }
+                     ),
+                ],
+              ),
             ),
           ),
           
@@ -197,6 +231,8 @@ class _WeatherCalibrationScreenState
         });
   }
 
+  bool _showMetrics = true;
+
   Widget _buildAestheticPanel({
     required String title,
     required AestheticParams params,
@@ -231,9 +267,26 @@ class _WeatherCalibrationScreenState
             value: params.agitation,
             min: 0.0, max: 1.0,
             onChanged: (v) => onUpdate(params.copyWith(agitation: v))),
+        // V4.1 Structural
+        const Divider(),
+        const Padding(padding: EdgeInsets.only(left: 16), child: Text("Structure", style: TextStyle(fontSize: 10, color: Colors.grey))),
+        _ConfigSlider(
+            label: 'Clumping (Clusters)',
+            value: params.clumping,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => onUpdate(params.copyWith(clumping: v))),
+        _ConfigSlider(
+            label: 'Granularity (Bursts)',
+            value: params.granularity,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => onUpdate(params.copyWith(granularity: v))),
       ],
     );
   }
+
+  // ... (inside build method, update Stack)
+  // Replaced Preview Zone with Stack
+
  
   // Legacy or Technical Sections below
   
