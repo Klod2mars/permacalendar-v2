@@ -514,12 +514,10 @@ class _BioParticlePainter extends CustomPainter {
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
     
-    // SNOW PAINTS (Cached variants for performance?)
-    // Actually, drawing individually is fine for < 5000 in canvas.
+    // SNOW PAINTS (Soft, Matte, White)
     final paintSnow = Paint()
-      ..color = Colors.white.withOpacity(0.92);
-      // maskFilter dynamic based on Z? 
-    // We will apply maskFilter dynamically if Z is low (blurred background)
+      ..color = Colors.white.withOpacity(0.85) // Matte White (less glare)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.5); // Soft edges
     
     final paintCloud = Paint()
       ..color = Colors.white.withOpacity(0.2)
@@ -563,6 +561,11 @@ class _BioParticlePainter extends CustomPainter {
       } else if (p.type == _ParticleType.snow) {
          final snowAlpha = (lifeAlpha * 0.95 * depthAlpha).clamp(0.0, 1.0);
          paintSnow.color = Colors.white.withOpacity(snowAlpha);
+         
+         // Defocus background interactively?
+         // This is expensive (changing mask filter). Only do it for very back?
+         // Or just use alpha to simulate distance.
+         // Let's rely on Alpha + Size. Blur is too heavy for loop.
          
          // Defocus background interactively?
          // This is expensive (changing mask filter). Only do it for very back?

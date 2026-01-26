@@ -263,13 +263,13 @@ class _WeatherCalibrationScreenState
                  onPressed: () => onUpdate(WeatherPresets.storm),
                ),
                ActionChip(
-                 label: const Text('Snow'),
-                 onPressed: () => onUpdate(WeatherPresets.snow),
+                 label: const Text('Light Snow'),
+                 onPressed: () => onUpdate(WeatherPresets.lightSnow),
                ),
                ActionChip(
-                 label: const Text('Blizzard'),
+                 label: const Text('Dense Snow'),
                  backgroundColor: Colors.blue.withOpacity(0.2),
-                 onPressed: () => onUpdate(WeatherPresets.blizzard),
+                 onPressed: () => onUpdate(WeatherPresets.denseSnow),
                ),
             ],
           ),
