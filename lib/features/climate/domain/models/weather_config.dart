@@ -23,7 +23,7 @@ class WeatherConfig {
       snow: SnowConfig(),
       cloud: CloudConfig(),
       general: GeneralConfig(),
-      aesthetics: AestheticConfig(),
+      aesthetics: AestheticConfig.initial(),
     );
   }
 
@@ -243,47 +243,131 @@ class GeneralConfig {
       };
 }
 
-/// New V2 Engine: Aesthetic Parameters
-/// These values (0.0 to 1.0) drive the physics engine non-linearly.
+/// New V3 Engine: Holistic Aesthetic Parameters
+/// Decoupled controls for "Sculpting" the weather.
 class AestheticConfig {
-  // Rain
-  final double rainDensity;    // 0.0-1.0 (Quantity + Spread)
-  final double rainSlant;      // 0.0-1.0 (Wind/Chaos effect)
-  final double rainIntensity;  // 0.0-1.0 (Speed/Impact)
+  final AestheticParams rain;
+  final AestheticParams snow;
 
-  // Snow
-  final double snowDensity;    // 0.0-1.0 (Blizzard factor)
-  final double snowHeaviness;  // 0.0-1.0 (Flake size + Gravity)
-  
   const AestheticConfig({
-    this.rainDensity = 0.5,
-    this.rainSlant = 0.2,
-    this.rainIntensity = 0.5,
-    this.snowDensity = 0.3,
-    this.snowHeaviness = 0.2,
+    required this.rain,
+    required this.snow,
   });
 
+  /// Default values for V3
+  factory AestheticConfig.defaults() {
+    return const AestheticConfig(
+      rain: AestheticParams(
+        quantity: 0.5,
+        area: 0.5,
+        weight: 0.5,
+        size: 0.5,
+        agitation: 0.2,
+      ),
+      snow: AestheticParams(
+        quantity: 0.3,
+        area: 0.8,
+        weight: 0.2,
+        size: 0.6,
+        agitation: 0.1,
+      ),
+    );
+  }
+
+  // Fallback for const constructor if needed, mostly used for defaults above
+  const AestheticConfig.initial()
+      : rain = const AestheticParams.initialRain(),
+        snow = const AestheticParams.initialSnow();
+
   AestheticConfig copyWith({
-    double? rainDensity,
-    double? rainSlant,
-    double? rainIntensity,
-    double? snowDensity,
-    double? snowHeaviness,
+    AestheticParams? rain,
+    AestheticParams? snow,
   }) {
     return AestheticConfig(
-      rainDensity: rainDensity ?? this.rainDensity,
-      rainSlant: rainSlant ?? this.rainSlant,
-      rainIntensity: rainIntensity ?? this.rainIntensity,
-      snowDensity: snowDensity ?? this.snowDensity,
-      snowHeaviness: snowHeaviness ?? this.snowHeaviness,
+      rain: rain ?? this.rain,
+      snow: snow ?? this.snow,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'rainDensity': rainDensity,
-        'rainSlant': rainSlant,
-        'rainIntensity': rainIntensity,
-        'snowDensity': snowDensity,
-        'snowHeaviness': snowHeaviness,
+        'rain': rain.toJson(),
+        'snow': snow.toJson(),
       };
+      
+  factory AestheticConfig.fromJson(Map<String, dynamic> json) {
+    return AestheticConfig(
+      rain: json['rain'] != null 
+          ? AestheticParams.fromJson(json['rain']) 
+          : const AestheticParams.initialRain(),
+      snow: json['snow'] != null 
+          ? AestheticParams.fromJson(json['snow']) 
+          : const AestheticParams.initialSnow(),
+    );
+  }
+}
+
+/// The 5 Pillars of Weather Sculpting
+/// All values 0.0 to 1.0
+class AestheticParams {
+  final double quantity;  // How Much? (Density/Count)
+  final double area;      // Where? (Spread/Distribution)
+  final double weight;    // Physics feel (Gravity vs Float)
+  final double size;      // Scale (Fine vs Chunky)
+  final double agitation; // Chaos (Wind/Turbulence)
+
+  const AestheticParams({
+    this.quantity = 0.5,
+    this.area = 0.5,
+    this.weight = 0.5,
+    this.size = 0.5,
+    this.agitation = 0.2,
+  });
+
+  const AestheticParams.initialRain()
+      : quantity = 0.5,
+        area = 0.5,
+        weight = 0.6,
+        size = 0.4,
+        agitation = 0.2;
+
+  const AestheticParams.initialSnow()
+      : quantity = 0.3,
+        area = 0.9,
+        weight = 0.1,
+        size = 0.7,
+        agitation = 0.1;
+
+  AestheticParams copyWith({
+    double? quantity,
+    double? area,
+    double? weight,
+    double? size,
+    double? agitation,
+  }) {
+    return AestheticParams(
+      quantity: quantity ?? this.quantity,
+      area: area ?? this.area,
+      weight: weight ?? this.weight,
+      size: size ?? this.size,
+      agitation: agitation ?? this.agitation,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'quantity': quantity,
+        'area': area,
+        'weight': weight,
+        'size': size,
+        'agitation': agitation,
+      };
+
+  factory AestheticParams.fromJson(Map<String, dynamic> json) {
+    return AestheticParams(
+      quantity: (json['quantity'] as num?)?.toDouble() ?? 0.5,
+      area: (json['area'] as num?)?.toDouble() ?? 0.5,
+      weight: (json['weight'] as num?)?.toDouble() ?? 0.5,
+      size: (json['size'] as num?)?.toDouble() ?? 0.5,
+      agitation: (json['agitation'] as num?)?.toDouble() ?? 0.2,
+    );
+  }
 }

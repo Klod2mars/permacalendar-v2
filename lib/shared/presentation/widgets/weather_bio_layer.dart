@@ -134,10 +134,10 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
 
   void _processEngine(double dt, SkyCalibrationConfig calib, WeatherConfig config) {
     // -------------------------------------------------------------------------
-    // 1. RESOLVE PHYSICS FROM AESTHETICS (The "Mapping" Layer)
+    // 1. RESOLVE PHYSICS FROM AESTHETICS (The "Mapping" Layer V3 + V4 Depth)
     // -------------------------------------------------------------------------
     
-    // Derived Physics Values (Rain/Snow agnostic holders)
+    // Derived Physics Values
     double dGravity = 0.5;
     double dSpawnRate = 0.0;
     double dVelocityBase = 0.2;
@@ -147,85 +147,77 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     double dHSpread = 1.5;
     double dWindX = 0.0;
     
+    // Pick the right sculpted material
+    final aesthetic = _isSnow ? config.aesthetics.snow : config.aesthetics.rain;
+    
+    // --- V3 MAPPING: 5 HOLISTIC PILLARS ---
+    
+    // 1. QUANTITY (How much?)
+    // Controlled by 'quantity' (0-1). 
+    // Uses power curve to give fine control at low values.
     if (_isSnow) {
-      final a = config.aesthetics;
-      
-      // NON-LINEAR DENSITY: 10% -> 100 particles, 100% -> 3000 particles
-      // Curve: Power 2.5
-      dSpawnRate = 10.0 + (math.pow(a.snowDensity, 2.5) * 3000.0);
-      
-      // HEAVINESS affects Gravity & Size
-      // Heaviness 0.0 -> Float fast/small, 1.0 -> Fall heavy/large
-      dGravity = 0.01 + (a.snowHeaviness * 0.15); // 0.01 to 0.16
-      dSizeBase = 1.5 + (a.snowHeaviness * 3.0);  // 1.5 to 4.5
-      dSizeVar = dSizeBase * 0.5;
-      
-      // DENSITY affects Spread (More density needs more space visually)
-      dHSpread = 2.0 + (a.snowDensity * 10.0); // 2.0 to 12.0
-      
-      // FALL SPEED (Velocity)
-      // Snow falls slowly generally
-      dVelocityBase = 0.05 + (a.snowHeaviness * 0.2); 
-      dVelocityVar = dVelocityBase * 0.5;
-      
-      // WIND / CHAOS
-      // WindSpeed from real weather or override
-      dWindX = (_windSpeed * 0.002) + (math.sin(_time * 2.0) * 0.005);
-
+       // V4: Uncapped limits. 10 -> 4000
+       dSpawnRate = 10.0 + (math.pow(aesthetic.quantity, 1.5) * 4000.0);
     } else {
-      // RAIN
-      final a = config.aesthetics;
-      
-      // Intensity drives SpawnRate heavily too
-      // Rain needs MUCH MORE particles to be visible at high intensity (motion blur effect)
-      dSpawnRate = 20.0 + (math.pow(a.rainDensity, 2.0) * 1000.0);
-      
-      // Intensity drives Velocity (Speed)
-      dVelocityBase = 0.2 + (a.rainIntensity * 0.8); // 0.2 to 1.0 (Fast!)
-      dVelocityVar = 0.1;
-      
-      dGravity = 0.5; // Constant for rain usually, velocity dominates
-      
-      dSizeBase = 0.8 + (a.rainIntensity * 1.5); // Thicker streaks
-      dHSpread = 1.5 + (a.rainDensity * 5.0); // Spread with density
-      
-      // Slant (Wind/Chaos)
-      dWindX = (_windSpeed * 0.005) + ((a.rainSlant - 0.2) * 0.1);
+       // Rain needs to be dense to be seen
+       // V4: Uncapped. 20 -> 2500
+       dSpawnRate = 20.0 + (math.pow(aesthetic.quantity, 1.5) * 2500.0);
     }
     
-    // Override SpawnRate with Precip Intensity if in "Real" mode and not heavy forcing?
-    // User wants "Sculpting" mode -> He uses the sliders in calibration.
-    // In Real Mode (Calibration OFF), we need to map Real _precipIntensity to Aesthetics.
-    // TODO: That's a later step. For now, we assume Config IS the current state.
-    // BUT: The original code scaled spawn based on _precipIntensity.
-    // We should scale the "Master Density" by the real precip intensity if NOT in calibration mode.
-    // However, the prompt implies replacing the system. Let's stick to using config values, 
-    // assuming the Provider updates the config based on weather? 
-    // NO, the Config is "Tuneables". The Weather Provider gives "Data".
-    // WE MUST MODULATE THE CONFIG VALUES BY THE WEATHER DATA.
+    // 2. AREA (Where?)
+    // Controlled by 'area'. 0.0 = Pinpoint, 1.0 = Wide coverage
+    // We Map 0-1 to 0.1x - 15.0x Radius
+    dHSpread = 0.1 + (aesthetic.area * 14.0); 
+
+    // 3. WEIGHT (Heavy or Light?)
+    // Controlled by 'weight'. Affects Gravity and Velocity.
+    if (_isSnow) {
+      // Light snow floats (0.0), Heavy snow plummets (1.0)
+      dGravity = 0.005 + (aesthetic.weight * 0.15); 
+      dVelocityBase = 0.02 + (aesthetic.weight * 0.5); 
+    } else {
+      // Mist (0.0) -> Driving Rain (1.0)
+      dGravity = 0.1 + (aesthetic.weight * 0.8);
+      dVelocityBase = 0.1 + (aesthetic.weight * 1.5);
+    }
+    dVelocityVar = dVelocityBase * 0.4;
     
+    // 4. SIZE (Scale)
+    // Controlled by 'size'. Flake/Drop size.
+    if (_isSnow) {
+       dSizeBase = 1.0 + (aesthetic.size * 6.0); // Up to 7.0 size
+    } else {
+       dSizeBase = 0.5 + (aesthetic.size * 2.5); // Up to 3.0 thickness
+    }
+    dSizeVar = dSizeBase * 0.5;
+
+    // 5. AGITATION (Chaos)
+    // Controlled by 'agitation'. Wind, Turbulence, Jitter.
+    // Inject some time-based sine wave for "Gusts" if agitation is high.
+    final chaosSignal = math.sin(_time * (1.0 + aesthetic.agitation * 5.0));
+    final localWind = (_windSpeed * 0.005);
+    // Agitation adds random wind + gusting
+    dWindX = localWind + (chaosSignal * aesthetic.agitation * 0.02) + ((_rng.nextDouble()-0.5) * aesthetic.agitation * 0.01);
+    
+    
+    // AUTO-TUNING (If not in calibration mode)
     final calibState = ref.read(weatherCalibrationStateProvider);
     if (!calibState.isCalibrationMode) {
-      // AUTO-TUNING: Map real weather to aesthetic 0..1 values locally
-      // This allows the Engine to run autonomously using the "Presets" defined in config as baselines?
-      // Or simply scale the results.
-      
-      double intensityFactor = (_precipIntensity / 5.0).clamp(0.0, 1.0); // 5mm is heavy
-      
-      // Modulate spawn rate
-      dSpawnRate *= intensityFactor;
-      if (_precipProbability > 0 && dSpawnRate < 10) dSpawnRate = 10; // Min drizzle
+      double realIntensity = _precipIntensity / 5.0; // 5mm is base max
+      if (_precipProbability > 0) {
+         realIntensity = math.max(realIntensity, 0.1); 
+      }
+      realIntensity = realIntensity.clamp(0.0, 1.0);
+      dSpawnRate *= realIntensity;
       if (_precipIntensity <= 0 && _precipProbability < 20) dSpawnRate = 0;
-            
-      // Modulate wind
-      dWindX = _windSpeed * 0.005;
+      dWindX = _windSpeed * 0.002;
     }
 
     // -------------------------------------------------------------------------
-    // 2. SPAWN
+    // 2. SPAWN V4 (With Z-Depth)
     // -------------------------------------------------------------------------
     final toSpawn = (dSpawnRate * dt).toInt();
-    final spawnCount = math.min(toSpawn, 100); // Cap per tick
+    final spawnCount = math.min(toSpawn, 300); // V4: Higher cap per tick
     
     if (spawnCount > 0) {
        final minX = calib.cx - calib.rx * dHSpread;
@@ -235,27 +227,38 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
        for (int i = 0; i < spawnCount; i++) {
          // Randomize Start X
          final sx = minX + _rng.nextDouble() * (maxX - minX);
-         // Randomize Start Y slightly above
-         final sy = startY - (_rng.nextDouble() * 0.5); // Start a bit higher
+         final sy = startY - (_rng.nextDouble() * 0.5); 
          
+         // V4: DEPTH ASSIGNMENT
+         // Bias slightly towards background (0.0) for volume? Or uniform? 
+         // Uniform is fine. 0.0 = Back, 1.0 = Front.
+         final z = _rng.nextDouble();
+         
+         // PARALLAX PHYSICS
+         // Background objects move slower.
+         // Factor: 0.4 (at z0) to 1.0 (at z1)
+         final depthFactor = 0.4 + (0.6 * z);
+
          if (_isSnow) {
            final life = 5.0 + _rng.nextDouble() * 5.0;
            _particles.add(_BioParticle(
              x: sx, y: sy,
+             z: z, // V4
              type: _ParticleType.snow,
-             vx: dWindX + (_rng.nextDouble() - 0.5) * 0.02, // Jitter
-             vy: dVelocityBase + (_rng.nextDouble() * dVelocityVar),
+             vx: (dWindX + (_rng.nextDouble() - 0.5) * 0.02) * depthFactor, 
+             vy: (dVelocityBase + (_rng.nextDouble() * dVelocityVar)) * depthFactor,
              life: life, maxLife: life,
-             size: dSizeBase + (_rng.nextDouble() * dSizeVar),
+             size: (dSizeBase + (_rng.nextDouble() * dSizeVar)) * depthFactor, // Background is smaller
            ));
          } else {
            _particles.add(_BioParticle(
              x: sx, y: sy,
+             z: z, // V4
              type: _ParticleType.rain,
-             vx: dWindX + (_rng.nextDouble() - 0.5) * 0.01,
-             vy: dVelocityBase + (_rng.nextDouble() * dVelocityVar),
+             vx: (dWindX + (_rng.nextDouble() - 0.5) * 0.01) * depthFactor,
+             vy: (dVelocityBase + (_rng.nextDouble() * dVelocityVar)) * depthFactor,
              life: 1.0, maxLife: 1.0,
-             size: dSizeBase + (_rng.nextDouble() * 0.5),
+             size: (dSizeBase + (_rng.nextDouble() * 0.5)) * depthFactor,
            ));
          }
        }
@@ -343,11 +346,12 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
 enum _ParticleType { rain, snow, cloud, mist }
 
 class _BioParticle {
-  double x, y, vx, vy, life, maxLife, size;
+  double x, y, z, vx, vy, life, maxLife, size;
   _ParticleType type;
   _BioParticle(
       {required this.x,
       required this.y,
+      this.z = 0.5, // V4: Depth
       required this.type,
       this.vx = 0,
       this.vy = 0,
@@ -363,6 +367,7 @@ class _BioParticlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (particles.isEmpty) return;
     final w = size.width;
     final h = size.height;
 
@@ -370,9 +375,14 @@ class _BioParticlePainter extends CustomPainter {
       ..color = Colors.blueAccent.withOpacity(0.6)
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
+    
+    // SNOW PAINTS (Cached variants for performance?)
+    // Actually, drawing individually is fine for < 5000 in canvas.
     final paintSnow = Paint()
-      ..color = Colors.white.withOpacity(0.92)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0); // doux pour flocons
+      ..color = Colors.white.withOpacity(0.92);
+      // maskFilter dynamic based on Z? 
+    // We will apply maskFilter dynamically if Z is low (blurred background)
+    
     final paintCloud = Paint()
       ..color = Colors.white.withOpacity(0.2)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 15);
@@ -380,30 +390,53 @@ class _BioParticlePainter extends CustomPainter {
       ..color = Colors.white.withOpacity(0.15)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25);
 
+    // V4: SORT Back-to-Front so transparency layers correctly
+    // Optimized: Only sort if needed? Sort is fast enough.
+    particles.sort((a, b) => a.z.compareTo(b.z));
+
     for (final p in particles) {
       final px = p.x * w;
       final py = p.y * h;
-      // Fade in/out
-      double alpha = 1.0;
-      if (p.life < 0.5) alpha = p.life / 0.5;
-      if (p.maxLife - p.life < 0.5) alpha = (p.maxLife - p.life) / 0.5;
-      alpha = alpha.clamp(0.0, 1.0);
-
+      
+      // Fade in/out logic
+      double lifeAlpha = 1.0;
+      if (p.life < 0.5) lifeAlpha = p.life / 0.5;
+      if (p.maxLife - p.life < 0.5) lifeAlpha = (p.maxLife - p.life) / 0.5;
+      lifeAlpha = lifeAlpha.clamp(0.0, 1.0);
+      
+      // V4: DEPTH VISUALS
+      // Opacity drops with distance (Z=0 is back)
+      // Z=1.0 -> 100% impact. Z=0.0 -> 30% impact.
+      final depthAlpha = 0.3 + (0.7 * p.z);
+      
       if (p.type == _ParticleType.rain) {
-        paintRain.color = paintRain.color.withOpacity(alpha * 0.6);
-        // Stretch rain by velocity
-        canvas.drawLine(
-            Offset(px, py), Offset(px - p.vx * 15, py - p.vy * 15), paintRain);
+         // Rain gets thinner/shorter in back
+         final rainAlpha = (lifeAlpha * depthAlpha * 0.6).clamp(0.0, 1.0);
+         paintRain.color = paintRain.color.withOpacity(rainAlpha);
+         paintRain.strokeWidth = 0.5 + (1.5 * p.z); // Thinner in back
+         
+         // Length depends on Z and Speed
+         final len = 5.0 + (15.0 * p.z) * (p.vy * 5.0); 
+         canvas.drawLine(
+             Offset(px, py), Offset(px - p.vx * len, py - p.vy * len), paintRain);
+             
       } else if (p.type == _ParticleType.snow) {
-        paintSnow.color =
-            Colors.white.withOpacity((alpha * 0.9).clamp(0.0, 1.0));
-        final radius = p.size;
-        canvas.drawCircle(Offset(px, py), radius, paintSnow);
+         final snowAlpha = (lifeAlpha * 0.95 * depthAlpha).clamp(0.0, 1.0);
+         paintSnow.color = Colors.white.withOpacity(snowAlpha);
+         
+         // Defocus background interactively?
+         // This is expensive (changing mask filter). Only do it for very back?
+         // Or just use alpha to simulate distance.
+         // Let's rely on Alpha + Size. Blur is too heavy for loop.
+         
+         final radius = p.size; // Scaled by Z in physics already? Yes.
+         canvas.drawCircle(Offset(px, py), radius, paintSnow);
+         
       } else if (p.type == _ParticleType.cloud) {
-        paintCloud.color = paintCloud.color.withOpacity(alpha * 0.3);
+        paintCloud.color = paintCloud.color.withOpacity(lifeAlpha * 0.3);
         canvas.drawCircle(Offset(px, py), p.size, paintCloud);
       } else if (p.type == _ParticleType.mist) {
-        paintMist.color = paintMist.color.withOpacity(alpha * 0.2);
+        paintMist.color = paintMist.color.withOpacity(lifeAlpha * 0.2);
         canvas.drawCircle(Offset(px, py), p.size, paintMist);
       }
     }

@@ -178,45 +178,59 @@ class _WeatherCalibrationScreenState
     );
   }
 
-  Widget _buildRainAesthetics(WidgetRef ref, AestheticConfig c) {
-    return ExpansionTile(
-      title: const Text('💧 Rain Aesthetics (V2)'),
-      initiallyExpanded: true,
-      children: [
-        _ConfigSlider(
-            label: 'Density (Volume)',
-            value: c.rainDensity,
-            min: 0.0, max: 1.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(rainDensity: v)))),
-        _ConfigSlider(
-            label: 'Intensity (Speed/Impact)',
-            value: c.rainIntensity,
-            min: 0.0, max: 1.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(rainIntensity: v)))),
-        _ConfigSlider(
-            label: 'Slant (Wind Chaos)',
-            value: c.rainSlant,
-            min: 0.0, max: 1.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(rainSlant: v)))),
-      ],
+  Widget _buildRainAesthetics(WidgetRef ref, AestheticConfig config) {
+    return _buildAestheticPanel(
+      title: '💧 Rain Aesthetics (V3)',
+      params: config.rain,
+      onUpdate: (newParams) {
+        _update(ref, (cfg) => cfg.copyWith(aesthetics: config.copyWith(rain: newParams)));
+      },
     );
   }
 
-  Widget _buildSnowAesthetics(WidgetRef ref, AestheticConfig c) {
+  Widget _buildSnowAesthetics(WidgetRef ref, AestheticConfig config) {
+    return _buildAestheticPanel(
+        title: '❄️ Snow Aesthetics (V3)',
+        params: config.snow,
+        onUpdate: (newParams) {
+          _update(ref, (cfg) => cfg.copyWith(aesthetics: config.copyWith(snow: newParams)));
+        });
+  }
+
+  Widget _buildAestheticPanel({
+    required String title,
+    required AestheticParams params,
+    required ValueChanged<AestheticParams> onUpdate,
+  }) {
     return ExpansionTile(
-      title: const Text('❄️ Snow Aesthetics (V2)'),
+      title: Text(title),
       initiallyExpanded: true,
       children: [
         _ConfigSlider(
-            label: 'Density (Blizzard Factor)',
-            value: c.snowDensity,
+            label: 'Quantity (Density)',
+            value: params.quantity,
             min: 0.0, max: 1.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(snowDensity: v)))),
+            onChanged: (v) => onUpdate(params.copyWith(quantity: v))),
         _ConfigSlider(
-            label: 'Heaviness (Gravity/Size)',
-            value: c.snowHeaviness,
+            label: 'Area (Spread)',
+            value: params.area,
             min: 0.0, max: 1.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(snowHeaviness: v)))),
+            onChanged: (v) => onUpdate(params.copyWith(area: v))),
+        _ConfigSlider(
+            label: 'Weight (Grav/Speed)',
+            value: params.weight,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => onUpdate(params.copyWith(weight: v))),
+        _ConfigSlider(
+            label: 'Size (Scale)',
+            value: params.size,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => onUpdate(params.copyWith(size: v))),
+        _ConfigSlider(
+            label: 'Agitation (Chaos/Wind)',
+            value: params.agitation,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => onUpdate(params.copyWith(agitation: v))),
       ],
     );
   }
