@@ -8,6 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
 
 // 1. Header Widget
+import '../screens/weather_calibration_screen.dart';
+
 class WeatherHeader extends StatelessWidget {
   final String commune;
   final double? temp;
@@ -29,12 +31,25 @@ class WeatherHeader extends StatelessWidget {
 
     return Column(
       children: [
-        Text(
-          commune.toUpperCase(),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              commune.toUpperCase(),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+            ),
+             // SETTINGS BUTTON (Internal)
+             IconButton(
+              icon: const Icon(Icons.settings, size: 20, color: Colors.black54),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const WeatherCalibrationScreen()));
+              },
+            ),
+          ],
         ),
         const SizedBox(height: 4),
         Text(

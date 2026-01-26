@@ -9,6 +9,9 @@ import '../../../features/climate/domain/models/weather_view_data.dart';
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 import '../../../features/climate/domain/utils/weather_interpolation.dart';
 import '../../../features/climate/presentation/providers/weather_time_provider.dart';
+// Config & Calibration imports
+import '../../../features/climate/presentation/providers/weather_config_provider.dart';
+import '../../../features/climate/domain/models/weather_config.dart';
 
 /// Layer Global pour la simulation de particules (Pluie, Neige, Nuages, Brume).
 /// Respecte la calibration du ciel et inclut physique de collision avec l'ovoïde.
@@ -37,14 +40,9 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
   // DEBUG / TEMP FLAGS - désactivé par défaut pour éviter spam terminal
   // Mettre true temporairement lors d'un diagnostic local seulement.
   static const bool kWeatherDebug = false;
-  static const double kPrecipSpawnThreshold = 0.02; // mm, seuil réduit pour tests
-  static const double kPrecipProbabilityThreshold = 30.0; // % - si >=, on force spawn
 
-  // === Snow tuning constants ===
-  static const double _kSnowBaseMultiplier = 18.0;
-  static const double _kSnowHorizontalSpread = 6.0;
-  static const double _kSnowStartYSpread = 0.25;
-  static const int _kSnowSpawnCap = 1800; // Increased to allow high density with long life
+  // Constants removed in favor of WeatherConfig
+
 
   // NOTE: variable additionnelle pour stocker la probabilité de précipitation
   double _precipProbability = 0.0; // 0..100
@@ -72,17 +70,44 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     _time = elapsed.inMicroseconds / 1000000.0;
 
     final calib = ref.read(skyCalibrationProvider);
+    final config = ref.read(weatherConfigProvider);
+    final calibState = ref.read(weatherCalibrationStateProvider);
 
     if (dt > 0.0) {
-      _updateWeatherState(dt);
-      _spawnParticles(dt, calib);
-      _updateParticles(dt, calib); // Physics collision
+      _updateWeatherState(dt, calibState);
+      _spawnParticles(dt, calib, config);
+      _updateParticles(dt, calib, config); // Physics collision
     }
 
     setState(() {});
   }
 
-  void _updateWeatherState(double dt) {
+  void _updateWeatherState(double dt, WeatherCalibrationState calibState) {
+    // 1. If Calibration Mode is ON, force values
+    if (calibState.isCalibrationMode) {
+      if (calibState.forcedPrecipMm != null) {
+        _precipIntensity = calibState.forcedPrecipMm!;
+        // If we force intensity, we assume prob is 100% or irrelevant
+        _precipProbability = 100.0; 
+      }
+      if (calibState.forcedWindSpeed != null) {
+        _windSpeed = calibState.forcedWindSpeed!;
+      }
+      if (calibState.forcedCloudCover != null) {
+        _cloudCover = calibState.forcedCloudCover!;
+      }
+      
+      // Determine Snow vs Rain based on Forced Code or just use current if not forced
+      if (calibState.forcedWeatherCode != null) {
+        final code = calibState.forcedWeatherCode!;
+        _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
+      }
+      // If nothing forced, we might keep previous values or read from provider?
+      // Ideally we read from provider first, then overwrite.
+      // So let's read real weather first below, then overwrite again.
+    }
+
+    // 2. Read Real Weather (Always do this to have a fallback base)
     final weatherAsync = ref.read(currentWeatherProvider);
     final timeOffset = ref.read(weatherTimeOffsetProvider);
 
@@ -98,6 +123,21 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
         _updateParamsFromPoint(interpolated);
       }
     });
+
+    // 3. Re-apply overrides if needed (because async update might overwrite)
+    if (calibState.isCalibrationMode) {
+       if (calibState.forcedPrecipMm != null) _precipIntensity = calibState.forcedPrecipMm!;
+       if (calibState.forcedWindSpeed != null) _windSpeed = calibState.forcedWindSpeed!;
+       if (calibState.forcedCloudCover != null) _cloudCover = calibState.forcedCloudCover!;
+       if (calibState.forcedWeatherCode != null) {
+          final code = calibState.forcedWeatherCode!;
+          _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
+       }
+       // Force probability high if we are forcing precip
+       if (calibState.forcedPrecipMm != null && calibState.forcedPrecipMm! > 0) {
+         _precipProbability = 100.0;
+       }
+    }
   }
 
   void _updateParamsFromPoint(HourlyWeatherPoint p) {
@@ -112,100 +152,111 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     final code = p.weatherCode;
     // Logique Neige/Pluie
     _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
-
   }
 
-  void _spawnParticles(double dt, SkyCalibrationConfig calib) {
+  void _spawnParticles(double dt, SkyCalibrationConfig calib, WeatherConfig config) {
     // 1. Precipitations
-    // On déclenche si l'intensité (mm) dépasse un seuil de test, OU si la probabilité est importante.
-    if (_precipIntensity > kPrecipSpawnThreshold ||
-        _precipProbability >= kPrecipProbabilityThreshold) {
-      // Base spawnRate from intensity (same base idea as before)
-      double spawnRate = _precipIntensity * 50.0;
-
+    
+    // Check config thresholds
+    if (_precipIntensity > config.general.precipThresholdMm ||
+        _precipProbability >= config.general.precipThresholdProb) {
+      
+      // Base spawnRate derived from intensity
+      // Rain: 50 * intensity
+      // Snow: Configurable multiplier
+      
+      double spawnRate = 0.0;
+      
       if (_isSnow) {
-        // use more reasonable base multiplier and apply density preset
-        final preset = _snowPresetFrom(_precipIntensity, _precipProbability);
-        spawnRate *= _kSnowBaseMultiplier * preset.multiplier;
+        // Use snow specific base multiplier from config
+         spawnRate = _precipIntensity * config.snow.baseMultiplier;
+      } else {
+         spawnRate = _precipIntensity * config.rain.spawnRateBase;
       }
 
-      // Fallback when intensity low but probability high
-      if (spawnRate < 1.0 && _precipProbability >= kPrecipProbabilityThreshold) {
+      // Fallback if probability is high but intensity low (drizzle/mist)
+      if (spawnRate < 1.0 && _precipProbability >= config.general.precipThresholdProb) {
         spawnRate = (_precipProbability / 100.0) * 6.0;
       }
 
       final calculated = (spawnRate * dt).toInt();
-      final toSpawn = math.max(1, math.min(calculated, _kSnowSpawnCap));
+      
+      // Apply Caps
+      final cap = _isSnow ? config.snow.spawnCap : 3000; // Rain cap default high
+      final toSpawn = math.max(1, math.min(calculated, cap));
 
       if (kWeatherDebug) {
         debugPrint(
-            'SPAWN -> spawnRate=${spawnRate.toStringAsFixed(2)} isSnow=$_isSnow toSpawn=$toSpawn precip=${_precipIntensity} prob=${_precipProbability}');
+            'SPAWN -> spawnRate=${spawnRate.toStringAsFixed(2)} isSnow=$_isSnow toSpawn=$toSpawn precip=${_precipIntensity}');
       }
 
-      // Spawn zone: much larger than the ovoïde to avoid tube/canon
-      final minX = calib.cx - calib.rx * _kSnowHorizontalSpread;
-      final maxX = calib.cx + calib.rx * _kSnowHorizontalSpread;
+      // Spawn zone
+      // Snow can have wider spread
+      final hSpread = _isSnow ? config.snow.horizontalSpread : config.rain.horizontalSpread;
+      final startYSpread = _isSnow ? config.snow.startYSpread : 0.0;
+
+      final minX = calib.cx - calib.rx * hSpread;
+      final maxX = calib.cx + calib.rx * hSpread;
       final baseStartY = calib.cy - calib.ry;
 
       for (int i = 0; i < toSpawn; i++) {
         final startX = minX + _rng.nextDouble() * (maxX - minX);
-        // disperse vertical starting position slightly above the top of the oval
-        final startY = baseStartY - (_rng.nextDouble() * _kSnowStartYSpread);
+        final startY = baseStartY - (_rng.nextDouble() * startYSpread);
 
         if (_isSnow) {
-          final preset = _snowPresetFrom(_precipIntensity, _precipProbability);
-          final size = preset.sizeMin +
-              _rng.nextDouble() * (preset.sizeMax - preset.sizeMin);
+          final size = config.snow.fallSpeedBase + // Using sizeBase logic mismatch in original code, fixing:
+                       config.snow.sizeBase + // Actually using sizeBase
+              _rng.nextDouble() * config.snow.sizeVariance; // Use variance from config
           
-          // Fix: Snow falls slowly (0.06-0.10/sec), so it needs ~10-15s to cross the screen/ovoid.
-          // Previously life=1.0 caused them to fade out halfway.
-          final lifeTime = 10.0 + _rng.nextDouble() * 4.0;
+          // Life logic
+          final lifeTime = 10.0 + _rng.nextDouble() * 4.0; 
 
           _particles.add(_BioParticle(
             x: startX,
             y: startY,
             type: _ParticleType.snow,
-            vx: _windSpeed * 0.005 + (_rng.nextDouble() - 0.5) * 0.02, // drift
-            vy: 0.06 + _rng.nextDouble() * 0.04, // slower fall for snow
+            vx: _windSpeed * 0.005 + (_rng.nextDouble() - 0.5) * 0.02, 
+            vy: config.snow.fallSpeedBase + _rng.nextDouble() * config.snow.fallSpeedVariance,
             life: lifeTime,
             maxLife: lifeTime,
             size: size,
           ));
         } else {
-          // rain behavior unchanged but we keep similar distribution area
           _particles.add(_BioParticle(
             x: startX,
             y: startY,
             type: _ParticleType.rain,
-            vx: _windSpeed * 0.005,
-            vy: (0.2 + _rng.nextDouble() * 0.1),
+            vx: _windSpeed * config.general.windFactor, // Use generalized wind factor? Or keep hardcoded 0.005?
+            // Let's assume 0.005 is part of the 'velocityBase' or internal physics, keeping it simple for now or using rain config
+             // Actually, Rain Config has velocityBase (0.2). Rain Vy = 0.2 + variance.
+            vy: (config.rain.velocityBase + _rng.nextDouble() * config.rain.velocityVariance),
             life: 1.0,
-            size: _rng.nextDouble() * 2 + 1,
+            size: config.rain.sizeBase + _rng.nextDouble() * config.rain.sizeVariance,
           ));
         }
       }
     }
-    // Nuages (basé sur cloudCover)
+    // Nuages
     if (_cloudCover > 30) {
       final currentClouds =
           _particles.where((p) => p.type == _ParticleType.cloud).length;
-      if (currentClouds < 4 && _rng.nextDouble() < 0.02) {
+      if (currentClouds < config.cloud.maxClouds && _rng.nextDouble() < config.cloud.spawnChance) {
         _particles.add(_BioParticle(
             x: calib.cx + (_rng.nextDouble() - 0.5) * calib.rx * 1.5,
             y: calib.cy - calib.ry + _rng.nextDouble() * calib.ry * 0.5,
             type: _ParticleType.cloud,
-            vx: (_rng.nextDouble() - 0.5) * 0.01,
+            vx: (_rng.nextDouble() - 0.5) * config.cloud.speedVariance,
             vy: 0,
             life: 1.0,
             maxLife: 1.0,
-            size: 40 + _rng.nextDouble() * 30));
+            size: config.cloud.sizeBase + _rng.nextDouble() * config.cloud.sizeVariance));
       }
     }
   }
 
-  void _updateParticles(double dt, SkyCalibrationConfig calib) {
+  void _updateParticles(double dt, SkyCalibrationConfig calib, WeatherConfig config) {
     // Gravité
-    final gravity = _isSnow ? 0.05 : 0.5;
+    final gravity = _isSnow ? config.snow.gravity : config.rain.gravity;
 
     for (int i = _particles.length - 1; i >= 0; i--) {
       final p = _particles[i];
@@ -218,39 +269,37 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
         p.y += p.vy * dt;
 
         // --- COLLISION OVÏDE RÉELLE ---
-        // 1. Transformer position particule dans repère local de l'ellipse
-        // Centre ellipse (cx, cy)
-        final dx = p.x - calib.cx;
-        final dy = p.y - calib.cy;
-
-        // Rotation inverse (-rotation)
-        final angle = -calib.rotation;
-        final localX = dx * math.cos(angle) - dy * math.sin(angle);
-        final localY = dx * math.sin(angle) + dy * math.cos(angle);
-
-        // 2. Équation ellipse: (x/rx)^2 + (y/ry)^2
-        // Si > 1, on est dehors
-        final rx = calib.rx;
-        final ry = calib.ry;
-        final eq =
-            (localX * localX) / (rx * rx) + (localY * localY) / (ry * ry);
-
-        if (eq >= 1.0) {
-          // COLLISION ADOUCIE :
-          // On pousse la particule le long d'une tangente faible et on réduit sa vie progressivement
-          // Calcul tangent approximatif dans le repère local
-          final tangentX = -localY / ry;
-          final tangentY = localX / rx;
-
-          // Appliquer petite poussée tangentielle pour "glisser" le long de la bordure
-          p.vx += tangentX * 0.02;
-          p.vy += tangentY * 0.02 * 0.1;
-
-          // Réduire progressivement la vie pour éviter suppression instantanée
-          p.life -= 0.15;
-
-          // Si la particule est très loin en-dehors (bord net), alors supprimer
-          if (eq > 1.05) p.life = -1;
+        if (config.general.enableCollision) {
+          // 1. Transformer position particule dans repère local de l'ellipse
+          final dx = p.x - calib.cx;
+          final dy = p.y - calib.cy;
+  
+          // Rotation inverse (-rotation)
+          final angle = -calib.rotation;
+          final localX = dx * math.cos(angle) - dy * math.sin(angle);
+          final localY = dx * math.sin(angle) + dy * math.cos(angle);
+  
+          // 2. Équation ellipse: (x/rx)^2 + (y/ry)^2
+          // Si > 1, on est dehors
+          final rx = calib.rx;
+          final ry = calib.ry;
+          final eq =
+              (localX * localX) / (rx * rx) + (localY * localY) / (ry * ry);
+  
+          if (eq >= 1.0) {
+            // COLLISION ADOUCIE
+            final tangentX = -localY / ry;
+            final tangentY = localX / rx;
+  
+            // Tuning collision damping via simple constant or new config param
+            // Keeping hardcoded 0.02 for now as it's physics-y, or use general damping fallback
+            p.vx += tangentX * 0.02;
+            p.vy += tangentY * 0.02 * 0.1;
+  
+            p.life -= 0.15; // Hardcoded fade on collision
+  
+            if (eq > 1.05) p.life = -1;
+          }
         }
       } else if (p.type == _ParticleType.cloud) {
         p.x += p.vx * dt;
@@ -378,24 +427,5 @@ class _OrganicSkyClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant _OrganicSkyClipper old) => old.config != config;
 }
 
-// Presets for density (light / normal / heavy)
-class _SnowPreset {
-  final double multiplier; // multiplies spawnRate
-  final double sizeMin;
-  final double sizeMax;
-  final double blurRadius;
-  const _SnowPreset(
-      this.multiplier, this.sizeMin, this.sizeMax, this.blurRadius);
-}
+// _SnowPreset removed as it is superseded by WeatherConfig
 
-// Map intensity/probability to a snow preset
-_SnowPreset _snowPresetFrom(double intensityMm, double probabilityPct) {
-  // intensity thresholds are heuristics — tune to taste
-  if (intensityMm >= 1.5 || probabilityPct >= 70) {
-    return const _SnowPreset(2.5, 1.8, 4.0, 2.8); // heavy (multiplier 1.8 -> 2.5)
-  } else if (intensityMm >= 0.5 || probabilityPct >= 40) {
-    return const _SnowPreset(1.5, 1.2, 3.0, 2.0); // normal (multiplier 1.2 -> 1.5)
-  } else {
-    return const _SnowPreset(1.0, 0.8, 2.2, 1.4); // light (multiplier 0.75 -> 1.0)
-  }
-}

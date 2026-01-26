@@ -11,6 +11,8 @@ import 'package:permacalendar/core/models/daily_weather_point.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 
+import 'weather_calibration_screen.dart';
+
 class WeatherDetailScreen extends ConsumerWidget {
   const WeatherDetailScreen({super.key});
 
@@ -127,14 +129,28 @@ class WeatherDetailScreen extends ConsumerWidget {
                           ),
 
                         Column(children: [
-                          Text(data.locationLabel.toUpperCase(),
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    Shadow(blurRadius: 4, color: Colors.black26)
-                                  ])),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(data.locationLabel.toUpperCase(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(blurRadius: 4, color: Colors.black26)
+                                      ])),
+                              IconButton(
+                                icon: const Icon(Icons.settings,
+                                    size: 20, color: Colors.white70),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) =>
+                                          const WeatherCalibrationScreen()));
+                                },
+                              ),
+                            ],
+                          ),
                           Text(
                               '${current.currentTemperatureC?.toStringAsFixed(1)}°',
                               style: const TextStyle(
