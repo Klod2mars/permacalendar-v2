@@ -6,12 +6,14 @@ class WeatherConfig {
   final SnowConfig snow;
   final CloudConfig cloud;
   final GeneralConfig general;
+  final AestheticConfig aesthetics;
 
   const WeatherConfig({
     required this.rain,
     required this.snow,
     required this.cloud,
     required this.general,
+    required this.aesthetics,
   });
 
   /// Default configuration matching original hardcoded values
@@ -21,6 +23,7 @@ class WeatherConfig {
       snow: SnowConfig(),
       cloud: CloudConfig(),
       general: GeneralConfig(),
+      aesthetics: AestheticConfig(),
     );
   }
 
@@ -29,12 +32,14 @@ class WeatherConfig {
     SnowConfig? snow,
     CloudConfig? cloud,
     GeneralConfig? general,
+    AestheticConfig? aesthetics,
   }) {
     return WeatherConfig(
       rain: rain ?? this.rain,
       snow: snow ?? this.snow,
       cloud: cloud ?? this.cloud,
       general: general ?? this.general,
+      aesthetics: aesthetics ?? this.aesthetics,
     );
   }
 
@@ -43,6 +48,7 @@ class WeatherConfig {
         'snow': snow.toJson(),
         'cloud': cloud.toJson(),
         'general': general.toJson(),
+        'aesthetics': aesthetics.toJson(),
       };
 
   String toPrettyJson() => const JsonEncoder.withIndent('  ').convert(toJson());
@@ -234,5 +240,50 @@ class GeneralConfig {
         'precipThresholdProb': precipThresholdProb,
         'enableCollision': enableCollision,
         'windFactor': windFactor,
+      };
+}
+
+/// New V2 Engine: Aesthetic Parameters
+/// These values (0.0 to 1.0) drive the physics engine non-linearly.
+class AestheticConfig {
+  // Rain
+  final double rainDensity;    // 0.0-1.0 (Quantity + Spread)
+  final double rainSlant;      // 0.0-1.0 (Wind/Chaos effect)
+  final double rainIntensity;  // 0.0-1.0 (Speed/Impact)
+
+  // Snow
+  final double snowDensity;    // 0.0-1.0 (Blizzard factor)
+  final double snowHeaviness;  // 0.0-1.0 (Flake size + Gravity)
+  
+  const AestheticConfig({
+    this.rainDensity = 0.5,
+    this.rainSlant = 0.2,
+    this.rainIntensity = 0.5,
+    this.snowDensity = 0.3,
+    this.snowHeaviness = 0.2,
+  });
+
+  AestheticConfig copyWith({
+    double? rainDensity,
+    double? rainSlant,
+    double? rainIntensity,
+    double? snowDensity,
+    double? snowHeaviness,
+  }) {
+    return AestheticConfig(
+      rainDensity: rainDensity ?? this.rainDensity,
+      rainSlant: rainSlant ?? this.rainSlant,
+      rainIntensity: rainIntensity ?? this.rainIntensity,
+      snowDensity: snowDensity ?? this.snowDensity,
+      snowHeaviness: snowHeaviness ?? this.snowHeaviness,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'rainDensity': rainDensity,
+        'rainSlant': rainSlant,
+        'rainIntensity': rainIntensity,
+        'snowDensity': snowDensity,
+        'snowHeaviness': snowHeaviness,
       };
 }

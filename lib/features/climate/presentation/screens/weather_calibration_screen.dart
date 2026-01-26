@@ -84,9 +84,14 @@ class _WeatherCalibrationScreenState
               children: [
                 _buildScenarioSelector(ref, calibState),
                 const Divider(),
-                _buildRainSection(ref, config.rain),
-                _buildSnowSection(ref, config.snow),
-                _buildCloudSection(ref, config.cloud),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("🎨 CREATIVE MODE V2", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
+                ),
+                _buildRainAesthetics(ref, config.aesthetics),
+                _buildSnowAesthetics(ref, config.aesthetics),
+                const Divider(),
+                _buildCloudSection(ref, config.cloud), // Keep clouds technical for now? Or hide? Keeping for now.
                 _buildGeneralSection(ref, config.general),
                 const SizedBox(height: 100),
               ],
@@ -173,111 +178,61 @@ class _WeatherCalibrationScreenState
     );
   }
 
-  Widget _buildRainSection(WidgetRef ref, RainConfig c) {
+  Widget _buildRainAesthetics(WidgetRef ref, AestheticConfig c) {
     return ExpansionTile(
-      title: const Text('💧 Rain Config'),
+      title: const Text('💧 Rain Aesthetics (V2)'),
       initiallyExpanded: true,
       children: [
         _ConfigSlider(
-            label: 'Gravity',
-            value: c.gravity,
-            min: 0.1,
-            max: 2.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(gravity: v)))),
+            label: 'Density (Volume)',
+            value: c.rainDensity,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(rainDensity: v)))),
         _ConfigSlider(
-            label: 'Velocity Base',
-            value: c.velocityBase,
-             min: 0.1,
-            max: 5.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(velocityBase: v)))),
-         _ConfigSlider(
-            label: 'Velocity Var',
-            value: c.velocityVariance,
-            min: 0.0,
-            max: 2.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(velocityVariance: v)))),
-         _ConfigSlider(
-            label: 'Size Base',
-            value: c.sizeBase,
-            min: 0.5,
-            max: 5.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(sizeBase: v)))),
-         _ConfigSlider(
-            label: 'Size Var',
-            value: c.sizeVariance,
-            min: 0.0,
-            max: 5.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(sizeVariance: v)))),
-         _ConfigSlider(
-            label: 'Spawn Rate Base',
-            value: c.spawnRateBase,
-            min: 10.0,
-            max: 200.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(spawnRateBase: v)))),
-         _ConfigSlider(
-            label: 'Horizontal Spread',
-            value: c.horizontalSpread,
-            min: 1.0,
-            max: 10.0, // Allow up to 10x radius
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(rain: c.copyWith(horizontalSpread: v)))),
+            label: 'Intensity (Speed/Impact)',
+            value: c.rainIntensity,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(rainIntensity: v)))),
+        _ConfigSlider(
+            label: 'Slant (Wind Chaos)',
+            value: c.rainSlant,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(rainSlant: v)))),
       ],
     );
   }
 
-   Widget _buildSnowSection(WidgetRef ref, SnowConfig c) {
+  Widget _buildSnowAesthetics(WidgetRef ref, AestheticConfig c) {
     return ExpansionTile(
-      title: const Text('❄️ Snow Config'),
+      title: const Text('❄️ Snow Aesthetics (V2)'),
+      initiallyExpanded: true,
       children: [
         _ConfigSlider(
-            label: 'Gravity',
-            value: c.gravity,
-            min: 0.01,
-            max: 0.5,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(snow: c.copyWith(gravity: v)))),
+            label: 'Density (Blizzard Factor)',
+            value: c.snowDensity,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(snowDensity: v)))),
         _ConfigSlider(
-            label: 'Fall Speed Base',
-            value: c.fallSpeedBase,
-            min: 0.01,
-            max: 1.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(snow: c.copyWith(fallSpeedBase: v)))),
-           _ConfigSlider(
-            label: 'Fall Speed Var',
-            value: c.fallSpeedVariance,
-            min: 0.0,
-            max: 0.5,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(snow: c.copyWith(fallSpeedVariance: v)))),
-        _ConfigSlider(
-            label: 'Base Multiplier',
-            value: c.baseMultiplier,
-            min: 1.0,
-            max: 50.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(snow: c.copyWith(baseMultiplier: v)))),
-         _ConfigSlider(
-            label: 'Horizontal Spread',
-            value: c.horizontalSpread,
-            min: 1.0,
-            max: 10.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(snow: c.copyWith(horizontalSpread: v)))),
+            label: 'Heaviness (Gravity/Size)',
+            value: c.snowHeaviness,
+            min: 0.0, max: 1.0,
+            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(aesthetics: c.copyWith(snowHeaviness: v)))),
       ],
     );
   }
-
+ 
+  // Legacy or Technical Sections below
+  
   Widget _buildCloudSection(WidgetRef ref, CloudConfig c) {
     return ExpansionTile(
-      title: const Text('☁️ Cloud Config'),
+      title: const Text('☁️ Cloud (Technical)'),
       children: [
         _ConfigSlider(
             label: 'Spawn Chance',
             value: c.spawnChance,
             min: 0.0,
-            max: 0.2, // 20% per tick is huge
+            max: 0.2, 
             onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(cloud: c.copyWith(spawnChance: v)))),
-        _ConfigSlider(
-            label: 'Size Base',
-            value: c.sizeBase,
-            min: 10.0,
-            max: 100.0,
-            onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(cloud: c.copyWith(sizeBase: v)))),
          _ConfigSlider(
             label: 'Max Clouds',
             value: c.maxClouds.toDouble(),
@@ -296,8 +251,6 @@ class _WeatherCalibrationScreenState
          SwitchListTile(title: const Text('Enable Collision'), value: c.enableCollision, onChanged: (v) {
             _update(ref, (cfg) => cfg.copyWith(general: c.copyWith(enableCollision: v)));
          }),
-         _ConfigSlider(label: 'Precip Threshold (mm)', value: c.precipThresholdMm, min: 0.0, max: 1.0,
-         onChanged: (v) => _update(ref, (cfg) => cfg.copyWith(general: c.copyWith(precipThresholdMm: v))))
        ],
     );
   }
