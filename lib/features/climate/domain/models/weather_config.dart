@@ -318,6 +318,7 @@ class AestheticParams {
   // V4.1 Structural Controls
   final double clumping;    // 0.0-1.0 (Clusters vs Uniform)
   final double granularity; // 0.0-1.0 (Bursts vs Steady)
+  final double lightning;   // 0.0-1.0 (Flash Intensity/Frequency)
 
   const AestheticParams({
     this.quantity = 0.5,
@@ -327,6 +328,7 @@ class AestheticParams {
     this.agitation = 0.2,
     this.clumping = 0.0,
     this.granularity = 0.0,
+    this.lightning = 0.0,
   });
 
   const AestheticParams.initialRain()
@@ -336,7 +338,8 @@ class AestheticParams {
         size = 0.4,
         agitation = 0.2,
         clumping = 0.0,
-        granularity = 0.0;
+        granularity = 0.0,
+        lightning = 0.0;
 
   const AestheticParams.initialSnow()
       : quantity = 0.3,
@@ -345,7 +348,8 @@ class AestheticParams {
         size = 0.7,
         agitation = 0.1,
         clumping = 0.2, // Default some clumping for snow
-        granularity = 0.3;
+        granularity = 0.3,
+        lightning = 0.0;
 
   AestheticParams copyWith({
     double? quantity,
@@ -355,6 +359,7 @@ class AestheticParams {
     double? agitation,
     double? clumping,
     double? granularity,
+    double? lightning,
   }) {
     return AestheticParams(
       quantity: quantity ?? this.quantity,
@@ -364,6 +369,7 @@ class AestheticParams {
       agitation: agitation ?? this.agitation,
       clumping: clumping ?? this.clumping,
       granularity: granularity ?? this.granularity,
+      lightning: lightning ?? this.lightning,
     );
   }
 
@@ -375,6 +381,7 @@ class AestheticParams {
         'agitation': agitation,
         'clumping': clumping,
         'granularity': granularity,
+        'lightning': lightning,
       };
 
   factory AestheticParams.fromJson(Map<String, dynamic> json) {
@@ -386,45 +393,54 @@ class AestheticParams {
       agitation: (json['agitation'] as num?)?.toDouble() ?? 0.2,
       clumping: (json['clumping'] as num?)?.toDouble() ?? 0.0,
       granularity: (json['granularity'] as num?)?.toDouble() ?? 0.0,
+      lightning: (json['lightning'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }
 
 /// PRESETS FOR USER VALIDATION (V5)
 class WeatherPresets {
-  // 1. Light Rain (Gentle Drizzle)
+  // 1. Light Rain (Readable Small Rain)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
+  // Validated by Roman as the perfect "Small Rain" (Visible but gentle).
+  // Shifted up: ~Old Heavy Rain (0.4) minus 10% -> 0.35
   static const AestheticParams lightRain = AestheticParams(
-    quantity: 0.2, // Sparse
+    quantity: 0.35, 
     area: 1.0, 
-    weight: 0.05, // Very slow (floaty)
-    size: 0.4, 
+    weight: 0.15, // Slow but falling
+    size: 0.5, // Visible drops
     agitation: 0.1, 
     clumping: 0.0,
     granularity: 0.0,
+    lightning: 0.0,
   );
 
-  // 2. Heavy Rain ("The Beautiful Rain" - EXACT PORT FROM SNOW PRESET)
-  // User confirmed "Snow" button visual is the target.
-  // Snow preset: Q:0.4, W:0.1, Ag:0.1
+  // 2. Heavy Rain (Ideal Real Rain)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
+  // Validated by Roman as the perfect "Real Rain".
+  // Identical to V5 Storm (0.6).
   static const AestheticParams heavyRain = AestheticParams(
-    quantity: 0.4, // Matches Snow
+    quantity: 0.6, 
     area: 1.0,
-    weight: 0.1, // Matches Snow (now supported by relaxed physics)
-    size: 0.7, // Matches Snow size
-    agitation: 0.1, // Calm like Snow
+    weight: 0.25, // Good falling speed
+    size: 0.7, 
+    agitation: 0.4, // Windy
     clumping: 0.0,
-    granularity: 0.0,
+    granularity: 0.2, 
+    lightning: 0.0,
   );
 
-  // 3. Storm (Intense)
+  // 3. Storm (Base for Lightning)
+  // Based on Heavy Rain (0.6) + slight boost
   static const AestheticParams storm = AestheticParams(
-    quantity: 0.9, 
+    quantity: 0.65, 
     area: 1.0,
-    weight: 0.5, // Faster driving rain
+    weight: 0.25, // Same speed as heavy rain
     size: 0.7,
-    agitation: 0.6, // Chaotic
+    agitation: 0.6, // More turbulent
     clumping: 0.0,
     granularity: 0.4, 
+    lightning: 0.8, // Active Lightning
   );
 
   // 4. Snow (Calm)
@@ -436,6 +452,7 @@ class WeatherPresets {
     agitation: 0.1,
     clumping: 0.3, // Nice clusters
     granularity: 0.0,
+    lightning: 0.0,
   );
   
   // 5. Blizzard (Stormy Snow)
@@ -447,5 +464,6 @@ class WeatherPresets {
     agitation: 0.6,
     clumping: 0.5, 
     granularity: 0.5,
+    lightning: 0.3, // Frequent thundersnow? (Reduced for safety) -> Let's say 0.0 for now unless requested
   );
 }

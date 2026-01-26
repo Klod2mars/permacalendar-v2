@@ -30,6 +30,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
   final List<_BioParticle> _particles = [];
   final math.Random _rng = math.Random();
   double _time = 0.0;
+  
+  // Lightning State
+  double _lightningFlashOpacity = 0.0;
+  double _timeSinceLastFlash = 0.0;
+  double _secondaryFlashCountdown = -1.0; // < 0 means inactive
 
   // Weather Params Interpolated
   double _windSpeed = 0.0;
@@ -232,6 +237,47 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     dWindX = localWind + (chaosSignal * aesthetic.agitation * 0.02) + ((_rng.nextDouble()-0.5) * aesthetic.agitation * 0.01);
     
     // -------------------------------------------------------------------------
+    // V5: LIGHTNING (Additive)
+    // -------------------------------------------------------------------------
+    _timeSinceLastFlash += dt;
+    if (aesthetic.lightning > 0) {
+       // Cooldown of 2 seconds minimum
+       // Probability scales with lightning parameter.
+       // 0.8 => Frequent (every ~3-8 sec?)
+       if (_timeSinceLastFlash > 2.0) {
+          final chance = aesthetic.lightning * 0.01 * dt * 60; // Approximate per frame
+          if (_rng.nextDouble() < chance) {
+             _triggerFlash(intensity: 0.6 + (_rng.nextDouble() * 0.4));
+             _timeSinceLastFlash = 0.0;
+             
+             // DOUBLE IMPACT LOGIC (User Request)
+             // 35% chance to trigger a secondary flash 50-150ms later
+             if (_rng.nextDouble() < 0.35) {
+                _secondaryFlashCountdown = 0.05 + (_rng.nextDouble() * 0.10);
+             } else {
+                _secondaryFlashCountdown = -1.0;
+             }
+          }
+       }
+    }
+    
+    // Handle Secondary Flash
+    if (_secondaryFlashCountdown > 0) {
+       _secondaryFlashCountdown -= dt;
+       if (_secondaryFlashCountdown <= 0) {
+          // Trigger the echo
+          _triggerFlash(intensity: 0.4 + (_rng.nextDouble() * 0.4)); // Slightly weaker or random
+          _secondaryFlashCountdown = -1.0; 
+       }
+    }
+    
+    // Decay Flash
+    if (_lightningFlashOpacity > 0) {
+       _lightningFlashOpacity -= dt * 5.0; // Quick fade out (0.2s)
+       if (_lightningFlashOpacity < 0) _lightningFlashOpacity = 0;
+    }
+    
+    // -------------------------------------------------------------------------
     // 2. SPAWN V4.1 (Clumping & Z-Depth)
     // -------------------------------------------------------------------------
     
@@ -395,6 +441,16 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
       }
   }
 
+  void _triggerFlash({required double intensity}) {
+      // If a flash is already happening, we add to it or overwrite if brighter
+      if (intensity > _lightningFlashOpacity) {
+         _lightningFlashOpacity = intensity;
+      } else {
+         // boost slightly
+         _lightningFlashOpacity = (_lightningFlashOpacity + intensity).clamp(0.0, 1.0);
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     final calib = ref.watch(skyCalibrationProvider);
@@ -404,7 +460,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
         child: ClipPath(
           clipper: _OrganicSkyClipper(calib),
           child: CustomPaint(
-            painter: _BioParticlePainter(_particles, _isSnow),
+            painter: _BioParticlePainter(_particles, _isSnow, _lightningFlashOpacity),
             size: Size.infinite,
           ),
         ),
@@ -433,16 +489,28 @@ class _BioParticle {
 class _BioParticlePainter extends CustomPainter {
   final List<_BioParticle> particles;
   final bool isSnow;
-  _BioParticlePainter(this.particles, this.isSnow);
+  final double flashOpacity;
+  
+  _BioParticlePainter(this.particles, this.isSnow, this.flashOpacity);
 
   @override
   void paint(Canvas canvas, Size size) {
+    // 0. FLASH BACKGROUND (Illuminates sky)
+    if (flashOpacity > 0.01) {
+       canvas.drawRect(
+          Rect.fromLTWH(0, 0, size.width, size.height), 
+          Paint()..color = Colors.white.withOpacity(flashOpacity)
+       );
+    }
+
     if (particles.isEmpty) return;
     final w = size.width;
     final h = size.height;
 
     final paintRain = Paint()
-      ..color = Colors.blueAccent.withOpacity(0.6)
+      // V5: WHITER RAIN (Silvery/Nuanced)
+      // User feedback: Blue was too fake. Wanted "White slightly nuanced".
+      ..color = const Color(0xFFD6E4FF).withOpacity(0.6)
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
     
