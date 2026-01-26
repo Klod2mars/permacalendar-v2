@@ -242,6 +242,39 @@ class _WeatherCalibrationScreenState
       title: Text(title),
       initiallyExpanded: true,
       children: [
+        // PRESET BUTTONS (V5)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+               ActionChip(
+                 label: const Text('Light Rain'),
+                 onPressed: () => onUpdate(WeatherPresets.lightRain),
+               ),
+               ActionChip(
+                 label: const Text('Heavy Rain'),
+                 onPressed: () => onUpdate(WeatherPresets.heavyRain),
+               ),
+               ActionChip(
+                 label: const Text('Storm'),
+                 backgroundColor: Colors.orange.withOpacity(0.2),
+                 onPressed: () => onUpdate(WeatherPresets.storm),
+               ),
+               ActionChip(
+                 label: const Text('Snow'),
+                 onPressed: () => onUpdate(WeatherPresets.snow),
+               ),
+               ActionChip(
+                 label: const Text('Blizzard'),
+                 backgroundColor: Colors.blue.withOpacity(0.2),
+                 onPressed: () => onUpdate(WeatherPresets.blizzard),
+               ),
+            ],
+          ),
+        ),
+        const Divider(),
         _ConfigSlider(
             label: 'Quantity (Density)',
             value: params.quantity,

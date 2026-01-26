@@ -177,9 +177,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     double dHSpread = 1.5;
     double dWindX = 0.0;
     
-    // V4.1: DECOUPLING QUANTITY & AREA
-    // Area Control: 0.1 (Pinpoint) -> 14.1 (Wide)
-    dHSpread = 0.1 + (aesthetic.area * 14.0); 
+    // V5: FULL VOLUME WIDENING
+    // Area maps to "How much of the ovoid width is covered?"
+    // 1.0 = Full Ovoid Width + 30% margin for parallax.
+    // 0.2 = Narrow central column.
+    dHSpread = 0.2 + (aesthetic.area * 1.3); 
     
     // Density Control (Particles per Unit Area)
     // We want Quantity to mean "How dense is it LOCALLY".
@@ -191,11 +193,12 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     final baseDensity = aesthetic.quantity; // 0..1
     double densityCurve = math.pow(baseDensity, 1.6).toDouble(); // gentle power
     
-    double spawnPerUnit = _isSnow ? 150.0 : 400.0; // Base reference
+    double spawnPerUnit = _isSnow ? 2500.0 : 3000.0; // V5 Boost: Maximum Intensity
     double spawnRateRaw = (densityCurve * spawnPerUnit) * dHSpread;
     
     // SOFT CAP to prevent explosions
-    final softCap = _isSnow ? 3000.0 : 4000.0;
+    // V5: Raised limits to allow "Heavy Rain" over "Wide Area"
+    final softCap = _isSnow ? 12000.0 : 15000.0;
     if (spawnRateRaw > softCap) {
        // Logarithmic approach to limit
        spawnRateRaw = softCap + (math.log(spawnRateRaw - softCap + 1) * 100);
@@ -208,8 +211,10 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
       dGravity = 0.005 + (aesthetic.weight * 0.15); 
       dVelocityBase = 0.02 + (aesthetic.weight * 0.5); 
     } else {
-      dGravity = 0.1 + (aesthetic.weight * 0.8);
-      dVelocityBase = 0.1 + (aesthetic.weight * 1.5);
+      // V5: Relaxed Rain Physics to allow "Beautiful Rain" (Snow-like float)
+      // Old: 0.1 was min gravity. Now 0.02 to allow slow falls.
+      dGravity = 0.02 + (aesthetic.weight * 0.8);
+      dVelocityBase = 0.05 + (aesthetic.weight * 1.5);
     }
     dVelocityVar = dVelocityBase * 0.4;
     
@@ -246,7 +251,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
        }
     }
     
-    final spawnCapPerTick = 400; // Safety
+    final spawnCapPerTick = 2000; // V5 Boost: Relaxed safety cap
     int validSpawn = math.min(toSpawn, spawnCapPerTick);
     
     if (validSpawn > 0) {
@@ -294,7 +299,10 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
        }
     }
     
-    // SImple Cloud logic preserved
+    // -------------------------------------------------------------------------
+    // 3. CLOUDS (DISABLED V5 per User Feedback)
+    // -------------------------------------------------------------------------
+    /*
     if (_cloudCover > 20) {
        if (_particles.where((p) => p.type == _ParticleType.cloud).length < config.cloud.maxClouds) {
          if (_rng.nextDouble() < 0.01) {
@@ -307,6 +315,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
          }
        }
     }
+    */
 
     // -------------------------------------------------------------------------
     // 4. UPDATE PHYSICS
@@ -321,7 +330,9 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
          p.y += p.vy * dt;
          
          // Collision
-         if (config.general.enableCollision) {
+         // V5: DISABLE COLLISION FOR RAIN (Prevent funneling, allow straight fall)
+         // Only apply collision to snow for "drift/settle" effect.
+         if (config.general.enableCollision && p.type == _ParticleType.snow) {
             _handleCollision(p, calib);
          }
       } else if (p.type == _ParticleType.cloud) {
@@ -474,8 +485,10 @@ class _BioParticlePainter extends CustomPainter {
          paintRain.color = paintRain.color.withOpacity(rainAlpha);
          paintRain.strokeWidth = 0.5 + (1.5 * p.z); // Thinner in back
          
-         // Length depends on Z and Speed
-         final len = 5.0 + (15.0 * p.z) * (p.vy * 5.0); 
+         // Length: Drastically reduced to avoid "Blue Screen" saturation
+         // Old: 5.0 + (15.0 * z) * (p.vy * 5.0)
+         // New: More discrete drops, less "Laser beams"
+         final len = 4.0 + (8.0 * p.z) * (p.vy * 1.5); 
          canvas.drawLine(
              Offset(px, py), Offset(px - p.vx * len, py - p.vy * len), paintRain);
              
@@ -491,13 +504,16 @@ class _BioParticlePainter extends CustomPainter {
          final radius = p.size; // Scaled by Z in physics already? Yes.
          canvas.drawCircle(Offset(px, py), radius, paintSnow);
          
-      } else if (p.type == _ParticleType.cloud) {
+      } 
+      /*
+      else if (p.type == _ParticleType.cloud) {
         paintCloud.color = paintCloud.color.withOpacity(lifeAlpha * 0.3);
         canvas.drawCircle(Offset(px, py), p.size, paintCloud);
       } else if (p.type == _ParticleType.mist) {
         paintMist.color = paintMist.color.withOpacity(lifeAlpha * 0.2);
         canvas.drawCircle(Offset(px, py), p.size, paintMist);
       }
+      */
     }
   }
 

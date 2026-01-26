@@ -389,3 +389,63 @@ class AestheticParams {
     );
   }
 }
+
+/// PRESETS FOR USER VALIDATION (V5)
+class WeatherPresets {
+  // 1. Light Rain (Gentle Drizzle)
+  static const AestheticParams lightRain = AestheticParams(
+    quantity: 0.2, // Sparse
+    area: 1.0, 
+    weight: 0.05, // Very slow (floaty)
+    size: 0.4, 
+    agitation: 0.1, 
+    clumping: 0.0,
+    granularity: 0.0,
+  );
+
+  // 2. Heavy Rain ("The Beautiful Rain" - EXACT PORT FROM SNOW PRESET)
+  // User confirmed "Snow" button visual is the target.
+  // Snow preset: Q:0.4, W:0.1, Ag:0.1
+  static const AestheticParams heavyRain = AestheticParams(
+    quantity: 0.4, // Matches Snow
+    area: 1.0,
+    weight: 0.1, // Matches Snow (now supported by relaxed physics)
+    size: 0.7, // Matches Snow size
+    agitation: 0.1, // Calm like Snow
+    clumping: 0.0,
+    granularity: 0.0,
+  );
+
+  // 3. Storm (Intense)
+  static const AestheticParams storm = AestheticParams(
+    quantity: 0.9, 
+    area: 1.0,
+    weight: 0.5, // Faster driving rain
+    size: 0.7,
+    agitation: 0.6, // Chaotic
+    clumping: 0.0,
+    granularity: 0.4, 
+  );
+
+  // 4. Snow (Calm)
+  static const AestheticParams snow = AestheticParams(
+    quantity: 0.4,
+    area: 1.0,
+    weight: 0.1, // Float
+    size: 0.7, // Large flakes
+    agitation: 0.1,
+    clumping: 0.3, // Nice clusters
+    granularity: 0.0,
+  );
+  
+  // 5. Blizzard (Stormy Snow)
+  static const AestheticParams blizzard = AestheticParams(
+    quantity: 0.8,
+    area: 1.0,
+    weight: 0.4, // Faster snow
+    size: 0.6, 
+    agitation: 0.6,
+    clumping: 0.5, 
+    granularity: 0.5,
+  );
+}
