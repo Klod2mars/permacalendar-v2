@@ -71,6 +71,12 @@ class ZoneService {
       return getZoneById('NH_temperate_na') ?? _zones.first;
     }
     
+    // 3. Asie Tropicale / Subtropicale (Inde, SE Asia)
+    const tropicalCountries = ['IN', 'TH', 'VN', 'PH', 'ID', 'MY', 'SG', 'LK', 'BD', 'KH', 'LA', 'MM'];
+    if (countryCode != null && tropicalCountries.contains(countryCode.toUpperCase())) {
+       return getZoneById('tropical') ?? _zones.first;
+    }
+
     // Méditerranée (approx lat 30-45 + Europe/Afrique Nord? Difficile sans longitude)
     // Pour l'instant on reste sur NH_temperate_europe par défaut pour le reste (Europe/Asie)
     // Sauf si on implémente un check longitude + lat pour Mediterranean.
