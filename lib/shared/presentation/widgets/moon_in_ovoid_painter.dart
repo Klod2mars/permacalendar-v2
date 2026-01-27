@@ -3,30 +3,46 @@ import 'dart:math' as math;
 
 class MoonInOvoidPainter extends CustomPainter {
   final double phase; // 0..1 (Open-Meteo)
-  final Rect ovalRect; // bounds of the ovoid in absolute coordinates (or derived)
+  final Rect? ovalRect; // bounds of the ovoid in absolute coordinates (or derived)
   final Offset animOffset; // small offset for micro-motion
   final double darkness; // 0..1, how dark the night is (optional)
+  
+  // Optional explicit overrides for decoupled usage
+  final Offset? centerOverride;
+  final double? radiusOverride;
 
   MoonInOvoidPainter({
     required this.phase,
-    required this.ovalRect,
+    this.ovalRect, // Now optional
     required this.animOffset,
     required this.darkness,
+    this.centerOverride,
+    this.radiusOverride,
   }) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
     if (phase < 0.02 || phase > 0.98) return; // New Moon invisible
 
-    final center = Offset(
-            ovalRect.center.dx + ovalRect.width * 0.22,
-            ovalRect.center.dy - ovalRect.height * 0.18) +
-        animOffset;
-
-    final r =
-        (ovalRect.width < ovalRect.height ? ovalRect.width : ovalRect.height) *
-            0.12 /
-            2;
+    final Offset center;
+    final double r;
+    
+    if (centerOverride != null && radiusOverride != null) {
+      center = centerOverride! + animOffset;
+      r = radiusOverride!;
+    } else if (ovalRect != null) {
+      center = Offset(
+              ovalRect!.center.dx + ovalRect!.width * 0.22,
+              ovalRect!.center.dy - ovalRect!.height * 0.18) +
+          animOffset;
+      r = (ovalRect!.width < ovalRect!.height ? ovalRect!.width : ovalRect!.height) *
+              0.12 /
+              2;
+    } else {
+      // Fallback if neither rect nor overrides are provided (should not happen in correct usage)
+      center = size.center(Offset.zero);
+      r = size.shortestSide / 2;
+    }
 
     // Illumination intensity (0.0 to 1.0) for opacity/glow
     // Full moon (0.5) -> 1.0, New moon (0.0/1.0) -> 0.0
@@ -307,6 +323,8 @@ class MoonInOvoidPainter extends CustomPainter {
     return old.phase != phase ||
         old.animOffset != animOffset ||
         old.darkness != darkness ||
-        old.ovalRect != ovalRect;
+        old.ovalRect != ovalRect ||
+        old.centerOverride != centerOverride ||
+        old.radiusOverride != radiusOverride;
   }
 }

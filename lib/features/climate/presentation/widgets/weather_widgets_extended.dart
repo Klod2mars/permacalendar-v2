@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 import 'dart:math' as math;
-import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +9,7 @@ import '../../../../core/models/hourly_weather_point.dart';
 import '../../../../core/utils/weather_icon_mapper.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
+import '../../../../shared/presentation/widgets/moon_in_ovoid_painter.dart';
 
 // ---------------------------------------------------------------------------
 // 1. HOURLY FORECAST GRAPH (Scrollable + CustomPainter)
@@ -692,10 +693,20 @@ class MoonPhaseWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.nightlight_round,
-                    size: 48,
-                    color: Colors.grey[
-                        300]), // Placeholder for true moon phase rendering
+                SizedBox(
+                  width: 48,
+                  height: 48,
+                  child: CustomPaint(
+                    painter: MoonInOvoidPainter(
+                      phase: phase,
+                      animOffset: Offset.zero,
+                      // Fully visible (darkness 1.0) and explicitly centered/sized
+                      darkness: 1.0, 
+                      centerOverride: const Offset(24, 24),
+                      radiusOverride: 20, // Slightly smaller than half of 48 to have padding
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Text(phaseLabel(l10n),
                     textAlign: TextAlign.center,
