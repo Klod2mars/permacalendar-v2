@@ -120,42 +120,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     return '';
   }
 
-  Future<void> _askToExport(Activity created) async {
-    final l10n = AppLocalizations.of(context)!;
-    // Ask user if they want to export now
-    final want = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.calendar_task_saved_title),
-        content: Text(l10n.calendar_ask_export_pdf),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(l10n.common_no)),
-          ElevatedButton(
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: Text(l10n.common_yes)),
-        ],
-      ),
-    );
 
-    if (want == true) {
-      try {
-        final file = await TaskDocumentGenerator.generateTaskPdf(created);
-        await TaskDocumentGenerator.shareFile(
-            file, 'application/pdf', context,
-            shareText: 'Tâche PermaCalendar (PDF)');
-      } catch (e, s) {
-        developer.log('Export after create failed: $e\n$s');
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(l10n.calendar_export_error(e)),
-            backgroundColor: Colors.orange,
-          ));
-        }
-      }
-    }
-  }
 
   void _updateDailyTasks() {
     _dailyTasks.clear();
@@ -318,7 +283,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         // Handle export if option selected or just prompt
           // Handle export if option selected or just prompt
           // Re-prompt always for consistency in this simplified flow
-           _askToExport(updated);
+
         }
     }
   }
@@ -521,9 +486,9 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 await _loadCalendarData();
 
                 // After the UI has settled, ask user if they want to export
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _askToExport(created);
-                });
+                // WidgetsBinding.instance.addPostFrameCallback((_) {
+                //   // No longer needed as CreateTaskDialog handles it
+                // });
               }
             },
           ),

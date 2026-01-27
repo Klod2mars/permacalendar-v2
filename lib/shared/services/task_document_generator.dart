@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
-import 'package:docx_template/docx_template.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../core/models/activity.dart';
@@ -130,85 +131,7 @@ class TaskDocumentGenerator {
     );
   }
 
-  /// Génère un DOCX via template pour la tâche donnée
-  static Future<File> generateTaskDocx(Activity task) async {
-    // 1. Charger le template
-    final data = await rootBundle.load('assets/templates/task_template.docx');
-    final bytes = data.buffer.asUint8List();
 
-    final docx = await DocxTemplate.fromBytes(bytes);
-
-    // 2. Préparer le contenu
-    // Résolution des noms (similaire au PDF)
-    String gardenName = '-';
-    String bedName = '-';
-    
-    if (task.metadata != null) {
-      final gId = task.metadata?['gardenId'] as String?;
-      if (gId != null) {
-        final g = GardenBoxes.getGarden(gId);
-        if (g != null) gardenName = g.name;
-      }
-      
-      final bId = task.metadata?['zoneGardenBedId'] as String?;
-      if (bId != null) {
-         final b = GardenBoxes.getGardenBedById(bId);
-         if (b != null) bedName = b.name;
-      }
-    }
-
-    // Prepare data from metadata
-    DateTime nextRun = task.timestamp;
-    if (task.metadata['nextRunDate'] != null) {
-      nextRun = DateTime.tryParse(task.metadata['nextRunDate']) ?? task.timestamp;
-    }
-    final String tKind = task.metadata['taskKind'] is String 
-        ? task.metadata['taskKind'] 
-        : (task.type.name);
-    final bool isUrgent = task.metadata['urgent'] == true;
-    final bool hasRecurrence = task.metadata['recurrence'] != null;
-
-    final dateFormat = DateFormat('dd/MM/yyyy');
-    final timeFormat = DateFormat('HH:mm');
-    
-    final content = Content();
-    content
-      ..add(TextContent('title', task.title))
-      ..add(TextContent('description', task.description ?? ''))
-      ..add(TextContent('garden', gardenName))
-      ..add(TextContent('bed', bedName))
-      ..add(TextContent('date', dateFormat.format(nextRun)))
-      ..add(TextContent('time', timeFormat.format(nextRun)))
-      ..add(TextContent('duration', '${task.metadata?['durationMinutes'] ?? ""}'))
-      ..add(TextContent('type', tKind))
-      ..add(TextContent('priority', task.metadata?['priority']?.toString() ?? ""))
-      ..add(TextContent('urgent', isUrgent ? "OUI" : "Non"))
-      ..add(TextContent('assignee', task.metadata?['assignee']?.toString() ?? ""))
-      ..add(TextContent('recurrence', hasRecurrence ? "Oui" : "Non"));
-
-    // Add Image to DOCX
-    final imgPathDocx = task.metadata['attachedImagePath'] as String?;
-    if (imgPathDocx != null && imgPathDocx.isNotEmpty) {
-      final f = File(imgPathDocx);
-      if (await f.exists()) {
-        final imgBytes = await f.readAsBytes();
-        content.add(ImageContent('attachedImage', imgBytes));
-      }
-    }
-
-    // 3. Générer
-    final generated = await docx.generate(content);
-    if (generated == null) {
-      throw Exception('Echec de la génération DOCX (template potentiellement invalide ou mismatch)');
-    }
-
-    final tmp = await getTemporaryDirectory();
-    final sanitizedTitle = _sanitizeFilename(task.title);
-    final fileName = sanitizedTitle.isNotEmpty ? sanitizedTitle : 'task_${task.id}';
-    final file = File('${tmp.path}/$fileName.docx');
-    await file.writeAsBytes(generated);
-    return file;
-  }
 
   /// Ouvre la feuille de partage système
   static Future<void> shareFile(File file, String mimeType, BuildContext? context, { String? shareText }) async {

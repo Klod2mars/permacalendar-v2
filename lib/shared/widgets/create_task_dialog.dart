@@ -452,25 +452,17 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
              label: const Text('PDF'),
              onPressed: () async {
                Navigator.of(ctx).pop(); // Close dialog first
-               await _generateAndShare(task, true); // Generate PDF
+               await _generateAndShare(task); // Generate PDF
                if (mounted) Navigator.of(context).pop({'task': task});
              },
            ),
-           FilledButton.icon(
-              icon: const Icon(Icons.description),
-              label: const Text('Word'),
-              onPressed: () async {
-                Navigator.of(ctx).pop();
-                await _generateAndShare(task, false); // Generate Word
-                if (mounted) Navigator.of(context).pop({'task': task});
-              },
-           ),
+
          ],
        ),
      );
   }
 
-  Future<void> _generateAndShare(Activity task, bool isPdf) async {
+  Future<void> _generateAndShare(Activity task) async {
     try {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -479,21 +471,19 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       }
       
       File file;
-      String mime;
-      if (isPdf) {
-        file = await TaskDocumentGenerator.generateTaskPdf(task);
-        mime = 'application/pdf';
-      } else {
-        file = await TaskDocumentGenerator.generateTaskDocx(task);
-        mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-      }
+      String mime = 'application/pdf';
+      file = await TaskDocumentGenerator.generateTaskPdf(task);
 
       if (mounted) {
         await TaskDocumentGenerator.shareFile(file, mime, context, shareText: 'Tâche : ${task.title}');
       }
-    } catch (e) {
+    } catch (e, s) {
+      developer.log('Generation error', error: e, stackTrace: s);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Erreur: $e'),
+          duration: const Duration(seconds: 5),
+        ));
       }
     }
   }
@@ -504,36 +494,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.activityToEdit != null ? l10n.task_editor_title_edit : l10n.task_editor_title_new),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            tooltip: l10n.task_editor_option_share,
-            onPressed: () {
-              _formKey.currentState?.save();
-              _shareTask();
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
-            tooltip: 'Exporter PDF (brouillon)',
-            onPressed: () {
-              _formKey.currentState?.save();
-              _exportPreview();
-            },
-          ),
-          PopupMenuButton<String>(
-            onSelected: (v) {
-              if (v == 'save') _saveTemplate();
-              if (v == 'load') _loadTemplate();
-            },
-            itemBuilder: (ctx) => [
-              const PopupMenuItem(
-                  value: 'save', child: Text('Sauvegarder comme template')),
-              const PopupMenuItem(
-                  value: 'load', child: Text('Charger le dernier template')),
-            ],
-          )
-        ],
+        actions: const [],
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(

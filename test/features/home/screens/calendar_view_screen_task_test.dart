@@ -111,7 +111,7 @@ void main() {
 
     // 5b. Handle "Ask to Export" dialog
     expect(find.text('Tâche enregistrée'), findsOneWidget);
-    await tester.tap(find.text('Non'));
+    await tester.tap(find.text('Non merci'));
     await tester.pumpAndSettle(); // Close alert dialog
 
     // 6. Verify New Task in Hive
@@ -236,6 +236,11 @@ void main() {
     
     // Save
     await tester.tap(find.text('Enregistrer'));
+    await tester.pumpAndSettle();
+
+    // Verify Post-Save Dialog (New Flow)
+    expect(find.text('Tâche enregistrée'), findsOneWidget);
+    await tester.tap(find.text('Non merci'));
     await tester.pumpAndSettle();
 
     // Verify SnackBar
