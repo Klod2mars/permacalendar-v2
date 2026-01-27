@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/models/planting.dart';
 import 'package:permacalendar/core/models/plant.dart';
 import 'package:permacalendar/core/services/plant_catalog_service.dart';
+import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
+import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 
-class PlantingImage extends StatelessWidget {
+class PlantingImage extends ConsumerWidget {
   final Planting planting;
   final double? width;
   final double? height;
@@ -36,13 +39,8 @@ class PlantingImage extends StatelessWidget {
       final m = <String, String>{};
       for (final k in map.keys) m[k.toLowerCase()] = k;
       _assetManifestLowerToOriginal = m;
-      if (kDebugMode)
-        debugPrint(
-            'PlantingImage: loaded asset manifest (${m.length} entries)');
     } catch (e) {
       _assetManifestLowerToOriginal = null;
-      if (kDebugMode)
-        debugPrint('PlantingImage: AssetManifest load failed: $e');
     }
   }
 
@@ -78,65 +76,19 @@ class PlantingImage extends StatelessWidget {
 
   static String _removeDiacritics(String s) {
     const Map<String, String> table = {
-      'à': 'a',
-      'á': 'a',
-      'â': 'a',
-      'ã': 'a',
-      'ä': 'a',
-      'å': 'a',
-      'ç': 'c',
-      'è': 'e',
-      'é': 'e',
-      'ê': 'e',
-      'ë': 'e',
-      'ì': 'i',
-      'í': 'i',
-      'î': 'i',
-      'ï': 'i',
-      'ñ': 'n',
-      'ò': 'o',
-      'ó': 'o',
-      'ô': 'o',
-      'õ': 'o',
-      'ö': 'o',
-      'ù': 'u',
-      'ú': 'u',
-      'û': 'u',
-      'ü': 'u',
-      'ý': 'y',
-      'ÿ': 'y',
-      'À': 'A',
-      'Á': 'A',
-      'Â': 'A',
-      'Ã': 'A',
-      'Ä': 'A',
-      'Å': 'A',
-      'Ç': 'C',
-      'È': 'E',
-      'É': 'E',
-      'Ê': 'E',
-      'Ë': 'E',
-      'Ì': 'I',
-      'Í': 'I',
-      'Î': 'I',
-      'Ï': 'I',
-      'Ñ': 'N',
-      'Ò': 'O',
-      'Ó': 'O',
-      'Ô': 'O',
-      'Õ': 'O',
-      'Ö': 'O',
-      'Ù': 'U',
-      'Ú': 'U',
-      'Û': 'U',
-      'Ü': 'U',
-      'Ý': 'Y',
-      'Ÿ': 'Y'
+      'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a',
+      'ç': 'c', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
+      'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
+      'ñ': 'n', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
+      'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y', 'ÿ': 'y',
+      'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A',
+      'Ç': 'C', 'È': 'E', 'É': 'E', 'Ê': 'E', 'Ë': 'E',
+      'Ì': 'I', 'Í': 'I', 'Î': 'I', 'Ï': 'I',
+      'Ñ': 'N', 'Ò': 'O', 'Ó': 'O', 'Ô': 'O', 'Õ': 'O', 'Ö': 'O',
+      'Ù': 'U', 'Ú': 'U', 'Û': 'U', 'Ü': 'U', 'Ý': 'Y', 'Ÿ': 'Y'
     };
     var out = s;
-    table.forEach((k, v) {
-      out = out.replaceAll(k, v);
-    });
+    table.forEach((k, v) => out = out.replaceAll(k, v));
     return out;
   }
 
@@ -152,12 +104,10 @@ class PlantingImage extends StatelessWidget {
       String base, String id, String catalogName, String plantingName) {
     final candidates = <String>[];
 
-    // Helper to add candidates for a specific name
     void addNameCandidates(String name) {
       if (name.isEmpty) return;
       candidates.add('assets/images/legumes/$name');
       candidates.add('assets/images/plants/$name');
-      // safe versions
       final safe = _toFilenameSafe(name);
       final altHyphen = safe.replaceAll('_', '-');
       for (final ext in ['.png', '.jpg', '.jpeg', '.webp']) {
@@ -168,10 +118,7 @@ class PlantingImage extends StatelessWidget {
       }
     }
 
-    // 1. Prioritize Catalog Name (Official)
     addNameCandidates(catalogName);
-
-    // 2. Fallback to Planting Name (might be English or user-customized)
     if (plantingName != catalogName) {
       addNameCandidates(plantingName);
     }
@@ -222,7 +169,6 @@ class PlantingImage extends StatelessWidget {
   Widget _fallback() {
     final w = width ?? size ?? 60.0;
     final h = height ?? size ?? 60.0;
-
     return Container(
       height: h,
       width: w,
@@ -234,14 +180,62 @@ class PlantingImage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final w = width ?? size ?? 60.0;
     final h = height ?? size ?? 60.0;
+    final userPlants = ref.read(plantsListProvider);
+
+    // Try finding in user provider first (Custom Plants)
+    PlantFreezed? foundPlant;
+    try {
+      foundPlant = userPlants.firstWhere((p) => p.id == planting.plantId);
+    } catch (_) {}
+
+    // Prepare future based on provider result or legacy service
+    final Future<Plant?> loadFuture = foundPlant != null
+      ? Future.value(Plant(
+          id: foundPlant.id,
+          commonName: foundPlant.commonName,
+          scientificName: foundPlant.scientificName,
+          family: foundPlant.family,
+          description: foundPlant.description,
+          plantingSeason: foundPlant.plantingSeason,
+          harvestSeason: foundPlant.harvestSeason,
+          daysToMaturity: foundPlant.daysToMaturity,
+          spacing: foundPlant.spacing.toDouble(),
+          depth: foundPlant.depth,
+          sunExposure: foundPlant.sunExposure,
+          waterNeeds: foundPlant.waterNeeds,
+          sowingMonths: foundPlant.sowingMonths,
+          harvestMonths: foundPlant.harvestMonths,
+          marketPricePerKg: foundPlant.marketPricePerKg ?? 0.0,
+          defaultUnit: foundPlant.defaultUnit ?? '',
+          nutritionPer100g: foundPlant.nutritionPer100g ?? const {},
+          germination: foundPlant.germination ?? const {},
+          growth: foundPlant.growth ?? const {},
+          watering: foundPlant.watering ?? const {},
+          thinning: foundPlant.thinning ?? const {},
+          weeding: foundPlant.weeding ?? const {},
+          culturalTips: foundPlant.culturalTips ?? const [],
+          biologicalControl: foundPlant.biologicalControl ?? const {},
+          harvestTime: foundPlant.harvestTime ?? '',
+          companionPlanting: foundPlant.companionPlanting ?? const {},
+          notificationSettings: foundPlant.notificationSettings ?? const {},
+          imageUrl: foundPlant.metadata != null ? (
+            foundPlant.metadata!['image'] ??
+            foundPlant.metadata!['imagePath'] ??
+            foundPlant.metadata!['photo'] ?? 
+            foundPlant.metadata!['image_url']
+          ) : null,
+          metadata: foundPlant.metadata,
+          notes: foundPlant.notes,
+        ))
+      : PlantCatalogService.getPlantById(planting.plantId);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius ?? 12),
       child: FutureBuilder<Plant?>(
-        future: PlantCatalogService.getPlantById(planting.plantId),
+        future: loadFuture,
         builder: (ctx, snap) {
           final plant = snap.data;
           String? raw;
@@ -267,54 +261,55 @@ class PlantingImage extends StatelessWidget {
             raw = null;
           }
 
+          if (raw != null) {
+            // debugPrint('[PlantingImage] Resolved raw path for ${planting.plantName}: $raw');
+          }
+
           final String commonNameFromPlanting = planting.plantName.trim();
           final base = raw ?? '';
           final id = (plant?.id ?? planting.plantId).toString();
-
           final catalogName = plant?.commonName.trim() ?? '';
 
-          final List<String> candidates =
-              _buildCandidates(base, id, catalogName, commonNameFromPlanting);
+          // 1. Network
+          if (raw != null && raw.isNotEmpty && RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw)) {
+             return Image.network(
+               raw!,
+               height: h,
+               width: w,
+               fit: fit,
+               errorBuilder: (_, __, ___) => _fallback(),
+             );
+          }
 
-          // Return Resolved Image
+          // 2. Local File (Custom Plants - Fix applied)
           if (raw != null && raw.isNotEmpty) {
-            // 1. Network
-            if (RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw)) {
-              return Image.network(
-                raw!,
-                height: h,
-                width: w,
-                fit: fit,
-                errorBuilder: (_, __, ___) => _fallback(),
-              );
-            }
-            
-            // 2. Local File (Custom Plants)
-            final bool isLocalFile = !raw.startsWith('assets/') && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.'))); 
-            
-            if (isLocalFile) {
-               final file = File(raw);
-               // We don't always check existsSync to avoid blocking UI, Image.file handles errors gracefully via errorBuilder
+             final bool isLocalFile = !raw.startsWith('assets/') && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.')));
+             if (isLocalFile) {
+               var path = raw!;
+               if (path.startsWith('file://')) path = path.substring(7);
+               // debugPrint('[PlantingImage] Attempting local file load: $path');
                return Image.file(
-                 file,
+                 File(path),
                  height: h,
                  width: w,
                  fit: fit,
                  errorBuilder: (_, __, ___) => _fallback(),
                );
-            }
-
-            // 3. Explicit Asset Path
-            if (raw.startsWith('assets/')) {
+             }
+             
+             // Explicit asset path
+             if (raw.startsWith('assets/')) {
                return Image.asset(
-                raw,
-                height: h,
-                width: w,
-                fit: fit,
-                errorBuilder: (_, __, ___) => _fallback(),
-              );
-            }
+                 raw,
+                 height: h,
+                 width: w,
+                 fit: fit,
+                 errorBuilder: (_, __, ___) => _fallback(),
+               );
+             }
           }
+
+          final List<String> candidates = _buildCandidates(base, id, catalogName, commonNameFromPlanting);
 
           return FutureBuilder<String?>(
             future: () async {
@@ -335,15 +330,13 @@ class PlantingImage extends StatelessWidget {
             }(),
             builder: (c2, snap2) {
               if (snap2.connectionState != ConnectionState.done) {
-                // return placeholder while loading
-                return Container(
-                    height: h, width: w, color: Colors.green.shade50);
+                return Container(height: h, width: w, color: Colors.green.shade50);
               }
               final found = snap2.data;
               if (found != null) {
                 return Image.asset(
                   found,
-                  height: h,
+                   height: h,
                   width: w,
                   fit: fit,
                   errorBuilder: (_, __, ___) => _fallback(),
