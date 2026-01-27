@@ -32,6 +32,9 @@ import '../../core/models/garden_freezed.dart';
 import '../../features/home/presentation/providers/dashboard_image_settings_provider.dart'; // [NEW]
 import '../../features/home/presentation/providers/unified_calibration_provider.dart'; // [NEW]
 import '../presentation/widgets/unified_calibration_overlay.dart'; // [NEW]
+import '../../core/models/meta_tap_zone_config.dart';
+import '../../core/providers/meta_tap_zones_provider.dart';
+import '../../features/home/widgets/meta_tap_zone_widget.dart';
 
 /// 1) Active/désactive l’affichage des cadres bleus (debug)
 const bool kShowTapZonesDebug = true;
@@ -421,7 +424,28 @@ class _OrganicDashboardWidgetState
       debugPrint(
           '[CALIBRATION] after loadFromStorage zones: ${ref.read(organicZonesProvider).keys.toList()}');
     }
+
+    // --- META TAP ZONES INITIALIZATION ---
+    // Mirroring the exact logic for Meta Zones
+    final metaDefaultsPositions = <String, Offset>{};
+    final metaDefaultsSizes = <String, double>{};
+    final metaDefaultsEnabled = <String, bool>{};
+
+    const String kMetaCreditsId = 'meta_credits';
+    // Default position for the credits bubble (small bubble to the right of central cluster)
+    // Adjust these coordinates based on the visual layout or user guidance
+    metaDefaultsPositions[kMetaCreditsId] = const Offset(0.66, 0.28); 
+    metaDefaultsSizes[kMetaCreditsId] = 0.08; // Small visual size
+    metaDefaultsEnabled[kMetaCreditsId] = true;
+
+    await ref.read(metaTapZonesProvider.notifier).loadFromStorage(
+          defaultPositions: metaDefaultsPositions,
+          defaultSizes: metaDefaultsSizes,
+          defaultEnabled: metaDefaultsEnabled,
+        );
   }
+
+
 
   Future<void> _onGardenTap(int slot) async {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
@@ -529,7 +553,9 @@ class _OrganicDashboardWidgetState
     // [NEW] Read image settings from provider (handling persistence + live update)
     final imageSettings = ref.watch(dashboardImageSettingsProvider);
     final activeGardenId = ref.watch(activeGardenIdProvider);
+    final metaZones = ref.watch(metaTapZonesProvider); // [NEW]
     final l10n = AppLocalizations.of(context)!;
+
 
     String getLocalizedLabel(String id) {
       if (id.startsWith('garden_')) {
@@ -761,15 +787,44 @@ class _OrganicDashboardWidgetState
                                   ),
                               );
                             })(),
+
+                         // [NEW] Calibration display for Meta Zones
+                         // In calibration mode, we display them so the user knows they exist.
+                         // Currently we don't have a Drag/Drop UI for them in this loop, 
+                         // but we render them to visualize placement.
+                         for (final entry in metaZones.entries)
+                          if (entry.value.enabled)
+                            MetaTapZoneWidget(
+                              config: entry.value,
+                              isCalibrationMode: true,
+                              containerSize: Size(w, h),
+                              onTap: () {}, // No nav in calibration
+                            ),
                       ],
                     );
                   }
 
                   // Mode normal (non-calibration) : utiliser les positions persistées depuis le provider
                   final gardenState = ref.watch(gardenProvider);
-
+                  
                   return Stack(
                     children: [
+                      // [NEW] 0) Meta Tap Zones (Rendered FIRST -> Bottom of Stack -> Lower priority)
+                      // This ensures that if a Meta Zone overlaps with a Business Zone (rendered later),
+                      // the Business Zone handles the tap.
+                      for (final entry in metaZones.entries)
+                        if (entry.value.enabled)
+                          MetaTapZoneWidget(
+                            config: entry.value,
+                            isCalibrationMode: false, // In normal mode, no calibration overlay
+                            containerSize: Size(w, h),
+                            onTap: () {
+                                if (entry.key == 'meta_credits') {
+                                  context.push(AppRoutes.credits);
+                                }
+                            },
+                          ),
+
                       // Construire dynamiquement à partir de `zones` pour garantir
                       // que le dashboard reflète l'état persistant (post-redémarrage).
                       for (final entry in zones.entries)

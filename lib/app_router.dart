@@ -27,6 +27,7 @@ import 'features/statistics/presentation/screens/garden_nutrition_screen.dart';
 
 import 'features/statistics/presentation/screens/garden_alignment_screen.dart';
 import 'package:permacalendar/features/export/presentation/screens/export_builder_screen.dart';
+import 'shared/presentation/screens/credit_contact_screen.dart';
 
 import 'core/feature_flags.dart';
 
@@ -49,6 +50,7 @@ class AppRoutes {
   static const String statistics = '/statistics';
   static const String export = '/export';
   static const String soilTemperature = '/soil-temperature';
+  static const String credits = '/credits';
 }
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -261,6 +263,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.soilTemperature,
         name: 'soil-temperature',
         builder: (context, state) => const SoilTempPage(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.credits,
+        name: 'credits',
+        builder: (context, state) => const CreditContactScreen(),
       ),
     ],
     errorBuilder: (context, state) {
