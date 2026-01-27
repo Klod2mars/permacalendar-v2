@@ -1661,7 +1661,23 @@
   "task_editor_photo_add": "Ajouter une photo",
   "task_editor_photo_change": "Changer la photo",
   "task_editor_photo_remove": "Retirer la photo",
-  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF / Word à la création / envoi."
+  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF / Word à la création / envoi.",
+
+  "export_block_nutrition": "Nutrition (Agrégation)",
+  "@export_block_nutrition": { "description": "Label pour le bloc Nutrition dans l'export" },
+  "export_block_desc_nutrition": "Indicateurs nutritionnels agrégés par nutriment",
+  "@export_block_desc_nutrition": { "description": "Description pour le bloc Nutrition" },
+
+  "export_field_nutrient_key": "Clé nutriment",
+  "export_field_nutrient_label": "Nutriment",
+  "export_field_nutrient_unit": "Unité",
+  "export_field_nutrient_total": "Total disponible",
+  "export_field_mass_with_data_kg": "Masse avec données (kg)",
+  "export_field_contributing_records": "Nb récoltes",
+  "export_field_data_confidence": "Confiance",
+  "export_field_coverage_percent": "Moy. DRI (%)",
+  "export_field_lower_bound_coverage": "Min DRI (%)",
+  "export_field_upper_bound_coverage": "Max DRI (%)"
 }
 
 

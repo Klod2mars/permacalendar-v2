@@ -2449,4 +2449,41 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get task_editor_photo_help =>
       'La photo sera jointe automatiquement au PDF / Word à la création / envoi.';
+
+  @override
+  String get export_block_nutrition => 'Nutrition (Agrégation)';
+
+  @override
+  String get export_block_desc_nutrition =>
+      'Indicateurs nutritionnels agrégés par nutriment';
+
+  @override
+  String get export_field_nutrient_key => 'Clé nutriment';
+
+  @override
+  String get export_field_nutrient_label => 'Nutriment';
+
+  @override
+  String get export_field_nutrient_unit => 'Unité';
+
+  @override
+  String get export_field_nutrient_total => 'Total disponible';
+
+  @override
+  String get export_field_mass_with_data_kg => 'Masse avec données (kg)';
+
+  @override
+  String get export_field_contributing_records => 'Nb récoltes';
+
+  @override
+  String get export_field_data_confidence => 'Confiance';
+
+  @override
+  String get export_field_coverage_percent => 'Moy. DRI (%)';
+
+  @override
+  String get export_field_lower_bound_coverage => 'Min DRI (%)';
+
+  @override
+  String get export_field_upper_bound_coverage => 'Max DRI (%)';
 }

@@ -4527,6 +4527,78 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'La photo sera jointe automatiquement au PDF / Word à la création / envoi.'**
   String get task_editor_photo_help;
+
+  /// Label pour le bloc Nutrition dans l'export
+  ///
+  /// In fr, this message translates to:
+  /// **'Nutrition (Agrégation)'**
+  String get export_block_nutrition;
+
+  /// Description pour le bloc Nutrition
+  ///
+  /// In fr, this message translates to:
+  /// **'Indicateurs nutritionnels agrégés par nutriment'**
+  String get export_block_desc_nutrition;
+
+  /// No description provided for @export_field_nutrient_key.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clé nutriment'**
+  String get export_field_nutrient_key;
+
+  /// No description provided for @export_field_nutrient_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nutriment'**
+  String get export_field_nutrient_label;
+
+  /// No description provided for @export_field_nutrient_unit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unité'**
+  String get export_field_nutrient_unit;
+
+  /// No description provided for @export_field_nutrient_total.
+  ///
+  /// In fr, this message translates to:
+  /// **'Total disponible'**
+  String get export_field_nutrient_total;
+
+  /// No description provided for @export_field_mass_with_data_kg.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masse avec données (kg)'**
+  String get export_field_mass_with_data_kg;
+
+  /// No description provided for @export_field_contributing_records.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nb récoltes'**
+  String get export_field_contributing_records;
+
+  /// No description provided for @export_field_data_confidence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confiance'**
+  String get export_field_data_confidence;
+
+  /// No description provided for @export_field_coverage_percent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moy. DRI (%)'**
+  String get export_field_coverage_percent;
+
+  /// No description provided for @export_field_lower_bound_coverage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Min DRI (%)'**
+  String get export_field_lower_bound_coverage;
+
+  /// No description provided for @export_field_upper_bound_coverage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Max DRI (%)'**
+  String get export_field_upper_bound_coverage;
 }
 
 class _AppLocalizationsDelegate

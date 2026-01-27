@@ -84,7 +84,34 @@
     "task_editor_photo_add",
     "task_editor_photo_change",
     "task_editor_photo_remove",
-    "task_editor_photo_help"
+    "task_editor_photo_help",
+    "export_block_nutrition",
+    "export_block_desc_nutrition",
+    "export_field_nutrient_key",
+    "export_field_nutrient_label",
+    "export_field_nutrient_unit",
+    "export_field_nutrient_total",
+    "export_field_mass_with_data_kg",
+    "export_field_contributing_records",
+    "export_field_data_confidence",
+    "export_field_coverage_percent",
+    "export_field_lower_bound_coverage",
+    "export_field_upper_bound_coverage"
+  ],
+
+  "en": [
+    "export_block_nutrition",
+    "export_block_desc_nutrition",
+    "export_field_nutrient_key",
+    "export_field_nutrient_label",
+    "export_field_nutrient_unit",
+    "export_field_nutrient_total",
+    "export_field_mass_with_data_kg",
+    "export_field_contributing_records",
+    "export_field_data_confidence",
+    "export_field_coverage_percent",
+    "export_field_lower_bound_coverage",
+    "export_field_upper_bound_coverage"
   ],
 
   "es": [
@@ -172,7 +199,19 @@
     "task_editor_photo_add",
     "task_editor_photo_change",
     "task_editor_photo_remove",
-    "task_editor_photo_help"
+    "task_editor_photo_help",
+    "export_block_nutrition",
+    "export_block_desc_nutrition",
+    "export_field_nutrient_key",
+    "export_field_nutrient_label",
+    "export_field_nutrient_unit",
+    "export_field_nutrient_total",
+    "export_field_mass_with_data_kg",
+    "export_field_contributing_records",
+    "export_field_data_confidence",
+    "export_field_coverage_percent",
+    "export_field_lower_bound_coverage",
+    "export_field_upper_bound_coverage"
   ],
 
   "it": [
@@ -260,7 +299,19 @@
     "task_editor_photo_add",
     "task_editor_photo_change",
     "task_editor_photo_remove",
-    "task_editor_photo_help"
+    "task_editor_photo_help",
+    "export_block_nutrition",
+    "export_block_desc_nutrition",
+    "export_field_nutrient_key",
+    "export_field_nutrient_label",
+    "export_field_nutrient_unit",
+    "export_field_nutrient_total",
+    "export_field_mass_with_data_kg",
+    "export_field_contributing_records",
+    "export_field_data_confidence",
+    "export_field_coverage_percent",
+    "export_field_lower_bound_coverage",
+    "export_field_upper_bound_coverage"
   ],
 
   "pt": [
@@ -348,6 +399,18 @@
     "task_editor_photo_add",
     "task_editor_photo_change",
     "task_editor_photo_remove",
-    "task_editor_photo_help"
+    "task_editor_photo_help",
+    "export_block_nutrition",
+    "export_block_desc_nutrition",
+    "export_field_nutrient_key",
+    "export_field_nutrient_label",
+    "export_field_nutrient_unit",
+    "export_field_nutrient_total",
+    "export_field_mass_with_data_kg",
+    "export_field_contributing_records",
+    "export_field_data_confidence",
+    "export_field_coverage_percent",
+    "export_field_lower_bound_coverage",
+    "export_field_upper_bound_coverage"
   ]
 }

@@ -222,9 +222,9 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Column(
         children: ExportSchema.blockLabels.entries
-            .where((e) =>
+            /* .where((e) =>
                 e.key == ExportBlockType.activity ||
-                e.key == ExportBlockType.harvest)
+                e.key == ExportBlockType.harvest) */
             .map((entry) {
           final type = entry.key;
           // label is unused
@@ -410,6 +410,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         return l10n.export_block_garden_bed;
       case ExportBlockType.plant:
         return l10n.export_block_plant;
+      case ExportBlockType.nutrition:
+        return l10n.export_block_nutrition;
     }
   }
 
@@ -425,6 +427,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         return l10n.export_block_desc_garden_bed;
       case ExportBlockType.plant:
         return l10n.export_block_desc_plant;
+      case ExportBlockType.nutrition:
+        return l10n.export_block_desc_nutrition;
     }
   }
 
@@ -492,6 +496,27 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         return l10n.export_field_activity_entity;
       case 'activity_entity_id':
         return l10n.export_field_activity_entity_id;
+
+      case 'nutrient_key':
+        return l10n.export_field_nutrient_key;
+      case 'nutrient_label':
+        return l10n.export_field_nutrient_label;
+      case 'nutrient_unit':
+        return l10n.export_field_nutrient_unit;
+      case 'nutrient_total':
+        return l10n.export_field_nutrient_total;
+      case 'mass_with_data_kg':
+        return l10n.export_field_mass_with_data_kg;
+      case 'contributing_records':
+        return l10n.export_field_contributing_records;
+      case 'data_confidence':
+        return l10n.export_field_data_confidence;
+      case 'coverage_percent':
+        return l10n.export_field_coverage_percent;
+      case 'lower_bound_coverage':
+        return l10n.export_field_lower_bound_coverage;
+      case 'upper_bound_coverage':
+        return l10n.export_field_upper_bound_coverage;
 
       default:
         return fieldId;

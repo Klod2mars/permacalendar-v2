@@ -10,6 +10,7 @@ class ExportSchema {
     ExportBlockType.plant: "Plantes (Catalogue)",
     ExportBlockType.activity: "Activités (Journal)",
     ExportBlockType.harvest: "Récoltes (Production)",
+    ExportBlockType.nutrition: "Nutrition (Agrégation)",
   };
 
   static Map<ExportBlockType, String> blockDescriptions = {
@@ -21,6 +22,7 @@ class ExportSchema {
     ExportBlockType.activity:
         "Historique complet des interventions et événements",
     ExportBlockType.harvest: "Données de production et rendements",
+    ExportBlockType.nutrition: "Indicateurs nutritionnels agrégés par nutriment",
   };
 
   static Map<ExportBlockType, List<ExportField>> fields = {
@@ -174,6 +176,50 @@ class ExportSchema {
           id: 'activity_entity_id',
           label: 'ID Cible',
           description: 'ID de l\'objet concerné',
+          isAdvanced: true),
+    ],
+    ExportBlockType.nutrition: [
+      const ExportField(
+          id: 'nutrient_key',
+          label: 'Clé nutriment',
+          description: 'Identifiant technique',
+          isAdvanced: true),
+      const ExportField(
+          id: 'nutrient_label',
+          label: 'Nutriment',
+          description: 'Nom lisible'),
+      const ExportField(
+          id: 'nutrient_unit',
+          label: 'Unité',
+          description: 'Unité de mesure'),
+      const ExportField(
+          id: 'nutrient_total',
+          label: 'Total disponible',
+          description: 'Somme disponible (unités selon le nutriment)'),
+      const ExportField(
+          id: 'mass_with_data_kg',
+          label: 'Masse avec données (kg)',
+          description: 'Masse pour laquelle il existe des données'),
+      const ExportField(
+          id: 'contributing_records',
+          label: 'Nb récoltes contributives',
+          description: 'Nombre d’enregistrements contribuant'),
+      const ExportField(
+          id: 'data_confidence',
+          label: 'Confiance données',
+          description: 'Ratio masse-avec-données / masse totale'),
+      const ExportField(
+          id: 'coverage_percent',
+          label: 'Couverture DRI (%)',
+          description: 'Pourcentage de couverture DRI'),
+      const ExportField(
+          id: 'lower_bound_coverage',
+          label: 'Couverture basse (%)',
+          description: 'Borne basse'),
+      const ExportField(
+          id: 'upper_bound_coverage',
+          label: 'Couverture haute (%)',
+          description: 'Borne haute (estimation)',
           isAdvanced: true),
     ]
   };

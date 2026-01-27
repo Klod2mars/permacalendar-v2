@@ -17,6 +17,9 @@ import 'package:permacalendar/features/harvest/domain/models/harvest_record.dart
 import 'package:permacalendar/features/export/domain/models/export_config.dart';
 import 'package:permacalendar/features/export/domain/models/export_schema.dart';
 import 'package:permacalendar/core/models/activity_v3.dart';
+import 'package:permacalendar/features/statistics/application/services/nutrition_aggregation_service.dart';
+import 'package:permacalendar/features/statistics/domain/models/nutrient_aggregation_result.dart';
+import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 
 class ExcelGeneratorService {
   /// Main Entry Point
@@ -206,6 +209,28 @@ class ExcelGeneratorService {
         _fillSheet(excel, l10n.export_block_activity.split(' (').first, ExportBlockType.activity,
             filteredActivities, config, l10n);
       }
+      if (config.isBlockEnabled(ExportBlockType.nutrition)) {
+        // --- NUTRITION EXPORT ---
+        final plants = _adaptPlantsForNutrition();
+        final nutritionService = NutritionAggregationService(plants);
+        
+        // Date Range Auto-detect if null
+        DateTime start = config.scope.dateRange?.start ?? DateTime.now();
+        DateTime end = config.scope.dateRange?.end ?? DateTime.now();
+
+        if (config.scope.dateRange == null && filteredHarvests.isNotEmpty) {
+           try {
+             start = filteredHarvests.map((e) => e.date).reduce((a, b) => a.isBefore(b) ? a : b);
+             end = filteredHarvests.map((e) => e.date).reduce((a, b) => a.isAfter(b) ? a : b);
+           } catch (_) {}
+        }
+        
+        final result = await nutritionService.aggregate(filteredHarvests, startDate: start, endDate: end, estimateMissing: true);
+        
+        _fillSheet(excel, l10n.export_block_nutrition.split(' (').first, ExportBlockType.nutrition,
+             result.byNutrient.values.toList(), config, l10n);
+      }
+
     } else {
       // FLAT TABLE MODE
       if (config.isBlockEnabled(ExportBlockType.harvest)) {
@@ -516,6 +541,32 @@ class ExcelGeneratorService {
           }
         }
 
+
+        
+        // --- NUTRITION MAPPING ---
+        else if (type == ExportBlockType.nutrition && item is NutrientAggregate) {
+           switch(fid) {
+             case 'nutrient_key': value = item.key; break;
+             case 'nutrient_label': value = _humanizeNutrientKey(item.key); break;
+             case 'nutrient_unit': value = _extractNutrientUnit(item.key); break;
+             case 'nutrient_total': value = item.sumAvailable; break;
+             case 'mass_with_data_kg': value = item.massWithDataKg; break;
+             case 'contributing_records': value = item.contributingRecords; break;
+             case 'data_confidence': 
+                value = (item.dataConfidence * 100).toStringAsFixed(2) + ' %'; 
+                break;
+             case 'coverage_percent': 
+                value = item.coveragePercent.toStringAsFixed(2) + ' %'; 
+                break;
+             case 'lower_bound_coverage': 
+                value = item.lowerBoundCoverage.toStringAsFixed(2) + ' %'; 
+                break;
+             case 'upper_bound_coverage': 
+                value = item.upperBoundCoverage != null ? (item.upperBoundCoverage!.toStringAsFixed(2) + ' %') : ''; 
+                break;
+           }
+        }
+
         // Convert to CellValue
         if (value == null) {
           row.add(TextCellValue(''));
@@ -649,5 +700,40 @@ class ExcelGeneratorService {
 
       default: return fieldId;
     }
+  }
+
+  // --- NUTRITION HELPERS ---
+  List<PlantFreezed> _adaptPlantsForNutrition() {
+    return GardenBoxes.plants.values.map((p) {
+      if (p is Plant) {
+        return PlantFreezed.fromJson(p.toJson());
+      } else if (p is Map) {
+        try {
+          return PlantFreezed.fromJson(Map<String, dynamic>.from(p));
+        } catch (_) {
+          return null;
+        }
+      }
+      return null;
+    }).whereType<PlantFreezed>().toList();
+  }
+
+  String _humanizeNutrientKey(String key) {
+     final parts = key.split('_');
+     if (parts.isEmpty) return key;
+     // Heuristic: remove last part if it looks like a unit, convert rest to Title Case
+     if (parts.length > 1) {
+        final nameParts = parts.sublist(0, parts.length - 1);
+        final name = nameParts.join(' ');
+        if (name.trim().isEmpty) return key;
+        return name[0].toUpperCase() + name.substring(1);
+     }
+     return key[0].toUpperCase() + key.substring(1);
+  }
+
+  String _extractNutrientUnit(String key) {
+     final parts = key.split('_');
+     if (parts.length > 1) return parts.last;
+     return '';
   }
 }

@@ -7,6 +7,7 @@ enum ExportBlockType {
   plant,
   activity,
   harvest,
+  nutrition,
 }
 
 /// Define the export format
@@ -79,7 +80,10 @@ class ExportBlockSelection {
 
   factory ExportBlockSelection.fromJson(Map<String, dynamic> json) =>
       ExportBlockSelection(
-        type: ExportBlockType.values.firstWhere((e) => e.name == json['type']),
+        type: ExportBlockType.values.firstWhere(
+          (e) => e.name == json['type'],
+          orElse: () => ExportBlockType.garden, // Fallback to avoid crash
+        ),
         selectedFieldIds: List<String>.from(json['selectedFieldIds'] ?? []),
         isEnabled: json['isEnabled'] as bool? ?? false,
       );
