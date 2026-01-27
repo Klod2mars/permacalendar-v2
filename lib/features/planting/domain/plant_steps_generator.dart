@@ -214,27 +214,48 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
           category: 'harvest',
           recommended: true,
           completed: planting.isHarvested ||
-              isCompleted('récolte') ||
-              isCompleted('harvest'),
+            isCompleted('récolte') ||
+            isCompleted('harvest'),
           meta: {},
         ));
       }
-    } else if (plant.daysToMaturity > 0) {
-      final start = planted.add(Duration(days: plant.daysToMaturity));
+    }
+      
+      // Calcul de la date estimée en prenant en compte l'avancement initial (repiquage)
+      // Logique alignée avec PlantLifecycleService
+      int maturityDays = plant.daysToMaturity > 0 ? plant.daysToMaturity : 60;
+      
+      double initialProgress = 0.0;
+      if (planting.metadata != null && planting.metadata!['initialGrowthPercent'] != null) {
+         final dynamic raw = planting.metadata!['initialGrowthPercent'];
+         if (raw is num) initialProgress = raw.toDouble().clamp(0.0, 1.0);
+         else if (raw is String) initialProgress = (double.tryParse(raw) ?? 0.0).clamp(0.0, 1.0);
+      } else if (planting.status == 'Planté') {
+         // Fallback pour ancien planting sans metadata explicite
+         initialProgress = 0.3; 
+      }
+
+      final int effectiveMaturityDays = (maturityDays * (1.0 - initialProgress)).ceil().clamp(1, maturityDays);
+      final start = planted.add(Duration(days: effectiveMaturityDays));
+
       steps.add(PlantStep(
         id: 'harvest_estimated',
         title: 'Récolte estimée',
         description:
-            'Estimation basée sur ${plant.daysToMaturity} jours jusqu\'à maturité',
+            'Estimation basée sur ${plant.daysToMaturity} jours (ajusté: ${initialProgress > 0 ? "repiquage" : "semis"})',
         scheduledDate: start,
         category: 'harvest',
         recommended: true,
         completed: now.isAfter(start) ||
             isCompleted('récolte') ||
             isCompleted('harvest'),
-        meta: {'daysToMaturity': plant.daysToMaturity},
+        meta: {
+          'daysToMaturity': plant.daysToMaturity,
+          'effectiveMaturityDays': effectiveMaturityDays,
+          'initialProgress': initialProgress
+        },
       ));
-    }
+    
   } catch (_) {}
 
   // dé-duplication par id (garde la dernière)

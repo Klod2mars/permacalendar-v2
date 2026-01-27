@@ -65,4 +65,58 @@ void main() {
     expect(steps.any((s) => s.id == 'germination'), isFalse);
     expect(steps.any((s) => s.id == 'thinning'), isFalse);
   });
+
+
+  test('Harvest Date: Semé vs Planté differences', () {
+    final now = DateTime.now();
+    // Cas 1 : Semé -> 90 jours
+    final plantingSeeded = Planting(
+      gardenBedId: 'bed1',
+      plantId: 'p1',
+      plantName: 'Tomate',
+      plantedDate: now,
+      quantity: 1,
+      status: 'Semé',
+    );
+    final stepsSeeded = generateSteps(plant, plantingSeeded);
+    final harvestStepSeeded = stepsSeeded.firstWhere((s) => s.id == 'harvest_estimated');
+    // ~90 jours
+    final expectedSeededDate = now.add(const Duration(days: 90));
+    // on accepte une marge d'erreur de 1 jour (heures/minutes) ou exact date match
+    expect(
+      harvestStepSeeded.scheduledDate!.year == expectedSeededDate.year &&
+      harvestStepSeeded.scheduledDate!.month == expectedSeededDate.month &&
+      harvestStepSeeded.scheduledDate!.day == expectedSeededDate.day, 
+      isTrue,
+      reason: 'Semé harvest should be ~90 days after planting'
+    );
+    // Vérif méta
+    expect(harvestStepSeeded.meta!['effectiveMaturityDays'], 90);
+
+
+    // Cas 2 : Planté (default 30% progress) -> 90 * (1 - 0.3) = 63 jours
+    final plantingPlanted = Planting(
+      gardenBedId: 'bed1',
+      plantId: 'p1',
+      plantName: 'Tomate',
+      plantedDate: now,
+      quantity: 1,
+      status: 'Planté',
+      // metadata null ou explicit
+      metadata: {'initialGrowthPercent': 0.3}
+    );
+    final stepsPlanted = generateSteps(plant, plantingPlanted);
+    final harvestStepPlanted = stepsPlanted.firstWhere((s) => s.id == 'harvest_estimated');
+    // ~63 jours
+    final expectedPlantedDate = now.add(const Duration(days: 63));
+    
+    expect(
+      harvestStepPlanted.scheduledDate!.year == expectedPlantedDate.year &&
+      harvestStepPlanted.scheduledDate!.month == expectedPlantedDate.month &&
+      harvestStepPlanted.scheduledDate!.day == expectedPlantedDate.day, 
+      isTrue,
+      reason: 'Planté harvest should be ~63 days after planting'
+    );
+    expect(harvestStepPlanted.meta!['effectiveMaturityDays'], 63);
+  });
 }
