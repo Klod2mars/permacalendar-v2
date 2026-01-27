@@ -78,6 +78,7 @@ final selectedCommuneCoordinatesProvider =
           latitude: p.latitude,
           longitude: p.longitude,
           resolvedName: p.name,
+          countryCode: p.countryCode,
         );
 
         // âœ… FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
@@ -133,9 +134,10 @@ final selectedCommuneCoordinatesProvider =
       latitude: p.latitude,
       longitude: p.longitude,
       resolvedName: p.name,
+      countryCode: p.countryCode,
     );
 
-    // âœ… FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
+    // ✅ FIX : Ne sauvegarder que si les coordonnées ont vraiment changé (évite boucle infinie)
 
     if (settings.lastLatitude == null || settings.lastLongitude == null) {
       // Pas de coordonnées stockées, sauvegarder

@@ -4,6 +4,8 @@ import '../../domain/models/zone.dart';
 import '../providers/weather_providers.dart';
 import 'dart:developer' as developer;
 
+import 'package:permacalendar/core/providers/app_settings_provider.dart';
+
 /// Provider global pour ZoneService
 final zoneServiceProvider = Provider<ZoneService>((ref) {
   final service = ZoneService();
@@ -14,19 +16,22 @@ final zoneServiceProvider = Provider<ZoneService>((ref) {
 /// Provider de la Zone calculée selon la commune active
 final currentZoneProvider = FutureProvider<Zone>((ref) async {
   final service = ref.watch(zoneServiceProvider);
-  
-  // Attendre l'init si nécessaire ? 
-  // initialize() est async mais on peut ne pas attendre bloquant si le service gère son état interne.
-  // Pour être sür, on attend un peu ou on check IsInitialized si on avait exposé cette méthode.
-  // Ici on fait confiance au fait que initialize() est rapide (lecture JSON asset).
+  final settings = ref.watch(appSettingsProvider);
+
   await service.initialize();
   
+  // 1. Check override
+  if (settings.customZoneId != null) {
+    final forced = service.getZoneById(settings.customZoneId!);
+    if (forced != null) {
+      developer.log('Using forced zone: ${forced.id}', name: 'currentZoneProvider');
+      return forced;
+    }
+  }
+
+  // 2. Normal detection
   final coords = await ref.watch(selectedCommuneCoordinatesProvider.future);
-  
-  // Detecter la zone
-  // On pourrait passer le country code si on l'avait dans coords.resolvedName via un Geocoding plus fin
-  // Pour l'instant on se base sur latitude.
-  final zone = service.detectZone(latitude: coords.latitude);
+  final zone = service.detectZone(latitude: coords.latitude, countryCode: coords.countryCode);
   
   developer.log('Detected zone: ${zone.id} (${zone.name}) for lat ${coords.latitude}', name: 'currentZoneProvider');
   
@@ -34,31 +39,37 @@ final currentZoneProvider = FutureProvider<Zone>((ref) async {
 });
 
 /// Provider pour la date de dernier gel (Last Frost)
-/// TODO: Devrait être persisté dans les settings du Jardin
-/// Pour l'instant : calculé dynamiquement selon la zone et l'hémisphère.
 final lastFrostDateProvider = FutureProvider<DateTime>((ref) async {
-  final zone = await ref.watch(currentZoneProvider.future);
+  final settings = ref.watch(appSettingsProvider);
   
+  // 1. Check override
+  if (settings.customLastFrostDate != null) {
+    // Adapter l'année à l'année courante si nécessaire ?
+    // Pour l'instant on retourne la date stockée (qui contient une année).
+    // Idéalement on stocke juste jour/mois et on projette sur l'année.
+    // L'implémentation actuelle stocke une DateTime complète.
+    // On va retourner la date telle quelle, ou projetée ?
+    // Pour simplifier, on prend ce qui est stocké. L'utilisateur devra changer l'année ou on ignore l'année dans le resolver ?
+    // PhaseResolver utilise `lastFrostDate` pour calculer des deltas. Il compare avec `date.month`.
+    // Si la date stockée est 2024 et on est en 2025, c'est pas grave tant que le jour/mois est bon pour l'affichage ?
+    // Sauf si on calcule des jours précis.
+    // Projetons sur l'année en cours pour être safe.
+    final now = DateTime.now();
+    final stored = settings.customLastFrostDate!;
+    // Si la date est passée de beaucoup, on prend l'année suivante ?
+    // Restons simple : on garde l'année en cours.
+    return DateTime(now.year, stored.month, stored.day);
+  }
+
+  final zone = await ref.watch(currentZoneProvider.future);
   final now = DateTime.now();
   
   // Logique simplifiée par défaut
   if (zone.id == 'SH_temperate') {
-    // Hémisphère Sud : Gel fin octobre/début novembre ?
-    // Printemps = Sept-Nov. Dernier gel souvent vers Septembre/Octobre.
-    // Mettons 15 Septembre pour l'instant
-    // Année : si on est en Janvier 2024, le dernier gel était en Sept 2023. La saison de culture est en cours.
-    // Si on est en Juin 2024, le dernier gel sera en Sept 2024.
-    // C'est complexe. Il faut la date de référence pour le "cycle actuel".
-    // Disons qu'on retourne la date de l'année en cours pour simplifier la logique relative.
     return DateTime(now.year, 9, 15);
   } else if (zone.id == 'NH_temperate_europe' || zone.id == 'NH_temperate_na') {
-    // Hémisphère Nord : Saints de Glace (Mi-Mai)
     return DateTime(now.year, 5, 15);
   } else if (zone.id == 'tropical') {
-    // Pas de gel. On retourne une date lointaine ou null ?
-    // PhaseResolver gère null ? Oui.
-    // Mais FutureProvider doit retourner une valeur non null nullable?
-    // On met Jan 1st pour pas casser.
     return DateTime(now.year, 1, 1);
   }
   

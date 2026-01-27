@@ -20,6 +20,8 @@ class AppSettings {
   bool showMoonInOvoid;
   bool showHistoryHint;
   bool showNutritionInterpretation;
+  String? customZoneId;
+  DateTime? customLastFrostDate;
 
   AppSettings({
     required this.themeMode,
@@ -38,6 +40,8 @@ class AppSettings {
     required this.showMoonInOvoid,
     required this.showHistoryHint,
     required this.showNutritionInterpretation,
+    this.customZoneId,
+    this.customLastFrostDate,
   });
 
   /// Valeurs par défaut (conformes aux tests)
@@ -58,6 +62,8 @@ class AppSettings {
         showMoonInOvoid: true,
         showHistoryHint: true,
         showNutritionInterpretation: false,
+        customZoneId: null,
+        customLastFrostDate: null,
       );
 
   /// CopyWith (immutable-style)
@@ -78,6 +84,8 @@ class AppSettings {
     bool? showMoonInOvoid,
     bool? showHistoryHint,
     bool? showNutritionInterpretation,
+    String? customZoneId,
+    DateTime? customLastFrostDate,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -99,6 +107,8 @@ class AppSettings {
       showHistoryHint: showHistoryHint ?? this.showHistoryHint,
       showNutritionInterpretation:
           showNutritionInterpretation ?? this.showNutritionInterpretation,
+      customZoneId: customZoneId ?? this.customZoneId,
+      customLastFrostDate: customLastFrostDate ?? this.customLastFrostDate,
     );
   }
 

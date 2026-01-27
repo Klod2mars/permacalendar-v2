@@ -20,6 +20,7 @@ import '../widgets/settings/backup_restore_section.dart';
 import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
 import '../../../features/settings/presentation/screens/language_settings_page.dart';
+import '../../../features/climate/presentation/providers/zone_providers.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -35,6 +36,8 @@ class SettingsScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildAppInfoSection(context, theme),
+          const SizedBox(height: 24),
+          _buildGardenConfigSection(context, theme, ref),
           const SizedBox(height: 24),
           _buildDisplaySection(context, theme, ref),
           const SizedBox(height: 24),
@@ -340,6 +343,60 @@ class SettingsScreen extends ConsumerWidget {
     ]);
   }
 
+  Widget _buildGardenConfigSection(BuildContext context, ThemeData theme, WidgetRef ref) {
+    // Reconstruire si la zone change
+    final zoneAsync = ref.watch(currentZoneProvider);
+    final frostAsync = ref.watch(lastFrostDateProvider);
+    final settings = ref.watch(appSettingsProvider);
+
+    final currentZone = zoneAsync.asData?.value;
+    final currentFrost = frostAsync.asData?.value;
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          'Configuration du Jardin', // TODO: l10n
+          style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+        CustomCard(
+          child: Column(children: [
+            ListTile(
+              leading: const Icon(Icons.public),
+              title: const Text('Zone Climatique'), // TODO: l10n
+              subtitle: Text(settings.customZoneId != null 
+                  ? '${currentZone?.name ?? settings.customZoneId} (Manuel)' 
+                  : '${currentZone?.name ?? "Détection..."} (Auto)'),
+              trailing: const Icon(Icons.edit),
+              onTap: () => _showGardenConfigDialog(context, ref),
+            ),
+            const Divider(height: 1),
+            ListTile(
+              leading: const Icon(Icons.ac_unit),
+              title: const Text('Dernier Gel (Printemps)'), // TODO: l10n
+              subtitle: Text(settings.customLastFrostDate != null
+                  ? '${_formatDate(currentFrost)} (Manuel)'
+                  : '${_formatDate(currentFrost)} (Estimé)'),
+              trailing: const Icon(Icons.edit),
+              onTap: () => _showGardenConfigDialog(context, ref),
+            ),
+          ]),
+        ),
+      ]);
+  }
+
+  String _formatDate(DateTime? d) {
+    if (d == null) return 'Inconnu';
+    return '${d.day}/${d.month}';
+  }
+
+  void _showGardenConfigDialog(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _GardenConfigSheet(),
+    );
+  }
+
   void _showVersionInfo(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     showDialog(
@@ -383,6 +440,91 @@ class SettingsScreen extends ConsumerWidget {
         title: l10n.settings_terms,
         content: l10n.terms_text,
       ),
+    );
+  }
+}
+
+class _GardenConfigSheet extends ConsumerStatefulWidget {
+  @override
+  ConsumerState<_GardenConfigSheet> createState() => _GardenConfigSheetState();
+}
+
+class _GardenConfigSheetState extends ConsumerState<_GardenConfigSheet> {
+  @override
+  Widget build(BuildContext context) {
+    final zoneService = ref.watch(zoneServiceProvider);
+    final zones = zoneService.getAllZones();
+    final settings = ref.watch(appSettingsProvider);
+    
+    // Valeurs courantes ou overrides
+    final overrideZoneId = settings.customZoneId;
+    final overrideFrost = settings.customLastFrostDate;
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 16, right: 16, top: 16,
+        bottom: 16 + MediaQuery.of(context).viewInsets.bottom
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Configuration du Jardin', style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 20),
+          
+          Text('Zone Climatique', style: Theme.of(context).textTheme.titleMedium),
+          DropdownButtonFormField<String?>(
+            value: overrideZoneId, // null = Auto
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            items: [
+              const DropdownMenuItem(value: null, child: Text('Automatique (Recommandé)')),
+              ...zones.map((z) => DropdownMenuItem(
+                value: z.id,
+                child: Text(z.name),
+              ))
+            ],
+            onChanged: (v) {
+              ref.read(appSettingsProvider.notifier).setCustomZoneId(v);
+              // Force refresh
+              ref.invalidate(currentZoneProvider);
+              ref.invalidate(lastFrostDateProvider);
+            },
+          ),
+          const SizedBox(height: 16),
+          
+          Text('Date de Dernier Gel', style: Theme.of(context).textTheme.titleMedium),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(overrideFrost != null 
+              ? '${overrideFrost.day}/${overrideFrost.month}' 
+              : 'Automatique'),
+            trailing: const Icon(Icons.calendar_today),
+            onTap: () async {
+              final now = DateTime.now();
+              final pick = await showDatePicker(
+                context: context, 
+                initialDate: overrideFrost ?? DateTime(now.year, 5, 1),
+                firstDate: DateTime(now.year, 1, 1),
+                lastDate: DateTime(now.year, 12, 31)
+              );
+              if (pick != null) {
+                ref.read(appSettingsProvider.notifier).setCustomLastFrostDate(pick);
+                ref.invalidate(lastFrostDateProvider);
+              }
+            },
+          ),
+          if (overrideFrost != null)
+            TextButton(
+              onPressed: () {
+                ref.read(appSettingsProvider.notifier).setCustomLastFrostDate(null);
+                 ref.invalidate(lastFrostDateProvider);
+              }, 
+              child: const Text('Réinitialiser la date')
+            ),
+            
+          const SizedBox(height: 24),
+        ],
+      )
     );
   }
 }

@@ -42,6 +42,7 @@ class OpenMeteoService {
       latitude: (first['latitude'] as num).toDouble(),
       longitude: (first['longitude'] as num).toDouble(),
       resolvedName: (first['name'] as String?) ?? communeName,
+      countryCode: (first['country_code'] as String?)?.toUpperCase(),
     );
   }
 
@@ -68,6 +69,7 @@ class OpenMeteoService {
         name: (m['name'] as String?) ?? '—',
         admin1: (m['admin1'] as String?) ?? '',
         country: (m['country'] as String?) ?? '',
+        countryCode: (m['country_code'] as String?)?.toUpperCase(),
         latitude: (m['latitude'] as num).toDouble(),
         longitude: (m['longitude'] as num).toDouble(),
       );
@@ -100,7 +102,6 @@ class OpenMeteoService {
         'daily':
             'precipitation_sum,temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max',
         'past_days': pastDays,
-// ... (inside fetchPrecipitation)
         'forecast_days': forecastDays,
         'timezone': 'UTC', // FORCE UTC for consistent absolute time comparison
       });
@@ -141,39 +142,39 @@ class OpenMeteoService {
     final limit = hourlyTimes.length;
 
     for (var i = 0; i < limit; i++) {
-      // Robustesse sur les longueurs de listes
-      double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
-      int getInt(List<int> list) => i < list.length ? list[i] : 0;
+        // Robustesse sur les longueurs de listes
+        double getVal(List<double> list) => i < list.length ? list[i] : 0.0;
+        int getInt(List<int> list) => i < list.length ? list[i] : 0;
 
-      // Parse time as strict UTC
-      // OpenMeteo returns ISO8601 strings. If we requested timezone=UTC, they look like "2023-01-01T00:00" (usually without Z if not explicitly requested as iso8601, but logic is safer with UTC suffix)
-      // We force .parse(s + 'Z') if missing, or use .utc constructor if needed.
-      // Actually, best way if we requested UTC is to trust the string is GMT time.
-      // But Dart DateTime.parse defaults to local if no offset.
-      // So we append 'Z' to be safe if it's missing.
-      var tStr = hourlyTimes[i];
-      if (!tStr.endsWith('Z') && !tStr.contains('+')) {
-        tStr += 'Z';
+        // Parse time as strict UTC
+        // OpenMeteo returns ISO8601 strings. If we requested timezone=UTC, they look like "2023-01-01T00:00" (usually without Z if not explicitly requested as iso8601, but logic is safer with UTC suffix)
+        // We force .parse(s + 'Z') if missing, or use .utc constructor if needed.
+        // Actually, best way if we requested UTC is to trust the string is GMT time.
+        // But Dart DateTime.parse defaults to local if no offset.
+        // So we append 'Z' to be safe if it's missing.
+        var tStr = hourlyTimes[i];
+        if (!tStr.endsWith('Z') && !tStr.contains('+')) {
+          tStr += 'Z';
+        }
+        final parsedTime = DateTime.parse(tStr).toUtc();
+
+        hourlyPoints.add(
+          HourlyWeatherPoint(
+            time: parsedTime,
+            precipitationMm: getVal(hourlyPrecip),
+            precipitationProbability: getInt(hourlyPrecipProb),
+            temperatureC: getVal(hourlyTemp),
+            apparentTemperatureC: getVal(hourlyApparentTemp),
+            windSpeedkmh: getVal(hourlyWindSpeed),
+            windDirection: getInt(hourlyWindDir),
+            windGustsKmh: getVal(hourlyWindGusts),
+            pressureMsl: getVal(hourlyPressure),
+            weatherCode: getInt(hourlyCodes),
+            cloudCover: getInt(hourlyCloudCover),
+            visibility: getVal(hourlyVisibility),
+          ),
+        );
       }
-      final parsedTime = DateTime.parse(tStr).toUtc();
-
-      hourlyPoints.add(
-        HourlyWeatherPoint(
-          time: parsedTime,
-          precipitationMm: getVal(hourlyPrecip),
-          precipitationProbability: getInt(hourlyPrecipProb),
-          temperatureC: getVal(hourlyTemp),
-          apparentTemperatureC: getVal(hourlyApparentTemp),
-          windSpeedkmh: getVal(hourlyWindSpeed),
-          windDirection: getInt(hourlyWindDir),
-          windGustsKmh: getVal(hourlyWindGusts),
-          pressureMsl: getVal(hourlyPressure),
-          weatherCode: getInt(hourlyCodes),
-          cloudCover: getInt(hourlyCloudCover),
-          visibility: getVal(hourlyVisibility),
-        ),
-      );
-    }
 
     // ... (Daily parsing slightly less critical for hour-by-hour time travel but good to stick to UTC)
     // --- Parsing Daily ---
@@ -303,10 +304,12 @@ class Coordinates {
   final double latitude;
   final double longitude;
   final String? resolvedName;
+  final String? countryCode;
   Coordinates({
     required this.latitude,
     required this.longitude,
     this.resolvedName,
+    this.countryCode,
   });
 }
 
@@ -359,12 +362,14 @@ class PlaceSuggestion {
   final String name;
   final String admin1;
   final String country;
+  final String? countryCode;
   final double latitude;
   final double longitude;
   PlaceSuggestion({
     required this.name,
     required this.admin1,
     required this.country,
+    this.countryCode,
     required this.latitude,
     required this.longitude,
   });
