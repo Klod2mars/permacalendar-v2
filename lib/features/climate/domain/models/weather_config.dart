@@ -420,7 +420,7 @@ class WeatherPresets {
   // Validated by Roman as the perfect "Real Rain".
   // Identical to V5 Storm (0.6).
   static const AestheticParams heavyRain = AestheticParams(
-    quantity: 0.6, 
+    quantity: 0.50, 
     area: 1.0,
     weight: 0.25, // Good falling speed
     size: 0.7, 

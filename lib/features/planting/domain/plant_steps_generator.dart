@@ -25,37 +25,46 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
         .any((a) => a.toLowerCase().contains(title.toLowerCase()));
   }
 
-  // 1) Germination
-  try {
-    final g = plant.germination;
-    if (g != null) {
-      final gm = g['germinationTime'];
-      if (gm != null) {
-        int min = 7, max = 14;
-        if (gm is Map<String, dynamic>) {
-          min = (gm['min'] is num) ? (gm['min'] as num).toInt() : min;
-          max = (gm['max'] is num) ? (gm['max'] as num).toInt() : max;
-        } else if (gm is num) {
-          min = gm.toInt();
-          max = gm.toInt();
+  // Détection si c'est un plant repiqué (Planté) ou si la croissance initiale est avancée
+  final bool isTransplanted = planting.status.toLowerCase() == 'planté' ||
+      (planting.metadata != null &&
+          planting.metadata['initialGrowthPercent'] != null &&
+          (planting.metadata['initialGrowthPercent'] is num) &&
+          (planting.metadata['initialGrowthPercent'] as num) > 0.0);
+
+  // 1) Germination - Uniquement si ce n'est pas un plant repiqué
+  if (!isTransplanted) {
+    try {
+      final g = plant.germination;
+      if (g != null) {
+        final gm = g['germinationTime'];
+        if (gm != null) {
+          int min = 7, max = 14;
+          if (gm is Map<String, dynamic>) {
+            min = (gm['min'] is num) ? (gm['min'] as num).toInt() : min;
+            max = (gm['max'] is num) ? (gm['max'] as num).toInt() : max;
+          } else if (gm is num) {
+            min = gm.toInt();
+            max = gm.toInt();
+          }
+          final mean = ((min + max) / 2).round();
+          final scheduled = planted.add(Duration(days: mean));
+          steps.add(PlantStep(
+            id: 'germination',
+            title: 'Germination attendue',
+            description:
+                'Apparition des premières pousses (estimé à ~$mean jours)',
+            scheduledDate: scheduled,
+            category: 'germination',
+            recommended: true,
+            completed: now.difference(planted).inDays >= mean ||
+                isCompleted('germination'),
+            meta: {'min': min, 'max': max},
+          ));
         }
-        final mean = ((min + max) / 2).round();
-        final scheduled = planted.add(Duration(days: mean));
-        steps.add(PlantStep(
-          id: 'germination',
-          title: 'Germination attendue',
-          description:
-              'Apparition des premières pousses (estimé à ~$mean jours)',
-          scheduledDate: scheduled,
-          category: 'germination',
-          recommended: true,
-          completed: now.difference(planted).inDays >= mean ||
-              isCompleted('germination'),
-          meta: {'min': min, 'max': max},
-        ));
       }
-    }
-  } catch (_) {}
+    } catch (_) {}
+  }
 
   // 2) Watering
   try {
@@ -82,34 +91,37 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
     }
   } catch (_) {}
 
-  // 3) Thinning (Éclaircissage)
-  try {
-    final t = plant.thinning ?? (plant.notificationSettings ?? {})['thinning'];
-    if (t != null) {
-      int daysAfter = 30;
-      if (t is Map<String, dynamic>) {
-        if (t['daysAfterPlanting'] is num)
-          daysAfter = (t['daysAfterPlanting'] as num).toInt();
+  // 3) Thinning (Éclaircissage) - Uniquement si ce n'est pas un plant repiqué
+  if (!isTransplanted) {
+    try {
+      final t =
+          plant.thinning ?? (plant.notificationSettings ?? {})['thinning'];
+      if (t != null) {
+        int daysAfter = 30;
+        if (t is Map<String, dynamic>) {
+          if (t['daysAfterPlanting'] is num)
+            daysAfter = (t['daysAfterPlanting'] as num).toInt();
+        }
+        final scheduled = planted.add(Duration(days: daysAfter));
+        steps.add(PlantStep(
+          id: 'thinning',
+          title: 'Éclaircissage recommandé',
+          description: (t is Map && t['when'] != null)
+              ? t['when'].toString()
+              : 'Éclaircir pour obtenir un espacement optimal',
+          scheduledDate: scheduled,
+          category: 'thinning',
+          recommended: true,
+          completed: now.difference(planted).inDays >= daysAfter ||
+              isCompleted('éclaircissage') ||
+              isCompleted('thinning'),
+          meta: t is Map<String, dynamic>
+              ? Map<String, dynamic>.from(t)
+              : {'raw': t},
+        ));
       }
-      final scheduled = planted.add(Duration(days: daysAfter));
-      steps.add(PlantStep(
-        id: 'thinning',
-        title: 'Éclaircissage recommandé',
-        description: (t is Map && t['when'] != null)
-            ? t['when'].toString()
-            : 'Éclaircir pour obtenir un espacement optimal',
-        scheduledDate: scheduled,
-        category: 'thinning',
-        recommended: true,
-        completed: now.difference(planted).inDays >= daysAfter ||
-            isCompleted('éclaircissage') ||
-            isCompleted('thinning'),
-        meta: t is Map<String, dynamic>
-            ? Map<String, dynamic>.from(t)
-            : {'raw': t},
-      ));
-    }
-  } catch (_) {}
+    } catch (_) {}
+  }
 
   // 4) Weeding (Désherbage)
   try {
