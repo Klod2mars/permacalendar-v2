@@ -8,6 +8,7 @@ import '../../application/providers/nutrition_detailed_provider.dart';
 import '../widgets/nutrition_stats/month_selector.dart';
 import '../widgets/nutrition_stats/nutrient_inventory_widget.dart';
 import '../widgets/nutrition_stats/seasonal_trend_widget.dart';
+import '../../../../core/providers/app_settings_provider.dart';
 import '../widgets/garden_multi_selector.dart';
 
 class GardenNutritionScreen extends ConsumerStatefulWidget {
@@ -36,7 +37,9 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final seasonalAsync = ref.watch(seasonalNutritionAllProvider);
+    // FIX: Use seasonalNutritionProvider to respect filters
+    final seasonalAsync = ref.watch(seasonalNutritionProvider);
+    final appSettings = ref.watch(appSettingsProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -60,7 +63,7 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 0. SELECTOR & HEADER
-              const GardenMultiSelector(),
+              GardenMultiSelector(),
               const SizedBox(height: 16),
 
               Padding(
@@ -127,13 +130,44 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                           ),
                           const SizedBox(height: 24),
 
-                          // INVENTORY
-                          Text(
-                            "Inventaire Nutritionnel",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                          // INVENTORY HEADER + TOGGLE
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Inventaire Nutritionnel",
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    appSettings.showNutritionInterpretation
+                                        ? "Interprétation"
+                                        : "Mesure",
+                                    style: const TextStyle(
+                                      color: Colors.white54,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Switch(
+                                    value: appSettings.showNutritionInterpretation,
+                                    onChanged: (val) {
+                                      ref
+                                          .read(appSettingsProvider.notifier)
+                                          .toggleShowNutritionInterpretation(val);
+                                    },
+                                    activeColor: Colors.greenAccent,
+                                    activeTrackColor: Colors.greenAccent.withOpacity(0.2),
+                                    inactiveThumbColor: Colors.white54,
+                                    inactiveTrackColor: Colors.white10,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 16),
                           Container(
@@ -143,7 +177,10 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(color: Colors.white.withOpacity(0.05)),
                             ),
-                            child: NutrientInventoryWidget(data: monthlyStats.nutrientTotals),
+                            child: NutrientInventoryWidget(
+                              data: monthlyStats.nutrientTotals,
+                              showHumanUnits: appSettings.showNutritionInterpretation,
+                            ),
                           ),
                           const SizedBox(height: 48),
                         ],

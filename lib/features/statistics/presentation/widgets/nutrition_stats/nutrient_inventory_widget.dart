@@ -4,8 +4,13 @@ import 'package:permacalendar/l10n/app_localizations.dart';
 
 class NutrientInventoryWidget extends StatelessWidget {
   final Map<String, double> data;
+  final bool showHumanUnits;
 
-  const NutrientInventoryWidget({super.key, required this.data});
+  const NutrientInventoryWidget({
+    super.key,
+    required this.data,
+    this.showHumanUnits = false,
+  });
 
   // Reference Daily Intakes (approximate for adults)
   // Used only to scale the visual bars linearly within a category.
@@ -160,21 +165,74 @@ class NutrientInventoryWidget extends StatelessWidget {
   }
 
   String _formatValue(String key, double value) {
-    String unit = "";
-    if (key.endsWith('_mg')) unit = "mg";
-    else if (key.endsWith('_mcg')) unit = "µg";
-    else if (key.endsWith('_g')) unit = "g";
-    else if (key.endsWith('_kcal')) unit = "kcal";
+    // 1. Identify base unit
+    String baseUnit = "";
+    double val = value;
     
-    // Format number nicely
+    if (key.endsWith('_mg')) baseUnit = "mg";
+    else if (key.endsWith('_mcg')) baseUnit = "µg";
+    else if (key.endsWith('_g')) baseUnit = "g";
+    else if (key.endsWith('_kcal')) baseUnit = "kcal";
+
+    // 2. Logic for Human Readable Units
+    if (showHumanUnits) {
+      if (baseUnit == "µg") {
+        if (val >= 1000) {
+          val /= 1000;
+          baseUnit = "mg";
+        }
+      }
+      
+      // Check again (cascade)
+      if (baseUnit == "mg") {
+        if (val >= 1000) {
+          val /= 1000;
+          baseUnit = "g";
+        }
+      }
+      
+      // Check again (cascade)
+      if (baseUnit == "g") {
+        if (val >= 1000) {
+          val /= 1000;
+          baseUnit = "kg";
+        }
+      }
+      
+      // Kcal logic
+      if (baseUnit == "kcal") {
+         // usually we keep kcal, maybe Mcal if huge? 
+         // But for gardens, Mcal is possible.
+         if (val >= 1000) {
+            // val /= 1000; 
+            // baseUnit = "Mcal"; // Maybe not standard enough. Keep as is or kCal.
+         }
+      }
+
+      // Formatting for human readable
+      // If > 10, no decimals. If < 10, 1 decimal.
+      String valStr;
+      if (val >= 100) {
+        valStr = val.toStringAsFixed(0);
+      } else if (val >= 10) {
+        valStr = val.toStringAsFixed(0); // 12 g
+      } else {
+        valStr = val.toStringAsFixed(1); // 4.5 g
+      }
+      
+      // Clean
+      if (valStr.endsWith('.0')) valStr = valStr.substring(0, valStr.length - 2);
+      
+      return "$valStr $baseUnit";
+    }
+
+    // 3. Logic for Technical Units (Existing behavior)
     String valStr;
     if (value >= 1000) {
-      valStr = (value / 1000).toStringAsFixed(1) + "k"; // 1500 -> 1.5k (optional? User said "raw data").
-      // Actually user asked for raw data. 1500 is readable. 1500000 is not.
       if (value > 9999) {
-         valStr = value.toStringAsFixed(0); // 12000
+         valStr = value.toStringAsFixed(0);
       } else {
-         valStr = value.toStringAsFixed(0); // 1500
+         valStr = value.toStringAsFixed(0);
       }
     } else if (value < 1) {
        valStr = value.toStringAsFixed(2);
@@ -182,14 +240,10 @@ class NutrientInventoryWidget extends StatelessWidget {
        valStr = value.toStringAsFixed(1);
     }
     
-    // Clean trailing zeros
     if (valStr.endsWith('.0')) valStr = valStr.substring(0, valStr.length - 2);
     if (valStr.endsWith('.00')) valStr = valStr.substring(0, valStr.length - 3);
 
-    // Special case for big values
-    // Keep it raw as requested.
-    
-    return "$valStr $unit";
+    return "$valStr $baseUnit";
   }
 
   String _formatKey(String key, AppLocalizations l10n) {

@@ -19,6 +19,7 @@ class AppSettings {
   bool gardenCalibrationEnabled;
   bool showMoonInOvoid;
   bool showHistoryHint;
+  bool showNutritionInterpretation;
 
   AppSettings({
     required this.themeMode,
@@ -36,6 +37,7 @@ class AppSettings {
     required this.gardenCalibrationEnabled,
     required this.showMoonInOvoid,
     required this.showHistoryHint,
+    required this.showNutritionInterpretation,
   });
 
   /// Valeurs par défaut (conformes aux tests)
@@ -55,6 +57,7 @@ class AppSettings {
         gardenCalibrationEnabled: false,
         showMoonInOvoid: true,
         showHistoryHint: true,
+        showNutritionInterpretation: false,
       );
 
   /// CopyWith (immutable-style)
@@ -74,6 +77,7 @@ class AppSettings {
     bool? gardenCalibrationEnabled,
     bool? showMoonInOvoid,
     bool? showHistoryHint,
+    bool? showNutritionInterpretation,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -93,6 +97,8 @@ class AppSettings {
           gardenCalibrationEnabled ?? this.gardenCalibrationEnabled,
       showMoonInOvoid: showMoonInOvoid ?? this.showMoonInOvoid,
       showHistoryHint: showHistoryHint ?? this.showHistoryHint,
+      showNutritionInterpretation:
+          showNutritionInterpretation ?? this.showNutritionInterpretation,
     );
   }
 
@@ -126,6 +132,6 @@ class AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: $weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled, showMoonInOvoid: $showMoonInOvoid, showHistoryHint: $showHistoryHint)';
+    return 'AppSettings(themeMode: $themeMode, showAnimations: $showAnimations, selectedCommune: $selectedCommune, notificationsEnabled: $notificationsEnabled, alertThreshold: $alertThreshold, temperatureUnit: $temperatureUnit, weatherRadius: $weatherRadius, isRuralMode: $isRuralMode, lastLatitude: $lastLatitude, lastLongitude: $lastLongitude, analysisIntervalMinutes: $analysisIntervalMinutes, backupEnabled: $backupEnabled, gardenCalibrationEnabled: $gardenCalibrationEnabled, showMoonInOvoid: $showMoonInOvoid, showHistoryHint: $showHistoryHint, showNutritionInterpretation: $showNutritionInterpretation)';
   }
 }
