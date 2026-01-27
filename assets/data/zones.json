@@ -1,0 +1,46 @@
+{
+  "zones": [
+    {
+      "id": "NH_temperate_europe",
+      "name": "Tempéré - Europe de l'Ouest",
+      "description": "Climat tempéré océanique, étés doux, hivers frais. Référence historique de l'application.",
+      "monthShift": 0,
+      "tags": ["temperate", "oceanic", "western_europe"]
+    },
+    {
+      "id": "NH_temperate_na",
+      "name": "Tempéré - Amérique du Nord",
+      "description": "Climat tempéré continental, variations fortes, gelées tardives possibles. Privilégie les règles relatives (gel).",
+      "monthShift": 0,
+      "preferRelativeRules": true,
+      "tags": ["temperate", "continental", "north_america"]
+    },
+    {
+      "id": "SH_temperate",
+      "name": "Tempéré - Hémisphère Sud",
+      "description": "Saisons inversées (décalage de 6 mois).",
+      "monthShift": 6,
+      "tags": ["temperate", "southern_hemisphere"]
+    },
+    {
+      "id": "mediterranean",
+      "name": "Méditerranéen",
+      "description": "Hivers doux, étés chauds et secs.",
+      "monthShift": 0,
+      "tags": ["mediterranean", "warm"]
+    },
+    {
+      "id": "tropical",
+      "name": "Tropical",
+      "description": "Saisons définies par les pluies (sèches/humides) plutôt que la température.",
+      "preferSeasonDefinition": true,
+      "tags": ["tropical", "wetdry"]
+    },
+    {
+      "id": "arid",
+      "name": "Aride / Désertique",
+      "description": "Précipitations rares, amplitudes thermiques fortes.",
+      "tags": ["arid"]
+    }
+  ]
+}

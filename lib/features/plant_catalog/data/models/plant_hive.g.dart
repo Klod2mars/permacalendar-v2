@@ -49,13 +49,15 @@ class PlantHiveAdapter extends TypeAdapter<PlantHive> {
       createdAt: fields[29] as DateTime?,
       updatedAt: fields[30] as DateTime?,
       isActive: fields[31] as bool,
+      referenceProfile: (fields[32] as Map?)?.cast<String, dynamic>(),
+      zoneProfiles: (fields[33] as Map?)?.cast<String, dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, PlantHive obj) {
     writer
-      ..writeByte(32)
+      ..writeByte(34)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -119,7 +121,11 @@ class PlantHiveAdapter extends TypeAdapter<PlantHive> {
       ..writeByte(30)
       ..write(obj.updatedAt)
       ..writeByte(31)
-      ..write(obj.isActive);
+      ..write(obj.isActive)
+      ..writeByte(32)
+      ..write(obj.referenceProfile)
+      ..writeByte(33)
+      ..write(obj.zoneProfiles);
   }
 
   @override

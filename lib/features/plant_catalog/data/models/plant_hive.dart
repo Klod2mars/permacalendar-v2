@@ -136,6 +136,14 @@ class PlantHive extends HiveObject {
   /// Indique si la plante est active
   @HiveField(31)
   bool isActive;
+  
+  /// Profil de référence (Europe Ouest)
+  @HiveField(32)
+  Map<String, dynamic>? referenceProfile;
+
+  /// Profils de zones spécifiques (mapping override, règles relatives)
+  @HiveField(33)
+  Map<String, dynamic>? zoneProfiles;
 
   PlantHive({
     required this.id,
@@ -170,6 +178,8 @@ class PlantHive extends HiveObject {
     this.createdAt,
     this.updatedAt,
     this.isActive = true,
+    this.referenceProfile,
+    this.zoneProfiles,
   });
 
   /// Factory constructor pour Créer depuis JSON
@@ -216,6 +226,8 @@ class PlantHive extends HiveObject {
           ? DateTime.parse(json['updatedAt'] as String)
           : DateTime.now(),
       isActive: json['isActive'] as bool? ?? true,
+      referenceProfile: json['referenceProfile'] as Map<String, dynamic>?,
+      zoneProfiles: json['zoneProfiles'] as Map<String, dynamic>?,
     );
   }
 
@@ -254,6 +266,8 @@ class PlantHive extends HiveObject {
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
       'isActive': isActive,
+      'referenceProfile': referenceProfile,
+      'zoneProfiles': zoneProfiles,
     };
   }
 

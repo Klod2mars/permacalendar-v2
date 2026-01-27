@@ -1,7 +1,7 @@
 {
   "schema_version": "2.2.0",
   "metadata": {
-    "generated_at": "2026-01-17T16:33:11.527829",
+    "generated_at": "2026-01-27T11:29:54.545044",
     "source": "plants.json transformation v2",
     "total_plants": 76
   },
@@ -73,14 +73,17 @@
           "radis",
           "pois",
           "salades",
-          "pois (cultures intercalaires la première année)"
+          "pois"
         ],
         "avoid": [
           "fenouil",
           "persil"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -129,6 +132,39 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Artichaut"
     },
     {
@@ -205,7 +241,9 @@
           "oignon"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -254,6 +292,38 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Asperge"
     },
     {
@@ -333,11 +403,10 @@
           "poivron",
           "laitue",
           "carotte",
-          "asperge",
-          "favorise la biodiversité et repousse certains nuisibles"
+          "asperge"
         ],
         "avoid": [
-          "concombre (risque de concurrence)",
+          "concombre",
           "rue officinale"
         ]
       },
@@ -400,6 +469,40 @@
             "min": 21,
             "max": 24
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Basilic"
@@ -483,12 +586,14 @@
           "céleri",
           "radis",
           "épinard",
-          "tournesol (support et microclimat favorable)"
+          "tournesol"
         ],
         "avoid": [
           "ail",
-          "autres légumineuses (pois, fèves, lupin)",
-          "oignon (en excès)"
+          "pois",
+          "fèves",
+          "lupin",
+          "oignon"
         ]
       },
       "sowingMonths3": [
@@ -554,6 +659,42 @@
             "min": 20,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Haricot"
@@ -641,8 +782,7 @@
         "avoid": [
           "autres amaranthacées",
           "chénopode",
-          "épinard",
-          "épinards"
+          "épinard"
         ],
         "notes": [
           "éviter les épinards (même famille)"
@@ -709,6 +849,43 @@
             "min": 20,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Betterave"
@@ -779,16 +956,20 @@
           "haricot",
           "tomate",
           "fève",
-          "haricot (associations bénéfiques non compétitives)"
+          "haricot"
         ],
         "avoid": [
-          "autres crucifères en rotation immédiate",
+          "autres crucifères",
           "carotte",
           "chou",
           "concombre"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
@@ -840,6 +1021,27 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Radis Noir"
     },
     {
@@ -914,14 +1116,19 @@
           "poireau",
           "radis",
           "œillet d’inde",
-          "plantes aromatiques (répulsives naturelles)"
+          "plantes aromatiques"
         ],
         "avoid": [
           "autres choux",
           "plantes de la famille des brassicacées au même endroit"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
@@ -971,6 +1178,45 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Brocoli"
     },
     {
@@ -1049,7 +1295,11 @@
           "autres brassicacées (radis, navets, roquette, moutarde) sur la même parcelle"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -1099,6 +1349,38 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Chou de Bruxelles"
     },
     {
@@ -1172,16 +1454,24 @@
           "menthe",
           "sauge",
           "thym",
-          "camomille (répulsifs naturels)"
+          "camomille"
         ],
         "avoid": [
-          "autres brassicacées (choux, navets, radis)",
+          "navets",
+          "radis",
+          "choux",
           "fraises",
           "poivrons",
           "tomates"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
@@ -1232,6 +1522,44 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Chou pommé"
     },
     {
@@ -1316,11 +1644,12 @@
           "radis",
           "oignon",
           "ail",
-          "chou",
-          "œillets d’inde (contre mouche de la carotte)"
+          "chou"
         ],
         "avoid": [
-          "d'autres ombellifères (céleri, persil) sans rotation",
+          "Céleri",
+          "persil",
+          "autres ombellifères",
           "plantes gourmandes en azote"
         ]
       },
@@ -1386,6 +1715,44 @@
             "min": 20,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Carotte"
@@ -1460,13 +1827,18 @@
           "haricots",
           "oignons",
           "ail",
-          "fenouil (répulsifs naturels contre certains ravageurs)"
+          "fenouil"
         ],
         "avoid": [
           "autres brassicacées (chou, brocoli, navet...), fraises"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
@@ -1521,6 +1893,41 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "chou-fleur"
     },
     {
@@ -1587,15 +1994,17 @@
         ],
         "avoid": [
           "maïs",
-          "plantes gourmandes en eau comme la courgette",
-          "plantes très gourmandes en eau ou en azote",
           "pommes de terre"
         ],
         "notes": [
           "éviter les plantes gourmandes en eau comme la courgette"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -1645,6 +2054,38 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Céleri branche"
     },
     {
@@ -1724,12 +2165,11 @@
           "chou",
           "laitue",
           "radis",
-          "carottes",
           "navets",
           "haricots nains"
         ],
         "avoid": [
-          "betterave (même famille)",
+          "betterave",
           "poireau"
         ]
       },
@@ -1795,6 +2235,44 @@
             "min": 20,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Blette"
@@ -1878,8 +2356,7 @@
           "concombre",
           "céleri",
           "pomme de terre",
-          "fraise",
-          "repousse certains ravageurs naturellement"
+          "fraise"
         ],
         "avoid": [
           "betterave",
@@ -1908,9 +2385,9 @@
         "SPRING"
       ],
       "harvestSeason": [
-        "SUMMER",
         "SPRING",
-        "AUTUMN"
+        "AUTUMN",
+        "SUMMER"
       ],
       "notificationSettings": {
         "watering": {
@@ -1948,6 +2425,42 @@
             "min": 18,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Ciboulette"
@@ -2020,13 +2533,19 @@
         "avoid": [
           "concurrence",
           "plantes envahissantes",
-          "plantes envahissantes ou à forte concurrence racinaire"
+          "plantes à concurrence racinaire"
         ],
         "notes": [
-          "mais éviter la concurrence avec plantes envahissantes"
+          "éviter la concurrence avec plantes envahissantes"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -2076,6 +2595,29 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Coriandre"
     },
     {
@@ -2157,19 +2699,20 @@
           "ail",
           "laitue",
           "épinard",
-          "capucine (piège)",
-          "ail (répulsifs naturels)"
+          "capucine",
+          "ail"
         ],
         "avoid": [
-          "autres cucurbitacées (concombre, potiron, melon)",
+          "autres cucurbitacées",
+          "concombre",
+          "potiron",
+          "melon",
           "pommes de terre"
         ]
       },
       "sowingMonths3": [
-        "Mar",
         "Apr",
-        "May",
-        "Aug"
+        "May"
       ],
       "harvestMonths3": [
         "Jan",
@@ -2222,6 +2765,48 @@
             "min": 22,
             "max": 25
           }
+        }
+      },
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Courgette"
@@ -2305,11 +2890,14 @@
           "haricot",
           "maïs",
           "betterave",
-          "capucines (piège à pucerons)"
+          "capucines"
         ],
         "avoid": [
           "aromatiques fortes comme la sauge",
-          "autres cucurbitacées (courgettes, courges, melons)",
+          "autres cucurbitacées",
+          "courgettes",
+          "courges",
+          "melons",
           "pommes de terre"
         ]
       },
@@ -2370,6 +2958,39 @@
             "min": 20,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Concombre"
@@ -2444,14 +3065,20 @@
           "oignons",
           "choux",
           "concombres",
-          "brocolis (effet répulsif contre certains nuisibles)"
+          "brocolis"
         ],
         "avoid": [
           "autres apiacées",
           "fenouil"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -2499,6 +3126,29 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Aneth"
     },
     {
@@ -2580,10 +3230,10 @@
           "laitue",
           "épinard",
           "oignon",
-          "soucis (contre certains ravageurs)"
+          "soucis"
         ],
         "avoid": [
-          "autres solanacées au même endroit",
+          "autres solanacée",
           "poivrons",
           "pommes de terre",
           "tomates"
@@ -2648,6 +3298,41 @@
             "min": 25,
             "max": 28
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Aubergine"
@@ -2792,6 +3477,36 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "May",
+              "Oct"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Ail"
     },
     {
@@ -2871,10 +3586,18 @@
           "œillets d’inde"
         ],
         "avoid": [
-          "autres brassicacées (choux, navets, radis, roquette, moutarde) dans les 5-6 ans"
+          "choux",
+          "navets",
+          "radis",
+          "roquette",
+          "moutarde"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
@@ -2925,6 +3648,40 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Chou kale"
     },
     {
@@ -3077,6 +3834,36 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "May"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Jun",
+              "Jul",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Poireau"
     },
     {
@@ -3214,9 +4001,9 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SUMMER",
         "SPRING",
-        "AUTUMN"
+        "AUTUMN",
+        "SUMMER"
       ],
       "notificationSettings": {
         "watering": {
@@ -3253,6 +4040,46 @@
           "germination_optimal": {
             "temperature": 15
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Laitue"
@@ -3329,8 +4156,7 @@
           "carotte",
           "épinard",
           "poireaux",
-          "choux",
-          "carottes tardives"
+          "choux"
         ],
         "avoid": [
           "cultures ayant eu sclérotinia récemment",
@@ -3394,6 +4220,38 @@
             "min": 10,
             "max": 18
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "Aug",
+              "Oct"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Jun",
+              "Jul",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Mâche"
@@ -3476,7 +4334,12 @@
           "solanacées"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -3524,6 +4387,39 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Apr",
+        "May"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Melon"
     },
     {
@@ -3642,9 +4538,9 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SUMMER",
         "SPRING",
-        "AUTUMN"
+        "AUTUMN",
+        "SUMMER"
       ],
       "notificationSettings": {
         "watering": {
@@ -3682,6 +4578,47 @@
             "min": 19,
             "max": 19
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Navet"
@@ -3760,17 +4697,14 @@
           "tomate",
           "chou",
           "radis",
-          "épinard",
-          "fèves)"
+          "épinard"
         ],
         "avoid": [
           "fèves",
           "légumineuses",
           "pois"
         ],
-        "notes": [
-          "chou (éviter pois"
-        ]
+        "notes": []
       },
       "sowingMonths3": [
         "Feb",
@@ -3825,6 +4759,35 @@
             "min": 15,
             "max": 15
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Apr",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Oignon"
@@ -3909,11 +4872,12 @@
           "tomate",
           "poireau",
           "radis",
-          "carotte (avec précaution)",
-          "ciboulette (repousse la mouche de la carotte)"
+          "ciboulette"
         ],
         "avoid": [
-          "légumes de la même famille (carotte, céleri, panais) au même endroit — risque de maladies communes"
+          "carotte",
+          "céleri",
+          "panais"
         ]
       },
       "sowingMonths3": [
@@ -3983,6 +4947,46 @@
             "min": 20,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Persil"
@@ -4064,7 +5068,7 @@
           "laitue",
           "radis",
           "haricot nain",
-          "ail (répulsifs naturels contre certains insectes)"
+          "ail"
         ],
         "avoid": [
           "autres apiacées",
@@ -4128,6 +5132,36 @@
             "min": 18,
             "max": 18
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Panais"
@@ -4201,9 +5235,7 @@
           "oignon",
           "souci",
           "capucine",
-          "trèfle",
-          "trèfle (attirent auxiliaires",
-          "répulsifs naturels)"
+          "trèfle"
         ],
         "avoid": [
           "aubergine",
@@ -4213,7 +5245,10 @@
           "tomate"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -4261,6 +5296,37 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Pomme de terre"
     },
     {
@@ -4341,7 +5407,10 @@
           "radis"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -4391,6 +5460,37 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Courge Potiron "
     },
     {
@@ -4455,28 +5555,34 @@
           "épinard",
           "oignon",
           "poireau",
-          "capucine",
-          "laisser en bordure pour attirer auxiliaires"
+          "capucine"
         ],
         "avoid": [
-          "concurrence",
-          "plantes gourmandes",
-          "plantes très gourmandes en azote ou en espace (ex: choux volumineux)"
+          "concurrence azote",
+          "concurrence eau"
         ],
         "notes": [
           "éviter la concurrence avec plantes gourmandes"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SUMMER",
         "SPRING",
-        "AUTUMN"
+        "AUTUMN",
+        "SUMMER"
       ],
       "notificationSettings": {
         "watering": {
@@ -4519,6 +5625,31 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Roquette"
     },
     {
@@ -4594,14 +5725,15 @@
           "sauge",
           "choux",
           "carottes",
-          "haricots",
-          "repousse naturelle des insectes grâce aux huiles essentielles"
+          "haricots"
         ],
-        "avoid": [
-          "plantes gourmandes en eau ou en sol riche (ex: courges, laitues)"
-        ]
+        "avoid": []
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -4650,6 +5782,44 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Romarin"
     },
     {
@@ -4713,16 +5883,17 @@
       "biologicalControl": {},
       "companionPlanting": {
         "beneficial": [
-          "aucun compagnon spécifique documenté",
-          "mais paillage vivant (phacélie",
-          "trèfle) utile"
+          "paillage vivant",
+          "trèfle",
+          "phacélie"
         ],
-        "avoid": [
-          "cultures nécessitant un sol lourd",
-          "plantes gourmandes en azote"
-        ]
+        "avoid": []
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -4772,6 +5943,27 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Salsifis"
     },
     {
@@ -4854,7 +6046,7 @@
           "oignon",
           "poireau",
           "épinard",
-          "menthe (répulsif contre altises)"
+          "menthe (répulsif altises)"
         ],
         "avoid": [
           "autres astéracées",
@@ -4933,6 +6125,50 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Scarole"
     },
     {
@@ -5006,11 +6242,11 @@
           "sarriette",
           "aneth",
           "œillet d'inde",
-          "aneth (répulsifs naturels contre la mouche de l’oignon)"
+          "aneth (mouche de l’oignon)"
         ],
         "avoid": [
           "ail",
-          "autres alliacées (risque de maladies communes)",
+          "autres alliacées",
           "oignon",
           "poireau"
         ]
@@ -5065,6 +6301,33 @@
             "min": 15,
             "max": 15
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Échalote"
@@ -5148,7 +6411,7 @@
           "céleri",
           "oignon",
           "ail",
-          "choux (favorisent la croissance ou partagent l'espace efficacement)"
+          "choux"
         ],
         "avoid": [
           "betterave",
@@ -5222,6 +6485,44 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Épinard"
     },
     {
@@ -5292,16 +6593,20 @@
           "tournesol",
           "pois",
           "courges (système milpa)",
-          "tournesols (brise",
-          "vent)"
+          "tournesols (brise vent)"
         ],
         "avoid": [
           "betterave",
-          "céleri",
-          "plantes solitaires (pollinisation inefficace)"
+          "céleri"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -5350,6 +6655,40 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "May",
+        "Jun"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Maïs doux"
     },
     {
@@ -5420,14 +6759,16 @@
           "sauge",
           "chou",
           "carotte",
-          "tomate (protège contre certains nuisibles)",
-          "plantes méditerranéennes à faible besoin hydrique"
+          "tomate"
         ],
         "avoid": [
           "plantes gourmandes en eau (ex: courgette, laitue) — incompatibilité hydrique"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Apr",
+        "May"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING"
@@ -5477,6 +6818,43 @@
       },
       "sowingMonths": [],
       "harvestMonths": [],
+      "plantingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Sep",
+        "Oct"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Thym"
     },
     {
@@ -5559,7 +6937,7 @@
           "persil",
           "œillet d'inde",
           "capucine",
-          "basilic contre nématodes"
+          "basilic"
         ],
         "avoid": [
           "concombre",
@@ -5627,6 +7005,41 @@
             "min": 22,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Apr",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Tomate"
@@ -5702,12 +7115,9 @@
           "coriandre",
           "légumineuses",
           "légumes feuilles",
-          "coriandre (contre doryphores)"
+          "coriandre"
         ],
-        "avoid": [
-          "cultures exigeantes en azote juste après",
-          "légumes sensibles à l'ombre"
-        ]
+        "avoid": []
       },
       "sowingMonths3": [
         "Mar",
@@ -5760,6 +7170,32 @@
             "min": 19,
             "max": 19
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "May"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Topinambour"
@@ -5873,8 +7309,8 @@
         "Dec"
       ],
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -5915,6 +7351,39 @@
             "min": 15,
             "max": 22
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Carotte blanche"
@@ -6063,6 +7532,35 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Poivron"
     },
     {
@@ -6162,7 +7660,15 @@
           "maïs doux"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
         "SPRING",
@@ -6204,6 +7710,50 @@
             "min": 15,
             "max": 24
           }
+        }
+      },
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Bok choy"
@@ -6310,6 +7860,27 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Chayotte"
     },
     {
@@ -6411,8 +7982,8 @@
       ],
       "harvestMonths3": [],
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -6450,6 +8021,30 @@
             "min": 18,
             "max": 24
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Chou brocoli romanesco"
@@ -6549,11 +8144,16 @@
           "autres Brassicacées"
         ]
       },
-      "sowingMonths3": [],
+      "sowingMonths3": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
       "harvestMonths3": [],
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -6561,6 +8161,54 @@
         "WINTER"
       ],
       "notificationSettings": {},
+      "plantingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "J",
+              "A",
+              "S",
+              "O",
+              "N",
+              "D"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Chou cabus rouge"
     },
     {
@@ -6688,9 +8336,9 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SUMMER",
         "SPRING",
         "AUTUMN",
+        "SUMMER",
         "WINTER"
       ],
       "notificationSettings": {
@@ -6729,6 +8377,48 @@
             "min": 15,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Chou Daubenton"
@@ -6871,6 +8561,69 @@
             "min": 13,
             "max": 24
           }
+        }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "A",
+              "M",
+              "J",
+              "S",
+              "O",
+              "N",
+              "D"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Chou Mizuna"
@@ -7019,6 +8772,35 @@
             "min": 20,
             "max": 30
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Courge Butternut"
@@ -7171,6 +8953,35 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Courge musquée muscade"
     },
     {
@@ -7312,6 +9123,37 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Courge patidou"
     },
     {
@@ -7420,8 +9262,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -7464,6 +9306,42 @@
             "min": 15,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Cresson de fontaine"
@@ -7566,8 +9444,8 @@
         "Feb"
       ],
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "AUTUMN",
@@ -7609,6 +9487,38 @@
             "min": 15,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Endive"
@@ -7721,8 +9631,8 @@
         "AUTUMN"
       ],
       "harvestSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "notificationSettings": {
         "watering": {
@@ -7759,6 +9669,45 @@
             "min": 10,
             "max": 21
           }
+        }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "Oct",
+        "Nov"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "Oct",
+              "Nov"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "A",
+              "M",
+              "J",
+              "J"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Fève"
@@ -7909,6 +9858,37 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Gobo (Grande Bardane)"
     },
     {
@@ -8007,8 +9987,8 @@
         "Oct"
       ],
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -8050,6 +10030,36 @@
             "min": 21,
             "max": 30
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Haricot à rames"
@@ -8183,6 +10193,42 @@
           }
         }
       },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "A",
+              "S",
+              "O"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Haricot coco"
     },
     {
@@ -8269,8 +10315,8 @@
         ]
       },
       "plantingSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -8312,6 +10358,44 @@
             "min": 21,
             "max": 25
           }
+        }
+      },
+      "sowingMonths3": [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "J",
+              "A",
+              "S"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Haricot jaune"
@@ -8450,6 +10534,33 @@
             "min": 15,
             "max": 20
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Lentille"
@@ -8596,6 +10707,37 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Lupin"
     },
     {
@@ -8729,6 +10871,61 @@
             "min": 15,
             "max": 20
           }
+        }
+      },
+      "sowingMonths3": [
+        "Feb",
+        "Mar",
+        "Aug",
+        "Sep"
+      ],
+      "plantingMonths3": [
+        "Jan",
+        "Feb",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "planting": {
+            "type": "months",
+            "months": [
+              "Jan",
+              "Feb",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "M",
+              "J",
+              "J",
+              "A",
+              "S"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Oignon blanc"
@@ -8877,6 +11074,38 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Oignon rouge"
     },
     {
@@ -9016,6 +11245,36 @@
             "min": 21,
             "max": 29
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Pastèque"
@@ -9161,6 +11420,35 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jun"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Courge pâtisson"
     },
     {
@@ -9260,8 +11548,8 @@
         "SPRING"
       ],
       "harvestSeason": [
-        "SUMMER",
-        "SPRING"
+        "SPRING",
+        "SUMMER"
       ],
       "notificationSettings": {
         "watering": {
@@ -9302,11 +11590,40 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun",
+              "Jul"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Petit pois"
     },
     {
       "id": "red_chili",
-      "image": "piment.jpg",
+      "image": "piment_rouge.jpg",
       "scientificName": "Capsicum annuum L.",
       "family": "Solanaceae",
       "daysToMaturity": 80,
@@ -9446,6 +11763,36 @@
             "min": 22,
             "max": 28
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Piment rouge"
@@ -9593,6 +11940,35 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Pois cassé"
     },
     {
@@ -9733,6 +12109,36 @@
             "min": 15,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Pois chiche"
@@ -9879,6 +12285,36 @@
             "min": 20,
             "max": 28
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Poivron vert"
@@ -10031,6 +12467,39 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Radis de 18 jours"
     },
     {
@@ -10137,8 +12606,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "UNKNOWN_Fin d'été",
-        "SPRING"
+        "SPRING",
+        "UNKNOWN_Fin d'été"
       ],
       "harvestSeason": [
         "SUMMER",
@@ -10182,6 +12651,40 @@
             "min": 15,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Apr",
+              "May",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Radis Daikon"
@@ -10326,6 +12829,36 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Radis violet d'hiver"
     },
     {
@@ -10432,8 +12965,8 @@
         "Nov"
       ],
       "plantingSeason": [
-        "UNKNOWN_Fin d'été",
-        "SPRING"
+        "SPRING",
+        "UNKNOWN_Fin d'été"
       ],
       "harvestSeason": [
         "SPRING",
@@ -10475,6 +13008,40 @@
             "min": 15,
             "max": 24
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jul",
+              "Aug",
+              "Sep"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "May",
+              "Jun",
+              "Sep",
+              "Oct",
+              "Nov"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Radis Watermelon"
@@ -10625,6 +13192,38 @@
           }
         }
       },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr",
+              "May"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
+        }
+      },
       "commonName_legacy_dev": "Tomate cerise rouge"
     },
     {
@@ -10762,6 +13361,36 @@
             "min": 20,
             "max": 25
           }
+        }
+      },
+      "referenceProfile": {
+        "referenceId": "NH_temperate_europe",
+        "phases": {
+          "sowing": {
+            "type": "months",
+            "months": [
+              "Feb",
+              "Mar",
+              "Apr"
+            ]
+          },
+          "harvest": {
+            "type": "months",
+            "months": [
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct"
+            ]
+          }
+        }
+      },
+      "zoneProfiles": {
+        "NH_temperate_na": {
+          "preferRelativeRules": true
+        },
+        "SH_temperate": {
+          "monthShift": 6
         }
       },
       "commonName_legacy_dev": "Tomate Cœur de Bœuf"

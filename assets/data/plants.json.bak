@@ -172,35 +172,7 @@
         "Mar",
         "Apr",
         "May"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "asparagus",
@@ -365,34 +337,7 @@
         "Mar",
         "Apr",
         "May"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "basil",
@@ -572,40 +517,6 @@
             "message": "Conditions optimales de germination du basilic (21-24°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -722,8 +633,8 @@
         "avoid": [
           "ail",
           "pois",
-          "fèves",
-          "lupin",
+		  "fèves", 
+		  "lupin",
           "oignon"
         ]
       },
@@ -793,42 +704,6 @@
             "max": 25,
             "message": "Conditions optimales de germination atteintes (20-25°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -1017,43 +892,6 @@
             "message": "Température optimale de germination atteinte (20°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -1218,28 +1056,7 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": [],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      "harvestMonths": []
     },
     {
       "id": "broccoli",
@@ -1412,39 +1229,7 @@
         "Jun",
         "Jul",
         "Aug"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "brussels_sprout",
@@ -1615,35 +1400,7 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "cabbage",
@@ -1752,9 +1509,9 @@
           "camomille"
         ],
         "avoid": [
-          "navets",
-          "radis",
-          "choux",
+          "navets", 
+		  "radis",
+		  "choux",
           "fraises",
           "poivrons",
           "tomates"
@@ -1823,39 +1580,7 @@
         "May",
         "Jun",
         "Jul"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "carrot",
@@ -1975,8 +1700,8 @@
         ],
         "avoid": [
           "Céleri",
-          "persil",
-          "autres ombellifères",
+		  "persil",
+		  "autres ombellifères",
           "plantes gourmandes en azote"
         ]
       },
@@ -2044,44 +1769,6 @@
             "max": 20,
             "message": "Température optimale de germination atteinte (20°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -2258,37 +1945,7 @@
         "Jun",
         "Jul",
         "Aug"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "celery_branch",
@@ -2453,35 +2110,7 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "chard",
@@ -2662,44 +2291,6 @@
             "max": 20,
             "message": "Température optimale de germination atteinte (20°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -2884,42 +2475,6 @@
             "message": "Conditions optimales de germination atteintes (18-20°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -3082,30 +2637,7 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": [],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      "harvestMonths": []
     },
     {
       "id": "courgette",
@@ -3227,9 +2759,9 @@
         ],
         "avoid": [
           "autres cucurbitacées",
-          "concombre",
-          "potiron",
-          "melon",
+		  "concombre",
+		  "potiron",
+		  "melon",
           "pommes de terre"
         ]
       },
@@ -3296,45 +2828,7 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "cucumber",
@@ -3452,9 +2946,9 @@
         "avoid": [
           "aromatiques fortes comme la sauge",
           "autres cucurbitacées",
-          "courgettes",
-          "courges",
-          "melons",
+		  "courgettes",
+		  "courges",	
+		  "melons",
           "pommes de terre"
         ]
       },
@@ -3518,39 +3012,6 @@
             "max": 25,
             "message": "Conditions optimales de germination (20-25°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -3718,30 +3179,7 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": [],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      "harvestMonths": []
     },
     {
       "id": "eggplant",
@@ -3923,41 +3361,6 @@
             "message": "Conditions optimales de germination pour l'aubergine (25-28°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -4135,36 +3538,6 @@
             "message": "Conditions optimales de germination atteintes (15°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "May",
-              "Oct"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -4280,11 +3653,11 @@
         ],
         "avoid": [
           "choux",
-          "navets",
-          "radis",
-          "roquette",
-          "moutarde"
-        ]
+		  "navets", 
+		  "radis",	
+		  "roquette",
+		  "moutarde"
+		]
       },
       "sowingMonths3": [
         "Apr",
@@ -4346,36 +3719,7 @@
         "May",
         "Jun",
         "Jul"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "leek",
@@ -4558,36 +3902,6 @@
             "max": 19,
             "message": "Conditions optimales de germination atteintes (18-19°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "May"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Jun",
-              "Jul",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -4791,46 +4105,6 @@
             "message": "Conditions optimales de germination (15°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -5000,38 +4274,6 @@
             "max": 18,
             "message": "Conditions optimales de germination (10-18°C) — semer en soirée si sol frais"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "Aug",
-              "Oct"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Jun",
-              "Jul",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -5207,36 +4449,7 @@
       "plantingMonths3": [
         "Apr",
         "May"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "navet",
@@ -5422,47 +4635,6 @@
             "message": "Conditions optimales de germination atteintes (19°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -5579,7 +4751,9 @@
           "légumineuses",
           "pois"
         ],
-        "notes": []
+        "notes": [
+          
+        ]
       },
       "sowingMonths3": [
         "Feb",
@@ -5637,35 +4811,6 @@
             "max": 15,
             "message": "Température optimale de germination atteinte (15°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Apr",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -5781,7 +4926,7 @@
         ],
         "avoid": [
           "carotte",
-          "céleri",
+		  "céleri",
           "panais"
         ]
       },
@@ -5852,46 +4997,6 @@
             "max": 25,
             "message": "Conditions optimales de germination du persil (20-25°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -6070,36 +5175,6 @@
             "message": "Température optimale de germination atteinte (18°C) pour vos panais."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -6204,6 +5279,7 @@
           "souci",
           "capucine",
           "trèfle"
+          
         ],
         "avoid": [
           "aubergine",
@@ -6269,34 +5345,7 @@
       "plantingMonths3": [
         "Mar",
         "Apr"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "courge_potiron",
@@ -6466,34 +5515,7 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "roquette",
@@ -6561,7 +5583,7 @@
         "Ne pas trop fertiliser en azote pour conserver une saveur équilibrée",
         "Pailler pour garder le sol frais et limiter la montée à graines",
         "Laisser des zones non récoltées pour favoriser la biodiversité et la régulation naturelle des parasites",
-        "laisser en bordure pour attirer auxiliaires"
+		"laisser en bordure pour attirer auxiliaires"
       ],
       "biologicalControl": {
         "preparations": [
@@ -6588,10 +5610,11 @@
           "oignon",
           "poireau",
           "capucine"
+          
         ],
         "avoid": [
           "concurrence azote",
-          "concurrence eau"
+ 		  "concurrence eau"
         ],
         "notes": [
           "éviter la concurrence avec plantes gourmandes"
@@ -6656,32 +5679,7 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": [],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      "harvestMonths": []
     },
     {
       "id": "rosemary",
@@ -6788,7 +5786,9 @@
           "carottes",
           "haricots"
         ],
-        "avoid": []
+        "avoid": [
+          
+        ]
       },
       "sowingMonths3": [
         "Mar",
@@ -6852,38 +5852,7 @@
         "May",
         "Sep",
         "Oct"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "salsify",
@@ -6980,9 +5949,11 @@
         "beneficial": [
           "paillage vivant",
           "trèfle",
-          "phacélie"
+		  "phacélie"
         ],
-        "avoid": []
+        "avoid": [
+          
+        ]
       },
       "sowingMonths3": [
         "Mar",
@@ -7039,28 +6010,7 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": [],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      "harvestMonths": []
     },
     {
       "id": "scarole",
@@ -7157,7 +6107,9 @@
           "Coccinelles (contre pucerons)",
           "Nématodes bénéfiques (contre chenilles)"
         ],
-        "companionPlants": []
+        "companionPlants": [
+         
+        ]
       },
       "harvestTime": "Environ 90 jours après semis, selon variété et conditions",
       "companionPlanting": {
@@ -7246,50 +6198,6 @@
             "max": 15,
             "message": "Température optimale de germination atteinte (15°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -7455,33 +6363,6 @@
             "max": 15,
             "message": "Température optimale de germination atteinte (15°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -7670,44 +6551,6 @@
             "message": "Conditions optimales de germination pour les épinards (15-18°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -7877,37 +6720,7 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "thyme",
@@ -8078,37 +6891,7 @@
         "May",
         "Sep",
         "Oct"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "tomato",
@@ -8291,41 +7074,6 @@
             "message": "Conditions optimales de germination (22-25°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Apr",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -8431,7 +7179,9 @@
           "légumes feuilles",
           "coriandre"
         ],
-        "avoid": []
+        "avoid": [
+          
+        ]
       },
       "sowingMonths3": [
         "Mar",
@@ -8485,32 +7235,6 @@
             "max": 19,
             "message": "Température optimale de germination atteinte (19°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "May"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -8705,39 +7429,6 @@
             "message": "Température optimale de germination des carottes blanches"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -8925,35 +7616,6 @@
             "max": 28,
             "message": "Température optimale de germination atteinte"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -9148,43 +7810,7 @@
         "Jul",
         "Aug",
         "Sep"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "chayotte",
@@ -9321,27 +7947,6 @@
             "max": null,
             "message": null
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -9523,30 +8128,6 @@
             "message": null
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -9695,49 +8276,7 @@
         "May",
         "Jun",
         "Jul"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "J",
-              "A",
-              "S",
-              "O",
-              "N",
-              "D"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "chou-daubenton",
@@ -9936,48 +8475,6 @@
             "message": "Température idéale pour l'enracinement des boutures."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -10167,54 +8664,7 @@
         "Aug",
         "Sep",
         "Oct"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "A",
-              "M",
-              "J",
-              "S",
-              "O",
-              "N",
-              "D"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "butternut_squash",
@@ -10396,35 +8846,6 @@
             "max": 30,
             "message": "Conditions idéales pour la levée (20-30°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -10613,35 +9034,6 @@
             "message": "Température idéale atteinte pour la germination des graines"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -10815,37 +9207,6 @@
             "max": 20,
             "message": "Température idéale pour la levée de vos graines de patidou (20°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -11032,42 +9393,6 @@
             "message": "Fenêtre de germination idéale (15-20°C)."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -11243,38 +9568,6 @@
             "max": 20,
             "message": "Température idéale pour la levée de vos semis d'endives."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Oct",
-              "Nov",
-              "Dec",
-              "Jan",
-              "Feb"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -11466,39 +9759,7 @@
         "Apr",
         "Oct",
         "Nov"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "Oct",
-              "Nov"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "A",
-              "M",
-              "J",
-              "J"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "gobo",
@@ -11681,37 +9942,6 @@
             "message": "Conditions optimales pour la levée du gobo (15–20 °C)."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -11886,36 +10116,6 @@
             "message": "Température idéale pour la levée de vos haricots (21-30°C)."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -12084,37 +10284,7 @@
         "May",
         "Jun",
         "Jul"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "A",
-              "S",
-              "O"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "yellow_bean",
@@ -12285,38 +10455,7 @@
         "Jun",
         "Jul",
         "Aug"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "J",
-              "A",
-              "S"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "lentil",
@@ -12485,33 +10624,6 @@
             "max": 20,
             "message": "Température idéale pour la levée de vos lentilles"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -12688,37 +10800,6 @@
             "max": 15,
             "message": "Conditions optimales pour la germination des lupins (10-15°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -12899,49 +10980,7 @@
         "Oct",
         "Nov",
         "Dec"
-      ],
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "planting": {
-            "type": "months",
-            "months": [
-              "Jan",
-              "Feb",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "M",
-              "J",
-              "J",
-              "A",
-              "S"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
-      }
+      ]
     },
     {
       "id": "red_onion",
@@ -13117,38 +11156,6 @@
             "message": "Température idéale pour la levée de vos oignons"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -13322,36 +11329,6 @@
             "max": 29,
             "message": "Conditions optimales de germination (21-29°C)"
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -13528,35 +11505,6 @@
             "message": "Température idéale pour la levée de vos pâtissons"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jun"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -13730,35 +11678,6 @@
             "max": 18,
             "message": "Conditions idéales pour la levée de vos petits pois (10-18°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun",
-              "Jul"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -13938,36 +11857,6 @@
             "message": "Température idéale pour la levée de vos piments (22-28°C)"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -14144,35 +12033,6 @@
             "message": "Conditions idéales pour la levée de vos pois cassés"
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -14346,36 +12206,6 @@
             "max": 25,
             "message": "Conditions optimales pour la levée des pois chiches (15-25°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -14556,36 +12386,6 @@
             "message": "Conditions de germination optimales atteintes (20-28°C)."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -14765,39 +12565,6 @@
             "max": 30,
             "message": "Conditions de germination optimales atteintes."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -14984,40 +12751,6 @@
             "message": "Température idéale pour la levée rapide de vos graines."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Apr",
-              "May",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -15190,36 +12923,6 @@
             "max": 18,
             "message": "Température idéale pour la levée de vos radis (15-18°C)."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     },
@@ -15403,40 +13106,6 @@
             "message": "Conditions idéales pour la levée de vos radis (15-24°C)."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Mar",
-              "Apr",
-              "May",
-              "Jul",
-              "Aug",
-              "Sep"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "May",
-              "Jun",
-              "Sep",
-              "Oct",
-              "Nov"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -15618,38 +13287,6 @@
             "message": "Température idéale pour la levée des graines (24-32°C)."
           }
         }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr",
-              "May"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
-        }
       }
     },
     {
@@ -15820,36 +13457,6 @@
             "max": 25,
             "message": "Conditions optimales pour la levée de vos graines."
           }
-        }
-      },
-      "referenceProfile": {
-        "referenceId": "NH_temperate_europe",
-        "phases": {
-          "sowing": {
-            "type": "months",
-            "months": [
-              "Feb",
-              "Mar",
-              "Apr"
-            ]
-          },
-          "harvest": {
-            "type": "months",
-            "months": [
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct"
-            ]
-          }
-        }
-      },
-      "zoneProfiles": {
-        "NH_temperate_na": {
-          "preferRelativeRules": true
-        },
-        "SH_temperate": {
-          "monthShift": 6
         }
       }
     }

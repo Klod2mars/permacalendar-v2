@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
+import 'package:permacalendar/features/climate/domain/models/zone.dart';
+import 'package:permacalendar/features/plant_catalog/domain/services/phase_resolver.dart';
 
 enum ActionType { sow, plant }
 enum SeasonStatus { green, orange, red, unknown }
@@ -88,8 +90,29 @@ Set<int> parseSeasonStringToMonths(String? season) {
   return {};
 }
 
-Set<int> buildEligibleMonthsForAction(PlantFreezed plant, ActionType action) {
+Set<int> buildEligibleMonthsForAction(PlantFreezed plant, ActionType action, {Zone? zone, DateTime? lastFrostDate}) {
+  // Nouvelle logique prioritaires si Zone fournie
+  if (zone != null) {
+    // Mapping ActionType -> string key pour PhaseResolver
+    final typeKey = action == ActionType.sow ? 'sowing' : 'planting';
+    
+    // Pour l'instant harvest n'est pas utilisé dans sowing_utils (qui sert au calendrier de semis/plantation)
+    
+    final resolvedCodes = PhaseResolver.resolvePhases(plant, zone, typeKey, lastFrostDate: lastFrostDate);
+    if (resolvedCodes.isNotEmpty) {
+      // Conversion codes (jan, feb...) -> int (1..12)
+      final ints = <int>{};
+      for (final c in resolvedCodes) {
+        final m = _monthFromToken(c);
+        if (m != null) ints.add(m);
+      }
+      if (ints.isNotEmpty) return ints;
+    }
+  }
+
+  // Fallback Legacy (Si pas de zone ou pas de résultat)
   if (action == ActionType.sow) {
+    // ... Legacy logic remains as fallback
     final s3 = normalizeMonthTokens(plant.metadata['sowingMonths3'] ?? plant.toJson()['sowingMonths3']);
     if (s3.isNotEmpty) return s3;
     final s = normalizeMonthTokens(plant.toJson()['sowingMonths'] ?? plant.metadata['sowingMonths']);
@@ -108,6 +131,7 @@ Set<int> buildEligibleMonthsForAction(PlantFreezed plant, ActionType action) {
   }
 }
 
+
 int distanceForward(int from, int to) => (to - from + 12) % 12;
 int distanceBackward(int from, int to) => (from - to + 12) % 12;
 
@@ -117,9 +141,11 @@ SeasonInfo computeSeasonInfoForPlant({
   required ActionType action,
   int nearThreshold = DEFAULT_NEAR_THRESHOLD,
   int longSeasonThreshold = DEFAULT_LONG_SEASON_THRESHOLD,
+  Zone? zone,
+  DateTime? lastFrostDate,
 }) {
   final month = date.month;
-  final months = buildEligibleMonthsForAction(plant, action);
+  final months = buildEligibleMonthsForAction(plant, action, zone: zone, lastFrostDate: lastFrostDate);
   if (months.isEmpty) {
     return SeasonInfo(status: SeasonStatus.unknown, distance: 999, eligibleMonths: {});
   }

@@ -22,6 +22,8 @@ import 'package:permacalendar/features/plant_catalog/application/sowing_utils.da
 import 'package:permacalendar/features/plant_catalog/presentation/widgets/sowing_picker.dart';
 import 'plant_detail_screen.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
+import 'package:permacalendar/features/climate/presentation/providers/zone_providers.dart';
+import 'package:permacalendar/features/climate/domain/models/zone.dart';
 
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -220,7 +222,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   }
 
   // Build Plant Card
-  Widget _buildPlantCard(PlantFreezed plant, [int index = -1]) {
+  Widget _buildPlantCard(PlantFreezed plant, Zone? zone, DateTime? lastFrost, [int index = -1]) {
     final raw = _resolveImagePathFromPlant(plant);
     const imageHeight = 180.0;
     Widget imageWidget;
@@ -328,6 +330,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                           plant: plant,
                           date: DateTime.now(),
                           action: ActionType.sow, // Default to Sow for grid view
+                          zone: zone,
+                          lastFrostDate: lastFrost,
                         )),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) return const SizedBox.shrink();
@@ -407,6 +411,12 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final providerPlants = ref.watch(plantsListProvider);
+    final zoneAsync = ref.watch(currentZoneProvider);
+    final frostAsync = ref.watch(lastFrostDateProvider);
+    
+    final zone = zoneAsync.asData?.value;
+    final lastFrost = frostAsync.asData?.value;
+    
     final sourcePlants =
         widget.plants.isNotEmpty ? widget.plants : providerPlants;
 
@@ -517,7 +527,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                           itemCount: filteredPlants.length,
                           itemBuilder: (context, index) {
                             final plant = filteredPlants[index];
-                            return _buildPlantCard(plant, index);
+                            return _buildPlantCard(plant, zone, lastFrost, index);
                           },
                         ),
                 ),

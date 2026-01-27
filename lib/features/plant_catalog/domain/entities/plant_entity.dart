@@ -104,6 +104,12 @@ class PlantFreezed with _$PlantFreezed {
 
     /// Indique si la plante est active
     @Default(true) bool isActive,
+
+    /// Profil de référence
+    Map<String, dynamic>? referenceProfile,
+
+    /// Profils de zones
+    Map<String, dynamic>? zoneProfiles,
   }) = _PlantFreezed;
 
   factory PlantFreezed.fromJson(Map<String, dynamic> json) =>
@@ -139,6 +145,8 @@ class PlantFreezed with _$PlantFreezed {
     Map<String, dynamic>? notificationSettings,
     Map<String, dynamic>? varieties,
     Map<String, dynamic>? metadata,
+    Map<String, dynamic>? referenceProfile,
+    Map<String, dynamic>? zoneProfiles,
   }) {
     final now = DateTime.now();
     return PlantFreezed(
@@ -173,6 +181,8 @@ class PlantFreezed with _$PlantFreezed {
       metadata: metadata ?? {},
       createdAt: now,
       updatedAt: now,
+      referenceProfile: referenceProfile,
+      zoneProfiles: zoneProfiles,
     );
   }
 }

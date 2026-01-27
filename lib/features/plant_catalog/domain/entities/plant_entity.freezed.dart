@@ -120,6 +120,13 @@ mixin _$PlantFreezed {
   /// Indique si la plante est active
   bool get isActive => throw _privateConstructorUsedError;
 
+  /// Profil de référence
+  Map<String, dynamic>? get referenceProfile =>
+      throw _privateConstructorUsedError;
+
+  /// Profils de zones
+  Map<String, dynamic>? get zoneProfiles => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PlantFreezedCopyWith<PlantFreezed> get copyWith =>
@@ -164,7 +171,9 @@ abstract class $PlantFreezedCopyWith<$Res> {
       Map<String, dynamic> metadata,
       DateTime? createdAt,
       DateTime? updatedAt,
-      bool isActive});
+      bool isActive,
+      Map<String, dynamic>? referenceProfile,
+      Map<String, dynamic>? zoneProfiles});
 }
 
 /// @nodoc
@@ -212,6 +221,8 @@ class _$PlantFreezedCopyWithImpl<$Res, $Val extends PlantFreezed>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? isActive = null,
+    Object? referenceProfile = freezed,
+    Object? zoneProfiles = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -342,6 +353,14 @@ class _$PlantFreezedCopyWithImpl<$Res, $Val extends PlantFreezed>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
+      referenceProfile: freezed == referenceProfile
+          ? _value.referenceProfile
+          : referenceProfile // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      zoneProfiles: freezed == zoneProfiles
+          ? _value.zoneProfiles
+          : zoneProfiles // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
     ) as $Val);
   }
 }
@@ -386,7 +405,9 @@ abstract class _$$PlantFreezedImplCopyWith<$Res>
       Map<String, dynamic> metadata,
       DateTime? createdAt,
       DateTime? updatedAt,
-      bool isActive});
+      bool isActive,
+      Map<String, dynamic>? referenceProfile,
+      Map<String, dynamic>? zoneProfiles});
 }
 
 /// @nodoc
@@ -432,6 +453,8 @@ class __$$PlantFreezedImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? isActive = null,
+    Object? referenceProfile = freezed,
+    Object? zoneProfiles = freezed,
   }) {
     return _then(_$PlantFreezedImpl(
       id: null == id
@@ -562,6 +585,14 @@ class __$$PlantFreezedImplCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
+      referenceProfile: freezed == referenceProfile
+          ? _value._referenceProfile
+          : referenceProfile // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      zoneProfiles: freezed == zoneProfiles
+          ? _value._zoneProfiles
+          : zoneProfiles // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
     ));
   }
 }
@@ -601,7 +632,9 @@ class _$PlantFreezedImpl implements _PlantFreezed {
       final Map<String, dynamic> metadata = const {},
       this.createdAt,
       this.updatedAt,
-      this.isActive = true})
+      this.isActive = true,
+      final Map<String, dynamic>? referenceProfile,
+      final Map<String, dynamic>? zoneProfiles})
       : _sowingMonths = sowingMonths,
         _harvestMonths = harvestMonths,
         _nutritionPer100g = nutritionPer100g,
@@ -615,7 +648,9 @@ class _$PlantFreezedImpl implements _PlantFreezed {
         _companionPlanting = companionPlanting,
         _notificationSettings = notificationSettings,
         _varieties = varieties,
-        _metadata = metadata;
+        _metadata = metadata,
+        _referenceProfile = referenceProfile,
+        _zoneProfiles = zoneProfiles;
 
   factory _$PlantFreezedImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlantFreezedImplFromJson(json);
@@ -873,9 +908,35 @@ class _$PlantFreezedImpl implements _PlantFreezed {
   @JsonKey()
   final bool isActive;
 
+  /// Profil de référence
+  final Map<String, dynamic>? _referenceProfile;
+
+  /// Profil de référence
+  @override
+  Map<String, dynamic>? get referenceProfile {
+    final value = _referenceProfile;
+    if (value == null) return null;
+    if (_referenceProfile is EqualUnmodifiableMapView) return _referenceProfile;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  /// Profils de zones
+  final Map<String, dynamic>? _zoneProfiles;
+
+  /// Profils de zones
+  @override
+  Map<String, dynamic>? get zoneProfiles {
+    final value = _zoneProfiles;
+    if (value == null) return null;
+    if (_zoneProfiles is EqualUnmodifiableMapView) return _zoneProfiles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   String toString() {
-    return 'PlantFreezed(id: $id, commonName: $commonName, scientificName: $scientificName, family: $family, plantingSeason: $plantingSeason, harvestSeason: $harvestSeason, daysToMaturity: $daysToMaturity, spacing: $spacing, depth: $depth, sunExposure: $sunExposure, waterNeeds: $waterNeeds, description: $description, sowingMonths: $sowingMonths, harvestMonths: $harvestMonths, marketPricePerKg: $marketPricePerKg, defaultUnit: $defaultUnit, nutritionPer100g: $nutritionPer100g, germination: $germination, growth: $growth, watering: $watering, thinning: $thinning, weeding: $weeding, culturalTips: $culturalTips, biologicalControl: $biologicalControl, harvestTime: $harvestTime, companionPlanting: $companionPlanting, notificationSettings: $notificationSettings, varieties: $varieties, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive)';
+    return 'PlantFreezed(id: $id, commonName: $commonName, scientificName: $scientificName, family: $family, plantingSeason: $plantingSeason, harvestSeason: $harvestSeason, daysToMaturity: $daysToMaturity, spacing: $spacing, depth: $depth, sunExposure: $sunExposure, waterNeeds: $waterNeeds, description: $description, sowingMonths: $sowingMonths, harvestMonths: $harvestMonths, marketPricePerKg: $marketPricePerKg, defaultUnit: $defaultUnit, nutritionPer100g: $nutritionPer100g, germination: $germination, growth: $growth, watering: $watering, thinning: $thinning, weeding: $weeding, culturalTips: $culturalTips, biologicalControl: $biologicalControl, harvestTime: $harvestTime, companionPlanting: $companionPlanting, notificationSettings: $notificationSettings, varieties: $varieties, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, referenceProfile: $referenceProfile, zoneProfiles: $zoneProfiles)';
   }
 
   @override
@@ -937,7 +998,11 @@ class _$PlantFreezedImpl implements _PlantFreezed {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+                other.isActive == isActive) &&
+            const DeepCollectionEquality()
+                .equals(other._referenceProfile, _referenceProfile) &&
+            const DeepCollectionEquality()
+                .equals(other._zoneProfiles, _zoneProfiles));
   }
 
   @JsonKey(ignore: true)
@@ -975,7 +1040,9 @@ class _$PlantFreezedImpl implements _PlantFreezed {
         const DeepCollectionEquality().hash(_metadata),
         createdAt,
         updatedAt,
-        isActive
+        isActive,
+        const DeepCollectionEquality().hash(_referenceProfile),
+        const DeepCollectionEquality().hash(_zoneProfiles)
       ]);
 
   @JsonKey(ignore: true)
@@ -1025,7 +1092,9 @@ abstract class _PlantFreezed implements PlantFreezed {
       final Map<String, dynamic> metadata,
       final DateTime? createdAt,
       final DateTime? updatedAt,
-      final bool isActive}) = _$PlantFreezedImpl;
+      final bool isActive,
+      final Map<String, dynamic>? referenceProfile,
+      final Map<String, dynamic>? zoneProfiles}) = _$PlantFreezedImpl;
 
   factory _PlantFreezed.fromJson(Map<String, dynamic> json) =
       _$PlantFreezedImpl.fromJson;
@@ -1158,6 +1227,14 @@ abstract class _PlantFreezed implements PlantFreezed {
 
   /// Indique si la plante est active
   bool get isActive;
+  @override
+
+  /// Profil de référence
+  Map<String, dynamic>? get referenceProfile;
+  @override
+
+  /// Profils de zones
+  Map<String, dynamic>? get zoneProfiles;
   @override
   @JsonKey(ignore: true)
   _$$PlantFreezedImplCopyWith<_$PlantFreezedImpl> get copyWith =>

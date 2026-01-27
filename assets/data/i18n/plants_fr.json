@@ -22,7 +22,7 @@
       "companionPlants": [
         "salades",
         "radis",
-        "pois (cultures intercalaires la première année)"
+        "pois"
       ]
     },
     "harvestTime": "Environ 120 jours après plantation, selon variété et climat",
@@ -56,16 +56,7 @@
       "amount": "25 à 50 mm d'eau par semaine",
       "method": "Arrosage au pied, éviter de mouiller le feuillage",
       "bestTime": "Tôt le matin ou tard le soir"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr"
-    ],
-    "plantingMonths3": [
-      "Mar",
-      "Apr",
-      "May"
-    ]
+    }
   },
   "asparagus": {
     "commonName": "Asperge",
@@ -125,15 +116,7 @@
       "amount": "50-75 mm par arrosage (soit ~2,8 mm/jour en période de croissance maximale)",
       "method": "Arrosage goutte-à-goutte ou au pied, éviter l'humidité stagnante",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Apr"
-    ],
-    "plantingMonths3": [
-      "Mar",
-      "Apr",
-      "May"
-    ]
+    }
   },
   "basil": {
     "commonName": "Basilic",
@@ -159,8 +142,7 @@
       "companionPlants": [
         "tomate",
         "poivron",
-        "laitue",
-        "favorise la biodiversité et repousse certains nuisibles"
+        "laitue"
       ]
     },
     "harvestTime": "50-60 jours après semis, selon conditions de culture",
@@ -219,7 +201,7 @@
       ],
       "companionPlants": [
         "maïs",
-        "tournesol (support et microclimat favorable)"
+        "tournesol"
       ]
     },
     "harvestTime": "60 jours après plantation en moyenne (selon variété naine ou grimpante)",
@@ -280,7 +262,7 @@
         "oignon",
         "radis",
         "haricot nain",
-        "éviter les épinards (même famille)"
+        "épinards"
       ]
     },
     "harvestTime": "60-90 jours après semis selon variété et conditions",
@@ -314,17 +296,7 @@
       "amount": "2-4 litres par m²/semaine",
       "method": "Au pied, sol maintenu frais sans excès",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Jan",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug"
-    ],
-    "plantingMonths3": []
+    }
   },
   "black_radish": {
     "commonName": "Radis Noir",
@@ -350,7 +322,7 @@
       "companionPlants": [
         "laitue",
         "épinard",
-        "haricot (associations bénéfiques non compétitives)"
+        "haricot"
       ]
     },
     "harvestTime": "60 jours après semis (selon variété et conditions)",
@@ -384,12 +356,7 @@
       "amount": "2-4 litres par m²/semaine (ajuster selon sol)",
       "method": "Arrosage doux au pied, éviter le feuillage",
       "bestTime": "Tôt le matin ou le soir"
-    },
-    "sowingMonths3": [
-      "Jun",
-      "Jul",
-      "Aug"
-    ]
+    }
   },
   "broccoli": {
     "commonName": "Brocoli",
@@ -448,20 +415,7 @@
       "amount": "Maintenir le sol toujours frais",
       "method": "Goutte-à-goutte idéal, éviter les excès",
       "bestTime": "Tôt le matin ou le soir"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun"
-    ],
-    "plantingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug"
-    ]
+    }
   },
   "brussels_sprout": {
     "commonName": "Chou de Bruxelles",
@@ -524,16 +478,7 @@
       "amount": "20-30 mm/semaine (10-15 mm par arrosage)",
       "method": "Au pied, sol humide mais non détrempé",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun"
-    ]
+    }
   },
   "cabbage": {
     "commonName": "Chou pommé",
@@ -595,20 +540,7 @@
       "amount": "4-6 litres par plant/semaine",
       "method": "Arrosage au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun"
-    ],
-    "plantingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ]
+    }
   },
   "carrot": {
     "commonName": "Carotte",
@@ -635,7 +567,7 @@
         "poireau",
         "coriandre",
         "aneth",
-        "œillets d’inde (contre mouche de la carotte)"
+        "œillets d’inde"
       ]
     },
     "harvestTime": "90-120 jours après semis selon variété et taille désirée",
@@ -732,18 +664,7 @@
       "amount": "20-25 mm/semaine",
       "method": "Au pied, sol constamment humide mais non détrempé",
       "bestTime": "Tôt le matin ou le soir"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun"
-    ],
-    "plantingMonths3": [
-      "Jun",
-      "Jul",
-      "Aug"
-    ]
+    }
   },
   "celery_branch": {
     "commonName": "Céleri branche",
@@ -805,16 +726,7 @@
       "amount": "20-30 mm/semaine",
       "method": "Arrosage au pied, sans mouiller le feuillage",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Feb",
-      "Mar",
-      "Apr"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun"
-    ]
+    }
   },
   "chard": {
     "commonName": "Blette",
@@ -899,8 +811,7 @@
       "companionPlants": [
         "carotte",
         "tomate",
-        "concombre",
-        "repousse certains ravageurs naturellement"
+        "concombre"
       ]
     },
     "harvestTime": "60 jours après semis, puis récolte régulière tout l'été",
@@ -991,14 +902,7 @@
       "amount": "Sol maintenu humide sans eau stagnante",
       "method": "Arroser au pied, éviter de mouiller les feuilles",
       "bestTime": "Tôt le matin ou en soirée"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ]
+    }
   },
   "courgette": {
     "commonName": "Courgette",
@@ -1027,9 +931,9 @@
         "haricot",
         "maïs",
         "radis",
-        "capucine (piège)",
+        "capucine",
         "oignon",
-        "ail (répulsifs naturels)"
+        "ail"
       ]
     },
     "harvestTime": "45-60 jours après plantation, selon variété et conditions",
@@ -1063,15 +967,7 @@
       "amount": "5-8 litres par plant/semaine",
       "method": "Arrosage au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun"
-    ]
+    }
   },
   "cucumber": {
     "commonName": "Concombre",
@@ -1095,7 +991,7 @@
         "Guêpes parasitoïdes (contre chenilles et pucerons)"
       ],
       "companionPlants": [
-        "capucines (piège à pucerons)",
+        "capucines",
         "radis",
         "oignon",
         "laitue"
@@ -1158,7 +1054,7 @@
         "oignons",
         "choux",
         "concombres",
-        "brocolis (effet répulsif contre certains nuisibles)"
+        "brocolis"
       ]
     },
     "harvestTime": "60-80 jours après semis, selon conditions climatiques et variété",
@@ -1192,14 +1088,7 @@
       "amount": "Sol légèrement humide, éviter le détrempé",
       "method": "Sous paillage si possible, au pied sans mouiller le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ]
+    }
   },
   "eggplant": {
     "commonName": "Aubergine",
@@ -1224,7 +1113,7 @@
       ],
       "companionPlants": [
         "basilic",
-        "soucis (contre certains ravageurs)"
+        "soucis"
       ]
     },
     "harvestTime": "90-120 jours après plantation selon variété et climat",
@@ -1385,17 +1274,7 @@
       "amount": "Arrosage profond 1-2 fois/semaine",
       "method": "Au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May",
-      "Jun"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun",
-      "Jul"
-    ]
+    }
   },
   "leek": {
     "commonName": "Poireau",
@@ -1423,7 +1302,7 @@
         "laitues",
         "carottes",
         "betteraves",
-        "éviter les autres alliacées en culture simultanée"
+        "éviter autres alliacées"
       ]
     },
     "harvestTime": "Environ 120 jours après semis, selon variété et conditions climatiques",
@@ -1635,17 +1514,7 @@
       "amount": "10-20 mm/semaine",
       "method": "Arrosage au pied, goutte-à-goutte idéal",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Feb",
-      "Mar",
-      "Apr",
-      "May"
-    ],
-    "plantingMonths3": [
-      "Apr",
-      "May"
-    ]
+    }
   },
   "navet": {
     "commonName": "Navet",
@@ -1729,8 +1598,7 @@
         "betterave",
         "laitue",
         "tomate",
-        "chou (éviter pois",
-        "fèves)"
+        "chou"
       ]
     },
     "harvestTime": "Lorsque le feuillage est complètement sec, généralement 4 à 5 mois après semis",
@@ -1787,7 +1655,7 @@
         "Insectes auxiliaires divers (syrphes, chrysopes)"
       ],
       "companionPlants": [
-        "ciboulette (repousse la mouche de la carotte)"
+        "ciboulette"
       ]
     },
     "harvestTime": "90 jours après semis, récolte possible tout l'été et jusqu'à l'hiver dans les climats doux",
@@ -1908,8 +1776,7 @@
       "companionPlants": [
         "capucine",
         "souci",
-        "trèfle (attirent auxiliaires",
-        "répulsifs naturels)"
+        "trèfle"
       ]
     },
     "harvestTime": "Environ 90-120 jours après plantation, selon variété",
@@ -1943,15 +1810,7 @@
       "amount": "15-30 mm/semaine (3-6 mm/jour selon phase)",
       "method": "Arrosage au sol, entre les rangs, sans mouiller le feuillage",
       "bestTime": "Tôt le matin ou en fin d’après-midi"
-    },
-    "plantingMonths3": [
-      "Mar",
-      "Apr"
-    ],
-    "sowingMonths3": [
-      "Mar",
-      "Apr"
-    ]
+    }
   },
   "courge_potiron": {
     "commonName": "Courge Potiron ",
@@ -2012,15 +1871,7 @@
       "amount": "Environ 15 mm/semaine",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Le soir en période chaude, le matin en temps frais"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun"
-    ]
+    }
   },
   "roquette": {
     "commonName": "Roquette",
@@ -2030,7 +1881,8 @@
       "Éviter les périodes de forte chaleur — privilégier la mi-ombre en été",
       "Ne pas trop fertiliser en azote pour conserver une saveur équilibrée",
       "Pailler pour garder le sol frais et limiter la montée à graines",
-      "Laisser des zones non récoltées pour favoriser la biodiversité et la régulation naturelle des parasites"
+      "Laisser des zones non récoltées pour favoriser la biodiversité et la régulation naturelle des parasites",
+      "laisser en bordure pour attirer auxiliaires"
     ],
     "biologicalControl": {
       "preparations": [
@@ -2078,16 +1930,7 @@
       "amount": "Modéré (éviter l'excès pour ne pas pourrir les racines)",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep"
-    ]
+    }
   },
   "rosemary": {
     "commonName": "Romarin",
@@ -2112,8 +1955,7 @@
       "companionPlants": [
         "choux",
         "carottes",
-        "haricots",
-        "repousse naturelle des insectes grâce aux huiles essentielles"
+        "haricots"
       ]
     },
     "harvestTime": "Feuilles récoltables toute l'année une fois la plante établie (après 3-4 mois)",
@@ -2147,19 +1989,7 @@
       "amount": "Arrosage profond, uniquement quand le sol est sec sur 2 cm (en pot)",
       "method": "Au pied, en profondeur, jamais par petites doses répétées",
       "bestTime": "Tôt le matin ou en fin de journée"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May"
-    ],
-    "plantingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Sep",
-      "Oct"
-    ]
+    }
   },
   "salsify": {
     "commonName": "Salsifis",
@@ -2220,12 +2050,7 @@
       "amount": "Arrosage léger en pluie fine durant la germination, modéré ensuite",
       "method": "En pluie fine au début, puis au pied sans mouiller le feuillage",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May"
-    ]
+    }
   },
   "scarole": {
     "commonName": "Scarole",
@@ -2247,9 +2072,7 @@
         "Coccinelles (contre pucerons)",
         "Nématodes bénéfiques (contre chenilles)"
       ],
-      "companionPlants": [
-        "menthe (répulsif contre altises)"
-      ]
+      "companionPlants": []
     },
     "harvestTime": "Environ 90 jours après semis, selon variété et conditions",
     "notificationSettings": {
@@ -2306,7 +2129,7 @@
       "companionPlants": [
         "carotte",
         "sarriette",
-        "aneth (répulsifs naturels contre la mouche de l’oignon)"
+        "aneth (mouche de l’oignon)"
       ]
     },
     "harvestTime": "Environ 90 jours après plantation, lorsque le feuillage jaunit et sèche",
@@ -2368,7 +2191,7 @@
         "radis",
         "pois",
         "fraises",
-        "choux (favorisent la croissance ou partagent l'espace efficacement)"
+        "choux"
       ]
     },
     "harvestTime": "40-50 jours après semis, selon variété et conditions",
@@ -2427,9 +2250,8 @@
       ],
       "companionPlants": [
         "haricots grimpants",
-        "courges (système milpa)",
-        "tournesols (brise",
-        "vent)"
+        "courges (milpa)",
+        "tournesols (brise vent)"
       ]
     },
     "harvestTime": "65-80 jours après semis, selon variété et conditions climatiques",
@@ -2463,18 +2285,7 @@
       "amount": "15-20 mm/semaine",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun"
-    ]
+    }
   },
   "thyme": {
     "commonName": "Thym",
@@ -2502,8 +2313,7 @@
       "companionPlants": [
         "romarin",
         "lavande",
-        "sauge",
-        "plantes méditerranéennes à faible besoin hydrique"
+        "sauge"
       ]
     },
     "harvestTime": "Dès la floraison, 2 à 3 mois après plantation — récolte possible toute l'année en climat doux",
@@ -2537,18 +2347,7 @@
       "amount": "Environ 20 litres/m² tous les 6 jours en potager paillé sous 30°C",
       "method": "Arrosage au pied, jamais sur le feuillage",
       "bestTime": "Tôt le matin ou le soir"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May"
-    ],
-    "plantingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Sep",
-      "Oct"
-    ]
+    }
   },
   "tomato": {
     "commonName": "Tomate",
@@ -2867,24 +2666,7 @@
       "amount": "20-25 mm par semaine en l’absence de pluie",
       "method": "Au pied, goutte-à-goutte ou tuyau suintant",
       "bestTime": null
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep"
-    ],
-    "plantingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep"
-    ]
+    }
   },
   "chayotte": {
     "commonName": "Chayotte",
@@ -3050,19 +2832,7 @@
       "amount": null,
       "method": "Au pied, irrigation localisée",
       "bestTime": "Matin ou soir"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun"
-    ],
-    "plantingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ]
+    }
   },
   "chou-daubenton": {
     "commonName": "Chou Daubenton",
@@ -3183,23 +2953,7 @@
       "amount": "Régulier sans excès pour éviter l'asphyxie",
       "method": "Au pied, irrigation douce (goutte-à-goutte)",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep"
-    ],
-    "plantingMonths3": [
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct"
-    ]
+    }
   },
   "butternut_squash": {
     "commonName": "Courge Butternut",
@@ -3566,14 +3320,7 @@
       "amount": "Environ 250 mm répartis sur le cycle",
       "method": "Arrosage au pied, éviter le feuillage",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Feb",
-      "Mar",
-      "Apr",
-      "Oct",
-      "Nov"
-    ]
+    }
   },
   "gobo": {
     "commonName": "Gobo (Grande Bardane)",
@@ -3636,14 +3383,7 @@
       "amount": "Arrosage abondant pour humidifier le sol en profondeur",
       "method": "Au pied, sans mouiller excessivement le feuillage",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr",
-      "May",
-      "Jun"
-    ],
-    "plantingMonths3": []
+    }
   },
   "haricot_rames": {
     "commonName": "Haricot à rames",
@@ -3762,13 +3502,7 @@
       "amount": "Maintenir le sol frais sans excès",
       "method": "Au pied, sans mouiller le feuillage",
       "bestTime": "Matin ou soir"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ]
+    }
   },
   "yellow_bean": {
     "commonName": "Haricot jaune",
@@ -3830,14 +3564,7 @@
       "amount": "Régulier, surtout lors de la floraison et formation des gousses",
       "method": "Au pied, éviter le mouillage du feuillage",
       "bestTime": "Tôt le matin ou le soir"
-    },
-    "sowingMonths3": [
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug"
-    ]
+    }
   },
   "lentil": {
     "commonName": "Lentille",
@@ -3896,12 +3623,7 @@
       "amount": "Sol frais mais non détrempé",
       "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
       "bestTime": "Tôt le matin"
-    },
-    "sowingMonths3": [
-      "Mar",
-      "Apr"
-    ],
-    "plantingMonths3": []
+    }
   },
   "lupin": {
     "commonName": "Lupin",
@@ -4021,20 +3743,7 @@
       "amount": "Apports légers et fréquents (éviter la saturation du sol)",
       "method": "Au pied ou goutte-à-goutte, éviter l'aspersion",
       "bestTime": "Tôt le matin ou le soir"
-    },
-    "sowingMonths3": [
-      "Feb",
-      "Mar",
-      "Aug",
-      "Sep"
-    ],
-    "plantingMonths3": [
-      "Jan",
-      "Feb",
-      "Oct",
-      "Nov",
-      "Dec"
-    ]
+    }
   },
   "red_onion": {
     "commonName": "Oignon rouge",

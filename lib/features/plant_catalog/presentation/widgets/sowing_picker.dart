@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 import 'package:permacalendar/features/plant_catalog/application/sowing_utils.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
+import 'package:permacalendar/features/climate/presentation/providers/zone_providers.dart';
+import 'package:permacalendar/features/climate/domain/models/zone.dart';
 
 class SowingPicker extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -21,11 +23,12 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
   DateTime _date = DateTime.now();
   int _filterMode = 2; // 0 = verts only, 1 = verts+oranges, 2 = tous
 
-  List<PlantFreezed> _computeResults() {
+  List<PlantFreezed> _computeResults(Zone? zone, DateTime? lastFrost) {
+    if (zone == null) return []; // Loading or error
     final list = List<PlantFreezed>.from(widget.plants);
     list.sort((a,b) {
-      final aInfo = computeSeasonInfoForPlant(plant: a, date: _date, action: _action);
-      final bInfo = computeSeasonInfoForPlant(plant: b, date: _date, action: _action);
+      final aInfo = computeSeasonInfoForPlant(plant: a, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost);
+      final bInfo = computeSeasonInfoForPlant(plant: b, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost);
       int rank(SeasonStatus s) {
         switch(s) {
           case SeasonStatus.green: return 0;
@@ -39,10 +42,10 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
       return aInfo.distance.compareTo(bInfo.distance);
     });
     if (_filterMode == 0) {
-      return list.where((p) => computeSeasonInfoForPlant(plant: p, date: _date, action: _action).status == SeasonStatus.green).toList();
+      return list.where((p) => computeSeasonInfoForPlant(plant: p, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost).status == SeasonStatus.green).toList();
     } else if (_filterMode == 1) {
       return list.where((p) {
-        final s = computeSeasonInfoForPlant(plant: p, date: _date, action: _action).status;
+        final s = computeSeasonInfoForPlant(plant: p, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost).status;
         return s == SeasonStatus.green || s == SeasonStatus.orange;
       }).toList();
     } else {
@@ -50,8 +53,9 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
     }
   }
 
-  void _openResults() {
-    final results = _computeResults();
+  void _openResults(Zone? zone, DateTime? lastFrost) {
+    if (zone == null) return;
+    final results = _computeResults(zone, lastFrost);
     showModalBottomSheet(context: context, isScrollControlled: true, builder: (_) {
       return DraggableScrollableSheet(
         expand: false,
@@ -74,7 +78,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                           // For prototype: temporarily increase nearThreshold by 1 and show again (not persisted)
                           Navigator.of(context).pop();
                           setState(() {});
-                          _openResults();
+                          _openResults(zone, lastFrost);
                         }, child: Text(AppLocalizations.of(context)!.plant_catalog_expand_window)),
                       ],
                     ))
@@ -82,14 +86,14 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                       controller: ctrl,
                       itemBuilder: (context, index) {
                         final plant = results[index];
-                        final info = computeSeasonInfoForPlant(plant: plant, date: _date, action: _action);
+                        final info = computeSeasonInfoForPlant(plant: plant, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost);
                         return ListTile(
                           leading: Container(
                             width: 12, height: 12,
                             decoration: BoxDecoration(color: statusToColor(info.status), shape: BoxShape.circle),
                           ),
                           title: Text(plant.commonName),
-                          subtitle: Text(_buildSubtitle(plant)),
+                          subtitle: Text(_buildSubtitle(plant, zone, lastFrost)),
                           onTap: () {
                             Navigator.of(context).pop();
                             widget.onPlantSelected(plant);
@@ -107,8 +111,8 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
     });
   }
 
-  String _buildSubtitle(PlantFreezed plant) {
-    final months = buildEligibleMonthsForAction(plant, _action);
+  String _buildSubtitle(PlantFreezed plant, Zone? zone, DateTime? lastFrost) {
+    final months = buildEligibleMonthsForAction(plant, _action, zone: zone, lastFrostDate: lastFrost);
     if (months.isEmpty) return AppLocalizations.of(context)!.plant_catalog_missing_period_data;
     return AppLocalizations.of(context)!.plant_catalog_periods_prefix(months.map((m)=>_monthName(m)).join(', '));
   }
@@ -124,6 +128,16 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
   Widget build(BuildContext context) {
     // Use AppLocalizations if available in repo (optional)
     final loc = AppLocalizations.of(context);
+    final zoneAsync = ref.watch(currentZoneProvider);
+    final frostAsync = ref.watch(lastFrostDateProvider);
+    
+    // Si chargement, on peut afficher un loader ou utiliser une valeur nullable
+    // Pour simplifier, on prend valueOrNull
+    final zone = zoneAsync.asData?.value;
+    final lastFrost = frostAsync.asData?.value;
+
+    if (zone == null) return const SizedBox.shrink(); // Wait for zone
+
     return Column(
       children: [
         Row(
@@ -153,9 +167,9 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
         SizedBox(height: 8),
         Row(
           children: [
-            Expanded(child: ElevatedButton(onPressed: _openResults, child: Text(AppLocalizations.of(context)!.plant_catalog_show_selection))),
+            Expanded(child: ElevatedButton(onPressed: () => _openResults(zone, lastFrost), child: Text(AppLocalizations.of(context)!.plant_catalog_show_selection))),
             SizedBox(width: 8),
-            Text('${_computeResults().length}'),
+            Text('${_computeResults(zone, lastFrost).length}'),
           ],
         )
       ],

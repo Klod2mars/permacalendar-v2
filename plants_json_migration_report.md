@@ -1,6 +1,6 @@
 # Plans JSON Migration Report V2
 
-Generated at: 2026-01-17 16:33:11.541139
+Generated at: 2026-01-27 11:29:54.560653
 
 ## Warnings / Ambiguities
 - WARNING: Unknown waterNeeds 'Moyen à élevé (sol humide mais pas détrempé)' for basil

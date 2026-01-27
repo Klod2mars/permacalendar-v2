@@ -610,6 +610,8 @@ class PlantHiveRepository {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         isActive: true,
+        referenceProfile: _getOptionalMapValue(json, 'referenceProfile'),
+        zoneProfiles: _getOptionalMapValue(json, 'zoneProfiles'),
       );
     } catch (e) {
       throw PlantHiveException(
@@ -652,6 +654,8 @@ class PlantHiveRepository {
       createdAt: hiveModel.createdAt,
       updatedAt: hiveModel.updatedAt,
       isActive: hiveModel.isActive,
+      referenceProfile: _castMap(hiveModel.referenceProfile),
+      zoneProfiles: _castMap(hiveModel.zoneProfiles),
     );
   }
 

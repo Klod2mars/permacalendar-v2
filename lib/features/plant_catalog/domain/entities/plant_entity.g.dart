@@ -51,6 +51,8 @@ _$PlantFreezedImpl _$$PlantFreezedImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       isActive: json['isActive'] as bool? ?? true,
+      referenceProfile: json['referenceProfile'] as Map<String, dynamic>?,
+      zoneProfiles: json['zoneProfiles'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$$PlantFreezedImplToJson(_$PlantFreezedImpl instance) =>
@@ -87,4 +89,6 @@ Map<String, dynamic> _$$PlantFreezedImplToJson(_$PlantFreezedImpl instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'isActive': instance.isActive,
+      'referenceProfile': instance.referenceProfile,
+      'zoneProfiles': instance.zoneProfiles,
     };
