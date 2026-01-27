@@ -415,6 +415,34 @@ class WeatherPresets {
     lightning: 0.0,
   );
 
+  // 2b. Drizzle / Bruine (nouveau)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
+  // Petite bruine, subtile
+  static const AestheticParams drizzle = AestheticParams(
+    quantity: 0.18,
+    area: 1.0,
+    weight: 0.08,
+    size: 0.30,
+    agitation: 0.05,
+    clumping: 0.0,
+    granularity: 0.0,
+    lightning: 0.0,
+  );
+
+  // 4. Moderate Rain (nouveau)
+  // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
+  // Marche intermédiaire entre Light et Heavy
+  static const AestheticParams moderateRain = AestheticParams(
+    quantity: 0.475,
+    area: 1.0,
+    weight: 0.20,
+    size: 0.60,
+    agitation: 0.25,
+    clumping: 0.0,
+    granularity: 0.10,
+    lightning: 0.0,
+  );
+
   // 2. Heavy Rain (Ideal Real Rain)
   // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
   // Validated by Roman as the perfect "Real Rain".

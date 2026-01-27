@@ -61,9 +61,9 @@ _$SkyCalibrationConfigImpl _$$SkyCalibrationConfigImplFromJson(
     _$SkyCalibrationConfigImpl(
       cx: (json['cx'] as num?)?.toDouble() ?? 0.503,
       cy: (json['cy'] as num?)?.toDouble() ?? 0.226,
-      rx: (json['rx'] as num?)?.toDouble() ?? 0.14,
+      rx: (json['rx'] as num?)?.toDouble() ?? 0.140,
       ry: (json['ry'] as num?)?.toDouble() ?? 0.105,
-      rotation: (json['rotation'] as num?)?.toDouble() ?? 0.0,
+      rotation: (json['rotation'] as num?)?.toDouble() ?? 0.000,
     );
 
 Map<String, dynamic> _$$SkyCalibrationConfigImplToJson(

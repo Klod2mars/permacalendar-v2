@@ -35,7 +35,7 @@ class WeatherDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherAsync = ref.watch(currentWeatherProvider);
     final l10n = AppLocalizations.of(context)!;
-
+    
     return Scaffold(
 
       extendBodyBehindAppBar: true,
