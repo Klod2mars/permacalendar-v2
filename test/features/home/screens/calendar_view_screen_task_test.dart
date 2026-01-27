@@ -195,27 +195,45 @@ void main() {
     expect(GardenBoxes.activities.get(task.id), isNotNull);
     expect(find.text('Action Task'), findsOneWidget); 
 
-    // --- TEST 2: ASSIGN ---
+    // --- TEST 2: SHARE ---
     
     // Tap chevron again
     await tester.tap(find.byIcon(Icons.chevron_right).last);
     await tester.pumpAndSettle();
 
-    // Tap Assign
-    await tester.tap(find.text('Envoyer / Attribuer à...'));
-    await tester.pumpAndSettle(); // Dialog
-
-    // Fill Dialog
-    await tester.enterText(find.byType(TextField), 'John Doe');
-    await tester.tap(find.text('OK'));
-    await tester.pumpAndSettle();
-
-    // Verify Metadata
-    final updated = GardenBoxes.activities.get(task.id) as Activity;
-    expect(updated.metadata['assignee'], 'John Doe');
+    // Tap Share (using the key value 'Partager' or 'Share' depending on locale, trying finding by Icon if possible or Text)
+    // The app uses AppLocalizations.of(context)!.plant_detail_popup_share
+    // In FR it is 'Partager'. In EN 'Share'.
+    // Test environment usually defaults to 'en' or 'fr' depending on existing setup.
+    // The previous test found 'Envoyer / Attribuer à...'.
+    // We will look for icon to be safe, or just 'Partager' if we assume FR.
+    // Let's assume FR as per previous test data.
     
-    // Verify SnackBar
-    expect(find.text('Tâche attribuée à John Doe'), findsOneWidget);
+    // Check if 'Partager' exists
+    if (find.text('Partager').evaluate().isNotEmpty) {
+      await tester.tap(find.text('Partager'));
+    } else if (find.text('Share').evaluate().isNotEmpty) {
+      await tester.tap(find.text('Share'));
+    } else {
+       // Fallback to Icon
+       await tester.tap(find.byIcon(Icons.share));
+    }
+    
+    await tester.pump(); 
+
+    // Verify NO Dialog asking for text
+    expect(find.byType(TextField), findsNothing);
+    expect(find.text('OK'), findsNothing);
+
+    // We expect the share function to be called.
+    // In this test environment, it likely catches an exception (MissingPlugin) or just works if mocked?
+    // We just want to ensure the UI didn't block us with a dialog.
+    
+    // allow async work to settle (exceptions might be printed)
+    await tester.pumpAndSettle();
+    
+    // Verify we are still on the screen (no crashes that close app)
+    expect(find.text('Action Task'), findsOneWidget);
 
     // --- TEST 3: EDIT ---
     

@@ -231,11 +231,11 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.send),
-                title: Text(l10n.calendar_action_assign),
+                leading: const Icon(Icons.share),
+                title: Text(l10n.plant_detail_popup_share),
                 onTap: () {
                   Navigator.of(ctx).pop();
-                  _assignOrSendActivity(activity);
+                  _shareActivity(activity);
                 },
               ),
               ListTile(
@@ -349,83 +349,25 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     }
   }
 
-  Future<void> _assignOrSendActivity(Activity activity) async {
+  Future<void> _shareActivity(Activity activity) async {
     final l10n = AppLocalizations.of(context)!;
-    final TextEditingController controller = TextEditingController(
-        text: activity.metadata['assignee']?.toString() ?? '');
-    final String? recipient = await showDialog<String>(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          title: Text(l10n.calendar_assign_title),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('${l10n.calendar_assign_hint} :'),
-              TextField(
-                  controller: controller,
-                  autofocus: true,
-                  decoration: InputDecoration(hintText: l10n.calendar_assign_field)),
-            ],
-          ),
-          actions: [
-            TextButton(
-                onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(l10n.common_cancel)),
-            ElevatedButton(
-                onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
-                child: const Text('OK')),
-          ],
-        );
-      },
-    );
-
-    if (recipient == null || recipient.isEmpty) return;
-
-    final newMeta = Map<String, dynamic>.from(activity.metadata);
-    newMeta['assignee'] = recipient;
-
-    final updated = Activity(
-      id: activity.id,
-      type: activity.type,
-      title: activity.title,
-      description: activity.description,
-      entityId: activity.entityId,
-      entityType: activity.entityType,
-      timestamp: activity.timestamp,
-      metadata: newMeta,
-      createdAt: activity.createdAt,
-      updatedAt: DateTime.now(),
-      isActive: activity.isActive,
-    );
-
     try {
-      await GardenBoxes.activities.put(updated.id, updated);
-      await _loadCalendarData();
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(l10n.calendar_task_assigned(recipient))));
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(l10n.calendar_assign_error(e))));
-      }
-      return;
-    }
+      // Prompt user or show visual feedback if needed?
+      // Since generation is fast, we skip loading snackbar to avoid missing key issues.
 
-    await _sendActivityIfNotSent(updated, recipient);
-  }
-
-  Future<void> _sendActivityIfNotSent(Activity activity, String? recipient) async {
-    try {
       final file = await TaskDocumentGenerator.generateTaskPdf(activity);
-      if (!mounted) return;
-      await TaskDocumentGenerator.shareFile(file, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF)');
       
+      if (!mounted) return;
+      await TaskDocumentGenerator.shareFile(
+        file, 
+        'application/pdf', 
+        context, 
+        shareText: '${activity.title} (PDF)'
+      );
+      
+      // Update sentAt metadata
       final newMeta = Map<String, dynamic>.from(activity.metadata);
       newMeta['sentAt'] = DateTime.now().toIso8601String();
-      if (recipient != null && recipient.isNotEmpty) newMeta['sentTo'] = recipient;
       
       final updated = Activity(
         id: activity.id,
@@ -445,7 +387,11 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       await _loadCalendarData();
       
     } catch (e, s) {
-      developer.log('Send task failed: $e\n$s');
+      developer.log('Share task failed: $e\n$s');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(l10n.common_general_error)));
+      }
     }
   }
 
