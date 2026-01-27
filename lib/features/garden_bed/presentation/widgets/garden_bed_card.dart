@@ -56,6 +56,12 @@ class GardenBedCard extends ConsumerWidget {
           break;
         }
       }
+      debugPrint('[GardenBedCard] Active planting: ${activePlanting.plantName}, Plant found: ${plant != null}, Plant ID: ${activePlanting.plantId}');
+      if (plant != null) {
+          debugPrint('[GardenBedCard] Plant metadata: ${plant.metadata}');
+      } else {
+          debugPrint('[GardenBedCard] WARNING: Plant not found in catalog for ID ${activePlanting.plantId}');
+      }
     }
 
     return CustomCard(
@@ -74,20 +80,29 @@ class GardenBedCard extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: Builder(builder: (ctx) {
                        // 1. Try Local File first (Sync check)
-                       if (plant != null) {
-                          String? raw = plant.metadata?['image'];
-                          if (raw != null && raw.isNotEmpty && !raw.startsWith('assets/') && !raw.startsWith('http')) {
-                              final f = File(raw);
-                              // We can allow Image.file to handle errors
-                              if (raw.startsWith('/') || raw.contains(Platform.pathSeparator)) {
-                                 return Image.file(
-                                    f, 
-                                    width: 64, 
-                                    height: 64, 
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (_,__,___) => _buildFallbackImage(context, width:64, height:64)
-                                 );
+                       final raw = _resolveImagePathFromPlant(plant);
+                       if (raw != null && raw.isNotEmpty) {
+                          debugPrint('[GardenBedCard] Resolving image for ${plant.commonName}: "$raw"'); 
+                          final isNetwork = RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
+                          final bool isLocalFile = !isNetwork && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.')));
+
+                          if (isLocalFile) {
+                              String path = raw;
+                              if (path.startsWith('file://')) {
+                                  path = path.substring(7);
                               }
+                              final f = File(path);
+                              debugPrint('[GardenBedCard] Trying local file: "$path" (exists: ${f.existsSync()})');
+                              return Image.file(
+                                f, 
+                                width: 64, 
+                                height: 64, 
+                                fit: BoxFit.cover,
+                                errorBuilder: (ctx, err, st) {
+                                    debugPrint('[GardenBedCard] Error loading file image $path: $err');
+                                    return _buildFallbackImage(context, width:64, height:64);
+                                }
+                              );
                           }
                        }
                        
@@ -257,5 +272,24 @@ class GardenBedCard extends ConsumerWidget {
         );
       },
     );
+    String? _resolveImagePathFromPlant(dynamic plant) {
+    if (plant == null) return null;
+    try {
+      final meta = plant.metadata;
+      if (meta != null && meta is Map) {
+        final candidates = [
+          meta['image'],
+          meta['imagePath'],
+          meta['photo'],
+          meta['image_url'],
+          meta['imageUrl'],
+        ];
+        for (final c in candidates) {
+          if (c is String && c.trim().isNotEmpty) return c.trim();
+        }
+      }
+    } catch (_) {}
+    return null;
   }
+}
 }

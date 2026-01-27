@@ -100,6 +100,18 @@ class PlantDetailScreen extends ConsumerWidget {
             _buildPlantDetails(plant, theme),
             const SizedBox(height: 24),
 
+            // Economics (Phase D)
+            _buildEconomicsSection(plant, theme),
+            const SizedBox(height: 24),
+
+            // Nutrition (Phase D)
+            _buildNutritionSection(plant, theme),
+            const SizedBox(height: 24),
+
+            // Notes (Phase D)
+            _buildNotesSection(plant, theme),
+            const SizedBox(height: 24),
+
             // Care Instructions
             _buildCareInstructions(plant, theme),
           ],
@@ -293,5 +305,110 @@ class PlantDetailScreen extends ConsumerWidget {
       default:
         return Icons.eco;
     }
+  }
+
+  Widget _buildEconomicsSection(PlantFreezed plant, ThemeData theme) {
+    if (plant.marketPricePerKg == null) return const SizedBox.shrink();
+
+    return CustomCard(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Économie',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildDetailRow(
+              'Prix moyen',
+              '${plant.marketPricePerKg!.toStringAsFixed(2)} € / ${plant.defaultUnit ?? 'kg'}',
+              Icons.euro,
+              theme,
+            ),
+            // On pourrait ajouter ici le rendement au m2 si on l'avait calculé
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNutritionSection(PlantFreezed plant, ThemeData theme) {
+    final nut = plant.nutritionPer100g;
+    if (nut == null || nut.isEmpty) return const SizedBox.shrink();
+
+    // Check if we have at least one valid value
+    final hasData = nut.values.any((v) => v is num && v > 0);
+    if (!hasData) return const SizedBox.shrink();
+
+    return CustomCard(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nutrition (pour 100g)',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildNutritionRow('Calories', '${nut['calories'] ?? 0} kcal', theme),
+            const Divider(),
+            _buildNutritionRow('Protéines', '${nut['protein_g'] ?? 0} g', theme),
+            const Divider(),
+            _buildNutritionRow('Glucides', '${nut['carbs_g'] ?? 0} g', theme),
+            const Divider(),
+            _buildNutritionRow('Lipides', '${nut['fat_g'] ?? 0} g', theme),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNutritionRow(String label, String value, ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: theme.textTheme.bodyMedium),
+          Text(value, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNotesSection(PlantFreezed plant, ThemeData theme) {
+    if (plant.notes == null || plant.notes!.trim().isEmpty) return const SizedBox.shrink();
+
+    return CustomCard(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Notes & Associations',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              plant.notes!,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontStyle: FontStyle.italic,
+                height: 1.5,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
