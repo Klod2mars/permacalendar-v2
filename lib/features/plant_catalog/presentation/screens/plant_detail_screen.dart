@@ -5,6 +5,9 @@ import '../../domain/entities/plant_entity.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../providers/plant_catalog_provider.dart';
+import '../../../../core/providers/currency_provider.dart';
+import '../../../../core/models/currency_info.dart';
+import '../../../../core/utils/formatters.dart';
 
 class PlantDetailScreen extends ConsumerWidget {
   final String plantId;
@@ -18,6 +21,7 @@ class PlantDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final plantState = ref.watch(plantCatalogProvider);
+    final currency = ref.watch(currencyProvider);
     final plant = plantState.plants.where((p) => p.id == plantId).firstOrNull;
 
     if (plant == null) {
@@ -101,7 +105,7 @@ class PlantDetailScreen extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // Economics (Phase D)
-            _buildEconomicsSection(plant, theme),
+            _buildEconomicsSection(plant, theme, currency),
             const SizedBox(height: 24),
 
             // Nutrition (Phase D)
@@ -307,7 +311,7 @@ class PlantDetailScreen extends ConsumerWidget {
     }
   }
 
-  Widget _buildEconomicsSection(PlantFreezed plant, ThemeData theme) {
+  Widget _buildEconomicsSection(PlantFreezed plant, ThemeData theme, CurrencyInfo currency) {
     if (plant.marketPricePerKg == null) return const SizedBox.shrink();
 
     return CustomCard(
@@ -325,8 +329,8 @@ class PlantDetailScreen extends ConsumerWidget {
             const SizedBox(height: 16),
             _buildDetailRow(
               'Prix moyen',
-              '${plant.marketPricePerKg!.toStringAsFixed(2)} € / ${plant.defaultUnit ?? 'kg'}',
-              Icons.euro,
+              '${formatCurrency(plant.marketPricePerKg!, currency)} / ${plant.defaultUnit ?? 'kg'}',
+              currency.icon ?? Icons.attach_money,
               theme,
             ),
             // On pourrait ajouter ici le rendement au m2 si on l'avait calculé

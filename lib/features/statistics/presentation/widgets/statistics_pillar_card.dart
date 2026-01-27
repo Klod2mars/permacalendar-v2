@@ -16,6 +16,8 @@ import '../../application/providers/nutrition_radar_provider.dart';
 
 import '../providers/statistics_filters_provider.dart';
 import '../../../harvest/application/harvest_records_provider.dart';
+import '../../../../core/providers/currency_provider.dart';
+import '../../../../core/utils/formatters.dart';
 
 class StatisticsPillarCard extends ConsumerWidget {
   final PillarType type;
@@ -249,7 +251,7 @@ class StatisticsPillarCard extends ConsumerWidget {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  totalValue > 0 ? '${totalValue.toStringAsFixed(0)} €' : '--',
+                  totalValue > 0 ? formatCurrency(totalValue, ref.watch(currencyProvider)) : '--',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
-import '../../../../../core/utils/formatters.dart';
+import 'package:permacalendar/core/utils/formatters.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
 
-class KeyMonthsWidget extends StatelessWidget {
+class KeyMonthsWidget extends ConsumerWidget {
   final List<MonthRevenue> monthlyRevenue;
   final int mostProfitableIndex;
   final int leastProfitableIndex;
@@ -17,7 +19,7 @@ class KeyMonthsWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (monthlyRevenue.isEmpty || mostProfitableIndex == -1) {
       return const SizedBox.shrink();
     }
@@ -49,7 +51,8 @@ class KeyMonthsWidget extends StatelessWidget {
                 best,
                 Colors.greenAccent,
                 Icons.trending_up,
-                l10n.localeName
+                l10n.localeName,
+                ref
               ),
             ),
             if (worst != null && worst != best) ...[
@@ -61,7 +64,8 @@ class KeyMonthsWidget extends StatelessWidget {
                   worst,
                   Colors.orangeAccent,
                   Icons.trending_down,
-                  l10n.localeName
+                  l10n.localeName,
+                  ref
                 ),
               ),
             ],
@@ -77,7 +81,8 @@ class KeyMonthsWidget extends StatelessWidget {
     MonthRevenue data,
     Color color,
     IconData icon,
-    String locale
+    String locale,
+    WidgetRef ref
   ) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -115,7 +120,7 @@ class KeyMonthsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            formatCurrency(data.totalValue),
+            formatCurrency(data.totalValue, ref.watch(currencyProvider)),
             style: TextStyle(
               color: color,
               fontSize: 20,

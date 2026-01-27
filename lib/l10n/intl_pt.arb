@@ -412,7 +412,7 @@
   "bed_delete_planting_confirm_body": "Esta ação é irreversível. Você realmente deseja excluir este plantio?",
   "harvest_title": "Colheita: {plantName}",
   "harvest_weight_label": "Peso Colhido (kg) *",
-  "harvest_price_label": "Preço Estimado (€/kg)",
+  "harvest_price_label": "Preço Estimado ({currencyUnit})",
   "harvest_price_helper": "Será lembrado para futuras colheitas desta planta",
   "harvest_notes_label": "Notas / Qualidade",
   "harvest_action_save": "Salvar",

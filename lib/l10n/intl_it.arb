@@ -412,7 +412,7 @@
   "bed_delete_planting_confirm_body": "Questa azione è irreversibile. Vuoi davvero eliminare questa piantagione?",
   "harvest_title": "Raccolto: {plantName}",
   "harvest_weight_label": "Peso Raccolto (kg) *",
-  "harvest_price_label": "Prezzo Stimato (€/kg)",
+  "harvest_price_label": "Prezzo Stimato ({currencyUnit})",
   "harvest_price_helper": "Sarà ricordato per futuri raccolti di questa pianta",
   "harvest_notes_label": "Note / Qualità",
   "harvest_action_save": "Salva",

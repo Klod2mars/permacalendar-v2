@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
-import '../../../../../core/utils/formatters.dart';
+import 'package:permacalendar/core/utils/formatters.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
 
-class MonthlyRevenueChart extends StatelessWidget {
+class MonthlyRevenueChart extends ConsumerWidget {
   final List<MonthRevenue> monthlyRevenue;
 
   const MonthlyRevenueChart({super.key, required this.monthlyRevenue});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (monthlyRevenue.isEmpty) {
       return SizedBox(
         height: 200,
@@ -56,7 +58,7 @@ class MonthlyRevenueChart extends StatelessWidget {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: formatCurrency(rod.toY),
+                          text: formatCurrency(rod.toY, ref.watch(currencyProvider)),
                           style: const TextStyle(
                             color: Colors.lightGreenAccent,
                             fontSize: 14,

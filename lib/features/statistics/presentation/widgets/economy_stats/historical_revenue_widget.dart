@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import '../../../application/economy_details_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
+import 'package:permacalendar/core/utils/formatters.dart';
 
-class HistoricalRevenueWidget extends StatelessWidget {
+class HistoricalRevenueWidget extends ConsumerWidget {
   final List<SeriesPoint> revenueSeries;
 
   const HistoricalRevenueWidget({super.key, required this.revenueSeries});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (revenueSeries.isEmpty) return const SizedBox.shrink();
 
     final maxY =
         revenueSeries.fold(0.0, (m, e) => e.value > m ? e.value : m) * 1.2;
     final l10n = AppLocalizations.of(context)!;
+    final currency = ref.watch(currencyProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +121,7 @@ class HistoricalRevenueWidget extends StatelessWidget {
                             color: Colors.white, fontWeight: FontWeight.bold),
                         children: [
                           TextSpan(
-                            text: '${point.value.toStringAsFixed(0)} €',
+                            text: formatCurrency(point.value, currency),
                             style: const TextStyle(
                               color: Colors.cyanAccent,
                               fontWeight: FontWeight.w500,

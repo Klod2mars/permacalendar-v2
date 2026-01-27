@@ -1316,7 +1316,11 @@
   
   "harvest_title": "Récolte :{plantName}",
   "harvest_weight_label": "Poids récolté (kg) *",
-  "harvest_price_label": "Prix estimé (€/kg)",
+  "harvest_price_label": "Prix estimé ({currencyUnit})",
+  "@harvest_price_label": {
+    "description": "Libellé pour le champ prix estimé",
+    "placeholders": { "currencyUnit": { "type": "String" } }
+  },
   "harvest_price_helper": "Sera mémorisé pour les prochaines récoltes de cette plante",
   "harvest_notes_label": "Notes / Qualité",
   "harvest_action_save": "Enregistrer",

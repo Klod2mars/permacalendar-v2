@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
-import '../../../../../core/utils/formatters.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/utils/formatters.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
 
-class EconomyKpiRow extends StatelessWidget {
+class EconomyKpiRow extends ConsumerWidget {
   final EconomyDetails details;
 
   const EconomyKpiRow({super.key, required this.details});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final currency = ref.watch(currencyProvider);
     return Row(
       children: [
         Expanded(
           child: _buildKpiCard(
             context,
             l10n.stats_kpi_total_revenue,
-            formatCurrency(details.totalValue),
-            Icons.euro,
+            formatCurrency(details.totalValue, currency),
+            currency.icon ?? Icons.attach_money,
             Colors.green,
           ),
         ),
@@ -37,7 +40,7 @@ class EconomyKpiRow extends StatelessWidget {
           child: _buildKpiCard(
             context,
             l10n.stats_kpi_avg_price,
-            formatPricePerKg(details.weightedAvgPrice),
+            formatPricePerKg(details.weightedAvgPrice, currency),
             Icons.price_change,
             Colors.orange,
           ),

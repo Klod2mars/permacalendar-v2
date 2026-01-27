@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
 
 import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entity.dart';
 import 'package:permacalendar/features/plant_catalog/data/models/plant_hive.dart';
@@ -372,12 +373,12 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     TextFormField(
                       controller: _marketPriceController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      decoration: const InputDecoration(
-                        labelText: 'Prix moyen par Kg (€)',
+                      decoration: InputDecoration(
+                        labelText: 'Prix moyen par Kg (${ref.watch(currencyProvider).symbol})',
                         hintText: 'ex: 4.50',
-                        border: OutlineInputBorder(),
-                        suffixText: '€/kg',
-                        prefixIcon: Icon(Icons.euro),
+                        border: const OutlineInputBorder(),
+                        suffixText: '${ref.watch(currencyProvider).symbol}/kg',
+                        prefixIcon: Icon(ref.watch(currencyProvider).icon ?? Icons.attach_money),
                       ),
                     ),
                     const SizedBox(height: 24),

@@ -7,6 +7,7 @@ import '../../../../core/models/planting.dart';
 import '../../../../core/utils/calibration_storage.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../providers/planting_provider.dart';
+import '../../../../core/providers/currency_provider.dart';
 
 /// Dialogue réutilisable pour enregistrer une récolte
 Future<void> showHarvestDialog(
@@ -95,9 +96,11 @@ Future<void> showHarvestDialog(
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
-                    labelText: l10n.harvest_price_label,
-                    suffixText: '€/kg',
-                    prefixIcon: const Icon(Icons.euro),
+                    labelText: l10n.harvest_price_label('${ref.watch(currencyProvider).symbol}/kg'),
+                    suffixText: '${ref.watch(currencyProvider).symbol}/kg',
+                    prefixIcon: ref.watch(currencyProvider).icon != null
+                        ? Icon(ref.watch(currencyProvider).icon)
+                        : null,
                     helperText: l10n.harvest_price_helper,
                   ),
                   validator: (v) {

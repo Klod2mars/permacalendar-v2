@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
-import '../../../../../core/utils/formatters.dart';
+import 'package:permacalendar/core/utils/formatters.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
 
-class TopPlantPerMonthGrid extends StatelessWidget {
+class TopPlantPerMonthGrid extends ConsumerWidget {
   final Map<int, PlantRanking> topPlantPerMonth;
   final List<MonthRevenue> monthlyRevenue; // Needed for indexing month order
 
@@ -15,7 +17,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (monthlyRevenue.isEmpty) return const SizedBox.shrink();
     final l10n = AppLocalizations.of(context)!;
 
@@ -45,7 +47,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
             final yearMonth = monthRev.year * 100 + monthRev.month;
             final ranking = topPlantPerMonth[yearMonth];
 
-            return _buildMonthCell(context, monthRev.month, ranking, l10n.localeName);
+            return _buildMonthCell(context, monthRev.month, ranking, l10n.localeName, ref);
           },
         ),
       ],
@@ -53,7 +55,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
   }
 
   Widget _buildMonthCell(
-      BuildContext context, int month, PlantRanking? ranking, String locale) {
+      BuildContext context, int month, PlantRanking? ranking, String locale, WidgetRef ref) {
     
     String monthName = '';
     try {
@@ -94,7 +96,7 @@ class TopPlantPerMonthGrid extends StatelessWidget {
             ),
             const SizedBox(height: 2),
             Text(
-              formatCurrency(ranking.totalValue),
+              formatCurrency(ranking.totalValue, ref.watch(currencyProvider)),
               style: const TextStyle(color: Colors.greenAccent, fontSize: 10),
             ),
           ] else

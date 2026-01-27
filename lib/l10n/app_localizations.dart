@@ -3112,11 +3112,11 @@ abstract class AppLocalizations {
   /// **'Poids récolté (kg) *'**
   String get harvest_weight_label;
 
-  /// No description provided for @harvest_price_label.
+  /// Libellé pour le champ prix estimé
   ///
   /// In fr, this message translates to:
-  /// **'Prix estimé (€/kg)'**
-  String get harvest_price_label;
+  /// **'Prix estimé ({currencyUnit})'**
+  String harvest_price_label(String currencyUnit);
 
   /// No description provided for @harvest_price_helper.
   ///

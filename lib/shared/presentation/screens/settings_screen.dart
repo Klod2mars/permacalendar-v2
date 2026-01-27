@@ -21,6 +21,8 @@ import '../../../core/providers/app_settings_provider.dart';
 import '../../../features/climate/data/commune_storage.dart';
 import '../../../features/settings/presentation/screens/language_settings_page.dart';
 import '../../../features/climate/presentation/providers/zone_providers.dart';
+import '../../../core/providers/currency_provider.dart';
+import '../../../core/models/currency_info.dart';
 
 
 class SettingsScreen extends ConsumerWidget {
@@ -102,6 +104,14 @@ class SettingsScreen extends ConsumerWidget {
                 builder: (_) => const LanguageSettingsPage(),
               ),
             ),
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: Icon(ref.watch(currencyProvider).icon ?? Icons.attach_money),
+            title: const Text('Devise'),
+            subtitle: Text('${ref.watch(currencyProvider).symbol} (${ref.watch(currencyProvider).code})'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _showCurrencySelector(context, ref),
           ),
         ]),
       ),
@@ -445,6 +455,39 @@ class SettingsScreen extends ConsumerWidget {
   }
 
 
+  void _showCurrencySelector(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Choisir la devise',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              ...defaultCurrencies.values.map((currency) {
+                final isSelected = ref.read(currencyProvider).code == currency.code;
+                return ListTile(
+                  leading: Icon(currency.icon ?? Icons.monetization_on),
+                  title: Text('${currency.code} (${currency.symbol})'),
+                  trailing: isSelected ? const Icon(Icons.check, color: Colors.green) : null,
+                  onTap: () {
+                    ref.read(currencyProvider.notifier).setCurrency(currency.code);
+                    Navigator.pop(ctx);
+                  },
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
 
 class _GardenConfigSheet extends ConsumerStatefulWidget {

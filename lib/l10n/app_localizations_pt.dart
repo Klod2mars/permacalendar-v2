@@ -1700,7 +1700,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get harvest_weight_label => 'Peso Colhido (kg) *';
 
   @override
-  String get harvest_price_label => 'Preço Estimado (€/kg)';
+  String harvest_price_label(String currencyUnit) {
+    return 'Preço Estimado ($currencyUnit)';
+  }
 
   @override
   String get harvest_price_helper =>

@@ -1710,7 +1710,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get harvest_weight_label => 'Poids récolté (kg) *';
 
   @override
-  String get harvest_price_label => 'Prix estimé (€/kg)';
+  String harvest_price_label(String currencyUnit) {
+    return 'Prix estimé ($currencyUnit)';
+  }
 
   @override
   String get harvest_price_helper =>

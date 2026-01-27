@@ -1,4 +1,7 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/providers/currency_provider.dart';
+import '../../../../core/utils/formatters.dart';
 import '../../domain/models/plant_value_ranking.dart';
 
 /// Widget pour afficher le Top 3 des plantes les plus rentables sous forme de bulles colorées
@@ -8,13 +11,13 @@ import '../../domain/models/plant_value_ranking.dart';
 /// - Couleurs pastel fixes : vert, bleu clair, ambre
 /// - Nom et valeur affichés sous chaque bulle
 /// - Disposition en Row avec espacement uniforme
-class TopEconomyBubbleChart extends StatelessWidget {
+class TopEconomyBubbleChart extends ConsumerWidget {
   final List<PlantValueRanking> rankings;
 
   const TopEconomyBubbleChart({required this.rankings, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (rankings.isEmpty) return const SizedBox.shrink();
 
     final double maxValue = rankings.first.totalValue;
@@ -59,7 +62,7 @@ class TopEconomyBubbleChart extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '${data.totalValue.toStringAsFixed(2)} €',
+                  formatCurrency(data.totalValue, ref.watch(currencyProvider)),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontWeight: FontWeight.w600,

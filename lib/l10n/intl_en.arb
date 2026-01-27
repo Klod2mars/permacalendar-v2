@@ -572,7 +572,7 @@
   
   "harvest_title": "Harvest: {plantName}",
   "harvest_weight_label": "Harvested Weight (kg) *",
-  "harvest_price_label": "Estimated Price (€/kg)",
+  "harvest_price_label": "Estimated Price ({currencyUnit})",
   "harvest_price_helper": "Will be remembered for future harvests of this plant",
   "harvest_notes_label": "Notes / Quality",
   "harvest_action_save": "Save",

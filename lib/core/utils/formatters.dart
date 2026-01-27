@@ -1,17 +1,16 @@
 import 'package:intl/intl.dart';
+import '../models/currency_info.dart';
 
-final NumberFormat _currencyFormatter = NumberFormat.currency(
-  locale: 'fr_FR',
-  symbol: '€',
-  decimalDigits: 2,
-);
+NumberFormat currencyFormatterFor(CurrencyInfo ci) => NumberFormat.currency(
+      locale: ci.locale,
+      symbol: ci.symbol,
+      decimalDigits: ci.decimalDigits,
+    );
 
-String formatCurrency(double value) {
-  // Returns "37,35 €" with correct locale spacing (non-breaking space)
-  return _currencyFormatter.format(value);
+String formatCurrency(double value, CurrencyInfo ci) {
+  return currencyFormatterFor(ci).format(value);
 }
 
-String formatPricePerKg(double value) {
-  // Keep €/kg consistent with 2 decimals
-  return '${value.toStringAsFixed(2)} €/kg';
+String formatPricePerKg(double value, CurrencyInfo ci, {String unit = 'kg'}) {
+  return '${formatCurrency(value, ci)} /$unit';
 }

@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 import '../../../application/economy_details_provider.dart';
 
-class FastVsLongTable extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/core/providers/currency_provider.dart';
+import 'package:permacalendar/core/utils/formatters.dart';
+
+class FastVsLongTable extends ConsumerWidget {
   final List<FastLongMetrics> metrics;
 
   const FastVsLongTable({super.key, required this.metrics});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (metrics.isEmpty) return const SizedBox.shrink();
 
     final l10n = AppLocalizations.of(context)!;
@@ -60,7 +64,7 @@ class FastVsLongTable extends StatelessWidget {
                   DataCell(Text(m.plantName)),
                   DataCell(Text('${m.avgDaysToHarvest.toStringAsFixed(0)}j')),
                   DataCell(
-                      Text('${m.avgRevenuePerHarvest.toStringAsFixed(2)} €')),
+                      Text(formatCurrency(m.avgRevenuePerHarvest, ref.watch(currencyProvider)))),
                   DataCell(Text(typeText,
                       style: TextStyle(color: typeColor))),
                 ]);

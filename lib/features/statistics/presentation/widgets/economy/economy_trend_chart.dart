@@ -3,7 +3,11 @@ import '../../../domain/models/economy_trend_point.dart';
 import 'dart:math' as math;
 import 'package:intl/intl.dart' hide TextDirection;
 
-class EconomyTrendChart extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/providers/currency_provider.dart';
+import '../../../../core/utils/formatters.dart';
+
+class EconomyTrendChart extends ConsumerWidget {
   final List<EconomyTrendPoint> points;
   final double height;
   final Color lineColor;
@@ -20,7 +24,7 @@ class EconomyTrendChart extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (points.isEmpty) {
       return SizedBox(
         height: height,
@@ -41,7 +45,7 @@ class EconomyTrendChart extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('${points.first.value.toStringAsFixed(2)} €',
+              Text(formatCurrency(points.first.value, ref.watch(currencyProvider)),
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold)),
               const Text('Données insuffisantes pour une courbe',

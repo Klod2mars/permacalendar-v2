@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../../domain/models/plant_value_ranking.dart';
 
-class EconomyTop3Table extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/providers/currency_provider.dart';
+import '../../../../core/utils/formatters.dart';
+
+class EconomyTop3Table extends ConsumerWidget {
   final List<PlantValueRanking> rankings;
 
   const EconomyTop3Table({super.key, required this.rankings});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (rankings.isEmpty) return const SizedBox.shrink();
 
     return Padding(
@@ -93,7 +97,7 @@ class EconomyTop3Table extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        '${r.totalValue.toStringAsFixed(2)} €',
+                        formatCurrency(r.totalValue, ref.watch(currencyProvider)),
                         style: const TextStyle(
                             color: Colors.greenAccent,
                             fontWeight: FontWeight.bold),
