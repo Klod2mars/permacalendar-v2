@@ -22,6 +22,7 @@ import '../../../features/climate/data/commune_storage.dart';
 import '../../../features/settings/presentation/screens/language_settings_page.dart';
 import '../../../features/climate/presentation/providers/zone_providers.dart';
 
+
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -442,6 +443,8 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
+
+
 }
 
 class _GardenConfigSheet extends ConsumerStatefulWidget {

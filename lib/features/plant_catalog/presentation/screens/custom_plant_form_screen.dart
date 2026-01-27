@@ -10,6 +10,7 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 import 'package:permacalendar/features/plant_catalog/data/models/plant_hive.dart';
 import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
 import 'package:permacalendar/shared/widgets/month_picker.dart';
+import 'package:permacalendar/features/plant_catalog/application/sowing_utils.dart'; // Added for derivation
 
 class CustomPlantFormScreen extends ConsumerStatefulWidget {
   final PlantFreezed? plantToEdit;
@@ -27,8 +28,16 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
   late TextEditingController _scientificNameController;
   late TextEditingController _familyController;
   late TextEditingController _descriptionController;
-  late TextEditingController _plantingSeasonController;
-  late TextEditingController _harvestSeasonController;
+  
+  // New Fields (Phase C)
+  late TextEditingController _marketPriceController;
+  late TextEditingController _notesController; // For associations/tips
+  
+  // Nutrition Controllers
+  late TextEditingController _calController;
+  late TextEditingController _protController;
+  late TextEditingController _carbController;
+  late TextEditingController _fatController;
   
   // Champs techniques
   String? _imagePath;
@@ -42,12 +51,22 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
   void initState() {
     super.initState();
     final p = widget.plantToEdit;
+    
     _commonNameController = TextEditingController(text: p?.commonName ?? '');
     _scientificNameController = TextEditingController(text: p?.scientificName ?? '');
     _familyController = TextEditingController(text: p?.family ?? '');
     _descriptionController = TextEditingController(text: p?.description ?? '');
-    _plantingSeasonController = TextEditingController(text: p?.plantingSeason ?? '');
-    _harvestSeasonController = TextEditingController(text: p?.harvestSeason ?? '');
+    
+    // Init Phase C fields
+    _marketPriceController = TextEditingController(text: p?.marketPricePerKg?.toString() ?? '');
+    _notesController = TextEditingController(text: p?.notes ?? '');
+    
+    // Init Nutrition
+    final nut = p?.nutritionPer100g ?? {};
+    _calController = TextEditingController(text: nut['calories']?.toString() ?? '');
+    _protController = TextEditingController(text: nut['protein_g']?.toString() ?? '');
+    _carbController = TextEditingController(text: nut['carbs_g']?.toString() ?? '');
+    _fatController = TextEditingController(text: nut['fat_g']?.toString() ?? '');
     
     // Récupérer l'image existante
     if (p != null && p.metadata != null) {
@@ -67,8 +86,13 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
     _scientificNameController.dispose();
     _familyController.dispose();
     _descriptionController.dispose();
-    _plantingSeasonController.dispose();
-    _harvestSeasonController.dispose();
+    // Phase C dispose
+    _marketPriceController.dispose();
+    _notesController.dispose();
+    _calController.dispose();
+    _protController.dispose();
+    _carbController.dispose();
+    _fatController.dispose();
     super.dispose();
   }
 
@@ -132,7 +156,27 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
         if (saved != null) finalImagePath = saved;
       }
 
-      // 2. Créer l'objet PlantHive
+      // 2. Derive Seasons
+      // Import sowning_utils not needed explicitly if we put the helper here or in utils
+      // We assume deriveSeasonLabelFromMonths is available (we just added it to sowing_utils.dart)
+      // Wait we need to import sowing_utils.dart in this file?
+      // Yes, check imports. It wasn't imported. I need to make sure I add the import or duplicate the helper.
+      // Better to import. I will assume I can fix imports in a second pass or now. 
+      // Actually I am replacing a big block, I can add the import at the top if I replace the whole file or I can just use the tool to add import. 
+      // This replace block is for the class body. I cannot add import here easily.
+      // I will rely on the helper being available if I can calling it `SowingUtils.derive...` or just the global function.
+      // I will implement a quick local helper or assume I'll add the import later.
+      // Let's implement the logic using the SowingUtils global function I just created.
+      // But I need to import `package:permacalendar/features/plant_catalog/application/sowing_utils.dart`.
+      
+      // I will use a local trick to resolve the import issue:
+      // I'll assume the function is `deriveSeasonLabelFromMonths`. The code will fail to compile if I don't add the import.
+      // I will add the import in a separate tool call to be safe because I am only replacing the class body here.
+      
+      final derivedPlanting = deriveSeasonLabelFromMonths(_sowingMonths);
+      final derivedHarvest = deriveSeasonLabelFromMonths(_harvestMonths);
+
+      // 3. Créer l'objet PlantHive
       final isEdit = widget.plantToEdit != null;
       final plantId = isEdit ? widget.plantToEdit!.id : 'custom-${const Uuid().v4().substring(0, 8)}';
       
@@ -150,8 +194,20 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
         scientificName: _scientificNameController.text.trim(),
         family: _familyController.text.trim(),
         description: _descriptionController.text.trim(),
-        plantingSeason: _plantingSeasonController.text.trim(),
-        harvestSeason: _harvestSeasonController.text.trim(),
+        plantingSeason: derivedPlanting, // Automagically derived
+        harvestSeason: derivedHarvest,   // Automagically derived
+        
+        // Phase C: New fields
+        marketPricePerKg: double.tryParse(_marketPriceController.text.replaceAll(',', '.')),
+        defaultUnit: 'kg', // Forced as per user request
+        notes: _notesController.text.trim(),
+        nutritionPer100g: {
+          'calories': double.tryParse(_calController.text) ?? 0,
+          'protein_g': double.tryParse(_protController.text.replaceAll(',', '.')) ?? 0,
+          'carbs_g': double.tryParse(_carbController.text.replaceAll(',', '.')) ?? 0,
+          'fat_g': double.tryParse(_fatController.text.replaceAll(',', '.')) ?? 0,
+        },
+
         // Valeurs par défaut pour le reste pour éviter null check errors
         daysToMaturity: isEdit ? widget.plantToEdit!.daysToMaturity : 90,
         spacing: isEdit ? widget.plantToEdit!.spacing : 30,
@@ -306,54 +362,141 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     ),
                     const SizedBox(height: 16),
                     
+                    
+                    // --- SEASONS SECTION (Refactored) ---
+                    const Divider(height: 32),
+                    
+                    // --- PRICE SECTION ---
+                    Text('Prix', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _marketPriceController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(
+                        labelText: 'Prix moyen par Kg (€)',
+                        hintText: 'ex: 4.50',
+                        border: OutlineInputBorder(),
+                        suffixText: '€/kg',
+                        prefixIcon: Icon(Icons.euro),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // --- NUTRITION SECTION ---
+                    Text('Nutrition (pour 100g)', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    const SizedBox(height: 16),
                     Row(
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: _plantingSeasonController,
+                            controller: _calController,
+                            keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
-                              labelText: 'Saison semis',
+                              labelText: 'Calories',
+                              suffixText: 'kcal',
                               border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.calendar_month),
-                              hintText: 'ex: Printemps',
+                              isDense: true,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: TextFormField(
-                             controller: _harvestSeasonController,
-                             decoration: const InputDecoration(
-                               labelText: 'Saison récolte',
-                               border: OutlineInputBorder(),
-                               prefixIcon: Icon(Icons.shopping_basket),
-                               hintText: 'ex: Été',
-                             ),
+                            controller: _protController,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            decoration: const InputDecoration(
+                              labelText: 'Protéines',
+                              suffixText: 'g',
+                              border: OutlineInputBorder(),
+                              isDense: true,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    MonthPicker(
-                      label: 'Mois de semis',
-                      initialSelected: isEdit ? (widget.plantToEdit?.sowingMonths ?? []) : [],
-                      onChanged: (months) => setState(() => _sowingMonths = months),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _carbController,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            decoration: const InputDecoration(
+                              labelText: 'Glucides',
+                              suffixText: 'g',
+                              border: OutlineInputBorder(),
+                              isDense: true,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _fatController,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            decoration: const InputDecoration(
+                              labelText: 'Lipides',
+                              suffixText: 'g',
+                              border: OutlineInputBorder(),
+                              isDense: true,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    MonthPicker(
-                      label: 'Mois de récolte',
-                      initialSelected: isEdit ? (widget.plantToEdit?.harvestMonths ?? []) : [],
-                      onChanged: (months) => setState(() => _harvestMonths = months),
-                    ),
-                    
-                    const SizedBox(height: 32),
-                    ElevatedButton(
-                      onPressed: _savePlant,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                    const SizedBox(height: 24),
+
+                    // --- NOTES / ASSOCIATIONS SECTION ---
+                    Text('Notes & Associations', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _notesController,
+                      maxLines: 4,
+                      decoration: const InputDecoration(
+                        labelText: 'Notes personnelles',
+                        hintText: 'Plantes compagnes, astuces de culture...',
+                        border: OutlineInputBorder(),
+                        alignLabelWithHint: true,
+                        prefixIcon: Icon(Icons.note_alt_outlined),
                       ),
-                      child: Text(isEdit ? 'Enregistrer les modifications' : 'Créer la plante'),
                     ),
+
+                    const Divider(height: 48),
+                    Text('Cycle de culture', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    const SizedBox(height: 16),
+                    
+                    // Sowing
+                    _buildSeasonSection(
+                      context,
+                      label: 'Période de semis',
+                      months: _sowingMonths,
+                      onMonthsChanged: (m) => setState(() => _sowingMonths = m),
+                      icon: Icons.calendar_month,
+                    ),
+                    const SizedBox(height: 24),
+                    
+                    // Harvest
+                    _buildSeasonSection(
+                      context,
+                      label: 'Période de récolte',
+                      months: _harvestMonths,
+                      onMonthsChanged: (m) => setState(() => _harvestMonths = m),
+                      icon: Icons.shopping_basket,
+                    ),
+                    const Divider(height: 32),
+
+                    
+                      const SizedBox(height: 32),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 48.0), // Add safe padding for scroll
+                        child: ElevatedButton(
+                          onPressed: _savePlant,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          child: Text(isEdit ? 'Enregistrer les modifications' : 'Créer la plante'),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -441,6 +584,64 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSeasonSection(
+    BuildContext context, {
+    required String label,
+    required List<String> months,
+    required ValueChanged<List<String>> onMonthsChanged,
+    required IconData icon,
+  }) {
+    final theme = Theme.of(context);
+    final derivedLabel = deriveSeasonLabelFromMonths(months);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 20, color: theme.colorScheme.secondary),
+                const SizedBox(width: 8),
+                Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            if (months.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primaryContainer.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  derivedLabel.isEmpty ? '...' : derivedLabel,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        if (months.isEmpty)
+          Padding(
+             padding: const EdgeInsets.only(top: 4, left: 28),
+             child: Text(
+               'Sélectionnez les mois ci-dessous',
+               style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
+             ),
+          ),
+        const SizedBox(height: 8),
+        MonthPicker(
+          label: '', // Hidden internal label as we use custom header
+          initialSelected: months,
+          onChanged: onMonthsChanged,
+        ),
+      ],
     );
   }
 }

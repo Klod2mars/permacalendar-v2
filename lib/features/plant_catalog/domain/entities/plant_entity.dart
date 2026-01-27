@@ -110,6 +110,9 @@ class PlantFreezed with _$PlantFreezed {
 
     /// Profils de zones
     Map<String, dynamic>? zoneProfiles,
+
+    /// Notes personnelles
+    String? notes,
   }) = _PlantFreezed;
 
   factory PlantFreezed.fromJson(Map<String, dynamic> json) =>
@@ -147,6 +150,7 @@ class PlantFreezed with _$PlantFreezed {
     Map<String, dynamic>? metadata,
     Map<String, dynamic>? referenceProfile,
     Map<String, dynamic>? zoneProfiles,
+    String? notes,
   }) {
     final now = DateTime.now();
     return PlantFreezed(
@@ -183,6 +187,7 @@ class PlantFreezed with _$PlantFreezed {
       updatedAt: now,
       referenceProfile: referenceProfile,
       zoneProfiles: zoneProfiles,
+      notes: notes,
     );
   }
 }

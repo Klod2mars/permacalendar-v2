@@ -53,6 +53,7 @@ _$PlantFreezedImpl _$$PlantFreezedImplFromJson(Map<String, dynamic> json) =>
       isActive: json['isActive'] as bool? ?? true,
       referenceProfile: json['referenceProfile'] as Map<String, dynamic>?,
       zoneProfiles: json['zoneProfiles'] as Map<String, dynamic>?,
+      notes: json['notes'] as String?,
     );
 
 Map<String, dynamic> _$$PlantFreezedImplToJson(_$PlantFreezedImpl instance) =>
@@ -91,4 +92,5 @@ Map<String, dynamic> _$$PlantFreezedImplToJson(_$PlantFreezedImpl instance) =>
       'isActive': instance.isActive,
       'referenceProfile': instance.referenceProfile,
       'zoneProfiles': instance.zoneProfiles,
+      'notes': instance.notes,
     };

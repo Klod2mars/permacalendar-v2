@@ -296,47 +296,78 @@ class PlantCatalogService {
 
   /// Obtient les plantes plantables ce mois-ci
 
+  /// Obtient les plantes plantables ce mois-ci
   static Future<List<Plant>> getPlantableThisMonth() async {
     final plants = await loadPlants();
-
-    final currentMonth = _getCurrentMonthAbbreviation();
-
-    return plants
-        .where((plant) => plant.sowingMonths.contains(currentMonth))
-        .toList();
+    final currentMonth = DateTime.now().month;
+    return plants.where((plant) => _isMonthInList(plant.sowingMonths, currentMonth)).toList();
   }
 
   /// Obtient les plantes récoltables ce mois-ci
 
+  /// Obtient les plantes récoltables ce mois-ci
   static Future<List<Plant>> getHarvestablePlants() async {
     final plants = await loadPlants();
-
-    final currentMonth = _getCurrentMonthAbbreviation();
-
-    return plants
-        .where((plant) => plant.harvestMonths.contains(currentMonth))
-        .toList();
+    final currentMonth = DateTime.now().month;
+    return plants.where((plant) => _isMonthInList(plant.harvestMonths, currentMonth)).toList();
   }
 
   /// Obtient l'abréviation du mois actuel
 
-  static String _getCurrentMonthAbbreviation() {
-    final monthAbbreviations = [
-      'J',
-      'F',
-      'M',
-      'A',
-      'M',
-      'J',
-      'J',
-      'A',
-      'S',
-      'O',
-      'N',
-      'D'
-    ];
+  /// Vérifie si un mois donné (1..12) est dans la liste des tokens (supporte formats legacy & v2)
+  static bool _isMonthInList(List<String> months, int targetMonth) {
+    for (final token in months) {
+      if (_tokenMatchesMonth(token, targetMonth)) return true;
+    }
+    return false;
+  }
 
-    return monthAbbreviations[DateTime.now().month - 1];
+  static bool _tokenMatchesMonth(String token, int month) {
+    final t = token.trim();
+    if (t.isEmpty) return false;
+    
+    // 1. Numeric check
+    final n = int.tryParse(t);
+    if (n != null) return n == month;
+
+    // 2. Canonical 3-letter check (or full)
+    if (t.length >= 3) {
+      final three = t.substring(0,3).toLowerCase();
+      switch (month) {
+        case 1: return three == 'jan';
+        case 2: return three == 'fev' || three == 'fév' || three == 'feb';
+        case 3: return three == 'mar';
+        case 4: return three == 'avr' || three == 'apr';
+        case 5: return three == 'mai' || three == 'may';
+        case 6: return three == 'jui' || three == 'jun'; 
+        case 7: return three == 'jui' || three == 'jul'; 
+        case 8: return three == 'aou' || three == 'aoû' || three == 'aug';
+        case 9: return three == 'sep';
+        case 10: return three == 'oct';
+        case 11: return three == 'nov';
+        case 12: return three == 'déc' || three == 'dec';
+      }
+      if (three == 'jui') {
+         if (month == 6) return t.toLowerCase().startsWith('juin') || t == 'Jui';
+         if (month == 7) return t.toLowerCase().startsWith('juil') || t == 'Jui';
+      }
+    }
+
+    // 3. Legacy Single Letter (Ambiguous expansion)
+    if (t.length == 1) {
+      final c = t.toUpperCase();
+      switch (c) {
+        case 'J': return month == 1 || month == 6 || month == 7;
+        case 'F': return month == 2;
+        case 'M': return month == 3 || month == 5;
+        case 'A': return month == 4 || month == 8;
+        case 'S': return month == 9;
+        case 'O': return month == 10;
+        case 'N': return month == 11;
+        case 'D': return month == 12;
+      }
+    }
+    return false;
   }
 
   /// Vide le cache

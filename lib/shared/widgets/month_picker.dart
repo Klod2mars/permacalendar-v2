@@ -19,8 +19,13 @@ class MonthPicker extends StatefulWidget {
 }
 
 class _MonthPickerState extends State<MonthPicker> {
-  // Abréviations utilisées dans l'app (ordre Jan..Dec)
-  static const List<String> _monthAbbr = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+  // Canonic tokens (3 letters) to remove ambiguity
+  static const List<String> _monthTokens = [
+    'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin',
+    'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'
+  ];
+  
+  // Display names (same as tokens for now, but keeping clean separation concept)
   static const List<String> _monthNamesFr = [
     'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin',
     'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'
@@ -32,29 +37,49 @@ class _MonthPickerState extends State<MonthPicker> {
   void initState() {
     super.initState();
     _selectedIndices = <int>{};
-    // Initialize selection based on provided abbreviations
-    // Note: This logic assumes simple matching. Duplicate abbreviations in _monthAbbr (like 'J', 'M', 'A') 
-    // might match multiple months. 
-    // However, the requirement is to use the specific existing abbreviation list.
-    // Let's refine the matching to be index-based if possible, but the input is List<String>.
-    // Since the input abbreviations are ambiguous ('J' can be Jan, Juin, Juil), 
-    // we should be careful. 
-    // BUT the USER provided implementation implies a direct mapping.
-    // The user's code:
-    // for (int i = 0; i < _monthAbbr.length; i++) {
-    //   if (widget.initialSelected.contains(_monthAbbr[i])) {
-    //     _selectedIndices.add(i);
-    //   }
-    // }
-    // This logic means if 'J' is in initialSelected, Jan (0), Juin (5), Juil (6) will ALL be selected.
-    // This assumes the input list has no distinction.
-    // Given the context of the app using these specific single letters, this seems to be the intended behavior 
-    // or at least the accepted limitation of the existing data model.
-    // I will stick to the user's provided implementation for consistency with their request.
     
-    for (int i = 0; i < _monthAbbr.length; i++) {
-      if (widget.initialSelected.contains(_monthAbbr[i])) {
-        _selectedIndices.add(i);
+    // Initialize selection with support for legacy ambiguous tokens
+    for (final token in widget.initialSelected) {
+      if (token.length >= 3) {
+        // Canonical token
+        final idx = _monthTokens.indexOf(token);
+        if (idx != -1) _selectedIndices.add(idx);
+      } else {
+        // Legacy single-letter fallback (Heuristic expansion)
+        // 'J' -> Jan, Juin, Juil
+        // 'F' -> Fév
+        // 'M' -> Mar, Mai
+        // 'A' -> Avr, Aoû
+        // 'S' -> Sep
+        // 'O' -> Oct
+        // 'N' -> Nov
+        // 'D' -> Déc
+        switch (token) {
+          case 'J':
+            _selectedIndices.addAll([0, 5, 6]); // Jan, Juin, Juil
+            break;
+          case 'F':
+            _selectedIndices.add(1); // Fév
+            break;
+          case 'M':
+            _selectedIndices.addAll([2, 4]); // Mar, Mai
+            break;
+          case 'A':
+            _selectedIndices.addAll([3, 7]); // Avr, Aoû
+            break;
+          case 'S':
+            _selectedIndices.add(8); // Sep
+            break;
+          case 'O':
+            _selectedIndices.add(9); // Oct
+            break;
+          case 'N':
+            _selectedIndices.add(10); // Nov
+            break;
+          case 'D':
+            _selectedIndices.add(11); // Déc
+            break;
+        }
       }
     }
   }
@@ -67,10 +92,8 @@ class _MonthPickerState extends State<MonthPicker> {
         _selectedIndices.add(idx);
       }
     });
-    // Map indices back to abbreviations. 
-    // Note that this might produce duplicates in the output list (e.g. ['J', 'J']) if Jan and Juin are selected.
-    // The backend seems to handle List<String>.
-    widget.onChanged?.call(_selectedIndices.map((i) => _monthAbbr[i]).toList());
+    // Emit canonical tokens
+    widget.onChanged?.call(_selectedIndices.map((i) => _monthTokens[i]).toList());
   }
 
   @override

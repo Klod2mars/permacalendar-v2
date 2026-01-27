@@ -127,6 +127,9 @@ mixin _$PlantFreezed {
   /// Profils de zones
   Map<String, dynamic>? get zoneProfiles => throw _privateConstructorUsedError;
 
+  /// Notes personnelles
+  String? get notes => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PlantFreezedCopyWith<PlantFreezed> get copyWith =>
@@ -173,7 +176,8 @@ abstract class $PlantFreezedCopyWith<$Res> {
       DateTime? updatedAt,
       bool isActive,
       Map<String, dynamic>? referenceProfile,
-      Map<String, dynamic>? zoneProfiles});
+      Map<String, dynamic>? zoneProfiles,
+      String? notes});
 }
 
 /// @nodoc
@@ -223,6 +227,7 @@ class _$PlantFreezedCopyWithImpl<$Res, $Val extends PlantFreezed>
     Object? isActive = null,
     Object? referenceProfile = freezed,
     Object? zoneProfiles = freezed,
+    Object? notes = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -361,6 +366,10 @@ class _$PlantFreezedCopyWithImpl<$Res, $Val extends PlantFreezed>
           ? _value.zoneProfiles
           : zoneProfiles // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -407,7 +416,8 @@ abstract class _$$PlantFreezedImplCopyWith<$Res>
       DateTime? updatedAt,
       bool isActive,
       Map<String, dynamic>? referenceProfile,
-      Map<String, dynamic>? zoneProfiles});
+      Map<String, dynamic>? zoneProfiles,
+      String? notes});
 }
 
 /// @nodoc
@@ -455,6 +465,7 @@ class __$$PlantFreezedImplCopyWithImpl<$Res>
     Object? isActive = null,
     Object? referenceProfile = freezed,
     Object? zoneProfiles = freezed,
+    Object? notes = freezed,
   }) {
     return _then(_$PlantFreezedImpl(
       id: null == id
@@ -593,6 +604,10 @@ class __$$PlantFreezedImplCopyWithImpl<$Res>
           ? _value._zoneProfiles
           : zoneProfiles // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -634,7 +649,8 @@ class _$PlantFreezedImpl implements _PlantFreezed {
       this.updatedAt,
       this.isActive = true,
       final Map<String, dynamic>? referenceProfile,
-      final Map<String, dynamic>? zoneProfiles})
+      final Map<String, dynamic>? zoneProfiles,
+      this.notes})
       : _sowingMonths = sowingMonths,
         _harvestMonths = harvestMonths,
         _nutritionPer100g = nutritionPer100g,
@@ -934,9 +950,13 @@ class _$PlantFreezedImpl implements _PlantFreezed {
     return EqualUnmodifiableMapView(value);
   }
 
+  /// Notes personnelles
+  @override
+  final String? notes;
+
   @override
   String toString() {
-    return 'PlantFreezed(id: $id, commonName: $commonName, scientificName: $scientificName, family: $family, plantingSeason: $plantingSeason, harvestSeason: $harvestSeason, daysToMaturity: $daysToMaturity, spacing: $spacing, depth: $depth, sunExposure: $sunExposure, waterNeeds: $waterNeeds, description: $description, sowingMonths: $sowingMonths, harvestMonths: $harvestMonths, marketPricePerKg: $marketPricePerKg, defaultUnit: $defaultUnit, nutritionPer100g: $nutritionPer100g, germination: $germination, growth: $growth, watering: $watering, thinning: $thinning, weeding: $weeding, culturalTips: $culturalTips, biologicalControl: $biologicalControl, harvestTime: $harvestTime, companionPlanting: $companionPlanting, notificationSettings: $notificationSettings, varieties: $varieties, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, referenceProfile: $referenceProfile, zoneProfiles: $zoneProfiles)';
+    return 'PlantFreezed(id: $id, commonName: $commonName, scientificName: $scientificName, family: $family, plantingSeason: $plantingSeason, harvestSeason: $harvestSeason, daysToMaturity: $daysToMaturity, spacing: $spacing, depth: $depth, sunExposure: $sunExposure, waterNeeds: $waterNeeds, description: $description, sowingMonths: $sowingMonths, harvestMonths: $harvestMonths, marketPricePerKg: $marketPricePerKg, defaultUnit: $defaultUnit, nutritionPer100g: $nutritionPer100g, germination: $germination, growth: $growth, watering: $watering, thinning: $thinning, weeding: $weeding, culturalTips: $culturalTips, biologicalControl: $biologicalControl, harvestTime: $harvestTime, companionPlanting: $companionPlanting, notificationSettings: $notificationSettings, varieties: $varieties, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, referenceProfile: $referenceProfile, zoneProfiles: $zoneProfiles, notes: $notes)';
   }
 
   @override
@@ -1002,7 +1022,8 @@ class _$PlantFreezedImpl implements _PlantFreezed {
             const DeepCollectionEquality()
                 .equals(other._referenceProfile, _referenceProfile) &&
             const DeepCollectionEquality()
-                .equals(other._zoneProfiles, _zoneProfiles));
+                .equals(other._zoneProfiles, _zoneProfiles) &&
+            (identical(other.notes, notes) || other.notes == notes));
   }
 
   @JsonKey(ignore: true)
@@ -1042,7 +1063,8 @@ class _$PlantFreezedImpl implements _PlantFreezed {
         updatedAt,
         isActive,
         const DeepCollectionEquality().hash(_referenceProfile),
-        const DeepCollectionEquality().hash(_zoneProfiles)
+        const DeepCollectionEquality().hash(_zoneProfiles),
+        notes
       ]);
 
   @JsonKey(ignore: true)
@@ -1094,7 +1116,8 @@ abstract class _PlantFreezed implements PlantFreezed {
       final DateTime? updatedAt,
       final bool isActive,
       final Map<String, dynamic>? referenceProfile,
-      final Map<String, dynamic>? zoneProfiles}) = _$PlantFreezedImpl;
+      final Map<String, dynamic>? zoneProfiles,
+      final String? notes}) = _$PlantFreezedImpl;
 
   factory _PlantFreezed.fromJson(Map<String, dynamic> json) =
       _$PlantFreezedImpl.fromJson;
@@ -1235,6 +1258,10 @@ abstract class _PlantFreezed implements PlantFreezed {
 
   /// Profils de zones
   Map<String, dynamic>? get zoneProfiles;
+  @override
+
+  /// Notes personnelles
+  String? get notes;
   @override
   @JsonKey(ignore: true)
   _$$PlantFreezedImplCopyWith<_$PlantFreezedImpl> get copyWith =>

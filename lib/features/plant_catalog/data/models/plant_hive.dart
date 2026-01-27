@@ -145,6 +145,10 @@ class PlantHive extends HiveObject {
   @HiveField(33)
   Map<String, dynamic>? zoneProfiles;
 
+  /// Notes personnelles et associations
+  @HiveField(34)
+  String? notes;
+
   PlantHive({
     required this.id,
     required this.commonName,
@@ -180,6 +184,7 @@ class PlantHive extends HiveObject {
     this.isActive = true,
     this.referenceProfile,
     this.zoneProfiles,
+    this.notes,
   });
 
   /// Factory constructor pour Créer depuis JSON
@@ -228,6 +233,7 @@ class PlantHive extends HiveObject {
       isActive: json['isActive'] as bool? ?? true,
       referenceProfile: json['referenceProfile'] as Map<String, dynamic>?,
       zoneProfiles: json['zoneProfiles'] as Map<String, dynamic>?,
+      notes: json['notes'] as String?,
     );
   }
 
@@ -268,6 +274,7 @@ class PlantHive extends HiveObject {
       'isActive': isActive,
       'referenceProfile': referenceProfile,
       'zoneProfiles': zoneProfiles,
+      'notes': notes,
     };
   }
 
