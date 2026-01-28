@@ -415,6 +415,34 @@ class WeatherPresets {
     lightning: 0.0,
   );
 
+  // NEW. 0. Empty / No-Precip preset (preset zéro)
+  // Permet d'exprimer un état "visuellement nul" lorsque la confiance est trop faible.
+  // [NEW / À VALIDER VISUELLEMENT]
+  static const AestheticParams emptyPrecip = AestheticParams(
+    quantity: 0.0,
+    area: 0.0,
+    weight: 0.0,
+    size: 0.0,
+    agitation: 0.0,
+    clumping: 0.0,
+    granularity: 0.0,
+    lightning: 0.0,
+  );
+
+  // NEW. 0. Very Light Rain / Sprinkle (nouveau)
+  // Petite pluie très légère — basé sur 'drizzle' mais légèrement atténué (-15%).
+  // [NEW / À VALIDER VISUELLEMENT]
+  static const AestheticParams veryLightRain = AestheticParams(
+    quantity: 0.153,   // drizzle.quantity (0.18) * 0.85
+    area: 0.85,        // drizzle.area (1.0) * 0.85
+    weight: 0.068,     // drizzle.weight (0.08) * 0.85
+    size: 0.255,       // drizzle.size (0.30) * 0.85
+    agitation: 0.0425, // drizzle.agitation (0.05) * 0.85
+    clumping: 0.0,
+    granularity: 0.0,
+    lightning: 0.0,
+  );
+
   // 2b. Drizzle / Bruine (nouveau)
   // [LOCKED / SANCTUARISÉ] - DO NOT TOUCH
   // Petite bruine, subtile

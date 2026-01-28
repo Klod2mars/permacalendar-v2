@@ -141,7 +141,12 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     // V5 DYNAMIC INJECTION
     // We map the physical weather point to an Aesthetic Configuration on the fly.
     // This ensures we always strictly use the Sanctified Presets.
-    final mapperConfig = WeatherAestheticMapper.getAesthetic(p);
+    final config = ref.read(weatherConfigProvider);
+    final mapperConfig = WeatherAestheticMapper.getAesthetic(
+      p,
+      precipProbThreshold: config.general.precipThresholdProb, // 30.0 par défaut
+      downgradeOnLowProb: true,
+    );
     
     if (mapperConfig != null) {
       // We found a matching preset (Light Rain, Heavy Rain, Snow, etc.)

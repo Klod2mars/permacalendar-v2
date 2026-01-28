@@ -15,7 +15,15 @@ class WeatherAestheticMapper {
   ///    <= 3.0  -> lightRain
   ///    <= 8.0  -> moderateRain
   ///    <=20.0  -> heavyRain
-  static AestheticParams? getAesthetic(HourlyWeatherPoint point) {
+  /// Retourne l'AestheticParams correspondant au point horaire.
+  /// - Override ORAGE : si code ∈ stormCodes -> WeatherPresets.storm
+  /// - Sinon : utilise precipitationMm pour déterminer le preset de base.
+  /// - Puis applique la logique de downgrade si precipProb < seuil.
+  static AestheticParams? getAesthetic(
+    HourlyWeatherPoint point, {
+    double precipProbThreshold = 30.0,
+    bool downgradeOnLowProb = true,
+  }) {
     final code = point.weatherCode;
     final precipMm = point.precipitationMm;
     final precipProb = (point.precipitationProbability).clamp(0, 100);
@@ -29,20 +37,40 @@ class WeatherAestheticMapper {
     const minShowMm = 0.02;
     if (precipMm <= minShowMm) return null;
 
-    // 3) Atténuation par probabilité (sqrt pour obtenir une atténuation douce)
-    final probFactor = math.sqrt((precipProb / 100.0).clamp(0.0, 1.0));
-    final effectiveMm = precipMm * probFactor;
-
-    // 4) Classification par paliers (discrets)
-    if (effectiveMm <= 0.5) {
-      return WeatherPresets.drizzle;
-    } else if (effectiveMm <= 3.0) {
-      return WeatherPresets.lightRain; // sanctuarisé
-    } else if (effectiveMm <= 8.0) {
-      return WeatherPresets.moderateRain;
+    // 3) Classification initiale sur le volume RÉEL (sans atténuation proba)
+    AestheticParams basePreset;
+    if (precipMm <= 0.5) {
+      basePreset = WeatherPresets.veryLightRain;
+    } else if (precipMm <= 3.0) {
+      basePreset = WeatherPresets.drizzle;
+    } else if (precipMm <= 8.0) {
+      basePreset = WeatherPresets.lightRain;
+    } else if (precipMm <= 20.0) {
+      basePreset = WeatherPresets.moderateRain;
     } else {
-      // >= 8.0 (cap à 20.0 dans UI) -> heavyRain (sanctuarisé, pluie forte)
-      return WeatherPresets.heavyRain;
+      basePreset = WeatherPresets.heavyRain;
     }
+
+    // 4) Gating / downgrade par probabilité
+    if (precipProb < precipProbThreshold) {
+      if (!downgradeOnLowProb) {
+        // Trop incertain -> on ne montre rien
+        return null;
+      } else {
+        // Downgrade d'un pas : retourne le preset immédiatement inférieur.
+        AestheticParams stepDown(AestheticParams p) {
+          if (identical(p, WeatherPresets.emptyPrecip)) return WeatherPresets.emptyPrecip;
+          if (identical(p, WeatherPresets.veryLightRain)) return WeatherPresets.emptyPrecip;
+          if (identical(p, WeatherPresets.drizzle)) return WeatherPresets.veryLightRain;
+          if (identical(p, WeatherPresets.lightRain)) return WeatherPresets.drizzle;
+          if (identical(p, WeatherPresets.moderateRain)) return WeatherPresets.lightRain;
+          if (identical(p, WeatherPresets.heavyRain)) return WeatherPresets.moderateRain;
+          return p;
+        }
+        return stepDown(basePreset);
+      }
+    }
+
+    return basePreset;
   }
 }
