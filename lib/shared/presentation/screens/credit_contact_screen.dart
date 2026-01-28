@@ -42,7 +42,7 @@ class CreditContactScreen extends StatelessWidget {
 
               // Brand
               Text(
-                'SoWing',
+                'Sowing',
                 style: GoogleFonts.outfit(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class CreditContactScreen extends StatelessWidget {
 
               // Credits
               _buildSectionText(
-                'Conception et développement : Azaïs Claude',
+                'Conception et développement :             Claude Azaïs',
                 textColor,
               ),
               _buildSectionText(
