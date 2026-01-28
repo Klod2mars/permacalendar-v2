@@ -431,25 +431,26 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   }
 
   Future<void> _showPostSaveDialog(Activity task) async {
+    final l10n = AppLocalizations.of(context)!;
      // Use showDialog to ask for export
      if (!mounted) return;
      await showDialog(
        context: context,
        barrierDismissible: false,
        builder: (ctx) => AlertDialog(
-         title: const Text('Tâche enregistrée'),
-         content: const Text('Souhaitez-vous envoyer la fiche tâche à quelqu\'un ?'),
+         title: Text(l10n.calendar_task_saved_title),
+         content: Text(l10n.calendar_ask_export_pdf),
          actions: [
            TextButton(
              onPressed: () {
                Navigator.of(ctx).pop();
                Navigator.of(context).pop({'task': task});
              },
-             child: const Text('Non merci'),
+             child: Text(l10n.action_no_thanks),
            ),
            FilledButton.icon(
              icon: const Icon(Icons.picture_as_pdf),
-             label: const Text('PDF'),
+             label: Text(l10n.action_pdf),
              onPressed: () async {
                Navigator.of(ctx).pop(); // Close dialog first
                await _generateAndShare(task); // Generate PDF
@@ -754,7 +755,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
               const SizedBox(height: 8),
               Text(
-                l10n.task_editor_photo_help ?? 'La photo sera jointe automatiquement au PDF / Word à la création / envoi.',
+                l10n.task_editor_photo_help ?? 'La photo sera jointe automatiquement au PDF à la création / envoi.',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
               ),
 

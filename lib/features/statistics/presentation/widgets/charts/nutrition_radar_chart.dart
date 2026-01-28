@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:permacalendar/features/statistics/application/providers/nutrition_radar_provider.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class NutritionRadarChart extends StatelessWidget {
   final NutritionRadarData data;
@@ -10,6 +11,7 @@ class NutritionRadarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // Normalization logic for visualization:
     // We want a balanced shape. We take the max value among axes to scale the chart,
     // but we cap the minimum scale to avoid a tiny chart if values are low.
@@ -49,13 +51,13 @@ class NutritionRadarChart extends StatelessWidget {
         getTitle: (index, angle) {
           switch (index) {
             case 0:
-              return RadarChartTitle(text: 'Vitamines', angle: angle);
+              return RadarChartTitle(text: l10n.stats_radar_vitamins, angle: angle);
             case 1:
-              return RadarChartTitle(text: 'Minéraux', angle: angle);
+              return RadarChartTitle(text: l10n.stats_radar_minerals, angle: angle);
             case 2:
-              return RadarChartTitle(text: 'Fibres', angle: angle);
+              return RadarChartTitle(text: l10n.stats_radar_fibers, angle: angle);
             case 3:
-              return RadarChartTitle(text: 'Protéines', angle: angle);
+              return RadarChartTitle(text: l10n.stats_radar_proteins, angle: angle);
             default:
               return const RadarChartTitle(text: '');
           }

@@ -715,10 +715,12 @@
   "@calendar_task_saved_title": {
     "description": "Titre dialog tâche enregistrée"
   },
-  "calendar_ask_export_pdf": "Vuoi inviarlo come PDF?",
-  "@calendar_ask_export_pdf": {
-    "description": "Contenu dialog export PDF"
-  },
+  "calendar_ask_export_pdf": "Vuoi inviare la scheda attività a qualcuno?",
+  "@calendar_ask_export_pdf": { "description": "Contenu dialog export PDF" },
+  "action_no_thanks": "No grazie",
+  "@action_no_thanks": { "description": "Bouton pour decliner une action" },
+  "action_pdf": "PDF",
+  "@action_pdf": { "description": "Label bouton PDF" },
   "calendar_task_modified": "Attività modificata",
   "@calendar_task_modified": {
     "description": "SnackBar tâche modifiée"
@@ -2349,11 +2351,11 @@
   "@plant_catalog_data_unknown": {
     "description": "Mention pour données manquantes/grises"
   },
-  "task_editor_photo_label": "Photo de la tâche",
-  "task_editor_photo_add": "Ajouter une photo",
-  "task_editor_photo_change": "Changer la photo",
-  "task_editor_photo_remove": "Retirer la photo",
-  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF / Word à la création / envoi.",
+  "task_editor_photo_label": "Foto dell'attività",
+  "task_editor_photo_add": "Aggiungi foto",
+  "task_editor_photo_change": "Cambia foto",
+  "task_editor_photo_remove": "Rimuovi foto",
+  "task_editor_photo_help": "La foto verrà allegata automaticamente al PDF alla creazione / invio.",
   "export_block_nutrition": "Nutrition (Agrégation)",
   "@export_block_nutrition": {
     "description": "Label pour le bloc Nutrition dans l'export"
@@ -2371,5 +2373,214 @@
   "export_field_data_confidence": "Confiance",
   "export_field_coverage_percent": "Moy. DRI (%)",
   "export_field_lower_bound_coverage": "Min DRI (%)",
-  "export_field_upper_bound_coverage": "Max DRI (%)"
+  "export_field_upper_bound_coverage": "Max DRI (%)",
+
+  "settings_garden_config_title": "Configurazione del Giardino",
+  "@settings_garden_config_title": {
+    "description": "Titolo della sezione configurazione giardino"
+  },
+  "settings_climatic_zone_label": "Zona Climatica",
+  "@settings_climatic_zone_label": {
+    "description": "Etichetta per impostazione zona climatica"
+  },
+  "settings_status_manual": "{value} (Manuale)",
+  "@settings_status_manual": {
+    "description": "Stato manuale per impostazioni",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "Zone A"
+      }
+    }
+  },
+  "settings_status_auto": "{value} (Auto)",
+  "@settings_status_auto": {
+    "description": "Stato automatico per impostazioni",
+    "placeholders": {
+       "value": {
+         "type": "String",
+         "example": "Zone A"
+       }
+    }
+  },
+  "settings_status_detecting": "Rilevamento...",
+  "@settings_status_detecting": {
+    "description": "Stato rilevamento"
+  },
+  "settings_last_frost_date_label": "Ultimo Gelo (Primavera)",
+  "@settings_last_frost_date_label": {
+    "description": "Etichetta per data ultimo gelo"
+  },
+  "settings_last_frost_date_title": "Data Ultimo Gelo",
+  "@settings_last_frost_date_title": {
+    "description": "Titolo per impostazione data ultimo gelo"
+  },
+  "settings_status_estimated": "{value} (Stimato)",
+  "@settings_status_estimated": {
+    "description": "Stato stimato per una data",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "15/05"
+      }
+    }
+  },
+  "settings_status_unknown": "Sconosciuto",
+  "@settings_status_unknown": {
+    "description": "Stato sconosciuto"
+  },
+  "settings_currency_label": "Valuta",
+  "@settings_currency_label": {
+    "description": "Etichetta per valuta"
+  },
+  "settings_currency_selector_title": "Scegli valuta",
+  "@settings_currency_selector_title": {
+    "description": "Titolo selettore valuta"
+  },
+  "settings_commune_search_placeholder_start": "Inserisci il nome di una città per iniziare.",
+  "@settings_commune_search_placeholder_start": {
+    "description": "Placeholder vuoto ricerca città"
+  },
+  "settings_commune_search_no_results": "Nessun risultato per \"{query}\".",
+  "@settings_commune_search_no_results": {
+    "description": "Risultato vuoto ricerca città",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_zone_auto_recommended": "Automatico (Consigliato)",
+  "@settings_zone_auto_recommended": {
+    "description": "Opzione automatica per zona"
+  },
+  "settings_date_auto": "Automatico",
+  "@settings_date_auto": {
+    "description": "Opzione automatica per data"
+  },
+  "settings_reset_date_button": "Reimposta data",
+  "@settings_reset_date_button": {
+    "description": "Pulsante reimposta data"
+  },
+  "settings_terms_subtitle": "Termini e condizioni",
+  "@settings_terms_subtitle": {
+    "description": "Sottotitolo termini e condizioni"
+  },
+  "language_italian": "Italiano",
+  "@language_italian": {
+    "description": "Etichetta lingua italiano"
+  },
+
+  "zone_nh_temperate_europe": "Temperato - Emisfero Settentrionale (Eurasia)",
+  "@zone_nh_temperate_europe": {
+    "description": "Nome zona Emisferio Settentrionale Eurasia"
+  },
+  "zone_nh_temperate_na": "Temperato - Nord America",
+  "@zone_nh_temperate_na": {
+    "description": "Nome zona Nord America"
+  },
+  "zone_sh_temperate": "Temperato - Emisfero Meridionale",
+  "@zone_sh_temperate": {
+    "description": "Nome zona Emisferio Meridionale"
+  },
+  "zone_mediterranean": "Mediterraneo",
+  "@zone_mediterranean": {
+    "description": "Nome zona Mediterraneo"
+  },
+  "zone_tropical": "Tropicale",
+  "@zone_tropical": {
+    "description": "Nome zona Tropicale"
+  },
+  "zone_arid": "Arido / Desertico",
+  "@zone_arid": {
+    "description": "Nome zona Arido / Desertico"
+  },
+
+  "settings_backup_restore_section": "Backup e Ripristino",
+  "@settings_backup_restore_section": { "description": "Titolo sezione backup" },
+  "settings_backup_restore_subtitle": "Backup completo dei dati",
+  "@settings_backup_restore_subtitle": { "description": "Sottotitolo sezione backup" },
+  "settings_backup_action": "Crea backup",
+  "@settings_backup_action": { "description": "Pulsante crea backup" },
+  "settings_restore_action": "Ripristina backup",
+  "@settings_restore_action": { "description": "Pulsante ripristina backup" },
+  "settings_backup_creating": "Creazione backup in corso...",
+  "@settings_backup_creating": { "description": "Caricamento backup" },
+  "settings_backup_success": "Backup creato con successo!",
+  "@settings_backup_success": { "description": "Successo backup" },
+  "settings_restore_warning_title": "Attenzione",
+  "@settings_restore_warning_title": { "description": "Titolo avviso ripristino" },
+  "settings_restore_warning_content": "Il ripristino sovrascriverà TUTTI i dati attuali. Questa azione è irreversibile. L'applicazione dovrà essere riavviata.\n\nSei sicuro di voler continuare?",
+  "@settings_restore_warning_content": { "description": "Contenuto avviso ripristino" },
+  "settings_restore_success": "Ripristino riuscito! Riavvia l'applicazione.",
+  "@settings_restore_success": { "description": "Successo ripristino" },
+  "settings_backup_error": "Backup fallito: {error}",
+  "@settings_backup_error": { "description": "Errore backup", "placeholders": { "error": { "type": "Object" } } },
+  "settings_restore_error": "Ripristino fallito: {error}",
+  "@settings_restore_error": { "description": "Errore ripristino", "placeholders": { "error": { "type": "Object" } } },
+  "settings_backup_compatible_zip": "Compatibile ZIP",
+  "@settings_backup_compatible_zip": { "description": "Indicazione ZIP" },
+  "backup_share_subject": "Backup PermaCalendar",
+  "@backup_share_subject": { "description": "Oggetto condivisione backup" },
+  "stats_pillar_economy": "ECONOMIA",
+  "@stats_pillar_economy": { "description": "Titolo pilastro Economia" },
+  "stats_pillar_nutrition": "NUTRIZIONE",
+  "@stats_pillar_nutrition": { "description": "Titolo pilastro Nutrizione" },
+  "stats_pillar_export": "ESPORTAZIONE",
+  "@stats_pillar_export": { "description": "Titolo pilastro Esportazione" },
+  "stats_data_label": "DATI",
+  "@stats_data_label": { "description": "Etichetta dati" },
+  "stats_radar_vitamins": "Vitamine",
+  "@stats_radar_vitamins": { "description": "Etichetta radar vitamine" },
+  "stats_radar_minerals": "Minerali",
+  "@stats_radar_minerals": { "description": "Etichetta radar minerali" },
+  "stats_radar_fibers": "Fibre",
+  "@stats_radar_fibers": { "description": "Etichetta radar fibre" },
+  "stats_radar_proteins": "Proteine",
+  "@stats_radar_proteins": { "description": "Etichetta radar proteine" },
+  "stats_radar_energy": "Energia",
+  "@stats_radar_energy": { "description": "Etichetta radar energia" },
+  "stats_radar_antiox": "Antiox",
+  "@stats_radar_antiox": { "description": "Etichetta radar antiossidanti" },
+
+  "custom_plant_new_title": "Nuova pianta",
+  "custom_plant_edit_title": "Modifica pianta",
+  "custom_plant_action_save_creation": "Crea pianta",
+  "custom_plant_action_save_modification": "Salva modifiche",
+  "custom_plant_delete_confirm_title": "Eliminare la pianta?",
+  "custom_plant_delete_confirm_body": "Questa azione è irreversibile.",
+  "custom_plant_saved_success": "Pianta salvata con successo",
+  "custom_plant_common_name_label": "Nome comune *",
+  "custom_plant_common_name_required": "Obbligatorio",
+  "custom_plant_scientific_name_label": "Nome scientifico",
+  "custom_plant_family_label": "Famiglia",
+  "custom_plant_description_label": "Descrizione",
+  "custom_plant_price_title": "Prezzo",
+  "custom_plant_price_label": "Prezzo medio al Kg ({currency})",
+  "@custom_plant_price_label": {
+    "description": "Etichetta prezzo medio al kg",
+    "placeholders": { "currency": { "type": "String" } }
+  },
+  "custom_plant_price_hint": "es: 4.50",
+  "custom_plant_nutrition_title": "Nutrizione (per 100g)",
+  "custom_plant_nutrition_cal": "Calorie",
+  "custom_plant_nutrition_prot": "Proteine",
+  "custom_plant_nutrition_carb": "Carboidrati",
+  "custom_plant_nutrition_fat": "Grassi",
+  "custom_plant_notes_title": "Note & Associazioni",
+  "custom_plant_notes_label": "Note personali",
+  "custom_plant_notes_hint": "Piante consocie, consigli di coltivazione...",
+  "custom_plant_cycle_title": "Ciclo di coltivazione",
+  "custom_plant_sowing_period": "Periodo di semina",
+  "custom_plant_harvest_period": "Periodo di raccolta",
+  "custom_plant_select_months": "Seleziona i mesi qui sotto",
+  "custom_plant_add_photo": "Aggiungi foto",
+  "custom_plant_delete_photo": "Rimuovi foto",
+  "custom_plant_pick_camera": "Scatta foto",
+  "custom_plant_pick_gallery": "Scegli dalla galleria",
+  "custom_plant_pick_error": "Errore nella selezione dell'immagine: {error}",
+  "@custom_plant_pick_error": {
+    "description": "Errore selezione immagine",
+    "placeholders": { "error": { "type": "Object" } }
+  }
 }

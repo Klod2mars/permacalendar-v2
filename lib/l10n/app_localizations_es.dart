@@ -581,7 +581,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendar_task_saved_title => 'Tarea guardada';
 
   @override
-  String get calendar_ask_export_pdf => '¿Desea enviarla como PDF?';
+  String get calendar_ask_export_pdf =>
+      '¿Desea enviar la ficha de la tarea a alguien?';
+
+  @override
+  String get action_no_thanks => 'No, gracias';
+
+  @override
+  String get action_pdf => 'PDF';
 
   @override
   String get calendar_task_modified => 'Tarea modificada';
@@ -708,45 +715,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String get common_error => 'Error';
 
   @override
-  String get settings_backup_restore_section => 'Sauvegarde et Restauration';
+  String get settings_backup_restore_section =>
+      'Copia de seguridad y Restauración';
 
   @override
-  String get settings_backup_restore_subtitle =>
-      'Sauvegarde intégrale de vos données';
+  String get settings_backup_restore_subtitle => 'Copia de seguridad completa';
 
   @override
-  String get settings_backup_action => 'Créer une sauvegarde';
+  String get settings_backup_action => 'Crear copia de seguridad';
 
   @override
-  String get settings_restore_action => 'Restaurer une sauvegarde';
+  String get settings_restore_action => 'Restaurar copia de seguridad';
 
   @override
-  String get settings_backup_creating =>
-      'Création de la sauvegarde en cours...';
+  String get settings_backup_creating => 'Creando copia de seguridad...';
 
   @override
-  String get settings_backup_success => 'Sauvegarde créée avec succès !';
+  String get settings_backup_success => '¡Copia de seguridad creada con éxito!';
 
   @override
-  String get settings_restore_warning_title => 'Attention';
+  String get settings_restore_warning_title => 'Atención';
 
   @override
   String get settings_restore_warning_content =>
-      'La restauration d\'une sauvegarde écrasera TOUTES les données actuelles (jardins, plantations, réglages). Cette action est irréversible. L\'application devra redémarrer.\n\nÊtes-vous sûr de vouloir continuer ?';
+      'Restaurar una copia sobrescribirá TODOS los datos actuales. Esta acción es irreversible. La aplicación deberá reiniciarse.\n\n¿Seguro que desea continuar?';
 
   @override
   String get settings_restore_success =>
-      'Restauration réussie ! Veuillez redémarrer l\'application.';
+      '¡Restauración exitosa! Reinicie la aplicación.';
 
   @override
   String settings_backup_error(Object error) {
-    return 'Échec de la sauvegarde : $error';
+    return 'Fallo de copia: $error';
   }
 
   @override
   String settings_restore_error(Object error) {
-    return 'Échec de la restauration : $error';
+    return 'Fallo de restauración: $error';
   }
+
+  @override
+  String get settings_backup_compatible_zip => 'Compatible con ZIP';
+
+  @override
+  String get backup_share_subject => 'Copia de seguridad PermaCalendar';
 
   @override
   String get task_editor_title_new => 'Nueva tarea';
@@ -2437,20 +2449,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get plant_catalog_data_unknown => 'Datos desconocidos';
 
   @override
-  String get task_editor_photo_label => 'Photo de la tâche';
+  String get task_editor_photo_label => 'Foto de la tarea';
 
   @override
-  String get task_editor_photo_add => 'Ajouter une photo';
+  String get task_editor_photo_add => 'Añadir una foto';
 
   @override
-  String get task_editor_photo_change => 'Changer la photo';
+  String get task_editor_photo_change => 'Cambiar foto';
 
   @override
-  String get task_editor_photo_remove => 'Retirer la photo';
+  String get task_editor_photo_remove => 'Quitar foto';
 
   @override
   String get task_editor_photo_help =>
-      'La photo sera jointe automatiquement au PDF / Word à la création / envoi.';
+      'La foto se adjuntará automáticamente al PDF al crear / enviar.';
 
   @override
   String get export_block_nutrition => 'Nutrition (Agrégation)';
@@ -2488,4 +2500,217 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get export_field_upper_bound_coverage => 'Max DRI (%)';
+
+  @override
+  String get settings_garden_config_title => 'Configuración del Jardín';
+
+  @override
+  String get settings_climatic_zone_label => 'Zona Climática';
+
+  @override
+  String settings_status_manual(String value) {
+    return '$value (Manual)';
+  }
+
+  @override
+  String settings_status_auto(String value) {
+    return '$value (Auto)';
+  }
+
+  @override
+  String get settings_status_detecting => 'Detectando...';
+
+  @override
+  String get settings_last_frost_date_label => 'Última Helada (Primavera)';
+
+  @override
+  String get settings_last_frost_date_title => 'Fecha de Última Helada';
+
+  @override
+  String settings_status_estimated(String value) {
+    return '$value (Estimado)';
+  }
+
+  @override
+  String get settings_status_unknown => 'Desconocido';
+
+  @override
+  String get settings_currency_label => 'Moneda';
+
+  @override
+  String get settings_currency_selector_title => 'Elegir moneda';
+
+  @override
+  String get settings_commune_search_placeholder_start =>
+      'Ingrese el nombre de una ciudad para comenzar.';
+
+  @override
+  String settings_commune_search_no_results(String query) {
+    return 'Sin resultados para \"$query\".';
+  }
+
+  @override
+  String get settings_zone_auto_recommended => 'Automático (Recomendado)';
+
+  @override
+  String get settings_date_auto => 'Automático';
+
+  @override
+  String get settings_reset_date_button => 'Restablecer fecha';
+
+  @override
+  String get settings_terms_subtitle => 'Términos y condiciones';
+
+  @override
+  String get language_italian => 'Italiano';
+
+  @override
+  String get zone_nh_temperate_europe =>
+      'Templado - Hemisferio Norte (Eurasia)';
+
+  @override
+  String get zone_nh_temperate_na => 'Templado - América del Norte';
+
+  @override
+  String get zone_sh_temperate => 'Templado - Hemisferio Sur';
+
+  @override
+  String get zone_mediterranean => 'Mediterráneo';
+
+  @override
+  String get zone_tropical => 'Tropical';
+
+  @override
+  String get zone_arid => 'Árido / Desierto';
+
+  @override
+  String get stats_pillar_economy => 'ECONOMÍA';
+
+  @override
+  String get stats_pillar_nutrition => 'NUTRICIÓN';
+
+  @override
+  String get stats_pillar_export => 'EXPORTACIÓN';
+
+  @override
+  String get stats_data_label => 'DATOS';
+
+  @override
+  String get stats_radar_vitamins => 'Vitaminas';
+
+  @override
+  String get stats_radar_minerals => 'Minerales';
+
+  @override
+  String get stats_radar_fibers => 'Fibras';
+
+  @override
+  String get stats_radar_proteins => 'Proteínas';
+
+  @override
+  String get stats_radar_energy => 'Energía';
+
+  @override
+  String get stats_radar_antiox => 'Antiox';
+
+  @override
+  String get custom_plant_new_title => 'Nueva planta';
+
+  @override
+  String get custom_plant_edit_title => 'Editar planta';
+
+  @override
+  String get custom_plant_action_save_creation => 'Crear planta';
+
+  @override
+  String get custom_plant_action_save_modification => 'Guardar cambios';
+
+  @override
+  String get custom_plant_delete_confirm_title => '¿Eliminar planta?';
+
+  @override
+  String get custom_plant_delete_confirm_body => 'Esta acción es irreversible.';
+
+  @override
+  String get custom_plant_saved_success => 'Planta guardada con éxito';
+
+  @override
+  String get custom_plant_common_name_label => 'Nombre común *';
+
+  @override
+  String get custom_plant_common_name_required => 'Requerido';
+
+  @override
+  String get custom_plant_scientific_name_label => 'Nombre científico';
+
+  @override
+  String get custom_plant_family_label => 'Familia';
+
+  @override
+  String get custom_plant_description_label => 'Descripción';
+
+  @override
+  String get custom_plant_price_title => 'Precio';
+
+  @override
+  String custom_plant_price_label(String currency) {
+    return 'Precio medio por Kg ($currency)';
+  }
+
+  @override
+  String get custom_plant_price_hint => 'ej: 4.50';
+
+  @override
+  String get custom_plant_nutrition_title => 'Nutrición (por 100g)';
+
+  @override
+  String get custom_plant_nutrition_cal => 'Calorías';
+
+  @override
+  String get custom_plant_nutrition_prot => 'Proteínas';
+
+  @override
+  String get custom_plant_nutrition_carb => 'Carbohidratos';
+
+  @override
+  String get custom_plant_nutrition_fat => 'Grasas';
+
+  @override
+  String get custom_plant_notes_title => 'Notas y Asociaciones';
+
+  @override
+  String get custom_plant_notes_label => 'Notas personales';
+
+  @override
+  String get custom_plant_notes_hint =>
+      'Plantas compañeras, consejos de cultivo...';
+
+  @override
+  String get custom_plant_cycle_title => 'Ciclo de cultivo';
+
+  @override
+  String get custom_plant_sowing_period => 'Periodo de siembra';
+
+  @override
+  String get custom_plant_harvest_period => 'Periodo de cosecha';
+
+  @override
+  String get custom_plant_select_months => 'Seleccione los meses abajo';
+
+  @override
+  String get custom_plant_add_photo => 'Añadir foto';
+
+  @override
+  String get custom_plant_delete_photo => 'Eliminar foto';
+
+  @override
+  String get custom_plant_pick_camera => 'Tomar foto';
+
+  @override
+  String get custom_plant_pick_gallery => 'Elegir de la galería';
+
+  @override
+  String custom_plant_pick_error(Object error) {
+    return 'Error al seleccionar imagen: $error';
+  }
 }

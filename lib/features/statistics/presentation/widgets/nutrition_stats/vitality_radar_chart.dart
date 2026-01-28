@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../application/providers/nutrition_radar_provider.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class VitalityRadarChart extends StatelessWidget {
   final NutritionRadarData data;
@@ -9,6 +10,7 @@ class VitalityRadarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // Neon Green Colors
     const Color primaryColor = Color(0xFF00FFC2); // Cyber Green
     const Color gridColor = Color(0xFF333333);
@@ -44,17 +46,17 @@ class VitalityRadarChart extends StatelessWidget {
           getTitle: (index, angle) {
             switch (index) {
               case 0:
-                return const RadarChartTitle(text: 'Énergie', angle: 0);
+                return RadarChartTitle(text: l10n.stats_radar_energy, angle: 0);
               case 1:
-                return const RadarChartTitle(text: 'Protéines', angle: 0);
+                return RadarChartTitle(text: l10n.stats_radar_proteins, angle: 0);
               case 2:
-                return const RadarChartTitle(text: 'Fibres', angle: 0);
+                return RadarChartTitle(text: l10n.stats_radar_fibers, angle: 0);
               case 3:
-                return const RadarChartTitle(text: 'Vitamines', angle: 0);
+                return RadarChartTitle(text: l10n.stats_radar_vitamins, angle: 0);
               case 4:
-                return const RadarChartTitle(text: 'Minéraux', angle: 0);
+                return RadarChartTitle(text: l10n.stats_radar_minerals, angle: 0);
               case 5:
-                return const RadarChartTitle(text: 'Antiox', angle: 0);
+                return RadarChartTitle(text: l10n.stats_radar_antiox, angle: 0);
               default:
                 return const RadarChartTitle(text: '');
             }

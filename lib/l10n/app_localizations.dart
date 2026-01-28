@@ -1129,8 +1129,20 @@ abstract class AppLocalizations {
   /// Contenu dialog export PDF
   ///
   /// In fr, this message translates to:
-  /// **'Voulez-vous l\'envoyer à quelqu\'un en PDF ?'**
+  /// **'Souhaitez-vous envoyer la fiche tâche à quelqu\'un ?'**
   String get calendar_ask_export_pdf;
+
+  /// Bouton pour decliner une action
+  ///
+  /// In fr, this message translates to:
+  /// **'Non merci'**
+  String get action_no_thanks;
+
+  /// Label bouton PDF
+  ///
+  /// In fr, this message translates to:
+  /// **'PDF'**
+  String get action_pdf;
 
   /// SnackBar tâche modifiée
   ///
@@ -1413,6 +1425,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Échec de la restauration : {error}'**
   String settings_restore_error(Object error);
+
+  /// Indication format ZIP
+  ///
+  /// In fr, this message translates to:
+  /// **'Compatible ZIP'**
+  String get settings_backup_compatible_zip;
+
+  /// Sujet du partage de backup
+  ///
+  /// In fr, this message translates to:
+  /// **'Sauvegarde PermaCalendar'**
+  String get backup_share_subject;
 
   /// Titre dialogue nouvelle tâche
   ///
@@ -4525,7 +4549,7 @@ abstract class AppLocalizations {
   /// No description provided for @task_editor_photo_help.
   ///
   /// In fr, this message translates to:
-  /// **'La photo sera jointe automatiquement au PDF / Word à la création / envoi.'**
+  /// **'La photo sera jointe automatiquement au PDF à la création / envoi.'**
   String get task_editor_photo_help;
 
   /// Label pour le bloc Nutrition dans l'export
@@ -4599,6 +4623,402 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Max DRI (%)'**
   String get export_field_upper_bound_coverage;
+
+  /// Titre de la section configuration du jardin
+  ///
+  /// In fr, this message translates to:
+  /// **'Configuration du Jardin'**
+  String get settings_garden_config_title;
+
+  /// Label pour le réglage de la zone climatique
+  ///
+  /// In fr, this message translates to:
+  /// **'Zone Climatique'**
+  String get settings_climatic_zone_label;
+
+  /// Statut manuel pour les réglages
+  ///
+  /// In fr, this message translates to:
+  /// **'{value} (Manuel)'**
+  String settings_status_manual(String value);
+
+  /// Statut automatique pour les réglages
+  ///
+  /// In fr, this message translates to:
+  /// **'{value} (Auto)'**
+  String settings_status_auto(String value);
+
+  /// Statut en cours de détection
+  ///
+  /// In fr, this message translates to:
+  /// **'Détection...'**
+  String get settings_status_detecting;
+
+  /// Label pour la date de dernier gel
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernier Gel (Printemps)'**
+  String get settings_last_frost_date_label;
+
+  /// Titre pour le réglage de la date de dernier gel
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de Dernier Gel'**
+  String get settings_last_frost_date_title;
+
+  /// Statut estimé pour une date
+  ///
+  /// In fr, this message translates to:
+  /// **'{value} (Estimé)'**
+  String settings_status_estimated(String value);
+
+  /// Statut inconnu
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu'**
+  String get settings_status_unknown;
+
+  /// Label pour la devise
+  ///
+  /// In fr, this message translates to:
+  /// **'Devise'**
+  String get settings_currency_label;
+
+  /// Titre du sélecteur de devise
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir la devise'**
+  String get settings_currency_selector_title;
+
+  /// Placeholder vide recherche commune
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisissez un nom de commune pour commencer.'**
+  String get settings_commune_search_placeholder_start;
+
+  /// Résultat vide recherche commune
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat pour \"{query}\".'**
+  String settings_commune_search_no_results(String query);
+
+  /// Option automatique pour la zone
+  ///
+  /// In fr, this message translates to:
+  /// **'Automatique (Recommandé)'**
+  String get settings_zone_auto_recommended;
+
+  /// Option automatique pour la date
+  ///
+  /// In fr, this message translates to:
+  /// **'Automatique'**
+  String get settings_date_auto;
+
+  /// Bouton réinitialiser date
+  ///
+  /// In fr, this message translates to:
+  /// **'Réinitialiser la date'**
+  String get settings_reset_date_button;
+
+  /// Sous-titre termes et conditions
+  ///
+  /// In fr, this message translates to:
+  /// **'Termes et conditions'**
+  String get settings_terms_subtitle;
+
+  /// Label langue italien
+  ///
+  /// In fr, this message translates to:
+  /// **'Italiano'**
+  String get language_italian;
+
+  /// Nom de la zone climatique Europe/Eurasie
+  ///
+  /// In fr, this message translates to:
+  /// **'Tempéré - Hémisphère Nord (Eurasie)'**
+  String get zone_nh_temperate_europe;
+
+  /// Nom de la zone climatique Amérique du Nord
+  ///
+  /// In fr, this message translates to:
+  /// **'Tempéré - Amérique du Nord'**
+  String get zone_nh_temperate_na;
+
+  /// Nom de la zone climatique Hémisphère Sud
+  ///
+  /// In fr, this message translates to:
+  /// **'Tempéré - Hémisphère Sud'**
+  String get zone_sh_temperate;
+
+  /// Nom de la zone climatique Méditerranéenne
+  ///
+  /// In fr, this message translates to:
+  /// **'Méditerranéen'**
+  String get zone_mediterranean;
+
+  /// Nom de la zone climatique Tropicale
+  ///
+  /// In fr, this message translates to:
+  /// **'Tropical'**
+  String get zone_tropical;
+
+  /// Nom de la zone climatique Aride
+  ///
+  /// In fr, this message translates to:
+  /// **'Aride / Désertique'**
+  String get zone_arid;
+
+  /// Titre du pilier Économie
+  ///
+  /// In fr, this message translates to:
+  /// **'ÉCONOMIE'**
+  String get stats_pillar_economy;
+
+  /// Titre du pilier Nutrition
+  ///
+  /// In fr, this message translates to:
+  /// **'NUTRITION'**
+  String get stats_pillar_nutrition;
+
+  /// Titre du pilier Export
+  ///
+  /// In fr, this message translates to:
+  /// **'EXPORT'**
+  String get stats_pillar_export;
+
+  /// Label pour les données
+  ///
+  /// In fr, this message translates to:
+  /// **'DATA'**
+  String get stats_data_label;
+
+  /// Label radar vitamines
+  ///
+  /// In fr, this message translates to:
+  /// **'Vitamines'**
+  String get stats_radar_vitamins;
+
+  /// Label radar minéraux
+  ///
+  /// In fr, this message translates to:
+  /// **'Minéraux'**
+  String get stats_radar_minerals;
+
+  /// Label radar fibres
+  ///
+  /// In fr, this message translates to:
+  /// **'Fibres'**
+  String get stats_radar_fibers;
+
+  /// Label radar protéines
+  ///
+  /// In fr, this message translates to:
+  /// **'Protéines'**
+  String get stats_radar_proteins;
+
+  /// Label radar énergie
+  ///
+  /// In fr, this message translates to:
+  /// **'Énergie'**
+  String get stats_radar_energy;
+
+  /// Label radar antioxydants
+  ///
+  /// In fr, this message translates to:
+  /// **'Antiox'**
+  String get stats_radar_antiox;
+
+  /// No description provided for @custom_plant_new_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle plante'**
+  String get custom_plant_new_title;
+
+  /// No description provided for @custom_plant_edit_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la plante'**
+  String get custom_plant_edit_title;
+
+  /// No description provided for @custom_plant_action_save_creation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer la plante'**
+  String get custom_plant_action_save_creation;
+
+  /// No description provided for @custom_plant_action_save_modification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer les modifications'**
+  String get custom_plant_action_save_modification;
+
+  /// No description provided for @custom_plant_delete_confirm_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la plante ?'**
+  String get custom_plant_delete_confirm_title;
+
+  /// No description provided for @custom_plant_delete_confirm_body.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action est irréversible.'**
+  String get custom_plant_delete_confirm_body;
+
+  /// No description provided for @custom_plant_saved_success.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plante enregistrée avec succès'**
+  String get custom_plant_saved_success;
+
+  /// No description provided for @custom_plant_common_name_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom commun *'**
+  String get custom_plant_common_name_label;
+
+  /// No description provided for @custom_plant_common_name_required.
+  ///
+  /// In fr, this message translates to:
+  /// **'Requis'**
+  String get custom_plant_common_name_required;
+
+  /// No description provided for @custom_plant_scientific_name_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom scientifique'**
+  String get custom_plant_scientific_name_label;
+
+  /// No description provided for @custom_plant_family_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Famille'**
+  String get custom_plant_family_label;
+
+  /// No description provided for @custom_plant_description_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get custom_plant_description_label;
+
+  /// No description provided for @custom_plant_price_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix'**
+  String get custom_plant_price_title;
+
+  /// Label prix moyen par kg
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix moyen par Kg ({currency})'**
+  String custom_plant_price_label(String currency);
+
+  /// No description provided for @custom_plant_price_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'ex: 4.50'**
+  String get custom_plant_price_hint;
+
+  /// No description provided for @custom_plant_nutrition_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nutrition (pour 100g)'**
+  String get custom_plant_nutrition_title;
+
+  /// No description provided for @custom_plant_nutrition_cal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calories'**
+  String get custom_plant_nutrition_cal;
+
+  /// No description provided for @custom_plant_nutrition_prot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Protéines'**
+  String get custom_plant_nutrition_prot;
+
+  /// No description provided for @custom_plant_nutrition_carb.
+  ///
+  /// In fr, this message translates to:
+  /// **'Glucides'**
+  String get custom_plant_nutrition_carb;
+
+  /// No description provided for @custom_plant_nutrition_fat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lipides'**
+  String get custom_plant_nutrition_fat;
+
+  /// No description provided for @custom_plant_notes_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes & Associations'**
+  String get custom_plant_notes_title;
+
+  /// No description provided for @custom_plant_notes_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes personnelles'**
+  String get custom_plant_notes_label;
+
+  /// No description provided for @custom_plant_notes_hint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plantes compagnes, astuces de culture...'**
+  String get custom_plant_notes_hint;
+
+  /// No description provided for @custom_plant_cycle_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cycle de culture'**
+  String get custom_plant_cycle_title;
+
+  /// No description provided for @custom_plant_sowing_period.
+  ///
+  /// In fr, this message translates to:
+  /// **'Période de semis'**
+  String get custom_plant_sowing_period;
+
+  /// No description provided for @custom_plant_harvest_period.
+  ///
+  /// In fr, this message translates to:
+  /// **'Période de récolte'**
+  String get custom_plant_harvest_period;
+
+  /// No description provided for @custom_plant_select_months.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionnez les mois ci-dessous'**
+  String get custom_plant_select_months;
+
+  /// No description provided for @custom_plant_add_photo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une photo'**
+  String get custom_plant_add_photo;
+
+  /// No description provided for @custom_plant_delete_photo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la photo'**
+  String get custom_plant_delete_photo;
+
+  /// No description provided for @custom_plant_pick_camera.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prendre une photo'**
+  String get custom_plant_pick_camera;
+
+  /// No description provided for @custom_plant_pick_gallery.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir depuis la galerie'**
+  String get custom_plant_pick_gallery;
+
+  /// Erreur image picker
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la sélection de l\'image: {error}'**
+  String custom_plant_pick_error(Object error);
 }
 
 class _AppLocalizationsDelegate

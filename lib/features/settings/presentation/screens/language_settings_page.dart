@@ -56,7 +56,7 @@ class LanguageSettingsPage extends ConsumerWidget {
             context,
             ref,
             const Locale('it'),
-            'Italiano', // Hardcoded as per instructions to avoid ARB modification
+            l10n.language_italian,
             currentLocale,
           ),
         ],

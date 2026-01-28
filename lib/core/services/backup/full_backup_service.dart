@@ -22,7 +22,7 @@ class FullBackupService {
   FullBackupService._internal();
 
   /// Create a full backup (ZIP) and share it / save it
-  Future<void> createAndShareBackup() async {
+  Future<void> createAndShareBackup({required String shareSubject}) async {
     try {
       final appDir = await getApplicationDocumentsDirectory();
       final tempDir = await getTemporaryDirectory();
@@ -72,7 +72,7 @@ class FullBackupService {
       // 5. Share/Save
       await Share.shareXFiles(
         [XFile(backupFile.path)],
-        text: 'PermaCalendar Backup $timestamp',
+        text: '$shareSubject $timestamp',
       );
 
     } catch (e) {

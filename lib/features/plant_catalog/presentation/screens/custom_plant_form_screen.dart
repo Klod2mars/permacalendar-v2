@@ -11,7 +11,8 @@ import 'package:permacalendar/features/plant_catalog/domain/entities/plant_entit
 import 'package:permacalendar/features/plant_catalog/data/models/plant_hive.dart';
 import 'package:permacalendar/features/plant_catalog/providers/plant_catalog_provider.dart';
 import 'package:permacalendar/shared/widgets/month_picker.dart';
-import 'package:permacalendar/features/plant_catalog/application/sowing_utils.dart'; // Added for derivation
+import 'package:permacalendar/features/plant_catalog/application/sowing_utils.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 class CustomPlantFormScreen extends ConsumerStatefulWidget {
   final PlantFreezed? plantToEdit;
@@ -115,7 +116,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur lors de la sélection de l\'image: $e')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.custom_plant_pick_error(e))),
         );
       }
     }
@@ -235,14 +236,14 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Plante enregistrée avec succès')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.custom_plant_saved_success)),
         );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur: $e')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.common_error_prefix(e))),
         );
       }
     } finally {
@@ -253,16 +254,17 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
   Future<void> _deletePlant() async {
     if (widget.plantToEdit == null) return;
     
+        final l10n = AppLocalizations.of(context)!;
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Supprimer la plante ?'),
-        content: const Text('Cette action est irréversible.'),
+        title: Text(l10n.custom_plant_delete_confirm_title),
+        content: Text(l10n.custom_plant_delete_confirm_body),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Annuler')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.common_cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true), 
-            child: const Text('Supprimer', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.common_delete, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -284,7 +286,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
          }
        } catch (e) {
          if (mounted) {
-           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.common_error_prefix(e))));
            setState(() => _isLoading = false);
          }
        }
@@ -293,11 +295,12 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isEdit = widget.plantToEdit != null;
     
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEdit ? 'Modifier la plante' : 'Nouvelle plante'),
+        title: Text(isEdit ? l10n.custom_plant_edit_title : l10n.custom_plant_new_title),
         actions: [
           if (isEdit)
             IconButton(
@@ -322,42 +325,42 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     // Fields
                     TextFormField(
                       controller: _commonNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Nom commun *',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.grass),
+                      decoration: InputDecoration(
+                        labelText: l10n.custom_plant_common_name_label,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.grass),
                       ),
-                      validator: (v) => v == null || v.isEmpty ? 'Requis' : null,
+                      validator: (v) => v == null || v.isEmpty ? l10n.custom_plant_common_name_required : null,
                     ),
                     const SizedBox(height: 16),
                     
                     TextFormField(
                       controller: _scientificNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Nom scientifique',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.science),
+                      decoration: InputDecoration(
+                        labelText: l10n.custom_plant_scientific_name_label,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.science),
                       ),
                     ),
                     const SizedBox(height: 16),
                     
                     TextFormField(
                       controller: _familyController,
-                      decoration: const InputDecoration(
-                        labelText: 'Famille',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.category),
+                      decoration: InputDecoration(
+                        labelText: l10n.custom_plant_family_label,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.category),
                       ),
                     ),
                     const SizedBox(height: 16),
                     
                     TextFormField(
                       controller: _descriptionController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.custom_plant_description_label,
+                        border: const OutlineInputBorder(),
                         alignLabelWithHint: true,
-                        prefixIcon: Icon(Icons.description),
+                        prefixIcon: const Icon(Icons.description),
                       ),
                       maxLines: 3,
                     ),
@@ -368,14 +371,14 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     const Divider(height: 32),
                     
                     // --- PRICE SECTION ---
-                    Text('Prix', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    Text(l10n.custom_plant_price_title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _marketPriceController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
-                        labelText: 'Prix moyen par Kg (${ref.watch(currencyProvider).symbol})',
-                        hintText: 'ex: 4.50',
+                        labelText: l10n.custom_plant_price_label(ref.watch(currencyProvider).symbol),
+                        hintText: l10n.custom_plant_price_hint,
                         border: const OutlineInputBorder(),
                         suffixText: '${ref.watch(currencyProvider).symbol}/kg',
                         prefixIcon: Icon(ref.watch(currencyProvider).icon ?? Icons.attach_money),
@@ -384,7 +387,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     const SizedBox(height: 24),
 
                     // --- NUTRITION SECTION ---
-                    Text('Nutrition (pour 100g)', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    Text(l10n.custom_plant_nutrition_title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
                     const SizedBox(height: 16),
                     Row(
                       children: [
@@ -392,10 +395,10 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                           child: TextFormField(
                             controller: _calController,
                             keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              labelText: 'Calories',
+                            decoration: InputDecoration(
+                              labelText: l10n.custom_plant_nutrition_cal,
                               suffixText: 'kcal',
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               isDense: true,
                             ),
                           ),
@@ -405,10 +408,10 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                           child: TextFormField(
                             controller: _protController,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            decoration: const InputDecoration(
-                              labelText: 'Protéines',
+                            decoration: InputDecoration(
+                              labelText: l10n.custom_plant_nutrition_prot,
                               suffixText: 'g',
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               isDense: true,
                             ),
                           ),
@@ -422,10 +425,10 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                           child: TextFormField(
                             controller: _carbController,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            decoration: const InputDecoration(
-                              labelText: 'Glucides',
+                            decoration: InputDecoration(
+                              labelText: l10n.custom_plant_nutrition_carb,
                               suffixText: 'g',
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               isDense: true,
                             ),
                           ),
@@ -435,10 +438,10 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                           child: TextFormField(
                             controller: _fatController,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            decoration: const InputDecoration(
-                              labelText: 'Lipides',
+                            decoration: InputDecoration(
+                              labelText: l10n.custom_plant_nutrition_fat,
                               suffixText: 'g',
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               isDense: true,
                             ),
                           ),
@@ -448,28 +451,28 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     const SizedBox(height: 24),
 
                     // --- NOTES / ASSOCIATIONS SECTION ---
-                    Text('Notes & Associations', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    Text(l10n.custom_plant_notes_title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _notesController,
                       maxLines: 4,
-                      decoration: const InputDecoration(
-                        labelText: 'Notes personnelles',
-                        hintText: 'Plantes compagnes, astuces de culture...',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.custom_plant_notes_label,
+                        hintText: l10n.custom_plant_notes_hint,
+                        border: const OutlineInputBorder(),
                         alignLabelWithHint: true,
-                        prefixIcon: Icon(Icons.note_alt_outlined),
+                        prefixIcon: const Icon(Icons.note_alt_outlined),
                       ),
                     ),
 
                     const Divider(height: 48),
-                    Text('Cycle de culture', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                    Text(l10n.custom_plant_cycle_title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary)),
                     const SizedBox(height: 16),
                     
                     // Sowing
                     _buildSeasonSection(
                       context,
-                      label: 'Période de semis',
+                      label: l10n.custom_plant_sowing_period,
                       months: _sowingMonths,
                       onMonthsChanged: (m) => setState(() => _sowingMonths = m),
                       icon: Icons.calendar_month,
@@ -479,7 +482,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                     // Harvest
                     _buildSeasonSection(
                       context,
-                      label: 'Période de récolte',
+                      label: l10n.custom_plant_harvest_period,
                       months: _harvestMonths,
                       onMonthsChanged: (m) => setState(() => _harvestMonths = m),
                       icon: Icons.shopping_basket,
@@ -495,7 +498,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
-                          child: Text(isEdit ? 'Enregistrer les modifications' : 'Créer la plante'),
+                          child: Text(isEdit ? l10n.custom_plant_action_save_modification : l10n.custom_plant_action_save_creation),
                         ),
                       ),
                   ],
@@ -529,7 +532,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
                       Icon(Icons.add_a_photo, size: 48, color: Colors.grey.shade400),
                       const SizedBox(height: 8),
                       Text(
-                        'Ajouter une photo',
+                        AppLocalizations.of(context)!.custom_plant_add_photo,
                         style: TextStyle(color: Colors.grey.shade600),
                       ),
                     ],
@@ -540,7 +543,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
           TextButton.icon(
             onPressed: () => setState(() => _imagePath = null),
             icon: const Icon(Icons.delete, color: Colors.red),
-            label: const Text('Supprimer la photo', style: TextStyle(color: Colors.red)),
+            label: Text(AppLocalizations.of(context)!.custom_plant_delete_photo, style: const TextStyle(color: Colors.red)),
           ),
       ],
     );
@@ -561,6 +564,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
   }
 
   void _showImageSourceSheet() {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       builder: (ctx) => SafeArea(
@@ -568,7 +572,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text('Prendre une photo'),
+              title: Text(l10n.custom_plant_pick_camera),
               onTap: () {
                 Navigator.pop(ctx);
                 _pickImage(ImageSource.camera);
@@ -576,7 +580,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text('Choisir depuis la galerie'),
+              title: Text(l10n.custom_plant_pick_gallery),
               onTap: () {
                 Navigator.pop(ctx);
                 _pickImage(ImageSource.gallery);
@@ -632,7 +636,7 @@ class _CustomPlantFormScreenState extends ConsumerState<CustomPlantFormScreen> {
           Padding(
              padding: const EdgeInsets.only(top: 4, left: 28),
              child: Text(
-               'Sélectionnez les mois ci-dessous',
+               AppLocalizations.of(context)!.custom_plant_select_months,
                style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
              ),
           ),

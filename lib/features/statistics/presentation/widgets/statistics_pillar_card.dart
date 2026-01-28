@@ -29,9 +29,9 @@ class StatisticsPillarCard extends ConsumerWidget {
     // TITRES COURTS (Demande utilisateur: "Économie", "Nutrition", "Export")
     // On hardcode ici pour le test ou on utilise des clés plus courtes si dispo.
     final title = switch (type) {
-      PillarType.economieVivante => "ÉCONOMIE",
-      PillarType.sante => "NUTRITION",
-      PillarType.patrimoine => "EXPORT",
+      PillarType.economieVivante => l10n.stats_pillar_economy,
+      PillarType.sante => l10n.stats_pillar_nutrition,
+      PillarType.patrimoine => l10n.stats_pillar_export,
     };
 
     return Center(
@@ -277,7 +277,7 @@ class StatisticsPillarCard extends ConsumerWidget {
             ),
             SizedBox(height: diameter * 0.02),
             Text(
-              "DATA",
+              l10n.stats_data_label,
               style: TextStyle(
                 color: Colors.white.withOpacity(0.9),
                 fontSize: diameter * 0.05,

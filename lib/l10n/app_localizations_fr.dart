@@ -583,7 +583,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get calendar_ask_export_pdf =>
-      'Voulez-vous l\'envoyer à quelqu\'un en PDF ?';
+      'Souhaitez-vous envoyer la fiche tâche à quelqu\'un ?';
+
+  @override
+  String get action_no_thanks => 'Non merci';
+
+  @override
+  String get action_pdf => 'PDF';
 
   @override
   String get calendar_task_modified => 'Tâche modifiée';
@@ -749,6 +755,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String settings_restore_error(Object error) {
     return 'Échec de la restauration : $error';
   }
+
+  @override
+  String get settings_backup_compatible_zip => 'Compatible ZIP';
+
+  @override
+  String get backup_share_subject => 'Sauvegarde PermaCalendar';
 
   @override
   String get task_editor_title_new => 'Nouvelle Tâche';
@@ -2461,7 +2473,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get task_editor_photo_help =>
-      'La photo sera jointe automatiquement au PDF / Word à la création / envoi.';
+      'La photo sera jointe automatiquement au PDF à la création / envoi.';
 
   @override
   String get export_block_nutrition => 'Nutrition (Agrégation)';
@@ -2499,4 +2511,218 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get export_field_upper_bound_coverage => 'Max DRI (%)';
+
+  @override
+  String get settings_garden_config_title => 'Configuration du Jardin';
+
+  @override
+  String get settings_climatic_zone_label => 'Zone Climatique';
+
+  @override
+  String settings_status_manual(String value) {
+    return '$value (Manuel)';
+  }
+
+  @override
+  String settings_status_auto(String value) {
+    return '$value (Auto)';
+  }
+
+  @override
+  String get settings_status_detecting => 'Détection...';
+
+  @override
+  String get settings_last_frost_date_label => 'Dernier Gel (Printemps)';
+
+  @override
+  String get settings_last_frost_date_title => 'Date de Dernier Gel';
+
+  @override
+  String settings_status_estimated(String value) {
+    return '$value (Estimé)';
+  }
+
+  @override
+  String get settings_status_unknown => 'Inconnu';
+
+  @override
+  String get settings_currency_label => 'Devise';
+
+  @override
+  String get settings_currency_selector_title => 'Choisir la devise';
+
+  @override
+  String get settings_commune_search_placeholder_start =>
+      'Saisissez un nom de commune pour commencer.';
+
+  @override
+  String settings_commune_search_no_results(String query) {
+    return 'Aucun résultat pour \"$query\".';
+  }
+
+  @override
+  String get settings_zone_auto_recommended => 'Automatique (Recommandé)';
+
+  @override
+  String get settings_date_auto => 'Automatique';
+
+  @override
+  String get settings_reset_date_button => 'Réinitialiser la date';
+
+  @override
+  String get settings_terms_subtitle => 'Termes et conditions';
+
+  @override
+  String get language_italian => 'Italiano';
+
+  @override
+  String get zone_nh_temperate_europe => 'Tempéré - Hémisphère Nord (Eurasie)';
+
+  @override
+  String get zone_nh_temperate_na => 'Tempéré - Amérique du Nord';
+
+  @override
+  String get zone_sh_temperate => 'Tempéré - Hémisphère Sud';
+
+  @override
+  String get zone_mediterranean => 'Méditerranéen';
+
+  @override
+  String get zone_tropical => 'Tropical';
+
+  @override
+  String get zone_arid => 'Aride / Désertique';
+
+  @override
+  String get stats_pillar_economy => 'ÉCONOMIE';
+
+  @override
+  String get stats_pillar_nutrition => 'NUTRITION';
+
+  @override
+  String get stats_pillar_export => 'EXPORT';
+
+  @override
+  String get stats_data_label => 'DATA';
+
+  @override
+  String get stats_radar_vitamins => 'Vitamines';
+
+  @override
+  String get stats_radar_minerals => 'Minéraux';
+
+  @override
+  String get stats_radar_fibers => 'Fibres';
+
+  @override
+  String get stats_radar_proteins => 'Protéines';
+
+  @override
+  String get stats_radar_energy => 'Énergie';
+
+  @override
+  String get stats_radar_antiox => 'Antiox';
+
+  @override
+  String get custom_plant_new_title => 'Nouvelle plante';
+
+  @override
+  String get custom_plant_edit_title => 'Modifier la plante';
+
+  @override
+  String get custom_plant_action_save_creation => 'Créer la plante';
+
+  @override
+  String get custom_plant_action_save_modification =>
+      'Enregistrer les modifications';
+
+  @override
+  String get custom_plant_delete_confirm_title => 'Supprimer la plante ?';
+
+  @override
+  String get custom_plant_delete_confirm_body =>
+      'Cette action est irréversible.';
+
+  @override
+  String get custom_plant_saved_success => 'Plante enregistrée avec succès';
+
+  @override
+  String get custom_plant_common_name_label => 'Nom commun *';
+
+  @override
+  String get custom_plant_common_name_required => 'Requis';
+
+  @override
+  String get custom_plant_scientific_name_label => 'Nom scientifique';
+
+  @override
+  String get custom_plant_family_label => 'Famille';
+
+  @override
+  String get custom_plant_description_label => 'Description';
+
+  @override
+  String get custom_plant_price_title => 'Prix';
+
+  @override
+  String custom_plant_price_label(String currency) {
+    return 'Prix moyen par Kg ($currency)';
+  }
+
+  @override
+  String get custom_plant_price_hint => 'ex: 4.50';
+
+  @override
+  String get custom_plant_nutrition_title => 'Nutrition (pour 100g)';
+
+  @override
+  String get custom_plant_nutrition_cal => 'Calories';
+
+  @override
+  String get custom_plant_nutrition_prot => 'Protéines';
+
+  @override
+  String get custom_plant_nutrition_carb => 'Glucides';
+
+  @override
+  String get custom_plant_nutrition_fat => 'Lipides';
+
+  @override
+  String get custom_plant_notes_title => 'Notes & Associations';
+
+  @override
+  String get custom_plant_notes_label => 'Notes personnelles';
+
+  @override
+  String get custom_plant_notes_hint =>
+      'Plantes compagnes, astuces de culture...';
+
+  @override
+  String get custom_plant_cycle_title => 'Cycle de culture';
+
+  @override
+  String get custom_plant_sowing_period => 'Période de semis';
+
+  @override
+  String get custom_plant_harvest_period => 'Période de récolte';
+
+  @override
+  String get custom_plant_select_months => 'Sélectionnez les mois ci-dessous';
+
+  @override
+  String get custom_plant_add_photo => 'Ajouter une photo';
+
+  @override
+  String get custom_plant_delete_photo => 'Supprimer la photo';
+
+  @override
+  String get custom_plant_pick_camera => 'Prendre une photo';
+
+  @override
+  String get custom_plant_pick_gallery => 'Choisir depuis la galerie';
+
+  @override
+  String custom_plant_pick_error(Object error) {
+    return 'Erreur lors de la sélection de l\'image: $error';
+  }
 }

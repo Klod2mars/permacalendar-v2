@@ -238,8 +238,8 @@ class SettingsScreen extends ConsumerWidget {
                             padding: const EdgeInsets.symmetric(vertical: 24),
                             child: Text(
                               query.isEmpty
-                                  ? 'Saisissez un nom de commune pour commencer.'
-                                  : 'Aucun résultat pour "$query".',
+                                  ? l10n.settings_commune_search_placeholder_start
+                                  : l10n.settings_commune_search_no_results(query),
                               style: theme.textTheme.bodyMedium
                                   ?.copyWith(color: theme.colorScheme.outline),
                             ),
@@ -345,7 +345,7 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.gavel_outlined),
             title: Text(l10n.settings_terms),
-            subtitle: const Text('Termes et conditions'),
+            subtitle: Text(l10n.settings_terms_subtitle),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showTermsOfService(context),
           ),
@@ -356,6 +356,7 @@ class SettingsScreen extends ConsumerWidget {
 
   Widget _buildGardenConfigSection(BuildContext context, ThemeData theme, WidgetRef ref) {
     // Reconstruire si la zone change
+    final l10n = AppLocalizations.of(context)!;
     final zoneAsync = ref.watch(currentZoneProvider);
     final frostAsync = ref.watch(lastFrostDateProvider);
     final settings = ref.watch(appSettingsProvider);
@@ -365,7 +366,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'Configuration du Jardin', // TODO: l10n
+          l10n.settings_garden_config_title,
           style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
@@ -373,20 +374,22 @@ class SettingsScreen extends ConsumerWidget {
           child: Column(children: [
             ListTile(
               leading: const Icon(Icons.public),
-              title: const Text('Zone Climatique'), // TODO: l10n
+              title: Text(l10n.settings_climatic_zone_label),
               subtitle: Text(settings.customZoneId != null 
-                  ? '${currentZone?.name ?? settings.customZoneId} (Manuel)' 
-                  : '${currentZone?.name ?? "Détection..."} (Auto)'),
+                  ? l10n.settings_status_manual(_getLocalizedZoneName(l10n, settings.customZoneId!) ?? currentZone?.name ?? settings.customZoneId ?? "") 
+                  : currentZone?.name != null
+                      ? l10n.settings_status_auto(_getLocalizedZoneName(l10n, currentZone!.id) ?? currentZone!.name)
+                      : l10n.settings_status_detecting),
               trailing: const Icon(Icons.edit),
               onTap: () => _showGardenConfigDialog(context, ref),
             ),
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.ac_unit),
-              title: const Text('Dernier Gel (Printemps)'), // TODO: l10n
+              title: Text(l10n.settings_last_frost_date_label),
               subtitle: Text(settings.customLastFrostDate != null
-                  ? '${_formatDate(currentFrost)} (Manuel)'
-                  : '${_formatDate(currentFrost)} (Estimé)'),
+                  ? l10n.settings_status_manual(_formatDate(currentFrost, l10n))
+                  : l10n.settings_status_estimated(_formatDate(currentFrost, l10n))),
               trailing: const Icon(Icons.edit),
               onTap: () => _showGardenConfigDialog(context, ref),
             ),
@@ -395,8 +398,8 @@ class SettingsScreen extends ConsumerWidget {
       ]);
   }
 
-  String _formatDate(DateTime? d) {
-    if (d == null) return 'Inconnu';
+  String _formatDate(DateTime? d, AppLocalizations l10n) {
+    if (d == null) return l10n.settings_status_unknown;
     return '${d.day}/${d.month}';
   }
 
@@ -466,7 +469,7 @@ class SettingsScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Choisir la devise',
+                  AppLocalizations.of(context)!.settings_currency_selector_title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -498,6 +501,7 @@ class _GardenConfigSheet extends ConsumerStatefulWidget {
 class _GardenConfigSheetState extends ConsumerState<_GardenConfigSheet> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final zoneService = ref.watch(zoneServiceProvider);
     final zones = zoneService.getAllZones();
     final settings = ref.watch(appSettingsProvider);
@@ -515,18 +519,18 @@ class _GardenConfigSheetState extends ConsumerState<_GardenConfigSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Configuration du Jardin', style: Theme.of(context).textTheme.titleLarge),
+          Text(l10n.settings_garden_config_title, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 20),
           
-          Text('Zone Climatique', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.settings_climatic_zone_label, style: Theme.of(context).textTheme.titleMedium),
           DropdownButtonFormField<String?>(
             value: overrideZoneId, // null = Auto
             decoration: const InputDecoration(border: OutlineInputBorder()),
             items: [
-              const DropdownMenuItem(value: null, child: Text('Automatique (Recommandé)')),
+              DropdownMenuItem(value: null, child: Text(l10n.settings_zone_auto_recommended)),
               ...zones.map((z) => DropdownMenuItem(
                 value: z.id,
-                child: Text(z.name),
+                child: Text(_getLocalizedZoneName(l10n, z.id) ?? z.name),
               ))
             ],
             onChanged: (v) {
@@ -538,12 +542,12 @@ class _GardenConfigSheetState extends ConsumerState<_GardenConfigSheet> {
           ),
           const SizedBox(height: 16),
           
-          Text('Date de Dernier Gel', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.settings_last_frost_date_title, style: Theme.of(context).textTheme.titleMedium),
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(overrideFrost != null 
               ? '${overrideFrost.day}/${overrideFrost.month}' 
-              : 'Automatique'),
+              : l10n.settings_date_auto),
             trailing: const Icon(Icons.calendar_today),
             onTap: () async {
               final now = DateTime.now();
@@ -565,12 +569,31 @@ class _GardenConfigSheetState extends ConsumerState<_GardenConfigSheet> {
                 ref.read(appSettingsProvider.notifier).setCustomLastFrostDate(null);
                  ref.invalidate(lastFrostDateProvider);
               }, 
-              child: const Text('Réinitialiser la date')
+              child: Text(l10n.settings_reset_date_button)
             ),
             
           const SizedBox(height: 24),
         ],
       )
     );
+  }
+}
+
+String? _getLocalizedZoneName(AppLocalizations l10n, String zoneId) {
+  switch (zoneId) {
+    case 'NH_temperate_europe':
+      return l10n.zone_nh_temperate_europe;
+    case 'NH_temperate_na':
+      return l10n.zone_nh_temperate_na;
+    case 'SH_temperate':
+      return l10n.zone_sh_temperate;
+    case 'mediterranean':
+      return l10n.zone_mediterranean;
+    case 'tropical':
+      return l10n.zone_tropical;
+    case 'arid':
+      return l10n.zone_arid;
+    default:
+      return null;
   }
 }

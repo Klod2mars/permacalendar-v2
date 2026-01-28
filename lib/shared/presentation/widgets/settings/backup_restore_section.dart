@@ -17,7 +17,7 @@ class _BackupRestoreSectionState extends State<BackupRestoreSection> {
     setState(() => _isLoading = true);
     final l10n = AppLocalizations.of(context)!;
     try {
-      await FullBackupService().createAndShareBackup();
+      await FullBackupService().createAndShareBackup(shareSubject: l10n.backup_share_subject);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(l10n.settings_backup_success)),
@@ -108,7 +108,7 @@ class _BackupRestoreSectionState extends State<BackupRestoreSection> {
             ListTile(
               leading: const Icon(Icons.settings_backup_restore),
               title: Text(l10n.settings_restore_action),
-              subtitle: const Text('Compatible ZIP'),
+              subtitle: Text(l10n.settings_backup_compatible_zip),
               trailing: const Icon(Icons.chevron_right),
               onTap: _isLoading ? null : _restoreBackup,
             ),

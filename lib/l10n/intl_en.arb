@@ -715,10 +715,12 @@
   "@calendar_task_saved_title": {
     "description": "Titre dialog tâche enregistrée"
   },
-  "calendar_ask_export_pdf": "Do you want to send it as PDF?",
-  "@calendar_ask_export_pdf": {
-    "description": "Contenu dialog export PDF"
-  },
+  "calendar_ask_export_pdf": "Do you want to send the task sheet to someone?",
+  "@calendar_ask_export_pdf": { "description": "Contenu dialog export PDF" },
+  "action_no_thanks": "No thanks",
+  "@action_no_thanks": { "description": "Bouton pour decliner une action" },
+  "action_pdf": "PDF",
+  "@action_pdf": { "description": "Label bouton PDF" },
   "calendar_task_modified": "Task modified",
   "@calendar_task_modified": {
     "description": "SnackBar tâche modifiée"
@@ -2353,7 +2355,7 @@
   "task_editor_photo_add": "Add Photo",
   "task_editor_photo_change": "Change Photo",
   "task_editor_photo_remove": "Remove Photo",
-  "task_editor_photo_help": "The photo will be automatically attached to PDF / Word upon creation / sending.",
+  "task_editor_photo_help": "The photo will be automatically attached to the PDF upon creation / sending.",
   "export_block_nutrition": "Nutrition (Agrégation)",
   "@export_block_nutrition": {
     "description": "Label pour le bloc Nutrition dans l'export"
@@ -2371,5 +2373,214 @@
   "export_field_data_confidence": "Confiance",
   "export_field_coverage_percent": "Moy. DRI (%)",
   "export_field_lower_bound_coverage": "Min DRI (%)",
-  "export_field_upper_bound_coverage": "Max DRI (%)"
+  "export_field_upper_bound_coverage": "Max DRI (%)",
+
+  "settings_garden_config_title": "Garden Configuration",
+  "@settings_garden_config_title": {
+    "description": "Garden configuration section title"
+  },
+  "settings_climatic_zone_label": "Climatic Zone",
+  "@settings_climatic_zone_label": {
+    "description": "Label for climatic zone setting"
+  },
+  "settings_status_manual": "{value} (Manual)",
+  "@settings_status_manual": {
+    "description": "Manual status for settings",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "Zone A"
+      }
+    }
+  },
+  "settings_status_auto": "{value} (Auto)",
+  "@settings_status_auto": {
+    "description": "Automatic status for settings",
+    "placeholders": {
+       "value": {
+         "type": "String",
+         "example": "Zone A"
+       }
+    }
+  },
+  "settings_status_detecting": "Detecting...",
+  "@settings_status_detecting": {
+    "description": "Detecting status"
+  },
+  "settings_last_frost_date_label": "Last Frost (Spring)",
+  "@settings_last_frost_date_label": {
+    "description": "Label for last frost date"
+  },
+  "settings_last_frost_date_title": "Last Frost Date",
+  "@settings_last_frost_date_title": {
+    "description": "Title for last frost date setting"
+  },
+  "settings_status_estimated": "{value} (Estimated)",
+  "@settings_status_estimated": {
+    "description": "Estimated status for a date",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "15/05"
+      }
+    }
+  },
+  "settings_status_unknown": "Unknown",
+  "@settings_status_unknown": {
+    "description": "Unknown status"
+  },
+  "settings_currency_label": "Currency",
+  "@settings_currency_label": {
+    "description": "Label for currency"
+  },
+  "settings_currency_selector_title": "Choose Currency",
+  "@settings_currency_selector_title": {
+    "description": "Title for currency selector"
+  },
+  "settings_commune_search_placeholder_start": "Enter a city name to start.",
+  "@settings_commune_search_placeholder_start": {
+    "description": "Empty placeholder for city search"
+  },
+  "settings_commune_search_no_results": "No results for \"{query}\".",
+  "@settings_commune_search_no_results": {
+    "description": "Empty result for city search",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_zone_auto_recommended": "Automatic (Recommended)",
+  "@settings_zone_auto_recommended": {
+    "description": "Automatic option for zone"
+  },
+  "settings_date_auto": "Automatic",
+  "@settings_date_auto": {
+    "description": "Automatic option for date"
+  },
+  "settings_reset_date_button": "Reset Date",
+  "@settings_reset_date_button": {
+    "description": "Reset date button"
+  },
+  "settings_terms_subtitle": "Terms and Conditions",
+  "@settings_terms_subtitle": {
+    "description": "Subtitle terms and conditions"
+  },
+  "language_italian": "Italiano",
+  "@language_italian": {
+    "description": "Italian language label"
+  },
+
+  "zone_nh_temperate_europe": "Temperate - Northern Hemisphere (Eurasia)",
+  "@zone_nh_temperate_europe": {
+    "description": "Zone name Northern Hemisphere Eurasia"
+  },
+  "zone_nh_temperate_na": "Temperate - North America",
+  "@zone_nh_temperate_na": {
+    "description": "Zone name North America"
+  },
+  "zone_sh_temperate": "Temperate - Southern Hemisphere",
+  "@zone_sh_temperate": {
+    "description": "Zone name Southern Hemisphere"
+  },
+  "zone_mediterranean": "Mediterranean",
+  "@zone_mediterranean": {
+    "description": "Zone name Mediterranean"
+  },
+  "zone_tropical": "Tropical",
+  "@zone_tropical": {
+    "description": "Zone name Tropical"
+  },
+  "zone_arid": "Arid / Desert",
+  "@zone_arid": {
+    "description": "Zone name Arid"
+  },
+
+  "settings_backup_restore_section": "Backup and Restore",
+  "@settings_backup_restore_section": { "description": "Backup section title" },
+  "settings_backup_restore_subtitle": "Full data backup",
+  "@settings_backup_restore_subtitle": { "description": "Backup section subtitle" },
+  "settings_backup_action": "Create a backup",
+  "@settings_backup_action": { "description": "Create backup button" },
+  "settings_restore_action": "Restore a backup",
+  "@settings_restore_action": { "description": "Restore backup button" },
+  "settings_backup_creating": "Creating backup...",
+  "@settings_backup_creating": { "description": "Backup loading" },
+  "settings_backup_success": "Backup created successfully!",
+  "@settings_backup_success": { "description": "Backup success" },
+  "settings_restore_warning_title": "Warning",
+  "@settings_restore_warning_title": { "description": "Restore warning title" },
+  "settings_restore_warning_content": "Restoring a backup will overwrite ALL current data. This action is irreversible. The app will need to restart.\n\nAre you sure you want to continue?",
+  "@settings_restore_warning_content": { "description": "Restore warning content" },
+  "settings_restore_success": "Restore successful! Please restart the app.",
+  "@settings_restore_success": { "description": "Restore success" },
+  "settings_backup_error": "Backup failed: {error}",
+  "@settings_backup_error": { "description": "Backup error", "placeholders": { "error": { "type": "Object" } } },
+  "settings_restore_error": "Restore failed: {error}",
+  "@settings_restore_error": { "description": "Restore error", "placeholders": { "error": { "type": "Object" } } },
+  "settings_backup_compatible_zip": "ZIP Compatible",
+  "@settings_backup_compatible_zip": { "description": "ZIP format indication" },
+  "backup_share_subject": "PermaCalendar Backup",
+  "@backup_share_subject": { "description": "Backup share subject" },
+  "stats_pillar_economy": "ECONOMY",
+  "@stats_pillar_economy": { "description": "Economy pillar title" },
+  "stats_pillar_nutrition": "NUTRITION",
+  "@stats_pillar_nutrition": { "description": "Nutrition pillar title" },
+  "stats_pillar_export": "EXPORT",
+  "@stats_pillar_export": { "description": "Export pillar title" },
+  "stats_data_label": "DATA",
+  "@stats_data_label": { "description": "Data label" },
+  "stats_radar_vitamins": "Vitamins",
+  "@stats_radar_vitamins": { "description": "Vitamins radar label" },
+  "stats_radar_minerals": "Minerals",
+  "@stats_radar_minerals": { "description": "Minerals radar label" },
+  "stats_radar_fibers": "Fibers",
+  "@stats_radar_fibers": { "description": "Fibers radar label" },
+  "stats_radar_proteins": "Proteins",
+  "@stats_radar_proteins": { "description": "Proteins radar label" },
+  "stats_radar_energy": "Energy",
+  "@stats_radar_energy": { "description": "Energy radar label" },
+  "stats_radar_antiox": "Antiox",
+  "@stats_radar_antiox": { "description": "Antioxidants radar label" },
+
+  "custom_plant_new_title": "New Plant",
+  "custom_plant_edit_title": "Edit Plant",
+  "custom_plant_action_save_creation": "Create Plant",
+  "custom_plant_action_save_modification": "Save Changes",
+  "custom_plant_delete_confirm_title": "Delete Plant?",
+  "custom_plant_delete_confirm_body": "This action is irreversible.",
+  "custom_plant_saved_success": "Plant saved successfully",
+  "custom_plant_common_name_label": "Common Name *",
+  "custom_plant_common_name_required": "Required",
+  "custom_plant_scientific_name_label": "Scientific Name",
+  "custom_plant_family_label": "Family",
+  "custom_plant_description_label": "Description",
+  "custom_plant_price_title": "Price",
+  "custom_plant_price_label": "Average Price per Kg ({currency})",
+  "@custom_plant_price_label": {
+    "description": "Label average price per kg",
+    "placeholders": { "currency": { "type": "String" } }
+  },
+  "custom_plant_price_hint": "ex: 4.50",
+  "custom_plant_nutrition_title": "Nutrition (per 100g)",
+  "custom_plant_nutrition_cal": "Calories",
+  "custom_plant_nutrition_prot": "Protein",
+  "custom_plant_nutrition_carb": "Carbs",
+  "custom_plant_nutrition_fat": "Fat",
+  "custom_plant_notes_title": "Notes & Associations",
+  "custom_plant_notes_label": "Personal Notes",
+  "custom_plant_notes_hint": "Companion plants, growing tips...",
+  "custom_plant_cycle_title": "Growth Cycle",
+  "custom_plant_sowing_period": "Sowing Period",
+  "custom_plant_harvest_period": "Harvest Period",
+  "custom_plant_select_months": "Select months below",
+  "custom_plant_add_photo": "Add Photo",
+  "custom_plant_delete_photo": "Remove Photo",
+  "custom_plant_pick_camera": "Take Photo",
+  "custom_plant_pick_gallery": "Choose from Gallery",
+  "custom_plant_pick_error": "Error selecting image: {error}",
+  "@custom_plant_pick_error": {
+    "description": "Image picker error",
+    "placeholders": { "error": { "type": "Object" } }
+  }
 }

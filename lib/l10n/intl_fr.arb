@@ -729,8 +729,12 @@
   "@calendar_new_task_tooltip": { "description": "Tooltip bouton nouvelle tâche" },
   "calendar_task_saved_title": "Tâche enregistrée",
   "@calendar_task_saved_title": { "description": "Titre dialog tâche enregistrée" },
-  "calendar_ask_export_pdf": "Voulez-vous l'envoyer à quelqu'un en PDF ?",
+  "calendar_ask_export_pdf": "Souhaitez-vous envoyer la fiche tâche à quelqu'un ?",
   "@calendar_ask_export_pdf": { "description": "Contenu dialog export PDF" },
+  "action_no_thanks": "Non merci",
+  "@action_no_thanks": { "description": "Bouton pour decliner une action" },
+  "action_pdf": "PDF",
+  "@action_pdf": { "description": "Label bouton PDF" },
   "calendar_task_modified": "Tâche modifiée",
   "@calendar_task_modified": { "description": "SnackBar tâche modifiée" },
   "calendar_delete_confirm_title": "Supprimer la tâche ?",
@@ -827,6 +831,11 @@
   "@settings_backup_error": { "description": "Erreur sauvegarde", "placeholders": { "error": { "type": "Object" } } },
   "settings_restore_error": "Échec de la restauration : {error}",
   "@settings_restore_error": { "description": "Erreur restauration", "placeholders": { "error": { "type": "Object" } } },
+  "settings_backup_compatible_zip": "Compatible ZIP",
+  "@settings_backup_compatible_zip": { "description": "Indication format ZIP" },
+  "backup_share_subject": "Sauvegarde PermaCalendar",
+  "@backup_share_subject": { "description": "Sujet du partage de backup" },
+
 
   "task_editor_title_new": "Nouvelle Tâche",
   "@task_editor_title_new": { "description": "Titre dialogue nouvelle tâche" },
@@ -1665,7 +1674,7 @@
   "task_editor_photo_add": "Ajouter une photo",
   "task_editor_photo_change": "Changer la photo",
   "task_editor_photo_remove": "Retirer la photo",
-  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF / Word à la création / envoi.",
+  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF à la création / envoi.",
 
   "export_block_nutrition": "Nutrition (Agrégation)",
   "@export_block_nutrition": { "description": "Label pour le bloc Nutrition dans l'export" },
@@ -1681,7 +1690,189 @@
   "export_field_data_confidence": "Confiance",
   "export_field_coverage_percent": "Moy. DRI (%)",
   "export_field_lower_bound_coverage": "Min DRI (%)",
-  "export_field_upper_bound_coverage": "Max DRI (%)"
+  "export_field_upper_bound_coverage": "Max DRI (%)",
+
+  "settings_garden_config_title": "Configuration du Jardin",
+  "@settings_garden_config_title": {
+    "description": "Titre de la section configuration du jardin"
+  },
+  "settings_climatic_zone_label": "Zone Climatique",
+  "@settings_climatic_zone_label": {
+    "description": "Label pour le réglage de la zone climatique"
+  },
+  "settings_status_manual": "{value} (Manuel)",
+  "@settings_status_manual": {
+    "description": "Statut manuel pour les réglages",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "Zone A"
+      }
+    }
+  },
+  "settings_status_auto": "{value} (Auto)",
+  "@settings_status_auto": {
+    "description": "Statut automatique pour les réglages",
+    "placeholders": {
+       "value": {
+         "type": "String",
+         "example": "Zone A"
+       }
+    }
+  },
+  "settings_status_detecting": "Détection...",
+  "@settings_status_detecting": {
+    "description": "Statut en cours de détection"
+  },
+  "settings_last_frost_date_label": "Dernier Gel (Printemps)",
+  "@settings_last_frost_date_label": {
+    "description": "Label pour la date de dernier gel"
+  },
+  "settings_last_frost_date_title": "Date de Dernier Gel",
+  "@settings_last_frost_date_title": {
+    "description": "Titre pour le réglage de la date de dernier gel"
+  },
+  "settings_status_estimated": "{value} (Estimé)",
+  "@settings_status_estimated": {
+    "description": "Statut estimé pour une date",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "15/05"
+      }
+    }
+  },
+  "settings_status_unknown": "Inconnu",
+  "@settings_status_unknown": {
+    "description": "Statut inconnu"
+  },
+  "settings_currency_label": "Devise",
+  "@settings_currency_label": {
+    "description": "Label pour la devise"
+  },
+  "settings_currency_selector_title": "Choisir la devise",
+  "@settings_currency_selector_title": {
+    "description": "Titre du sélecteur de devise"
+  },
+  "settings_commune_search_placeholder_start": "Saisissez un nom de commune pour commencer.",
+  "@settings_commune_search_placeholder_start": {
+    "description": "Placeholder vide recherche commune"
+  },
+  "settings_commune_search_no_results": "Aucun résultat pour \"{query}\".",
+  "@settings_commune_search_no_results": {
+    "description": "Résultat vide recherche commune",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "settings_zone_auto_recommended": "Automatique (Recommandé)",
+  "@settings_zone_auto_recommended": {
+    "description": "Option automatique pour la zone"
+  },
+  "settings_date_auto": "Automatique",
+  "@settings_date_auto": {
+    "description": "Option automatique pour la date"
+  },
+  "settings_reset_date_button": "Réinitialiser la date",
+  "@settings_reset_date_button": {
+    "description": "Bouton réinitialiser date"
+  },
+  "settings_terms_subtitle": "Termes et conditions",
+  "@settings_terms_subtitle": {
+    "description": "Sous-titre termes et conditions"
+  },
+  "language_italian": "Italiano",
+  "@language_italian": {
+    "description": "Label langue italien"
+  },
+
+  "zone_nh_temperate_europe": "Tempéré - Hémisphère Nord (Eurasie)",
+  "@zone_nh_temperate_europe": {
+    "description": "Nom de la zone climatique Europe/Eurasie"
+  },
+  "zone_nh_temperate_na": "Tempéré - Amérique du Nord",
+  "@zone_nh_temperate_na": {
+    "description": "Nom de la zone climatique Amérique du Nord"
+  },
+  "zone_sh_temperate": "Tempéré - Hémisphère Sud",
+  "@zone_sh_temperate": {
+    "description": "Nom de la zone climatique Hémisphère Sud"
+  },
+  "zone_mediterranean": "Méditerranéen",
+  "@zone_mediterranean": {
+    "description": "Nom de la zone climatique Méditerranéenne"
+  },
+  "zone_tropical": "Tropical",
+  "@zone_tropical": {
+    "description": "Nom de la zone climatique Tropicale"
+  },
+  "zone_arid": "Aride / Désertique",
+  "@zone_arid": {
+    "description": "Nom de la zone climatique Aride"
+  },
+  "stats_pillar_economy": "ÉCONOMIE",
+  "@stats_pillar_economy": { "description": "Titre du pilier Économie" },
+  "stats_pillar_nutrition": "NUTRITION",
+  "@stats_pillar_nutrition": { "description": "Titre du pilier Nutrition" },
+  "stats_pillar_export": "EXPORT",
+  "@stats_pillar_export": { "description": "Titre du pilier Export" },
+  "stats_data_label": "DATA",
+  "@stats_data_label": { "description": "Label pour les données" },
+  "stats_radar_vitamins": "Vitamines",
+  "@stats_radar_vitamins": { "description": "Label radar vitamines" },
+  "stats_radar_minerals": "Minéraux",
+  "@stats_radar_minerals": { "description": "Label radar minéraux" },
+  "stats_radar_fibers": "Fibres",
+  "@stats_radar_fibers": { "description": "Label radar fibres" },
+  "stats_radar_proteins": "Protéines",
+  "@stats_radar_proteins": { "description": "Label radar protéines" },
+  "stats_radar_energy": "Énergie",
+  "@stats_radar_energy": { "description": "Label radar énergie" },
+  "stats_radar_antiox": "Antiox",
+  "@stats_radar_antiox": { "description": "Label radar antioxydants" },
+
+  "custom_plant_new_title": "Nouvelle plante",
+  "custom_plant_edit_title": "Modifier la plante",
+  "custom_plant_action_save_creation": "Créer la plante",
+  "custom_plant_action_save_modification": "Enregistrer les modifications",
+  "custom_plant_delete_confirm_title": "Supprimer la plante ?",
+  "custom_plant_delete_confirm_body": "Cette action est irréversible.",
+  "custom_plant_saved_success": "Plante enregistrée avec succès",
+  "custom_plant_common_name_label": "Nom commun *",
+  "custom_plant_common_name_required": "Requis",
+  "custom_plant_scientific_name_label": "Nom scientifique",
+  "custom_plant_family_label": "Famille",
+  "custom_plant_description_label": "Description",
+  "custom_plant_price_title": "Prix",
+  "custom_plant_price_label": "Prix moyen par Kg ({currency})",
+  "@custom_plant_price_label": {
+    "description": "Label prix moyen par kg",
+    "placeholders": { "currency": { "type": "String" } }
+  },
+  "custom_plant_price_hint": "ex: 4.50",
+  "custom_plant_nutrition_title": "Nutrition (pour 100g)",
+  "custom_plant_nutrition_cal": "Calories",
+  "custom_plant_nutrition_prot": "Protéines",
+  "custom_plant_nutrition_carb": "Glucides",
+  "custom_plant_nutrition_fat": "Lipides",
+  "custom_plant_notes_title": "Notes & Associations",
+  "custom_plant_notes_label": "Notes personnelles",
+  "custom_plant_notes_hint": "Plantes compagnes, astuces de culture...",
+  "custom_plant_cycle_title": "Cycle de culture",
+  "custom_plant_sowing_period": "Période de semis",
+  "custom_plant_harvest_period": "Période de récolte",
+  "custom_plant_select_months": "Sélectionnez les mois ci-dessous",
+  "custom_plant_add_photo": "Ajouter une photo",
+  "custom_plant_delete_photo": "Supprimer la photo",
+  "custom_plant_pick_camera": "Prendre une photo",
+  "custom_plant_pick_gallery": "Choisir depuis la galerie",
+  "custom_plant_pick_error": "Erreur lors de la sélection de l'image: {error}",
+  "@custom_plant_pick_error": {
+    "description": "Erreur image picker",
+    "placeholders": { "error": { "type": "Object" } }
+  }
 }
 
 
