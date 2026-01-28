@@ -47,7 +47,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
 
   // DEBUG / TEMP FLAGS - désactivé par défaut pour éviter spam terminal
   // Mettre true temporairement lors d'un diagnostic local seulement.
-  static const bool kWeatherDebug = false;
+  static const bool kWeatherDebug = true;
   
   double _lastCalculatedSpawnRate = 0.0;
   int _ticksCount = 0;
@@ -147,6 +147,16 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
       precipProbThreshold: config.general.precipThresholdProb, // 30.0 par défaut
       downgradeOnLowProb: true,
     );
+
+    // debug : diagnostic temporaire
+    if (kWeatherDebug) {
+      debugPrint('DBG_WEATHER INPUT -> mm=${p.precipitationMm.toStringAsFixed(2)}mm prob=${p.precipitationProbability}% code=${p.weatherCode}');
+      if (mapperConfig == null) {
+        debugPrint('DBG_WEATHER MAPPER -> null (no precip preset)');
+      } else {
+        debugPrint('DBG_WEATHER MAPPER -> preset qty=${mapperConfig.quantity.toStringAsFixed(3)} area=${mapperConfig.area.toStringAsFixed(2)} size=${mapperConfig.size.toStringAsFixed(2)} weight=${mapperConfig.weight.toStringAsFixed(2)}');
+      }
+    }
     
     if (mapperConfig != null) {
       // We found a matching preset (Light Rain, Heavy Rain, Snow, etc.)
@@ -247,6 +257,11 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     
     dSpawnRate = spawnRateRaw;
     _lastCalculatedSpawnRate = dSpawnRate;
+
+    if (kWeatherDebug) {
+      debugPrint('DBG_ENGINE aesthetic.qty=${aesthetic.quantity}, area=${aesthetic.area}, size=${aesthetic.size}, weight=${aesthetic.weight}');
+      debugPrint('DBG_ENGINE densityCurve=$densityCurve, spawnPerUnit=$spawnPerUnit, dHSpread=$dHSpread, spawnRateRaw=$spawnRateRaw, spawnRateFinal=$dSpawnRate');
+    }
 
 
     // 3. WEIGHT (Heavy or Light?)
