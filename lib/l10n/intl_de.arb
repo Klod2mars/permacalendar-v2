@@ -1,6 +1,9 @@
 {
   "@@locale": "de",
   "appTitle": "Sowing",
+  "@appTitle": {
+    "description": "Titre de l'application"
+  },
   "garden_creation_dialog_title": "Erstellen Sie Ihren ersten Garten",
   "garden_creation_dialog_description": "Geben Sie Ihrem Permakultur-Bereich einen Namen, um zu beginnen.",
   "garden_creation_name_label": "Gartenname",
@@ -8,139 +11,548 @@
   "garden_creation_name_required": "Der Name ist erforderlich",
   "garden_creation_create_button": "Erstellen",
   "settings_title": "Einstellungen",
+  "@settings_title": {
+    "description": "Titre de la page des paramètres"
+  },
   "home_settings_fallback_label": "Einstellungen (Fallback)",
+  "@home_settings_fallback_label": {
+    "description": "Label accessibilité pour le hotspot de paramètres sur l'accueil"
+  },
   "settings_application": "Anwendung",
+  "@settings_application": {
+    "description": "Rubrique 'Application' dans les paramètres"
+  },
   "settings_version": "Version",
+  "@settings_version": {
+    "description": "Label pour la version de l'application"
+  },
   "settings_display": "Anzeige",
+  "@settings_display": {
+    "description": "Titre de la section Affichage"
+  },
   "settings_weather_selector": "Wetter-Wahla",
+  "@settings_weather_selector": {
+    "description": "Titre de la section Sélecteur météo"
+  },
   "settings_commune_title": "Standort für Wetter",
+  "@settings_commune_title": {
+    "description": "Titre du paramètre Commune pour la météo"
+  },
   "settings_choose_commune": "Standort wählen",
+  "@settings_choose_commune": {
+    "description": "Titre/drawer pour choisir une commune"
+  },
   "settings_search_commune_hint": "Nach einem Ort suchen...",
+  "@settings_search_commune_hint": {
+    "description": "Hint text pour la recherche de commune"
+  },
   "settings_commune_default": "Standard: {label}",
+  "@settings_commune_default": {
+    "description": "Texte indiquant la commune par défaut",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "Paris"
+      }
+    }
+  },
   "settings_commune_selected": "Ausgewählt: {label}",
+  "@settings_commune_selected": {
+    "description": "Texte indiquant la commune sélectionnée",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "Saint-Affrique"
+      }
+    }
+  },
   "settings_quick_access": "Schnellzugriff",
+  "@settings_quick_access": {
+    "description": "Titre de la zone Accès rapide dans les paramètres"
+  },
   "settings_plants_catalog": "Pflanzenkatalog",
+  "@settings_plants_catalog": {
+    "description": "Libellé pour l'accès au catalogue des plantes"
+  },
   "settings_plants_catalog_subtitle": "Pflanzen suchen und anzeigen",
+  "@settings_plants_catalog_subtitle": {
+    "description": "Sous-titre pour le catalogue des plantes"
+  },
   "settings_about": "Über",
+  "@settings_about": {
+    "description": "Titre de la section À propos"
+  },
   "settings_user_guide": "Benutzerhandbuch",
+  "@settings_user_guide": {
+    "description": "Label pour le guide d'utilisation"
+  },
   "settings_user_guide_subtitle": "Handbuch lesen",
+  "@settings_user_guide_subtitle": {
+    "description": "Sous-titre pour le guide d'utilisation"
+  },
   "settings_privacy": "Datenschutz",
+  "@settings_privacy": {
+    "description": "Label Confidentialité"
+  },
   "settings_privacy_policy": "Datenschutzrichtlinie",
+  "@settings_privacy_policy": {
+    "description": "Titre / label de la politique de confidentialité"
+  },
   "settings_terms": "Nutzungsbedingungen",
+  "@settings_terms": {
+    "description": "Titre / label des conditions d'utilisation"
+  },
   "settings_version_dialog_title": "App-Version",
+  "@settings_version_dialog_title": {
+    "description": "Titre de la boîte de dialogue d'information sur la version"
+  },
   "settings_version_dialog_content": "Version: {version} – Dynamisches Gartenmanagement\n\nSowing - Lebendiges Gartenmanagement",
+  "@settings_version_dialog_content": {
+    "description": "Contenu de la boîte de dialogue de version",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.2"
+      }
+    }
+  },
   "language_title": "Sprache / Language",
+  "@language_title": {
+    "description": "Titre de la page de sélection de la langue"
+  },
   "language_french": "Français",
+  "@language_french": {
+    "description": "Nom de la langue française"
+  },
   "language_english": "English",
+  "@language_english": {
+    "description": "Nom de la langue anglaise"
+  },
   "language_spanish": "Español",
+  "@language_spanish": {
+    "description": "Nom de la langue espagnole"
+  },
   "language_portuguese_br": "Português (Brasil)",
+  "@language_portuguese_br": {
+    "description": "Nom de la langue portugaise (Brésil)"
+  },
   "language_german": "Deutsch",
+  "@language_german": {
+    "description": "Nom de la langue allemande"
+  },
   "language_changed_snackbar": "Sprache geändert: {label}",
+  "@language_changed_snackbar": {
+    "description": "Message affiché en snackBar après changement de langue",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "English"
+      }
+    }
+  },
   "calibration_title": "Kalibrierung",
+  "@calibration_title": {
+    "description": "Titre de la section Calibration"
+  },
   "calibration_subtitle": "Passen Sie die Anzeige Ihres Dashboards an",
+  "@calibration_subtitle": {
+    "description": "Sous-titre de la section Calibration"
+  },
   "calibration_organic_title": "Organische Kalibrierung",
+  "@calibration_organic_title": {
+    "description": "Titre de la carte Calibration Organique"
+  },
   "calibration_organic_subtitle": "Einheitlicher Modus: Bild, Himmel, Module",
+  "@calibration_organic_subtitle": {
+    "description": "Sous-titre de la carte Calibration Organique"
+  },
   "calibration_organic_disabled": "🌿 Organische Kalibrierung deaktiviert",
+  "@calibration_organic_disabled": {
+    "description": "SnackBar désactivation calibration"
+  },
   "calibration_organic_enabled": "🌿 Organischer Kalibrierungsmodus aktiviert. Wählen Sie einen der drei Tabs.",
-  "lifecycle_error_title": "Fehler bei der Zyklusberechnung",
-  "lifecycle_error_prefix": "Fehler: ",
-  "lifecycle_cycle_completed": "Zyklus abgeschlossen",
-  "lifecycle_stage_germination": "Keimung",
-  "lifecycle_stage_growth": "Wachstum",
-  "lifecycle_stage_fruiting": "Fruchtbildung",
-  "lifecycle_stage_harvest": "Ernte",
-  "lifecycle_stage_unknown": "Unbekannt",
-  "lifecycle_harvest_expected": "Erwartete Ernte",
-  "lifecycle_in_days": "In {days} Tagen",
-  "lifecycle_passed": "Vergangen",
-  "lifecycle_now": "Jetzt!",
-  "lifecycle_next_action": "Nächste Aktion",
-  "lifecycle_update": "Zyklus aktualisieren",
-  "lifecycle_days_ago": "vor {days} Tagen",
-  "planting_detail_title": "Pflanzdetails",
+  "@calibration_organic_enabled": {
+    "description": "SnackBar activation calibration"
+  },
   "garden_list_title": "Meine Gärten",
+  "@garden_list_title": {
+    "description": "Titre écran liste des jardins"
+  },
   "garden_error_title": "Ladefehler",
+  "@garden_error_title": {
+    "description": "Titre pour l'état d'erreur sur la liste des jardins"
+  },
   "garden_error_subtitle": "Gartenliste konnte nicht geladen werden: {error}",
+  "@garden_error_subtitle": {
+    "description": "Message d'erreur détaillé pour jardin",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "garden_retry": "Wiederholen",
+  "@garden_retry": {
+    "description": "Texte du bouton Réessayer"
+  },
   "garden_no_gardens": "Noch keine Gärten.",
+  "@garden_no_gardens": {
+    "description": "Message affiché si aucun jardin actif"
+  },
   "garden_archived_info": "Sie haben archivierte Gärten. Aktivieren Sie die Anzeige archivierter Gärten, um sie zu sehen.",
+  "@garden_archived_info": {
+    "description": "Info affichée lorsque des jardins sont archivés"
+  },
   "garden_add_tooltip": "Garten hinzufügen",
+  "@garden_add_tooltip": {
+    "description": "Tooltip du FAB pour ajouter un jardin"
+  },
   "plant_catalog_title": "Pflanzenkatalog",
+  "@plant_catalog_title": {
+    "description": "Titre de l'écran catalogue de plantes"
+  },
   "plant_catalog_search_hint": "Pflanze suchen...",
+  "@plant_catalog_search_hint": {
+    "description": "Indication visuelle dans la barre de recherche du catalogue"
+  },
   "plant_custom_badge": "Benutzerdefiniert",
+  "@plant_custom_badge": {
+    "description": "Texte du badge pour plante personnalisée"
+  },
   "plant_detail_not_found_title": "Pflanze nicht gefunden",
+  "@plant_detail_not_found_title": {
+    "description": "Titre affiché si une plante n'existe pas"
+  },
   "plant_detail_not_found_body": "Diese Pflanze existiert nicht oder konnte nicht geladen werden.",
+  "@plant_detail_not_found_body": {
+    "description": "Message affiché lorsque la plante n'a pas été chargée"
+  },
   "plant_added_favorites": "{plant} zu Favoriten hinzugefügt",
+  "@plant_added_favorites": {
+    "description": "SnackBar indiquant qu'une plante a été ajoutée aux favoris",
+    "placeholders": {
+      "plant": {
+        "type": "String",
+        "example": "Tomate"
+      }
+    }
+  },
   "plant_detail_popup_add_to_garden": "Zum Garten hinzufügen",
+  "@plant_detail_popup_add_to_garden": {
+    "description": "Texte du menu contextuel pour ajouter une plante au jardin"
+  },
   "plant_detail_popup_share": "Teilen",
+  "@plant_detail_popup_share": {
+    "description": "Texte du menu contextuel pour partager"
+  },
   "plant_detail_share_todo": "Teilen ist noch nicht implementiert",
+  "@plant_detail_share_todo": {
+    "description": "SnackBar indiquant que le partage n'est pas encore implémenté"
+  },
   "plant_detail_add_to_garden_todo": "Hinzufügen zum Garten noch nicht implementiert",
+  "@plant_detail_add_to_garden_todo": {
+    "description": "SnackBar indiquant que l'ajout au jardin est à implémenter"
+  },
   "plant_detail_section_culture": "Kulturdetails",
+  "@plant_detail_section_culture": {
+    "description": "Titre section Détails de culture"
+  },
   "plant_detail_section_instructions": "Allgemeine Anweisungen",
+  "@plant_detail_section_instructions": {
+    "description": "Titre section Instructions générales"
+  },
   "plant_detail_detail_family": "Familie",
+  "@plant_detail_detail_family": {
+    "description": "Label Famille dans le détail plante"
+  },
   "plant_detail_detail_maturity": "Reifedauer",
+  "@plant_detail_detail_maturity": {
+    "description": "Label Durée de maturation"
+  },
   "plant_detail_detail_spacing": "Abstand",
+  "@plant_detail_detail_spacing": {
+    "description": "Label Espacement"
+  },
   "plant_detail_detail_exposure": "Standort",
+  "@plant_detail_detail_exposure": {
+    "description": "Label Exposition"
+  },
   "plant_detail_detail_water": "Wasserbedarf",
+  "@plant_detail_detail_water": {
+    "description": "Label Besoins en eau"
+  },
   "planting_title_template": "Pflanzungen - {gardenBedName}",
+  "@planting_title_template": {
+    "description": "Titre de l'écran des plantations, contient le nom de la parcelle",
+    "placeholders": {
+      "gardenBedName": {
+        "type": "String",
+        "example": "Parcelle A"
+      }
+    }
+  },
   "planting_menu_statistics": "Statistiken",
+  "@planting_menu_statistics": {
+    "description": "Menu item Statistiques"
+  },
   "planting_menu_ready_for_harvest": "Erntebereit",
+  "@planting_menu_ready_for_harvest": {
+    "description": "Menu item Prêt à récolter"
+  },
   "planting_menu_test_data": "Testdaten",
+  "@planting_menu_test_data": {
+    "description": "Menu item Données test"
+  },
   "planting_search_hint": "Pflanzung suchen...",
+  "@planting_search_hint": {
+    "description": "Hint de recherche sur la liste de plantations"
+  },
   "planting_filter_all_statuses": "Alle Status",
+  "@planting_filter_all_statuses": {
+    "description": "Filtre Tous les statuts"
+  },
   "planting_filter_all_plants": "Alle Pflanzen",
+  "@planting_filter_all_plants": {
+    "description": "Filtre Toutes les plantes"
+  },
   "planting_stat_plantings": "Pflanzungen",
+  "@planting_stat_plantings": {
+    "description": "Label statistiques : Plantations"
+  },
   "planting_stat_total_quantity": "Gesamtmenge",
+  "@planting_stat_total_quantity": {
+    "description": "Label statistiques : Quantité totale"
+  },
   "planting_stat_success_rate": "Erfolgsrate",
+  "@planting_stat_success_rate": {
+    "description": "Label statistiques : Taux de réussite"
+  },
   "planting_stat_in_growth": "Im Wachstum",
+  "@planting_stat_in_growth": {
+    "description": "Label statistiques : En croissance"
+  },
   "planting_stat_ready_for_harvest": "Erntebereit",
+  "@planting_stat_ready_for_harvest": {
+    "description": "Label statistiques : Prêt à récolter"
+  },
   "planting_empty_none": "Keine Pflanzungen",
+  "@planting_empty_none": {
+    "description": "Titre pour l'état vide des plantations"
+  },
   "planting_empty_first": "Fügen Sie Ihre erste Pflanzung in diesem Beet hinzu.",
+  "@planting_empty_first": {
+    "description": "Texte incitatif si aucune plantation n'existe"
+  },
   "planting_create_action": "Pflanzung erstellen",
+  "@planting_create_action": {
+    "description": "Texte du bouton pour créer une plantation"
+  },
   "planting_empty_no_result": "Kein Ergebnis",
+  "@planting_empty_no_result": {
+    "description": "Titre pour l'état 'aucun résultat' dans la recherche"
+  },
   "planting_clear_filters": "Filter löschen",
+  "@planting_clear_filters": {
+    "description": "Action pour effacer les filtres"
+  },
   "planting_add_tooltip": "Pflanzung hinzufügen",
+  "@planting_add_tooltip": {
+    "description": "Tooltip du FAB pour ajouter une plantation"
+  },
   "search_hint": "Suchen...",
+  "@search_hint": {
+    "description": "Hint générique pour la barre de recherche"
+  },
   "error_page_title": "Seite nicht gefunden",
+  "@error_page_title": {
+    "description": "Titre pour la page d'erreur 'page non trouvée'"
+  },
   "error_page_message": "Die Seite \"{uri}\" existiert nicht.",
+  "@error_page_message": {
+    "description": "Message expliquant que la page demandée n'existe pas",
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
   "error_page_back": "Zurück zur Startseite",
+  "@error_page_back": {
+    "description": "Bouton pour revenir à l'accueil depuis la page d'erreur"
+  },
   "dialog_confirm": "Bestätigen",
+  "@dialog_confirm": {
+    "description": "Texte du bouton Confirmer dans les dialogues"
+  },
   "dialog_cancel": "Abbrechen",
+  "@dialog_cancel": {
+    "description": "Texte du bouton Annuler dans les dialogues"
+  },
   "snackbar_commune_selected": "Standort ausgewählt: {name}",
+  "@snackbar_commune_selected": {
+    "description": "SnackBar indiquant la commune sélectionnée",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "common_validate": "Bestätigen",
+  "@common_validate": {
+    "description": "Texte générique Valider"
+  },
   "common_cancel": "Stornieren",
+  "@common_cancel": {
+    "description": "Texte générique Annuler (duplicate kept for backward compatibility)"
+  },
+  "common_save": "Speichern",
+  "@common_save": {
+    "description": "Texte générique Enregistrer"
+  },
   "empty_action_create": "Erstellen",
+  "@empty_action_create": {
+    "description": "Action générique pour créer quelque chose depuis un état vide"
+  },
   "user_guide_text": "1 — Willkommen bei Sowing\nSowing ist eine Anwendung, die Gärtner bei der lebendigen und konkreten Überwachung ihrer Kulturen unterstützt.\nSie ermöglicht Ihnen:\n• Ihre Gärten und Beete zu organisieren,\n• Ihre Pflanzungen während ihres gesamten Lebenszyklus zu verfolgen,\n• Ihre Aufgaben zum richtigen Zeitpunkt zu planen,\n• eine Erinnerung an das zu behalten, was getan wurde,\n• das lokale Wetter und den Rhythmus der Jahreszeiten zu berücksichtigen.\nDie Anwendung funktioniert hauptsächlich offline und speichert Ihre Daten direkt auf Ihrem Gerät.\nDieses Handbuch beschreibt die übliche Verwendung von Sowing: Erste Schritte, Erstellung von Gärten, Pflanzungen, Kalender, Wetter, Datenexport und bewährte Verfahren.\n\n2 — Die Benutzeroberfläche verstehen\nDas Dashboard\nBeim Öffnen zeigt Sowing ein visuelles und organisches Dashboard an.\nEs hat die Form eines Hintergrundbildes, das von interaktiven Blasen animiert wird. Jede Blase bietet Zugriff auf eine wichtige Funktion der Anwendung:\n• Gärten,\n• Luftwetter,\n• Bodenwetter,\n• Kalender,\n• Aktivitäten,\n• Statistiken,\n• Einstellungen.\nAllgemeine Navigation\nTippen Sie einfach auf eine Blase, um den entsprechenden Abschnitt zu öffnen.\nInnerhalb der Seiten finden Sie je nach Kontext:\n• Kontextmenüs,\n• „+“-Schaltflächen zum Hinzufügen eines Elements,\n• Bearbeitungs- oder Löschschaltflächen.\n\n3 — Schnellstart\nAnwendung öffnen\nBeim Start wird das Dashboard automatisch angezeigt.\nWetter konfigurieren\nWählen Sie in den Einstellungen Ihren Standort.\nDiese Information ermöglicht es Sowing, ein an Ihren Garten angepasstes lokales Wetter anzuzeigen. Wenn kein Standort ausgewählt ist, wird ein Standardstandort verwendet.\nIhren ersten Garten erstellen\nBei der ersten Verwendung führt Sie Sowing automatisch durch die Erstellung Ihres ersten Gartens.\nSie können einen Garten auch manuell über das Dashboard erstellen.\nTippen Sie auf dem Hauptbildschirm auf das grüne Blatt im freiesten Bereich, rechts von den Statistiken und etwas darüber. Dieser bewusst diskrete Bereich ermöglicht es Ihnen, die Erstellung eines Gartens zu initiieren.\nSie können bis zu fünf Gärten erstellen.\nDieser Ansatz ist Teil des Sowing-Erlebnisses: Es gibt keine permanente und zentrale „+“-Schaltfläche. Die Anwendung lädt eher zur Erkundung und schrittweisen Entdeckung des Raumes ein.\nDie mit den Gärten verknüpften Bereiche sind auch über das Einstellungsmenü zugänglich.\nOrganische Kalibrierung des Dashboards\nEin organischer Kalibrierungsmodus ermöglicht:\n• die tatsächliche Position der interaktiven Zonen zu visualisieren,\n• sie durch einfaches Schieben des Fingers zu bewegen.\nSie können Ihre Gärten und Module also genau dort auf dem Bild positionieren, wo Sie es möchten: oben, unten oder an der Stelle, die Ihnen am besten passt.\nNach der Bestätigung wird diese Organisation gespeichert und in der Anwendung beibehalten.\nEin Beet erstellen\nIn einem Gartenblatt:\n• wählen Sie „Ein Beet hinzufügen“,\n• geben Sie seinen Namen, seine Fläche und ggf. einige Notizen an,\n• speichern Sie.\nEine Pflanzung hinzufügen\nIn einem Beet:\n• drücken Sie die „+“-Taste,\n• wählen Sie eine Pflanze aus dem Katalog,\n• geben Sie das Datum, die Menge und nützliche Informationen an,\n• bestätigen Sie.\n\n4 — Das organische Dashboard\nDas Dashboard ist der zentrale Punkt von Sowing.\nEs ermöglicht:\n• einen Überblick über Ihre Aktivität zu haben,\n• schnell auf die Hauptfunktionen zuzugreifen,\n• intuitiv zu navigieren.\nJe nach Ihren Einstellungen können einige Blasen synthetische Informationen anzeigen, wie das Wetter oder anstehende Aufgaben.\n\n5 — Gärten, Beete und Pflanzungen\nDie Gärten\nEin Garten repräsentiert einen realen Ort: Gemüsegarten, Gewächshaus, Obstgarten, Balkon usw.\nSie können:\n• mehrere Gärten erstellen,\n• ihre Informationen ändern,\n• sie bei Bedarf löschen.\nDie Beete\nEin Beet ist eine genaue Zone innerhalb eines Gartens.\nEs ermöglicht, den Raum zu strukturieren, Kulturen zu organisieren und mehrere Pflanzungen am selben Ort zu gruppieren.\nDie Pflanzungen\nEine Pflanzung entspricht der Einführung einer Pflanze in ein Beet zu einem bestimmten Zeitpunkt.\nBeim Erstellen einer Pflanzung bietet Sowing zwei Modi an.\nSäen\nDer Modus „Säen“ entspricht dem Einbringen eines Samens in den Boden.\nIn diesem Fall:\n• beginnt der Fortschritt bei 0 %,\n• wird eine schrittweise Nachverfolgung vorgeschlagen, besonders nützlich für Gartenanfänger,\n• visualisiert ein Fortschrittsbalken den Fortschritt des Kulturzyklus.\nDiese Nachverfolgung ermöglicht die Schätzung:\n• des wahrscheinlichen Beginns der Erntezeit,\n• der Entwicklung der Kultur im Laufe der Zeit auf einfache und visuelle Weise.\nPflanzen\nDer Modus „Pflanzen“ ist für bereits entwickelte Pflanzen gedacht (Pflanzen aus einem Gewächshaus oder in einem Gartencenter gekauft).\nIn diesem Fall:\n• beginnt die Pflanze mit einem Fortschritt von ca. 30 %,\n• ist die Nachverfolgung sofort fortgeschrittener,\n• wird die Schätzung der Erntezeit entsprechend angepasst.\nWahl des Datums\nBeim Pflanzen können Sie das Datum frei wählen.\nDies ermöglicht zum Beispiel:\n• eine zuvor durchgeführte Pflanzung einzutragen,\n• ein Datum zu korrigieren, wenn die Anwendung zum Zeitpunkt der Aussaat oder Pflanzung nicht verwendet wurde.\nStandardmäßig wird das aktuelle Datum verwendet.\nNachverfolgung und Verlauf\nJede Pflanzung hat:\n• eine Fortschrittsnachverfolgung,\n• Informationen zu ihrem Lebenszyklus,\n• Kulturphasen,\n• persönliche Notizen.\nAlle Aktionen (Aussaat, Pflanzung, Pflege, Ernte) werden automatisch im Gartenverlauf aufgezeichnet.\n\n6 — Pflanzenkatalog\nDer Katalog fasst alle beim Erstellen einer Pflanzung verfügbaren Pflanzen zusammen.\nEr stellt eine skalierbare Referenzbasis dar, die so konzipiert ist, dass sie aktuelle Verwendungen abdeckt und gleichzeitig anpassbar bleibt.\nHauptfunktionen:\n• einfache und schnelle Suche,\n• Erkennung von gebräuchlichen und wissenschaftlichen Namen,\n• Anzeige von Fotos, wenn verfügbar.\nBenutzerdefinierte Pflanzen\nSie können Ihre eigenen benutzerdefinierten Pflanzen erstellen unter:\nEinstellungen → Pflanzenkatalog.\nEs ist dann möglich:\n• eine neue Pflanze zu erstellen,\n• die wesentlichen Parameter (Name, Typ, nützliche Informationen) auszufüllen,\n• ein Bild hinzuzufügen, um die Identifizierung zu erleichtern.\nDie benutzerdefinierten Pflanzen sind dann wie jede andere Pflanze im Katalog verwendbar.\n\n7 — Kalender und Aufgaben\nDie Kalenderansicht\nDer Kalender zeigt an:\n• geplante Aufgaben,\n• wichtige Pflanzungen,\n• geschätzte Erntezeiten.\nEine Aufgabe erstellen\nVom Kalender aus:\n• erstellen Sie eine neue Aufgabe,\n• geben Sie einen Titel, ein Datum und eine Beschreibung an,\n• wählen Sie eine mögliche Wiederholung.\nDie Aufgaben können mit einem Garten oder einem Beet verknüpft werden.\nAufgabenverwaltung\nSie können:\n• eine Aufgabe ändern,\n• sie löschen,\n• sie exportieren, um sie zu teilen.\n\n8 — Aktivitäten und Verlauf\nDieser Abschnitt stellt das lebendige Gedächtnis Ihrer Gärten dar.\nAuswahl eines Gartens\nDrücken Sie vom Dashboard aus lange auf einen Garten, um ihn auszuwählen.\nDer aktive Garten wird durch einen hellgrünen Heiligenschein und ein Bestätigungsbanner hervorgehoben.\nDiese Auswahl ermöglicht das Filtern der angezeigten Informationen.\nKürzliche Aktivitäten\nDer Reiter „Aktivitäten“ zeigt chronologisch an:\n• Erstellungen,\n• Pflanzungen,\n• Pflege,\n• Ernten,\n• manuelle Aktionen.\nVerlauf nach Garten\nDer Reiter „Verlauf“ präsentiert den vollständigen Verlauf des ausgewählten Gartens Jahr für Jahr.\nEr ermöglicht insbesondere:\n• vergangene Pflanzungen zu finden,\n• zu überprüfen, ob eine Pflanze bereits an einem bestimmten Ort angebaut wurde,\n• die Fruchtfolge besser zu organisieren.\n\n9 — Luftwetter und Bodenwetter\nLuftwetter\nDas Luftwetter liefert wesentliche Informationen:\n• Außentemperatur,\n• Niederschläge (Regen, Schnee, kein Regen),\n• Tag-/Nachtwechsel.\nDiese Daten helfen, klimatische Risiken zu antizipieren und Interventionen anzupassen.\nBodenwetter\nSowing integriert ein Bodenwettermodul.\nDer Benutzer kann eine gemessene Temperatur eingeben. Aus diesen Daten schätzt die Anwendung dynamisch die Entwicklung der Bodentemperatur im Laufe der Zeit.\nDiese Information ermöglicht:\n• zu wissen, welche Pflanzen zu einem bestimmten Zeitpunkt wirklich anbaubar sind,\n• die Aussaat an die realen Bedingungen anzupassen statt an einen theoretischen Kalender.\nEchtzeitwetter auf dem Dashboard\nEin zentrales, eiförmiges Modul zeigt auf einen Blick:\n• den Himmelszustand,\n• Tag oder Nacht,\n• die Phase und Position des Mondes für den ausgewählten Standort.\nZeitnavigation\nIndem Sie Ihren Finger von links nach rechts über das Ei gleiten lassen, durchsuchen Sie die Vorhersagen stundenweise, bis zu mehr als 12 Stunden im Voraus.\nTemperatur und Niederschlag passen sich während der Geste dynamisch an.\n\n10 — Empfehlungen\nSowing kann Empfehlungen anbieten, die an Ihre Situation angepasst sind.\nSie stützen sich auf:\n• die Jahreszeit,\n• das Wetter,\n• den Zustand Ihrer Pflanzungen.\nJede Empfehlung gibt an:\n• was zu tun ist,\n• wann zu handeln ist,\n• warum die Aktion vorgeschlagen wird.\n\n11 — Export und Teilen\nPDF-Export — Kalender und Aufgaben\nDie Kalenderaufgaben können als PDF exportiert werden.\nDies ermöglicht:\n• klare Informationen zu teilen,\n• eine geplante Intervention zu übermitteln,\n• eine lesbare und datierte Spur zu behalten.\nExcel-Export — Ernten und Statistiken\nDie Erntedaten können im Excel-Format exportiert werden, um:\n• die Ergebnisse zu analysieren,\n• Berichte zu erstellen,\n• die Entwicklung im Laufe der Zeit zu verfolgen.\nDokumentfreigabe\nDie generierten Dokumente können über die auf Ihrem Gerät verfügbaren Anwendungen (Messaging, Speicher, Übertragung auf einen Computer usw.) geteilt werden.\n\n12 — Sicherung und bewährte Verfahren\nDie Daten werden lokal auf Ihrem Gerät gespeichert.\nEmpfohlene bewährte Verfahren:\n• vor einem größeren Update eine Sicherung durchführen,\n• Ihre Daten regelmäßig exportieren,\n• die Anwendung und das Gerät auf dem neuesten Stand halten.\n\n13 — Einstellungen\nDas Einstellungsmenü ermöglicht es, Sowing an Ihre Nutzungen anzupassen.\nSie können insbesondere:\n• die Sprache wählen,\n• Ihren Standort auswählen,\n• auf den Pflanzenkatalog zugreifen,\n• das Dashboard anpassen.\nDashboard-Anpassung\nEs ist möglich:\n• jedes Modul neu zu positionieren,\n• den visuellen Raum anzupassen,\n• das Hintergrundbild zu ändern,\n• Ihr eigenes Bild zu importieren (Funktion kommt bald).\nRechtliche Informationen\nIn den Einstellungen können Sie einsehen:\n• das Benutzerhandbuch,\n• die Datenschutzrichtlinie,\n• die Nutzungsbedingungen.\n\n14 — Häufig gestellte Fragen\nDie Touch-Zonen sind nicht gut ausgerichtet\nJe nach Telefon oder Anzeigeeinstellungen können einige Zonen verschoben erscheinen.\nEin organischer Kalibrierungsmodus ermöglicht:\n• die Touch-Zonen zu visualisieren,\n• sie durch Schieben neu zu positionieren,\n• die Konfiguration für Ihr Gerät zu speichern.\nKann ich Sowing ohne Verbindung nutzen?\nJa. Sowing funktioniert offline für die Verwaltung von Gärten, Pflanzungen, Aufgaben und Verlauf.\nEine Verbindung wird nur verwendet:\n• für den Abruf von Wetterdaten,\n• beim Export oder Teilen von Dokumenten.\nEs werden keine anderen Daten übertragen.\n\n15 — Schlussbemerkung\nSowing ist als Gartenbegleiter konzipiert: einfach, lebendig und skalierbar.\nNehmen Sie sich die Zeit zu beobachten, zu notieren und vertrauen Sie Ihrer Erfahrung genauso wie dem Werkzeug.",
+  "@user_guide_text": {
+    "description": "Texte complet du guide d'utilisation"
+  },
   "privacy_policy_text": "Sowing respektiert Ihre Privatsphäre voll und ganz.\n\n• Alle Daten werden lokal auf Ihrem Gerät gespeichert\n• Es werden keine persönlichen Daten an Dritte übermittelt\n• Es werden keine Informationen auf einem externen Server gespeichert\n\nDie Anwendung funktioniert vollständig offline. Eine Internetverbindung wird nur zum Abrufen von Wetterdaten oder beim Export verwendet.",
+  "@privacy_policy_text": {
+    "description": "Texte complet de la politique de confidentialité"
+  },
   "terms_text": "Durch die Nutzung von Sowing stimmen Sie zu:\n\n• Die Anwendung verantwortungsvoll zu nutzen\n• Nicht zu versuchen, ihre Einschränkungen zu umgehen\n• Die geistigen Eigentumsrechte zu respektieren\n• Nur Ihre eigenen Daten zu verwenden\n\nDiese Anwendung wird ohne Mängelgewähr bereitgestellt.\n\nDas Sowing-Team bleibt offen für zukünftige Verbesserungen oder Entwicklungen.",
+  "@terms_text": {
+    "description": "Texte complet des conditions d'utilisation"
+  },
   "calibration_auto_apply": "Automatisch für dieses Gerät anwenden",
+  "@calibration_auto_apply": {
+    "description": "Switch pour appliquer automatiquement la calibration"
+  },
   "calibration_calibrate_now": "Jetzt kalibrieren",
+  "@calibration_calibrate_now": {
+    "description": "Bouton pour lancer la calibration"
+  },
   "calibration_save_profile": "Aktuelle Kalibrierung als Profil speichern",
+  "@calibration_save_profile": {
+    "description": "Bouton pour sauvegarder le profil"
+  },
   "calibration_export_profile": "Profil exportieren (JSON-Kopie)",
+  "@calibration_export_profile": {
+    "description": "Bouton pour exporter le profil"
+  },
   "calibration_import_profile": "Profil aus Zwischenablage importieren",
+  "@calibration_import_profile": {
+    "description": "Bouton pour importer le profil"
+  },
   "calibration_reset_profile": "Profil für dieses Gerät zurücksetzen",
+  "@calibration_reset_profile": {
+    "description": "Bouton pour réinitialiser le profil"
+  },
   "calibration_refresh_profile": "Profilvorschau aktualisieren",
+  "@calibration_refresh_profile": {
+    "description": "Bouton pour actualiser l'aperçu"
+  },
   "calibration_key_device": "Geräteschlüssel: {key}",
+  "@calibration_key_device": {
+    "description": "Label affichant la clé de l'appareil",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_no_profile": "Kein Profil für dieses Gerät gespeichert.",
+  "@calibration_no_profile": {
+    "description": "Message si aucun profil"
+  },
   "calibration_image_settings_title": "Hintergrundbild-Einstellungen (Persistent)",
+  "@calibration_image_settings_title": {
+    "description": "Titre section réglages image"
+  },
   "calibration_pos_x": "Pos X",
+  "@calibration_pos_x": {
+    "description": "Label position X"
+  },
   "calibration_pos_y": "Pos Y",
+  "@calibration_pos_y": {
+    "description": "Label position Y"
+  },
   "calibration_zoom": "Zoom",
+  "@calibration_zoom": {
+    "description": "Label zoom"
+  },
   "calibration_reset_image": "Bildstandards zurücksetzen",
+  "@calibration_reset_image": {
+    "description": "Bouton reset image defaults"
+  },
   "calibration_dialog_confirm_title": "Bestätigen",
+  "@calibration_dialog_confirm_title": {
+    "description": "Titre dialog confirmation"
+  },
   "calibration_dialog_delete_profile": "Kalibrierungsprofil für dieses Gerät löschen?",
+  "@calibration_dialog_delete_profile": {
+    "description": "Contenu dialog suppression profil"
+  },
   "calibration_action_delete": "Löschen",
+  "@calibration_action_delete": {
+    "description": "Bouton supprimer"
+  },
   "calibration_snack_no_profile": "Kein Profil für dieses Gerät gefunden.",
+  "@calibration_snack_no_profile": {
+    "description": "SnackBar aucun profil"
+  },
   "calibration_snack_profile_copied": "Profil in die Zwischenablage kopiert.",
+  "@calibration_snack_profile_copied": {
+    "description": "SnackBar profil copié"
+  },
   "calibration_snack_clipboard_empty": "Zwischenablage leer.",
+  "@calibration_snack_clipboard_empty": {
+    "description": "SnackBar presse-papiers vide"
+  },
   "calibration_snack_profile_imported": "Profil importiert und für dieses Gerät gespeichert.",
+  "@calibration_snack_profile_imported": {
+    "description": "SnackBar profil importé"
+  },
   "calibration_snack_import_error": "JSON-Importfehler: {error}",
+  "@calibration_snack_import_error": {
+    "description": "SnackBar erreur import",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_snack_profile_deleted": "Profil für dieses Gerät gelöscht.",
+  "@calibration_snack_profile_deleted": {
+    "description": "SnackBar profil supprimé"
+  },
   "calibration_snack_no_calibration": "Keine Kalibrierung gespeichert. Kalibrieren Sie zuerst vom Dashboard aus.",
+  "@calibration_snack_no_calibration": {
+    "description": "SnackBar aucune calibration"
+  },
   "calibration_snack_saved_as_profile": "Aktuelle Kalibrierung als Profil für dieses Gerät gespeichert.",
+  "@calibration_snack_saved_as_profile": {
+    "description": "SnackBar calibration sauvegardée comme profil"
+  },
   "calibration_snack_save_error": "Fehler beim Speichern: {error}",
+  "@calibration_snack_save_error": {
+    "description": "SnackBar erreur sauvegarde",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_overlay_saved": "Kalibrierung gespeichert",
   "calibration_overlay_error_save": "Fehler beim Speichern der Kalibrierung: {error}",
+  "@calibration_overlay_error_save": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_instruction_image": "Ziehen zum Bewegen, Kneifen zum Zoomen des Hintergrundbilds.",
   "calibration_instruction_sky": "Passen Sie das Tag/Nacht-Ei an (Mitte, Größe, Rotation).",
   "calibration_instruction_modules": "Bewegen Sie die Module (Blasen) an die gewünschte Stelle.",
@@ -149,145 +561,1196 @@
   "calibration_tool_sky": "Himmel",
   "calibration_tool_modules": "Module",
   "calibration_action_validate_exit": "Bestätigen & Beenden",
+  "garden_management_create_title": "Einen Garten erstellen",
+  "@garden_management_create_title": {
+    "description": "Titre page création jardin"
+  },
+  "garden_management_edit_title": "Garten bearbeiten",
+  "@garden_management_edit_title": {
+    "description": "Titre page modification jardin"
+  },
+  "garden_management_name_label": "Gartenname",
+  "@garden_management_name_label": {
+    "description": "Label champ nom jardin"
+  },
+  "garden_management_desc_label": "Beschreibung",
+  "@garden_management_desc_label": {
+    "description": "Label champ description"
+  },
+  "garden_management_image_label": "Gartenbild (Optional)",
+  "@garden_management_image_label": {
+    "description": "Label section image"
+  },
+  "garden_management_image_url_label": "Bild-URL",
+  "@garden_management_image_url_label": {
+    "description": "Label champ URL image"
+  },
+  "garden_management_image_preview_error": "Bild kann nicht geladen werden",
+  "@garden_management_image_preview_error": {
+    "description": "Erreur preview image"
+  },
+  "garden_management_create_submit": "Garten erstellen",
+  "@garden_management_create_submit": {
+    "description": "Bouton soumettre création"
+  },
+  "garden_management_create_submitting": "Erstellen...",
+  "@garden_management_create_submitting": {
+    "description": "Bouton pendant soumission"
+  },
+  "garden_management_created_success": "Garten erfolgreich erstellt",
+  "@garden_management_created_success": {
+    "description": "SnackBar succès création"
+  },
+  "garden_management_create_error": "Fehler beim Erstellen des Gartens",
+  "@garden_management_create_error": {
+    "description": "SnackBar erreur création"
+  },
+  "garden_management_delete_confirm_title": "Garten löschen",
+  "@garden_management_delete_confirm_title": {
+    "description": "Titre dialog suppression"
+  },
+  "garden_management_delete_confirm_body": "Sind Sie sicher, dass Sie diesen Garten löschen möchten? Dies löscht auch alle zugehörigen Beete und Pflanzungen. Diese Aktion ist unwiderruflich.",
+  "@garden_management_delete_confirm_body": {
+    "description": "Corps dialog suppression"
+  },
+  "garden_management_delete_success": "Garten erfolgreich gelöscht",
+  "@garden_management_delete_success": {
+    "description": "SnackBar succès suppression"
+  },
+  "garden_management_archived_tag": "Archivierter Garten",
+  "@garden_management_archived_tag": {
+    "description": "Tag jardin archivé"
+  },
+  "garden_management_beds_title": "Gartenbeete",
+  "@garden_management_beds_title": {
+    "description": "Titre section parcelles"
+  },
+  "garden_management_no_beds_title": "Keine Beete",
+  "@garden_management_no_beds_title": {
+    "description": "Titre état vide parcelles"
+  },
+  "garden_management_no_beds_desc": "Erstellen Sie Beete, um Ihre Pflanzungen zu organisieren",
+  "@garden_management_no_beds_desc": {
+    "description": "Description état vide parcelles"
+  },
+  "garden_management_add_bed_label": "Beet erstellen",
+  "@garden_management_add_bed_label": {
+    "description": "Bouton ajouter parcelle"
+  },
+  "garden_management_stats_beds": "Beete",
+  "@garden_management_stats_beds": {
+    "description": "Label stat nombre parcelles"
+  },
+  "garden_management_stats_area": "Gesamtfläche",
+  "@garden_management_stats_area": {
+    "description": "Label stat surface totale"
+  },
   "dashboard_weather_stats": "Wetterdetails",
+  "@dashboard_weather_stats": {
+    "description": "Label dashboard: Statistiques météo"
+  },
   "dashboard_soil_temp": "Bodentemp.",
+  "@dashboard_soil_temp": {
+    "description": "Label dashboard: Température du sol"
+  },
   "dashboard_air_temp": "Temperatur",
+  "@dashboard_air_temp": {
+    "description": "Label dashboard: Température air"
+  },
   "dashboard_statistics": "Statistiken",
+  "@dashboard_statistics": {
+    "description": "Label dashboard: Statistiques globales"
+  },
   "dashboard_calendar": "Kalender",
+  "@dashboard_calendar": {
+    "description": "Label dashboard: Calendrier"
+  },
   "dashboard_activities": "Aktivitäten",
+  "@dashboard_activities": {
+    "description": "Label dashboard: Activités récentes"
+  },
   "dashboard_weather": "Wetter",
+  "@dashboard_weather": {
+    "description": "Label dashboard: Météo ciel"
+  },
   "dashboard_settings": "Einstellungen",
+  "@dashboard_settings": {
+    "description": "Label dashboard: Paramètres"
+  },
   "dashboard_garden_n": "Garten {number}",
+  "@dashboard_garden_n": {
+    "description": "Label dashboard: Jardin N",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "dashboard_garden_created": "Garten \"{name}\" erfolgreich erstellt",
+  "@dashboard_garden_created": {
+    "description": "SnackBar création jardin succès",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "dashboard_garden_create_error": "Fehler beim Erstellen des Gartens.",
+  "@dashboard_garden_create_error": {
+    "description": "SnackBar erreur création jardin"
+  },
   "calendar_title": "Anbaukalender",
+  "@calendar_title": {
+    "description": "Titre page calendrier"
+  },
   "calendar_refreshed": "Kalender aktualisiert",
+  "@calendar_refreshed": {
+    "description": "SnackBar actualisation calendrier"
+  },
   "calendar_new_task_tooltip": "Neue Aufgabe",
+  "@calendar_new_task_tooltip": {
+    "description": "Tooltip bouton nouvelle tâche"
+  },
   "calendar_task_saved_title": "Aufgabe gespeichert",
+  "@calendar_task_saved_title": {
+    "description": "Titre dialog tâche enregistrée"
+  },
   "calendar_ask_export_pdf": "Möchten Sie es als PDF senden?",
+  "@calendar_ask_export_pdf": {
+    "description": "Contenu dialog export PDF"
+  },
   "calendar_task_modified": "Aufgabe geändert",
+  "@calendar_task_modified": {
+    "description": "SnackBar tâche modifiée"
+  },
   "calendar_delete_confirm_title": "Aufgabe löschen?",
+  "@calendar_delete_confirm_title": {
+    "description": "Titre dialog suppression tâche"
+  },
   "calendar_delete_confirm_content": "\"{title}\" wird gelöscht.",
+  "@calendar_delete_confirm_content": {
+    "description": "Contenu dialog suppression tâche",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "calendar_task_deleted": "Aufgabe gelöscht",
+  "@calendar_task_deleted": {
+    "description": "SnackBar tâche supprimée"
+  },
   "calendar_restore_error": "Wiederherstellungsfehler: {error}",
+  "@calendar_restore_error": {
+    "description": "Erreur restauration",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_delete_error": "Löschfehler: {error}",
+  "@calendar_delete_error": {
+    "description": "Erreur suppression",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_action_assign": "Senden / Zuweisen an...",
+  "@calendar_action_assign": {
+    "description": "Action sheet assigner"
+  },
   "calendar_assign_title": "Zuweisen / Senden",
+  "@calendar_assign_title": {
+    "description": "Titre dialog assignation"
+  },
   "calendar_assign_hint": "Name oder E-Mail eingeben",
+  "@calendar_assign_hint": {
+    "description": "Hint dialog assignation"
+  },
   "calendar_assign_field": "Name oder E-Mail",
+  "@calendar_assign_field": {
+    "description": "Label champ assignation"
+  },
   "calendar_task_assigned": "Aufgabe an {name} zugewiesen",
+  "@calendar_task_assigned": {
+    "description": "SnackBar tâche attribuée",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "calendar_assign_error": "Zuweisungsfehler: {error}",
+  "@calendar_assign_error": {
+    "description": "Erreur attribution",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_export_error": "PDF-Exportfehler: {error}",
+  "@calendar_export_error": {
+    "description": "Erreur export PDF",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_previous_month": "Vorheriger Monat",
+  "@calendar_previous_month": {
+    "description": "Tooltip mois précédent"
+  },
   "calendar_next_month": "Nächster Monat",
+  "@calendar_next_month": {
+    "description": "Tooltip mois suivant"
+  },
   "calendar_limit_reached": "Limit erreicht",
+  "@calendar_limit_reached": {
+    "description": "Tooltip limite navigation"
+  },
   "calendar_drag_instruction": "Wischen zum Navigieren",
+  "@calendar_drag_instruction": {
+    "description": "Instruction navigation calendrier"
+  },
   "common_refresh": "Aktualisieren",
+  "@common_refresh": {
+    "description": "Tooltip actualiser"
+  },
   "common_yes": "Ja",
+  "@common_yes": {
+    "description": "Bouton Oui"
+  },
   "common_no": "Nein",
+  "@common_no": {
+    "description": "Bouton Non"
+  },
   "common_delete": "Löschen",
+  "@common_delete": {
+    "description": "Bouton Supprimer"
+  },
   "common_edit": "Bearbeiten",
+  "@common_edit": {
+    "description": "Bouton Modifier"
+  },
   "common_undo": "Rückgängig",
+  "@common_undo": {
+    "description": "Action Annuler (Undo)"
+  },
   "common_error_prefix": "Fehler: {error}",
+  "@common_error_prefix": {
+    "description": "Préfixe erreur",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "common_retry": "Wiederholen",
+  "@common_retry": {
+    "description": "Bouton réessayer"
+  },
+  "calendar_no_events": "Keine Ereignisse heute",
+  "@calendar_no_events": {
+    "description": "Message aucun événement"
+  },
+  "calendar_events_of": "Ereignisse am {date}",
+  "@calendar_events_of": {
+    "description": "Titre événements du jour",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "calendar_section_plantings": "Pflanzungen",
+  "@calendar_section_plantings": {
+    "description": "Titre section plantations"
+  },
+  "calendar_section_harvests": "Erwartete Ernten",
+  "@calendar_section_harvests": {
+    "description": "Titre section récoltes"
+  },
+  "calendar_section_tasks": "Geplante Aufgaben",
+  "@calendar_section_tasks": {
+    "description": "Titre section tâches"
+  },
+  "calendar_filter_tasks": "Aufgaben",
+  "@calendar_filter_tasks": {
+    "description": "Filtre tâches"
+  },
+  "calendar_filter_maintenance": "Wartung",
+  "@calendar_filter_maintenance": {
+    "description": "Filtre entretien"
+  },
+  "calendar_filter_harvests": "Ernten",
+  "@calendar_filter_harvests": {
+    "description": "Filtre récoltes"
+  },
+  "calendar_filter_urgent": "Dringend",
+  "@calendar_filter_urgent": {
+    "description": "Filtre urgences"
+  },
   "common_general_error": "Ein Fehler ist aufgetreten",
+  "@common_general_error": {
+    "description": "Message erreur générique"
+  },
   "common_error": "Fehler",
+  "@common_error": {
+    "description": "Titre erreur générique"
+  },
+  "settings_backup_restore_section": "Sauvegarde et Restauration",
+  "@settings_backup_restore_section": {
+    "description": "Titre section sauvegarde/restauration"
+  },
+  "settings_backup_restore_subtitle": "Sauvegarde intégrale de vos données",
+  "@settings_backup_restore_subtitle": {
+    "description": "Sous-titre section sauvegarde/restauration"
+  },
+  "settings_backup_action": "Créer une sauvegarde",
+  "@settings_backup_action": {
+    "description": "Bouton créer sauvegarde"
+  },
+  "settings_restore_action": "Restaurer une sauvegarde",
+  "@settings_restore_action": {
+    "description": "Bouton restaurer sauvegarde"
+  },
+  "settings_backup_creating": "Création de la sauvegarde en cours...",
+  "@settings_backup_creating": {
+    "description": "Loading sauvegarde"
+  },
+  "settings_backup_success": "Sauvegarde créée avec succès !",
+  "@settings_backup_success": {
+    "description": "Succès sauvegarde"
+  },
+  "settings_restore_warning_title": "Attention",
+  "@settings_restore_warning_title": {
+    "description": "Titre warning restauration"
+  },
+  "settings_restore_warning_content": "La restauration d'une sauvegarde écrasera TOUTES les données actuelles (jardins, plantations, réglages). Cette action est irréversible. L'application devra redémarrer.\n\nÊtes-vous sûr de vouloir continuer ?",
+  "@settings_restore_warning_content": {
+    "description": "Contenu warning restauration"
+  },
+  "settings_restore_success": "Restauration réussie ! Veuillez redémarrer l'application.",
+  "@settings_restore_success": {
+    "description": "Succès restauration"
+  },
+  "settings_backup_error": "Échec de la sauvegarde : {error}",
+  "@settings_backup_error": {
+    "description": "Erreur sauvegarde",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "settings_restore_error": "Échec de la restauration : {error}",
+  "@settings_restore_error": {
+    "description": "Erreur restauration",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "task_editor_title_new": "Neue Aufgabe",
+  "@task_editor_title_new": {
+    "description": "Titre dialogue nouvelle tâche"
+  },
   "task_editor_title_edit": "Aufgabe bearbeiten",
+  "@task_editor_title_edit": {
+    "description": "Titre dialogue modifier tâche"
+  },
   "task_editor_title_field": "Titel *",
+  "activity_screen_title": "Aktivitäten & Verlauf",
+  "@activity_screen_title": {
+    "description": "Titre de l'écran des activités"
+  },
+  "activity_tab_recent_garden": "Kürzlich ({gardenName})",
+  "@activity_tab_recent_garden": {
+    "description": "Titre onglet récentes pour un jardin",
+    "placeholders": {
+      "gardenName": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_tab_recent_global": "Kürzlich (Global)",
+  "@activity_tab_recent_global": {
+    "description": "Titre onglet récentes global"
+  },
+  "activity_tab_history": "Verlauf",
+  "@activity_tab_history": {
+    "description": "Titre onglet historique"
+  },
+  "activity_history_section_title": "Verlauf — ",
+  "@activity_history_section_title": {
+    "description": "Titre section historique"
+  },
+  "activity_history_empty": "Kein Garten ausgewählt.\nUm den Verlauf eines Gartens zu sehen, drücken Sie lange darauf im Dashboard.",
+  "@activity_history_empty": {
+    "description": "Message vide historique"
+  },
+  "activity_empty_title": "Keine Aktivitäten gefunden",
+  "@activity_empty_title": {
+    "description": "Titre vide activités"
+  },
+  "activity_empty_subtitle": "Gartenaktivitäten werden hier erscheinen",
+  "@activity_empty_subtitle": {
+    "description": "Sous-titre vide activités"
+  },
+  "activity_error_loading": "Fehler beim Laden der Aktivitäten",
+  "@activity_error_loading": {
+    "description": "Erreur chargement"
+  },
+  "activity_priority_important": "Wichtig",
+  "@activity_priority_important": {
+    "description": "Priorité importante"
+  },
+  "activity_priority_normal": "Normal",
+  "@activity_priority_normal": {
+    "description": "Priorité normale"
+  },
+  "activity_time_just_now": "Gerade eben",
+  "@activity_time_just_now": {
+    "description": "Temps: à l'instant"
+  },
+  "activity_time_minutes_ago": "vor {minutes} Min",
+  "@activity_time_minutes_ago": {
+    "description": "Temps: minutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "activity_time_hours_ago": "vor {hours} Std",
+  "@activity_time_hours_ago": {
+    "description": "Temps: heures",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "activity_time_days_ago": "vor {count} Tagen",
+  "@activity_time_days_ago": {
+    "description": "Temps: jours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activity_metadata_garden": "Garten: {name}",
+  "@activity_metadata_garden": {
+    "description": "Metadata jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_bed": "Beet: {name}",
+  "@activity_metadata_bed": {
+    "description": "Metadata parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_plant": "Pflanze: {name}",
+  "@activity_metadata_plant": {
+    "description": "Metadata plante",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_quantity": "Menge: {quantity}",
+  "@activity_metadata_quantity": {
+    "description": "Metadata quantité",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_date": "Datum: {date}",
+  "@activity_metadata_date": {
+    "description": "Metadata date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_maintenance": "Wartung: {type}",
+  "@activity_metadata_maintenance": {
+    "description": "Metadata maintenance",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_weather": "Wetter: {weather}",
+  "@activity_metadata_weather": {
+    "description": "Metadata météo",
+    "placeholders": {
+      "weather": {
+        "type": "String"
+      }
+    }
+  },
+  "@task_editor_title_field": {
+    "description": "Label champ titre"
+  },
   "task_editor_error_title_required": "Erforderlich",
+  "history_hint_title": "Um den Verlauf eines Gartens zu sehen",
+  "@history_hint_title": {
+    "description": "Titre carte hint historique"
+  },
+  "history_hint_body": "Wählen Sie ihn durch langes Drücken im Dashboard aus.",
+  "@history_hint_body": {
+    "description": "Corps carte hint historique"
+  },
+  "history_hint_action": "Zum Dashboard",
+  "@history_hint_action": {
+    "description": "Action carte hint historique"
+  },
+  "activity_desc_garden_created": "Garten \"{name}\" erstellt",
+  "@activity_desc_garden_created": {
+    "description": "Desc act création jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_bed_created": "Beet \"{name}\" erstellt",
+  "@activity_desc_bed_created": {
+    "description": "Desc act création parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_planting_created": "Pflanzung von \"{name}\" hinzugefügt",
+  "@activity_desc_planting_created": {
+    "description": "Desc act création plantation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_germination": "Keimung von \"{name}\" bestätigt",
+  "@activity_desc_germination": {
+    "description": "Desc act germination",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_harvest": "Ernte von \"{name}\" aufgezeichnet",
+  "@activity_desc_harvest": {
+    "description": "Desc act récolte",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_maintenance": "Wartung: {type}",
+  "@activity_desc_maintenance": {
+    "description": "Desc act maintenance",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_garden_deleted": "Garten \"{name}\" gelöscht",
+  "@activity_desc_garden_deleted": {
+    "description": "Desc act suppression jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_bed_deleted": "Beet \"{name}\" gelöscht",
+  "@activity_desc_bed_deleted": {
+    "description": "Desc act suppression parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_planting_deleted": "Pflanzung von \"{name}\" gelöscht",
+  "@activity_desc_planting_deleted": {
+    "description": "Desc act suppression plantation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_garden_updated": "Garten \"{name}\" aktualisiert",
+  "@activity_desc_garden_updated": {
+    "description": "Desc act màj jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_bed_updated": "Beet \"{name}\" aktualisiert",
+  "@activity_desc_bed_updated": {
+    "description": "Desc act màj parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_planting_updated": "Pflanzung von \"{name}\" aktualisiert",
+  "@activity_desc_planting_updated": {
+    "description": "Desc act màj plantation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_steps_title": "Schritt-für-Schritt",
+  "@planting_steps_title": {
+    "description": "Titre widget Pas-à-pas"
+  },
+  "planting_steps_add_button": "Hinzufügen",
+  "@planting_steps_add_button": {
+    "description": "Label bouton ajouter étape"
+  },
+  "planting_steps_see_less": "Weniger anzeigen",
+  "@planting_steps_see_less": {
+    "description": "Bouton replier"
+  },
+  "planting_steps_see_all": "Alle anzeigen",
+  "@planting_steps_see_all": {
+    "description": "Bouton voir tout"
+  },
+  "planting_steps_empty": "Keine empfohlenen Schritte",
+  "@planting_steps_empty": {
+    "description": "Message vide étapes"
+  },
+  "planting_steps_more": "+ {count} weitere Schritte",
+  "@planting_steps_more": {
+    "description": "Label x autres étapes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planting_steps_prediction_badge": "Vorhersage",
+  "@planting_steps_prediction_badge": {
+    "description": "Badge prédiction"
+  },
+  "planting_steps_date_prefix": "Am {date}",
+  "@planting_steps_date_prefix": {
+    "description": "Préfixe date étape",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_steps_done": "Erledigt",
+  "@planting_steps_done": {
+    "description": "Label fait"
+  },
+  "planting_steps_mark_done": "Als erledigt markieren",
+  "@planting_steps_mark_done": {
+    "description": "Bouton marquer fait"
+  },
+  "planting_steps_dialog_title": "Schritt hinzufügen",
+  "@planting_steps_dialog_title": {
+    "description": "Titre dialog ajout étape"
+  },
+  "planting_steps_dialog_hint": "Bsp: Leichtes Mulchen",
+  "@planting_steps_dialog_hint": {
+    "description": "Hint dialog ajout étape"
+  },
+  "planting_steps_dialog_add": "Hinzufügen",
+  "@planting_steps_dialog_add": {
+    "description": "Bouton valider ajout"
+  },
+  "planting_status_sown": "Gesät",
+  "planting_status_planted": "Gepflanzt",
+  "planting_status_growing": "Wachsend",
+  "planting_status_ready": "Erntebereit",
+  "planting_status_harvested": "Geerntet",
+  "planting_status_failed": "Fehlgeschlagen",
+  "planting_card_sown_date": "Gesät am {date}",
+  "@planting_card_sown_date": {
+    "description": "Label sémé le",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_card_planted_date": "Gepflanzt am {date}",
+  "@planting_card_planted_date": {
+    "description": "Label planté le",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_card_harvest_estimate": "Gesch. Ernte: {date}",
+  "@planting_card_harvest_estimate": {
+    "description": "Label récolte estimée",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_info_title": "Botanische Info",
+  "planting_info_tips_title": "Anbautipps",
+  "planting_info_maturity": "Reife",
+  "planting_info_days": "{days} Tage",
+  "planting_info_spacing": "Abstand",
+  "planting_info_cm": "{cm} cm",
+  "planting_info_depth": "Tiefe",
+  "planting_info_exposure": "Standort",
+  "planting_info_water": "Wasser",
+  "planting_info_season": "Pflanzsaison",
+  "planting_info_scientific_name_none": "Wissenschaftlicher Name nicht verfügbar",
+  "planting_info_culture_title": "Kulturinformationen",
+  "planting_info_germination": "Keimdauer",
+  "planting_info_harvest_time": "Erntezeit",
+  "planting_info_none": "Nicht angegeben",
+  "planting_tips_none": "Keine Tipps verfügbar",
+  "planting_history_title": "Aktionsverlauf",
+  "planting_history_action_planting": "Pflanzung",
+  "planting_history_todo": "Detaillierter Verlauf kommt bald",
+  "@task_editor_error_title_required": {
+    "description": "Erreur validation titre"
+  },
   "task_editor_garden_all": "Alle Gärten",
+  "@task_editor_garden_all": {
+    "description": "Option tous les jardins"
+  },
   "task_editor_zone_label": "Zone (Beet)",
+  "@task_editor_zone_label": {
+    "description": "Label champ zone"
+  },
   "task_editor_zone_none": "Keine spezifische Zone",
+  "@task_editor_zone_none": {
+    "description": "Option aucune zone"
+  },
   "task_editor_zone_empty": "Keine Beete für diesen Garten",
+  "@task_editor_zone_empty": {
+    "description": "Message aucune parcelle"
+  },
   "task_editor_description_label": "Beschreibung",
+  "@task_editor_description_label": {
+    "description": "Label champ description"
+  },
   "task_editor_date_label": "Startdatum",
+  "@task_editor_date_label": {
+    "description": "Label champ date"
+  },
   "task_editor_time_label": "Zeit",
+  "@task_editor_time_label": {
+    "description": "Label champ heure"
+  },
   "task_editor_duration_label": "Geschätzte Dauer",
+  "@task_editor_duration_label": {
+    "description": "Label champ durée"
+  },
   "task_editor_duration_other": "Andere",
+  "@task_editor_duration_other": {
+    "description": "Option durée autre"
+  },
   "task_editor_type_label": "Aufgabentyp",
+  "@task_editor_type_label": {
+    "description": "Label champ type"
+  },
   "task_editor_priority_label": "Priorität",
+  "@task_editor_priority_label": {
+    "description": "Label champ priorité"
+  },
   "task_editor_urgent_label": "Dringend",
+  "@task_editor_urgent_label": {
+    "description": "Label switch urgent"
+  },
   "task_editor_option_none": "Keine (Nur speichern)",
+  "@task_editor_option_none": {
+    "description": "Option export aucune"
+  },
   "task_editor_option_share": "Teilen (Text)",
+  "@task_editor_option_share": {
+    "description": "Option export partage"
+  },
   "task_editor_option_pdf": "Exportieren — PDF",
+  "@task_editor_option_pdf": {
+    "description": "Option export PDF"
+  },
   "task_editor_option_docx": "Exportieren — Word (.docx)",
+  "@task_editor_option_docx": {
+    "description": "Option export Word"
+  },
   "task_editor_export_label": "Ausgabe / Teilen",
+  "@task_editor_export_label": {
+    "description": "Label champ export"
+  },
   "task_editor_photo_placeholder": "Foto hinzufügen (Bald)",
+  "@task_editor_photo_placeholder": {
+    "description": "Bouton photo placeholder"
+  },
   "task_editor_action_create": "Erstellen",
+  "@task_editor_action_create": {
+    "description": "Bouton créer"
+  },
   "task_editor_action_save": "Speichern",
+  "@task_editor_action_save": {
+    "description": "Bouton enregistrer"
+  },
   "task_editor_action_cancel": "Abbrechen",
+  "@task_editor_action_cancel": {
+    "description": "Bouton annuler"
+  },
   "task_editor_assignee_label": "Zugewiesen an",
+  "@task_editor_assignee_label": {
+    "description": "Label champ assigné à"
+  },
   "task_editor_assignee_add": "\"{name}\" zu Favoriten hinzufügen",
+  "@task_editor_assignee_add": {
+    "description": "Action ajouter assigné",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "task_editor_assignee_none": "Keine Ergebnisse.",
+  "@task_editor_assignee_none": {
+    "description": "Message aucun résultat assigné"
+  },
   "task_editor_recurrence_label": "Wiederholung",
+  "@task_editor_recurrence_label": {
+    "description": "Label champ récurrence"
+  },
   "task_editor_recurrence_none": "Keine",
+  "@task_editor_recurrence_none": {
+    "description": "Option récurrence aucune"
+  },
   "task_editor_recurrence_interval": "Alle X Tage",
+  "@task_editor_recurrence_interval": {
+    "description": "Option récurrence intervalle"
+  },
   "task_editor_recurrence_weekly": "Wöchentlich (Tage)",
+  "@task_editor_recurrence_weekly": {
+    "description": "Option récurrence hebdo"
+  },
   "task_editor_recurrence_monthly": "Monatlich (gleicher Tag)",
+  "@task_editor_recurrence_monthly": {
+    "description": "Option récurrence mensuelle"
+  },
   "task_editor_recurrence_repeat_label": "Wiederholen alle ",
+  "@task_editor_recurrence_repeat_label": {
+    "description": "Label répéter tous les"
+  },
   "task_editor_recurrence_days_suffix": " T",
+  "@task_editor_recurrence_days_suffix": {
+    "description": "Suffixe jours"
+  },
   "task_kind_generic": "Allgemein",
+  "@task_kind_generic": {
+    "description": "Type tâche générique"
+  },
   "task_kind_repair": "Reparatur 🛠️",
+  "@task_kind_repair": {
+    "description": "Type tâche réparation"
+  },
   "soil_temp_title": "Bodentemperatur",
+  "@soil_temp_title": {
+    "description": "Titre écran température sol"
+  },
   "soil_temp_chart_error": "Diagrammfehler: {error}",
+  "@soil_temp_chart_error": {
+    "description": "Erreur affichage graphique",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "soil_temp_about_title": "Über Bodentemperatur",
+  "@soil_temp_about_title": {
+    "description": "Titre section à propos"
+  },
   "soil_temp_about_content": "Die hier angezeigte Bodentemperatur wird von der App anhand von Klima- und Saisondaten nach folgender Formel geschätzt:\n\nDiese Schätzung liefert einen realistischen Trend der Bodentemperatur, wenn keine direkten Messungen verfügbar sind.",
+  "@soil_temp_about_content": {
+    "description": "Contenu section à propos"
+  },
   "soil_temp_formula_label": "Verwendete Berechnungsformel:",
+  "@soil_temp_formula_label": {
+    "description": "Label formule"
+  },
   "soil_temp_formula_content": "T_Boden(n+1) = T_Boden(n) + α × (T_Luft(n) − T_Boden(n))\n\nWobei:\n• α: thermischer Diffusionskoeffizient (Standardwert 0,15 — empfohlener Bereich 0,10–0,20).\n• T_Boden(n): aktuelle Bodentemperatur (°C).\n• T_Luft(n): aktuelle Lufttemperatur (°C).\n\nDie Formel ist im App-Code implementiert (ComputeSoilTempNextDayUsecase).",
+  "@soil_temp_formula_content": {
+    "description": "Contenu formule"
+  },
   "soil_temp_current_label": "Aktuelle Temperatur",
+  "@soil_temp_current_label": {
+    "description": "Label température actuelle"
+  },
   "soil_temp_action_measure": "Bearbeiten / Messen",
+  "@soil_temp_action_measure": {
+    "description": "Bouton modifier/mesurer"
+  },
   "soil_temp_measure_hint": "Sie können die Bodentemperatur im Tab 'Bearbeiten / Messen' manuell eingeben.",
+  "@soil_temp_measure_hint": {
+    "description": "Hint mesure manuelle"
+  },
   "soil_temp_catalog_error": "Katalogfehler: {error}",
+  "@soil_temp_catalog_error": {
+    "description": "Erreur catalogue",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "soil_temp_advice_error": "Beratungsfehler: {error}",
+  "@soil_temp_advice_error": {
+    "description": "Erreur chargement conseils",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "soil_temp_db_empty": "Pflanzendatenbank ist leer.",
+  "@soil_temp_db_empty": {
+    "description": "Message DB vide"
+  },
   "soil_temp_reload_plants": "Pflanzen neu laden",
+  "@soil_temp_reload_plants": {
+    "description": "Bouton recharger plantes"
+  },
   "soil_temp_no_advice": "Keine Pflanzen mit Keimdaten gefunden.",
+  "@soil_temp_no_advice": {
+    "description": "Message aucun conseil"
+  },
   "soil_advice_status_ideal": "Optimal",
+  "@soil_advice_status_ideal": {
+    "description": "Statut conseil optimal"
+  },
   "soil_advice_status_sow_now": "Jetzt säen",
+  "@soil_advice_status_sow_now": {
+    "description": "Statut conseil semer"
+  },
   "soil_advice_status_sow_soon": "Bald",
+  "@soil_advice_status_sow_soon": {
+    "description": "Statut conseil bientôt"
+  },
   "soil_advice_status_wait": "Warten",
+  "@soil_advice_status_wait": {
+    "description": "Statut conseil attendre"
+  },
   "soil_sheet_title": "Bodentemperatur",
+  "@soil_sheet_title": {
+    "description": "Titre sheet temp sol"
+  },
   "soil_sheet_last_measure": "Letzte Messung: {temp}°C ({date})",
+  "@soil_sheet_last_measure": {
+    "description": "Info dernière mesure",
+    "placeholders": {
+      "temp": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "soil_sheet_new_measure": "Neue Messung (Anker)",
+  "@soil_sheet_new_measure": {
+    "description": "Titre section nouvelle mesure"
+  },
   "soil_sheet_input_label": "Temperatur (°C)",
+  "@soil_sheet_input_label": {
+    "description": "Label champ input temp"
+  },
   "soil_sheet_input_error": "Ungültiger Wert (-10.0 bis 45.0)",
+  "@soil_sheet_input_error": {
+    "description": "Erreur validation input"
+  },
   "soil_sheet_input_hint": "0.0",
+  "@soil_sheet_input_hint": {
+    "description": "Hint input"
+  },
   "soil_sheet_action_cancel": "Abbrechen",
+  "@soil_sheet_action_cancel": {
+    "description": "Bouton annuler"
+  },
   "soil_sheet_action_save": "Speichern",
+  "@soil_sheet_action_save": {
+    "description": "Bouton sauvegarder"
+  },
   "soil_sheet_snack_invalid": "Ungültiger Wert. Geben Sie -10.0 bis 45.0 ein",
+  "@soil_sheet_snack_invalid": {
+    "description": "Snack valeur invalide"
+  },
   "soil_sheet_snack_success": "Messung als Anker gespeichert",
+  "@soil_sheet_snack_success": {
+    "description": "Snack succès sauvegarde"
+  },
   "soil_sheet_snack_error": "Fehler beim Speichern: {error}",
+  "@soil_sheet_snack_error": {
+    "description": "Snack erreur sauvegarde",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "weather_screen_title": "Wetter",
+  "@weather_screen_title": {
+    "description": "Titre écran météo"
+  },
   "weather_provider_credit": "Daten bereitgestellt von Open-Meteo",
+  "@weather_provider_credit": {
+    "description": "Crédit fournisseur données"
+  },
   "weather_error_loading": "Wetter konnte nicht geladen werden",
+  "@weather_error_loading": {
+    "description": "Erreur chargement météo"
+  },
   "weather_action_retry": "Wiederholen",
+  "@weather_action_retry": {
+    "description": "Bouton réessayer"
+  },
   "weather_header_next_24h": "NÄCHSTE 24H",
+  "@weather_header_next_24h": {
+    "description": "Header prochaines 24h"
+  },
   "weather_header_daily_summary": "TÄGLICHE ZUSAMMENFASSUNG",
+  "@weather_header_daily_summary": {
+    "description": "Header résumé jour"
+  },
   "weather_header_precipitations": "NIEDERSCHLAG (24h)",
+  "@weather_header_precipitations": {
+    "description": "Header précipitations"
+  },
   "weather_label_wind": "WIND",
+  "@weather_label_wind": {
+    "description": "Label vent"
+  },
   "weather_label_pressure": "DRUCK",
+  "@weather_label_pressure": {
+    "description": "Label pression"
+  },
   "weather_label_sun": "SONNE",
+  "@weather_label_sun": {
+    "description": "Label soleil"
+  },
   "weather_label_astro": "ASTRO",
+  "@weather_label_astro": {
+    "description": "Label astres"
+  },
   "weather_data_speed": "Geschw.",
+  "@weather_data_speed": {
+    "description": "Label vitesse vent"
+  },
   "weather_data_gusts": "Böen",
+  "@weather_data_gusts": {
+    "description": "Label rafales"
+  },
   "weather_data_sunrise": "Sonnenaufgang",
+  "@weather_data_sunrise": {
+    "description": "Label lever soleil"
+  },
   "weather_data_sunset": "Sonnenuntergang",
+  "@weather_data_sunset": {
+    "description": "Label coucher soleil"
+  },
   "weather_data_rain": "Regen",
+  "@weather_data_rain": {
+    "description": "Label pluie"
+  },
   "weather_data_max": "Max",
+  "@weather_data_max": {
+    "description": "Label temp max"
+  },
   "weather_data_min": "Min",
+  "@weather_data_min": {
+    "description": "Label temp min"
+  },
   "weather_data_wind_max": "Max Wind",
+  "@weather_data_wind_max": {
+    "description": "Label vent max"
+  },
   "weather_pressure_high": "Hoch",
+  "@weather_pressure_high": {
+    "description": "Pression haute"
+  },
   "weather_pressure_low": "Tief",
+  "@weather_pressure_low": {
+    "description": "Pression basse"
+  },
   "weather_today_label": "Heute",
+  "@weather_today_label": {
+    "description": "Label aujourd'hui"
+  },
   "moon_phase_new": "Neumond",
+  "@moon_phase_new": {
+    "description": "Phase nouvelle lune"
+  },
   "moon_phase_waxing_crescent": "Zunehmender Sichelmond",
+  "@moon_phase_waxing_crescent": {
+    "description": "Phase premier croissant"
+  },
   "moon_phase_first_quarter": "Erstes Viertel",
+  "@moon_phase_first_quarter": {
+    "description": "Phase premier quartier"
+  },
   "moon_phase_waxing_gibbous": "Zunehmender Mond",
+  "@moon_phase_waxing_gibbous": {
+    "description": "Phase gibbeuse croissante"
+  },
   "moon_phase_full": "Vollmond",
+  "@moon_phase_full": {
+    "description": "Phase pleine lune"
+  },
   "moon_phase_waning_gibbous": "Abnehmender Mond",
+  "@moon_phase_waning_gibbous": {
+    "description": "Phase gibbeuse décroissante"
+  },
   "moon_phase_last_quarter": "Letztes Viertel",
+  "@moon_phase_last_quarter": {
+    "description": "Phase dernier quartier"
+  },
   "moon_phase_waning_crescent": "Abnehmender Sichelmond",
+  "@moon_phase_waning_crescent": {
+    "description": "Phase dernier croissant"
+  },
   "wmo_code_0": "Klarer Himmel",
   "wmo_code_1": "Überwiegend klar",
   "wmo_code_2": "Teilweise bewölkt",
@@ -316,45 +1779,45 @@
   "wmo_code_99": "Gewitter mit starkem Hagel",
   "wmo_code_unknown": "Unbekannte Bedingungen",
   "task_kind_buy": "Kaufen 🛒",
+  "@task_kind_buy": {
+    "description": "Type tâche achat"
+  },
   "task_kind_clean": "Reinigen 🧹",
+  "@task_kind_clean": {
+    "description": "Type tâche nettoyage"
+  },
   "task_kind_watering": "Gießen 💧",
+  "@task_kind_watering": {
+    "description": "Type tâche arrosage"
+  },
   "task_kind_seeding": "Aussäen 🌱",
+  "@task_kind_seeding": {
+    "description": "Type tâche semis"
+  },
   "task_kind_pruning": "Beschneiden ✂️",
+  "@task_kind_pruning": {
+    "description": "Type tâche taille"
+  },
   "task_kind_weeding": "Jäten 🌿",
+  "@task_kind_weeding": {
+    "description": "Type tâche désherbage"
+  },
   "task_kind_amendment": "Bodenverbesserung 🪵",
+  "@task_kind_amendment": {
+    "description": "Type tâche amendement"
+  },
   "task_kind_treatment": "Behandlung 🧪",
+  "@task_kind_treatment": {
+    "description": "Type tâche traitement"
+  },
   "task_kind_harvest": "Ernten 🧺",
+  "@task_kind_harvest": {
+    "description": "Type tâche récolte"
+  },
   "task_kind_winter_protection": "Winterschutz ❄️",
-  "calendar_no_events": "Keine Ereignisse heute",
-  "calendar_events_of": "Ereignisse am {date}",
-  "calendar_section_plantings": "Pflanzungen",
-  "calendar_section_harvests": "Erwartete Ernten",
-  "calendar_section_tasks": "Geplante Aufgaben",
-  "calendar_filter_tasks": "Aufgaben",
-  "calendar_filter_maintenance": "Wartung",
-  "calendar_filter_harvests": "Ernten",
-  "calendar_filter_urgent": "Dringend",
-  "garden_management_create_title": "Einen Garten erstellen",
-  "garden_management_edit_title": "Garten bearbeiten",
-  "garden_management_name_label": "Gartenname",
-  "garden_management_desc_label": "Beschreibung",
-  "garden_management_image_label": "Gartenbild (Optional)",
-  "garden_management_image_url_label": "Bild-URL",
-  "garden_management_image_preview_error": "Bild kann nicht geladen werden",
-  "garden_management_create_submit": "Garten erstellen",
-  "garden_management_create_submitting": "Erstellen...",
-  "garden_management_created_success": "Garten erfolgreich erstellt",
-  "garden_management_create_error": "Fehler beim Erstellen des Gartens",
-  "garden_management_delete_confirm_title": "Garten löschen",
-  "garden_management_delete_confirm_body": "Sind Sie sicher, dass Sie diesen Garten löschen möchten? Dies löscht auch alle zugehörigen Beete und Pflanzungen. Diese Aktion ist unwiderruflich.",
-  "garden_management_delete_success": "Garten erfolgreich gelöscht",
-  "garden_management_archived_tag": "Archivierter Garten",
-  "garden_management_beds_title": "Gartenbeete",
-  "garden_management_no_beds_title": "Keine Beete",
-  "garden_management_no_beds_desc": "Erstellen Sie Beete, um Ihre Pflanzungen zu organisieren",
-  "garden_management_add_bed_label": "Beet erstellen",
-  "garden_management_stats_beds": "Beete",
-  "garden_management_stats_area": "Gesamtfläche",
+  "@task_kind_winter_protection": {
+    "description": "Type tâche hivernage"
+  },
   "garden_detail_title_error": "Fehler",
   "garden_detail_subtitle_not_found": "Der angeforderte Garten existiert nicht oder wurde gelöscht.",
   "garden_detail_subtitle_error_beds": "Beete konnten nicht geladen werden: {error}",
@@ -367,7 +1830,6 @@
   "garden_bed_delete_confirm_body": "Sind Sie sicher, dass Sie \"{bedName}\" löschen möchten? Diese Aktion ist unwiderruflich.",
   "garden_bed_deleted_snack": "Beet gelöscht",
   "garden_bed_delete_error": "Fehler beim Löschen des Beets: {error}",
-  "common_save": "Speichern",
   "common_back": "Zurück",
   "garden_action_disable": "Deaktivieren",
   "garden_action_enable": "Aktivieren",
@@ -398,6 +1860,22 @@
   "bed_card_sown_on": "Gesät am {date}",
   "bed_card_harvest_start": "ca. Erntebeginn",
   "bed_action_harvest": "Ernten",
+  "lifecycle_error_title": "Fehler bei der Zyklusberechnung",
+  "lifecycle_error_prefix": "Fehler: ",
+  "lifecycle_cycle_completed": "Zyklus abgeschlossen",
+  "lifecycle_stage_germination": "Keimung",
+  "lifecycle_stage_growth": "Wachstum",
+  "lifecycle_stage_fruiting": "Fruchtbildung",
+  "lifecycle_stage_harvest": "Ernte",
+  "lifecycle_stage_unknown": "Unbekannt",
+  "lifecycle_harvest_expected": "Erwartete Ernte",
+  "lifecycle_in_days": "In {days} Tagen",
+  "lifecycle_passed": "Vergangen",
+  "lifecycle_now": "Jetzt!",
+  "lifecycle_next_action": "Nächste Aktion",
+  "lifecycle_update": "Zyklus aktualisieren",
+  "lifecycle_days_ago": "vor {days} Tagen",
+  "planting_detail_title": "Pflanzdetails",
   "companion_beneficial": "Nützliche Pflanzen",
   "companion_avoid": "Zu vermeidende Pflanzen",
   "common_close": "Schließen",
@@ -413,6 +1891,14 @@
   "harvest_title": "Ernte: {plantName}",
   "harvest_weight_label": "Erntegewicht (kg) *",
   "harvest_price_label": "Geschätzter Preis ({currencyUnit})",
+  "@harvest_price_label": {
+    "description": "Libellé pour le champ prix estimé",
+    "placeholders": {
+      "currencyUnit": {
+        "type": "String"
+      }
+    }
+  },
   "harvest_price_helper": "Wird für zukünftige Ernten dieser Pflanze gespeichert",
   "harvest_notes_label": "Notizen / Qualität",
   "harvest_action_save": "Speichern",
@@ -421,47 +1907,6 @@
   "harvest_form_error_required": "Erforderlich",
   "harvest_form_error_positive": "Ungültig (> 0)",
   "harvest_form_error_positive_or_zero": "Ungültig (>= 0)",
-  "planting_steps_title": "Schritt-für-Schritt",
-  "planting_steps_add_button": "Hinzufügen",
-  "planting_steps_see_less": "Weniger anzeigen",
-  "planting_steps_see_all": "Alle anzeigen",
-  "planting_steps_empty": "Keine empfohlenen Schritte",
-  "planting_steps_more": "+ {count} weitere Schritte",
-  "planting_steps_prediction_badge": "Vorhersage",
-  "planting_steps_date_prefix": "Am {date}",
-  "planting_steps_done": "Erledigt",
-  "planting_steps_mark_done": "Als erledigt markieren",
-  "planting_steps_dialog_title": "Schritt hinzufügen",
-  "planting_steps_dialog_hint": "Bsp: Leichtes Mulchen",
-  "planting_steps_dialog_add": "Hinzufügen",
-  "planting_status_sown": "Gesät",
-  "planting_status_planted": "Gepflanzt",
-  "planting_status_growing": "Wachsend",
-  "planting_status_ready": "Erntebereit",
-  "planting_status_harvested": "Geerntet",
-  "planting_status_failed": "Fehlgeschlagen",
-  "planting_card_sown_date": "Gesät am {date}",
-  "planting_card_planted_date": "Gepflanzt am {date}",
-  "planting_card_harvest_estimate": "Gesch. Ernte: {date}",
-  "planting_info_title": "Botanische Info",
-  "planting_info_tips_title": "Anbautipps",
-  "planting_info_maturity": "Reife",
-  "planting_info_days": "{days} Tage",
-  "planting_info_spacing": "Abstand",
-  "planting_info_cm": "{cm} cm",
-  "planting_info_depth": "Tiefe",
-  "planting_info_exposure": "Standort",
-  "planting_info_water": "Wasser",
-  "planting_info_season": "Pflanzsaison",
-  "planting_info_scientific_name_none": "Wissenschaftlicher Name nicht verfügbar",
-  "planting_info_culture_title": "Kulturinformationen",
-  "planting_info_germination": "Keimdauer",
-  "planting_info_harvest_time": "Erntezeit",
-  "planting_info_none": "Nicht angegeben",
-  "planting_tips_none": "Keine Tipps verfügbar",
-  "planting_history_title": "Aktionsverlauf",
-  "planting_history_action_planting": "Pflanzung",
-  "planting_history_todo": "Detaillierter Verlauf kommt bald",
   "info_exposure_full_sun": "Volle Sonne",
   "info_exposure_partial_sun": "Teilweise Sonne",
   "info_exposure_shade": "Schatten",
@@ -498,100 +1943,236 @@
   "planting_date_future_error": "Pflanzdatum kann nicht in der Zukunft liegen",
   "planting_success_create": "Pflanzung erfolgreich erstellt",
   "planting_success_update": "Pflanzung erfolgreich aktualisiert",
-  "activity_screen_title": "Aktivitäten & Verlauf",
-  "activity_tab_recent_garden": "Kürzlich ({gardenName})",
-  "activity_tab_recent_global": "Kürzlich (Global)",
-  "activity_tab_history": "Verlauf",
-  "activity_history_section_title": "Verlauf — ",
-  "activity_history_empty": "Kein Garten ausgewählt.\nUm den Verlauf eines Gartens zu sehen, drücken Sie lange darauf im Dashboard.",
-  "activity_empty_title": "Keine Aktivitäten gefunden",
-  "activity_empty_subtitle": "Gartenaktivitäten werden hier erscheinen",
-  "activity_error_loading": "Fehler beim Laden der Aktivitäten",
-  "activity_priority_important": "Wichtig",
-  "activity_priority_normal": "Normal",
-  "activity_time_just_now": "Gerade eben",
-  "activity_time_minutes_ago": "vor {minutes} Min",
-  "activity_time_hours_ago": "vor {hours} Std",
-  "activity_time_days_ago": "vor {count} Tagen",
-  "activity_metadata_garden": "Garten: {name}",
-  "activity_metadata_bed": "Beet: {name}",
-  "activity_metadata_plant": "Pflanze: {name}",
-  "activity_metadata_quantity": "Menge: {quantity}",
-  "activity_metadata_date": "Datum: {date}",
-  "activity_metadata_maintenance": "Wartung: {type}",
-  "activity_metadata_weather": "Wetter: {weather}",
-  "history_hint_title": "Um den Verlauf eines Gartens zu sehen",
-  "history_hint_body": "Wählen Sie ihn durch langes Drücken im Dashboard aus.",
-  "history_hint_action": "Zum Dashboard",
-  "activity_desc_garden_created": "Garten \"{name}\" erstellt",
-  "activity_desc_bed_created": "Beet \"{name}\" erstellt",
-  "activity_desc_planting_created": "Pflanzung von \"{name}\" hinzugefügt",
-  "activity_desc_germination": "Keimung von \"{name}\" bestätigt",
-  "activity_desc_harvest": "Ernte von \"{name}\" aufgezeichnet",
-  "activity_desc_maintenance": "Wartung: {type}",
-  "activity_desc_garden_deleted": "Garten \"{name}\" gelöscht",
-  "activity_desc_bed_deleted": "Beet \"{name}\" gelöscht",
-  "activity_desc_planting_deleted": "Pflanzung von \"{name}\" gelöscht",
-  "activity_desc_garden_updated": "Garten \"{name}\" aktualisiert",
-  "activity_desc_bed_updated": "Beet \"{name}\" aktualisiert",
-  "activity_desc_planting_updated": "Pflanzung von \"{name}\" aktualisiert",
   "stats_screen_title": "Statistiken",
+  "@stats_screen_title": {
+    "description": "Titre écran statistiques"
+  },
   "stats_screen_subtitle": "Analysieren Sie in Echtzeit und exportieren Sie Ihre Daten.",
+  "@stats_screen_subtitle": {
+    "description": "Sous-titre écran statistiques"
+  },
   "kpi_alignment_title": "Lebendige Ausrichtung",
+  "@kpi_alignment_title": {
+    "description": "Titre KPI Alignement"
+  },
   "kpi_alignment_description": "Dieses Tool bewertet, wie nah Ihre Aussaaten, Pflanzungen und Ernten an den von der Intelligenten Agenda empfohlenen idealen Zeitfenstern liegen.",
+  "@kpi_alignment_description": {
+    "description": "Description KPI Alignement"
+  },
   "kpi_alignment_cta": "Beginnen Sie zu pflanzen und zu ernten, um Ihre Ausrichtung zu sehen!",
+  "@kpi_alignment_cta": {
+    "description": "CTA KPI Alignement"
+  },
   "kpi_alignment_aligned": "ausgerichtet",
+  "@kpi_alignment_aligned": {
+    "description": "Label aligné"
+  },
   "kpi_alignment_total": "Gesamt",
+  "@kpi_alignment_total": {
+    "description": "Label Total"
+  },
   "kpi_alignment_aligned_actions": "Ausgerichtet",
+  "@kpi_alignment_aligned_actions": {
+    "description": "Label Actions Alignées"
+  },
   "kpi_alignment_misaligned_actions": "Fehlausgerichtet",
+  "@kpi_alignment_misaligned_actions": {
+    "description": "Label Actions Décalées"
+  },
   "kpi_alignment_calculating": "Berechne Ausrichtung...",
+  "@kpi_alignment_calculating": {
+    "description": "Message calcul alignement"
+  },
   "kpi_alignment_error": "Fehler bei der Berechnung",
+  "@kpi_alignment_error": {
+    "description": "Message erreur alignement"
+  },
   "pillar_economy_title": "Gartenökonomie",
+  "@pillar_economy_title": {
+    "description": "Titre Pilier Économie"
+  },
   "pillar_nutrition_title": "Ernährungsbilanz",
+  "@pillar_nutrition_title": {
+    "description": "Titre Pilier Nutrition"
+  },
   "pillar_export_title": "Exportieren",
+  "@pillar_export_title": {
+    "description": "Titre Pilier Export"
+  },
   "pillar_economy_label": "Gesamternte­wert",
+  "@pillar_economy_label": {
+    "description": "Label Pilier Économie"
+  },
   "pillar_nutrition_label": "Ernährungssignatur",
+  "@pillar_nutrition_label": {
+    "description": "Label Pilier Nutrition"
+  },
   "pillar_export_label": "Ihre Daten abrufen",
+  "@pillar_export_label": {
+    "description": "Label Pilier Export"
+  },
   "pillar_export_button": "Exportieren",
+  "@pillar_export_button": {
+    "description": "Bouton Pilier Export"
+  },
   "stats_economy_title": "Gartenökonomie",
+  "@stats_economy_title": {
+    "description": "Titre écran économie"
+  },
   "stats_economy_no_harvest": "Keine Ernte im ausgewählten Zeitraum.",
+  "@stats_economy_no_harvest": {
+    "description": "Message vide économie"
+  },
   "stats_economy_no_harvest_desc": "Keine Daten für den ausgewählten Zeitraum.",
+  "@stats_economy_no_harvest_desc": {
+    "description": "Sous-titre vide économie"
+  },
   "stats_kpi_total_revenue": "Gesamtumsatz",
+  "@stats_kpi_total_revenue": {
+    "description": "KPI Revenu Total"
+  },
   "stats_kpi_total_volume": "Gesamtvolumen",
+  "@stats_kpi_total_volume": {
+    "description": "KPI Volume Total"
+  },
   "stats_kpi_avg_price": "Durchschnittspreis",
+  "@stats_kpi_avg_price": {
+    "description": "KPI Prix Moyen"
+  },
   "stats_top_cultures_title": "Top-Kulturen (Wert)",
+  "@stats_top_cultures_title": {
+    "description": "Titre Top Cultures"
+  },
   "stats_top_cultures_no_data": "Keine Daten",
+  "@stats_top_cultures_no_data": {
+    "description": "Vide Top Cultures"
+  },
   "stats_top_cultures_percent_revenue": "des Umsatzes",
+  "@stats_top_cultures_percent_revenue": {
+    "description": "Suffixe pourcentage revenu"
+  },
   "stats_monthly_revenue_title": "Monatlicher Umsatz",
+  "@stats_monthly_revenue_title": {
+    "description": "Titre Revenu Mensuel"
+  },
   "stats_monthly_revenue_no_data": "Keine monatlichen Daten",
+  "@stats_monthly_revenue_no_data": {
+    "description": "Vide Revenu Mensuel"
+  },
   "stats_dominant_culture_title": "Dominante Kultur pro Monat",
+  "@stats_dominant_culture_title": {
+    "description": "Titre Culture Dominante"
+  },
   "stats_annual_evolution_title": "Jahrestrend",
+  "@stats_annual_evolution_title": {
+    "description": "Titre Évolution Annuelle"
+  },
   "stats_crop_distribution_title": "Kulturverteilung",
+  "@stats_crop_distribution_title": {
+    "description": "Titre Répartition Culture"
+  },
   "stats_crop_distribution_others": "Andere",
+  "@stats_crop_distribution_others": {
+    "description": "Label Autres pie chart"
+  },
   "stats_key_months_title": "Wichtige Gartenmonate",
+  "@stats_key_months_title": {
+    "description": "Titre Mois Clés"
+  },
   "stats_most_profitable": "Am profitabelsten",
+  "@stats_most_profitable": {
+    "description": "Label plus rentable"
+  },
   "stats_least_profitable": "Am wenigsten profitabel",
+  "@stats_least_profitable": {
+    "description": "Label moins rentable"
+  },
   "stats_auto_summary_title": "Auto-Zusammenfassung",
+  "@stats_auto_summary_title": {
+    "description": "Titre Synthèse Automatique"
+  },
   "stats_revenue_history_title": "Umsatzverlauf",
+  "@stats_revenue_history_title": {
+    "description": "Titre Historique Revenu"
+  },
   "stats_profitability_cycle_title": "Rentabilitätszyklus",
+  "@stats_profitability_cycle_title": {
+    "description": "Titre Cycle Rentabilité"
+  },
   "stats_table_crop": "Kultur",
+  "@stats_table_crop": {
+    "description": "Header colonne Culture"
+  },
   "stats_table_days": "Tage (Ø)",
+  "@stats_table_days": {
+    "description": "Header colonne Jours"
+  },
   "stats_table_revenue": "Umsatz/Ernte",
+  "@stats_table_revenue": {
+    "description": "Header colonne Revenu"
+  },
   "stats_table_type": "Typ",
+  "@stats_table_type": {
+    "description": "Header colonne Type"
+  },
   "stats_type_fast": "Schnell",
+  "@stats_type_fast": {
+    "description": "Type culture rapide"
+  },
   "stats_type_long_term": "Langfristig",
   "nutrition_page_title": "Ernährungssignatur",
+  "@nutrition_page_title": {
+    "description": "Titre écrant nutrition"
+  },
   "nutrition_seasonal_dynamics_title": "Saisonale Dynamik",
+  "@nutrition_seasonal_dynamics_title": {
+    "description": "Titre dynamique saisonnière"
+  },
   "nutrition_seasonal_dynamics_desc": "Entdecken Sie die Mineral- und Vitaminproduktion Ihres Gartens, Monat für Monat.",
+  "@nutrition_seasonal_dynamics_desc": {
+    "description": "Desc dynamique saisonnière"
+  },
   "nutrition_no_harvest_month": "Keine Ernte in diesem Monat",
+  "@nutrition_no_harvest_month": {
+    "description": "Vide mois"
+  },
   "nutrition_major_minerals_title": "Struktur & Hauptmineralien",
+  "@nutrition_major_minerals_title": {
+    "description": "Titre minéraux majeurs"
+  },
   "nutrition_trace_elements_title": "Vitalität & Spurenelemente",
+  "@nutrition_trace_elements_title": {
+    "description": "Titre oligo éléments"
+  },
   "nutrition_no_data_period": "Keine Daten für diesen Zeitraum",
+  "@nutrition_no_data_period": {
+    "description": "Pas de données chart"
+  },
   "nutrition_no_major_minerals": "Keine Hauptmineralien",
+  "@nutrition_no_major_minerals": {
+    "description": "Vide chart majeurs"
+  },
   "nutrition_no_trace_elements": "Keine Spurenelemente",
+  "@nutrition_no_trace_elements": {
+    "description": "Vide chart oligo"
+  },
   "nutrition_month_dynamics_title": "Dynamik von {month}",
+  "@nutrition_month_dynamics_title": {
+    "description": "Titre dynamique mois",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "nutrition_dominant_production": "Dominante Produktion:",
+  "@nutrition_dominant_production": {
+    "description": "Label production dominante"
+  },
   "nutrition_nutrients_origin": "Diese Nährstoffe stammen aus Ihren Ernten des Monats.",
+  "@nutrition_nutrients_origin": {
+    "description": "Note origine nutriments"
+  },
   "nut_calcium": "Kalzium",
   "nut_potassium": "Kalium",
   "nut_magnesium": "Magnesium",
@@ -638,36 +2219,157 @@
   "export_field_garden_surface": "Fläche (m²)",
   "export_field_garden_creation": "Erstellungsdatum",
   "export_field_bed_name": "Beetname",
-
+  "export_field_bed_id": "ID Parcelle",
+  "export_field_bed_surface": "Surface (m²)",
+  "export_field_bed_plant_count": "Nb Plantes",
+  "export_field_plant_name": "Nom commun",
+  "export_field_plant_id": "ID Plante",
+  "export_field_plant_scientific": "Nom scientifique",
+  "export_field_plant_family": "Famille",
+  "export_field_plant_variety": "Variété",
+  "export_field_harvest_date": "Date Récolte",
+  "export_field_harvest_qty": "Quantité (kg)",
+  "export_field_harvest_plant_name": "Plante",
+  "export_field_harvest_price": "Prix/kg",
+  "export_field_harvest_value": "Valeur Totale",
+  "export_field_harvest_notes": "Notes",
+  "export_field_harvest_garden_name": "Jardin",
+  "export_field_harvest_garden_id": "ID Jardin",
+  "export_field_harvest_bed_name": "Parcelle",
+  "export_field_harvest_bed_id": "ID Parcelle",
+  "export_field_activity_date": "Date",
+  "export_field_activity_type": "Type",
+  "export_field_activity_title": "Titre",
+  "export_field_activity_desc": "Description",
+  "export_field_activity_entity": "Entité Cible",
+  "export_field_activity_entity_id": "ID Cible",
+  "export_activity_type_garden_created": "Création de jardin",
+  "export_activity_type_garden_updated": "Mise à jour du jardin",
+  "export_activity_type_garden_deleted": "Suppression de jardin",
+  "export_activity_type_bed_created": "Création de parcelle",
+  "export_activity_type_bed_updated": "Mise à jour de parcelle",
+  "export_activity_type_bed_deleted": "Suppression de parcelle",
+  "export_activity_type_planting_created": "Nouvelle plantation",
+  "export_activity_type_planting_updated": "Mise à jour plantation",
+  "export_activity_type_planting_deleted": "Suppression plantation",
+  "export_activity_type_harvest": "Récolte",
+  "export_activity_type_maintenance": "Entretien",
+  "export_activity_type_weather": "Météo",
+  "export_activity_type_error": "Erreur",
+  "export_excel_total": "TOTAL",
+  "export_excel_unknown": "Inconnu",
+  "export_field_advanced_suffix": " (Avancé)",
+  "export_field_desc_garden_name": "Nom donné au jardin",
+  "export_field_desc_garden_id": "Identifiant unique technique",
+  "export_field_desc_garden_surface": "Surface totale du jardin",
+  "export_field_desc_garden_creation": "Date de création dans l'application",
+  "export_field_desc_bed_name": "Nom de la parcelle",
+  "export_field_desc_bed_id": "Identifiant unique technique",
+  "export_field_desc_bed_surface": "Surface de la parcelle",
+  "export_field_desc_bed_plant_count": "Nombre de cultures en place (actuel)",
+  "export_field_desc_plant_name": "Nom usuel de la plante",
+  "export_field_desc_plant_id": "Identifiant unique technique",
+  "export_field_desc_plant_scientific": "Dénomination botanique",
+  "export_field_desc_plant_family": "Famille botanique",
+  "export_field_desc_plant_variety": "Variété spécifique",
+  "export_field_desc_harvest_date": "Date de l'événement de récolte",
+  "export_field_desc_harvest_qty": "Poids récolté en kg",
+  "export_field_desc_harvest_plant_name": "Nom de la plante récoltée",
+  "export_field_desc_harvest_price": "Prix au kg configuré",
+  "export_field_desc_harvest_value": "Quantité * Prix/kg",
+  "export_field_desc_harvest_notes": "Observations saisies lors de la récolte",
+  "export_field_desc_harvest_garden_name": "Nom du jardin d'origine (si disponible)",
+  "export_field_desc_harvest_garden_id": "Identifiant unique du jardin",
+  "export_field_desc_harvest_bed_name": "Parcelle d'origine (si disponible)",
+  "export_field_desc_harvest_bed_id": "Identifiant parcelle",
+  "export_field_desc_activity_date": "Date de l'activité",
+  "export_field_desc_activity_type": "Catégorie d'action (Semis, Récolte, Soin...)",
+  "export_field_desc_activity_title": "Résumé de l'action",
+  "export_field_desc_activity_desc": "Détails complets",
+  "export_field_desc_activity_entity": "Nom de l'objet concerné (Plante, Parcelle...)",
+  "export_field_desc_activity_entity_id": "ID de l'objet concerné",
   "plant_catalog_sow": "Säen",
-  "@plant_catalog_sow": { "description": "Label du bouton Semer" },
+  "@plant_catalog_sow": {
+    "description": "Label du bouton Semer"
+  },
   "plant_catalog_plant": "Pflanzen",
-  "@plant_catalog_plant": { "description": "Label du bouton Planter" },
+  "@plant_catalog_plant": {
+    "description": "Label du bouton Planter"
+  },
   "plant_catalog_show_selection": "Auswahl ansehen",
-  "@plant_catalog_show_selection": { "description": "Bouton pour afficher la sélection Semer/Planter" },
+  "@plant_catalog_show_selection": {
+    "description": "Bouton pour afficher la sélection Semer/Planter"
+  },
   "plant_catalog_filter_green_only": "Nur Grüne",
-  "@plant_catalog_filter_green_only": { "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)" },
+  "@plant_catalog_filter_green_only": {
+    "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)"
+  },
   "plant_catalog_filter_green_orange": "Grün + Orange",
-  "@plant_catalog_filter_green_orange": { "description": "Filtre afficher les plantes vertes et oranges" },
+  "@plant_catalog_filter_green_orange": {
+    "description": "Filtre afficher les plantes vertes et oranges"
+  },
   "plant_catalog_filter_all": "Alle",
-  "@plant_catalog_filter_all": { "description": "Filtre afficher toutes les plantes" },
+  "@plant_catalog_filter_all": {
+    "description": "Filtre afficher toutes les plantes"
+  },
   "plant_catalog_no_recommended": "Keine Pflanzen für diesen Zeitraum empfohlen.",
-  "@plant_catalog_no_recommended": { "description": "Message si aucune plante n'est recommandée pour la date/action donnée" },
+  "@plant_catalog_no_recommended": {
+    "description": "Message si aucune plante n'est recommandée pour la date/action donnée"
+  },
   "plant_catalog_expand_window": "Erweitern (±2 Monate)",
-  "@plant_catalog_expand_window": { "description": "Action pour élargir la fenêtre temporelle" },
+  "@plant_catalog_expand_window": {
+    "description": "Action pour élargir la fenêtre temporelle"
+  },
   "plant_catalog_missing_period_data": "Fehlende Zeitraumsdaten",
-  "@plant_catalog_missing_period_data": { "description": "Message quand la plante n'a pas d'information de période" },
+  "@plant_catalog_missing_period_data": {
+    "description": "Message quand la plante n'a pas d'information de période"
+  },
   "plant_catalog_periods_prefix": "Zeiträume: {months}",
   "@plant_catalog_periods_prefix": {
     "description": "Préfixe listant les périodes available pour la plante",
-    "placeholders": { "months": { "type": "String" } }
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
   },
   "plant_catalog_legend_green": "Bereit diesen Monat",
-  "@plant_catalog_legend_green": { "description": "Légende couleur verte" },
+  "@plant_catalog_legend_green": {
+    "description": "Légende couleur verte"
+  },
   "plant_catalog_legend_orange": "Nahe / Bald",
-  "@plant_catalog_legend_orange": { "description": "Légende couleur orange" },
+  "@plant_catalog_legend_orange": {
+    "description": "Légende couleur orange"
+  },
   "plant_catalog_legend_red": "Außerhalb der Saison",
-  "@plant_catalog_legend_red": { "description": "Légende couleur rouge" },
+  "@plant_catalog_legend_red": {
+    "description": "Légende couleur rouge"
+  },
   "plant_catalog_data_unknown": "Unbekannte Daten",
-  "@plant_catalog_data_unknown": { "description": "Mention pour données manquantes/grises" }
+  "@plant_catalog_data_unknown": {
+    "description": "Mention pour données manquantes/grises"
+  },
+  "task_editor_photo_label": "Photo de la tâche",
+  "task_editor_photo_add": "Ajouter une photo",
+  "task_editor_photo_change": "Changer la photo",
+  "task_editor_photo_remove": "Retirer la photo",
+  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF / Word à la création / envoi.",
+  "export_block_nutrition": "Nutrition (Agrégation)",
+  "@export_block_nutrition": {
+    "description": "Label pour le bloc Nutrition dans l'export"
+  },
+  "export_block_desc_nutrition": "Indicateurs nutritionnels agrégés par nutriment",
+  "@export_block_desc_nutrition": {
+    "description": "Description pour le bloc Nutrition"
+  },
+  "export_field_nutrient_key": "Clé nutriment",
+  "export_field_nutrient_label": "Nutriment",
+  "export_field_nutrient_unit": "Unité",
+  "export_field_nutrient_total": "Total disponible",
+  "export_field_mass_with_data_kg": "Masse avec données (kg)",
+  "export_field_contributing_records": "Nb récoltes",
+  "export_field_data_confidence": "Confiance",
+  "export_field_coverage_percent": "Moy. DRI (%)",
+  "export_field_lower_bound_coverage": "Min DRI (%)",
+  "export_field_upper_bound_coverage": "Max DRI (%)"
 }

@@ -1,6 +1,9 @@
 {
   "@@locale": "es",
   "appTitle": "Sowing",
+  "@appTitle": {
+    "description": "Titre de l'application"
+  },
   "garden_creation_dialog_title": "Crea tu primer jardín",
   "garden_creation_dialog_description": "Dale un nombre a tu espacio de permacultura para comenzar.",
   "garden_creation_name_label": "Nombre del jardín",
@@ -8,139 +11,548 @@
   "garden_creation_name_required": "El nombre es obligatorio",
   "garden_creation_create_button": "Crear",
   "settings_title": "Ajustes",
+  "@settings_title": {
+    "description": "Titre de la page des paramètres"
+  },
   "home_settings_fallback_label": "Ajustes (respaldo)",
+  "@home_settings_fallback_label": {
+    "description": "Label accessibilité pour le hotspot de paramètres sur l'accueil"
+  },
   "settings_application": "Aplicación",
+  "@settings_application": {
+    "description": "Rubrique 'Application' dans les paramètres"
+  },
   "settings_version": "Versión",
+  "@settings_version": {
+    "description": "Label pour la version de l'application"
+  },
   "settings_display": "Visualización",
+  "@settings_display": {
+    "description": "Titre de la section Affichage"
+  },
   "settings_weather_selector": "Selector de clima",
+  "@settings_weather_selector": {
+    "description": "Titre de la section Sélecteur météo"
+  },
   "settings_commune_title": "Ubicación para el clima",
+  "@settings_commune_title": {
+    "description": "Titre du paramètre Commune pour la météo"
+  },
   "settings_choose_commune": "Elegir ubicación",
+  "@settings_choose_commune": {
+    "description": "Titre/drawer pour choisir une commune"
+  },
   "settings_search_commune_hint": "Buscar una ubicación...",
+  "@settings_search_commune_hint": {
+    "description": "Hint text pour la recherche de commune"
+  },
   "settings_commune_default": "Por defecto: {label}",
+  "@settings_commune_default": {
+    "description": "Texte indiquant la commune par défaut",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "Paris"
+      }
+    }
+  },
   "settings_commune_selected": "Seleccionada: {label}",
+  "@settings_commune_selected": {
+    "description": "Texte indiquant la commune sélectionnée",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "Saint-Affrique"
+      }
+    }
+  },
   "settings_quick_access": "Acceso rápido",
+  "@settings_quick_access": {
+    "description": "Titre de la zone Accès rapide dans les paramètres"
+  },
   "settings_plants_catalog": "Catálogo de plantas",
+  "@settings_plants_catalog": {
+    "description": "Libellé pour l'accès au catalogue des plantes"
+  },
   "settings_plants_catalog_subtitle": "Buscar y ver plantas",
+  "@settings_plants_catalog_subtitle": {
+    "description": "Sous-titre pour le catalogue des plantes"
+  },
   "settings_about": "Acerca de",
+  "@settings_about": {
+    "description": "Titre de la section À propos"
+  },
   "settings_user_guide": "Guía de usuario",
+  "@settings_user_guide": {
+    "description": "Label pour le guide d'utilisation"
+  },
   "settings_user_guide_subtitle": "Consultar el manual",
+  "@settings_user_guide_subtitle": {
+    "description": "Sous-titre pour le guide d'utilisation"
+  },
   "settings_privacy": "Privacidad",
+  "@settings_privacy": {
+    "description": "Label Confidentialité"
+  },
   "settings_privacy_policy": "Política de privacidad",
+  "@settings_privacy_policy": {
+    "description": "Titre / label de la politique de confidentialité"
+  },
   "settings_terms": "Condiciones de uso",
+  "@settings_terms": {
+    "description": "Titre / label des conditions d'utilisation"
+  },
   "settings_version_dialog_title": "Versión de la aplicación",
+  "@settings_version_dialog_title": {
+    "description": "Titre de la boîte de dialogue d'information sur la version"
+  },
   "settings_version_dialog_content": "Versión: {version} – Gestión de jardines dinámica\n\nSowing - Gestión de jardines vivos",
+  "@settings_version_dialog_content": {
+    "description": "Contenu de la boîte de dialogue de version",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.2"
+      }
+    }
+  },
   "language_title": "Idioma / Language",
+  "@language_title": {
+    "description": "Titre de la page de sélection de la langue"
+  },
   "language_french": "Français",
+  "@language_french": {
+    "description": "Nom de la langue française"
+  },
   "language_english": "English",
+  "@language_english": {
+    "description": "Nom de la langue anglaise"
+  },
   "language_spanish": "Español",
+  "@language_spanish": {
+    "description": "Nom de la langue espagnole"
+  },
   "language_portuguese_br": "Português (Brasil)",
+  "@language_portuguese_br": {
+    "description": "Nom de la langue portugaise (Brésil)"
+  },
   "language_german": "Deutsch",
+  "@language_german": {
+    "description": "Nom de la langue allemande"
+  },
   "language_changed_snackbar": "Idioma cambiado: {label}",
+  "@language_changed_snackbar": {
+    "description": "Message affiché en snackBar après changement de langue",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "example": "English"
+      }
+    }
+  },
   "calibration_title": "Calibración",
+  "@calibration_title": {
+    "description": "Titre de la section Calibration"
+  },
   "calibration_subtitle": "Personaliza la visualización de tu panel",
+  "@calibration_subtitle": {
+    "description": "Sous-titre de la section Calibration"
+  },
   "calibration_organic_title": "Calibración Orgánica",
+  "@calibration_organic_title": {
+    "description": "Titre de la carte Calibration Organique"
+  },
   "calibration_organic_subtitle": "Modo unificado: Imagen, Cielo, Módulos",
+  "@calibration_organic_subtitle": {
+    "description": "Sous-titre de la carte Calibration Organique"
+  },
   "calibration_organic_disabled": "🌿 Calibración orgánica desactivada",
+  "@calibration_organic_disabled": {
+    "description": "SnackBar désactivation calibration"
+  },
   "calibration_organic_enabled": "🌿 Modo de calibración orgánica activado. Seleccione una de las tres pestañas.",
-  "lifecycle_error_title": "Error al calcular ciclo",
-  "lifecycle_error_prefix": "Error: ",
-  "lifecycle_cycle_completed": "ciclo completado",
-  "lifecycle_stage_germination": "Germinación",
-  "lifecycle_stage_growth": "Crecimiento",
-  "lifecycle_stage_fruiting": "Fructificación",
-  "lifecycle_stage_harvest": "Cosecha",
-  "lifecycle_stage_unknown": "Desconocido",
-  "lifecycle_harvest_expected": "Cosecha esperada",
-  "lifecycle_in_days": "En {days} días",
-  "lifecycle_passed": "Pasado",
-  "lifecycle_now": "¡Ahora!",
-  "lifecycle_next_action": "Siguiente acción",
-  "lifecycle_update": "Actualizar ciclo",
-  "lifecycle_days_ago": "hace {days} días",
-  "planting_detail_title": "Detalles de la siembra",
+  "@calibration_organic_enabled": {
+    "description": "SnackBar activation calibration"
+  },
   "garden_list_title": "Mis jardines",
+  "@garden_list_title": {
+    "description": "Titre écran liste des jardins"
+  },
   "garden_error_title": "Error de carga",
+  "@garden_error_title": {
+    "description": "Titre pour l'état d'erreur sur la liste des jardins"
+  },
   "garden_error_subtitle": "No se puede cargar la lista de jardines: {error}",
+  "@garden_error_subtitle": {
+    "description": "Message d'erreur détaillé pour jardin",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "garden_retry": "Reintentar",
+  "@garden_retry": {
+    "description": "Texte du bouton Réessayer"
+  },
   "garden_no_gardens": "Ningún jardín por el momento.",
+  "@garden_no_gardens": {
+    "description": "Message affiché si aucun jardin actif"
+  },
   "garden_archived_info": "Tienes jardines archivados. Activa la visualización de jardines archivados para verlos.",
+  "@garden_archived_info": {
+    "description": "Info affichée lorsque des jardins sont archivés"
+  },
   "garden_add_tooltip": "Añadir un jardín",
+  "@garden_add_tooltip": {
+    "description": "Tooltip du FAB pour ajouter un jardin"
+  },
   "plant_catalog_title": "Catálogo de plantas",
+  "@plant_catalog_title": {
+    "description": "Titre de l'écran catalogue de plantes"
+  },
   "plant_catalog_search_hint": "Buscar una planta...",
+  "@plant_catalog_search_hint": {
+    "description": "Indication visuelle dans la barre de recherche du catalogue"
+  },
   "plant_custom_badge": "Personalizado",
+  "@plant_custom_badge": {
+    "description": "Texte du badge pour plante personnalisée"
+  },
   "plant_detail_not_found_title": "Planta no encontrada",
+  "@plant_detail_not_found_title": {
+    "description": "Titre affiché si une plante n'existe pas"
+  },
   "plant_detail_not_found_body": "Esta planta no existe o no se pudo cargar.",
+  "@plant_detail_not_found_body": {
+    "description": "Message affiché lorsque la plante n'a pas été chargée"
+  },
   "plant_added_favorites": "{plant} añadida a favoritos",
+  "@plant_added_favorites": {
+    "description": "SnackBar indiquant qu'une plante a été ajoutée aux favoris",
+    "placeholders": {
+      "plant": {
+        "type": "String",
+        "example": "Tomate"
+      }
+    }
+  },
   "plant_detail_popup_add_to_garden": "Añadir al jardín",
+  "@plant_detail_popup_add_to_garden": {
+    "description": "Texte du menu contextuel pour ajouter une plante au jardin"
+  },
   "plant_detail_popup_share": "Compartir",
+  "@plant_detail_popup_share": {
+    "description": "Texte du menu contextuel pour partager"
+  },
   "plant_detail_share_todo": "Compartir no implementado todavía",
+  "@plant_detail_share_todo": {
+    "description": "SnackBar indiquant que le partage n'est pas encore implémenté"
+  },
   "plant_detail_add_to_garden_todo": "Añadir al jardín no implementado todavía",
+  "@plant_detail_add_to_garden_todo": {
+    "description": "SnackBar indiquant que l'ajout au jardin est à implémenter"
+  },
   "plant_detail_section_culture": "Detalles de cultivo",
+  "@plant_detail_section_culture": {
+    "description": "Titre section Détails de culture"
+  },
   "plant_detail_section_instructions": "Instrucciones generales",
+  "@plant_detail_section_instructions": {
+    "description": "Titre section Instructions générales"
+  },
   "plant_detail_detail_family": "Familia",
+  "@plant_detail_detail_family": {
+    "description": "Label Famille dans le détail plante"
+  },
   "plant_detail_detail_maturity": "Duración de maduración",
+  "@plant_detail_detail_maturity": {
+    "description": "Label Durée de maturation"
+  },
   "plant_detail_detail_spacing": "Espaciamiento",
+  "@plant_detail_detail_spacing": {
+    "description": "Label Espacement"
+  },
   "plant_detail_detail_exposure": "Exposición",
+  "@plant_detail_detail_exposure": {
+    "description": "Label Exposition"
+  },
   "plant_detail_detail_water": "Necesidades de agua",
+  "@plant_detail_detail_water": {
+    "description": "Label Besoins en eau"
+  },
   "planting_title_template": "Plantaciones - {gardenBedName}",
+  "@planting_title_template": {
+    "description": "Titre de l'écran des plantations, contient le nom de la parcelle",
+    "placeholders": {
+      "gardenBedName": {
+        "type": "String",
+        "example": "Parcelle A"
+      }
+    }
+  },
   "planting_menu_statistics": "Estadísticas",
+  "@planting_menu_statistics": {
+    "description": "Menu item Statistiques"
+  },
   "planting_menu_ready_for_harvest": "Listo para cosechar",
+  "@planting_menu_ready_for_harvest": {
+    "description": "Menu item Prêt à récolter"
+  },
   "planting_menu_test_data": "Datos de prueba",
+  "@planting_menu_test_data": {
+    "description": "Menu item Données test"
+  },
   "planting_search_hint": "Buscar una plantación...",
+  "@planting_search_hint": {
+    "description": "Hint de recherche sur la liste de plantations"
+  },
   "planting_filter_all_statuses": "Todos los estados",
+  "@planting_filter_all_statuses": {
+    "description": "Filtre Tous les statuts"
+  },
   "planting_filter_all_plants": "Todas las plantas",
+  "@planting_filter_all_plants": {
+    "description": "Filtre Toutes les plantes"
+  },
   "planting_stat_plantings": "Plantaciones",
+  "@planting_stat_plantings": {
+    "description": "Label statistiques : Plantations"
+  },
   "planting_stat_total_quantity": "Cantidad total",
+  "@planting_stat_total_quantity": {
+    "description": "Label statistiques : Quantité totale"
+  },
   "planting_stat_success_rate": "Tasa de éxito",
+  "@planting_stat_success_rate": {
+    "description": "Label statistiques : Taux de réussite"
+  },
   "planting_stat_in_growth": "En crecimiento",
+  "@planting_stat_in_growth": {
+    "description": "Label statistiques : En croissance"
+  },
   "planting_stat_ready_for_harvest": "Listo para cosechar",
+  "@planting_stat_ready_for_harvest": {
+    "description": "Label statistiques : Prêt à récolter"
+  },
   "planting_empty_none": "Ninguna plantación",
+  "@planting_empty_none": {
+    "description": "Titre pour l'état vide des plantations"
+  },
   "planting_empty_first": "Comienza añadiendo tu primera plantación en esta parcela.",
+  "@planting_empty_first": {
+    "description": "Texte incitatif si aucune plantation n'existe"
+  },
   "planting_create_action": "Crear plantación",
+  "@planting_create_action": {
+    "description": "Texte du bouton pour créer une plantation"
+  },
   "planting_empty_no_result": "Sin resultados",
+  "@planting_empty_no_result": {
+    "description": "Titre pour l'état 'aucun résultat' dans la recherche"
+  },
   "planting_clear_filters": "Borrar filtros",
+  "@planting_clear_filters": {
+    "description": "Action pour effacer les filtres"
+  },
   "planting_add_tooltip": "Añadir una plantación",
+  "@planting_add_tooltip": {
+    "description": "Tooltip du FAB pour ajouter une plantation"
+  },
   "search_hint": "Buscar...",
+  "@search_hint": {
+    "description": "Hint générique pour la barre de recherche"
+  },
   "error_page_title": "Página no encontrada",
+  "@error_page_title": {
+    "description": "Titre pour la page d'erreur 'page non trouvée'"
+  },
   "error_page_message": "La página \"{uri}\" no existe.",
+  "@error_page_message": {
+    "description": "Message expliquant que la page demandée n'existe pas",
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
   "error_page_back": "Volver al inicio",
+  "@error_page_back": {
+    "description": "Bouton pour revenir à l'accueil depuis la page d'erreur"
+  },
   "dialog_confirm": "Confirmar",
+  "@dialog_confirm": {
+    "description": "Texte du bouton Confirmer dans les dialogues"
+  },
   "dialog_cancel": "Cancelar",
+  "@dialog_cancel": {
+    "description": "Texte du bouton Annuler dans les dialogues"
+  },
   "snackbar_commune_selected": "Ubicación seleccionada: {name}",
+  "@snackbar_commune_selected": {
+    "description": "SnackBar indiquant la commune sélectionnée",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "common_validate": "Validar",
+  "@common_validate": {
+    "description": "Texte générique Valider"
+  },
   "common_cancel": "Cancelar",
+  "@common_cancel": {
+    "description": "Texte générique Annuler (duplicate kept for backward compatibility)"
+  },
+  "common_save": "Guardar",
+  "@common_save": {
+    "description": "Texte générique Enregistrer"
+  },
   "empty_action_create": "Crear",
+  "@empty_action_create": {
+    "description": "Action générique pour créer quelque chose depuis un état vide"
+  },
   "user_guide_text": "1 — Bienvenido a Sowing\nSowing es una aplicación diseñada para apoyar a los jardineros en el seguimiento animado y concreto de sus cultivos.\nLe permite:\n• organizar sus jardines y parcelas,\n• seguir sus plantaciones a lo largo de su ciclo de vida,\n• planificar sus tareas en el momento adecuado,\n• mantener un recuerdo de lo que se ha hecho,\n• tener en cuenta el clima local y el ritmo de las estaciones.\nLa aplicación funciona principalmente sin conexión y mantiene sus datos directamente en su dispositivo.\nEste manual describe el uso común de Sowing: primeros pasos, creación de jardines, plantaciones, calendario, clima, exportación de datos y mejores prácticas.\n\n2 — Comprendiendo la interfaz\nEl tablero\nAl abrir, Sowing muestra un tablero visual y orgánico.\nToma la forma de una imagen de fondo animada por burbujas interactivas. Cada burbuja da acceso a una función principal de la aplicación:\n• jardines,\n• clima aéreo,\n• clima del suelo,\n• calendario,\n• actividades,\n• estadísticas,\n• ajustes.\nNavegación general\nSimplemente toque una burbuja para abrir la sección correspondiente.\nDentro de las páginas, encontrará dependiendo del contexto:\n• menús contextuales,\n• botones \"+\" para añadir un elemento,\n• botones de edición o eliminación.\n\n3 — Inicio rápido\nAbrir la aplicación\nAl iniciar, el tablero se muestra automáticamente.\nConfigurar el clima\nEn los ajustes, elija su ubicación.\nEsta información permite a Sowing mostrar el clima local adaptado a su jardín. Si no se selecciona ninguna ubicación, se utiliza una predeterminada.\nCrear su primer jardín\nAl usar por primera vez, Sowing le guía automáticamente para crear su primer jardín.\nTambién puede crear un jardín manualmente desde el tablero.\nEn la pantalla principal, toque la hoja verde ubicada en el área más libre, a la derecha de las estadísticas y ligeramente arriba. Esta área deliberadamente discreta le permite iniciar la creación de un jardín.\nPuede crear hasta cinco jardines.\nEste enfoque es parte de la experiencia Sowing: no hay un botón \"+\" permanente y central. La aplicación invita más bien a la exploración y el descubrimiento progresivo del espacio.\nLas áreas vinculadas a los jardines también son accesibles desde el menú Ajustes.\nCalibración orgánica del tablero\nUn modo de calibración orgánica permite:\n• visualizar la ubicación real de las zonas interactivas,\n• moverlas simplemente deslizando el dedo.\nAsí puede posicionar sus jardines y módulos exactamente donde quiera en la imagen: arriba, abajo o en el lugar que mejor le convenga.\nUna vez validada, esta organización se guarda y se mantiene en la aplicación.\nCrear una parcela\nEn una ficha de jardín:\n• elija \"Añadir una parcela\",\n• indique su nombre, su área y, si es necesario, algunas notas,\n• guarde.\nAñadir una plantación\nEn una parcela:\n• presione el botón \"+\",\n• elija una planta del catálogo,\n• indique la fecha, la cantidad e información útil,\n• valide.\n\n4 — El tablero orgánico\nEl tablero es el punto central de Sowing.\nPermite:\n• tener una visión general de su actividad,\n• acceder rápidamente a las funciones principales,\n• navegar intuitivamente.\nDependiendo de sus ajustes, algunas burbujas pueden mostrar información sintética, como el clima o las tareas próximas.\n\n5 — Jardines, parcelas y plantaciones\nLos jardines\nUn jardín representa un lugar real: huerto, invernadero, huerto frutal, balcón, etc.\nPuede:\n• crear varios jardines,\n• modificar su información,\n• eliminarlos si es necesario.\nLas parcelas\nUna parcela es una zona precisa dentro de un jardín.\nPermite estructurar el espacio, organizar cultivos y agrupar varias plantaciones en el mismo lugar.\nLas plantaciones\nUna plantación corresponde a la introducción de una planta en una parcela, en una fecha dada.\nAl crear una plantación, Sowing ofrece dos modos.\nSembrar\nEl modo \"Sembrar\" corresponde a poner una semilla en la tierra.\nEn este caso:\n• el progreso comienza en 0%,\n• se propone un seguimiento paso a paso, particularmente útil para jardineros principiantes,\n• una barra de progreso visualiza el avance del ciclo de cultivo.\nEste seguimiento permite estimar:\n• el inicio probable del período de cosecha,\n• la evolución del cultivo a lo largo del tiempo, de una manera simple y visual.\nPlantar\nEl modo \"Plantar\" está destinado a plantas ya desarrolladas (plantas de un invernadero o compradas en un centro de jardinería).\nEn este caso:\n• la planta comienza con un progreso de aproximadamente 30%,\n• el seguimiento es inmediatamente más avanzado,\n• la estimación del período de cosecha se ajusta en consecuencia.\nElección de fecha\nAl plantar, puede elegir libremente la fecha.\nEsto permite por ejemplo:\n• rellenar una plantación realizada anteriormente,\n• corregir una fecha si la aplicación no se usó en el momento de la siembra o plantación.\nPor defecto, se utiliza la fecha actual.\nSeguimiento e historial\nCada plantación tiene:\n• un seguimiento de progreso,\n• información sobre su ciclo de vida,\n• etapas de cultivo,\n• notas personales.\nTodas las acciones (siembra, plantación, cuidado, cosecha) se registran automáticamente en el historial del jardín.\n\n6 — Catálogo de plantas\nEl catálogo reúne todas las plantas disponibles al crear una plantación.\nConstituye una base de referencia escalable, diseñada para cubrir usos actuales mientras permanece personalizable.\nFunciones principales:\n• búsqueda simple y rápida,\n• reconocimiento de nombres comunes y científicos,\n• visualización de fotos cuando están disponibles.\nPlantas personalizadas\nPuede crear sus propias plantas personalizadas desde:\nAjustes → Catálogo de plantas.\nEntonces es posible:\n• crear una nueva planta,\n• rellenar los parámetros esenciales (nombre, tipo, información útil),\n• añadir una imagen para facilitar la identificación.\nLas plantas personalizadas son entonces utilizables como cualquier otra planta en el catálogo.\n\n7 — Calendario y tareas\nLa vista de calendario\nEl calendario muestra:\n• tareas planificadas,\n• plantaciones importantes,\n• períodos de cosecha estimados.\nCrear una tarea\nDesde el calendario:\n• cree una nueva tarea,\n• indique un título, una fecha y una descripción,\n• elija una posible recurrencia.\nLas tareas pueden asociarse con un jardín o una parcela.\nGestión de tareas\nPuede:\n• modificar una tarea,\n• eliminarla,\n• exportarla para compartirla.\n\n8 — Actividades e historial\nEsta sección constituye la memoria viva de sus jardines.\nSelección de un jardín\nDesde el tablero, mantenga presionado un jardín para seleccionarlo.\nEl jardín activo se resalta con un halo verde claro y un banner de confirmación.\nEsta selección permite filtrar la información mostrada.\nActividades recientes\nLa pestaña \"Actividades\" muestra cronológicamente:\n• creaciones,\n• plantaciones,\n• cuidados,\n• cosechas,\n• acciones manuales.\nHistorial por jardín\nLa pestaña \"Historial\" presenta el historial completo del jardín seleccionado, año tras año.\nPermite en particular:\n• encontrar plantaciones pasadas,\n• verificar si una planta ya se ha cultivado en un lugar dado,\n• organizar mejor la rotación de cultivos.\n\n9 — Clima aéreo y clima del suelo\nClima aéreo\nEl clima aéreo proporciona información esencial:\n• temperatura exterior,\n• precipitaciones (lluvia, nieve, sin lluvia),\n• alternancia día / noche.\nEstos datos ayudan a anticipar riesgos climáticos y adaptar intervenciones.\nClima del suelo\nSowing integra un módulo de clima del suelo.\nEl usuario puede rellenar una temperatura medida. A partir de estos datos, la aplicación estima dinámicamente la evolución de la temperatura del suelo a lo largo del tiempo.\nEsta información permite:\n• saber qué plantas son realmente cultivables en un momento dado,\n• ajustar la siembra a las condiciones reales en lugar de un calendario teórico.\nClima en tiempo real en el tablero\nUn módulo central en forma de ovoide muestra de un vistazo:\n• el estado del cielo,\n• día o noche,\n• la fase y posición de la luna para la ubicación seleccionada.\nNavegación en el tiempo\nDeslizando el dedo de izquierda a derecha sobre el ovoide, navega por las previsiones hora por hora, hasta más de 12 horas por adelantado.\nLa temperatura y las precipitaciones se ajustan dinámicamente durante el gesto.\n\n10 — Recomendaciones\nSowing puede ofrecer recomendaciones adaptadas a su situación.\nSe basan en:\n• la temporada,\n• el clima,\n• el estado de sus plantaciones.\nCada recomendación especifica:\n• qué hacer,\n• cuándo actuar,\n• por qué se sugiere la acción.\n\n11 — Exportación y uso compartido\nExportación PDF — calendario y tareas\nLas tareas del calendario se pueden exportar a PDF.\nEsto permite:\n• compartir información clara,\n• transmitir una intervención planificada,\n• mantener un rastro legible y fechado.\nExportación Excel — cosechas y estadísticas\nLos datos de cosecha se pueden exportar en formato Excel para:\n• analizar los resultados,\n• producir informes,\n• seguir la evolución a lo largo del tiempo.\nUso compartido de documentos\nLos documentos generados se pueden compartir a través de las aplicaciones disponibles en su dispositivo (mensajería, almacenamiento, transferencia a una computadora, etc.).\n\n12 — Copia de seguridad y mejores prácticas\nLos datos se almacenan localmente en su dispositivo.\nMejores prácticas recomendadas:\n• haga una copia de seguridad antes de una actualización importante,\n• exporte sus datos regularmente,\n• mantenga la aplicación y el dispositivo actualizados.\n\n13 — Ajustes\nEl menú Ajustes permite adaptar Sowing a sus usos.\nPuede notablemente:\n• elegir el idioma,\n• seleccionar su ubicación,\n• acceder al catálogo de plantas,\n• personalizar el tablero.\nPersonalización del tablero\nEs posible:\n• reposicionar cada módulo,\n• ajustar el espacio visual,\n• cambiar la imagen de fondo,\n• importar su propia imagen (función próximamente).\nInformación legal\nDesde los ajustes, puede consultar:\n• la guía de usuario,\n• la política de privacidad,\n• las condiciones de uso.\n\n14 — Preguntas frecuentes\nLas zonas táctiles no están bien alineadas\nDependiendo del teléfono o los ajustes de pantalla, algunas zonas pueden parecer desplazadas.\nUn modo de calibración orgánica permite:\n• visualizar las zonas táctiles,\n• reposicionarlas deslizándolas,\n• guardar la configuración para su dispositivo.\n¿Puedo usar Sowing sin conexión?\nSí. Sowing funciona sin conexión para la gestión de jardines, plantaciones, tareas e historial.\nSolo se utiliza una conexión:\n• para la recuperación de datos meteorológicos,\n• durante la exportación o uso compartido de documentos.\nNo se transmiten otros datos.\n\n15 — Observación final\nSowing está diseñado como un compañero de jardinería: simple, vivo y escalable.\nTómese el tiempo para observar, anotar y confiar en su experiencia tanto como en la herramienta.",
+  "@user_guide_text": {
+    "description": "Texte complet du guide d'utilisation"
+  },
   "privacy_policy_text": "Sowing respeta plenamente su privacidad.\n\n• Todos los datos se almacenan localmente en su dispositivo\n• No se transmiten datos personales a terceros\n• Ninguna información se almacena en un servidor externo\n\nLa aplicación funciona completamente sin conexión. Una conexión a Internet solo se utiliza para recuperar datos meteorológicos o durante las exportaciones.",
+  "@privacy_policy_text": {
+    "description": "Texte complet de la politique de confidentialité"
+  },
   "terms_text": "Al usar Sowing, usted acepta:\n\n• Usar la aplicación de manera responsable\n• No intentar eludir sus limitaciones\n• Respetar los derechos de propiedad intelectual\n• Usar solo sus propios datos\n\nEsta aplicación se proporciona tal cual, sin garantía.\n\nEl equipo de Sowing permanece atento a cualquier mejora o evolución futura.",
+  "@terms_text": {
+    "description": "Texte complet des conditions d'utilisation"
+  },
   "calibration_auto_apply": "Aplicar automáticamente para este dispositivo",
+  "@calibration_auto_apply": {
+    "description": "Switch pour appliquer automatiquement la calibration"
+  },
   "calibration_calibrate_now": "Calibrar ahora",
+  "@calibration_calibrate_now": {
+    "description": "Bouton pour lancer la calibration"
+  },
   "calibration_save_profile": "Guardar calibración actual como perfil",
+  "@calibration_save_profile": {
+    "description": "Bouton pour sauvegarder le profil"
+  },
   "calibration_export_profile": "Exportar perfil (copia JSON)",
+  "@calibration_export_profile": {
+    "description": "Bouton pour exporter le profil"
+  },
   "calibration_import_profile": "Importar perfil desde portapapeles",
+  "@calibration_import_profile": {
+    "description": "Bouton pour importer le profil"
+  },
   "calibration_reset_profile": "Restablecer perfil para este dispositivo",
+  "@calibration_reset_profile": {
+    "description": "Bouton pour réinitialiser le profil"
+  },
   "calibration_refresh_profile": "Actualizar vista previa del perfil",
+  "@calibration_refresh_profile": {
+    "description": "Bouton pour actualiser l'aperçu"
+  },
   "calibration_key_device": "Clave del dispositivo: {key}",
+  "@calibration_key_device": {
+    "description": "Label affichant la clé de l'appareil",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_no_profile": "No hay perfil guardado para este dispositivo.",
+  "@calibration_no_profile": {
+    "description": "Message si aucun profil"
+  },
   "calibration_image_settings_title": "Ajustes de imagen de fondo (Persistente)",
+  "@calibration_image_settings_title": {
+    "description": "Titre section réglages image"
+  },
   "calibration_pos_x": "Pos X",
+  "@calibration_pos_x": {
+    "description": "Label position X"
+  },
   "calibration_pos_y": "Pos Y",
+  "@calibration_pos_y": {
+    "description": "Label position Y"
+  },
   "calibration_zoom": "Zoom",
+  "@calibration_zoom": {
+    "description": "Label zoom"
+  },
   "calibration_reset_image": "Restablecer valores predeterminados de imagen",
+  "@calibration_reset_image": {
+    "description": "Bouton reset image defaults"
+  },
   "calibration_dialog_confirm_title": "Confirmar",
+  "@calibration_dialog_confirm_title": {
+    "description": "Titre dialog confirmation"
+  },
   "calibration_dialog_delete_profile": "¿Eliminar perfil de calibración para este dispositivo?",
+  "@calibration_dialog_delete_profile": {
+    "description": "Contenu dialog suppression profil"
+  },
   "calibration_action_delete": "Eliminar",
+  "@calibration_action_delete": {
+    "description": "Bouton supprimer"
+  },
   "calibration_snack_no_profile": "No se encontró perfil para este dispositivo.",
+  "@calibration_snack_no_profile": {
+    "description": "SnackBar aucun profil"
+  },
   "calibration_snack_profile_copied": "Perfil copiado al portapapeles.",
+  "@calibration_snack_profile_copied": {
+    "description": "SnackBar profil copié"
+  },
   "calibration_snack_clipboard_empty": "Portapapeles vacío.",
+  "@calibration_snack_clipboard_empty": {
+    "description": "SnackBar presse-papiers vide"
+  },
   "calibration_snack_profile_imported": "Perfil importado y guardado para este dispositivo.",
+  "@calibration_snack_profile_imported": {
+    "description": "SnackBar profil importé"
+  },
   "calibration_snack_import_error": "Error de importación JSON: {error}",
+  "@calibration_snack_import_error": {
+    "description": "SnackBar erreur import",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_snack_profile_deleted": "Perfil eliminado para este dispositivo.",
+  "@calibration_snack_profile_deleted": {
+    "description": "SnackBar profil supprimé"
+  },
   "calibration_snack_no_calibration": "No hay calibración guardada. Calibre desde el tablero primero.",
+  "@calibration_snack_no_calibration": {
+    "description": "SnackBar aucune calibration"
+  },
   "calibration_snack_saved_as_profile": "Calibración actual guardada como perfil para este dispositivo.",
+  "@calibration_snack_saved_as_profile": {
+    "description": "SnackBar calibration sauvegardée comme profil"
+  },
   "calibration_snack_save_error": "Error al guardar: {error}",
+  "@calibration_snack_save_error": {
+    "description": "SnackBar erreur sauvegarde",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_overlay_saved": "Calibración guardada",
   "calibration_overlay_error_save": "Error al guardar calibración: {error}",
+  "@calibration_overlay_error_save": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "calibration_instruction_image": "Arrastre para mover, pellizque para hacer zoom en la imagen de fondo.",
   "calibration_instruction_sky": "Ajuste el ovoide día/noche (centro, tamaño, rotación).",
   "calibration_instruction_modules": "Mueva los módulos (burbujas) a la ubicación deseada.",
@@ -149,145 +561,1196 @@
   "calibration_tool_sky": "Cielo",
   "calibration_tool_modules": "Módulos",
   "calibration_action_validate_exit": "Validar y salir",
+  "garden_management_create_title": "Crear un jardín",
+  "@garden_management_create_title": {
+    "description": "Titre page création jardin"
+  },
+  "garden_management_edit_title": "Editar jardín",
+  "@garden_management_edit_title": {
+    "description": "Titre page modification jardin"
+  },
+  "garden_management_name_label": "Nombre del jardín",
+  "@garden_management_name_label": {
+    "description": "Label champ nom jardin"
+  },
+  "garden_management_desc_label": "Descripción",
+  "@garden_management_desc_label": {
+    "description": "Label champ description"
+  },
+  "garden_management_image_label": "Imagen del jardín (Opcional)",
+  "@garden_management_image_label": {
+    "description": "Label section image"
+  },
+  "garden_management_image_url_label": "URL de la imagen",
+  "@garden_management_image_url_label": {
+    "description": "Label champ URL image"
+  },
+  "garden_management_image_preview_error": "No se puede cargar la imagen",
+  "@garden_management_image_preview_error": {
+    "description": "Erreur preview image"
+  },
+  "garden_management_create_submit": "Crear jardín",
+  "@garden_management_create_submit": {
+    "description": "Bouton soumettre création"
+  },
+  "garden_management_create_submitting": "Creando...",
+  "@garden_management_create_submitting": {
+    "description": "Bouton pendant soumission"
+  },
+  "garden_management_created_success": "Jardín creado con éxito",
+  "@garden_management_created_success": {
+    "description": "SnackBar succès création"
+  },
+  "garden_management_create_error": "Error al crear jardín",
+  "@garden_management_create_error": {
+    "description": "SnackBar erreur création"
+  },
+  "garden_management_delete_confirm_title": "Eliminar jardín",
+  "@garden_management_delete_confirm_title": {
+    "description": "Titre dialog suppression"
+  },
+  "garden_management_delete_confirm_body": "¿Está seguro de que desea eliminar este jardín? Esto también eliminará todas las parcelas y plantaciones asociadas. Esta acción es irreversible.",
+  "@garden_management_delete_confirm_body": {
+    "description": "Corps dialog suppression"
+  },
+  "garden_management_delete_success": "Jardín eliminado con éxito",
+  "@garden_management_delete_success": {
+    "description": "SnackBar succès suppression"
+  },
+  "garden_management_archived_tag": "Jardín archivado",
+  "@garden_management_archived_tag": {
+    "description": "Tag jardin archivé"
+  },
+  "garden_management_beds_title": "Parcelas del jardín",
+  "@garden_management_beds_title": {
+    "description": "Titre section parcelles"
+  },
+  "garden_management_no_beds_title": "Sin parcelas",
+  "@garden_management_no_beds_title": {
+    "description": "Titre état vide parcelles"
+  },
+  "garden_management_no_beds_desc": "Cree parcelas para organizar sus plantaciones",
+  "@garden_management_no_beds_desc": {
+    "description": "Description état vide parcelles"
+  },
+  "garden_management_add_bed_label": "Crear parcela",
+  "@garden_management_add_bed_label": {
+    "description": "Bouton ajouter parcelle"
+  },
+  "garden_management_stats_beds": "Parcelas",
+  "@garden_management_stats_beds": {
+    "description": "Label stat nombre parcelles"
+  },
+  "garden_management_stats_area": "Área total",
+  "@garden_management_stats_area": {
+    "description": "Label stat surface totale"
+  },
   "dashboard_weather_stats": "Detalles del clima",
+  "@dashboard_weather_stats": {
+    "description": "Label dashboard: Statistiques météo"
+  },
   "dashboard_soil_temp": "Temp. suelo",
+  "@dashboard_soil_temp": {
+    "description": "Label dashboard: Température du sol"
+  },
   "dashboard_air_temp": "Temperatura",
+  "@dashboard_air_temp": {
+    "description": "Label dashboard: Température air"
+  },
   "dashboard_statistics": "Estadísticas",
+  "@dashboard_statistics": {
+    "description": "Label dashboard: Statistiques globales"
+  },
   "dashboard_calendar": "Calendario",
+  "@dashboard_calendar": {
+    "description": "Label dashboard: Calendrier"
+  },
   "dashboard_activities": "Actividades",
+  "@dashboard_activities": {
+    "description": "Label dashboard: Activités récentes"
+  },
   "dashboard_weather": "Clima",
+  "@dashboard_weather": {
+    "description": "Label dashboard: Météo ciel"
+  },
   "dashboard_settings": "Ajustes",
+  "@dashboard_settings": {
+    "description": "Label dashboard: Paramètres"
+  },
   "dashboard_garden_n": "Jardín {number}",
+  "@dashboard_garden_n": {
+    "description": "Label dashboard: Jardin N",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "dashboard_garden_created": "Jardín \"{name}\" creado con éxito",
+  "@dashboard_garden_created": {
+    "description": "SnackBar création jardin succès",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "dashboard_garden_create_error": "Error al crear jardín.",
+  "@dashboard_garden_create_error": {
+    "description": "SnackBar erreur création jardin"
+  },
   "calendar_title": "Calendario de cultivo",
+  "@calendar_title": {
+    "description": "Titre page calendrier"
+  },
   "calendar_refreshed": "Calendario actualizado",
+  "@calendar_refreshed": {
+    "description": "SnackBar actualisation calendrier"
+  },
   "calendar_new_task_tooltip": "Nueva tarea",
+  "@calendar_new_task_tooltip": {
+    "description": "Tooltip bouton nouvelle tâche"
+  },
   "calendar_task_saved_title": "Tarea guardada",
+  "@calendar_task_saved_title": {
+    "description": "Titre dialog tâche enregistrée"
+  },
   "calendar_ask_export_pdf": "¿Desea enviarla como PDF?",
+  "@calendar_ask_export_pdf": {
+    "description": "Contenu dialog export PDF"
+  },
   "calendar_task_modified": "Tarea modificada",
+  "@calendar_task_modified": {
+    "description": "SnackBar tâche modifiée"
+  },
   "calendar_delete_confirm_title": "¿Eliminar tarea?",
+  "@calendar_delete_confirm_title": {
+    "description": "Titre dialog suppression tâche"
+  },
   "calendar_delete_confirm_content": "\"{title}\" será eliminada.",
+  "@calendar_delete_confirm_content": {
+    "description": "Contenu dialog suppression tâche",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "calendar_task_deleted": "Tarea eliminada",
+  "@calendar_task_deleted": {
+    "description": "SnackBar tâche supprimée"
+  },
   "calendar_restore_error": "Error de restauración: {error}",
+  "@calendar_restore_error": {
+    "description": "Erreur restauration",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_delete_error": "Error de eliminación: {error}",
+  "@calendar_delete_error": {
+    "description": "Erreur suppression",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_action_assign": "Enviar / Asignar a...",
+  "@calendar_action_assign": {
+    "description": "Action sheet assigner"
+  },
   "calendar_assign_title": "Asignar / Enviar",
+  "@calendar_assign_title": {
+    "description": "Titre dialog assignation"
+  },
   "calendar_assign_hint": "Ingrese nombre o correo electrónico",
+  "@calendar_assign_hint": {
+    "description": "Hint dialog assignation"
+  },
   "calendar_assign_field": "Nombre o correo electrónico",
+  "@calendar_assign_field": {
+    "description": "Label champ assignation"
+  },
   "calendar_task_assigned": "Tarea asignada a {name}",
+  "@calendar_task_assigned": {
+    "description": "SnackBar tâche attribuée",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "calendar_assign_error": "Error de asignación: {error}",
+  "@calendar_assign_error": {
+    "description": "Erreur attribution",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_export_error": "Error de exportación PDF: {error}",
+  "@calendar_export_error": {
+    "description": "Erreur export PDF",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "calendar_previous_month": "Mes anterior",
+  "@calendar_previous_month": {
+    "description": "Tooltip mois précédent"
+  },
   "calendar_next_month": "Mes siguiente",
+  "@calendar_next_month": {
+    "description": "Tooltip mois suivant"
+  },
   "calendar_limit_reached": "Límite alcanzado",
+  "@calendar_limit_reached": {
+    "description": "Tooltip limite navigation"
+  },
   "calendar_drag_instruction": "Deslizar para navegar",
+  "@calendar_drag_instruction": {
+    "description": "Instruction navigation calendrier"
+  },
   "common_refresh": "Actualizar",
+  "@common_refresh": {
+    "description": "Tooltip actualiser"
+  },
   "common_yes": "Sí",
+  "@common_yes": {
+    "description": "Bouton Oui"
+  },
   "common_no": "No",
+  "@common_no": {
+    "description": "Bouton Non"
+  },
   "common_delete": "Eliminar",
+  "@common_delete": {
+    "description": "Bouton Supprimer"
+  },
   "common_edit": "Editar",
+  "@common_edit": {
+    "description": "Bouton Modifier"
+  },
   "common_undo": "Deshacer",
+  "@common_undo": {
+    "description": "Action Annuler (Undo)"
+  },
   "common_error_prefix": "Error: {error}",
+  "@common_error_prefix": {
+    "description": "Préfixe erreur",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "common_retry": "Reintentar",
+  "@common_retry": {
+    "description": "Bouton réessayer"
+  },
+  "calendar_no_events": "Sin eventos hoy",
+  "@calendar_no_events": {
+    "description": "Message aucun événement"
+  },
+  "calendar_events_of": "Eventos del {date}",
+  "@calendar_events_of": {
+    "description": "Titre événements du jour",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "calendar_section_plantings": "Plantaciones",
+  "@calendar_section_plantings": {
+    "description": "Titre section plantations"
+  },
+  "calendar_section_harvests": "Cosechas esperadas",
+  "@calendar_section_harvests": {
+    "description": "Titre section récoltes"
+  },
+  "calendar_section_tasks": "Tareas programadas",
+  "@calendar_section_tasks": {
+    "description": "Titre section tâches"
+  },
+  "calendar_filter_tasks": "Tareas",
+  "@calendar_filter_tasks": {
+    "description": "Filtre tâches"
+  },
+  "calendar_filter_maintenance": "Mantenimiento",
+  "@calendar_filter_maintenance": {
+    "description": "Filtre entretien"
+  },
+  "calendar_filter_harvests": "Cosechas",
+  "@calendar_filter_harvests": {
+    "description": "Filtre récoltes"
+  },
+  "calendar_filter_urgent": "Urgente",
+  "@calendar_filter_urgent": {
+    "description": "Filtre urgences"
+  },
   "common_general_error": "Ocurrió un error",
+  "@common_general_error": {
+    "description": "Message erreur générique"
+  },
   "common_error": "Error",
+  "@common_error": {
+    "description": "Titre erreur générique"
+  },
+  "settings_backup_restore_section": "Sauvegarde et Restauration",
+  "@settings_backup_restore_section": {
+    "description": "Titre section sauvegarde/restauration"
+  },
+  "settings_backup_restore_subtitle": "Sauvegarde intégrale de vos données",
+  "@settings_backup_restore_subtitle": {
+    "description": "Sous-titre section sauvegarde/restauration"
+  },
+  "settings_backup_action": "Créer une sauvegarde",
+  "@settings_backup_action": {
+    "description": "Bouton créer sauvegarde"
+  },
+  "settings_restore_action": "Restaurer une sauvegarde",
+  "@settings_restore_action": {
+    "description": "Bouton restaurer sauvegarde"
+  },
+  "settings_backup_creating": "Création de la sauvegarde en cours...",
+  "@settings_backup_creating": {
+    "description": "Loading sauvegarde"
+  },
+  "settings_backup_success": "Sauvegarde créée avec succès !",
+  "@settings_backup_success": {
+    "description": "Succès sauvegarde"
+  },
+  "settings_restore_warning_title": "Attention",
+  "@settings_restore_warning_title": {
+    "description": "Titre warning restauration"
+  },
+  "settings_restore_warning_content": "La restauration d'une sauvegarde écrasera TOUTES les données actuelles (jardins, plantations, réglages). Cette action est irréversible. L'application devra redémarrer.\n\nÊtes-vous sûr de vouloir continuer ?",
+  "@settings_restore_warning_content": {
+    "description": "Contenu warning restauration"
+  },
+  "settings_restore_success": "Restauration réussie ! Veuillez redémarrer l'application.",
+  "@settings_restore_success": {
+    "description": "Succès restauration"
+  },
+  "settings_backup_error": "Échec de la sauvegarde : {error}",
+  "@settings_backup_error": {
+    "description": "Erreur sauvegarde",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "settings_restore_error": "Échec de la restauration : {error}",
+  "@settings_restore_error": {
+    "description": "Erreur restauration",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "task_editor_title_new": "Nueva tarea",
+  "@task_editor_title_new": {
+    "description": "Titre dialogue nouvelle tâche"
+  },
   "task_editor_title_edit": "Editar tarea",
+  "@task_editor_title_edit": {
+    "description": "Titre dialogue modifier tâche"
+  },
   "task_editor_title_field": "Título *",
+  "activity_screen_title": "Actividades e Historial",
+  "@activity_screen_title": {
+    "description": "Titre de l'écran des activités"
+  },
+  "activity_tab_recent_garden": "Reciente ({gardenName})",
+  "@activity_tab_recent_garden": {
+    "description": "Titre onglet récentes pour un jardin",
+    "placeholders": {
+      "gardenName": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_tab_recent_global": "Reciente (Global)",
+  "@activity_tab_recent_global": {
+    "description": "Titre onglet récentes global"
+  },
+  "activity_tab_history": "Historial",
+  "@activity_tab_history": {
+    "description": "Titre onglet historique"
+  },
+  "activity_history_section_title": "Historial — ",
+  "@activity_history_section_title": {
+    "description": "Titre section historique"
+  },
+  "activity_history_empty": "Ningún jardín seleccionado.\nPara ver el historial de un jardín, manténgalo presionado desde el tablero.",
+  "@activity_history_empty": {
+    "description": "Message vide historique"
+  },
+  "activity_empty_title": "No se encontraron actividades",
+  "@activity_empty_title": {
+    "description": "Titre vide activités"
+  },
+  "activity_empty_subtitle": "Las actividades de jardinería aparecerán aquí",
+  "@activity_empty_subtitle": {
+    "description": "Sous-titre vide activités"
+  },
+  "activity_error_loading": "Error al cargar actividades",
+  "@activity_error_loading": {
+    "description": "Erreur chargement"
+  },
+  "activity_priority_important": "Importante",
+  "@activity_priority_important": {
+    "description": "Priorité importante"
+  },
+  "activity_priority_normal": "Normal",
+  "@activity_priority_normal": {
+    "description": "Priorité normale"
+  },
+  "activity_time_just_now": "Ahora mismo",
+  "@activity_time_just_now": {
+    "description": "Temps: à l'instant"
+  },
+  "activity_time_minutes_ago": "hace {minutes} min",
+  "@activity_time_minutes_ago": {
+    "description": "Temps: minutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "activity_time_hours_ago": "hace {hours} h",
+  "@activity_time_hours_ago": {
+    "description": "Temps: heures",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "activity_time_days_ago": "hace {count} días",
+  "@activity_time_days_ago": {
+    "description": "Temps: jours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activity_metadata_garden": "Jardín: {name}",
+  "@activity_metadata_garden": {
+    "description": "Metadata jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_bed": "Parcela: {name}",
+  "@activity_metadata_bed": {
+    "description": "Metadata parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_plant": "Planta: {name}",
+  "@activity_metadata_plant": {
+    "description": "Metadata plante",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_quantity": "Cantidad: {quantity}",
+  "@activity_metadata_quantity": {
+    "description": "Metadata quantité",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_date": "Fecha: {date}",
+  "@activity_metadata_date": {
+    "description": "Metadata date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_maintenance": "Mantenimiento: {type}",
+  "@activity_metadata_maintenance": {
+    "description": "Metadata maintenance",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_metadata_weather": "Clima: {weather}",
+  "@activity_metadata_weather": {
+    "description": "Metadata météo",
+    "placeholders": {
+      "weather": {
+        "type": "String"
+      }
+    }
+  },
+  "@task_editor_title_field": {
+    "description": "Label champ titre"
+  },
   "task_editor_error_title_required": "Requerido",
+  "history_hint_title": "Para ver el historial de un jardín",
+  "@history_hint_title": {
+    "description": "Titre carte hint historique"
+  },
+  "history_hint_body": "Selecciónelo manteniendo presionado desde el tablero.",
+  "@history_hint_body": {
+    "description": "Corps carte hint historique"
+  },
+  "history_hint_action": "Ir al tablero",
+  "@history_hint_action": {
+    "description": "Action carte hint historique"
+  },
+  "activity_desc_garden_created": "Jardín \"{name}\" creado",
+  "@activity_desc_garden_created": {
+    "description": "Desc act création jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_bed_created": "Parcela \"{name}\" creada",
+  "@activity_desc_bed_created": {
+    "description": "Desc act création parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_planting_created": "Plantación de \"{name}\" añadida",
+  "@activity_desc_planting_created": {
+    "description": "Desc act création plantation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_germination": "Germinación de \"{name}\" confirmada",
+  "@activity_desc_germination": {
+    "description": "Desc act germination",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_harvest": "Cosecha de \"{name}\" registrada",
+  "@activity_desc_harvest": {
+    "description": "Desc act récolte",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_maintenance": "Mantenimiento: {type}",
+  "@activity_desc_maintenance": {
+    "description": "Desc act maintenance",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_garden_deleted": "Jardín \"{name}\" eliminado",
+  "@activity_desc_garden_deleted": {
+    "description": "Desc act suppression jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_bed_deleted": "Parcela \"{name}\" eliminada",
+  "@activity_desc_bed_deleted": {
+    "description": "Desc act suppression parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_planting_deleted": "Plantación de \"{name}\" eliminada",
+  "@activity_desc_planting_deleted": {
+    "description": "Desc act suppression plantation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_garden_updated": "Jardín \"{name}\" actualizado",
+  "@activity_desc_garden_updated": {
+    "description": "Desc act màj jardin",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_bed_updated": "Parcela \"{name}\" actualizada",
+  "@activity_desc_bed_updated": {
+    "description": "Desc act màj parcelle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activity_desc_planting_updated": "Plantación de \"{name}\" actualizada",
+  "@activity_desc_planting_updated": {
+    "description": "Desc act màj plantation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_steps_title": "Paso a paso",
+  "@planting_steps_title": {
+    "description": "Titre widget Pas-à-pas"
+  },
+  "planting_steps_add_button": "Añadir",
+  "@planting_steps_add_button": {
+    "description": "Label bouton ajouter étape"
+  },
+  "planting_steps_see_less": "Ver menos",
+  "@planting_steps_see_less": {
+    "description": "Bouton replier"
+  },
+  "planting_steps_see_all": "Ver todo",
+  "@planting_steps_see_all": {
+    "description": "Bouton voir tout"
+  },
+  "planting_steps_empty": "No hay pasos recomendados",
+  "@planting_steps_empty": {
+    "description": "Message vide étapes"
+  },
+  "planting_steps_more": "+ {count} pasos más",
+  "@planting_steps_more": {
+    "description": "Label x autres étapes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planting_steps_prediction_badge": "Predicción",
+  "@planting_steps_prediction_badge": {
+    "description": "Badge prédiction"
+  },
+  "planting_steps_date_prefix": "El {date}",
+  "@planting_steps_date_prefix": {
+    "description": "Préfixe date étape",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_steps_done": "Hecho",
+  "@planting_steps_done": {
+    "description": "Label fait"
+  },
+  "planting_steps_mark_done": "Marcar como hecho",
+  "@planting_steps_mark_done": {
+    "description": "Bouton marquer fait"
+  },
+  "planting_steps_dialog_title": "Añadir paso",
+  "@planting_steps_dialog_title": {
+    "description": "Titre dialog ajout étape"
+  },
+  "planting_steps_dialog_hint": "Ej: Acolchado ligero",
+  "@planting_steps_dialog_hint": {
+    "description": "Hint dialog ajout étape"
+  },
+  "planting_steps_dialog_add": "Añadir",
+  "@planting_steps_dialog_add": {
+    "description": "Bouton valider ajout"
+  },
+  "planting_status_sown": "Sembrado",
+  "planting_status_planted": "Plantado",
+  "planting_status_growing": "En crecimiento",
+  "planting_status_ready": "Listo para cosechar",
+  "planting_status_harvested": "Cosechado",
+  "planting_status_failed": "Fallido",
+  "planting_card_sown_date": "Sembrado el {date}",
+  "@planting_card_sown_date": {
+    "description": "Label sémé le",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_card_planted_date": "Plantado el {date}",
+  "@planting_card_planted_date": {
+    "description": "Label planté le",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_card_harvest_estimate": "Est. cosecha: {date}",
+  "@planting_card_harvest_estimate": {
+    "description": "Label récolte estimée",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planting_info_title": "Info botánica",
+  "planting_info_tips_title": "Consejos de cultivo",
+  "planting_info_maturity": "Madurez",
+  "planting_info_days": "{days} días",
+  "planting_info_spacing": "Espaciamiento",
+  "planting_info_cm": "{cm} cm",
+  "planting_info_depth": "Profundidad",
+  "planting_info_exposure": "Exposición",
+  "planting_info_water": "Agua",
+  "planting_info_season": "Temporada de siembra",
+  "planting_info_scientific_name_none": "Nombre científico no disponible",
+  "planting_info_culture_title": "Información de cultivo",
+  "planting_info_germination": "Tiempo de germinación",
+  "planting_info_harvest_time": "Tiempo de cosecha",
+  "planting_info_none": "No especificado",
+  "planting_tips_none": "No hay consejos disponibles",
+  "planting_history_title": "Historial de acciones",
+  "planting_history_action_planting": "Plantación",
+  "planting_history_todo": "Historial detallado próximamente",
+  "@task_editor_error_title_required": {
+    "description": "Erreur validation titre"
+  },
   "task_editor_garden_all": "Todos los jardines",
+  "@task_editor_garden_all": {
+    "description": "Option tous les jardins"
+  },
   "task_editor_zone_label": "Zona (Parcela)",
+  "@task_editor_zone_label": {
+    "description": "Label champ zone"
+  },
   "task_editor_zone_none": "Sin zona específica",
+  "@task_editor_zone_none": {
+    "description": "Option aucune zone"
+  },
   "task_editor_zone_empty": "No hay parcelas para este jardín",
+  "@task_editor_zone_empty": {
+    "description": "Message aucune parcelle"
+  },
   "task_editor_description_label": "Descripción",
+  "@task_editor_description_label": {
+    "description": "Label champ description"
+  },
   "task_editor_date_label": "Fecha de inicio",
+  "@task_editor_date_label": {
+    "description": "Label champ date"
+  },
   "task_editor_time_label": "Hora",
+  "@task_editor_time_label": {
+    "description": "Label champ heure"
+  },
   "task_editor_duration_label": "Duración estimada",
+  "@task_editor_duration_label": {
+    "description": "Label champ durée"
+  },
   "task_editor_duration_other": "Otro",
+  "@task_editor_duration_other": {
+    "description": "Option durée autre"
+  },
   "task_editor_type_label": "Tipo de tarea",
+  "@task_editor_type_label": {
+    "description": "Label champ type"
+  },
   "task_editor_priority_label": "Prioridad",
+  "@task_editor_priority_label": {
+    "description": "Label champ priorité"
+  },
   "task_editor_urgent_label": "Urgente",
+  "@task_editor_urgent_label": {
+    "description": "Label switch urgent"
+  },
   "task_editor_option_none": "Ninguno (Solo guardar)",
+  "@task_editor_option_none": {
+    "description": "Option export aucune"
+  },
   "task_editor_option_share": "Compartir (Texto)",
+  "@task_editor_option_share": {
+    "description": "Option export partage"
+  },
   "task_editor_option_pdf": "Exportar — PDF",
+  "@task_editor_option_pdf": {
+    "description": "Option export PDF"
+  },
   "task_editor_option_docx": "Exportar — Word (.docx)",
+  "@task_editor_option_docx": {
+    "description": "Option export Word"
+  },
   "task_editor_export_label": "Salida / Compartir",
+  "@task_editor_export_label": {
+    "description": "Label champ export"
+  },
   "task_editor_photo_placeholder": "Añadir foto (Próximamente)",
+  "@task_editor_photo_placeholder": {
+    "description": "Bouton photo placeholder"
+  },
   "task_editor_action_create": "Crear",
+  "@task_editor_action_create": {
+    "description": "Bouton créer"
+  },
   "task_editor_action_save": "Guardar",
+  "@task_editor_action_save": {
+    "description": "Bouton enregistrer"
+  },
   "task_editor_action_cancel": "Cancelar",
+  "@task_editor_action_cancel": {
+    "description": "Bouton annuler"
+  },
   "task_editor_assignee_label": "Asignado a",
+  "@task_editor_assignee_label": {
+    "description": "Label champ assigné à"
+  },
   "task_editor_assignee_add": "Añadir \"{name}\" a favoritos",
+  "@task_editor_assignee_add": {
+    "description": "Action ajouter assigné",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "task_editor_assignee_none": "Sin resultados.",
+  "@task_editor_assignee_none": {
+    "description": "Message aucun résultat assigné"
+  },
   "task_editor_recurrence_label": "Recurrencia",
+  "@task_editor_recurrence_label": {
+    "description": "Label champ récurrence"
+  },
   "task_editor_recurrence_none": "Ninguna",
+  "@task_editor_recurrence_none": {
+    "description": "Option récurrence aucune"
+  },
   "task_editor_recurrence_interval": "Cada X días",
+  "@task_editor_recurrence_interval": {
+    "description": "Option récurrence intervalle"
+  },
   "task_editor_recurrence_weekly": "Semanalmente (Días)",
+  "@task_editor_recurrence_weekly": {
+    "description": "Option récurrence hebdo"
+  },
   "task_editor_recurrence_monthly": "Mensualmente (mismo día)",
+  "@task_editor_recurrence_monthly": {
+    "description": "Option récurrence mensuelle"
+  },
   "task_editor_recurrence_repeat_label": "Repetir cada ",
+  "@task_editor_recurrence_repeat_label": {
+    "description": "Label répéter tous les"
+  },
   "task_editor_recurrence_days_suffix": " d",
+  "@task_editor_recurrence_days_suffix": {
+    "description": "Suffixe jours"
+  },
   "task_kind_generic": "Genérico",
+  "@task_kind_generic": {
+    "description": "Type tâche générique"
+  },
   "task_kind_repair": "Reparación 🛠️",
+  "@task_kind_repair": {
+    "description": "Type tâche réparation"
+  },
   "soil_temp_title": "Temperatura del suelo",
+  "@soil_temp_title": {
+    "description": "Titre écran température sol"
+  },
   "soil_temp_chart_error": "Error de gráfico: {error}",
+  "@soil_temp_chart_error": {
+    "description": "Erreur affichage graphique",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "soil_temp_about_title": "Acerca de la temp. del suelo",
+  "@soil_temp_about_title": {
+    "description": "Titre section à propos"
+  },
   "soil_temp_about_content": "La temperatura del suelo mostrada aquí es estimada por la aplicación a partir de datos climáticos y estacionales, según la siguiente fórmula:\n\nEsta estimación permite dar una tendencia realista de la temperatura del suelo cuando no hay medición directa disponible.",
+  "@soil_temp_about_content": {
+    "description": "Contenu section à propos"
+  },
   "soil_temp_formula_label": "Fórmula de cálculo utilizada:",
+  "@soil_temp_formula_label": {
+    "description": "Label formule"
+  },
   "soil_temp_formula_content": "T_suelo(n+1) = T_suelo(n) + α × (T_aire(n) − T_suelo(n))\n\nCon:\n• α : coeficiente de difusión térmica (valor por defecto 0.15 — rango recomendado 0.10–0.20).\n• T_suelo(n) : temperatura actual del suelo (°C).\n• T_aire(n) : temperatura actual del aire (°C).\n\nLa fórmula está implementada en el código de la aplicación (ComputeSoilTempNextDayUsecase).",
+  "@soil_temp_formula_content": {
+    "description": "Contenu formule"
+  },
   "soil_temp_current_label": "Temperatura actual",
+  "@soil_temp_current_label": {
+    "description": "Label température actuelle"
+  },
   "soil_temp_action_measure": "Editar / Medir",
+  "@soil_temp_action_measure": {
+    "description": "Bouton modifier/mesurer"
+  },
   "soil_temp_measure_hint": "Puede ingresar manualmente la temperatura del suelo en la pestaña 'Editar / Medir'.",
+  "@soil_temp_measure_hint": {
+    "description": "Hint mesure manuelle"
+  },
   "soil_temp_catalog_error": "Error del catálogo: {error}",
+  "@soil_temp_catalog_error": {
+    "description": "Erreur catalogue",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "soil_temp_advice_error": "Error de consejo: {error}",
+  "@soil_temp_advice_error": {
+    "description": "Erreur chargement conseils",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "soil_temp_db_empty": "La base de datos de plantas está vacía.",
+  "@soil_temp_db_empty": {
+    "description": "Message DB vide"
+  },
   "soil_temp_reload_plants": "Recargar plantas",
+  "@soil_temp_reload_plants": {
+    "description": "Bouton recharger plantes"
+  },
   "soil_temp_no_advice": "No se encontraron plantas con datos de germinación.",
+  "@soil_temp_no_advice": {
+    "description": "Message aucun conseil"
+  },
   "soil_advice_status_ideal": "Óptimo",
+  "@soil_advice_status_ideal": {
+    "description": "Statut conseil optimal"
+  },
   "soil_advice_status_sow_now": "Sembrar ahora",
+  "@soil_advice_status_sow_now": {
+    "description": "Statut conseil semer"
+  },
   "soil_advice_status_sow_soon": "Pronto",
+  "@soil_advice_status_sow_soon": {
+    "description": "Statut conseil bientôt"
+  },
   "soil_advice_status_wait": "Esperar",
+  "@soil_advice_status_wait": {
+    "description": "Statut conseil attendre"
+  },
   "soil_sheet_title": "Temperatura del suelo",
+  "@soil_sheet_title": {
+    "description": "Titre sheet temp sol"
+  },
   "soil_sheet_last_measure": "Última medida: {temp}°C ({date})",
+  "@soil_sheet_last_measure": {
+    "description": "Info dernière mesure",
+    "placeholders": {
+      "temp": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "soil_sheet_new_measure": "Nueva medida (Ancla)",
+  "@soil_sheet_new_measure": {
+    "description": "Titre section nouvelle mesure"
+  },
   "soil_sheet_input_label": "Temperatura (°C)",
+  "@soil_sheet_input_label": {
+    "description": "Label champ input temp"
+  },
   "soil_sheet_input_error": "Valor inválido (-10.0 a 45.0)",
+  "@soil_sheet_input_error": {
+    "description": "Erreur validation input"
+  },
   "soil_sheet_input_hint": "0.0",
+  "@soil_sheet_input_hint": {
+    "description": "Hint input"
+  },
   "soil_sheet_action_cancel": "Cancelar",
+  "@soil_sheet_action_cancel": {
+    "description": "Bouton annuler"
+  },
   "soil_sheet_action_save": "Guardar",
+  "@soil_sheet_action_save": {
+    "description": "Bouton sauvegarder"
+  },
   "soil_sheet_snack_invalid": "Valor inválido. Ingrese entre -10.0 y 45.0",
+  "@soil_sheet_snack_invalid": {
+    "description": "Snack valeur invalide"
+  },
   "soil_sheet_snack_success": "Medida guardada como ancla",
+  "@soil_sheet_snack_success": {
+    "description": "Snack succès sauvegarde"
+  },
   "soil_sheet_snack_error": "Error al guardar: {error}",
+  "@soil_sheet_snack_error": {
+    "description": "Snack erreur sauvegarde",
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
   "weather_screen_title": "Clima",
+  "@weather_screen_title": {
+    "description": "Titre écran météo"
+  },
   "weather_provider_credit": "Datos proporcionados por Open-Meteo",
+  "@weather_provider_credit": {
+    "description": "Crédit fournisseur données"
+  },
   "weather_error_loading": "No se puede cargar el clima",
+  "@weather_error_loading": {
+    "description": "Erreur chargement météo"
+  },
   "weather_action_retry": "Reintentar",
+  "@weather_action_retry": {
+    "description": "Bouton réessayer"
+  },
   "weather_header_next_24h": "PRÓXIMAS 24H",
+  "@weather_header_next_24h": {
+    "description": "Header prochaines 24h"
+  },
   "weather_header_daily_summary": "RESUMEN DIARIO",
+  "@weather_header_daily_summary": {
+    "description": "Header résumé jour"
+  },
   "weather_header_precipitations": "PRECIPITACIÓN (24h)",
+  "@weather_header_precipitations": {
+    "description": "Header précipitations"
+  },
   "weather_label_wind": "VIENTO",
+  "@weather_label_wind": {
+    "description": "Label vent"
+  },
   "weather_label_pressure": "PRESIÓN",
+  "@weather_label_pressure": {
+    "description": "Label pression"
+  },
   "weather_label_sun": "SOL",
+  "@weather_label_sun": {
+    "description": "Label soleil"
+  },
   "weather_label_astro": "ASTRO",
+  "@weather_label_astro": {
+    "description": "Label astres"
+  },
   "weather_data_speed": "Velocidad",
+  "@weather_data_speed": {
+    "description": "Label vitesse vent"
+  },
   "weather_data_gusts": "Ráfagas",
+  "@weather_data_gusts": {
+    "description": "Label rafales"
+  },
   "weather_data_sunrise": "Amanecer",
+  "@weather_data_sunrise": {
+    "description": "Label lever soleil"
+  },
   "weather_data_sunset": "Atardecer",
+  "@weather_data_sunset": {
+    "description": "Label coucher soleil"
+  },
   "weather_data_rain": "Lluvia",
+  "@weather_data_rain": {
+    "description": "Label pluie"
+  },
   "weather_data_max": "Máx",
+  "@weather_data_max": {
+    "description": "Label temp max"
+  },
   "weather_data_min": "Mín",
+  "@weather_data_min": {
+    "description": "Label temp min"
+  },
   "weather_data_wind_max": "Viento Máx",
+  "@weather_data_wind_max": {
+    "description": "Label vent max"
+  },
   "weather_pressure_high": "Alta",
+  "@weather_pressure_high": {
+    "description": "Pression haute"
+  },
   "weather_pressure_low": "Baja",
+  "@weather_pressure_low": {
+    "description": "Pression basse"
+  },
   "weather_today_label": "Hoy",
+  "@weather_today_label": {
+    "description": "Label aujourd'hui"
+  },
   "moon_phase_new": "Luna Nueva",
+  "@moon_phase_new": {
+    "description": "Phase nouvelle lune"
+  },
   "moon_phase_waxing_crescent": "Luna Creciente",
+  "@moon_phase_waxing_crescent": {
+    "description": "Phase premier croissant"
+  },
   "moon_phase_first_quarter": "Cuarto Creciente",
+  "@moon_phase_first_quarter": {
+    "description": "Phase premier quartier"
+  },
   "moon_phase_waxing_gibbous": "Gibosa Creciente",
+  "@moon_phase_waxing_gibbous": {
+    "description": "Phase gibbeuse croissante"
+  },
   "moon_phase_full": "Luna Llena",
+  "@moon_phase_full": {
+    "description": "Phase pleine lune"
+  },
   "moon_phase_waning_gibbous": "Gibosa Menguante",
+  "@moon_phase_waning_gibbous": {
+    "description": "Phase gibbeuse décroissante"
+  },
   "moon_phase_last_quarter": "Cuarto Menguante",
+  "@moon_phase_last_quarter": {
+    "description": "Phase dernier quartier"
+  },
   "moon_phase_waning_crescent": "Luna Menguante",
+  "@moon_phase_waning_crescent": {
+    "description": "Phase dernier croissant"
+  },
   "wmo_code_0": "Despejado",
   "wmo_code_1": "Mayormente despejado",
   "wmo_code_2": "Parcialmente nublado",
@@ -316,45 +1779,45 @@
   "wmo_code_99": "Tormenta con granizo fuerte",
   "wmo_code_unknown": "Condiciones desconocidas",
   "task_kind_buy": "Comprar 🛒",
+  "@task_kind_buy": {
+    "description": "Type tâche achat"
+  },
   "task_kind_clean": "Limpiar 🧹",
+  "@task_kind_clean": {
+    "description": "Type tâche nettoyage"
+  },
   "task_kind_watering": "Regar 💧",
+  "@task_kind_watering": {
+    "description": "Type tâche arrosage"
+  },
   "task_kind_seeding": "Sembrar 🌱",
+  "@task_kind_seeding": {
+    "description": "Type tâche semis"
+  },
   "task_kind_pruning": "Podar ✂️",
+  "@task_kind_pruning": {
+    "description": "Type tâche taille"
+  },
   "task_kind_weeding": "Deshierbar 🌿",
+  "@task_kind_weeding": {
+    "description": "Type tâche désherbage"
+  },
   "task_kind_amendment": "Enmienda 🪵",
+  "@task_kind_amendment": {
+    "description": "Type tâche amendement"
+  },
   "task_kind_treatment": "Tratamiento 🧪",
+  "@task_kind_treatment": {
+    "description": "Type tâche traitement"
+  },
   "task_kind_harvest": "Cosechar 🧺",
+  "@task_kind_harvest": {
+    "description": "Type tâche récolte"
+  },
   "task_kind_winter_protection": "Protección invernal ❄️",
-  "calendar_no_events": "Sin eventos hoy",
-  "calendar_events_of": "Eventos del {date}",
-  "calendar_section_plantings": "Plantaciones",
-  "calendar_section_harvests": "Cosechas esperadas",
-  "calendar_section_tasks": "Tareas programadas",
-  "calendar_filter_tasks": "Tareas",
-  "calendar_filter_maintenance": "Mantenimiento",
-  "calendar_filter_harvests": "Cosechas",
-  "calendar_filter_urgent": "Urgente",
-  "garden_management_create_title": "Crear un jardín",
-  "garden_management_edit_title": "Editar jardín",
-  "garden_management_name_label": "Nombre del jardín",
-  "garden_management_desc_label": "Descripción",
-  "garden_management_image_label": "Imagen del jardín (Opcional)",
-  "garden_management_image_url_label": "URL de la imagen",
-  "garden_management_image_preview_error": "No se puede cargar la imagen",
-  "garden_management_create_submit": "Crear jardín",
-  "garden_management_create_submitting": "Creando...",
-  "garden_management_created_success": "Jardín creado con éxito",
-  "garden_management_create_error": "Error al crear jardín",
-  "garden_management_delete_confirm_title": "Eliminar jardín",
-  "garden_management_delete_confirm_body": "¿Está seguro de que desea eliminar este jardín? Esto también eliminará todas las parcelas y plantaciones asociadas. Esta acción es irreversible.",
-  "garden_management_delete_success": "Jardín eliminado con éxito",
-  "garden_management_archived_tag": "Jardín archivado",
-  "garden_management_beds_title": "Parcelas del jardín",
-  "garden_management_no_beds_title": "Sin parcelas",
-  "garden_management_no_beds_desc": "Cree parcelas para organizar sus plantaciones",
-  "garden_management_add_bed_label": "Crear parcela",
-  "garden_management_stats_beds": "Parcelas",
-  "garden_management_stats_area": "Área total",
+  "@task_kind_winter_protection": {
+    "description": "Type tâche hivernage"
+  },
   "garden_detail_title_error": "Error",
   "garden_detail_subtitle_not_found": "El jardín solicitado no existe o ha sido eliminado.",
   "garden_detail_subtitle_error_beds": "No se pueden cargar las parcelas: {error}",
@@ -367,7 +1830,6 @@
   "garden_bed_delete_confirm_body": "¿Está seguro de que desea eliminar \"{bedName}\"? Esta acción es irreversible.",
   "garden_bed_deleted_snack": "Parcela eliminada",
   "garden_bed_delete_error": "Error al eliminar la parcela: {error}",
-  "common_save": "Guardar",
   "common_back": "Atrás",
   "garden_action_disable": "Deshabilitar",
   "garden_action_enable": "Habilitar",
@@ -398,6 +1860,22 @@
   "bed_card_sown_on": "Sembrado el {date}",
   "bed_card_harvest_start": "inicio cosecha aprox.",
   "bed_action_harvest": "Cosechar",
+  "lifecycle_error_title": "Error al calcular ciclo",
+  "lifecycle_error_prefix": "Error: ",
+  "lifecycle_cycle_completed": "ciclo completado",
+  "lifecycle_stage_germination": "Germinación",
+  "lifecycle_stage_growth": "Crecimiento",
+  "lifecycle_stage_fruiting": "Fructificación",
+  "lifecycle_stage_harvest": "Cosecha",
+  "lifecycle_stage_unknown": "Desconocido",
+  "lifecycle_harvest_expected": "Cosecha esperada",
+  "lifecycle_in_days": "En {days} días",
+  "lifecycle_passed": "Pasado",
+  "lifecycle_now": "¡Ahora!",
+  "lifecycle_next_action": "Siguiente acción",
+  "lifecycle_update": "Actualizar ciclo",
+  "lifecycle_days_ago": "hace {days} días",
+  "planting_detail_title": "Detalles de la siembra",
   "companion_beneficial": "Plantas beneficiosas",
   "companion_avoid": "Plantas a evitar",
   "common_close": "Cerrar",
@@ -413,6 +1891,14 @@
   "harvest_title": "Cosecha: {plantName}",
   "harvest_weight_label": "Peso cosechado (kg) *",
   "harvest_price_label": "Precio estimado ({currencyUnit})",
+  "@harvest_price_label": {
+    "description": "Libellé pour le champ prix estimé",
+    "placeholders": {
+      "currencyUnit": {
+        "type": "String"
+      }
+    }
+  },
   "harvest_price_helper": "Se recordará para futuras cosechas de esta planta",
   "harvest_notes_label": "Notas / Calidad",
   "harvest_action_save": "Guardar",
@@ -421,47 +1907,6 @@
   "harvest_form_error_required": "Requerido",
   "harvest_form_error_positive": "Inválido (> 0)",
   "harvest_form_error_positive_or_zero": "Inválido (>= 0)",
-  "planting_steps_title": "Paso a paso",
-  "planting_steps_add_button": "Añadir",
-  "planting_steps_see_less": "Ver menos",
-  "planting_steps_see_all": "Ver todo",
-  "planting_steps_empty": "No hay pasos recomendados",
-  "planting_steps_more": "+ {count} pasos más",
-  "planting_steps_prediction_badge": "Predicción",
-  "planting_steps_date_prefix": "El {date}",
-  "planting_steps_done": "Hecho",
-  "planting_steps_mark_done": "Marcar como hecho",
-  "planting_steps_dialog_title": "Añadir paso",
-  "planting_steps_dialog_hint": "Ej: Acolchado ligero",
-  "planting_steps_dialog_add": "Añadir",
-  "planting_status_sown": "Sembrado",
-  "planting_status_planted": "Plantado",
-  "planting_status_growing": "En crecimiento",
-  "planting_status_ready": "Listo para cosechar",
-  "planting_status_harvested": "Cosechado",
-  "planting_status_failed": "Fallido",
-  "planting_card_sown_date": "Sembrado el {date}",
-  "planting_card_planted_date": "Plantado el {date}",
-  "planting_card_harvest_estimate": "Est. cosecha: {date}",
-  "planting_info_title": "Info botánica",
-  "planting_info_tips_title": "Consejos de cultivo",
-  "planting_info_maturity": "Madurez",
-  "planting_info_days": "{days} días",
-  "planting_info_spacing": "Espaciamiento",
-  "planting_info_cm": "{cm} cm",
-  "planting_info_depth": "Profundidad",
-  "planting_info_exposure": "Exposición",
-  "planting_info_water": "Agua",
-  "planting_info_season": "Temporada de siembra",
-  "planting_info_scientific_name_none": "Nombre científico no disponible",
-  "planting_info_culture_title": "Información de cultivo",
-  "planting_info_germination": "Tiempo de germinación",
-  "planting_info_harvest_time": "Tiempo de cosecha",
-  "planting_info_none": "No especificado",
-  "planting_tips_none": "No hay consejos disponibles",
-  "planting_history_title": "Historial de acciones",
-  "planting_history_action_planting": "Plantación",
-  "planting_history_todo": "Historial detallado próximamente",
   "info_exposure_full_sun": "Pleno sol",
   "info_exposure_partial_sun": "Sol parcial",
   "info_exposure_shade": "Sombra",
@@ -498,100 +1943,236 @@
   "planting_date_future_error": "La fecha de plantación no puede estar en el futuro",
   "planting_success_create": "Plantación creada con éxito",
   "planting_success_update": "Plantación actualizada con éxito",
-  "activity_screen_title": "Actividades e Historial",
-  "activity_tab_recent_garden": "Reciente ({gardenName})",
-  "activity_tab_recent_global": "Reciente (Global)",
-  "activity_tab_history": "Historial",
-  "activity_history_section_title": "Historial — ",
-  "activity_history_empty": "Ningún jardín seleccionado.\nPara ver el historial de un jardín, manténgalo presionado desde el tablero.",
-  "activity_empty_title": "No se encontraron actividades",
-  "activity_empty_subtitle": "Las actividades de jardinería aparecerán aquí",
-  "activity_error_loading": "Error al cargar actividades",
-  "activity_priority_important": "Importante",
-  "activity_priority_normal": "Normal",
-  "activity_time_just_now": "Ahora mismo",
-  "activity_time_minutes_ago": "hace {minutes} min",
-  "activity_time_hours_ago": "hace {hours} h",
-  "activity_time_days_ago": "hace {count} días",
-  "activity_metadata_garden": "Jardín: {name}",
-  "activity_metadata_bed": "Parcela: {name}",
-  "activity_metadata_plant": "Planta: {name}",
-  "activity_metadata_quantity": "Cantidad: {quantity}",
-  "activity_metadata_date": "Fecha: {date}",
-  "activity_metadata_maintenance": "Mantenimiento: {type}",
-  "activity_metadata_weather": "Clima: {weather}",
-  "history_hint_title": "Para ver el historial de un jardín",
-  "history_hint_body": "Selecciónelo manteniendo presionado desde el tablero.",
-  "history_hint_action": "Ir al tablero",
-  "activity_desc_garden_created": "Jardín \"{name}\" creado",
-  "activity_desc_bed_created": "Parcela \"{name}\" creada",
-  "activity_desc_planting_created": "Plantación de \"{name}\" añadida",
-  "activity_desc_germination": "Germinación de \"{name}\" confirmada",
-  "activity_desc_harvest": "Cosecha de \"{name}\" registrada",
-  "activity_desc_maintenance": "Mantenimiento: {type}",
-  "activity_desc_garden_deleted": "Jardín \"{name}\" eliminado",
-  "activity_desc_bed_deleted": "Parcela \"{name}\" eliminada",
-  "activity_desc_planting_deleted": "Plantación de \"{name}\" eliminada",
-  "activity_desc_garden_updated": "Jardín \"{name}\" actualizado",
-  "activity_desc_bed_updated": "Parcela \"{name}\" actualizada",
-  "activity_desc_planting_updated": "Plantación de \"{name}\" actualizada",
   "stats_screen_title": "Estadísticas",
+  "@stats_screen_title": {
+    "description": "Titre écran statistiques"
+  },
   "stats_screen_subtitle": "Analiza en tiempo real y exporta tus datos.",
+  "@stats_screen_subtitle": {
+    "description": "Sous-titre écran statistiques"
+  },
   "kpi_alignment_title": "Alineación Viva",
+  "@kpi_alignment_title": {
+    "description": "Titre KPI Alignement"
+  },
   "kpi_alignment_description": "Esta herramienta evalúa cuán cerca están tus siembras, plantaciones y cosechas de las ventanas ideales recomendadas por la Agenda Inteligente.",
+  "@kpi_alignment_description": {
+    "description": "Description KPI Alignement"
+  },
   "kpi_alignment_cta": "¡Comienza a plantar y cosechar para ver tu alineación!",
+  "@kpi_alignment_cta": {
+    "description": "CTA KPI Alignement"
+  },
   "kpi_alignment_aligned": "alineado",
+  "@kpi_alignment_aligned": {
+    "description": "Label aligné"
+  },
   "kpi_alignment_total": "Total",
+  "@kpi_alignment_total": {
+    "description": "Label Total"
+  },
   "kpi_alignment_aligned_actions": "Alineado",
+  "@kpi_alignment_aligned_actions": {
+    "description": "Label Actions Alignées"
+  },
   "kpi_alignment_misaligned_actions": "Desalineado",
+  "@kpi_alignment_misaligned_actions": {
+    "description": "Label Actions Décalées"
+  },
   "kpi_alignment_calculating": "Calculando alineación...",
+  "@kpi_alignment_calculating": {
+    "description": "Message calcul alignement"
+  },
   "kpi_alignment_error": "Error durante el cálculo",
+  "@kpi_alignment_error": {
+    "description": "Message erreur alignement"
+  },
   "pillar_economy_title": "Economía del Jardín",
+  "@pillar_economy_title": {
+    "description": "Titre Pilier Économie"
+  },
   "pillar_nutrition_title": "Equilibrio Nutricional",
+  "@pillar_nutrition_title": {
+    "description": "Titre Pilier Nutrition"
+  },
   "pillar_export_title": "Exportar",
+  "@pillar_export_title": {
+    "description": "Titre Pilier Export"
+  },
   "pillar_economy_label": "Valor total de cosecha",
+  "@pillar_economy_label": {
+    "description": "Label Pilier Économie"
+  },
   "pillar_nutrition_label": "Firma Nutricional",
+  "@pillar_nutrition_label": {
+    "description": "Label Pilier Nutrition"
+  },
   "pillar_export_label": "Recuperar sus datos",
+  "@pillar_export_label": {
+    "description": "Label Pilier Export"
+  },
   "pillar_export_button": "Exportar",
+  "@pillar_export_button": {
+    "description": "Bouton Pilier Export"
+  },
   "stats_economy_title": "Economía del Jardín",
+  "@stats_economy_title": {
+    "description": "Titre écran économie"
+  },
   "stats_economy_no_harvest": "Sin cosecha en el período seleccionado.",
+  "@stats_economy_no_harvest": {
+    "description": "Message vide économie"
+  },
   "stats_economy_no_harvest_desc": "Sin datos para el período seleccionado.",
+  "@stats_economy_no_harvest_desc": {
+    "description": "Sous-titre vide économie"
+  },
   "stats_kpi_total_revenue": "Ingresos Totales",
+  "@stats_kpi_total_revenue": {
+    "description": "KPI Revenu Total"
+  },
   "stats_kpi_total_volume": "Volumen Total",
+  "@stats_kpi_total_volume": {
+    "description": "KPI Volume Total"
+  },
   "stats_kpi_avg_price": "Precio Promedio",
+  "@stats_kpi_avg_price": {
+    "description": "KPI Prix Moyen"
+  },
   "stats_top_cultures_title": "Mejores Cultivos (Valor)",
+  "@stats_top_cultures_title": {
+    "description": "Titre Top Cultures"
+  },
   "stats_top_cultures_no_data": "Sin datos",
+  "@stats_top_cultures_no_data": {
+    "description": "Vide Top Cultures"
+  },
   "stats_top_cultures_percent_revenue": "de ingresos",
+  "@stats_top_cultures_percent_revenue": {
+    "description": "Suffixe pourcentage revenu"
+  },
   "stats_monthly_revenue_title": "Ingresos Mensuales",
+  "@stats_monthly_revenue_title": {
+    "description": "Titre Revenu Mensuel"
+  },
   "stats_monthly_revenue_no_data": "Sin datos mensuales",
+  "@stats_monthly_revenue_no_data": {
+    "description": "Vide Revenu Mensuel"
+  },
   "stats_dominant_culture_title": "Cultivo Dominante por Mes",
+  "@stats_dominant_culture_title": {
+    "description": "Titre Culture Dominante"
+  },
   "stats_annual_evolution_title": "Tendencia Anual",
+  "@stats_annual_evolution_title": {
+    "description": "Titre Évolution Annuelle"
+  },
   "stats_crop_distribution_title": "Distribución de Cultivos",
+  "@stats_crop_distribution_title": {
+    "description": "Titre Répartition Culture"
+  },
   "stats_crop_distribution_others": "Otros",
+  "@stats_crop_distribution_others": {
+    "description": "Label Autres pie chart"
+  },
   "stats_key_months_title": "Meses Clave del Jardín",
+  "@stats_key_months_title": {
+    "description": "Titre Mois Clés"
+  },
   "stats_most_profitable": "Más Rentable",
+  "@stats_most_profitable": {
+    "description": "Label plus rentable"
+  },
   "stats_least_profitable": "Menos Rentable",
+  "@stats_least_profitable": {
+    "description": "Label moins rentable"
+  },
   "stats_auto_summary_title": "Resumen Automático",
+  "@stats_auto_summary_title": {
+    "description": "Titre Synthèse Automatique"
+  },
   "stats_revenue_history_title": "Historial de Ingresos",
+  "@stats_revenue_history_title": {
+    "description": "Titre Historique Revenu"
+  },
   "stats_profitability_cycle_title": "Ciclo de Rentabilidad",
+  "@stats_profitability_cycle_title": {
+    "description": "Titre Cycle Rentabilité"
+  },
   "stats_table_crop": "Cultivo",
+  "@stats_table_crop": {
+    "description": "Header colonne Culture"
+  },
   "stats_table_days": "Días (Prom)",
+  "@stats_table_days": {
+    "description": "Header colonne Jours"
+  },
   "stats_table_revenue": "Ing/Cosecha",
+  "@stats_table_revenue": {
+    "description": "Header colonne Revenu"
+  },
   "stats_table_type": "Tipo",
+  "@stats_table_type": {
+    "description": "Header colonne Type"
+  },
   "stats_type_fast": "Rápido",
+  "@stats_type_fast": {
+    "description": "Type culture rapide"
+  },
   "stats_type_long_term": "Largo Plazo",
   "nutrition_page_title": "Firma Nutricional",
+  "@nutrition_page_title": {
+    "description": "Titre écrant nutrition"
+  },
   "nutrition_seasonal_dynamics_title": "Dinámicas Estacionales",
+  "@nutrition_seasonal_dynamics_title": {
+    "description": "Titre dynamique saisonnière"
+  },
   "nutrition_seasonal_dynamics_desc": "Explore la producción de minerales y vitaminas de su jardín, mes a mes.",
+  "@nutrition_seasonal_dynamics_desc": {
+    "description": "Desc dynamique saisonnière"
+  },
   "nutrition_no_harvest_month": "Sin cosecha este mes",
+  "@nutrition_no_harvest_month": {
+    "description": "Vide mois"
+  },
   "nutrition_major_minerals_title": "Estructura y Minerales Mayores",
+  "@nutrition_major_minerals_title": {
+    "description": "Titre minéraux majeurs"
+  },
   "nutrition_trace_elements_title": "Vitalidad y Oligoelementos",
+  "@nutrition_trace_elements_title": {
+    "description": "Titre oligo éléments"
+  },
   "nutrition_no_data_period": "Sin datos para este período",
+  "@nutrition_no_data_period": {
+    "description": "Pas de données chart"
+  },
   "nutrition_no_major_minerals": "Sin minerales mayores",
+  "@nutrition_no_major_minerals": {
+    "description": "Vide chart majeurs"
+  },
   "nutrition_no_trace_elements": "Sin oligoelementos",
+  "@nutrition_no_trace_elements": {
+    "description": "Vide chart oligo"
+  },
   "nutrition_month_dynamics_title": "Dinámicas de {month}",
+  "@nutrition_month_dynamics_title": {
+    "description": "Titre dynamique mois",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "nutrition_dominant_production": "Producción dominante:",
+  "@nutrition_dominant_production": {
+    "description": "Label production dominante"
+  },
   "nutrition_nutrients_origin": "Estos nutrientes provienen de sus cosechas del mes.",
+  "@nutrition_nutrients_origin": {
+    "description": "Note origine nutriments"
+  },
   "nut_calcium": "Calcio",
   "nut_potassium": "Potasio",
   "nut_magnesium": "Magnesio",
@@ -638,36 +2219,157 @@
   "export_field_garden_surface": "Área (m²)",
   "export_field_garden_creation": "Fecha de Creación",
   "export_field_bed_name": "Nombre de la Parcela",
-
+  "export_field_bed_id": "ID Parcelle",
+  "export_field_bed_surface": "Surface (m²)",
+  "export_field_bed_plant_count": "Nb Plantes",
+  "export_field_plant_name": "Nom commun",
+  "export_field_plant_id": "ID Plante",
+  "export_field_plant_scientific": "Nom scientifique",
+  "export_field_plant_family": "Famille",
+  "export_field_plant_variety": "Variété",
+  "export_field_harvest_date": "Date Récolte",
+  "export_field_harvest_qty": "Quantité (kg)",
+  "export_field_harvest_plant_name": "Plante",
+  "export_field_harvest_price": "Prix/kg",
+  "export_field_harvest_value": "Valeur Totale",
+  "export_field_harvest_notes": "Notes",
+  "export_field_harvest_garden_name": "Jardin",
+  "export_field_harvest_garden_id": "ID Jardin",
+  "export_field_harvest_bed_name": "Parcelle",
+  "export_field_harvest_bed_id": "ID Parcelle",
+  "export_field_activity_date": "Date",
+  "export_field_activity_type": "Type",
+  "export_field_activity_title": "Titre",
+  "export_field_activity_desc": "Description",
+  "export_field_activity_entity": "Entité Cible",
+  "export_field_activity_entity_id": "ID Cible",
+  "export_activity_type_garden_created": "Création de jardin",
+  "export_activity_type_garden_updated": "Mise à jour du jardin",
+  "export_activity_type_garden_deleted": "Suppression de jardin",
+  "export_activity_type_bed_created": "Création de parcelle",
+  "export_activity_type_bed_updated": "Mise à jour de parcelle",
+  "export_activity_type_bed_deleted": "Suppression de parcelle",
+  "export_activity_type_planting_created": "Nouvelle plantation",
+  "export_activity_type_planting_updated": "Mise à jour plantation",
+  "export_activity_type_planting_deleted": "Suppression plantation",
+  "export_activity_type_harvest": "Récolte",
+  "export_activity_type_maintenance": "Entretien",
+  "export_activity_type_weather": "Météo",
+  "export_activity_type_error": "Erreur",
+  "export_excel_total": "TOTAL",
+  "export_excel_unknown": "Inconnu",
+  "export_field_advanced_suffix": " (Avancé)",
+  "export_field_desc_garden_name": "Nom donné au jardin",
+  "export_field_desc_garden_id": "Identifiant unique technique",
+  "export_field_desc_garden_surface": "Surface totale du jardin",
+  "export_field_desc_garden_creation": "Date de création dans l'application",
+  "export_field_desc_bed_name": "Nom de la parcelle",
+  "export_field_desc_bed_id": "Identifiant unique technique",
+  "export_field_desc_bed_surface": "Surface de la parcelle",
+  "export_field_desc_bed_plant_count": "Nombre de cultures en place (actuel)",
+  "export_field_desc_plant_name": "Nom usuel de la plante",
+  "export_field_desc_plant_id": "Identifiant unique technique",
+  "export_field_desc_plant_scientific": "Dénomination botanique",
+  "export_field_desc_plant_family": "Famille botanique",
+  "export_field_desc_plant_variety": "Variété spécifique",
+  "export_field_desc_harvest_date": "Date de l'événement de récolte",
+  "export_field_desc_harvest_qty": "Poids récolté en kg",
+  "export_field_desc_harvest_plant_name": "Nom de la plante récoltée",
+  "export_field_desc_harvest_price": "Prix au kg configuré",
+  "export_field_desc_harvest_value": "Quantité * Prix/kg",
+  "export_field_desc_harvest_notes": "Observations saisies lors de la récolte",
+  "export_field_desc_harvest_garden_name": "Nom du jardin d'origine (si disponible)",
+  "export_field_desc_harvest_garden_id": "Identifiant unique du jardin",
+  "export_field_desc_harvest_bed_name": "Parcelle d'origine (si disponible)",
+  "export_field_desc_harvest_bed_id": "Identifiant parcelle",
+  "export_field_desc_activity_date": "Date de l'activité",
+  "export_field_desc_activity_type": "Catégorie d'action (Semis, Récolte, Soin...)",
+  "export_field_desc_activity_title": "Résumé de l'action",
+  "export_field_desc_activity_desc": "Détails complets",
+  "export_field_desc_activity_entity": "Nom de l'objet concerné (Plante, Parcelle...)",
+  "export_field_desc_activity_entity_id": "ID de l'objet concerné",
   "plant_catalog_sow": "Sembrar",
-  "@plant_catalog_sow": { "description": "Label du bouton Semer" },
+  "@plant_catalog_sow": {
+    "description": "Label du bouton Semer"
+  },
   "plant_catalog_plant": "Plantar",
-  "@plant_catalog_plant": { "description": "Label du bouton Planter" },
+  "@plant_catalog_plant": {
+    "description": "Label du bouton Planter"
+  },
   "plant_catalog_show_selection": "Mostrar selección",
-  "@plant_catalog_show_selection": { "description": "Bouton pour afficher la sélection Semer/Planter" },
+  "@plant_catalog_show_selection": {
+    "description": "Bouton pour afficher la sélection Semer/Planter"
+  },
   "plant_catalog_filter_green_only": "Verdes solo",
-  "@plant_catalog_filter_green_only": { "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)" },
+  "@plant_catalog_filter_green_only": {
+    "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)"
+  },
   "plant_catalog_filter_green_orange": "Verdes + Naranjas",
-  "@plant_catalog_filter_green_orange": { "description": "Filtre afficher les plantes vertes et oranges" },
+  "@plant_catalog_filter_green_orange": {
+    "description": "Filtre afficher les plantes vertes et oranges"
+  },
   "plant_catalog_filter_all": "Todos",
-  "@plant_catalog_filter_all": { "description": "Filtre afficher toutes les plantes" },
+  "@plant_catalog_filter_all": {
+    "description": "Filtre afficher toutes les plantes"
+  },
   "plant_catalog_no_recommended": "No hay plantas recomendadas para este período.",
-  "@plant_catalog_no_recommended": { "description": "Message si aucune plante n'est recommandée pour la date/action donnée" },
+  "@plant_catalog_no_recommended": {
+    "description": "Message si aucune plante n'est recommandée pour la date/action donnée"
+  },
   "plant_catalog_expand_window": "Ampliar (±2 meses)",
-  "@plant_catalog_expand_window": { "description": "Action pour élargir la fenêtre temporelle" },
+  "@plant_catalog_expand_window": {
+    "description": "Action pour élargir la fenêtre temporelle"
+  },
   "plant_catalog_missing_period_data": "Datos de período faltantes",
-  "@plant_catalog_missing_period_data": { "description": "Message quand la plante n'a pas d'information de période" },
+  "@plant_catalog_missing_period_data": {
+    "description": "Message quand la plante n'a pas d'information de période"
+  },
   "plant_catalog_periods_prefix": "Períodos: {months}",
   "@plant_catalog_periods_prefix": {
     "description": "Préfixe listant les périodes available pour la plante",
-    "placeholders": { "months": { "type": "String" } }
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
   },
   "plant_catalog_legend_green": "Listo este mes",
-  "@plant_catalog_legend_green": { "description": "Légende couleur verte" },
+  "@plant_catalog_legend_green": {
+    "description": "Légende couleur verte"
+  },
   "plant_catalog_legend_orange": "Cerca / Pronto",
-  "@plant_catalog_legend_orange": { "description": "Légende couleur orange" },
+  "@plant_catalog_legend_orange": {
+    "description": "Légende couleur orange"
+  },
   "plant_catalog_legend_red": "Fuera de temporada",
-  "@plant_catalog_legend_red": { "description": "Légende couleur rouge" },
+  "@plant_catalog_legend_red": {
+    "description": "Légende couleur rouge"
+  },
   "plant_catalog_data_unknown": "Datos desconocidos",
-  "@plant_catalog_data_unknown": { "description": "Mention pour données manquantes/grises" }
+  "@plant_catalog_data_unknown": {
+    "description": "Mention pour données manquantes/grises"
+  },
+  "task_editor_photo_label": "Photo de la tâche",
+  "task_editor_photo_add": "Ajouter une photo",
+  "task_editor_photo_change": "Changer la photo",
+  "task_editor_photo_remove": "Retirer la photo",
+  "task_editor_photo_help": "La photo sera jointe automatiquement au PDF / Word à la création / envoi.",
+  "export_block_nutrition": "Nutrition (Agrégation)",
+  "@export_block_nutrition": {
+    "description": "Label pour le bloc Nutrition dans l'export"
+  },
+  "export_block_desc_nutrition": "Indicateurs nutritionnels agrégés par nutriment",
+  "@export_block_desc_nutrition": {
+    "description": "Description pour le bloc Nutrition"
+  },
+  "export_field_nutrient_key": "Clé nutriment",
+  "export_field_nutrient_label": "Nutriment",
+  "export_field_nutrient_unit": "Unité",
+  "export_field_nutrient_total": "Total disponible",
+  "export_field_mass_with_data_kg": "Masse avec données (kg)",
+  "export_field_contributing_records": "Nb récoltes",
+  "export_field_data_confidence": "Confiance",
+  "export_field_coverage_percent": "Moy. DRI (%)",
+  "export_field_lower_bound_coverage": "Min DRI (%)",
+  "export_field_upper_bound_coverage": "Max DRI (%)"
 }
