@@ -114,16 +114,17 @@ class _MotePainter extends CustomPainter {
     final w = size.width;
     final h = size.height;
     
-    // Gradient de fond très subtil (optionnel, sinon noir par défaut dans le scaffold)
-    // On assume que le Scaffold est déjà noir, mais on peut ajouter une vignette ici.
+    // Gradient de fond "Organique" (Nuances de vert profond)
+    // Rétablit l'ambiance forêt/abysses
     final Paint bgPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-           Colors.greenAccent.withOpacity(0.05), // Centre très léger teinte
-           Colors.transparent,
+           const Color(0xFF1B5E20).withOpacity(0.25), // Vert forêt sombre central
+           const Color(0xFF000000).withOpacity(0.0), // Noir transparent bords
         ],
         center: Alignment.center,
-        radius: 0.8,
+        radius: 1.2, // Grand rayon pour couvrir
+        stops: const [0.0, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, w, h));
       
     canvas.drawRect(Rect.fromLTWH(0,0,w,h), bgPaint);

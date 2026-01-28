@@ -22,10 +22,13 @@ class TopEconomyBubbleChart extends ConsumerWidget {
 
     final double maxValue = rankings.first.totalValue;
 
-    final bubbleColors = [
-      Colors.greenAccent.shade200,
-      Colors.lightBlue.shade200,
-      Colors.amber.shade200,
+    // Couleurs organiques / Naturelles (Verts, Ors, Teals)
+    final List<Color> bubbleColors = const [
+      Color(0xFF66BB6A), // Green 400
+      Color(0xFFFFCA28), // Amber 400
+      Color(0xFF26A69A), // Teal 400
+      Color(0xFF9CCC65), // Light Green 400
+      Color(0xFFFFEE58), // Yellow 400
     ];
 
     return FittedBox(

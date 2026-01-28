@@ -38,8 +38,8 @@ class StatisticsPillarsList extends StatelessWidget {
             // Configuration "Organique"
             final (scale, topPadding) = switch (pillarType) {
               PillarType.economieVivante => (1.0, 0.0),
-              PillarType.sante => (0.94, 110.0), // Stronger staggered drop
-              PillarType.patrimoine => (1.05, 20.0), // Larger and pushed down
+              PillarType.sante => (1.0, 110.0), // Stronger staggered drop, but identical size
+              PillarType.patrimoine => (1.0, 20.0), // Identical size
             };
 
             return Padding(

@@ -8,11 +8,13 @@ class ActiveGardenAura extends StatefulWidget {
     this.size = 100.0,
     this.color,
     this.isActive = true,
+    this.animationDuration = const Duration(milliseconds: 3500),
   });
 
   final double size;
   final Color? color;
   final bool isActive;
+  final Duration animationDuration;
 
   @override
   State<ActiveGardenAura> createState() => _ActiveGardenAuraState();
@@ -27,7 +29,7 @@ class _ActiveGardenAuraState extends State<ActiveGardenAura>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3500), // Speed up (was 6000)
+      duration: widget.animationDuration,
     );
     if (widget.isActive) _ctrl.repeat();
   }
