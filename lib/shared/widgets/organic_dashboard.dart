@@ -789,17 +789,16 @@ class _OrganicDashboardWidgetState
                             })(),
 
                          // [NEW] Calibration display for Meta Zones
-                         // In calibration mode, we display them so the user knows they exist.
-                         // Currently we don't have a Drag/Drop UI for them in this loop, 
-                         // but we render them to visualize placement.
-                         for (final entry in metaZones.entries)
-                          if (entry.value.enabled)
-                            MetaTapZoneWidget(
-                              config: entry.value,
-                              isCalibrationMode: true,
-                              containerSize: Size(w, h),
-                              onTap: () {}, // No nav in calibration
-                            ),
+                         // Restrict to 'modules' tool as requested (no erratic movement in Image mode).
+                         if (activeTool == CalibrationTool.modules)
+                           for (final entry in metaZones.entries)
+                            if (entry.value.enabled)
+                              MetaTapZoneWidget(
+                                config: entry.value,
+                                isCalibrationMode: true,
+                                containerSize: Size(w, h),
+                                onTap: () {}, // No nav in calibration
+                              ),
                       ],
                     );
                   }

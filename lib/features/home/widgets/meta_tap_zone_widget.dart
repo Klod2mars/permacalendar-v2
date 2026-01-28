@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/core/models/meta_tap_zone_config.dart';
+import 'package:permacalendar/core/providers/meta_tap_zones_provider.dart';
+import 'package:permacalendar/core/models/calibration_state.dart';
 
 /// A widget that defines an interactive (or calibratable) Meta Tap Zone.
 ///
 /// It strictly separates the "visual" size from the "hit" size by applying
 /// an automatic inflation if the zone is too small (acc. to [minTapSizeDp]).
-class MetaTapZoneWidget extends StatelessWidget {
+///
+/// In Calibration Mode, it supports Dragging to reposition.
+class MetaTapZoneWidget extends ConsumerWidget {
   const MetaTapZoneWidget({
     super.key,
     required this.config,
@@ -23,7 +28,7 @@ class MetaTapZoneWidget extends StatelessWidget {
   final Size containerSize;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Calculate the absolute geometry from normalized configuration
     final double shortestSide =
         containerSize.width < containerSize.height
@@ -38,40 +43,37 @@ class MetaTapZoneWidget extends StatelessWidget {
     final double effectiveSize = zoneDiameter >= minTapSizeDp ? zoneDiameter : minTapSizeDp;
     final double inflation = (effectiveSize - zoneDiameter) / 2.0;
 
-    // We position the widget to cover the INFLATED area.
-    // Inside, we might render the visual debug marker smaller if needed,
-    // but the GestureDetector covers the whole inflamed area.
-    
     return Positioned(
       left: left - inflation,
       top: top - inflation,
       width: effectiveSize,
       height: effectiveSize,
       child: GestureDetector(
-        // Translucent allows us to catch taps even if we are invisible
-        // BUT also lets clicks pass through if we explicitly ignore them?
-        // No, translucent means: if I hit a visual part (even transparent), I win.
-        // If I hit a hole, I pass. But Container with color: Colors.transparent IS hit.
-        // We want to CAPTURE the tap if we are the priority target.
-        // Since we are rendered *before* business zones (underneath), 
-        // we actually want the OPPOSITE of "Stack priority dictates top-most wins".
-        // Wait.
-        // Standard Stack: Last child is on top. Top-most receives tap.
-        // User Plan: "Render meta-zones BEFORE business hotspots... so business hotspots (rendered later) remain on top."
-        // Correct. If business zone overlaps this, business zone is on top and takes the tap.
-        // So we just need standard Opaque/Translucent behavior.
         behavior: HitTestBehavior.translucent,
         onTap: () {
           if (isCalibrationMode) {
-            // In calibration mode, taps might be handled by a parent layer 
-            // or we might want to select this zone.
-            // For now, let's just consume it or let the parent logic (if any) handle selection.
-            // But usually calibration involves dragging.
             return;
           }
           HapticFeedback.lightImpact();
           onTap();
         },
+        // --- Calibration Drag Logic ---
+        onPanUpdate: isCalibrationMode
+            ? (details) {
+                // Calculate normalized delta
+                final dx = details.delta.dx / containerSize.width;
+                final dy = details.delta.dy / containerSize.height;
+                
+                final newPos = Offset(
+                  (config.position.dx + dx).clamp(0.0, 1.0),
+                  (config.position.dy + dy).clamp(0.0, 1.0),
+                );
+
+                ref.read(metaTapZonesProvider.notifier).setPosition(config.id, newPos);
+                ref.read(calibrationStateProvider.notifier).markAsModified();
+              }
+            : null,
+        // ------------------------------
         child: isCalibrationMode
             ? _buildCalibrationOverlay(zoneDiameter)
             : const SizedBox.expand(),
