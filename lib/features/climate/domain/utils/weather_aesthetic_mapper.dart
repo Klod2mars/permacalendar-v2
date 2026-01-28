@@ -34,14 +34,21 @@ class WeatherAestheticMapper {
     final effectiveMm = precipMm * probFactor;
 
     // 4) Classification par paliers (discrets)
+    // Nouvelle hiérarchie (veryLight -> drizzle -> lightRain -> moderateRain -> heavyRain)
     if (effectiveMm <= 0.5) {
-      return WeatherPresets.drizzle;
+      // Très faible pluie : nouveau preset ajouté
+      return WeatherPresets.veryLightRain;
     } else if (effectiveMm <= 3.0) {
-      return WeatherPresets.lightRain; // sanctuarisé
+      // Petite pluie (anciennement 'drizzle' zone basse)
+      return WeatherPresets.drizzle;
     } else if (effectiveMm <= 8.0) {
+      // Pluie lisible mais encore modérée (anciennement lightRain)
+      return WeatherPresets.lightRain;
+    } else if (effectiveMm <= 20.0) {
+      // Pluie plus forte mais pas encore "heavy" (zone élargie)
       return WeatherPresets.moderateRain;
     } else {
-      // >= 8.0 (cap à 20.0 dans UI) -> heavyRain (sanctuarisé, pluie forte)
+      // > 20.0 : Très fortes pluies (heavyRain)
       return WeatherPresets.heavyRain;
     }
   }
