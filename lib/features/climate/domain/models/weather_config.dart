@@ -216,7 +216,7 @@ class GeneralConfig {
 
   const GeneralConfig({
     this.precipThresholdMm = 0.02,
-    this.precipThresholdProb = 30.0,
+    this.precipThresholdProb = 15.0,
     this.enableCollision = true,
     this.windFactor = 0.005,
   });
