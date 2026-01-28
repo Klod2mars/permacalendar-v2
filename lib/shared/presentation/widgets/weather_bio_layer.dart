@@ -47,7 +47,7 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
 
   // DEBUG / TEMP FLAGS - désactivé par défaut pour éviter spam terminal
   // Mettre true temporairement lors d'un diagnostic local seulement.
-  static const bool kWeatherDebug = true;
+  static const bool kWeatherDebug = false;
   
   double _lastCalculatedSpawnRate = 0.0;
   int _ticksCount = 0;
@@ -138,38 +138,25 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     final code = p.weatherCode;
     _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
     
-    // V5 DYNAMIC INJECTION
-    // We map the physical weather point to an Aesthetic Configuration on the fly.
-    // This ensures we always strictly use the Sanctified Presets.
+    // V5 DYNAMIC INJECTION (amélioré)
+    // Récupère la config locale pour récupérer le seuil de confiance.
     final config = ref.read(weatherConfigProvider);
+
+    // Appel explicite du mapper avec le seuil global et le comportement de downgrade.
     final mapperConfig = WeatherAestheticMapper.getAesthetic(
       p,
-      precipProbThreshold: config.general.precipThresholdProb, // 30.0 par défaut
+      precipProbThreshold: config.general.precipThresholdProb,
       downgradeOnLowProb: true,
     );
 
-    // debug : diagnostic temporaire
-    if (kWeatherDebug) {
-      debugPrint('DBG_WEATHER INPUT -> mm=${p.precipitationMm.toStringAsFixed(2)}mm prob=${p.precipitationProbability}% code=${p.weatherCode}');
-      if (mapperConfig == null) {
-        debugPrint('DBG_WEATHER MAPPER -> null (no precip preset)');
-      } else {
-        debugPrint('DBG_WEATHER MAPPER -> preset qty=${mapperConfig.quantity.toStringAsFixed(3)} area=${mapperConfig.area.toStringAsFixed(2)} size=${mapperConfig.size.toStringAsFixed(2)} weight=${mapperConfig.weight.toStringAsFixed(2)}');
-      }
-    }
-    
+    // Si le mapper renvoie null (pas de preset), on **force** un aesthetic "vide"
+    // basé sur le preset de pluie mais avec quantité=0, afin d'éviter la retombée
+    // vers le preset global 'rain' qui est trop puissant par défaut.
     if (mapperConfig != null) {
-      // We found a matching preset (Light Rain, Heavy Rain, Snow, etc.)
-      // We inject it into the current config provider TEMPORARILY for this frame logic?
-      // No, strictly speaking, the Physics Engine (_processEngine) reads from 'ref.read(weatherConfigProvider)'.
-      // If we want to be dynamic without mutating the global user config (which we shouldn't touch technically if it's "settings"),
-      // we should pass this specific aesthetic to _processEngine.
-      // BUT: The requirement says "Le système doit instancier un AestheticParams".
-      // So let's pass it to _processEngine.
-      
       _currentDynamicAesthetic = mapperConfig;
     } else {
-      _currentDynamicAesthetic = null; // No precip or unknown
+      // Utiliser le preset explicite emptyPrecip pour plus de clarté
+      _currentDynamicAesthetic = WeatherPresets.emptyPrecip;
     }
   }
   
@@ -210,6 +197,12 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
        if (_precipIntensity < 0.1 && _precipProbability < 10) {
           aesthetic = aesthetic.copyWith(quantity: 0.0);
        }
+    }
+    
+    // OPTIMIZATION: Early exit if no quantity
+    if (aesthetic.quantity <= 0.0) {
+       _lastCalculatedSpawnRate = 0.0;
+       return; 
     }
     
     // Derived Physics Values
@@ -257,11 +250,6 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     
     dSpawnRate = spawnRateRaw;
     _lastCalculatedSpawnRate = dSpawnRate;
-
-    if (kWeatherDebug) {
-      debugPrint('DBG_ENGINE aesthetic.qty=${aesthetic.quantity}, area=${aesthetic.area}, size=${aesthetic.size}, weight=${aesthetic.weight}');
-      debugPrint('DBG_ENGINE densityCurve=$densityCurve, spawnPerUnit=$spawnPerUnit, dHSpread=$dHSpread, spawnRateRaw=$spawnRateRaw, spawnRateFinal=$dSpawnRate');
-    }
 
 
     // 3. WEIGHT (Heavy or Light?)
