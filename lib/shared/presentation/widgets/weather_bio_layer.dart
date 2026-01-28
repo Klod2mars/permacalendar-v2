@@ -138,13 +138,14 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
     final code = p.weatherCode;
     _isSnow = (code >= 70 && code <= 79) || (code >= 85 && code <= 86);
     
-    // V5 DYNAMIC INJECTION
-    // We map the physical weather point to an Aesthetic Configuration on the fly.
-    // This ensures we always strictly use the Sanctified Presets.
+    // V5 DYNAMIC INJECTION (amélioré)
+    // Récupère la config locale pour récupérer le seuil de confiance.
     final config = ref.read(weatherConfigProvider);
+
+    // Appel explicite du mapper avec le seuil global et le comportement de downgrade.
     final mapperConfig = WeatherAestheticMapper.getAesthetic(
       p,
-      precipProbThreshold: config.general.precipThresholdProb, // 30.0 par défaut
+      precipProbThreshold: config.general.precipThresholdProb,
       downgradeOnLowProb: true,
     );
 
@@ -158,18 +159,15 @@ class _WeatherBioLayerState extends ConsumerState<WeatherBioLayer>
       }
     }
     
+    // Si le mapper renvoie null (pas de preset), on **force** un aesthetic "vide"
+    // basé sur le preset de pluie mais avec quantité=0, afin d'éviter la retombée
+    // vers le preset global 'rain' qui est trop puissant par défaut.
     if (mapperConfig != null) {
-      // We found a matching preset (Light Rain, Heavy Rain, Snow, etc.)
-      // We inject it into the current config provider TEMPORARILY for this frame logic?
-      // No, strictly speaking, the Physics Engine (_processEngine) reads from 'ref.read(weatherConfigProvider)'.
-      // If we want to be dynamic without mutating the global user config (which we shouldn't touch technically if it's "settings"),
-      // we should pass this specific aesthetic to _processEngine.
-      // BUT: The requirement says "Le système doit instancier un AestheticParams".
-      // So let's pass it to _processEngine.
-      
       _currentDynamicAesthetic = mapperConfig;
     } else {
-      _currentDynamicAesthetic = null; // No precip or unknown
+      // Utiliser un "empty" aesthetic : copie de l'aesthetic rain mais quantity=0
+      // (plus propre que de laisser null et d'utiliser config.aesthetics.rain).
+      _currentDynamicAesthetic = config.aesthetics.rain.copyWith(quantity: 0.0);
     }
   }
   
