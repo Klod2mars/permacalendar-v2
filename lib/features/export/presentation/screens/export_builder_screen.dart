@@ -58,8 +58,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                     _buildColumnsSection(state, notifier, l10n),
                     const SizedBox(height: 24),
                   ],
-                  _buildSectionHeader(l10n.export_format_section),
-                  _buildFormatSection(state, notifier, l10n),
+                  // _buildSectionHeader(l10n.export_format_section),
+                  // _buildFormatSection(state, notifier, l10n),
                   const SizedBox(height: 80), // Space for FAB/Bottom button
                 ],
               ),
@@ -296,34 +296,7 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
     );
   }
 
-  Widget _buildFormatSection(
-      ExportBuilderState state, ExportBuilderNotifier notifier, AppLocalizations l10n) {
-    return Card(
-      elevation: 0,
-      color: Theme.of(context).colorScheme.surfaceContainerLow,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        children: [
-          RadioListTile<ExportFormat>(
-            title: Text(l10n.export_format_separate),
-            subtitle: Text(l10n.export_format_separate_subtitle),
-            value: ExportFormat.separateSheets,
-            groupValue: state.config.format,
-            onChanged: (val) => notifier.updateFormat(val!),
-          ),
-          const Divider(height: 1),
-          RadioListTile<ExportFormat>(
-            title: Text(l10n.export_format_flat),
-            subtitle: Text(
-                l10n.export_format_flat_subtitle),
-            value: ExportFormat.flatTable,
-            groupValue: state.config.format,
-            onChanged: (val) => notifier.updateFormat(val!),
-          ),
-        ],
-      ),
-    );
-  }
+
   
   Widget _buildBottomBar(ExportBuilderState state, ExportBuilderNotifier notifier,
       AppLocalizations l10n) {

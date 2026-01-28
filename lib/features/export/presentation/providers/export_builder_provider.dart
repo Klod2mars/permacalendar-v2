@@ -69,6 +69,9 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
         // Robust sanitization
         final map = _sanitizeHiveMap(savedMap); 
         initialConfig = ExportConfig.fromJson(map);
+        
+        // Enforce standard format regardless of saved state
+        initialConfig = initialConfig.copyWith(format: ExportFormat.separateSheets);
       }
     } catch (e, stack) {
       print('Error loading export config: $e');
@@ -135,11 +138,11 @@ class ExportBuilderNotifier extends Notifier<ExportBuilderState> {
     }
   }
 
-  Future<void> updateFormat(ExportFormat format) async {
-    final newConfig = state.config.copyWith(format: format);
-    state = state.copyWith(config: newConfig);
-    await _save(newConfig);
-  }
+  // Future<void> updateFormat(ExportFormat format) async {
+  //   final newConfig = state.config.copyWith(format: format);
+  //   state = state.copyWith(config: newConfig);
+  //   await _save(newConfig);
+  // }
 
   Future<List<int>> generate(AppLocalizations l10n) async {
     state = state.copyWith(isGenerating: true);
