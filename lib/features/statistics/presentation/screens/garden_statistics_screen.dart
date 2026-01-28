@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Importer la liste des piliers si elle existe :
 import '../widgets/statistics_pillars_list.dart';
 import '../providers/statistics_filters_provider.dart';
+import '../widgets/ambient_stats_background.dart';
 
 
 
@@ -43,50 +44,57 @@ class _GardenStatisticsScreenState
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white70),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              title: Text(
-                l10n.stats_screen_title,
-                style: TextStyle(
-                  color: Colors.greenAccent.withOpacity(0.8),
-                  letterSpacing: 1.2,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 20),
-                    Text(
-                      l10n.stats_screen_subtitle,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 16,
-                      ),
+        child: Stack(
+          children: [
+            // 0. Ambient Background Layer
+            const AmbientStatsBackground(),
+            
+            // 1. Scrollable Content
+            CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.white70),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  title: Text(
+                    l10n.stats_screen_title,
+                    style: TextStyle(
+                      color: Colors.greenAccent.withOpacity(0.8),
+                      letterSpacing: 1.2,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
                     ),
-                    const SizedBox(height: 40),
-
-                    // Ici : la liste de piliers (ou placeholder)
-                    const SizedBox(height: 24),
-                    // Injection : liste/pivot des 4 bulles
-                    const StatisticsPillarsList(),
-                  ],
+                  ),
                 ),
-              ),
+
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        Text(
+                          l10n.stats_screen_subtitle,
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+
+                        // Injection : liste/pivot des 4 bulles
+                        const StatisticsPillarsList(),
+                        const SizedBox(height: 100), // Bottom padding
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

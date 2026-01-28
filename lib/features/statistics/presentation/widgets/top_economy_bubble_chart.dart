@@ -55,6 +55,8 @@ class TopEconomyBubbleChart extends ConsumerWidget {
                   data.plantName,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
+                        color: Colors.white.withOpacity(0.9), // Force white text
+                        fontSize: 10, // Slightly smaller to fit
                       ),
                   textAlign: TextAlign.center,
                   maxLines: 2,
@@ -64,8 +66,9 @@ class TopEconomyBubbleChart extends ConsumerWidget {
                 Text(
                   formatCurrency(data.totalValue, ref.watch(currencyProvider)),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        color: Colors.white.withOpacity(0.7), // Force white/grey text
                         fontWeight: FontWeight.w600,
+                        fontSize: 10,
                       ),
                 ),
               ],
