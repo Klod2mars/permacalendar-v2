@@ -2596,5 +2596,17 @@
   "@custom_plant_pick_error": {
     "description": "Fehler Bildauswahl",
     "placeholders": { "error": { "type": "Object" } }
+  },
+  "common_attention": "Achtung",
+  "@common_attention": {
+    "description": "Titel Achtung-Dialog"
+  },
+  "limit_beds_reached_message": "Um eine perfekte Flüssigkeit zu gewährleisten, liegt das Limit bei 100 Parzellen pro Garten. Sie haben diese Komfortschwelle erreicht.",
+  "@limit_beds_reached_message": {
+    "description": "Fehlermeldung Limit Parzellen"
+  },
+  "limit_plantings_reached_message": "Limit von 6 Pflanzen erreicht.\nBitte entfernen Sie eine Pflanze aus diesem Beet, um eine neue hinzuzufügen.",
+  "@limit_plantings_reached_message": {
+    "description": "Fehlermeldung Limit Pflanzen"
   }
 }

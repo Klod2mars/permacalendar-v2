@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../../../../core/models/planting.dart';
 import '../../../plant_catalog/domain/entities/plant_entity.dart';
@@ -504,17 +505,20 @@ class _CreatePlantingBottomSheetContentState
 
         if (!success) {
           if (mounted) {
-            final error = ref.read(plantingProvider).error ??
+            final errorKey = ref.read(plantingProvider).error ??
                 'Erreur lors de la Création';
-            // Utiliser une couleur orange pour les messages "polis" de validation
-            // final isLimitation = error.contains('limite') || error.contains('confort') || error.contains('performances') || error.contains('atteinte');
             
+            String errorMessage = errorKey;
+            final l10n = AppLocalizations.of(context)!;
+            if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
+            if (errorKey == 'limit_plantings_reached_message') errorMessage = l10n.limit_plantings_reached_message;
+
             // Afficher une Dialog pour être sûr qu'elle soit visible par dessus le BottomSheet
             showDialog(
               context: context,
               builder: (ctx) => AlertDialog(
-                title: Text('Attention', style: TextStyle(color: Colors.orange)),
-                content: Text(error),
+                title: Text(l10n.common_attention, style: TextStyle(color: Colors.orange)),
+                content: Text(errorMessage),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(),

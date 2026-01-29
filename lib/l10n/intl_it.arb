@@ -2596,5 +2596,17 @@
   "@custom_plant_pick_error": {
     "description": "Errore selezione immagine",
     "placeholders": { "error": { "type": "Object" } }
+  },
+  "common_attention": "Attenzione",
+  "@common_attention": {
+    "description": "Titolo dialogo attenzione"
+  },
+  "limit_beds_reached_message": "Per garantire una fluidità perfetta, il limite è fissato a 100 appezzamenti per giardino. Hai raggiunto questa soglia di comfort.",
+  "@limit_beds_reached_message": {
+    "description": "Messaggio errore limite appezzamenti"
+  },
+  "limit_plantings_reached_message": "Limite di 6 piante raggiunto.\nRimuovi una pianta da questo appezzamento per aggiungerne una nuova.",
+  "@limit_plantings_reached_message": {
+    "description": "Messaggio errore limite piante"
   }
 }

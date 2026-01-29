@@ -882,8 +882,19 @@
     "description": "Titre section tâches"
   },
   "calendar_filter_tasks": "Tasks",
-  "@calendar_filter_tasks": {
-    "description": "Filtre tâches"
+  "@calendar_filter_tasks": { "description": "Filtre tâches" },
+
+  "common_attention": "Attention",
+  "@common_attention": {
+    "description": "Attention dialog title"
+  },
+  "limit_beds_reached_message": "To ensure perfect fluidity, the limit is set at 100 beds per garden. You have reached this comfort threshold.",
+  "@limit_beds_reached_message": {
+    "description": "Error message limit beds"
+  },
+  "limit_plantings_reached_message": "Limit of 6 plants reached.\nPlease remove a plant from this bed to add a new one.",
+  "@limit_plantings_reached_message": {
+    "description": "Error message limit plants"
   },
   "calendar_filter_maintenance": "Maintenance",
   "@calendar_filter_maintenance": {

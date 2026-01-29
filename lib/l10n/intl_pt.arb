@@ -2596,5 +2596,17 @@
   "@custom_plant_pick_error": {
     "description": "Erro seletor de imagem",
     "placeholders": { "error": { "type": "Object" } }
+  },
+  "common_attention": "Atenção",
+  "@common_attention": {
+    "description": "Título diálogo atenção"
+  },
+  "limit_beds_reached_message": "Para garantir uma fluidez perfeita, o limite é fixado em 100 parcelas por jardim. Você atingiu este limite de conforto.",
+  "@limit_beds_reached_message": {
+    "description": "Mensagem erro limite parcelas"
+  },
+  "limit_plantings_reached_message": "Limite de 6 plantas atingido.\nPor favor, remova uma planta desta parcela para adicionar uma nova.",
+  "@limit_plantings_reached_message": {
+    "description": "Mensagem erro limite plantas"
   }
 }

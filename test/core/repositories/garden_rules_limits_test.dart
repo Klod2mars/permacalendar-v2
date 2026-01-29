@@ -14,7 +14,7 @@ void main() {
     test('validateGardenBedCount blocks at limit', () {
       final result = gardenRules.validateGardenBedCount(100);
       expect(result.isValid, false);
-      expect(result.errorMessage, contains('Pour garantir une fluidité parfaite'));
+      expect(result.errorMessage, 'limit_beds_reached_message');
     });
 
     test('validatePlantingCount allows below limit', () {
@@ -26,8 +26,7 @@ void main() {
       final result = gardenRules.validatePlantingCount(6);
       expect(result.isValid, false);
       // New expected message
-      expect(result.errorMessage, contains('Limite de 6 plantes atteinte.'));
-      expect(result.errorMessage, contains('Veuillez retirer une plante'));
+      expect(result.errorMessage, 'limit_plantings_reached_message');
     });
   });
 }

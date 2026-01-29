@@ -1330,6 +1330,24 @@ abstract class AppLocalizations {
   /// **'Tâches'**
   String get calendar_filter_tasks;
 
+  /// Titre dialogue attention
+  ///
+  /// In fr, this message translates to:
+  /// **'Attention'**
+  String get common_attention;
+
+  /// Message erreur limite parcelles
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour garantir une fluidité parfaite, la limite est fixée à 100 parcelles par jardin. Vous avez atteint ce seuil de confort.'**
+  String get limit_beds_reached_message;
+
+  /// Message erreur limite plantes
+  ///
+  /// In fr, this message translates to:
+  /// **'Limite de 6 plantes atteinte.\nVeuillez retirer une plante de cette parcelle pour en ajouter une nouvelle.'**
+  String get limit_plantings_reached_message;
+
   /// Filtre entretien
   ///
   /// In fr, this message translates to:

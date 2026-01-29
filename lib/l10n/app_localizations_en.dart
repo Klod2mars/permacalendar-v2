@@ -690,6 +690,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendar_filter_tasks => 'Tasks';
 
   @override
+  String get common_attention => 'Attention';
+
+  @override
+  String get limit_beds_reached_message =>
+      'To ensure perfect fluidity, the limit is set at 100 beds per garden. You have reached this comfort threshold.';
+
+  @override
+  String get limit_plantings_reached_message =>
+      'Limit of 6 plants reached.\nPlease remove a plant from this bed to add a new one.';
+
+  @override
   String get calendar_filter_maintenance => 'Maintenance';
 
   @override

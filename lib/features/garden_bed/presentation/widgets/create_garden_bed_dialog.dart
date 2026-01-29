@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:permacalendar/l10n/app_localizations.dart';
+import '../../../../core/repositories/garden_rules.dart';
 
 import '../../../../core/models/garden_bed.dart';
 import '../../../../shared/widgets/custom_button.dart';
@@ -284,6 +285,35 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
 
         success = true;
       } else {
+        // Validation check for new garden bed
+        final currentBeds = GardenBoxes.getGardenBeds(widget.gardenId);
+        final validation = GardenRules().validateGardenBedCount(currentBeds.length);
+        
+        if (!validation.isValid) {
+           final errorKey = validation.errorMessage ?? 'limit_beds_reached_message';
+           String errorMessage = errorKey;
+           if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
+           // Fallback or other keys if needed
+
+           if (mounted) {
+             showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text(l10n.common_attention, style: TextStyle(color: Colors.orange)),
+                  content: Text(errorMessage),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: Text('OK'),
+                    )
+                  ],
+                ),
+             );
+           }
+           setState(() => _isLoading = false);
+           return;
+        }
+
         // Create new garden bed: UI no longer collects soil/exposure/notes/isActive,
         // provide neutral readable defaults so downstream code doesn't see raw UI choices.
         final newBed = GardenBed(

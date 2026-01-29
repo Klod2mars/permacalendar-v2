@@ -48,8 +48,7 @@ class GardenRules {
   /// Valide le nombre de parcelles dans un jardin
   ValidationResult validateGardenBedCount(int currentCount) {
     if (currentCount >= EnvironmentService.maxBedsPerGarden) {
-      return ValidationResult.invalid(
-          'Pour garantir une fluidité parfaite, la limite est fixée à ${EnvironmentService.maxBedsPerGarden} parcelles par jardin. Vous avez atteint ce seuil de confort.');
+      return ValidationResult.invalid('limit_beds_reached_message');
     }
     return ValidationResult.valid();
   }
@@ -57,8 +56,7 @@ class GardenRules {
   /// Valide le nombre de plantations sur une parcelle
   ValidationResult validatePlantingCount(int currentCount) {
     if (currentCount >= EnvironmentService.maxPlantingsPerBed) {
-      return ValidationResult.invalid(
-          'Limite de 6 plantes atteinte.\nVeuillez retirer une plante de cette parcelle pour en ajouter une nouvelle.');
+      return ValidationResult.invalid('limit_plantings_reached_message');
     }
     return ValidationResult.valid();
   }

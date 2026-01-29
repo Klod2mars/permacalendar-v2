@@ -798,6 +798,19 @@
   "@calendar_section_tasks": { "description": "Titre section tâches" },
   "calendar_filter_tasks": "Tâches",
   "@calendar_filter_tasks": { "description": "Filtre tâches" },
+
+  "common_attention": "Attention",
+  "@common_attention": {
+    "description": "Titre dialogue attention"
+  },
+  "limit_beds_reached_message": "Pour garantir une fluidité parfaite, la limite est fixée à 100 parcelles par jardin. Vous avez atteint ce seuil de confort.",
+  "@limit_beds_reached_message": {
+    "description": "Message erreur limite parcelles"
+  },
+  "limit_plantings_reached_message": "Limite de 6 plantes atteinte.\nVeuillez retirer une plante de cette parcelle pour en ajouter une nouvelle.",
+  "@limit_plantings_reached_message": {
+    "description": "Message erreur limite plantes"
+  },
   "calendar_filter_maintenance": "Entretien",
   "@calendar_filter_maintenance": { "description": "Filtre entretien" },
   "calendar_filter_harvests": "Récoltes",
