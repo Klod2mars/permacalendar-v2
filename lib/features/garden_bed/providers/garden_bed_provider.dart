@@ -1,5 +1,5 @@
 import 'package:riverpod/riverpod.dart';
-
+import '../../../core/repositories/garden_rules.dart';
 import '../../../core/models/garden_bed.dart';
 
 import '../../../core/data/hive/garden_boxes.dart';
@@ -80,8 +80,20 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      // Validate garden bed data
+      // Validate garden bed limits
+      // On compte d'abord les parcelles existantes
+      final currentBeds = GardenBoxes.getGardenBeds(gardenBed.gardenId);
+      final validationLimit =
+          GardenRules().validateGardenBedCount(currentBeds.length);
+      if (!validationLimit.isValid) {
+        state = state.copyWith(
+          isLoading: false,
+          error: validationLimit.errorMessage,
+        );
+        return false;
+      }
 
+      // Validate garden bed data
       final validationError = _validateGardenBed(gardenBed);
 
       if (validationError != null) {

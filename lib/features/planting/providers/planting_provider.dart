@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod/riverpod.dart';
+import '../../../core/repositories/garden_rules.dart';
 import '../../../core/services/plant_progress_service.dart';
 import '../../../core/models/planting.dart';
 import '../../../core/data/hive/garden_boxes.dart';
@@ -105,6 +106,17 @@ class PlantingNotifier extends Notifier<PlantingState> {
         metadata, // contains 'initialGrowthPercent' when applicable
   }) async {
     try {
+      // Validate planting limits
+      // On récupère les plantations de la parcelle pour compter les actives
+      final bedPlantings = GardenBoxes.getPlantings(gardenBedId);
+      final activeCount = bedPlantings.where((p) => p.isActive).length;
+
+      final validationLimit = GardenRules().validatePlantingCount(activeCount);
+      if (!validationLimit.isValid) {
+        state = state.copyWith(error: validationLimit.errorMessage);
+        return false;
+      }
+
       // Normaliser les métadonnées et garantir initialGrowthPercent
       final Map<String, dynamic> metaFinal =
           Map<String, dynamic>.from(metadata ?? {});

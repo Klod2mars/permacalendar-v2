@@ -45,6 +45,24 @@ class GardenRules {
     return ValidationResult.valid();
   }
 
+  /// Valide le nombre de parcelles dans un jardin
+  ValidationResult validateGardenBedCount(int currentCount) {
+    if (currentCount >= EnvironmentService.maxBedsPerGarden) {
+      return ValidationResult.invalid(
+          'Pour garantir une fluidité parfaite, la limite est fixée à ${EnvironmentService.maxBedsPerGarden} parcelles par jardin. Vous avez atteint ce seuil de confort.');
+    }
+    return ValidationResult.valid();
+  }
+
+  /// Valide le nombre de plantations sur une parcelle
+  ValidationResult validatePlantingCount(int currentCount) {
+    if (currentCount >= EnvironmentService.maxPlantingsPerBed) {
+      return ValidationResult.invalid(
+          'Cette parcelle est complète pour le moment.');
+    }
+    return ValidationResult.valid();
+  }
+
   /// Valide qu'un jardin peut être supprimé sans violer la limite minimale
   ValidationResult validateGardenDeletion(
       List<Garden> gardens, String gardenIdToDelete) {

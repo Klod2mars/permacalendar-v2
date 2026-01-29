@@ -105,14 +105,17 @@ class PlantHiveRepository {
       final box = await _getBox();
       final plants = <PlantFreezed>[];
 
-      for (final plantHive in box.values) {
+      for (final key in box.keys) {
         try {
+          final plantHive = box.get(key);
+          if (plantHive == null) continue;
+
           final plantFreezed = _fromHiveModel(plantHive);
           plants.add(plantFreezed);
         } catch (e) {
           // Journalisation discrète des erreurs de conversion par plante
           developer.log(
-              'PlantHiveRepository: Erreur conversion plante ${plantHive.id}: $e',
+              'PlantHiveRepository: Erreur conversion plante $key: $e',
               name: 'PlantHiveRepository',
               level: 900);
           // Continue avec les autres plantes

@@ -67,10 +67,14 @@ class GardenHiveRepository {
   /// Retourne une liste de GardenFreezed
   Future<List<GardenFreezed>> getAllGardens() async {
     try {
-      final hiveGardens = _gardenBox.values.toList();
-      return hiveGardens
-          .map((hiveGarden) => _convertToGardenFreezed(hiveGarden))
-          .toList();
+      final gardens = <GardenFreezed>[];
+      for (final key in _gardenBox.keys) {
+        final hiveGarden = _gardenBox.get(key);
+        if (hiveGarden != null) {
+          gardens.add(_convertToGardenFreezed(hiveGarden));
+        }
+      }
+      return gardens;
     } catch (e) {
       throw GardenHiveException(
           'Erreur lors de la récupération des jardins: $e');

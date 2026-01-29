@@ -143,4 +143,42 @@ class HiveService {
       // Ignorer les erreurs de flush
     }
   }
+
+  /// Parcourt une box **sans** matérialiser `values.toList()` et retourne
+  /// les éléments correspondant au predicate. Méthode synchrone pour usages UI.
+  /// - box : la Box déjà ouverte
+  /// - predicate : fonction de filtrage
+  /// - maxScan : nombre maximal d'éléments scannés (protection contre cas extrêmes)
+  /// - maxResults : nombre maximal d'éléments retournés
+  static List<T> collectByFilterSync<T>(
+    Box<T> box,
+    bool Function(T item) predicate, {
+    int maxScan = 5000,
+    int maxResults = 2000,
+  }) {
+    final results = <T>[];
+    var scanned = 0;
+
+    for (final key in box.keys) {
+      // Garde-fou : stoppe si on a scanné trop d'entrées
+      if (scanned >= maxScan) {
+        // Optionnel : logger (print/dev log)
+        // print('[HiveService] collectByFilterSync: scan limit reached ($maxScan)');
+        break;
+      }
+      scanned++;
+
+      try {
+        final T? item = box.get(key);
+        if (item != null && predicate(item)) {
+          results.add(item);
+          if (results.length >= maxResults) break;
+        }
+      } catch (e) {
+        // Ignorer erreurs de lecture ponctuelle
+      }
+    }
+    return results;
+  }
 }
+

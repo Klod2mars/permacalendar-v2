@@ -494,18 +494,35 @@ class _CreatePlantingDialogCustomState
           'initialGrowthPercent': initialGrowthPercent
         };
 
-        await ref.read(plantingProvider.notifier).createPlanting(
-              gardenBedId: widget.gardenBedId,
-              plantId: _selectedPlantId ?? 'custom',
-              plantName: plantName,
-              quantity: quantity,
-              plantedDate: _plantedDate,
-              expectedHarvestStartDate: null,
-              expectedHarvestEndDate: null,
-              notes: notes,
-              status: _status,
-              metadata: metadataForCreation,
-            );
+        final success =
+            await ref.read(plantingProvider.notifier).createPlanting(
+                  gardenBedId: widget.gardenBedId,
+                  plantId: _selectedPlantId ?? 'custom',
+                  plantName: plantName,
+                  quantity: quantity,
+                  plantedDate: _plantedDate,
+                  expectedHarvestStartDate: null,
+                  expectedHarvestEndDate: null,
+                  notes: notes,
+                  status: _status,
+                  metadata: metadataForCreation,
+                );
+
+        if (!success) {
+          if (mounted) {
+            final error = ref.read(plantingProvider).error ??
+                'Erreur lors de la Création';
+            // Utiliser une couleur orange pour les messages "polis" de validation
+            final isLimitation = error.contains('limite') ||
+                error.contains('confort') ||
+                error.contains('performances');
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(error),
+                backgroundColor: isLimitation ? Colors.orange : Colors.red));
+          }
+          setState(() => _isLoading = false);
+          return;
+        }
       } else {
         final updatedPlanting = widget.planting!.copyWith(
           plantName: plantName,
@@ -516,9 +533,20 @@ class _CreatePlantingDialogCustomState
           expectedHarvestStartDate: widget.planting!.expectedHarvestStartDate,
           expectedHarvestEndDate: widget.planting!.expectedHarvestEndDate,
         );
-        await ref
+        final success = await ref
             .read(plantingProvider.notifier)
             .updatePlanting(updatedPlanting);
+
+        if (!success) {
+          if (mounted) {
+            final error = ref.read(plantingProvider).error ??
+                'Erreur lors de la mise à jour';
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(error), backgroundColor: Colors.red));
+          }
+          setState(() => _isLoading = false);
+          return;
+        }
       }
 
       if (mounted) {

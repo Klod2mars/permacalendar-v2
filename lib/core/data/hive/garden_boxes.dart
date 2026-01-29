@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
+import 'hive_service.dart';
+
 import '../../models/garden.dart';
 import '../../models/garden_bed.dart';
 import '../../models/planting.dart';
@@ -152,7 +154,12 @@ class GardenBoxes {
   }
 
   static List<Garden> getAllGardens() {
-    return gardens.values.toList();
+    return HiveService.collectByFilterSync<Garden>(
+      gardens,
+      (Garden g) => true, // renvoie tout mais en streaming par clés
+      maxScan: 5000,
+      maxResults: 2000,
+    );
   }
 
   static Garden? getGarden(String id) {
@@ -190,17 +197,18 @@ class GardenBoxes {
 
   // Méthodes utilitaires pour les zones de culture
   static List<GardenBed> getGardenBeds(String gardenId) {
-    final allBeds = gardenBeds.values.toList();
-    final filteredBeds =
-        allBeds.where((bed) => bed.gardenId == gardenId).toList();
+    // Remplacement safe : itère par clés et récupère uniquement les objets nécessaires,
+    // avec des limites pour se protéger des cas extrêmes.
+    final filteredBeds = HiveService.collectByFilterSync<GardenBed>(
+      gardenBeds,
+      (GardenBed bed) => bed.gardenId == gardenId,
+      maxScan: 2000, // ajuster selon besoin
+      maxResults: 1000, // mais typiquement on s'attend à beaucoup moins
+    );
 
     if (verboseLogging) {
       developer.log(
-          '[GardenBoxes] getGardenBeds($gardenId): ${allBeds.length} parcelles totales, ${filteredBeds.length} pour ce jardin');
-      for (final bed in filteredBeds) {
-        developer.log(
-            '[GardenBoxes]   - Parcelle: ${bed.name} (ID: ${bed.id}, Jardin: ${bed.gardenId})');
-      }
+          '[GardenBoxes] getGardenBeds($gardenId): scanned limit etc -> ${filteredBeds.length}');
     }
 
     return filteredBeds;
@@ -248,13 +256,17 @@ class GardenBoxes {
     try {
       // Récupérer tous les lits de jardin pour ce jardin
       final gardenBeds = getGardenBeds(gardenId);
-      final gardenBedIds = gardenBeds.map((bed) => bed.id).toList();
+      // Use Set for faster lookups
+      final gardenBedIds = gardenBeds.map((bed) => bed.id).toSet();
 
-      // Récupérer toutes les plantations actives pour ces lits
-      return plantings.values
-          .where((planting) =>
-              gardenBedIds.contains(planting.gardenBedId) && planting.isActive)
-          .toList();
+      // Récupérer toutes les plantations actives pour ces lits via collectByFilterSync
+      return HiveService.collectByFilterSync<Planting>(
+        plantings,
+        (planting) =>
+            gardenBedIds.contains(planting.gardenBedId) && planting.isActive,
+        maxScan: 5000,
+        maxResults: 2000,
+      );
     } catch (e) {
       if (verboseLogging)
         developer.log(
@@ -267,9 +279,13 @@ class GardenBoxes {
   /// Renvoie `null` si aucune plantation active trouvée.
   static Planting? getActivePlantingForBed(String bedId) {
     try {
-      final bedPlantings = plantings.values
-          .where((p) => p.gardenBedId == bedId && p.isActive)
-          .toList();
+      final bedPlantings = HiveService.collectByFilterSync<Planting>(
+        plantings,
+        (p) => p.gardenBedId == bedId && p.isActive,
+        maxScan: 5000,
+        maxResults: 500,
+      );
+
       if (bedPlantings.isEmpty) return null;
       // Retourner la plus récente (par plantedDate)
       bedPlantings.sort((a, b) => b.plantedDate.compareTo(a.plantedDate));

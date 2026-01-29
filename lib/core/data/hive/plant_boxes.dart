@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'hive_service.dart';
 import '../../models/plant.dart';
 import '../../models/plant_variety.dart';
 import '../../models/growth_cycle.dart';
@@ -67,7 +68,12 @@ class PlantBoxes {
 
   static List<Plant> getAllPlants() {
     try {
-      return plants.values.toList();
+      return HiveService.collectByFilterSync<Plant>(
+        plants,
+        (Plant p) => true,
+        maxScan: 5000,
+        maxResults: 5000,
+      );
     } catch (e) {
       return <Plant>[];
     }
@@ -152,27 +158,35 @@ class PlantBoxes {
   static List<Plant> searchPlants(String query) {
     try {
       final lowerQuery = query.toLowerCase();
-      return plants.values
-          .where((plant) =>
-              plant.commonName.toLowerCase().contains(lowerQuery) ||
-              plant.scientificName.toLowerCase().contains(lowerQuery) ||
-              plant.category.toLowerCase().contains(lowerQuery))
-          .toList();
+      return HiveService.collectByFilterSync<Plant>(
+        plants,
+        (plant) =>
+            plant.commonName.toLowerCase().contains(lowerQuery) ||
+            plant.scientificName.toLowerCase().contains(lowerQuery) ||
+            plant.category.toLowerCase().contains(lowerQuery),
+        maxScan: 5000,
+        maxResults: 500,
+      );
     } catch (e) {
       return <Plant>[];
     }
   }
 
   static List<Plant> getPlantsByCategory(String category) {
-    return plants.values
-        .where(
-            (plant) => plant.category.toLowerCase() == category.toLowerCase())
-        .toList();
+    return HiveService.collectByFilterSync<Plant>(
+      plants,
+      (plant) => plant.category.toLowerCase() == category.toLowerCase(),
+      maxScan: 5000,
+      maxResults: 500,
+    );
   }
 
   static List<Plant> getPlantsBySeason(String season) {
-    return plants.values
-        .where((plant) => plant.plantingSeason.contains(season))
-        .toList();
+    return HiveService.collectByFilterSync<Plant>(
+      plants,
+      (plant) => plant.plantingSeason.contains(season),
+      maxScan: 5000,
+      maxResults: 500,
+    );
   }
 }

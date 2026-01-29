@@ -52,6 +52,9 @@ class EnvironmentService {
   static int get minGardensPerUser =>
       int.tryParse(dotenv.env['MIN_GARDENS_PER_USER'] ?? '1') ?? 1;
 
+  static int get maxBedsPerGarden => 100;
+  static int get maxPlantingsPerBed => 6;
+
   static bool get isGardenValidationEnabled =>
       dotenv.env['ENABLE_GARDEN_VALIDATION']?.toLowerCase() == 'true';
 
