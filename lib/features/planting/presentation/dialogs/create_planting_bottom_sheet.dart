@@ -507,12 +507,22 @@ class _CreatePlantingBottomSheetContentState
             final error = ref.read(plantingProvider).error ??
                 'Erreur lors de la Création';
             // Utiliser une couleur orange pour les messages "polis" de validation
-            final isLimitation = error.contains('limite') ||
-                error.contains('confort') ||
-                error.contains('performances');
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            // final isLimitation = error.contains('limite') || error.contains('confort') || error.contains('performances') || error.contains('atteinte');
+            
+            // Afficher une Dialog pour être sûr qu'elle soit visible par dessus le BottomSheet
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text('Attention', style: TextStyle(color: Colors.orange)),
                 content: Text(error),
-                backgroundColor: isLimitation ? Colors.orange : Colors.red));
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text('OK'),
+                  )
+                ],
+              ),
+            );
           }
           setState(() => _isLoading = false);
           return;
@@ -535,8 +545,19 @@ class _CreatePlantingBottomSheetContentState
           if (mounted) {
             final error = ref.read(plantingProvider).error ??
                 'Erreur lors de la mise à jour';
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(error), backgroundColor: Colors.red));
+             showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text('Erreur', style: TextStyle(color: Colors.red)),
+                content: Text(error),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text('OK'),
+                  )
+                ],
+              ),
+            );
           }
           setState(() => _isLoading = false);
           return;

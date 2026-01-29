@@ -58,7 +58,7 @@ class GardenRules {
   ValidationResult validatePlantingCount(int currentCount) {
     if (currentCount >= EnvironmentService.maxPlantingsPerBed) {
       return ValidationResult.invalid(
-          'Cette parcelle est complète pour le moment.');
+          'Limite de 6 plantes atteinte.\nVeuillez retirer une plante de cette parcelle pour en ajouter une nouvelle.');
     }
     return ValidationResult.valid();
   }
