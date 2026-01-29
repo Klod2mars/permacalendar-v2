@@ -2364,16 +2364,30 @@
   "@export_block_desc_nutrition": {
     "description": "Description pour le bloc Nutrition"
   },
-  "export_field_nutrient_key": "Clé nutriment",
-  "export_field_nutrient_label": "Nutriment",
-  "export_field_nutrient_unit": "Unité",
-  "export_field_nutrient_total": "Total disponible",
-  "export_field_mass_with_data_kg": "Masse avec données (kg)",
-  "export_field_contributing_records": "Nb récoltes",
-  "export_field_data_confidence": "Confiance",
-  "export_field_coverage_percent": "Moy. DRI (%)",
+  "export_field_nutrient_key": "Nutrient Key",
+  "export_field_nutrient_label": "Nutrient",
+  "export_field_nutrient_unit": "Unit",
+  "export_field_nutrient_total": "Total Available",
+  "export_field_mass_with_data_kg": "Mass with Data (kg)",
+  "export_field_contributing_records": "Harvest Count",
+  "export_field_data_confidence": "Confidence",
+  "export_field_coverage_percent": "Avg DRI (%)",
   "export_field_lower_bound_coverage": "Min DRI (%)",
   "export_field_upper_bound_coverage": "Max DRI (%)",
+
+  "garden_no_location": "No location",
+  "export_filename_prefix": "Export",
+  
+  "export_field_desc_nutrient_key": "Technical Identifier",
+  "export_field_desc_nutrient_label": "Nutrient Name",
+  "export_field_desc_nutrient_unit": "Measurement Unit",
+  "export_field_desc_nutrient_total": "Total Calculated Quantity",
+  "export_field_desc_mass_with_data_kg": "Total Mass of Harvests with Data",
+  "export_field_desc_contributing_records": "Number of Harvests with Data",
+  "export_field_desc_data_confidence": "Confidence (Mass with Data / Total Mass)",
+  "export_field_desc_coverage_percent": "DRI Coverage Percentage",
+  "export_field_desc_lower_bound_coverage": "Coverage Lower Bound Estimate",
+  "export_field_desc_upper_bound_coverage": "Coverage Upper Bound Estimate",
 
   "settings_garden_config_title": "Garden Configuration",
   "@settings_garden_config_title": {

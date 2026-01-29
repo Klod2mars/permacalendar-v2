@@ -2453,28 +2453,28 @@ class AppLocalizationsEn extends AppLocalizations {
       'Indicateurs nutritionnels agrégés par nutriment';
 
   @override
-  String get export_field_nutrient_key => 'Clé nutriment';
+  String get export_field_nutrient_key => 'Nutrient Key';
 
   @override
-  String get export_field_nutrient_label => 'Nutriment';
+  String get export_field_nutrient_label => 'Nutrient';
 
   @override
-  String get export_field_nutrient_unit => 'Unité';
+  String get export_field_nutrient_unit => 'Unit';
 
   @override
-  String get export_field_nutrient_total => 'Total disponible';
+  String get export_field_nutrient_total => 'Total Available';
 
   @override
-  String get export_field_mass_with_data_kg => 'Masse avec données (kg)';
+  String get export_field_mass_with_data_kg => 'Mass with Data (kg)';
 
   @override
-  String get export_field_contributing_records => 'Nb récoltes';
+  String get export_field_contributing_records => 'Harvest Count';
 
   @override
-  String get export_field_data_confidence => 'Confiance';
+  String get export_field_data_confidence => 'Confidence';
 
   @override
-  String get export_field_coverage_percent => 'Moy. DRI (%)';
+  String get export_field_coverage_percent => 'Avg DRI (%)';
 
   @override
   String get export_field_lower_bound_coverage => 'Min DRI (%)';
@@ -2693,4 +2693,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String custom_plant_pick_error(Object error) {
     return 'Error selecting image: $error';
   }
+
+  @override
+  String get garden_no_location => 'No location';
+
+  @override
+  String get export_filename_prefix => 'Export';
+
+  @override
+  String get export_field_desc_nutrient_key => 'Technical Identifier';
+
+  @override
+  String get export_field_desc_nutrient_label => 'Nutrient Name';
+
+  @override
+  String get export_field_desc_nutrient_unit => 'Measurement Unit';
+
+  @override
+  String get export_field_desc_nutrient_total => 'Total Calculated Quantity';
+
+  @override
+  String get export_field_desc_mass_with_data_kg =>
+      'Total Mass of Harvests with Data';
+
+  @override
+  String get export_field_desc_contributing_records =>
+      'Number of Harvests with Data';
+
+  @override
+  String get export_field_desc_data_confidence =>
+      'Confidence (Mass with Data / Total Mass)';
+
+  @override
+  String get export_field_desc_coverage_percent => 'DRI Coverage Percentage';
+
+  @override
+  String get export_field_desc_lower_bound_coverage =>
+      'Coverage Lower Bound Estimate';
+
+  @override
+  String get export_field_desc_upper_bound_coverage =>
+      'Coverage Upper Bound Estimate';
 }

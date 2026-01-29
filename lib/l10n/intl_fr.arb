@@ -1872,7 +1872,20 @@
   "@custom_plant_pick_error": {
     "description": "Erreur image picker",
     "placeholders": { "error": { "type": "Object" } }
-  }
+  },
+  "garden_no_location": "Sans lieu",
+  "export_filename_prefix": "Export",
+  
+  "export_field_desc_nutrient_key": "Identifiant technique",
+  "export_field_desc_nutrient_label": "Nom du nutriment",
+  "export_field_desc_nutrient_unit": "Unité de mesure",
+  "export_field_desc_nutrient_total": "Quantité totale calculée",
+  "export_field_desc_mass_with_data_kg": "Masse totale des récoltes ayant des données",
+  "export_field_desc_contributing_records": "Nombre de récoltes avec données",
+  "export_field_desc_data_confidence": "Confiance (Masse avec données / Masse totale)",
+  "export_field_desc_coverage_percent": "Couverture des Apports Journaliers Recommandés",
+  "export_field_desc_lower_bound_coverage": "Estimation basse de la couverture",
+  "export_field_desc_upper_bound_coverage": "Estimation haute de la couverture"
 }
 
 

@@ -2725,4 +2725,46 @@ class AppLocalizationsFr extends AppLocalizations {
   String custom_plant_pick_error(Object error) {
     return 'Erreur lors de la sélection de l\'image: $error';
   }
+
+  @override
+  String get garden_no_location => 'Sans lieu';
+
+  @override
+  String get export_filename_prefix => 'Export';
+
+  @override
+  String get export_field_desc_nutrient_key => 'Identifiant technique';
+
+  @override
+  String get export_field_desc_nutrient_label => 'Nom du nutriment';
+
+  @override
+  String get export_field_desc_nutrient_unit => 'Unité de mesure';
+
+  @override
+  String get export_field_desc_nutrient_total => 'Quantité totale calculée';
+
+  @override
+  String get export_field_desc_mass_with_data_kg =>
+      'Masse totale des récoltes ayant des données';
+
+  @override
+  String get export_field_desc_contributing_records =>
+      'Nombre de récoltes avec données';
+
+  @override
+  String get export_field_desc_data_confidence =>
+      'Confiance (Masse avec données / Masse totale)';
+
+  @override
+  String get export_field_desc_coverage_percent =>
+      'Couverture des Apports Journaliers Recommandés';
+
+  @override
+  String get export_field_desc_lower_bound_coverage =>
+      'Estimation basse de la couverture';
+
+  @override
+  String get export_field_desc_upper_bound_coverage =>
+      'Estimation haute de la couverture';
 }

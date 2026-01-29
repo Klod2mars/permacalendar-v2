@@ -2187,221 +2187,216 @@ class AppLocalizationsEs extends AppLocalizations {
   String get export_field_bed_name => 'Nombre de la Parcela';
 
   @override
-  String get export_field_bed_id => 'ID Parcelle';
+  String get export_field_bed_id => 'ID de Parcela';
 
   @override
-  String get export_field_bed_surface => 'Surface (m²)';
+  String get export_field_bed_surface => 'Área (m²)';
 
   @override
-  String get export_field_bed_plant_count => 'Nb Plantes';
+  String get export_field_bed_plant_count => 'Nº Plantas';
 
   @override
-  String get export_field_plant_name => 'Nom commun';
+  String get export_field_plant_name => 'Nombre común';
 
   @override
-  String get export_field_plant_id => 'ID Plante';
+  String get export_field_plant_id => 'ID Planta';
 
   @override
-  String get export_field_plant_scientific => 'Nom scientifique';
+  String get export_field_plant_scientific => 'Nombre científico';
 
   @override
-  String get export_field_plant_family => 'Famille';
+  String get export_field_plant_family => 'Familia';
 
   @override
-  String get export_field_plant_variety => 'Variété';
+  String get export_field_plant_variety => 'Variedad';
 
   @override
-  String get export_field_harvest_date => 'Date Récolte';
+  String get export_field_harvest_date => 'Fecha Cosecha';
 
   @override
-  String get export_field_harvest_qty => 'Quantité (kg)';
+  String get export_field_harvest_qty => 'Cantidad (kg)';
 
   @override
-  String get export_field_harvest_plant_name => 'Plante';
+  String get export_field_harvest_plant_name => 'Planta';
 
   @override
-  String get export_field_harvest_price => 'Prix/kg';
+  String get export_field_harvest_price => 'Precio/kg';
 
   @override
-  String get export_field_harvest_value => 'Valeur Totale';
+  String get export_field_harvest_value => 'Valor Total';
 
   @override
-  String get export_field_harvest_notes => 'Notes';
+  String get export_field_harvest_notes => 'Notas';
 
   @override
-  String get export_field_harvest_garden_name => 'Jardin';
+  String get export_field_harvest_garden_name => 'Jardín';
 
   @override
-  String get export_field_harvest_garden_id => 'ID Jardin';
+  String get export_field_harvest_garden_id => 'ID Jardín';
 
   @override
-  String get export_field_harvest_bed_name => 'Parcelle';
+  String get export_field_harvest_bed_name => 'Parcela';
 
   @override
-  String get export_field_harvest_bed_id => 'ID Parcelle';
+  String get export_field_harvest_bed_id => 'ID Parcela';
 
   @override
-  String get export_field_activity_date => 'Date';
+  String get export_field_activity_date => 'Fecha';
 
   @override
-  String get export_field_activity_type => 'Type';
+  String get export_field_activity_type => 'Tipo';
 
   @override
-  String get export_field_activity_title => 'Titre';
+  String get export_field_activity_title => 'Título';
 
   @override
-  String get export_field_activity_desc => 'Description';
+  String get export_field_activity_desc => 'Descripción';
 
   @override
-  String get export_field_activity_entity => 'Entité Cible';
+  String get export_field_activity_entity => 'Entidad Objetivo';
 
   @override
-  String get export_field_activity_entity_id => 'ID Cible';
+  String get export_field_activity_entity_id => 'ID Objetivo';
 
   @override
-  String get export_activity_type_garden_created => 'Création de jardin';
+  String get export_activity_type_garden_created => 'Jardín creado';
 
   @override
-  String get export_activity_type_garden_updated => 'Mise à jour du jardin';
+  String get export_activity_type_garden_updated => 'Jardín actualizado';
 
   @override
-  String get export_activity_type_garden_deleted => 'Suppression de jardin';
+  String get export_activity_type_garden_deleted => 'Jardín eliminado';
 
   @override
-  String get export_activity_type_bed_created => 'Création de parcelle';
+  String get export_activity_type_bed_created => 'Parcela creada';
 
   @override
-  String get export_activity_type_bed_updated => 'Mise à jour de parcelle';
+  String get export_activity_type_bed_updated => 'Parcela actualizada';
 
   @override
-  String get export_activity_type_bed_deleted => 'Suppression de parcelle';
+  String get export_activity_type_bed_deleted => 'Parcela eliminada';
 
   @override
-  String get export_activity_type_planting_created => 'Nouvelle plantation';
+  String get export_activity_type_planting_created => 'Nueva plantación';
 
   @override
-  String get export_activity_type_planting_updated => 'Mise à jour plantation';
+  String get export_activity_type_planting_updated => 'Plantación actualizada';
 
   @override
-  String get export_activity_type_planting_deleted => 'Suppression plantation';
+  String get export_activity_type_planting_deleted => 'Plantación eliminada';
 
   @override
-  String get export_activity_type_harvest => 'Récolte';
+  String get export_activity_type_harvest => 'Cosecha';
 
   @override
-  String get export_activity_type_maintenance => 'Entretien';
+  String get export_activity_type_maintenance => 'Mantenimiento';
 
   @override
-  String get export_activity_type_weather => 'Météo';
+  String get export_activity_type_weather => 'Clima';
 
   @override
-  String get export_activity_type_error => 'Erreur';
+  String get export_activity_type_error => 'Error';
 
   @override
   String get export_excel_total => 'TOTAL';
 
   @override
-  String get export_excel_unknown => 'Inconnu';
+  String get export_excel_unknown => 'Desconocido';
 
   @override
-  String get export_field_advanced_suffix => ' (Avancé)';
+  String get export_field_advanced_suffix => ' (Avanzado)';
 
   @override
-  String get export_field_desc_garden_name => 'Nom donné au jardin';
+  String get export_field_desc_garden_name => 'Nombre del jardín';
 
   @override
-  String get export_field_desc_garden_id => 'Identifiant unique technique';
+  String get export_field_desc_garden_id => 'ID técnico único';
 
   @override
-  String get export_field_desc_garden_surface => 'Surface totale du jardin';
+  String get export_field_desc_garden_surface => 'Superficie total del jardín';
 
   @override
   String get export_field_desc_garden_creation =>
-      'Date de création dans l\'application';
+      'Fecha de creación en la aplicación';
 
   @override
-  String get export_field_desc_bed_name => 'Nom de la parcelle';
+  String get export_field_desc_bed_name => 'Nombre de la parcela';
 
   @override
-  String get export_field_desc_bed_id => 'Identifiant unique technique';
+  String get export_field_desc_bed_id => 'ID técnico único';
 
   @override
-  String get export_field_desc_bed_surface => 'Surface de la parcelle';
+  String get export_field_desc_bed_surface => 'Superficie de la parcela';
 
   @override
-  String get export_field_desc_bed_plant_count =>
-      'Nombre de cultures en place (actuel)';
+  String get export_field_desc_bed_plant_count => 'Número de cultivos actuales';
 
   @override
-  String get export_field_desc_plant_name => 'Nom usuel de la plante';
+  String get export_field_desc_plant_name => 'Nombre común de la planta';
 
   @override
-  String get export_field_desc_plant_id => 'Identifiant unique technique';
+  String get export_field_desc_plant_id => 'ID técnico único';
 
   @override
-  String get export_field_desc_plant_scientific => 'Dénomination botanique';
+  String get export_field_desc_plant_scientific => 'Denominación botánica';
 
   @override
-  String get export_field_desc_plant_family => 'Famille botanique';
+  String get export_field_desc_plant_family => 'Familia botánica';
 
   @override
-  String get export_field_desc_plant_variety => 'Variété spécifique';
+  String get export_field_desc_plant_variety => 'Variedad específica';
 
   @override
-  String get export_field_desc_harvest_date =>
-      'Date de l\'événement de récolte';
+  String get export_field_desc_harvest_date => 'Fecha del evento de cosecha';
 
   @override
-  String get export_field_desc_harvest_qty => 'Poids récolté en kg';
+  String get export_field_desc_harvest_qty => 'Peso cosechado en kg';
 
   @override
   String get export_field_desc_harvest_plant_name =>
-      'Nom de la plante récoltée';
+      'Nombre de la planta cosechada';
 
   @override
-  String get export_field_desc_harvest_price => 'Prix au kg configuré';
+  String get export_field_desc_harvest_price => 'Precio por kg configurado';
 
   @override
-  String get export_field_desc_harvest_value => 'Quantité * Prix/kg';
+  String get export_field_desc_harvest_value => 'Cantidad * Precio/kg';
 
   @override
-  String get export_field_desc_harvest_notes =>
-      'Observations saisies lors de la récolte';
+  String get export_field_desc_harvest_notes => 'Observaciones de la cosecha';
 
   @override
   String get export_field_desc_harvest_garden_name =>
-      'Nom du jardin d\'origine (si disponible)';
+      'Nombre del jardín de origen';
 
   @override
-  String get export_field_desc_harvest_garden_id =>
-      'Identifiant unique du jardin';
+  String get export_field_desc_harvest_garden_id => 'ID único del jardín';
 
   @override
-  String get export_field_desc_harvest_bed_name =>
-      'Parcelle d\'origine (si disponible)';
+  String get export_field_desc_harvest_bed_name => 'Parcela de origen';
 
   @override
-  String get export_field_desc_harvest_bed_id => 'Identifiant parcelle';
+  String get export_field_desc_harvest_bed_id => 'ID de la parcela';
 
   @override
-  String get export_field_desc_activity_date => 'Date de l\'activité';
+  String get export_field_desc_activity_date => 'Fecha de la actividad';
 
   @override
   String get export_field_desc_activity_type =>
-      'Catégorie d\'action (Semis, Récolte, Soin...)';
+      'Categoría de acción (Siembra, Cosecha, Cuidado...)';
 
   @override
-  String get export_field_desc_activity_title => 'Résumé de l\'action';
+  String get export_field_desc_activity_title => 'Resumen de la acción';
 
   @override
-  String get export_field_desc_activity_desc => 'Détails complets';
+  String get export_field_desc_activity_desc => 'Detalles completos';
 
   @override
   String get export_field_desc_activity_entity =>
-      'Nom de l\'objet concerné (Plante, Parcelle...)';
+      'Nombre del objeto afectado (Planta, Parcela...)';
 
   @override
-  String get export_field_desc_activity_entity_id => 'ID de l\'objet concerné';
+  String get export_field_desc_activity_entity_id => 'ID del objeto afectado';
 
   @override
   String get plant_catalog_sow => 'Sembrar';
@@ -2472,28 +2467,28 @@ class AppLocalizationsEs extends AppLocalizations {
       'Indicateurs nutritionnels agrégés par nutriment';
 
   @override
-  String get export_field_nutrient_key => 'Clé nutriment';
+  String get export_field_nutrient_key => 'Clave nutriente';
 
   @override
-  String get export_field_nutrient_label => 'Nutriment';
+  String get export_field_nutrient_label => 'Nutriente';
 
   @override
-  String get export_field_nutrient_unit => 'Unité';
+  String get export_field_nutrient_unit => 'Unidad';
 
   @override
   String get export_field_nutrient_total => 'Total disponible';
 
   @override
-  String get export_field_mass_with_data_kg => 'Masse avec données (kg)';
+  String get export_field_mass_with_data_kg => 'Masa con datos (kg)';
 
   @override
-  String get export_field_contributing_records => 'Nb récoltes';
+  String get export_field_contributing_records => 'Nº Cosechas';
 
   @override
-  String get export_field_data_confidence => 'Confiance';
+  String get export_field_data_confidence => 'Confianza';
 
   @override
-  String get export_field_coverage_percent => 'Moy. DRI (%)';
+  String get export_field_coverage_percent => 'Prom. DRI (%)';
 
   @override
   String get export_field_lower_bound_coverage => 'Min DRI (%)';
@@ -2713,4 +2708,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String custom_plant_pick_error(Object error) {
     return 'Error al seleccionar imagen: $error';
   }
+
+  @override
+  String get garden_no_location => 'Sin ubicación';
+
+  @override
+  String get export_filename_prefix => 'Exportación';
+
+  @override
+  String get export_field_desc_nutrient_key => 'Identificador técnico';
+
+  @override
+  String get export_field_desc_nutrient_label => 'Nombre del nutriente';
+
+  @override
+  String get export_field_desc_nutrient_unit => 'Unidad de medida';
+
+  @override
+  String get export_field_desc_nutrient_total => 'Cantidad total calculada';
+
+  @override
+  String get export_field_desc_mass_with_data_kg =>
+      'Masa total de cosechas con datos';
+
+  @override
+  String get export_field_desc_contributing_records =>
+      'Número de cosechas con datos';
+
+  @override
+  String get export_field_desc_data_confidence =>
+      'Confianza (Masa con datos / Masa total)';
+
+  @override
+  String get export_field_desc_coverage_percent =>
+      'Porcentaje de cobertura DRI';
+
+  @override
+  String get export_field_desc_lower_bound_coverage =>
+      'Estimación baja de cobertura';
+
+  @override
+  String get export_field_desc_upper_bound_coverage =>
+      'Estimación alta de cobertura';
 }

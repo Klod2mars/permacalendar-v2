@@ -176,7 +176,7 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                     final isSelected = tempSelection.contains(garden.id);
                     return CheckboxListTile(
                       title: Text(garden.name),
-                      subtitle: Text(garden.location.isEmpty ? 'Sans lieu' : garden.location),
+                      subtitle: Text(garden.location.isEmpty ? l10n.garden_no_location : garden.location),
                       value: isSelected,
                       onChanged: (val) {
                         setState(() {
@@ -346,9 +346,9 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
       // We assume intl is initialized. If 'fr_FR' data is not loaded, it might fallback or error.
       // Usually, standard flutter apps initialize locale data.
       final now = DateTime.now();
-      final formatter = DateFormat('d MMMM yyyy – HH\'h\'mm', 'fr_FR');
+      final formatter = DateFormat('d MMMM yyyy – HH\'h\'mm', l10n.localeName);
       final dateStr = formatter.format(now);
-      final filename = 'Sowing $dateStr.xlsx';
+      final filename = '${l10n.export_filename_prefix} $dateStr.xlsx';
 
       // Save file
       final tempDir = await getTemporaryDirectory();
@@ -560,6 +560,27 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         return l10n.export_field_desc_activity_entity;
       case 'activity_entity_id':
         return l10n.export_field_desc_activity_entity_id;
+
+      case 'nutrient_key':
+        return l10n.export_field_desc_nutrient_key;
+      case 'nutrient_label':
+        return l10n.export_field_desc_nutrient_label;
+      case 'nutrient_unit':
+        return l10n.export_field_desc_nutrient_unit;
+      case 'nutrient_total':
+        return l10n.export_field_desc_nutrient_total;
+      case 'mass_with_data_kg':
+        return l10n.export_field_desc_mass_with_data_kg;
+      case 'contributing_records':
+        return l10n.export_field_desc_contributing_records;
+      case 'data_confidence':
+        return l10n.export_field_desc_data_confidence;
+      case 'coverage_percent':
+        return l10n.export_field_desc_coverage_percent;
+      case 'lower_bound_coverage':
+        return l10n.export_field_desc_lower_bound_coverage;
+      case 'upper_bound_coverage':
+        return l10n.export_field_desc_upper_bound_coverage;
 
       default:
         return '';

@@ -5019,6 +5019,78 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Erreur lors de la sélection de l\'image: {error}'**
   String custom_plant_pick_error(Object error);
+
+  /// No description provided for @garden_no_location.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans lieu'**
+  String get garden_no_location;
+
+  /// No description provided for @export_filename_prefix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Export'**
+  String get export_filename_prefix;
+
+  /// No description provided for @export_field_desc_nutrient_key.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant technique'**
+  String get export_field_desc_nutrient_key;
+
+  /// No description provided for @export_field_desc_nutrient_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du nutriment'**
+  String get export_field_desc_nutrient_label;
+
+  /// No description provided for @export_field_desc_nutrient_unit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unité de mesure'**
+  String get export_field_desc_nutrient_unit;
+
+  /// No description provided for @export_field_desc_nutrient_total.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité totale calculée'**
+  String get export_field_desc_nutrient_total;
+
+  /// No description provided for @export_field_desc_mass_with_data_kg.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masse totale des récoltes ayant des données'**
+  String get export_field_desc_mass_with_data_kg;
+
+  /// No description provided for @export_field_desc_contributing_records.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre de récoltes avec données'**
+  String get export_field_desc_contributing_records;
+
+  /// No description provided for @export_field_desc_data_confidence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confiance (Masse avec données / Masse totale)'**
+  String get export_field_desc_data_confidence;
+
+  /// No description provided for @export_field_desc_coverage_percent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couverture des Apports Journaliers Recommandés'**
+  String get export_field_desc_coverage_percent;
+
+  /// No description provided for @export_field_desc_lower_bound_coverage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Estimation basse de la couverture'**
+  String get export_field_desc_lower_bound_coverage;
+
+  /// No description provided for @export_field_desc_upper_bound_coverage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Estimation haute de la couverture'**
+  String get export_field_desc_upper_bound_coverage;
 }
 
 class _AppLocalizationsDelegate
