@@ -5109,6 +5109,186 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Estimation haute de la couverture'**
   String get export_field_desc_upper_bound_coverage;
+
+  /// No description provided for @nutrition_inventory_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inventaire Nutritionnel'**
+  String get nutrition_inventory_title;
+
+  /// No description provided for @nutrition_mode_interpretation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Interprétation'**
+  String get nutrition_mode_interpretation;
+
+  /// No description provided for @nutrition_mode_measure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mesure'**
+  String get nutrition_mode_measure;
+
+  /// No description provided for @calendar_mark_as_done.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme fait'**
+  String get calendar_mark_as_done;
+
+  /// No description provided for @calendar_mark_as_todo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme à faire'**
+  String get calendar_mark_as_todo;
+
+  /// No description provided for @step_germination_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Germination attendue'**
+  String get step_germination_title;
+
+  /// No description provided for @step_germination_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Apparition des premières pousses (estimé à ~{days} jours)'**
+  String step_germination_desc(Object days);
+
+  /// No description provided for @step_watering_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrosage recommandé'**
+  String get step_watering_title;
+
+  /// No description provided for @step_watering_desc_regular.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrosage régulier selon les besoins'**
+  String get step_watering_desc_regular;
+
+  /// No description provided for @step_watering_desc_amount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité : {amount}'**
+  String step_watering_desc_amount(Object amount);
+
+  /// No description provided for @step_thinning_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Éclaircissage recommandé'**
+  String get step_thinning_title;
+
+  /// No description provided for @step_thinning_desc_default.
+  ///
+  /// In fr, this message translates to:
+  /// **'Éclaircir pour obtenir un espacement optimal'**
+  String get step_thinning_desc_default;
+
+  /// No description provided for @step_weeding_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désherbage recommandé'**
+  String get step_weeding_title;
+
+  /// No description provided for @step_weeding_desc_regular.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désherbage régulier selon besoin'**
+  String get step_weeding_desc_regular;
+
+  /// No description provided for @step_weeding_desc_freq.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fréquence : {freq}'**
+  String step_weeding_desc_freq(Object freq);
+
+  /// No description provided for @step_harvest_estimated_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récolte estimée'**
+  String get step_harvest_estimated_title;
+
+  /// No description provided for @step_harvest_estimated_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Estimation basée sur {days} jours'**
+  String step_harvest_estimated_desc(Object days);
+
+  /// No description provided for @step_harvest_start_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Début de récolte'**
+  String get step_harvest_start_title;
+
+  /// No description provided for @step_harvest_start_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Début prévu de la période de récolte'**
+  String get step_harvest_start_desc;
+
+  /// No description provided for @step_harvest_end_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fin de récolte'**
+  String get step_harvest_end_title;
+
+  /// No description provided for @step_harvest_end_desc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fin prévue de la période de récolte'**
+  String get step_harvest_end_desc;
+
+  /// No description provided for @step_bio_control_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contrôle biologique'**
+  String get step_bio_control_title;
+
+  /// No description provided for @step_bio_control_prep_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préparation {number} contrôle biologique'**
+  String step_bio_control_prep_title(Object number);
+
+  /// No description provided for @step_add_step_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une étape'**
+  String get step_add_step_title;
+
+  /// No description provided for @step_dialog_title_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get step_dialog_title_label;
+
+  /// No description provided for @step_dialog_desc_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get step_dialog_desc_label;
+
+  /// No description provided for @step_dialog_no_date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de date'**
+  String get step_dialog_no_date;
+
+  /// No description provided for @step_dialog_pick_date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner date'**
+  String get step_dialog_pick_date;
+
+  /// No description provided for @common_add.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter'**
+  String get common_add;
+
+  /// No description provided for @common_done.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fait'**
+  String get common_done;
 }
 
 class _AppLocalizationsDelegate

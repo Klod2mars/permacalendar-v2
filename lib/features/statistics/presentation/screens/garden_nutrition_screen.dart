@@ -135,7 +135,7 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Inventaire Nutritionnel",
+                                l10n.nutrition_inventory_title,
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -145,8 +145,8 @@ class _GardenNutritionScreenState extends ConsumerState<GardenNutritionScreen> {
                                 children: [
                                   Text(
                                     appSettings.showNutritionInterpretation
-                                        ? "Interprétation"
-                                        : "Mesure",
+                                        ? l10n.nutrition_mode_interpretation
+                                        : l10n.nutrition_mode_measure,
                                     style: const TextStyle(
                                       color: Colors.white54,
                                       fontSize: 12,

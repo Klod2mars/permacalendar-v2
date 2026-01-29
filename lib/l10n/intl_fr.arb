@@ -1898,7 +1898,40 @@
   "export_field_desc_data_confidence": "Confiance (Masse avec données / Masse totale)",
   "export_field_desc_coverage_percent": "Couverture des Apports Journaliers Recommandés",
   "export_field_desc_lower_bound_coverage": "Estimation basse de la couverture",
-  "export_field_desc_upper_bound_coverage": "Estimation haute de la couverture"
+  "export_field_desc_upper_bound_coverage": "Estimation haute de la couverture",
+
+  "nutrition_inventory_title": "Inventaire Nutritionnel",
+  "nutrition_mode_interpretation": "Interprétation",
+  "nutrition_mode_measure": "Mesure",
+
+  "calendar_mark_as_done": "Marquer comme fait",
+  "calendar_mark_as_todo": "Marquer comme à faire",
+
+  "step_germination_title": "Germination attendue",
+  "step_germination_desc": "Apparition des premières pousses (estimé à ~{days} jours)",
+  "step_watering_title": "Arrosage recommandé",
+  "step_watering_desc_regular": "Arrosage régulier selon les besoins",
+  "step_watering_desc_amount": "Quantité : {amount}",
+  "step_thinning_title": "Éclaircissage recommandé",
+  "step_thinning_desc_default": "Éclaircir pour obtenir un espacement optimal",
+  "step_weeding_title": "Désherbage recommandé",
+  "step_weeding_desc_regular": "Désherbage régulier selon besoin",
+  "step_weeding_desc_freq": "Fréquence : {freq}",
+  "step_harvest_estimated_title": "Récolte estimée",
+  "step_harvest_estimated_desc": "Estimation basée sur {days} jours",
+  "step_harvest_start_title": "Début de récolte",
+  "step_harvest_start_desc": "Début prévu de la période de récolte",
+  "step_harvest_end_title": "Fin de récolte",
+  "step_harvest_end_desc": "Fin prévue de la période de récolte",
+  "step_bio_control_title": "Contrôle biologique",
+  "step_bio_control_prep_title": "Préparation {number} contrôle biologique",
+  "step_add_step_title": "Ajouter une étape",
+  "step_dialog_title_label": "Titre",
+  "step_dialog_desc_label": "Description",
+  "step_dialog_no_date": "Pas de date",
+  "step_dialog_pick_date": "Sélectionner date",
+  "common_add": "Ajouter",
+  "common_done": "Fait"
 }
 
 

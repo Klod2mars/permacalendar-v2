@@ -2608,5 +2608,38 @@
   "limit_plantings_reached_message": "Limit von 6 Pflanzen erreicht.\nBitte entfernen Sie eine Pflanze aus diesem Beet, um eine neue hinzuzufügen.",
   "@limit_plantings_reached_message": {
     "description": "Fehlermeldung Limit Pflanzen"
-  }
+  },
+
+  "nutrition_inventory_title": "Ernährungsinventar",
+  "nutrition_mode_interpretation": "Interpretation",
+  "nutrition_mode_measure": "Messung",
+
+  "calendar_mark_as_done": "Als erledigt markieren",
+  "calendar_mark_as_todo": "Als zu erledigen markieren",
+
+  "step_germination_title": "Erwartete Keimung",
+  "step_germination_desc": "Erscheinen der Keimlinge (geschätzt ~{days} Tage)",
+  "step_watering_title": "Empfohlene Bewässerung",
+  "step_watering_desc_regular": "Regelmäßige Bewässerung nach Bedarf",
+  "step_watering_desc_amount": "Menge: {amount}",
+  "step_thinning_title": "Empfohlenes Ausdünnen",
+  "step_thinning_desc_default": "Ausdünnen für optimalen Abstand",
+  "step_weeding_title": "Empfohlenes Jäten",
+  "step_weeding_desc_regular": "Jäten nach Bedarf",
+  "step_weeding_desc_freq": "Häufigkeit: {freq}",
+  "step_harvest_estimated_title": "Geschätzte Ernte",
+  "step_harvest_estimated_desc": "Schätzung basierend auf {days} Tagen",
+  "step_harvest_start_title": "Erntebeginn",
+  "step_harvest_start_desc": "Voraussichtlicher Erntebeginn",
+  "step_harvest_end_title": "Ernteende",
+  "step_harvest_end_desc": "Voraussichtliches Ernteende",
+  "step_bio_control_title": "Biologischer Pflanzenschutz",
+  "step_bio_control_prep_title": "Zubereitung {number} Bio-Schutz",
+  "step_add_step_title": "Schritt hinzufügen",
+  "step_dialog_title_label": "Titel",
+  "step_dialog_desc_label": "Beschreibung",
+  "step_dialog_no_date": "Kein Datum",
+  "step_dialog_pick_date": "Datum wählen",
+  "common_add": "Hinzufügen",
+  "common_done": "Erledigt"
 }

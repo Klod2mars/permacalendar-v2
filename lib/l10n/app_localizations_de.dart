@@ -2760,4 +2760,105 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get export_field_desc_upper_bound_coverage =>
       'Obere Schätzung der Abdeckung';
+
+  @override
+  String get nutrition_inventory_title => 'Ernährungsinventar';
+
+  @override
+  String get nutrition_mode_interpretation => 'Interpretation';
+
+  @override
+  String get nutrition_mode_measure => 'Messung';
+
+  @override
+  String get calendar_mark_as_done => 'Als erledigt markieren';
+
+  @override
+  String get calendar_mark_as_todo => 'Als zu erledigen markieren';
+
+  @override
+  String get step_germination_title => 'Erwartete Keimung';
+
+  @override
+  String step_germination_desc(Object days) {
+    return 'Erscheinen der Keimlinge (geschätzt ~$days Tage)';
+  }
+
+  @override
+  String get step_watering_title => 'Empfohlene Bewässerung';
+
+  @override
+  String get step_watering_desc_regular =>
+      'Regelmäßige Bewässerung nach Bedarf';
+
+  @override
+  String step_watering_desc_amount(Object amount) {
+    return 'Menge: $amount';
+  }
+
+  @override
+  String get step_thinning_title => 'Empfohlenes Ausdünnen';
+
+  @override
+  String get step_thinning_desc_default => 'Ausdünnen für optimalen Abstand';
+
+  @override
+  String get step_weeding_title => 'Empfohlenes Jäten';
+
+  @override
+  String get step_weeding_desc_regular => 'Jäten nach Bedarf';
+
+  @override
+  String step_weeding_desc_freq(Object freq) {
+    return 'Häufigkeit: $freq';
+  }
+
+  @override
+  String get step_harvest_estimated_title => 'Geschätzte Ernte';
+
+  @override
+  String step_harvest_estimated_desc(Object days) {
+    return 'Schätzung basierend auf $days Tagen';
+  }
+
+  @override
+  String get step_harvest_start_title => 'Erntebeginn';
+
+  @override
+  String get step_harvest_start_desc => 'Voraussichtlicher Erntebeginn';
+
+  @override
+  String get step_harvest_end_title => 'Ernteende';
+
+  @override
+  String get step_harvest_end_desc => 'Voraussichtliches Ernteende';
+
+  @override
+  String get step_bio_control_title => 'Biologischer Pflanzenschutz';
+
+  @override
+  String step_bio_control_prep_title(Object number) {
+    return 'Zubereitung $number Bio-Schutz';
+  }
+
+  @override
+  String get step_add_step_title => 'Schritt hinzufügen';
+
+  @override
+  String get step_dialog_title_label => 'Titel';
+
+  @override
+  String get step_dialog_desc_label => 'Beschreibung';
+
+  @override
+  String get step_dialog_no_date => 'Kein Datum';
+
+  @override
+  String get step_dialog_pick_date => 'Datum wählen';
+
+  @override
+  String get common_add => 'Hinzufügen';
+
+  @override
+  String get common_done => 'Erledigt';
 }

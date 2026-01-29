@@ -2607,5 +2607,38 @@
   "@custom_plant_pick_error": {
     "description": "Image picker error",
     "placeholders": { "error": { "type": "Object" } }
-  }
+  },
+
+  "nutrition_inventory_title": "Nutrition Inventory",
+  "nutrition_mode_interpretation": "Interpretation",
+  "nutrition_mode_measure": "Measure",
+
+  "calendar_mark_as_done": "Mark as done",
+  "calendar_mark_as_todo": "Mark as to do",
+
+  "step_germination_title": "Expected germination",
+  "step_germination_desc": "Seedlings appearance (est. ~{days} days)",
+  "step_watering_title": "Recommended watering",
+  "step_watering_desc_regular": "Regular watering as needed",
+  "step_watering_desc_amount": "Amount: {amount}",
+  "step_thinning_title": "Recommended thinning",
+  "step_thinning_desc_default": "Thin to achieve optimal spacing",
+  "step_weeding_title": "Recommended weeding",
+  "step_weeding_desc_regular": "Weed as needed",
+  "step_weeding_desc_freq": "Frequency: {freq}",
+  "step_harvest_estimated_title": "Estimated harvest",
+  "step_harvest_estimated_desc": "Estimate based on {days} days",
+  "step_harvest_start_title": "Harvest start",
+  "step_harvest_start_desc": "Expected start of harvest period",
+  "step_harvest_end_title": "Harvest end",
+  "step_harvest_end_desc": "Expected end of harvest period",
+  "step_bio_control_title": "Biological control",
+  "step_bio_control_prep_title": "Preparation {number} biological control",
+  "step_add_step_title": "Add step",
+  "step_dialog_title_label": "Title",
+  "step_dialog_desc_label": "Description",
+  "step_dialog_no_date": "No date",
+  "step_dialog_pick_date": "Select date",
+  "common_add": "Add",
+  "common_done": "Done"
 }

@@ -223,8 +223,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                   color: isCompleted ? Colors.grey : Colors.green,
                 ),
                 title: Text(isCompleted 
-                    ? 'Marquer comme à faire' 
-                    : 'Marquer comme fait'),
+                    ? l10n.calendar_mark_as_todo 
+                    : l10n.calendar_mark_as_done),
                 onTap: () async {
                   Navigator.of(ctx).pop();
                   await _toggleActivityStatus(activity);

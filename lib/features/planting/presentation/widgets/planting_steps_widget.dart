@@ -43,8 +43,8 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
   // Local cache of steps marked done in this UI session (instant feedback)
   final Set<String> _locallyCompleted = {};
 
-  List<PlantStep> get _computedSteps =>
-      generateSteps(widget.plant, widget.planting);
+  List<PlantStep> _getComputedSteps(AppLocalizations l10n) =>
+      generateSteps(widget.plant, widget.planting, l10n);
 
   @override
   void initState() {
@@ -135,7 +135,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
     
-    final generated = _computedSteps;
+    final generated = _getComputedSteps(l10n);
     final allSteps = _mergeGeneratedAndCustomSteps(generated, _customSteps);
     final toShow = _expanded ? allSteps : allSteps.take(3).toList();
 
@@ -180,7 +180,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                       icon: Icon(Icons.add,
                           size: 16, color: theme.colorScheme.primary),
                       label: Text(
-                        'Ajouter',
+                        l10n.common_add,
                         style: TextStyle(color: theme.colorScheme.primary),
                       ),
                     ),
@@ -342,7 +342,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                   TextButton(
                     onPressed: null, 
                     style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
-                    child: Text("Fait", style: TextStyle(color: Colors.green.shade700)),
+                    child: Text(l10n.common_done, style: TextStyle(color: Colors.green.shade700)),
                   )
                 else
                   OutlinedButton(
@@ -379,7 +379,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                       }
                     },
                     itemBuilder: (ctx) => [
-                      const PopupMenuItem(value: 'delete', child: Text('Supprimer')),
+                      PopupMenuItem(value: 'delete', child: Text(l10n.common_delete)),
                     ],
                   )
               ],
@@ -391,6 +391,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
   }
 
   Future<bool?> _showAddCustomStepDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final _titleCtrl = TextEditingController();
     final _descCtrl = TextEditingController();
     DateTime? chosenDate;
@@ -402,19 +403,19 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
         return StatefulBuilder(
           builder: (context, setStateSB) {
             return AlertDialog(
-              title: const Text('Ajouter une étape'),
+              title: Text(l10n.step_add_step_title),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
                       controller: _titleCtrl,
-                      decoration: const InputDecoration(labelText: 'Titre'),
+                      decoration: InputDecoration(labelText: l10n.step_dialog_title_label),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: _descCtrl,
-                      decoration: const InputDecoration(labelText: 'Description'),
+                      decoration: InputDecoration(labelText: l10n.step_dialog_desc_label),
                       maxLines: 3,
                     ),
                     const SizedBox(height: 8),
@@ -422,7 +423,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                       children: [
                         Expanded(
                           child: Text(chosenDate == null
-                              ? 'Pas de date'
+                              ? l10n.step_dialog_no_date
                               : _formatDate(chosenDate!)),
                         ),
                         TextButton(
@@ -439,7 +440,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                               });
                             }
                           },
-                          child: const Text('Sélectionner date'),
+                          child: Text(l10n.step_dialog_pick_date),
                         ),
                       ],
                     )
@@ -449,7 +450,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(false),
-                  child: const Text('Annuler'),
+                  child: Text(l10n.common_cancel),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -469,7 +470,7 @@ class _PlantingStepsWidgetState extends State<PlantingStepsWidget> {
                     await _saveCustomSteps();
                     Navigator.of(ctx).pop(true);
                   },
-                  child: const Text('Enregistrer'),
+                  child: Text(l10n.common_save),
                 ),
               ],
             );

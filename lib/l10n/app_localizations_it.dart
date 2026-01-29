@@ -2760,4 +2760,105 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get export_field_desc_upper_bound_coverage => 'Stima alta copertura';
+
+  @override
+  String get nutrition_inventory_title => 'Inventario Nutrizionale';
+
+  @override
+  String get nutrition_mode_interpretation => 'Interpretazione';
+
+  @override
+  String get nutrition_mode_measure => 'Misura';
+
+  @override
+  String get calendar_mark_as_done => 'Segna come fatto';
+
+  @override
+  String get calendar_mark_as_todo => 'Segna come da fare';
+
+  @override
+  String get step_germination_title => 'Germinazione prevista';
+
+  @override
+  String step_germination_desc(Object days) {
+    return 'Comparsa germogli (est. ~$days giorni)';
+  }
+
+  @override
+  String get step_watering_title => 'Irrigazione consigliata';
+
+  @override
+  String get step_watering_desc_regular =>
+      'Annaffiare regolarmente secondo necessità';
+
+  @override
+  String step_watering_desc_amount(Object amount) {
+    return 'Quantità: $amount';
+  }
+
+  @override
+  String get step_thinning_title => 'Diradamento consigliato';
+
+  @override
+  String get step_thinning_desc_default => 'Diradare per spaziatura ottimale';
+
+  @override
+  String get step_weeding_title => 'Diserbo consigliato';
+
+  @override
+  String get step_weeding_desc_regular => 'Diserbare secondo necessità';
+
+  @override
+  String step_weeding_desc_freq(Object freq) {
+    return 'Frequenza: $freq';
+  }
+
+  @override
+  String get step_harvest_estimated_title => 'Raccolto stimato';
+
+  @override
+  String step_harvest_estimated_desc(Object days) {
+    return 'Stima basata su $days giorni';
+  }
+
+  @override
+  String get step_harvest_start_title => 'Inizio raccolta';
+
+  @override
+  String get step_harvest_start_desc => 'Inizio previsto della raccolta';
+
+  @override
+  String get step_harvest_end_title => 'Fine raccolta';
+
+  @override
+  String get step_harvest_end_desc => 'Fine prevista della raccolta';
+
+  @override
+  String get step_bio_control_title => 'Controllo biologico';
+
+  @override
+  String step_bio_control_prep_title(Object number) {
+    return 'Preparazione $number controllo bio';
+  }
+
+  @override
+  String get step_add_step_title => 'Aggiungi passo';
+
+  @override
+  String get step_dialog_title_label => 'Titolo';
+
+  @override
+  String get step_dialog_desc_label => 'Descrizione';
+
+  @override
+  String get step_dialog_no_date => 'Nessuna data';
+
+  @override
+  String get step_dialog_pick_date => 'Seleziona data';
+
+  @override
+  String get common_add => 'Aggiungi';
+
+  @override
+  String get common_done => 'Fatto';
 }

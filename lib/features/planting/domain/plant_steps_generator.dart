@@ -1,5 +1,6 @@
 // lib/features/planting/domain/plant_steps_generator.dart
 import 'package:flutter/foundation.dart';
+import 'package:permacalendar/l10n/app_localizations.dart';
 
 import '../../../core/models/plant.dart';
 import '../../../core/models/planting.dart';
@@ -14,8 +15,13 @@ import 'plant_step.dart';
 /// - Weeding -> étape récurrente si fréquence
 /// - Biological control -> étapes pour chaque préparation
 /// - Harvest -> si planting.expectedHarvestStartDate ou plant.daysToMaturity
-List<PlantStep> generateSteps(Plant plant, Planting planting) {
+List<PlantStep> generateSteps(Plant plant, Planting planting, [AppLocalizations? l10n]) {
   final List<PlantStep> steps = [];
+  
+  // Helper for optional localization
+  String t(String Function(AppLocalizations) f, String fallback) =>
+      l10n != null ? f(l10n) : fallback;
+
   final DateTime planted = planting.plantedDate;
   final now = DateTime.now();
 
@@ -51,9 +57,8 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
           final scheduled = planted.add(Duration(days: mean));
           steps.add(PlantStep(
             id: 'germination',
-            title: 'Germination attendue',
-            description:
-                'Apparition des premières pousses (estimé à ~$mean jours)',
+            title: t((l) => l.step_germination_title, 'Germination attendue'),
+            description: t((l) => l.step_germination_desc(mean), 'Apparition des premières pousses (estimé à ~$mean jours)'),
             scheduledDate: scheduled,
             category: 'germination',
             recommended: true,
@@ -76,10 +81,10 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
           (w is Map && w['bestTime'] != null) ? w['bestTime'].toString() : null;
       steps.add(PlantStep(
         id: 'watering',
-        title: 'Arrosage recommandé',
+        title: t((l) => l.step_watering_title, 'Arrosage recommandé'),
         description: amount != null || bestTime != null
-            ? '${amount != null ? 'Quantité: $amount' : ''}${amount != null && bestTime != null ? ' · ' : ''}${bestTime ?? ''}'
-            : 'Arrosage régulier selon les besoins',
+            ? '${amount != null ? t((l) => l.step_watering_desc_amount(amount), 'Quantité: $amount') : ''}${amount != null && bestTime != null ? ' · ' : ''}${bestTime ?? ''}'
+            : t((l) => l.step_watering_desc_regular, 'Arrosage régulier selon les besoins'),
         scheduledDate: null, // tâche récurrente
         category: 'watering',
         recommended: true,
@@ -105,10 +110,10 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
         final scheduled = planted.add(Duration(days: daysAfter));
         steps.add(PlantStep(
           id: 'thinning',
-          title: 'Éclaircissage recommandé',
+          title: t((l) => l.step_thinning_title, 'Éclaircissage recommandé'),
           description: (t is Map && t['when'] != null)
               ? t['when'].toString()
-              : 'Éclaircir pour obtenir un espacement optimal',
+              : t((l) => l.step_thinning_desc_default, 'Éclaircir pour obtenir un espacement optimal'),
           scheduledDate: scheduled,
           category: 'thinning',
           recommended: true,
@@ -132,10 +137,10 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
           : null;
       steps.add(PlantStep(
         id: 'weeding',
-        title: 'Désherbage recommandé',
+        title: t((l) => l.step_weeding_title, 'Désherbage recommandé'),
         description: freq != null
-            ? 'Fréquence: $freq'
-            : 'Désherbage régulier selon besoin',
+            ? t((l) => l.step_weeding_desc_freq(freq), 'Fréquence: $freq')
+            : t((l) => l.step_weeding_desc_regular, 'Désherbage régulier selon besoin'),
         scheduledDate: null,
         category: 'weeding',
         recommended: true,
@@ -157,7 +162,7 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
           final prep = preparations[i];
           steps.add(PlantStep(
             id: 'bio_prep_$i',
-            title: 'Préparation ${i + 1} contrôle biologique',
+            title: t((l) => l.step_bio_control_prep_title(i + 1), 'Préparation ${i + 1} contrôle biologique'),
             description: prep is String
                 ? prep
                 : (prep is Map
@@ -175,7 +180,7 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
       } else {
         steps.add(PlantStep(
           id: 'biological_control',
-          title: 'Contrôle biologique',
+          title: t((l) => l.step_bio_control_title, 'Contrôle biologique'),
           description: bio.toString(),
           scheduledDate: null,
           category: 'biological_control',
@@ -194,8 +199,8 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
     if (planting.expectedHarvestStartDate != null) {
       steps.add(PlantStep(
         id: 'harvest_start',
-        title: 'Début de récolte',
-        description: 'Début prévu de la période de récolte',
+        title: t((l) => l.step_harvest_start_title, 'Début de récolte'),
+        description: t((l) => l.step_harvest_start_desc, 'Début prévu de la période de récolte'),
         scheduledDate: planting.expectedHarvestStartDate,
         category: 'harvest',
         recommended: true,
@@ -208,8 +213,8 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
       if (planting.expectedHarvestEndDate != null) {
         steps.add(PlantStep(
           id: 'harvest_end',
-          title: 'Fin de récolte',
-          description: 'Fin prévue de la période de récolte',
+          title: t((l) => l.step_harvest_end_title, 'Fin de récolte'),
+          description: t((l) => l.step_harvest_end_desc, 'Fin prévue de la période de récolte'),
           scheduledDate: planting.expectedHarvestEndDate,
           category: 'harvest',
           recommended: true,
@@ -240,9 +245,8 @@ List<PlantStep> generateSteps(Plant plant, Planting planting) {
 
       steps.add(PlantStep(
         id: 'harvest_estimated',
-        title: 'Récolte estimée',
-        description:
-            'Estimation basée sur ${plant.daysToMaturity} jours (ajusté: ${initialProgress > 0 ? "repiquage" : "semis"})',
+        title: t((l) => l.step_harvest_estimated_title, 'Récolte estimée'),
+        description: t((l) => l.step_harvest_estimated_desc(plant.daysToMaturity), 'Estimation basée sur ${plant.daysToMaturity} jours (ajusté: ${initialProgress > 0 ? "repiquage" : "semis"})'),
         scheduledDate: start,
         category: 'harvest',
         recommended: true,

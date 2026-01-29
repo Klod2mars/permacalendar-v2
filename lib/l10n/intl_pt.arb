@@ -2608,5 +2608,38 @@
   "limit_plantings_reached_message": "Limite de 6 plantas atingido.\nPor favor, remova uma planta desta parcela para adicionar uma nova.",
   "@limit_plantings_reached_message": {
     "description": "Mensagem erro limite plantas"
-  }
+  },
+
+  "nutrition_inventory_title": "Inventário Nutricional",
+  "nutrition_mode_interpretation": "Interpretação",
+  "nutrition_mode_measure": "Medida",
+
+  "calendar_mark_as_done": "Marcar como feito",
+  "calendar_mark_as_todo": "Marcar como a fazer",
+
+  "step_germination_title": "Germinação esperada",
+  "step_germination_desc": "Aparecimento de rebentos (est. ~{days} dias)",
+  "step_watering_title": "Rega recomendada",
+  "step_watering_desc_regular": "Rega regular conforme necessário",
+  "step_watering_desc_amount": "Quantidade: {amount}",
+  "step_thinning_title": "Desbaste recomendado",
+  "step_thinning_desc_default": "Desbastar para espaçamento ideal",
+  "step_weeding_title": "Sacha recomendada",
+  "step_weeding_desc_regular": "Sachar conforme necessário",
+  "step_weeding_desc_freq": "Frequência: {freq}",
+  "step_harvest_estimated_title": "Colheita estimada",
+  "step_harvest_estimated_desc": "Estimativa baseada em {days} dias",
+  "step_harvest_start_title": "Início da colheita",
+  "step_harvest_start_desc": "Início previsto da colheita",
+  "step_harvest_end_title": "Fim da colheita",
+  "step_harvest_end_desc": "Fim previsto da colheita",
+  "step_bio_control_title": "Controlo biológico",
+  "step_bio_control_prep_title": "Preparação {number} controlo bio",
+  "step_add_step_title": "Adicionar passo",
+  "step_dialog_title_label": "Título",
+  "step_dialog_desc_label": "Descrição",
+  "step_dialog_no_date": "Sem data",
+  "step_dialog_pick_date": "Selecionar data",
+  "common_add": "Adicionar",
+  "common_done": "Feito"
 }
