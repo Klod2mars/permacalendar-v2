@@ -162,7 +162,11 @@
         "Mar",
         "Apr",
         "May"
-      ]
+      ],
+      "image": "artichaut.png",
+      "metadata": {
+        "image": "artichaut.png"
+      }
     },
     {
       "id": "asparagus",
@@ -327,7 +331,11 @@
         "Mar",
         "Apr",
         "May"
-      ]
+      ],
+      "image": "asperge.png",
+      "metadata": {
+        "image": "asperge.png"
+      }
     },
     {
       "id": "basil",
@@ -428,7 +436,8 @@
           "tomato",
           "pepper",
           "lettuce",
-          "favors biodiversity and repels some pests"
+          "favors biodiversity",
+          "repels some pests"
         ]
       },
       "harvestTime": "50-60 days after sowing, depending on conditions",
@@ -439,7 +448,8 @@
           "lettuce",
           "carrot",
           "asparagus",
-          "favors biodiversity and repels some pests"
+          "favors biodiversity",
+          "repels some pests"
         ],
         "avoid": [
           "cucumber (competition risk)",
@@ -509,6 +519,10 @@
             "message": "Optimal germination conditions for basil (21-24°C)"
           }
         }
+      },
+      "image": "basilic.png",
+      "metadata": {
+        "image": "basilic.png"
       }
     },
     {
@@ -607,7 +621,9 @@
         ],
         "companionPlants": [
           "corn",
-          "sunflower (support and favorable microclimate)"
+          "sunflower",
+          "support",
+          "favorable microclimate"
         ]
       },
       "harvestTime": "60 days after planting on average (depending on bush or pole variety)",
@@ -620,11 +636,16 @@
           "celery",
           "radish",
           "spinach",
-          "sunflower (support and favorable microclimate)"
+          "sunflower",
+          "support",
+          "favorable microclimate"
         ],
         "avoid": [
           "garlic",
-          "other legumes (peas, fava beans, lupin)",
+          "other legumes",
+          "peas",
+          "fava beans",
+          "lupin",
           "onion (in excess)"
         ]
       },
@@ -695,6 +716,10 @@
             "message": "Optimal germination conditions reached (20-25°C)."
           }
         }
+      },
+      "image": "haricot.png",
+      "metadata": {
+        "image": "haricot.png"
       }
     },
     {
@@ -883,6 +908,10 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
+      },
+      "image": "betterave.png",
+      "metadata": {
+        "image": "betterave.png"
       }
     },
     {
@@ -1045,6 +1074,10 @@
             "message": "Optimal germination conditions reached (19°C)"
           }
         }
+      },
+      "image": "radis_noir.png",
+      "metadata": {
+        "image": "radis_noir.png"
       }
     },
     {
@@ -1216,7 +1249,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "brocoli.png",
+      "metadata": {
+        "image": "brocoli.png"
+      }
     },
     {
       "id": "brussels_sprout",
@@ -1321,11 +1358,17 @@
           "coriander",
           "marigolds",
           "tomatoes",
-          "legumes (peas, beans)",
+          "legumes",
+          "peas",
+          "beans",
           "marigolds"
         ],
         "avoid": [
-          "other brassicaceae (radish, turnip, arugula, mustard) on same plot"
+          "other brassicaceae",
+          "radish",
+          "turnip",
+          "arugula",
+          "mustard on same plot"
         ]
       },
       "sowingMonths3": [
@@ -1385,7 +1428,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "chou_de_bruxelles.png",
+      "metadata": {
+        "image": "chou_de_bruxelles.png"
+      }
     },
     {
       "id": "cabbage",
@@ -1494,7 +1541,10 @@
           "chamomile (natural repellents)"
         ],
         "avoid": [
-          "other brassicaceae (cabbages, turnips, radishes)",
+          "other brassicaceae",
+          "cabbages",
+          "turnips",
+          "radishes",
           "strawberries",
           "peppers",
           "tomatoes"
@@ -1561,7 +1611,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_pomme.png",
+      "metadata": {
+        "image": "chou_pomme.png"
+      }
     },
     {
       "id": "carrot",
@@ -1681,7 +1735,9 @@
           "marigolds (against carrot fly)"
         ],
         "avoid": [
-          "other umbellifers (celery, parsley) without rotation",
+          "other umbellifers",
+          "celery",
+          "parsley without rotation",
           "nitrogen-hungry plants"
         ]
       },
@@ -1750,6 +1806,10 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
+      },
+      "image": "carotte.png",
+      "metadata": {
+        "image": "carotte.png"
       }
     },
     {
@@ -1856,7 +1916,11 @@
           "fennel (natural repellents against some pests)"
         ],
         "avoid": [
-          "other brassicaceae (cabbage, broccoli, turnip...), strawberries"
+          "other brassicaceae",
+          "cabbage",
+          "broccoli",
+          "turnip...",
+          "strawberries"
         ]
       },
       "sowingMonths3": [
@@ -1923,7 +1987,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "chou_fleur.png",
+      "metadata": {
+        "image": "chou_fleur.png"
+      }
     },
     {
       "id": "celery_branch",
@@ -2023,7 +2091,8 @@
         "avoid": [
           "corn",
           "water-hungry plants like zucchini",
-          "plants very demanding in water or nitrogen",
+          "plants very demanding in water",
+          "nitrogen",
           "potatoes"
         ],
         "notes": [
@@ -2088,7 +2157,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "celeri_branche.png",
+      "metadata": {
+        "image": "celeri_branche.png"
+      }
     },
     {
       "id": "chard",
@@ -2271,6 +2344,10 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
+      },
+      "image": "blette.png",
+      "metadata": {
+        "image": "blette.png"
       }
     },
     {
@@ -2456,6 +2533,10 @@
             "message": "Optimal germination conditions reached (18-20°C)"
           }
         }
+      },
+      "image": "ciboulette.png",
+      "metadata": {
+        "image": "ciboulette.png"
       }
     },
     {
@@ -2561,7 +2642,8 @@
         "avoid": [
           "competition",
           "invasive plants",
-          "invasive or strong root competition plants",
+          "invasive",
+          "strong root competition plants",
           "other apiaceae",
           "fennel"
         ],
@@ -2625,6 +2707,10 @@
             "message": "Optimal germination conditions (18-22°C)"
           }
         }
+      },
+      "image": "coriandre.png",
+      "metadata": {
+        "image": "coriandre.png"
       }
     },
     {
@@ -2746,7 +2832,10 @@
           "garlic (natural repellents)"
         ],
         "avoid": [
-          "other cucurbits (cucumber, pumpkin, melon)",
+          "other cucurbits",
+          "cucumber",
+          "pumpkin",
+          "melon",
           "potatoes"
         ]
       },
@@ -2813,7 +2902,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courgette.png",
+      "metadata": {
+        "image": "courgette.png"
+      }
     },
     {
       "id": "cucumber",
@@ -2930,7 +3023,10 @@
         ],
         "avoid": [
           "strong aromatics like sage",
-          "other cucurbits (zucchini, squash, melon)",
+          "other cucurbits",
+          "zucchini",
+          "squash",
+          "melon",
           "potatoes"
         ]
       },
@@ -2995,6 +3091,10 @@
             "message": "Optimal germination conditions (20-25°C)"
           }
         }
+      },
+      "image": "concombre.png",
+      "metadata": {
+        "image": "concombre.png"
       }
     },
     {
@@ -3159,6 +3259,10 @@
             "message": "Optimal germination conditions (18-22°C)"
           }
         }
+      },
+      "image": "aneth.png",
+      "metadata": {
+        "image": "aneth.png"
       }
     },
     {
@@ -3341,6 +3445,10 @@
             "message": "Optimal germination conditions for eggplant (25-28°C)"
           }
         }
+      },
+      "image": "aubergine.png",
+      "metadata": {
+        "image": "aubergine.png"
       }
     },
     {
@@ -3518,6 +3626,10 @@
             "message": "Optimal germination conditions reached (15°C)"
           }
         }
+      },
+      "image": "ail.png",
+      "metadata": {
+        "image": "ail.png"
       }
     },
     {
@@ -3632,7 +3744,12 @@
           "marigolds"
         ],
         "avoid": [
-          "other brassicaceae (cabbages, turnips, radishes, arugula, mustard) within 5-6 years"
+          "other brassicaceae",
+          "cabbages",
+          "turnips",
+          "radishes",
+          "arugula",
+          "mustard within 5-6 years"
         ]
       },
       "sowingMonths3": [
@@ -3693,7 +3810,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_kale.png",
+      "metadata": {
+        "image": "chou_kale.png"
+      }
     },
     {
       "id": "leek",
@@ -3877,6 +3998,10 @@
             "message": "Optimal germination conditions reached (18-19°C)"
           }
         }
+      },
+      "image": "poireau.png",
+      "metadata": {
+        "image": "poireau.png"
       }
     },
     {
@@ -4079,6 +4204,10 @@
             "message": "Optimal germination conditions (15°C)"
           }
         }
+      },
+      "image": "laitue.png",
+      "metadata": {
+        "image": "laitue.png"
       }
     },
     {
@@ -4250,6 +4379,10 @@
             "message": "Optimal germination conditions (10-18°C) — sow in evening if soil cool"
           }
         }
+      },
+      "image": "mache.png",
+      "metadata": {
+        "image": "mache.png"
       }
     },
     {
@@ -4422,7 +4555,11 @@
       "plantingMonths3": [
         "Apr",
         "May"
-      ]
+      ],
+      "image": "melon.png",
+      "metadata": {
+        "image": "melon.png"
+      }
     },
     {
       "id": "navet",
@@ -4536,7 +4673,10 @@
           "hyssop (against flea beetles)"
         ],
         "avoid": [
-          "other brassicaceae (cabbage, radish, mustard)",
+          "other brassicaceae",
+          "cabbage",
+          "radish",
+          "mustard",
           "plants hungry for nitrogen if soil poor"
         ]
       },
@@ -4608,6 +4748,10 @@
             "message": "Optimal germination conditions reached (19°C)"
           }
         }
+      },
+      "image": "navet.png",
+      "metadata": {
+        "image": "navet.png"
       }
     },
     {
@@ -4787,6 +4931,10 @@
             "message": "Optimal germination temperature reached (15°C)"
           }
         }
+      },
+      "image": "oignon.png",
+      "metadata": {
+        "image": "oignon.png"
       }
     },
     {
@@ -4901,7 +5049,10 @@
           "chives (repels carrot fly)"
         ],
         "avoid": [
-          "vegetables of same family (carrot, celery, parsnip) in same spot — risk of common diseases"
+          "vegetables of same family",
+          "carrot",
+          "celery",
+          "parsnip in same spot — risk of common diseases"
         ]
       },
       "sowingMonths3": [
@@ -4972,6 +5123,10 @@
             "message": "Optimal germination conditions for parsley (20-25°C)"
           }
         }
+      },
+      "image": "persil.png",
+      "metadata": {
+        "image": "persil.png"
       }
     },
     {
@@ -5149,6 +5304,10 @@
             "message": "Optimal germination temperature reached (18°C) for your parsnips."
           }
         }
+      },
+      "image": "panais.png",
+      "metadata": {
+        "image": "panais.png"
       }
     },
     {
@@ -5319,7 +5478,11 @@
       "plantingMonths3": [
         "Mar",
         "Apr"
-      ]
+      ],
+      "image": "pomme_de_terre.png",
+      "metadata": {
+        "image": "pomme_de_terre.png"
+      }
     },
     {
       "id": "courge_potiron",
@@ -5487,7 +5650,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courge_potiron.png",
+      "metadata": {
+        "image": "courge_potiron.png"
+      }
     },
     {
       "id": "roquette",
@@ -5586,7 +5753,8 @@
         "avoid": [
           "competition",
           "heavy feeders",
-          "plants very hungry for nitrogen or space (e.g. large cabbages)"
+          "plants very hungry for nitrogen",
+          "space (e.g. large cabbages)"
         ],
         "notes": [
           "avoid competition with heavy feeders"
@@ -5649,6 +5817,10 @@
             "message": "Optimal germination temperature reached (15°C) — good time to sow!"
           }
         }
+      },
+      "image": "roquette.png",
+      "metadata": {
+        "image": "roquette.png"
       }
     },
     {
@@ -5759,7 +5931,10 @@
           "natural insect repellent thanks to essential oils"
         ],
         "avoid": [
-          "plants hungry for water or rich soil (e.g. squash, lettuce)"
+          "plants hungry for water",
+          "rich soil",
+          "e.g. squash",
+          "lettuce"
         ]
       },
       "sowingMonths3": [
@@ -5822,7 +5997,11 @@
         "May",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "romarin.png",
+      "metadata": {
+        "image": "romarin.png"
+      }
     },
     {
       "id": "salsify",
@@ -5979,6 +6158,10 @@
             "message": "Optimal germination temperature reached (20°C)"
           }
         }
+      },
+      "image": "salsifis.png",
+      "metadata": {
+        "image": "salsifis.png"
       }
     },
     {
@@ -6151,6 +6334,10 @@
             "message": "Optimal germination temperature reached (15°C)"
           }
         }
+      },
+      "image": "scarole.png",
+      "metadata": {
+        "image": "scarole.png"
       }
     },
     {
@@ -6316,6 +6503,10 @@
             "message": "Optimal germination temperature reached (15°C)."
           }
         }
+      },
+      "image": "echalote.png",
+      "metadata": {
+        "image": "echalote.png"
       }
     },
     {
@@ -6416,7 +6607,9 @@
           "radish",
           "pea",
           "strawberry",
-          "cabbages (favor growth or share space efficiently)"
+          "cabbages",
+          "favor growth",
+          "share space efficiently"
         ]
       },
       "harvestTime": "40-50 days after sowing, depending on variety and conditions",
@@ -6430,7 +6623,9 @@
           "celery",
           "onion",
           "garlic",
-          "cabbages (favor growth or share space efficiently)"
+          "cabbages",
+          "favor growth",
+          "share space efficiently"
         ],
         "avoid": [
           "beetroot",
@@ -6503,6 +6698,10 @@
             "message": "Optimal germination conditions for spinach (15-18°C)"
           }
         }
+      },
+      "image": "epinard.png",
+      "metadata": {
+        "image": "epinard.png"
       }
     },
     {
@@ -6671,7 +6870,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "maïs_doux.png",
+      "metadata": {
+        "image": "maïs_doux.png"
+      }
     },
     {
       "id": "thyme",
@@ -6779,7 +6982,9 @@
           "mediterranean plants with low water needs"
         ],
         "avoid": [
-          "plants hungry for water (e.g. zucchini, lettuce) — water incompatibility"
+          "plants hungry for water",
+          "e.g. zucchini",
+          "lettuce — water incompatibility"
         ]
       },
       "sowingMonths3": [
@@ -6842,7 +7047,11 @@
         "May",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "thym.png",
+      "metadata": {
+        "image": "thym.png"
+      }
     },
     {
       "id": "tomato",
@@ -7025,6 +7234,10 @@
             "message": "Optimal germination conditions (22-25°C)"
           }
         }
+      },
+      "image": "tomate.png",
+      "metadata": {
+        "image": "tomate.png"
       }
     },
     {
@@ -7188,6 +7401,10 @@
             "message": "Optimal germination temperature reached (19°C)"
           }
         }
+      },
+      "image": "topinambour.png",
+      "metadata": {
+        "image": "topinambour.png"
       }
     },
     {
@@ -7381,6 +7598,10 @@
             "message": "Optimal germination temperature for white carrots"
           }
         }
+      },
+      "image": "carotte_blanche.png",
+      "metadata": {
+        "image": "carotte_blanche.png"
       }
     },
     {
@@ -7569,6 +7790,10 @@
             "message": "Optimal germination temperature reached"
           }
         }
+      },
+      "image": "poivron.png",
+      "metadata": {
+        "image": "poivron.png"
       }
     },
     {
@@ -7762,7 +7987,11 @@
         "Jul",
         "Aug",
         "Sep"
-      ]
+      ],
+      "image": "bok_choy.png",
+      "metadata": {
+        "image": "bok_choy.png"
+      }
     },
     {
       "id": "chayotte",
@@ -7900,6 +8129,10 @@
             "message": null
           }
         }
+      },
+      "image": "chayotte.jpg",
+      "metadata": {
+        "image": "chayotte.jpg"
       }
     },
     {
@@ -8026,8 +8259,17 @@
           "phacelia"
         ],
         "avoid": [
-          "other brassicaceae (cabbage, cauliflower, kale, turnip, radish, mustard)",
-          "nitrogen-hungry crops with strong development (corn, large cucurbits, tomatoes in poor soil)"
+          "other brassicaceae",
+          "cabbage",
+          "cauliflower",
+          "kale",
+          "turnip",
+          "radish",
+          "mustard",
+          "nitrogen-hungry crops with strong development",
+          "corn",
+          "large cucurbits",
+          "tomatoes in poor soil"
         ]
       },
       "sowingMonths3": [
@@ -8080,11 +8322,15 @@
             "message": null
           }
         }
+      },
+      "image": "chou_brocoli_romanesco.png",
+      "metadata": {
+        "image": "chou_brocoli_romanesco.png"
       }
     },
     {
       "id": "chou_cabus_rouge",
-      "image": "chou_cabu_rouge.png",
+      "image": "chou_cabus_rouge.png",
       "commonName": "Red Cabbage",
       "scientificName": "Brassica oleracea var. capitata f. rubra",
       "family": "Brassicaceae",
@@ -8228,7 +8474,10 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "metadata": {
+        "image": "chou_cabus_rouge.png"
+      }
     },
     {
       "id": "chou-daubenton",
@@ -8333,8 +8582,11 @@
           "Micro-hymenoptera against cabbage white"
         ],
         "companionPlants": [
-          "Garlic and onion against diseases",
-          "Aromatic plants (thyme, sage) against cabbage white",
+          "Garlic",
+          "onion against diseases",
+          "Aromatic plants",
+          "thyme",
+          "sage against cabbage white",
           "Nasturtium (trap plant for aphids)"
         ]
       },
@@ -8427,6 +8679,10 @@
             "message": "Ideal temperature for rooting cuttings."
           }
         }
+      },
+      "image": "chou_daubenton.jpg",
+      "metadata": {
+        "image": "chou_daubenton.jpg"
       }
     },
     {
@@ -8616,7 +8872,11 @@
         "Aug",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "chou_mizuna.jpg",
+      "metadata": {
+        "image": "chou_mizuna.jpg"
+      }
     },
     {
       "id": "butternut_squash",
@@ -8717,9 +8977,13 @@
           "Ground beetles and rove beetles, slug predators"
         ],
         "companionPlants": [
-          "Corn (vertical structure and partial shade)",
+          "Corn",
+          "vertical structure",
+          "partial shade",
           "Beans (nitrogen input)",
-          "Marigold, nasturtium, borage (attraction of beneficials)",
+          "Marigold",
+          "nasturtium",
+          "borage (attraction of beneficials)",
           "Phacelia (flower strips)"
         ]
       },
@@ -8799,6 +9063,10 @@
             "message": "Ideal conditions for emergence (20-30°C)."
           }
         }
+      },
+      "image": "courge_butternut.png",
+      "metadata": {
+        "image": "courge_butternut.png"
       }
     },
     {
@@ -8986,6 +9254,10 @@
             "message": "Ideal temperature reached for seed germination"
           }
         }
+      },
+      "image": "musquee_de_provence.png",
+      "metadata": {
+        "image": "musquee_de_provence.png"
       }
     },
     {
@@ -9082,7 +9354,10 @@
         "companionPlants": [
           "Corn",
           "Bean",
-          "Melliferous flowers (phacelia, marigold, borage)"
+          "Melliferous flowers",
+          "phacelia",
+          "marigold",
+          "borage"
         ]
       },
       "harvestTime": "90-110 days after sowing",
@@ -9160,6 +9435,10 @@
             "message": "Ideal temperature for Sweet Dumpling seed germination (20°C)."
           }
         }
+      },
+      "image": "courge_patidou.png",
+      "metadata": {
+        "image": "courge_patidou.png"
       }
     },
     {
@@ -9345,6 +9624,9 @@
             "message": "Ideal germination window (15-20°C)."
           }
         }
+      },
+      "metadata": {
+        "image": "cresson.jpg"
       }
     },
     {
@@ -9440,7 +9722,8 @@
           "Attractive plants (umbellifers) for beneficials"
         ],
         "companionPlants": [
-          "Onion and chives (aphid repellent effect)",
+          "Onion",
+          "chives (aphid repellent effect)",
           "Carrot (space sharing)",
           "Green manures (phacelia) for soil structure"
         ]
@@ -9521,6 +9804,10 @@
             "message": "Ideal temperature for emergence of your endive seedlings."
           }
         }
+      },
+      "image": "endive.png",
+      "metadata": {
+        "image": "endive.png"
       }
     },
     {
@@ -9711,7 +9998,11 @@
         "Apr",
         "Oct",
         "Nov"
-      ]
+      ],
+      "image": "feve.png",
+      "metadata": {
+        "image": "feve.png"
+      }
     },
     {
       "id": "gobo",
@@ -9894,6 +10185,10 @@
             "message": "Optimal conditions for gobo emergence (15–20 °C)."
           }
         }
+      },
+      "image": "gobo.jpg",
+      "metadata": {
+        "image": "gobo.jpg"
       }
     },
     {
@@ -10068,6 +10363,10 @@
             "message": "Ideal temperature for bean emergence (21-30°C)."
           }
         }
+      },
+      "image": "haricot_a_rames.png",
+      "metadata": {
+        "image": "haricot_a_rames.png"
       }
     },
     {
@@ -10236,7 +10535,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "haricot_coco.png",
+      "metadata": {
+        "image": "haricot_coco.png"
+      }
     },
     {
       "id": "yellow_bean",
@@ -10407,7 +10710,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "haricot_jaune.png",
+      "metadata": {
+        "image": "haricot_jaune.png"
+      }
     },
     {
       "id": "lentil",
@@ -10577,6 +10884,10 @@
             "message": "Ideal temperature for emergence of your lentils"
           }
         }
+      },
+      "image": "lentille.png",
+      "metadata": {
+        "image": "lentille.png"
       }
     },
     {
@@ -10753,11 +11064,15 @@
             "message": "Optimal conditions for lupin germination (10-15°C)"
           }
         }
+      },
+      "image": "lupin.png",
+      "metadata": {
+        "image": "lupin.png"
       }
     },
     {
       "id": "white_onion",
-      "image": "oignons_blanc.png",
+      "image": "oignon_blanc.png",
       "commonName": "White Onion",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
@@ -10932,7 +11247,10 @@
         "Oct",
         "Nov",
         "Dec"
-      ]
+      ],
+      "metadata": {
+        "image": "oignon_blanc.png"
+      }
     },
     {
       "id": "red_onion",
@@ -11108,6 +11426,10 @@
             "message": "Ideal temperature for your onion emergence"
           }
         }
+      },
+      "image": "oignon_rouge.png",
+      "metadata": {
+        "image": "oignon_rouge.png"
       }
     },
     {
@@ -11282,11 +11604,15 @@
             "message": "Optimal germination conditions (21-29°C)"
           }
         }
+      },
+      "image": "pasteque.png",
+      "metadata": {
+        "image": "pasteque.png"
       }
     },
     {
       "id": "courge_patisson",
-      "image": "patisson.jpg",
+      "image": "courge_patisson.jpg",
       "commonName": "Patisson Squash",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitaceae",
@@ -11457,6 +11783,9 @@
             "message": "Ideal temperature for emergence of your patissons"
           }
         }
+      },
+      "metadata": {
+        "image": "courge_patisson.jpg"
       }
     },
     {
@@ -11631,6 +11960,10 @@
             "message": "Ideal conditions for emergence of your peas (10-18°C)."
           }
         }
+      },
+      "image": "petit_pois.jpg",
+      "metadata": {
+        "image": "petit_pois.jpg"
       }
     },
     {
@@ -11726,8 +12059,10 @@
         ],
         "companionPlants": [
           "Basil",
-          "Marigold and Tagetes",
-          "Onion and Garlic"
+          "Marigold",
+          "Tagetes",
+          "Onion",
+          "Garlic"
         ]
       },
       "harvestTime": "70-90 days after planting",
@@ -11809,6 +12144,9 @@
             "message": "Ideal temperature for emergence of your chilies (22-28°C)"
           }
         }
+      },
+      "metadata": {
+        "image": "piment_rouge.jpg"
       }
     },
     {
@@ -11985,6 +12323,10 @@
             "message": "Ideal conditions for emergence of your split peas"
           }
         }
+      },
+      "image": "pois_casse.png",
+      "metadata": {
+        "image": "pois_casse.png"
       }
     },
     {
@@ -12159,6 +12501,10 @@
             "message": "Optimal conditions for chickpea emergence (15-25°C)."
           }
         }
+      },
+      "image": "pois_chiche.png",
+      "metadata": {
+        "image": "pois_chiche.png"
       }
     },
     {
@@ -12338,6 +12684,10 @@
             "message": "Optimal germination conditions reached (20-28°C)."
           }
         }
+      },
+      "image": "poivron_vert.png",
+      "metadata": {
+        "image": "poivron_vert.png"
       }
     },
     {
@@ -12518,6 +12868,10 @@
             "message": "Optimal germination conditions reached."
           }
         }
+      },
+      "image": "radis.png",
+      "metadata": {
+        "image": "radis.png"
       }
     },
     {
@@ -12703,6 +13057,10 @@
             "message": "Ideal temperature for rapid emergence of your seeds."
           }
         }
+      },
+      "image": "radis_daikon.png",
+      "metadata": {
+        "image": "radis_daikon.png"
       }
     },
     {
@@ -12876,6 +13234,10 @@
             "message": "Ideal temperature for emergence of your radishes (15-18°C)."
           }
         }
+      },
+      "image": "radis_violet_hiver.png",
+      "metadata": {
+        "image": "radis_violet_hiver.png"
       }
     },
     {
@@ -13058,6 +13420,10 @@
             "message": "Ideal conditions for emergence of your radishes (15-24°C)."
           }
         }
+      },
+      "image": "radis_watermelon.png",
+      "metadata": {
+        "image": "radis_watermelon.png"
       }
     },
     {
@@ -13239,6 +13605,10 @@
             "message": "Ideal temperature for seed emergence (24-32°C)."
           }
         }
+      },
+      "image": "tomate_cerise_rouge.png",
+      "metadata": {
+        "image": "tomate_cerise_rouge.png"
       }
     },
     {
@@ -13333,7 +13703,9 @@
         ],
         "companionPlants": [
           "Basil (olfactory confusion)",
-          "French Marigold (aphids and nematodes)",
+          "French Marigold",
+          "aphids",
+          "nematodes",
           "Nasturtium (trap plant)"
         ]
       },

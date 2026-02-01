@@ -206,7 +206,9 @@ class PlantHiveRepository {
 
       // 0. Préparer le fallback map pour les images (charger les noms FR si on est pas en FR)
       // Cela permet de retrouver les images nommées en français même si on charge un JSON allemand/anglais
-      Map<String, String> frenchFallbackMap = {};
+      Map<String, String> frenchFallbackMap = {}; // ID -> CommonName (pour recherche floue)
+      Map<String, String> masterImageMap = {};    // ID -> Image Filename (pour injection directe)
+      
       if (languageCode.toLowerCase() != 'fr') {
         try {
           final frAssetPath = _getAssetPath('fr');
@@ -223,12 +225,18 @@ class PlantHiveRepository {
              if (item is Map) {
                 final pid = item['id']?.toString();
                 final pName = item['commonName']?.toString();
-                if (pid != null && pName != null) {
-                   frenchFallbackMap[pid] = pName;
+                final pImage = item['image']?.toString();
+                
+                if (pid != null) {
+                   if (pName != null) frenchFallbackMap[pid] = pName;
+                   // Collecter l'image maître
+                   if (pImage != null && pImage.isNotEmpty) {
+                     masterImageMap[pid] = pImage;
+                   }
                 }
              }
           }
-           developer.log('PlantHiveRepository: Loaded ${frenchFallbackMap.length} fallback names from FR', name: 'PlantHiveRepository');
+           developer.log('PlantHiveRepository: Loaded ${frenchFallbackMap.length} fallback names and ${masterImageMap.length} master images from FR', name: 'PlantHiveRepository');
         } catch (e) {
            // print('PlantHiveRepository: Warning - Failed to load FR fallback names: $e');
         }
@@ -272,7 +280,8 @@ class PlantHiveRepository {
         try {
           if (plantJson is Map<String, dynamic>) {
             // Créer l'objet "candidat" depuis le JSON
-            final candidatePlant = _createPlantHiveFromJson(plantJson, frenchFallbackMap);
+            // On passe les DEUX maps de fallback
+            final candidatePlant = _createPlantHiveFromJson(plantJson, frenchFallbackMap, masterImageMap);
             final id = candidatePlant.id;
 
             if (box.containsKey(id)) {
@@ -419,7 +428,8 @@ class PlantHiveRepository {
   ///
   /// Tolère les champs manquants en utilisant des valeurs par défaut.
   /// Permet l'ajout libre de nouvelles plantes par simple édition du JSON.
-  PlantHive _createPlantHiveFromJson(Map<String, dynamic> json, [Map<String, String>? fallbackImageTerms]) {
+  PlantHive _createPlantHiveFromJson(Map<String, dynamic> json, 
+      [Map<String, String>? fallbackImageTerms, Map<String, String>? masterImageMap]) {
     try {
       // Récupérer l'ID d'abord (utilisé pour proposer une image par défaut si besoin)
       final id = _getStringValue(
@@ -428,9 +438,24 @@ class PlantHiveRepository {
       // Récupérer / normaliser les métadonnées
       final Map<String, dynamic> meta = _getMapValue(json, 'metadata', {});
 
-      // Injecter le fallback image si disponible (ex: nom FR pour les images nommées en FR)
+      // Injecter le fallback search term si utile
       if (fallbackImageTerms != null && fallbackImageTerms.containsKey(id)) {
         meta['image_search_term'] = fallbackImageTerms[id];
+      }
+      
+      // Injecter l'image MAITRE si l'image locale est manquante (Systemic Fix)
+      // On vérifie si l'entrée locale a une image
+       final hasLocalImage = meta.containsKey('image') ||
+          meta.containsKey('imagePath') ||
+          meta.containsKey('photo') ||
+          meta.containsKey('image_url') ||
+          meta.containsKey('imageUrl');
+          
+      if (!hasLocalImage && masterImageMap != null && masterImageMap.containsKey(id)) {
+         // Injection de l'image officielle (FR/Master)
+         // Cela garantit que si une image existe dans le catalogue maître, elle est utilisée
+         meta['image'] = masterImageMap[id];
+         // developer.log('Systemic Fix: Injected master image for $id -> ${masterImageMap[id]}');
       }
 
       // === NORMALISATION LÉGÈRE POUR plants_merged_clean.json ===
@@ -554,8 +579,23 @@ class PlantHiveRepository {
           meta.containsKey('imageUrl');
 
       if (!hasImage) {
-        final candidateBase = id.toLowerCase();
-        final defaultImage = '${candidateBase}.jpg';
+        // SYSTEMIC FIX: Utiliser le nom commun français (s'il est disponible dans le fallback map)
+        // comme base pour le nom de fichier image. Cela découple le nom de fichier de la langue active.
+        String candidateBase;
+        
+        if (fallbackImageTerms != null && fallbackImageTerms.containsKey(id)) {
+             // Priorité 1: Nom français stocké dans le map de fallback
+             final frenchName = fallbackImageTerms[id]!;
+             candidateBase = _normalizeFilename(frenchName);
+        } else {
+             // Fallback Legacy (anglais/ID)
+             candidateBase = id.toLowerCase();
+        }
+        
+        // CORRECTION: Ne pas ajouter d'extension (.png/.jpg).
+        // Le widget PlantingImage va tester les extensions courantes (.png, .jpg, etc.)
+        // si aucune extension n'est fournie. Cela permet de supporter chayotte.jpg ET artichaut.png.
+        final defaultImage = candidateBase; 
         meta['image'] = defaultImage;
       }
       
@@ -620,6 +660,34 @@ class PlantHiveRepository {
       throw PlantHiveException(
           'Erreur lors de la Création de PlantHive depuis JSON: $e');
     }
+  }
+
+  /// Normalise une chaîne pour en faire un nom de fichier sûr (retire accents, lowercase)
+  /// Ex: "Fève" -> "feve", "Maïs doux" -> "mais_doux"
+  String _normalizeFilename(String s) {
+    var out = s.trim().toLowerCase();
+    
+    // Remplacements manuels des accents courants en français
+    const Map<String, String> accents = {
+      'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a',
+      'ç': 'c',
+      'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
+      'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
+      'ñ': 'n',
+      'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
+      'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u',
+      'ý': 'y', 'ÿ': 'y'
+    };
+    
+    accents.forEach((k, v) => out = out.replaceAll(k, v));
+    
+    // Remplacer les espaces et tirets par des underscores
+    out = out.replaceAll(RegExp(r'[\s\-]+'), '_');
+    
+    // Garder uniquement les caractères alphanumériques et underscores
+    out = out.replaceAll(RegExp(r'[^\w_]'), '');
+    
+    return out;
   }
 
   /// Convertit PlantHive vers PlantFreezed

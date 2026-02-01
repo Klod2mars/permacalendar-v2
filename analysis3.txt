@@ -10,7 +10,6 @@ warning - Dead code - lib\features\garden_bed\presentation\widgets\garden_bed_ca
 warning - The declaration '_resolveImagePathFromPlant' isn't referenced - lib\features\garden_bed\presentation\widgets\garden_bed_card.dart:262:13 - unused_element
    info - The local variable '_buildResolvedImage' starts with an underscore - lib\features\garden_bed\presentation\widgets\garden_bed_card.dart:283:10 - no_leading_underscores_for_local_identifiers
 warning - The declaration '_buildResolvedImage' isn't referenced - lib\features\garden_bed\presentation\widgets\garden_bed_card.dart:283:10 - unused_element
-  error - Expected to find '}' - lib\features\garden_bed\presentation\widgets\garden_bed_card.dart:331:1 - expected_token
 warning - The operand can't be 'null', so the condition is always 'true' - lib\features\planting\providers\planting_provider.dart:165:30 - unnecessary_null_comparison
 warning - The '!' will have no effect because the receiver can't be null - lib\features\planting\providers\planting_provider.dart:167:33 - unnecessary_non_null_assertion
 warning - The '!' will have no effect because the receiver can't be null - lib\features\planting\providers\planting_provider.dart:168:46 - unnecessary_non_null_assertion

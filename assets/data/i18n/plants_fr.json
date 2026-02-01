@@ -2856,8 +2856,11 @@
         "Micro-hyménoptères contre la piéride"
       ],
       "companionPlants": [
-        "Ail et oignon contre les maladies",
-        "Plantes aromatiques (thym, sauge) contre la piéride",
+        "Ail",
+        "oignon contre les maladies",
+        "Plantes aromatiques",
+        "thym",
+        "sauge contre la piéride",
         "Capucine (plante piège pour pucerons)"
       ]
     },
@@ -2978,9 +2981,13 @@
         "Carabes et staphylines, prédateurs de limaces"
       ],
       "companionPlants": [
-        "Maïs (structure verticale et ombrage partiel)",
+        "Maïs",
+        "structure verticale",
+        "ombrage partiel",
         "Haricots (apport d'azote)",
-        "Souci, capucine, bourrache (attraction des auxiliaires)",
+        "Souci",
+        "capucine",
+        "bourrache (attraction des auxiliaires)",
         "Phacélie (bandes fleuries)"
       ]
     },
@@ -3105,7 +3112,10 @@
       "companionPlants": [
         "Maïs",
         "Haricot",
-        "Fleurs mellifères (phacélie, souci, bourrache)"
+        "Fleurs mellifères",
+        "phacélie",
+        "souci",
+        "bourrache"
       ]
     },
     "harvestTime": "90-110 jours après semis",
@@ -3223,7 +3233,8 @@
         "Plantes attractives (ombellifères) pour les auxiliaires"
       ],
       "companionPlants": [
-        "Oignon et ciboulette (effet répulsif pucerons)",
+        "Oignon",
+        "ciboulette (effet répulsif pucerons)",
         "Carotte (partage d'espace)",
         "Engrais verts (phacélie) pour la structure du sol"
       ]
@@ -4007,8 +4018,10 @@
       ],
       "companionPlants": [
         "Basilic",
-        "Soucis et Tagètes",
-        "Oignon et Ail"
+        "Soucis",
+        "Tagètes",
+        "Oignon",
+        "Ail"
       ]
     },
     "harvestTime": "70-90 jours après plantation",
@@ -4548,7 +4561,9 @@
       ],
       "companionPlants": [
         "Basilic (confusion olfactive)",
-        "Œillet d'Inde (pucerons et nématodes)",
+        "Œillet d'Inde",
+        "pucerons",
+        "nématodes",
         "Capucine (plante piège)"
       ]
     },

@@ -1,0 +1,11 @@
+Analyzing plant_hive_repository.dart...                         
+
+   info - The imported package 'path' isn't a dependency of the importing package - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:11:8 - depend_on_referenced_packages
+warning - The value of the field '_jsonAssetPath' isn't used - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:37:23 - unused_field
+   info - Don't invoke 'print' in production code - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:344:7 - avoid_print
+   info - Invalid regular expression syntax - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:528:38 - valid_regexps
+   info - Statements in an if should be enclosed in a block - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:543:13 - curly_braces_in_flow_control_structures
+   info - Unnecessary braces in a string interpolation - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:583:31 - unnecessary_brace_in_string_interps
+warning - The left operand can't be null, so the right operand is never executed - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:681:49 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\features\plant_catalog\data\repositories\plant_hive_repository.dart:765:54 - dead_null_aware_expression
+

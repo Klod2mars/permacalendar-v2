@@ -162,7 +162,11 @@
         "Mar",
         "Apr",
         "May"
-      ]
+      ],
+      "image": "artichaut.png",
+      "metadata": {
+        "image": "artichaut.png"
+      }
     },
     {
       "id": "asparagus",
@@ -327,7 +331,11 @@
         "Mar",
         "Apr",
         "May"
-      ]
+      ],
+      "image": "asperge.png",
+      "metadata": {
+        "image": "asperge.png"
+      }
     },
     {
       "id": "basil",
@@ -507,6 +515,10 @@
             "message": "Condições ideais de germinação do manjericão (21-24°C)"
           }
         }
+      },
+      "image": "basilic.png",
+      "metadata": {
+        "image": "basilic.png"
       }
     },
     {
@@ -625,7 +637,6 @@
           "favas",
           "tremoço",
           "cebola"
-         
         ]
       },
       "sowingMonths3": [
@@ -695,6 +706,10 @@
             "message": "Condições ideais de germinação atingidas (20-25°C)."
           }
         }
+      },
+      "image": "haricot.png",
+      "metadata": {
+        "image": "haricot.png"
       }
     },
     {
@@ -884,7 +899,11 @@
           }
         }
       },
-      "plantingMonths3": []
+      "plantingMonths3": [],
+      "image": "betterave.png",
+      "metadata": {
+        "image": "betterave.png"
+      }
     },
     {
       "id": "black_radish",
@@ -1048,7 +1067,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "image": "radis_noir.png",
+      "metadata": {
+        "image": "radis_noir.png"
+      }
     },
     {
       "id": "broccoli",
@@ -1220,7 +1243,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "brocoli.png",
+      "metadata": {
+        "image": "brocoli.png"
+      }
     },
     {
       "id": "brussels_sprout",
@@ -1395,7 +1422,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "chou_de_bruxelles.png",
+      "metadata": {
+        "image": "chou_de_bruxelles.png"
+      }
     },
     {
       "id": "cabbage",
@@ -1575,7 +1606,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_pomme.png",
+      "metadata": {
+        "image": "chou_pomme.png"
+      }
     },
     {
       "id": "carrot",
@@ -1696,7 +1731,6 @@
         "avoid": [
           "aipo",
           "salsa"
-          
         ]
       },
       "sowingMonths3": [
@@ -1764,6 +1798,10 @@
             "message": "Temperatura ideal de germinação atingida (20°C)"
           }
         }
+      },
+      "image": "carotte.png",
+      "metadata": {
+        "image": "carotte.png"
       }
     },
     {
@@ -1937,7 +1975,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "chou_fleur.png",
+      "metadata": {
+        "image": "chou_fleur.png"
+      }
     },
     {
       "id": "celery_branch",
@@ -2021,6 +2063,7 @@
           "alho-poró",
           "tomate",
           "cebola"
+        ]
       },
       "harvestTime": "Cerca de 120 dias após semeadura, ou 90 dias após repicagem",
       "companionPlanting": {
@@ -2098,7 +2141,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "celeri_branche.png",
+      "metadata": {
+        "image": "celeri_branche.png"
+      }
     },
     {
       "id": "chard",
@@ -2281,6 +2328,10 @@
             "message": "Temperatura ideal de germinação atingida (20°C)"
           }
         }
+      },
+      "image": "blette.png",
+      "metadata": {
+        "image": "blette.png"
       }
     },
     {
@@ -2464,6 +2515,10 @@
             "message": "Condições ideais de germinação atingidas (18-20°C)"
           }
         }
+      },
+      "image": "ciboulette.png",
+      "metadata": {
+        "image": "ciboulette.png"
       }
     },
     {
@@ -2623,6 +2678,10 @@
             "message": "Condições ideais de germinação (18-22°C)"
           }
         }
+      },
+      "image": "coriandre.png",
+      "metadata": {
+        "image": "coriandre.png"
       }
     },
     {
@@ -2804,7 +2863,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courgette.png",
+      "metadata": {
+        "image": "courgette.png"
+      }
     },
     {
       "id": "cucumber",
@@ -2988,6 +3051,10 @@
             "message": "Condições ideais de germinação (20-25°C)"
           }
         }
+      },
+      "image": "concombre.png",
+      "metadata": {
+        "image": "concombre.png"
       }
     },
     {
@@ -3152,6 +3219,10 @@
             "message": "Condições ideais de germinação (18-22°C)"
           }
         }
+      },
+      "image": "aneth.png",
+      "metadata": {
+        "image": "aneth.png"
       }
     },
     {
@@ -3323,6 +3394,10 @@
             "message": "Condições ideais de germinação para berinjela (25-28°C)"
           }
         }
+      },
+      "image": "aubergine.png",
+      "metadata": {
+        "image": "aubergine.png"
       }
     },
     {
@@ -3492,6 +3567,10 @@
             "message": "Condições ideais de germinação atingidas (15°C)"
           }
         }
+      },
+      "image": "ail.png",
+      "metadata": {
+        "image": "ail.png"
       }
     },
     {
@@ -3610,7 +3689,7 @@
           "nabos",
           "rabanetes",
           "rúcula",
-          "mostarda" 
+          "mostarda"
         ]
       },
       "sowingMonths3": [
@@ -3671,7 +3750,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_kale.png",
+      "metadata": {
+        "image": "chou_kale.png"
+      }
     },
     {
       "id": "leek",
@@ -3855,6 +3938,10 @@
             "message": "Condições ideais de germinação atingidas (18-19°C)"
           }
         }
+      },
+      "image": "poireau.png",
+      "metadata": {
+        "image": "poireau.png"
       }
     },
     {
@@ -4057,6 +4144,10 @@
             "message": "Condições ideais de germinação (15°C)"
           }
         }
+      },
+      "image": "laitue.png",
+      "metadata": {
+        "image": "laitue.png"
       }
     },
     {
@@ -4163,9 +4254,7 @@
           "couves",
           "cenouras tardias"
         ],
-        "avoid": [
-        
-        ]
+        "avoid": []
       },
       "sowingMonths3": [
         "Apr",
@@ -4227,6 +4316,10 @@
             "message": "Condições ideais de germinação (10-18°C) — semear à noite se solo estiver fresco"
           }
         }
+      },
+      "image": "mache.png",
+      "metadata": {
+        "image": "mache.png"
       }
     },
     {
@@ -4397,7 +4490,11 @@
       "plantingMonths3": [
         "Apr",
         "May"
-      ]
+      ],
+      "image": "melon.png",
+      "metadata": {
+        "image": "melon.png"
+      }
     },
     {
       "id": "navet",
@@ -4498,10 +4595,9 @@
         ],
         "avoid": [
           "outras brassicáceas",
-          "couve", 
+          "couve",
           "rabanete",
           "mostarda"
-          
         ]
       },
       "sowingMonths3": [
@@ -4572,6 +4668,10 @@
             "message": "Condições ideais de germinação atingidas (19°C)"
           }
         }
+      },
+      "image": "navet.png",
+      "metadata": {
+        "image": "navet.png"
       }
     },
     {
@@ -4741,6 +4841,10 @@
             "message": "Temperatura ideal de germinação atingida (15°C)"
           }
         }
+      },
+      "image": "oignon.png",
+      "metadata": {
+        "image": "oignon.png"
       }
     },
     {
@@ -4914,6 +5018,10 @@
             "message": "Condições ideais de germinação da salsa (20-25°C)"
           }
         }
+      },
+      "image": "persil.png",
+      "metadata": {
+        "image": "persil.png"
       }
     },
     {
@@ -5082,6 +5190,10 @@
             "message": "Temperatura ótima de germinação atingida (18°C) para suas chirívias."
           }
         }
+      },
+      "image": "panais.png",
+      "metadata": {
+        "image": "panais.png"
       }
     },
     {
@@ -5250,7 +5362,11 @@
       "plantingMonths3": [
         "Mar",
         "Apr"
-      ]
+      ],
+      "image": "pomme_de_terre.png",
+      "metadata": {
+        "image": "pomme_de_terre.png"
+      }
     },
     {
       "id": "courge_potiron",
@@ -5418,7 +5534,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courge_potiron.png",
+      "metadata": {
+        "image": "courge_potiron.png"
+      }
     },
     {
       "id": "roquette",
@@ -5582,6 +5702,10 @@
             "message": "Germinação ideal a 15°C."
           }
         }
+      },
+      "image": "roquette.png",
+      "metadata": {
+        "image": "roquette.png"
       }
     },
     {
@@ -5673,9 +5797,7 @@
           "sálvia",
           "tomilho"
         ],
-        "avoid": [
-         
-        ]
+        "avoid": []
       },
       "sowingMonths3": [
         "Mar",
@@ -5745,7 +5867,11 @@
         "May",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "romarin.png",
+      "metadata": {
+        "image": "romarin.png"
+      }
     },
     {
       "id": "salsify",
@@ -5831,9 +5957,7 @@
           "laitue",
           "oignon"
         ],
-        "avoid": [
-          
-        ]
+        "avoid": []
       },
       "sowingMonths3": [
         "Mar",
@@ -5889,6 +6013,10 @@
             "message": "Semear em solo reaquecido."
           }
         }
+      },
+      "image": "salsifis.png",
+      "metadata": {
+        "image": "salsifis.png"
       }
     },
     {
@@ -5975,9 +6103,7 @@
           "poireau",
           "fenouil"
         ],
-        "avoid": [
-         
-        ]
+        "avoid": []
       },
       "sowingMonths3": [
         "Jun",
@@ -6035,6 +6161,10 @@
             "message": "Semear em solo aquecido (verão)."
           }
         }
+      },
+      "image": "scarole.png",
+      "metadata": {
+        "image": "scarole.png"
       }
     },
     {
@@ -6194,6 +6324,10 @@
             "message": "Temperatura ótima de germinação atingida (15°C)."
           }
         }
+      },
+      "image": "echalote.png",
+      "metadata": {
+        "image": "echalote.png"
       }
     },
     {
@@ -6368,6 +6502,10 @@
             "message": "Condições ideais de germinação para espinafres (15-18°C)"
           }
         }
+      },
+      "image": "epinard.png",
+      "metadata": {
+        "image": "epinard.png"
       }
     },
     {
@@ -6540,7 +6678,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "maïs_doux.png",
+      "metadata": {
+        "image": "maïs_doux.png"
+      }
     },
     {
       "id": "thyme",
@@ -6722,7 +6864,11 @@
         "May",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "thym.png",
+      "metadata": {
+        "image": "thym.png"
+      }
     },
     {
       "id": "tomato",
@@ -6891,6 +7037,10 @@
             "message": "Germinação ideal entre 22-25°C."
           }
         }
+      },
+      "image": "tomate.png",
+      "metadata": {
+        "image": "tomate.png"
       }
     },
     {
@@ -7047,6 +7197,10 @@
             "message": "Temperatura ótima de germinação atingida (19°C)"
           }
         }
+      },
+      "image": "topinambour.png",
+      "metadata": {
+        "image": "topinambour.png"
       }
     },
     {
@@ -7226,6 +7380,10 @@
             "message": "Temperatura ótima de germinação das cenouras brancas"
           }
         }
+      },
+      "image": "carotte_blanche.png",
+      "metadata": {
+        "image": "carotte_blanche.png"
       }
     },
     {
@@ -7404,6 +7562,10 @@
             "message": "Temperatura ótima de germinação atingida"
           }
         }
+      },
+      "image": "poivron.png",
+      "metadata": {
+        "image": "poivron.png"
       }
     },
     {
@@ -7595,7 +7757,11 @@
         "Jul",
         "Aug",
         "Sep"
-      ]
+      ],
+      "image": "bok_choy.png",
+      "metadata": {
+        "image": "bok_choy.png"
+      }
     },
     {
       "id": "chayotte",
@@ -7733,6 +7899,10 @@
             "message": null
           }
         }
+      },
+      "image": "chayotte.jpg",
+      "metadata": {
+        "image": "chayotte.jpg"
       }
     },
     {
@@ -7904,6 +8074,10 @@
             "message": null
           }
         }
+      },
+      "image": "chou_brocoli_romanesco.png",
+      "metadata": {
+        "image": "chou_brocoli_romanesco.png"
       }
     },
     {
@@ -8082,7 +8256,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_cabus_rouge.png",
+      "metadata": {
+        "image": "chou_cabus_rouge.png"
+      }
     },
     {
       "id": "chou-daubenton",
@@ -8258,6 +8436,10 @@
             "message": "Temperatura ideal para o enraizamento das estacas."
           }
         }
+      },
+      "image": "chou_daubenton.jpg",
+      "metadata": {
+        "image": "chou_daubenton.jpg"
       }
     },
     {
@@ -8430,7 +8612,11 @@
         "Aug",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "chou_mizuna.jpg",
+      "metadata": {
+        "image": "chou_mizuna.jpg"
+      }
     },
     {
       "id": "butternut_squash",
@@ -8601,6 +8787,10 @@
             "message": "Temperatura de germinação ótima"
           }
         }
+      },
+      "image": "courge_butternut.png",
+      "metadata": {
+        "image": "courge_butternut.png"
       }
     },
     {
@@ -8778,6 +8968,10 @@
             "message": "Temperatura ideal atingida para a germinação das sementes"
           }
         }
+      },
+      "image": "musquee_de_provence.png",
+      "metadata": {
+        "image": "musquee_de_provence.png"
       }
     },
     {
@@ -8940,6 +9134,10 @@
             "message": "Temperatura ideal para o nascimento de suas sementes de patidou (20°C)."
           }
         }
+      },
+      "image": "courge_patidou.png",
+      "metadata": {
+        "image": "courge_patidou.png"
       }
     },
     {
@@ -9107,6 +9305,10 @@
             "message": "Janela de germinação ideal (15-20°C)."
           }
         }
+      },
+      "image": "cresson.jpg",
+      "metadata": {
+        "image": "cresson.jpg"
       }
     },
     {
@@ -9270,6 +9472,10 @@
             "message": "Temperatura ideal para o nascimento de suas sementes de endívia."
           }
         }
+      },
+      "image": "endive.png",
+      "metadata": {
+        "image": "endive.png"
       }
     },
     {
@@ -9443,6 +9649,10 @@
             "message": "Temperatura favorável à germinação."
           }
         }
+      },
+      "image": "feve.png",
+      "metadata": {
+        "image": "feve.png"
       }
     },
     {
@@ -9615,7 +9825,11 @@
           }
         }
       },
-      "plantingMonths3": []
+      "plantingMonths3": [],
+      "image": "gobo.jpg",
+      "metadata": {
+        "image": "gobo.jpg"
+      }
     },
     {
       "id": "haricot_rames",
@@ -9778,6 +9992,10 @@
             "message": "Temperatura ideal para o nascimento dos seus feijões (21-30°C)."
           }
         }
+      },
+      "image": "haricot_a_rames.png",
+      "metadata": {
+        "image": "haricot_a_rames.png"
       }
     },
     {
@@ -9937,7 +10155,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "haricot_coco.png",
+      "metadata": {
+        "image": "haricot_coco.png"
+      }
     },
     {
       "id": "yellow_bean",
@@ -10098,7 +10320,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "haricot_jaune.png",
+      "metadata": {
+        "image": "haricot_jaune.png"
+      }
     },
     {
       "id": "lentil",
@@ -10261,7 +10487,11 @@
           }
         }
       },
-      "plantingMonths3": []
+      "plantingMonths3": [],
+      "image": "lentille.png",
+      "metadata": {
+        "image": "lentille.png"
+      }
     },
     {
       "id": "lupin",
@@ -10427,6 +10657,10 @@
             "message": "Condições ótimas para a germinação dos tremoços (10-15°C)"
           }
         }
+      },
+      "image": "lupin.png",
+      "metadata": {
+        "image": "lupin.png"
       }
     },
     {
@@ -10598,7 +10832,11 @@
         "Oct",
         "Nov",
         "Dec"
-      ]
+      ],
+      "image": "oignon_blanc.png",
+      "metadata": {
+        "image": "oignon_blanc.png"
+      }
     },
     {
       "id": "red_onion",
@@ -10761,6 +10999,10 @@
             "message": "Temperatura ideal para o nascimento de suas cebolas"
           }
         }
+      },
+      "image": "oignon_rouge.png",
+      "metadata": {
+        "image": "oignon_rouge.png"
       }
     },
     {
@@ -10924,6 +11166,10 @@
             "message": "Condições ótimas de germinação (21-29°C)"
           }
         }
+      },
+      "image": "pasteque.png",
+      "metadata": {
+        "image": "pasteque.png"
       }
     },
     {
@@ -11090,6 +11336,10 @@
             "message": "Temperatura ideal para sementeira de patisson."
           }
         }
+      },
+      "image": "courge_patisson.jpg",
+      "metadata": {
+        "image": "courge_patisson.jpg"
       }
     },
     {
@@ -11254,6 +11504,10 @@
             "message": "Condições ideais para o nascimento de suas ervilhas (10-18°C)."
           }
         }
+      },
+      "image": "petit_pois.jpg",
+      "metadata": {
+        "image": "petit_pois.jpg"
       }
     },
     {
@@ -11420,6 +11674,10 @@
             "message": "Temperatura ideal para o nascimento de suas pimentas (22-28°C)"
           }
         }
+      },
+      "image": "piment_rouge.jpg",
+      "metadata": {
+        "image": "piment_rouge.jpg"
       }
     },
     {
@@ -11586,6 +11844,10 @@
             "message": "Condições ideais para o nascimento de suas ervilhas secas"
           }
         }
+      },
+      "image": "pois_casse.png",
+      "metadata": {
+        "image": "pois_casse.png"
       }
     },
     {
@@ -11749,6 +12011,10 @@
             "message": "Condições ótimas para o nascimento do grão-de-bico (15-25°C)."
           }
         }
+      },
+      "image": "pois_chiche.png",
+      "metadata": {
+        "image": "pois_chiche.png"
       }
     },
     {
@@ -11917,6 +12183,10 @@
             "message": "Condições de germinação ótimas atingidas (20-28°C)."
           }
         }
+      },
+      "image": "poivron_vert.png",
+      "metadata": {
+        "image": "poivron_vert.png"
       }
     },
     {
@@ -12083,6 +12353,10 @@
             "message": "Condições de germinação ótimas atingidas."
           }
         }
+      },
+      "image": "radis.png",
+      "metadata": {
+        "image": "radis.png"
       }
     },
     {
@@ -12255,6 +12529,10 @@
             "message": "Temperatura ideal para o nascimento rápido de suas sementes."
           }
         }
+      },
+      "image": "radis_daikon.png",
+      "metadata": {
+        "image": "radis_daikon.png"
       }
     },
     {
@@ -12417,6 +12695,10 @@
             "message": "Temperatura ideal para o nascimento de seus rabanetes (15-18°C)."
           }
         }
+      },
+      "image": "radis_violet_hiver.png",
+      "metadata": {
+        "image": "radis_violet_hiver.png"
       }
     },
     {
@@ -12584,6 +12866,10 @@
             "message": "Condições ideais para a levée de seus rabanetes (15-24°C)."
           }
         }
+      },
+      "image": "radis_watermelon.png",
+      "metadata": {
+        "image": "radis_watermelon.png"
       }
     },
     {
@@ -12752,6 +13038,10 @@
             "message": "Temperatura ideal para o nascimento das sementes (24-32°C)."
           }
         }
+      },
+      "image": "tomate_cerise_rouge.png",
+      "metadata": {
+        "image": "tomate_cerise_rouge.png"
       }
     },
     {

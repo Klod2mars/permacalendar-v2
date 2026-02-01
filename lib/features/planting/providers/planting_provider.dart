@@ -18,6 +18,7 @@ import '../domain/plant_steps_generator.dart';
 import '../../../core/models/activity.dart';
 import '../../../core/models/plant.dart';
 import '../../../core/services/notification_service.dart';
+import '../../../shared/utils/plant_image_resolver.dart';
 
 // Planting State
 class PlantingState {
@@ -143,19 +144,83 @@ class PlantingNotifier extends Notifier<PlantingState> {
         return false;
       }
 
-      await GardenBoxes.savePlanting(planting);
+      // ✅ FIX DURABLE: Copier les métadonnées d'image depuis le catalogue
+      // pour rendre la plantation autonome (évite le bug lors du change de langue).
+      try {
+        final catalog = ref.read(plantCatalogProvider);
+        final plant = catalog.plants.where((p) => p.id == plantId).firstOrNull;
+
+        if (plant != null) {
+          final imageKeys = [
+            'image',
+            'imagePath',
+            'photo',
+            'image_url',
+            'imageUrl',
+            'image_search_term'
+          ];
+          bool metaUpdated = false;
+
+          // 1. Copier les clés d'image si elles n'existent pas déjà
+          if (plant.metadata != null) {
+            for (final k in imageKeys) {
+              if (plant.metadata!.containsKey(k) && !metaFinal.containsKey(k)) {
+                metaFinal[k] = plant.metadata![k];
+                metaUpdated = true;
+              }
+            }
+          }
+
+          // 2. Résoudre l'image et stocker le résultat final
+          // Prioriser une résolution immédiate pour éviter de dépendre du catalogue plus tard
+          if (!metaFinal.containsKey('resolvedImageAsset')) {
+             // Note: findPlantImageAsset est async mais généralement rapide (Manifest)
+             // On utilise 'await' ici car createPlanting est déjà Future<bool>
+             // et l'utilisateur a validé ce comportement.
+             final resolved = await findPlantImageAsset(plant);
+             if (resolved != null && resolved.isNotEmpty) {
+               metaFinal['resolvedImageAsset'] = resolved;
+               metaUpdated = true;
+             }
+          }
+
+          // Si on a mis à jour metaFinal, on doit recréer l'objet planting avec les nouvelles metadata
+          // car planting.metadata est final.
+          if (metaUpdated) {
+            // Note: Nous n'avons pas besoin de recréer tout l'objet car nous n'avons pas encore sauvé
+            // Mais l'objet 'planting' a été créé ligne 128 avec 'metadata: metaFinal'.
+            // Comme metaFinal est une Map mutable passée par référence,
+            // les modifs ci-dessus sont DÉJÀ dans l'objet planting.metadata (si c'est la même ref).
+            // Vérifions: ligne 138: metadata: metaFinal. Oui, c'est la même map instance.
+            // Donc pas besoin de planting.copyWith ou autre, tant qu'on modifie metaFinal *avant* savePlanting.
+            // ATTENTION: planting est immutable mais sa map metadata ne l'est pas forcément?
+            // En Dart, si on passe une Map, elle est passée par référence.
+            // Cependant, Planting est probablement une classe @immutable ou freezed.
+            // Si c'est freezed, la Map est copiée ? Non, généralement pas deep copy par défaut.
+            // Pour être sûr à 100%, on refait un copyWith juste avant le save.
+          }
+        }
+      } catch (e) {
+        print('[createPlanting] Image metadata copy failed: $e');
+        // Non-bloquant
+      }
+
+      // Sécurité : on refait un objet propre avec les metadata à jour
+      final finalPlanting = planting.copyWith(metadata: metaFinal);
+
+      await GardenBoxes.savePlanting(finalPlanting);
 
       // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(gardenBedId);
       if (bed != null) {
         await ActivityObserverService().capturePlantingCreated(
-          plantingId: planting.id,
-          plantName: planting.plantName,
+          plantingId: finalPlanting.id,
+          plantName: finalPlanting.plantName,
           gardenBedId: gardenBedId,
           gardenBedName: bed.name,
           gardenId: bed.gardenId,
-          plantingDate: planting.plantedDate,
-          quantity: planting.quantity,
+          plantingDate: finalPlanting.plantedDate,
+          quantity: finalPlanting.quantity,
         );
       }
 

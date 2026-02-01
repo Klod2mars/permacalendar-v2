@@ -162,7 +162,11 @@
         "Mar",
         "Apr",
         "May"
-      ]
+      ],
+      "image": "artichaut.png",
+      "metadata": {
+        "image": "artichaut.png"
+      }
     },
     {
       "id": "asparagus",
@@ -327,7 +331,11 @@
         "Mar",
         "Apr",
         "May"
-      ]
+      ],
+      "image": "asperge.png",
+      "metadata": {
+        "image": "asperge.png"
+      }
     },
     {
       "id": "basil",
@@ -428,7 +436,8 @@
           "Tomate",
           "Paprika",
           "Kopfsalat",
-          "fördert Biodiversität und vertreibt bestimmte Schädlinge"
+          "fördert Biodiversität",
+          "vertreibt bestimmte Schädlinge"
         ]
       },
       "harvestTime": "50-60 Tage nach Aussaat, je nach Kulturbedingungen",
@@ -439,7 +448,8 @@
           "Kopfsalat",
           "Karotte",
           "Spargel",
-          "fördert Biodiversität und vertreibt bestimmte Schädlinge"
+          "fördert Biodiversität",
+          "vertreibt bestimmte Schädlinge"
         ],
         "avoid": [
           "Gurke (Konkurrenzrisiko)",
@@ -509,6 +519,10 @@
             "message": "Optimale Keimbedingungen für Basilikum (21-24°C)"
           }
         }
+      },
+      "image": "basilic.png",
+      "metadata": {
+        "image": "basilic.png"
       }
     },
     {
@@ -607,7 +621,9 @@
         ],
         "companionPlants": [
           "Mais",
-          "Sonnenblume (Stütze und günstiges Mikroklima)"
+          "Sonnenblume",
+          "Stütze",
+          "günstiges Mikroklima"
         ]
       },
       "harvestTime": "Im Durchschnitt 60 Tage nach Pflanzung (je nach Zwerg- oder Klettersorte)",
@@ -620,11 +636,16 @@
           "Sellerie",
           "Radieschen",
           "Spinat",
-          "Sonnenblume (Stütze und günstiges Mikroklima)"
+          "Sonnenblume",
+          "Stütze",
+          "günstiges Mikroklima"
         ],
         "avoid": [
           "Knoblauch",
-          "andere Hülsenfrüchte (Erbsen, Bohnen, Lupinen)",
+          "andere Hülsenfrüchte",
+          "Erbsen",
+          "Bohnen",
+          "Lupinen",
           "Zwiebel (im Übermaß)"
         ]
       },
@@ -695,6 +716,10 @@
             "message": "Optimale Keimbedingungen erreicht (20-25°C)."
           }
         }
+      },
+      "image": "haricot.png",
+      "metadata": {
+        "image": "haricot.png"
       }
     },
     {
@@ -864,7 +889,11 @@
           }
         }
       },
-      "plantingMonths3": []
+      "plantingMonths3": [],
+      "image": "betterave.png",
+      "metadata": {
+        "image": "betterave.png"
+      }
     },
     {
       "id": "black_radish",
@@ -1026,6 +1055,10 @@
             "message": "Optimale Keimbedingungen erreicht (19°C)"
           }
         }
+      },
+      "image": "radis_noir.png",
+      "metadata": {
+        "image": "radis_noir.png"
       }
     },
     {
@@ -1197,7 +1230,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "brocoli.png",
+      "metadata": {
+        "image": "brocoli.png"
+      }
     },
     {
       "id": "brussels_sprout",
@@ -1302,11 +1339,17 @@
           "Koriander",
           "Tagetes",
           "Tomaten",
-          "Hülsenfrüchte (Erbsen, Bohnen)",
+          "Hülsenfrüchte",
+          "Erbsen",
+          "Bohnen",
           "Tagetes"
         ],
         "avoid": [
-          "andere Kreuzblütler (Radieschen, Rüben, Rucola, Senf) auf der gleichen Parzelle"
+          "andere Kreuzblütler",
+          "Radieschen",
+          "Rüben",
+          "Rucola",
+          "Senf auf der gleichen Parzelle"
         ]
       },
       "sowingMonths3": [
@@ -1366,7 +1409,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "chou_de_bruxelles.png",
+      "metadata": {
+        "image": "chou_de_bruxelles.png"
+      }
     },
     {
       "id": "cabbage",
@@ -1475,7 +1522,10 @@
           "Kamille (natürliche Abwehrmittel)"
         ],
         "avoid": [
-          "andere Kreuzblütler (Kohl, Rüben, Radieschen)",
+          "andere Kreuzblütler",
+          "Kohl",
+          "Rüben",
+          "Radieschen",
           "Erdbeeren",
           "Paprika",
           "Tomaten"
@@ -1542,7 +1592,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_pomme.png",
+      "metadata": {
+        "image": "chou_pomme.png"
+      }
     },
     {
       "id": "carrot",
@@ -1662,7 +1716,9 @@
           "Tagetes (gegen Möhrenfliege)"
         ],
         "avoid": [
-          "andere Doldenblütler (Sellerie, Petersilie) ohne Rotation",
+          "andere Doldenblütler",
+          "Sellerie",
+          "Petersilie ohne Rotation",
           "stickstoffbedürftige Pflanzen"
         ]
       },
@@ -1731,6 +1787,10 @@
             "message": "Optimale Keimtemperatur erreicht (20°C)"
           }
         }
+      },
+      "image": "carotte.png",
+      "metadata": {
+        "image": "carotte.png"
       }
     },
     {
@@ -1837,7 +1897,11 @@
           "Fenchel (natürliche Abwehrmittel gegen bestimmte Schädlinge)"
         ],
         "avoid": [
-          "andere Kreuzblütler (Kohl, Brokkoli, Rübe...), Erdbeeren"
+          "andere Kreuzblütler",
+          "Kohl",
+          "Brokkoli",
+          "Rübe...",
+          "Erdbeeren"
         ]
       },
       "sowingMonths3": [
@@ -1904,7 +1968,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "chou_fleur.png",
+      "metadata": {
+        "image": "chou_fleur.png"
+      }
     },
     {
       "id": "celery_branch",
@@ -2004,7 +2072,8 @@
         "avoid": [
           "Mais",
           "wasserzehrende Pflanzen wie Zucchini",
-          "sehr wasser- oder stickstoffzehrende Pflanzen",
+          "sehr wasser-",
+          "stickstoffzehrende Pflanzen",
           "Kartoffeln"
         ],
         "notes": [
@@ -2069,7 +2138,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "celeri_branche.png",
+      "metadata": {
+        "image": "celeri_branche.png"
+      }
     },
     {
       "id": "chard",
@@ -2252,6 +2325,10 @@
             "message": "Optimale Keimtemperatur erreicht (20°C)"
           }
         }
+      },
+      "image": "blette.png",
+      "metadata": {
+        "image": "blette.png"
       }
     },
     {
@@ -2437,6 +2514,10 @@
             "message": "Optimale Keimbedingungen erreicht (18-20°C)"
           }
         }
+      },
+      "image": "ciboulette.png",
+      "metadata": {
+        "image": "ciboulette.png"
       }
     },
     {
@@ -2535,7 +2616,8 @@
         "avoid": [
           "Konkurrenz",
           "invasive Pflanzen",
-          "invasive Pflanzen oder solche mit starker Wurzelkonkurrenz"
+          "invasive Pflanzen",
+          "solche mit starker Wurzelkonkurrenz"
         ],
         "notes": [
           "aber Konkurrenz mit invasiven Pflanzen vermeiden"
@@ -2597,6 +2679,10 @@
             "message": "Optimale Keimbedingungen (18-22°C)"
           }
         }
+      },
+      "image": "coriandre.png",
+      "metadata": {
+        "image": "coriandre.png"
       }
     },
     {
@@ -2723,7 +2809,10 @@
           "Knoblauch (natürliche Abwehrmittel)"
         ],
         "avoid": [
-          "andere Kürbisgewächse (Gurke, Kürbis, Melone)",
+          "andere Kürbisgewächse",
+          "Gurke",
+          "Kürbis",
+          "Melone",
           "Kartoffeln"
         ]
       },
@@ -2782,7 +2871,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courgette.png",
+      "metadata": {
+        "image": "courgette.png"
+      }
     },
     {
       "id": "cucumber",
@@ -2904,7 +2997,10 @@
         ],
         "avoid": [
           "starke aromatische Kräuter wie Salbei",
-          "andere Kürbisgewächse (Zucchini, Kürbis, Melonen)",
+          "andere Kürbisgewächse",
+          "Zucchini",
+          "Kürbis",
+          "Melonen",
           "Kartoffeln"
         ]
       },
@@ -2955,6 +3051,10 @@
             "message": "Optimale Keimbedingungen (20-25°C)"
           }
         }
+      },
+      "image": "concombre.png",
+      "metadata": {
+        "image": "concombre.png"
       }
     },
     {
@@ -3120,7 +3220,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "aneth.png",
+      "metadata": {
+        "image": "aneth.png"
+      }
     },
     {
       "id": "eggplant",
@@ -3291,6 +3395,10 @@
             "message": "Optimale Keimbedingungen für Aubergine (25-28°C)"
           }
         }
+      },
+      "image": "aubergine.png",
+      "metadata": {
+        "image": "aubergine.png"
       }
     },
     {
@@ -3442,6 +3550,10 @@
             "message": "Optimale Pflanzzeit (Kälteperiode nötig)"
           }
         }
+      },
+      "image": "ail.png",
+      "metadata": {
+        "image": "ail.png"
       }
     },
     {
@@ -3563,7 +3675,10 @@
           "Knoblauch (natürliche Abwehrmittel)"
         ],
         "avoid": [
-          "andere Kürbisgewächse (Gurke, Kürbis, Melone)",
+          "andere Kürbisgewächse",
+          "Gurke",
+          "Kürbis",
+          "Melone",
           "Kartoffeln"
         ]
       },
@@ -3630,7 +3745,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courgette.png",
+      "metadata": {
+        "image": "courgette.png"
+      }
     },
     {
       "id": "cucumber",
@@ -3747,7 +3866,10 @@
         ],
         "avoid": [
           "starke aromatische Kräuter wie Salbei",
-          "andere Kürbisgewächse (Zucchini, Kürbis, Melonen)",
+          "andere Kürbisgewächse",
+          "Zucchini",
+          "Kürbis",
+          "Melonen",
           "Kartoffeln"
         ]
       },
@@ -3812,6 +3934,10 @@
             "message": "Optimale Keimbedingungen (20-25°C)"
           }
         }
+      },
+      "image": "concombre.png",
+      "metadata": {
+        "image": "concombre.png"
       }
     },
     {
@@ -3978,7 +4104,11 @@
         }
       },
       "sowingMonths": [],
-      "harvestMonths": []
+      "harvestMonths": [],
+      "image": "aneth.png",
+      "metadata": {
+        "image": "aneth.png"
+      }
     },
     {
       "id": "eggplant",
@@ -4160,6 +4290,10 @@
             "message": "Optimale Keimbedingungen für Aubergine (25-28°C)"
           }
         }
+      },
+      "image": "aubergine.png",
+      "metadata": {
+        "image": "aubergine.png"
       }
     },
     {
@@ -4335,6 +4469,10 @@
             "message": "Optimale Pflanzzeit (Kälteperiode nötig)"
           }
         }
+      },
+      "image": "ail.png",
+      "metadata": {
+        "image": "ail.png"
       }
     },
     {
@@ -4449,7 +4587,12 @@
           "Tagetes"
         ],
         "avoid": [
-          "andere Kreuzblütler (Kohl, Rüben, Radieschen, Rucola, Senf) innerhalb von 5-6 Jahren"
+          "andere Kreuzblütler",
+          "Kohl",
+          "Rüben",
+          "Radieschen",
+          "Rucola",
+          "Senf innerhalb von 5-6 Jahren"
         ]
       },
       "sowingMonths3": [
@@ -4510,7 +4653,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_kale.png",
+      "metadata": {
+        "image": "chou_kale.png"
+      }
     },
     {
       "id": "leek",
@@ -4686,6 +4833,10 @@
             "message": "Optimale Keimbedingungen erreicht (18-19°C)"
           }
         }
+      },
+      "image": "poireau.png",
+      "metadata": {
+        "image": "poireau.png"
       }
     },
     {
@@ -4888,6 +5039,10 @@
             "message": "Optimale Keimbedingungen (15°C)"
           }
         }
+      },
+      "image": "laitue.png",
+      "metadata": {
+        "image": "laitue.png"
       }
     },
     {
@@ -5059,6 +5214,10 @@
             "message": "Optimale Keimbedingungen (10-18°C)"
           }
         }
+      },
+      "image": "mache.png",
+      "metadata": {
+        "image": "mache.png"
       }
     },
     {
@@ -5231,7 +5390,11 @@
       "plantingMonths3": [
         "Apr",
         "May"
-      ]
+      ],
+      "image": "melon.png",
+      "metadata": {
+        "image": "melon.png"
+      }
     },
     {
       "id": "navet",
@@ -5331,7 +5494,10 @@
           "Ysop (gegen Erdflöhe)"
         ],
         "avoid": [
-          "andere Kreuzblütler (Kohl, Rettich, Senf)",
+          "andere Kreuzblütler",
+          "Kohl",
+          "Rettich",
+          "Senf",
           "stark zehrende Pflanzen bei armem Boden"
         ]
       },
@@ -5403,6 +5569,10 @@
             "message": "Optimale Keimbedingungen erreicht (19°C)"
           }
         }
+      },
+      "image": "navet.png",
+      "metadata": {
+        "image": "navet.png"
       }
     },
     {
@@ -5493,7 +5663,9 @@
           "Rote Bete",
           "Kopfsalat",
           "Tomate",
-          "Kohl (Erbsen/Bohnen vermeiden)"
+          "Kohl",
+          "Erbsen",
+          "Bohnen vermeiden"
         ]
       },
       "harvestTime": "Wenn das Laub komplett trocken ist, meist 4-5 Monate nach Aussaat",
@@ -5574,6 +5746,10 @@
             "message": "Optimale Keimtemperatur erreicht (15°C)"
           }
         }
+      },
+      "image": "oignon.png",
+      "metadata": {
+        "image": "oignon.png"
       }
     },
     {
@@ -5674,7 +5850,10 @@
           "Schnittlauch (vertreibt Möhrenfliege)"
         ],
         "avoid": [
-          "Gemüse derselben Familie (Karotte, Sellerie, Pastinake) am selben Ort — Krankheitsrisiko"
+          "Gemüse derselben Familie",
+          "Karotte",
+          "Sellerie",
+          "Pastinake am selben Ort — Krankheitsrisiko"
         ]
       },
       "sowingMonths3": [
@@ -5745,6 +5924,10 @@
             "message": "Optimale Keimbedingungen für Petersilie (20-25°C)"
           }
         }
+      },
+      "image": "persil.png",
+      "metadata": {
+        "image": "persil.png"
       }
     },
     {
@@ -5913,6 +6096,10 @@
             "message": "Optimale Keimtemperatur (18°C) erreicht."
           }
         }
+      },
+      "image": "panais.png",
+      "metadata": {
+        "image": "panais.png"
       }
     },
     {
@@ -6083,7 +6270,11 @@
       "plantingMonths3": [
         "Mar",
         "Apr"
-      ]
+      ],
+      "image": "pomme_de_terre.png",
+      "metadata": {
+        "image": "pomme_de_terre.png"
+      }
     },
     {
       "id": "courge_potiron",
@@ -6173,7 +6364,9 @@
         ],
         "companionPlants": [
           "Mais",
-          "Bohnen (Milpa/Drei-Schwestern-Methode)",
+          "Bohnen",
+          "Milpa",
+          "Drei-Schwestern-Methode",
           "Kapuzinerkresse (Blattlausfalle)"
         ]
       },
@@ -6185,7 +6378,9 @@
           "Kapuzinerkresse",
           "Tagetes",
           "Minze",
-          "Bohnen (Milpa/Drei-Schwestern-Methode)",
+          "Bohnen",
+          "Milpa",
+          "Drei-Schwestern-Methode",
           "Kapuzinerkresse (Blattlausfalle)"
         ],
         "avoid": [
@@ -6251,7 +6446,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "courge_potiron.png",
+      "metadata": {
+        "image": "courge_potiron.png"
+      }
     },
     {
       "id": "roquette",
@@ -6350,7 +6549,9 @@
         "avoid": [
           "Konkurrenz",
           "Starkzehrer",
-          "große Kohlarten (Platz/Stickstoff)"
+          "große Kohlarten",
+          "Platz",
+          "Stickstoff"
         ],
         "notes": [
           "Konkurrenz mit Starkzehrern meiden"
@@ -6413,6 +6614,10 @@
             "message": "Optimale Keimtemperatur (15°C) — guter Moment zum Säen!"
           }
         }
+      },
+      "image": "roquette.png",
+      "metadata": {
+        "image": "roquette.png"
       }
     },
     {
@@ -6520,7 +6725,10 @@
           "vertreibt Insekten durch ätherische Öle"
         ],
         "avoid": [
-          "Pflanzen mit hohem Wasser- oder Nährstoffbedarf (z.B. Kürbis, Salat)"
+          "Pflanzen mit hohem Wasser-",
+          "Nährstoffbedarf",
+          "z.B. Kürbis",
+          "Salat"
         ]
       },
       "sowingMonths3": [
@@ -6583,7 +6791,11 @@
         "May",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "romarin.png",
+      "metadata": {
+        "image": "romarin.png"
+      }
     },
     {
       "id": "salsify",
@@ -6740,6 +6952,10 @@
             "message": "Optimale Keimtemperatur erreicht (20°C)."
           }
         }
+      },
+      "image": "salsifis.png",
+      "metadata": {
+        "image": "salsifis.png"
       }
     },
     {
@@ -6912,6 +7128,10 @@
             "message": "Optimale Keimtemperatur (15°C)."
           }
         }
+      },
+      "image": "scarole.png",
+      "metadata": {
+        "image": "scarole.png"
       }
     },
     {
@@ -7071,6 +7291,10 @@
             "message": "Optimale Keim/Wachstumsbedingungen erreicht (15°C)."
           }
         }
+      },
+      "image": "echalote.png",
+      "metadata": {
+        "image": "echalote.png"
       }
     },
     {
@@ -7244,6 +7468,10 @@
             "message": "Optimale Keimtemperatur (15-18°C) erreicht."
           }
         }
+      },
+      "image": "epinard.png",
+      "metadata": {
+        "image": "epinard.png"
       }
     },
     {
@@ -7411,7 +7639,11 @@
       "plantingMonths3": [
         "May",
         "Jun"
-      ]
+      ],
+      "image": "maïs_doux.png",
+      "metadata": {
+        "image": "maïs_doux.png"
+      }
     },
     {
       "id": "thyme",
@@ -7516,7 +7748,9 @@
           "Tomate"
         ],
         "avoid": [
-          "Feuchtigkeitsliebende Pflanzen (z.B. Gurke, Salat) - unterschiedliche Ansprüche"
+          "Feuchtigkeitsliebende Pflanzen",
+          "z.B. Gurke",
+          "Salat - unterschiedliche Ansprüche"
         ]
       },
       "sowingMonths3": [
@@ -7579,7 +7813,11 @@
         "May",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "thym.png",
+      "metadata": {
+        "image": "thym.png"
+      }
     },
     {
       "id": "tomato",
@@ -7661,7 +7899,8 @@
           "Nematoden (gegen Minierfliegen)"
         ],
         "companionPlants": [
-          "Tagetes/Studentenblume",
+          "Tagetes",
+          "Studentenblume",
           "Basilikum"
         ]
       },
@@ -7750,6 +7989,10 @@
             "message": "Optimale Keimtemperatur (22-25°C)."
           }
         }
+      },
+      "image": "tomate.png",
+      "metadata": {
+        "image": "tomate.png"
       }
     },
     {
@@ -7907,6 +8150,10 @@
             "message": "Optimale Keimtemp (19°C)."
           }
         }
+      },
+      "image": "topinambour.png",
+      "metadata": {
+        "image": "topinambour.png"
       }
     },
     {
@@ -8086,6 +8333,10 @@
             "message": "Optimale Keimtemp (15-22°C)."
           }
         }
+      },
+      "image": "carotte_blanche.png",
+      "metadata": {
+        "image": "carotte_blanche.png"
       }
     },
     {
@@ -8180,7 +8431,8 @@
           "Zwiebel",
           "Karotte",
           "Petersilie",
-          "Tagetes/Studentenblume",
+          "Tagetes",
+          "Studentenblume",
           "Kapuzinerkresse",
           "Salat",
           "Spinat"
@@ -8264,6 +8516,10 @@
             "message": "Keimtemperatur optimal."
           }
         }
+      },
+      "image": "poivron.png",
+      "metadata": {
+        "image": "poivron.png"
       }
     },
     {
@@ -8455,7 +8711,11 @@
         "Jul",
         "Aug",
         "Sep"
-      ]
+      ],
+      "image": "bok_choy.png",
+      "metadata": {
+        "image": "bok_choy.png"
+      }
     },
     {
       "id": "chayotte",
@@ -8584,6 +8844,10 @@
             "message": null
           }
         }
+      },
+      "image": "chayotte.jpg",
+      "metadata": {
+        "image": "chayotte.jpg"
       }
     },
     {
@@ -8681,7 +8945,8 @@
       "harvestTime": "75-100 Tage nach Pflanzung. Ernte wenn Köpfe fest und dicht sind, bevor sich Blüten öffnen.",
       "companionPlanting": {
         "beneficial": [
-          "Laitue/Salat",
+          "Laitue",
+          "Salat",
           "Spinat",
           "Mangold",
           "Zwiebel",
@@ -8752,6 +9017,10 @@
             "message": null
           }
         }
+      },
+      "image": "chou_brocoli_romanesco.png",
+      "metadata": {
+        "image": "chou_brocoli_romanesco.png"
       }
     },
     {
@@ -8891,7 +9160,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "chou_cabus_rouge.png",
+      "metadata": {
+        "image": "chou_cabus_rouge.png"
+      }
     },
     {
       "id": "chou-daubenton",
@@ -9069,6 +9342,10 @@
             "message": "Idealtemperatur für Stecklinge."
           }
         }
+      },
+      "image": "chou_daubenton.jpg",
+      "metadata": {
+        "image": "chou_daubenton.jpg"
       }
     },
     {
@@ -9242,7 +9519,11 @@
         "Aug",
         "Sep",
         "Oct"
-      ]
+      ],
+      "image": "chou_mizuna.jpg",
+      "metadata": {
+        "image": "chou_mizuna.jpg"
+      }
     },
     {
       "id": "butternut_squash",
@@ -9410,6 +9691,10 @@
             "message": "Wärme nötig zur Keimung."
           }
         }
+      },
+      "image": "courge_butternut.png",
+      "metadata": {
+        "image": "courge_butternut.png"
       }
     },
     {
@@ -9587,6 +9872,10 @@
             "message": "Keimtemperatur optimal."
           }
         }
+      },
+      "image": "musquee_de_provence.png",
+      "metadata": {
+        "image": "musquee_de_provence.png"
       }
     },
     {
@@ -9750,6 +10039,10 @@
             "message": "Keimtemperatur ideal (20°C)."
           }
         }
+      },
+      "image": "courge_patidou.png",
+      "metadata": {
+        "image": "courge_patidou.png"
       }
     },
     {
@@ -9918,6 +10211,9 @@
             "message": "Gute Keimbedingungen."
           }
         }
+      },
+      "metadata": {
+        "image": "cresson.jpg"
       }
     },
     {
@@ -10080,6 +10376,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "endive.png",
+      "metadata": {
+        "image": "endive.png"
       }
     },
     {
@@ -10257,7 +10557,11 @@
         "Apr",
         "Oct",
         "Nov"
-      ]
+      ],
+      "image": "feve.png",
+      "metadata": {
+        "image": "feve.png"
+      }
     },
     {
       "id": "gobo",
@@ -10423,7 +10727,11 @@
           }
         }
       },
-      "plantingMonths3": []
+      "plantingMonths3": [],
+      "image": "gobo.jpg",
+      "metadata": {
+        "image": "gobo.jpg"
+      }
     },
     {
       "id": "haricot_rames",
@@ -10587,6 +10895,10 @@
             "message": "Keimtemperatur optimal."
           }
         }
+      },
+      "image": "haricot_a_rames.png",
+      "metadata": {
+        "image": "haricot_a_rames.png"
       }
     },
     {
@@ -10745,7 +11057,11 @@
         "May",
         "Jun",
         "Jul"
-      ]
+      ],
+      "image": "haricot_coco.png",
+      "metadata": {
+        "image": "haricot_coco.png"
+      }
     },
     {
       "id": "yellow_bean",
@@ -10904,7 +11220,11 @@
         "Jun",
         "Jul",
         "Aug"
-      ]
+      ],
+      "image": "haricot_jaune.png",
+      "metadata": {
+        "image": "haricot_jaune.png"
+      }
     },
     {
       "id": "lentil",
@@ -11065,7 +11385,11 @@
           }
         }
       },
-      "plantingMonths3": []
+      "plantingMonths3": [],
+      "image": "lentille.png",
+      "metadata": {
+        "image": "lentille.png"
+      }
     },
     {
       "id": "lupin",
@@ -11232,11 +11556,15 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "lupin.png",
+      "metadata": {
+        "image": "lupin.png"
       }
     },
     {
       "id": "white_onion",
-      "image": "oignons_blanc.png",
+      "image": "oignon_blanc.png",
       "commonName": "Weiße Zwiebel",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
@@ -11410,7 +11738,10 @@
         "Oct",
         "Nov",
         "Dec"
-      ]
+      ],
+      "metadata": {
+        "image": "oignon_blanc.png"
+      }
     },
     {
       "id": "red_onion",
@@ -11573,6 +11904,10 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "oignon_rouge.png",
+      "metadata": {
+        "image": "oignon_rouge.png"
       }
     },
     {
@@ -11735,11 +12070,15 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "pasteque.png",
+      "metadata": {
+        "image": "pasteque.png"
       }
     },
     {
       "id": "courge_patisson",
-      "image": "patisson.jpg",
+      "image": "courge_patisson.jpg",
       "commonName": "Patisson (Ufo-Kürbis)",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitaceae",
@@ -11900,6 +12239,9 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "metadata": {
+        "image": "courge_patisson.jpg"
       }
     },
     {
@@ -12077,11 +12419,15 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "lupin.png",
+      "metadata": {
+        "image": "lupin.png"
       }
     },
     {
       "id": "white_onion",
-      "image": "oignons_blanc.png",
+      "image": "oignon_blanc.png",
       "commonName": "Weiße Zwiebel",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
@@ -12255,7 +12601,10 @@
         "Oct",
         "Nov",
         "Dec"
-      ]
+      ],
+      "metadata": {
+        "image": "oignon_blanc.png"
+      }
     },
     {
       "id": "red_onion",
@@ -12431,6 +12780,10 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "oignon_rouge.png",
+      "metadata": {
+        "image": "oignon_rouge.png"
       }
     },
     {
@@ -12604,11 +12957,15 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "pasteque.png",
+      "metadata": {
+        "image": "pasteque.png"
       }
     },
     {
       "id": "courge_patisson",
-      "image": "patisson.jpg",
+      "image": "courge_patisson.jpg",
       "commonName": "Patisson (Ufo-Kürbis)",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitaceae",
@@ -12779,6 +13136,9 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "metadata": {
+        "image": "courge_patisson.jpg"
       }
     },
     {
@@ -12943,6 +13303,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "petit_pois.jpg",
+      "metadata": {
+        "image": "petit_pois.jpg"
       }
     },
     {
@@ -13027,8 +13391,10 @@
         ],
         "companionPlants": [
           "Basilikum",
-          "Tagetes/Ringelblume",
-          "Zwiebel/Knoblauch"
+          "Tagetes",
+          "Ringelblume",
+          "Zwiebel",
+          "Knoblauch"
         ]
       },
       "harvestTime": "70-90 Tage nach Pflanzung",
@@ -13110,6 +13476,9 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "metadata": {
+        "image": "piment_rouge.jpg"
       }
     },
     {
@@ -13276,6 +13645,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "pois_casse.png",
+      "metadata": {
+        "image": "pois_casse.png"
       }
     },
     {
@@ -13439,6 +13812,10 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "pois_chiche.png",
+      "metadata": {
+        "image": "pois_chiche.png"
       }
     },
     {
@@ -13607,6 +13984,10 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "poivron_vert.png",
+      "metadata": {
+        "image": "poivron_vert.png"
       }
     },
     {
@@ -13781,11 +14162,15 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "petit_pois.jpg",
+      "metadata": {
+        "image": "petit_pois.jpg"
       }
     },
     {
       "id": "red_chili",
-      "image": "piment.jpg",
+      "image": "piment_rouge.jpg",
       "commonName": "Roter Chili",
       "scientificName": "Capsicum annuum L.",
       "family": "Solanaceae",
@@ -13876,8 +14261,10 @@
         ],
         "companionPlants": [
           "Basilikum",
-          "Tagetes/Ringelblume",
-          "Zwiebel/Knoblauch"
+          "Tagetes",
+          "Ringelblume",
+          "Zwiebel",
+          "Knoblauch"
         ]
       },
       "harvestTime": "70-90 Tage nach Pflanzung",
@@ -13959,6 +14346,9 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "metadata": {
+        "image": "piment_rouge.jpg"
       }
     },
     {
@@ -14135,6 +14525,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "pois_casse.png",
+      "metadata": {
+        "image": "pois_casse.png"
       }
     },
     {
@@ -14309,6 +14703,10 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "pois_chiche.png",
+      "metadata": {
+        "image": "pois_chiche.png"
       }
     },
     {
@@ -14488,6 +14886,10 @@
             "message": "Keimtemperatur gut."
           }
         }
+      },
+      "image": "poivron_vert.png",
+      "metadata": {
+        "image": "poivron_vert.png"
       }
     },
     {
@@ -14654,6 +15056,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis.png",
+      "metadata": {
+        "image": "radis.png"
       }
     },
     {
@@ -14825,6 +15231,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis_daikon.png",
+      "metadata": {
+        "image": "radis_daikon.png"
       }
     },
     {
@@ -14986,6 +15396,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis_violet_hiver.png",
+      "metadata": {
+        "image": "radis_violet_hiver.png"
       }
     },
     {
@@ -15151,6 +15565,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis_watermelon.png",
+      "metadata": {
+        "image": "radis_watermelon.png"
       }
     },
     {
@@ -15319,6 +15737,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "tomate_cerise_rouge.png",
+      "metadata": {
+        "image": "tomate_cerise_rouge.png"
       }
     },
     {
@@ -15659,6 +16081,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis.png",
+      "metadata": {
+        "image": "radis.png"
       }
     },
     {
@@ -15843,6 +16269,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis_daikon.png",
+      "metadata": {
+        "image": "radis_daikon.png"
       }
     },
     {
@@ -16015,6 +16445,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis_violet_hiver.png",
+      "metadata": {
+        "image": "radis_violet_hiver.png"
       }
     },
     {
@@ -16195,6 +16629,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "radis_watermelon.png",
+      "metadata": {
+        "image": "radis_watermelon.png"
       }
     },
     {
@@ -16376,6 +16814,10 @@
             "message": "Keimtemperatur ideal."
           }
         }
+      },
+      "image": "tomate_cerise_rouge.png",
+      "metadata": {
+        "image": "tomate_cerise_rouge.png"
       }
     },
     {

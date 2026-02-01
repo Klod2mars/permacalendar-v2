@@ -79,69 +79,56 @@ class GardenBedCard extends ConsumerWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Builder(builder: (ctx) {
-                       // 1. Try Local File first (Sync check)
-                       final raw = _resolveImagePathFromPlant(plant);
-                       if (raw != null && raw.isNotEmpty) {
-                          debugPrint('[GardenBedCard] Resolving image for ${plant.commonName}: "$raw"'); 
-                          final isNetwork = RegExp(r'^(http|https):\/\/', caseSensitive: false).hasMatch(raw);
-                          final bool isLocalFile = !isNetwork && (raw.startsWith('/') || raw.startsWith('file:') || (raw.contains(Platform.pathSeparator) && raw.contains('.')));
-
-                          if (isLocalFile) {
-                              String path = raw;
-                              if (path.startsWith('file://')) {
-                                  path = path.substring(7);
-                              }
-                              final f = File(path);
-                              debugPrint('[GardenBedCard] Trying local file: "$path" (exists: ${f.existsSync()})');
-                              return Image.file(
-                                f, 
-                                width: 64, 
-                                height: 64, 
-                                fit: BoxFit.cover,
-                                errorBuilder: (ctx, err, st) {
-                                    debugPrint('[GardenBedCard] Error loading file image $path: $err');
-                                    return _buildFallbackImage(context, width:64, height:64);
+                      // ✅ FIX ROBUSTE: Construction d'un objet plante de secours si le catalogue n'est pas prêt
+                      final dynamic plantToResolve = plant ??
+                          (activePlanting != null
+                              ? {
+                                  'id': activePlanting.plantId,
+                                  'commonName': activePlanting.plantName,
+                                  'metadata': activePlanting.metadata,
                                 }
-                              );
+                              : null);
+
+                      // 1. Priorité absolue : Image déjà résolue stockée dans la plantation (Fix Durable)
+                      if (activePlanting?.metadata != null &&
+                          activePlanting!.metadata!
+                              .containsKey('resolvedImageAsset')) {
+                        final pre =
+                            activePlanting!.metadata!['resolvedImageAsset'];
+                        if (pre != null && pre is String && pre.isNotEmpty) {
+                          return _buildResolvedImage(context, pre);
+                        }
+                      }
+
+                      // 2. Résolution asynchrone (Fallback)
+                      // Gère : assets, fichiers locaux, URLs réseau, clés de métadonnées
+                      return FutureBuilder<String?>(
+                        future: findPlantImageAsset(plantToResolve),
+                        builder: (ctx, snapshot) {
+                          if (snapshot.connectionState !=
+                              ConnectionState.done) {
+                            return Container(
+                              width: 64,
+                              height: 64,
+                              color: Colors.green.shade50,
+                              alignment: Alignment.center,
+                              child: const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2),
+                              ),
+                            );
                           }
-                       }
-                       
-                       // 2. Fallback to Asset Resolver
-                       return FutureBuilder<String?>(
-                      future: findPlantImageAsset(plant),
-                      builder: (ctx, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done) {
-                          return Container(
-                            width: 64,
-                            height: 64,
-                            color: Colors.green.shade50,
-                            alignment: Alignment.center,
-                            child: const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            ),
-                          );
-                        }
-                        final found = snapshot.data;
-                        if (found != null) {
-                          return Image.asset(
-                            found,
-                            width: 64,
-                            height: 64,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => _buildFallbackImage(
-                                context,
-                                width: 64,
-                                height: 64,
-                                fit: BoxFit.cover),
-                          );
-                        } else {
-                          return _buildFallbackImage(context,
-                              width: 64, height: 64, fit: BoxFit.cover);
-                        }
-                      },
-                    );
+                          final found = snapshot.data;
+                          if (found != null && found.isNotEmpty) {
+                            return _buildResolvedImage(context, found);
+                          } else {
+                            return _buildFallbackImage(context,
+                                width: 64, height: 64, fit: BoxFit.cover);
+                          }
+                        },
+                      );
                     }),
                   ),
                   const SizedBox(width: 12),
@@ -272,24 +259,55 @@ class GardenBedCard extends ConsumerWidget {
         );
       },
     );
-    String? _resolveImagePathFromPlant(dynamic plant) {
-    if (plant == null) return null;
-    try {
-      final meta = plant.metadata;
-      if (meta != null && meta is Map) {
-        final candidates = [
-          meta['image'],
-          meta['imagePath'],
-          meta['photo'],
-          meta['image_url'],
-          meta['imageUrl'],
-        ];
-        for (final c in candidates) {
-          if (c is String && c.trim().isNotEmpty) return c.trim();
-        }
-      }
-    } catch (_) {}
-    return null;
   }
-}
+
+  // Helper pour afficher l'image selon son type (Asset, Fichier, Réseau)
+  Widget _buildResolvedImage(BuildContext ctx, String path,
+      {double width = 64, double height = 64}) {
+    // 1. Réseau
+    if (path.startsWith('http')) {
+      return Image.network(
+        path,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('[GardenBedCard] Network image error: $path -> $error');
+          return _buildFallbackImage(ctx, width: width, height: height);
+        },
+      );
+    }
+    // 2. Fichier Local
+    if (path.startsWith('/') ||
+        path.startsWith('file:') ||
+        (path.contains(Platform.pathSeparator) && path.contains('.'))) {
+      String localPath = path;
+      if (localPath.startsWith('file://')) {
+        localPath = localPath.substring(7);
+      }
+      final f = File(localPath);
+      return Image.file(
+        f,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('[GardenBedCard] File image error: $localPath -> $error');
+          return _buildFallbackImage(ctx, width: width, height: height);
+        },
+      );
+    }
+    // 3. Asset (défaut)
+    return Image.asset(
+      path,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        // Silent error for assets
+        return _buildFallbackImage(ctx, width: width, height: height);
+      },
+    );
+  }
+
 }

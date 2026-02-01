@@ -200,6 +200,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "artichaut.png",
+      "metadata": {
+        "image": "artichaut.png"
       }
     },
     {
@@ -392,6 +396,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "asperge.png",
+      "metadata": {
+        "image": "asperge.png"
       }
     },
     {
@@ -606,6 +614,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "basilic.png",
+      "metadata": {
+        "image": "basilic.png"
       }
     },
     {
@@ -830,6 +842,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "haricot.png",
+      "metadata": {
+        "image": "haricot.png"
       }
     },
     {
@@ -1054,6 +1070,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "betterave.png",
+      "metadata": {
+        "image": "betterave.png"
       }
     },
     {
@@ -1239,6 +1259,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "radis_noir.png",
+      "metadata": {
+        "image": "radis_noir.png"
       }
     },
     {
@@ -1444,6 +1468,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "brocoli.png",
+      "metadata": {
+        "image": "brocoli.png"
       }
     },
     {
@@ -1549,11 +1577,17 @@
           "coriandre",
           "œillets d'inde",
           "tomates",
-          "légumineuses (pois, fèves)",
+          "légumineuses",
+          "pois",
+          "fèves",
           "œillets d’inde"
         ],
         "avoid": [
-          "autres brassicacées (radis, navets, roquette, moutarde) sur la même parcelle"
+          "autres brassicacées",
+          "radis",
+          "navets",
+          "roquette",
+          "moutarde sur la même parcelle"
         ]
       },
       "sowingMonths3": [
@@ -1643,6 +1677,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_de_bruxelles.png",
+      "metadata": {
+        "image": "chou_de_bruxelles.png"
       }
     },
     {
@@ -1855,6 +1893,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_pomme.png",
+      "metadata": {
+        "image": "chou_pomme.png"
       }
     },
     {
@@ -2083,6 +2125,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "carotte.png",
+      "metadata": {
+        "image": "carotte.png"
       }
     },
     {
@@ -2189,7 +2235,11 @@
           "fenouil"
         ],
         "avoid": [
-          "autres brassicacées (chou, brocoli, navet...), fraises"
+          "autres brassicacées",
+          "chou",
+          "brocoli",
+          "navet...",
+          "fraises"
         ]
       },
       "sowingMonths3": [
@@ -2288,6 +2338,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_fleur.png",
+      "metadata": {
+        "image": "chou_fleur.png"
       }
     },
     {
@@ -2481,6 +2535,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "celeri_branche.png",
+      "metadata": {
+        "image": "celeri_branche.png"
       }
     },
     {
@@ -2701,6 +2759,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "blette.png",
+      "metadata": {
+        "image": "blette.png"
       }
     },
     {
@@ -2920,6 +2982,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "ciboulette.png",
+      "metadata": {
+        "image": "ciboulette.png"
       }
     },
     {
@@ -3105,6 +3171,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "coriandre.png",
+      "metadata": {
+        "image": "coriandre.png"
       }
     },
     {
@@ -3334,6 +3404,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "courgette.png",
+      "metadata": {
+        "image": "courgette.png"
       }
     },
     {
@@ -3552,6 +3626,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "concombre.png",
+      "metadata": {
+        "image": "concombre.png"
       }
     },
     {
@@ -3741,6 +3819,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "aneth.png",
+      "metadata": {
+        "image": "aneth.png"
       }
     },
     {
@@ -3958,6 +4040,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "aubergine.png",
+      "metadata": {
+        "image": "aubergine.png"
       }
     },
     {
@@ -4165,6 +4251,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "ail.png",
+      "metadata": {
+        "image": "ail.png"
       }
     },
     {
@@ -4375,6 +4465,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_kale.png",
+      "metadata": {
+        "image": "chou_kale.png"
       }
     },
     {
@@ -4589,6 +4683,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "poireau.png",
+      "metadata": {
+        "image": "poireau.png"
       }
     },
     {
@@ -4831,6 +4929,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "laitue.png",
+      "metadata": {
+        "image": "laitue.png"
       }
     },
     {
@@ -5033,6 +5135,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "mache.png",
+      "metadata": {
+        "image": "mache.png"
       }
     },
     {
@@ -5236,6 +5342,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "melon.png",
+      "metadata": {
+        "image": "melon.png"
       }
     },
     {
@@ -5350,7 +5460,10 @@
           "hysope (contre les altises)"
         ],
         "avoid": [
-          "autres brassicacées (chou, radis, moutarde)",
+          "autres brassicacées",
+          "chou",
+          "radis",
+          "moutarde",
           "plantes gourmandes en azote si sol pauvre"
         ]
       },
@@ -5463,6 +5576,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "navet.png",
+      "metadata": {
+        "image": "navet.png"
       }
     },
     {
@@ -5667,6 +5784,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "oignon.png",
+      "metadata": {
+        "image": "oignon.png"
       }
     },
     {
@@ -5893,6 +6014,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "persil.png",
+      "metadata": {
+        "image": "persil.png"
       }
     },
     {
@@ -6100,6 +6225,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "panais.png",
+      "metadata": {
+        "image": "panais.png"
       }
     },
     {
@@ -6296,6 +6425,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "pomme_de_terre.png",
+      "metadata": {
+        "image": "pomme_de_terre.png"
       }
     },
     {
@@ -6493,6 +6626,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "courge_potiron.png",
+      "metadata": {
+        "image": "courge_potiron.png"
       }
     },
     {
@@ -6681,6 +6818,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "roquette.png",
+      "metadata": {
+        "image": "roquette.png"
       }
     },
     {
@@ -6883,6 +7024,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "romarin.png",
+      "metadata": {
+        "image": "romarin.png"
       }
     },
     {
@@ -7060,6 +7205,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "salsifis.png",
+      "metadata": {
+        "image": "salsifis.png"
       }
     },
     {
@@ -7291,6 +7440,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "scarole.png",
+      "metadata": {
+        "image": "scarole.png"
       }
     },
     {
@@ -7483,6 +7636,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "echalote.png",
+      "metadata": {
+        "image": "echalote.png"
       }
     },
     {
@@ -7708,6 +7865,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "epinard.png",
+      "metadata": {
+        "image": "epinard.png"
       }
     },
     {
@@ -7907,6 +8068,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "maïs_doux.png",
+      "metadata": {
+        "image": "maïs_doux.png"
       }
     },
     {
@@ -8013,7 +8178,9 @@
           "tomate"
         ],
         "avoid": [
-          "plantes gourmandes en eau (ex: courgette, laitue) — incompatibilité hydrique"
+          "plantes gourmandes en eau",
+          "ex: courgette",
+          "laitue — incompatibilité hydrique"
         ]
       },
       "sowingMonths3": [
@@ -8108,6 +8275,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "thym.png",
+      "metadata": {
+        "image": "thym.png"
       }
     },
     {
@@ -8326,6 +8497,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "tomate.png",
+      "metadata": {
+        "image": "tomate.png"
       }
     },
     {
@@ -8512,6 +8687,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "topinambour.png",
+      "metadata": {
+        "image": "topinambour.png"
       }
     },
     {
@@ -8738,6 +8917,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "carotte_blanche.png",
+      "metadata": {
+        "image": "carotte_blanche.png"
       }
     },
     {
@@ -8955,6 +9138,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "poivron.png",
+      "metadata": {
+        "image": "poivron.png"
       }
     },
     {
@@ -9184,6 +9371,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "bok_choy.png",
+      "metadata": {
+        "image": "bok_choy.png"
       }
     },
     {
@@ -9343,6 +9534,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chayotte.jpg",
+      "metadata": {
+        "image": "chayotte.jpg"
       }
     },
     {
@@ -9469,8 +9664,17 @@
           "phacélie"
         ],
         "avoid": [
-          "autres brassicacées (choux, chou-fleur, kale, navet, radis, moutarde)",
-          "cultures gourmandes en azote à fort développement (maïs, grandes cucurbitacées, tomates en sol pauvre)"
+          "autres brassicacées",
+          "choux",
+          "chou-fleur",
+          "kale",
+          "navet",
+          "radis",
+          "moutarde",
+          "cultures gourmandes en azote à fort développement",
+          "maïs",
+          "grandes cucurbitacées",
+          "tomates en sol pauvre"
         ]
       },
       "sowingMonths3": [
@@ -9547,11 +9751,15 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_brocoli_romanesco.png",
+      "metadata": {
+        "image": "chou_brocoli_romanesco.png"
       }
     },
     {
       "id": "chou_cabus_rouge",
-      "image": "chou_cabu_rouge.png",
+      "image": "chou_cabus_rouge.png",
       "commonName": "Chou cabus rouge",
       "scientificName": "Brassica oleracea var. capitata f. rubra",
       "family": "Brassicacées",
@@ -9737,6 +9945,9 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "metadata": {
+        "image": "chou_cabus_rouge.png"
       }
     },
     {
@@ -9842,8 +10053,11 @@
           "Micro-hyménoptères contre la piéride"
         ],
         "companionPlants": [
-          "Ail et oignon contre les maladies",
-          "Plantes aromatiques (thym, sauge) contre la piéride",
+          "Ail",
+          "oignon contre les maladies",
+          "Plantes aromatiques",
+          "thym",
+          "sauge contre la piéride",
           "Capucine (plante piège pour pucerons)"
         ]
       },
@@ -9978,6 +10192,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_daubenton.jpg",
+      "metadata": {
+        "image": "chou_daubenton.jpg"
       }
     },
     {
@@ -10214,6 +10432,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "chou_mizuna.jpg",
+      "metadata": {
+        "image": "chou_mizuna.jpg"
       }
     },
     {
@@ -10315,9 +10537,13 @@
           "Carabes et staphylines, prédateurs de limaces"
         ],
         "companionPlants": [
-          "Maïs (structure verticale et ombrage partiel)",
+          "Maïs",
+          "structure verticale",
+          "ombrage partiel",
           "Haricots (apport d'azote)",
-          "Souci, capucine, bourrache (attraction des auxiliaires)",
+          "Souci",
+          "capucine",
+          "bourrache (attraction des auxiliaires)",
           "Phacélie (bandes fleuries)"
         ]
       },
@@ -10426,6 +10652,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "courge_butternut.png",
+      "metadata": {
+        "image": "courge_butternut.png"
       }
     },
     {
@@ -10642,6 +10872,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "musquee_de_provence.png",
+      "metadata": {
+        "image": "musquee_de_provence.png"
       }
     },
     {
@@ -10738,7 +10972,10 @@
         "companionPlants": [
           "Maïs",
           "Haricot",
-          "Fleurs mellifères (phacélie, souci, bourrache)"
+          "Fleurs mellifères",
+          "phacélie",
+          "souci",
+          "bourrache"
         ]
       },
       "harvestTime": "90-110 jours après semis",
@@ -10847,6 +11084,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "courge_patidou.png",
+      "metadata": {
+        "image": "courge_patidou.png"
       }
     },
     {
@@ -11068,6 +11309,9 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "metadata": {
+        "image": "cresson.jpg"
       }
     },
     {
@@ -11163,7 +11407,8 @@
           "Plantes attractives (ombellifères) pour les auxiliaires"
         ],
         "companionPlants": [
-          "Oignon et ciboulette (effet répulsif pucerons)",
+          "Oignon",
+          "ciboulette (effet répulsif pucerons)",
           "Carotte (partage d'espace)",
           "Engrais verts (phacélie) pour la structure du sol"
         ]
@@ -11276,6 +11521,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "endive.png",
+      "metadata": {
+        "image": "endive.png"
       }
     },
     {
@@ -11498,6 +11747,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "feve.png",
+      "metadata": {
+        "image": "feve.png"
       }
     },
     {
@@ -11712,6 +11965,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "gobo.jpg",
+      "metadata": {
+        "image": "gobo.jpg"
       }
     },
     {
@@ -11916,6 +12173,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "haricot_a_rames.png",
+      "metadata": {
+        "image": "haricot_a_rames.png"
       }
     },
     {
@@ -12114,6 +12375,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "haricot_coco.png",
+      "metadata": {
+        "image": "haricot_coco.png"
       }
     },
     {
@@ -12316,6 +12581,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "haricot_jaune.png",
+      "metadata": {
+        "image": "haricot_jaune.png"
       }
     },
     {
@@ -12513,6 +12782,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "lentille.png",
+      "metadata": {
+        "image": "lentille.png"
       }
     },
     {
@@ -12720,11 +12993,15 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "lupin.png",
+      "metadata": {
+        "image": "lupin.png"
       }
     },
     {
       "id": "white_onion",
-      "image": "oignons_blanc.png",
+      "image": "oignon_blanc.png",
       "commonName": "Oignon blanc",
       "scientificName": "Allium cepa L.",
       "family": "Amaryllidaceae",
@@ -12941,6 +13218,9 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "metadata": {
+        "image": "oignon_blanc.png"
       }
     },
     {
@@ -13149,6 +13429,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "oignon_rouge.png",
+      "metadata": {
+        "image": "oignon_rouge.png"
       }
     },
     {
@@ -13353,11 +13637,15 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "pasteque.png",
+      "metadata": {
+        "image": "pasteque.png"
       }
     },
     {
       "id": "courge_patisson",
-      "image": "patisson.jpg",
+      "image": "courge_patisson.jpg",
       "commonName": "Courge pâtisson",
       "scientificName": "Cucurbita pepo L.",
       "family": "Cucurbitaceae",
@@ -13557,6 +13845,9 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "metadata": {
+        "image": "courge_patisson.jpg"
       }
     },
     {
@@ -13760,6 +14051,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "petit_pois.jpg",
+      "metadata": {
+        "image": "petit_pois.jpg"
       }
     },
     {
@@ -13855,8 +14150,10 @@
         ],
         "companionPlants": [
           "Basilic",
-          "Soucis et Tagètes",
-          "Oignon et Ail"
+          "Soucis",
+          "Tagètes",
+          "Oignon",
+          "Ail"
         ]
       },
       "harvestTime": "70-90 jours après plantation",
@@ -13968,6 +14265,9 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "metadata": {
+        "image": "piment_rouge.jpg"
       }
     },
     {
@@ -14173,6 +14473,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "pois_casse.png",
+      "metadata": {
+        "image": "pois_casse.png"
       }
     },
     {
@@ -14377,6 +14681,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "pois_chiche.png",
+      "metadata": {
+        "image": "pois_chiche.png"
       }
     },
     {
@@ -14586,6 +14894,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "poivron_vert.png",
+      "metadata": {
+        "image": "poivron_vert.png"
       }
     },
     {
@@ -14799,6 +15111,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "radis.png",
+      "metadata": {
+        "image": "radis.png"
       }
     },
     {
@@ -15018,6 +15334,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "radis_daikon.png",
+      "metadata": {
+        "image": "radis_daikon.png"
       }
     },
     {
@@ -15221,6 +15541,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "radis_violet_hiver.png",
+      "metadata": {
+        "image": "radis_violet_hiver.png"
       }
     },
     {
@@ -15437,6 +15761,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "radis_watermelon.png",
+      "metadata": {
+        "image": "radis_watermelon.png"
       }
     },
     {
@@ -15650,6 +15978,10 @@
         "SH_temperate": {
           "monthShift": 6
         }
+      },
+      "image": "tomate_cerise_rouge.png",
+      "metadata": {
+        "image": "tomate_cerise_rouge.png"
       }
     },
     {
@@ -15744,7 +16076,9 @@
         ],
         "companionPlants": [
           "Basilic (confusion olfactive)",
-          "Œillet d'Inde (pucerons et nématodes)",
+          "Œillet d'Inde",
+          "pucerons",
+          "nématodes",
           "Capucine (plante piège)"
         ]
       },

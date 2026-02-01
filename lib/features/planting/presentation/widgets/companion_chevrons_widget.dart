@@ -99,9 +99,11 @@ class CompanionChevronsWidget extends StatelessWidget {
               color: color,
             ),
             const SizedBox(width: 10),
-            Text(
-              title,
-              style: TextStyle(color: color),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(color: color),
+              ),
             ),
           ],
         ),
