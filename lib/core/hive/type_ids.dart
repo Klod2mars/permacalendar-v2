@@ -74,6 +74,9 @@ const int kTypeIdPlantConditionHive = 57;
 /// AppSettings - Application settings
 const int kTypeIdAppSettings = 60;
 
+/// Entitlement - Premium Subscription Entitlement
+const int kTypeIdEntitlement = 61;
+
 // ============================================================================
 // CLIMATE FEATURE TYPEIDS - NEW FOR PHASE 2
 // ============================================================================

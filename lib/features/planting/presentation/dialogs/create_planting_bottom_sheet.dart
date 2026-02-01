@@ -11,6 +11,8 @@ import '../../providers/planting_provider.dart';
 import '../../../plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../core/providers/activity_tracker_v3_provider.dart';
+import '../../../premium/presentation/paywall_sheet.dart'; // Added
+
 
 /// Usage:
 /// showCreatePlantingBottomSheet(context, gardenBedId: 'bed1', planting: null);
@@ -476,6 +478,14 @@ class _CreatePlantingBottomSheetContentState
             
             String errorMessage = errorKey;
             final l10n = AppLocalizations.of(context)!;
+            
+            if (errorKey == 'limit_beds_reached_message' || errorKey == 'limit_plantings_reached_message') {
+               // Show Paywall
+               await PaywallSheet.show(context);
+               setState(() => _isLoading = false);
+               return;
+            }
+
             if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
             if (errorKey == 'limit_plantings_reached_message') errorMessage = l10n.limit_plantings_reached_message;
 

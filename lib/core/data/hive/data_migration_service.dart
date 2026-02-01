@@ -6,7 +6,7 @@ import 'dart:io';
 class DataMigrationService {
   static const String _migrationVersionKey = 'hive_migration_version';
   static const int _currentVersion =
-      2; // Version actuelle après les modifications
+      3; // Version actuelle après les modifications
 
   /// Vérifie et exécute les migrations nécessaires
   static Future<void> checkAndMigrate() async {
@@ -46,6 +46,9 @@ class DataMigrationService {
         case 2:
           await _migrateToV2();
           break;
+        case 3:
+          await _migrateToV3();
+          break;
         default:
           print('⚠️ Migration vers la version $version non implémentée');
       }
@@ -72,6 +75,24 @@ class DataMigrationService {
       print('✅ Migration v2 terminée');
     } catch (e) {
       print('❌ Erreur lors de la migration v2: $e');
+      rethrow;
+    }
+  }
+
+  /// Migration vers la version 3 (Introduction des Entitlements)
+  static Future<void> _migrateToV3() async {
+    print('📦 Migration vers v3: Initialisation Entitlements Premium');
+    try {
+      await _backupExistingData(); // Always backup before new migration
+      
+      // Initialize entitlements box if not exists (handled by repository usually, 
+      // but here we ensure clean slate if needed or cleanup old tests)
+      // For now, just logging as the repository will create it.
+      // If we had old 'premium' flags scattered, we would consolidate them here.
+      
+      print('✅ Migration v3 terminée (Entitlements prepared)');
+    } catch (e) {
+      print('❌ Erreur lors de la migration v3: $e');
       rethrow;
     }
   }

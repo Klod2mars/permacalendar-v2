@@ -24,6 +24,9 @@ import 'plant_detail_screen.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
 import 'package:permacalendar/features/climate/presentation/providers/zone_providers.dart';
 import 'package:permacalendar/features/climate/domain/models/zone.dart';
+import 'package:permacalendar/features/premium/presentation/premium_banner.dart'; // Added
+import 'package:permacalendar/features/planting/providers/planting_provider.dart'; // Added (Note: check package name)
+
 
 class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
@@ -456,6 +459,9 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
 
           return Column(
             children: [
+              // Premium Banner
+              PremiumBanner(currentCount: ref.watch(plantingProvider).plantings.length),
+
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 12.0, vertical: 10.0),

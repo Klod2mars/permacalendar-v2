@@ -19,7 +19,9 @@ import 'core/models/sky_calibration_config.dart';
 import 'core/models/activity_v3.dart';
 import 'core/services/activity_observer_service.dart';
 import 'core/hive/type_ids.dart';
+import 'core/models/entitlement.dart'; // Added
 import 'features/climate/data/initialization/soil_metrics_initialization.dart';
+import 'features/premium/application/purchase_service.dart'; // Added
 // Generated Hive adapters
 import 'models/plant_localized.dart';
 
@@ -88,6 +90,12 @@ class AppInitializer {
       
       // ✅ Soil Metrics Adapter
       await SoilMetricsInitialization.initialize();
+
+      // Entitlement Adapter
+      if (!Hive.isAdapterRegistered(kTypeIdEntitlement)) {
+        Hive.registerAdapter(EntitlementAdapter());
+        print('✅ EntitlementAdapter registered (typeId=$kTypeIdEntitlement)');
+      }
     } catch (e) {
       print('Warning: Error registering adapters: $e');
     }
@@ -122,6 +130,13 @@ class AppInitializer {
     } catch (e) {
       print('❌ Erreur initialisation ActivityObserverService: $e');
       // Do not rethrow to avoid blocking the app initialization
+    }
+
+    // Initialize Purchase Service (RevenueCat)
+    try {
+      await PurchaseService().initialize();
+    } catch (e) {
+      print('❌ Erreur initialisation PurchaseService: $e');
     }
 
     // Validation des données
