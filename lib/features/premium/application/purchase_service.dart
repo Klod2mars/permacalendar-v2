@@ -89,6 +89,7 @@ class PurchaseService {
         debugPrint("📉 Downgrading to Free (Expired/Cancelled)");
         // We write a free entitlement to overwrite the premium one
         await _repository.saveEntitlement(Entitlement.free());
+        await _repository.resetExportQuota(); // Grant partial access
       }
     }
   }

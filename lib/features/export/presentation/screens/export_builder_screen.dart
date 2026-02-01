@@ -11,6 +11,9 @@ import 'package:permacalendar/features/export/presentation/providers/export_buil
 import 'package:permacalendar/features/garden/providers/garden_provider.dart';
 import 'package:permacalendar/core/models/garden_freezed.dart';
 import 'package:permacalendar/l10n/app_localizations.dart';
+import 'package:permacalendar/features/premium/domain/can_perform_action_checker.dart';
+import 'package:permacalendar/features/premium/presentation/paywall_sheet.dart';
+import 'package:permacalendar/features/premium/data/entitlement_repository.dart';
 
 class ExportBuilderScreen extends ConsumerStatefulWidget {
   const ExportBuilderScreen({super.key});
@@ -338,6 +341,14 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
 
   Future<void> _generateExport(ExportBuilderNotifier notifier,
       BuildContext context, AppLocalizations l10n) async {
+    
+    // Check permissions
+    final checker = CanPerformActionChecker();
+    if (!checker.canExportAdvanced()) {
+      await PaywallSheet.show(context);
+      return;
+    }
+
     try {
       final bytes = await notifier.generate(l10n);
 
@@ -363,6 +374,21 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
           ],
           text: '${l10n.export_success_share_text} ($filename)');
+      
+      // Decrement quota if strictly free user (and using quota)
+      // We check repository directly to see if premium is NOT active
+      final repo = EntitlementRepository();
+      if (!repo.getCurrentEntitlement().isActive) {
+        await repo.decrementRemainingExports();
+        // Optional: Show toast "Exports remaining: X"
+        final remaining = repo.getRemainingExports();
+        if (context.mounted) {
+           ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(content: Text('Export réussi. Il vous reste $remaining exports gratuits.'))
+           );
+        }
+      }
+
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context)

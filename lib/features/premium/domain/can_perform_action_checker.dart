@@ -33,8 +33,15 @@ class CanPerformActionChecker {
   /// PDF/Text might be free, but structured data could be premium.
   bool canExportAdvanced() {
     if (_isPremium()) return true;
-    // Decision: Advanced exports are Premium only
-    return false;
+    
+    // Check remaining exports for free users
+    final remaining = _repository.getRemainingExports();
+    return remaining > 0;
+  }
+
+  /// Check if user can export calendar (uses same limit as advanced export).
+  bool canExportCalendar() {
+    return canExportAdvanced();
   }
   
   /// Check if user can remove watermarks (for exports).

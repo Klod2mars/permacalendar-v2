@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permacalendar/features/premium/presentation/unlock_dialog.dart';
 import 'package:permacalendar/features/premium/application/purchase_service.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -90,9 +91,9 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
           ),
           const SizedBox(height: 12),
           const Text(
-            'Profitez de plantes illimitées, export XLS, et plus encore.',
+            'Déployez votre potager sans contrainte :\n5 jardins, 100 parcelles chacun,\n6 plantes par parcelle\n👉 3 000 cultures suivies simultanément.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey, fontSize: 16),
+            style: TextStyle(color: Colors.grey, fontSize: 16, height: 1.5),
           ),
           const SizedBox(height: 32),
 
@@ -113,9 +114,20 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
           const SizedBox(height: 24),
           
           // Restore
-          TextButton(
-            onPressed: _onRestore,
-            child: const Text("Restaurer les achats"),
+          GestureDetector(
+            onLongPress: () async {
+              final result = await showDialog(
+                context: context,
+                builder: (context) => const UnlockDialog(),
+              );
+              if (result == true && mounted) {
+                Navigator.pop(context); // Close paywall if unlocked
+              }
+            },
+            child: TextButton(
+              onPressed: _onRestore,
+              child: const Text("Restaurer les achats"),
+            ),
           ),
           
           const SizedBox(height: 24),

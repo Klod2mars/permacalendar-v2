@@ -17,7 +17,11 @@ import '../../../features/home/providers/calendar_aggregation_provider.dart';
 import '../../../core/services/recurrence_service.dart';
 import '../../../shared/widgets/create_task_dialog.dart';
 import '../../../shared/services/task_document_generator.dart';
+import '../../../shared/services/task_document_generator.dart';
 import 'dart:developer' as developer;
+import '../../../features/premium/domain/can_perform_action_checker.dart';
+import '../../../features/premium/presentation/paywall_sheet.dart';
+import '../../../features/premium/data/entitlement_repository.dart';
 
 /// Vue calendrier simplifiée des plantations et récoltes prévues
 class CalendarViewScreen extends ConsumerStatefulWidget {
@@ -351,6 +355,14 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
 
   Future<void> _shareActivity(Activity activity) async {
     final l10n = AppLocalizations.of(context)!;
+    
+    // 1. Check permissions / Paywall
+    final checker = CanPerformActionChecker();
+    if (!checker.canExportCalendar()) {
+       await PaywallSheet.show(context);
+       return;
+    }
+
     try {
       // Prompt user or show visual feedback if needed?
       // Since generation is fast, we skip loading snackbar to avoid missing key issues.
@@ -365,6 +377,19 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         shareText: '${activity.title} (PDF)'
       );
       
+      // 2. Decrement quota if not premium
+      final repo = EntitlementRepository();
+      if (!repo.getCurrentEntitlement().isActive) {
+        await repo.decrementRemainingExports();
+        if (mounted) {
+           final remaining = repo.getRemainingExports();
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+             content: Text('Export effectué. Il vous reste $remaining exports gratuits.'),
+             duration: const Duration(seconds: 4),
+           ));
+        }
+      }
+
       // Update sentAt metadata
       final newMeta = Map<String, dynamic>.from(activity.metadata);
       newMeta['sentAt'] = DateTime.now().toIso8601String();

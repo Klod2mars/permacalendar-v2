@@ -16,18 +16,29 @@ class EntitlementRepository {
   EntitlementRepository._internal();
 
   Box<Entitlement>? _box;
+  Box? _limitsBox;
 
   /// Initialize the Hive box. 
   /// Should be called during app initialization (after Hive.initFlutter and Adapter reg).
   Future<void> init() async {
-    if (_box != null && _box!.isOpen) return;
+    // Open Entitlements Box (Typed)
+    if (_box == null || !_box!.isOpen) {
+      try {
+        _box = await Hive.openBox<Entitlement>(_boxName);
+        debugPrint('📦 EntitlementRepository: Entitlements Box opened');
+      } catch (e) {
+        debugPrint('❌ EntitlementRepository: Failed to open entitlements box: $e');
+      }
+    }
     
-    try {
-      _box = await Hive.openBox<Entitlement>(_boxName);
-      debugPrint('📦 EntitlementRepository: Box opened');
-    } catch (e) {
-      debugPrint('❌ EntitlementRepository: Failed to open box: $e');
-      // Fallback or retry logic could be added here
+    // Open Limits Box (Dynamic/Int)
+    if (_limitsBox == null || !_limitsBox!.isOpen) {
+      try {
+        _limitsBox = await Hive.openBox('export_limits');
+        debugPrint('📦 EntitlementRepository: Limits Box opened');
+      } catch (e) {
+        debugPrint('❌ EntitlementRepository: Failed to open limits box: $e');
+      }
     }
   }
 
@@ -44,7 +55,7 @@ class EntitlementRepository {
 
   /// Save a new entitlement.
   Future<void> saveEntitlement(Entitlement entitlement) async {
-    if (_box == null || !_box!.isOpen) await init();
+    if (_box == null || _limitsBox == null) await init();
     
     if (_box != null && _box!.isOpen) {
       await _box!.put(_keyName, entitlement);
@@ -56,7 +67,7 @@ class EntitlementRepository {
 
   /// Clear entitlement (e.g. on logout or debug reset)
   Future<void> clearEntitlement() async {
-    if (_box == null || !_box!.isOpen) await init();
+    await init();
     
     if (_box != null && _box!.isOpen) {
       await _box!.delete(_keyName);
@@ -64,6 +75,35 @@ class EntitlementRepository {
     }
   }
   
+  static const String _keyRemainingExports = 'remaining_exports';
+  static const int kDefaultExportLimit = 5;
+
+  /// Get remaining exports count
+  int getRemainingExports() {
+    if (_limitsBox == null || !_limitsBox!.isOpen) return kDefaultExportLimit;
+    return _limitsBox!.get(_keyRemainingExports, defaultValue: kDefaultExportLimit) as int;
+  }
+
+  /// Decrement remaining exports
+  Future<void> decrementRemainingExports() async {
+    await init();
+    
+    final current = getRemainingExports();
+    if (current > 0 && _limitsBox != null && _limitsBox!.isOpen) {
+      await _limitsBox!.put(_keyRemainingExports, current - 1);
+      debugPrint('📉 Export quota decremented: ${current - 1} remaining');
+    }
+  }
+
+  /// Reset export quota (e.g. when premium status changes to expired, we might want to give them 5 fresh exports)
+  Future<void> resetExportQuota() async {
+     await init();
+     if (_limitsBox != null && _limitsBox!.isOpen) {
+        await _limitsBox!.put(_keyRemainingExports, kDefaultExportLimit);
+        debugPrint('🔄 Export quota reset to $kDefaultExportLimit');
+     }
+  }
+
   /// Listen to entitlement changes
   ValueListenable<Box<Entitlement>> get listenable {
     if (_box == null || !_box!.isOpen) {
