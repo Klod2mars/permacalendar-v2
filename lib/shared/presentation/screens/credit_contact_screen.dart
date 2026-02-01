@@ -1,6 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+Future<String> _loadLocalizedDoc(BuildContext context, String baseName) async {
+  final locale = Localizations.localeOf(context);
+  final codeFull = locale.toLanguageTag(); // ex "fr-FR"
+  final code = locale.languageCode; // ex "fr"
+
+  // Paths to test in order
+  final candidates = [
+    'assets/data/json_multilangue_doc/${baseName}_$codeFull.md',
+    'assets/data/json_multilangue_doc/${baseName}_$code.md',
+    'assets/data/json_multilangue_doc/${baseName}_en.md',
+    'assets/data/json_multilangue_doc/${baseName}_fr.md',
+  ];
+
+  for (final path in candidates) {
+    try {
+      final s = await rootBundle.loadString(path);
+      if (s.trim().isNotEmpty) return s;
+    } catch (_) {
+      // file not found -> next
+    }
+  }
+  return 'Texte non disponible.';
+}
 
 class CreditContactScreen extends StatelessWidget {
   const CreditContactScreen({super.key});
@@ -23,152 +49,54 @@ class CreditContactScreen extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title
-              Text(
-                'Crédit & contact',
-                style: GoogleFonts.outfit(
+      body: FutureBuilder<String>(
+        future: _loadLocalizedDoc(context, 'credit_contact'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final data = snapshot.data ?? 'Texte non disponible.';
+          
+          return SafeArea(
+            child: Markdown(
+              data: data,
+              selectable: true,
+              padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+              styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
+                p: GoogleFonts.inter(
+                  fontSize: 15,
+                  color: textColor.withOpacity(0.85),
+                  height: 1.6,
+                ),
+                h1: GoogleFonts.outfit(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
                   color: textColor,
                 ),
-              ),
-              const SizedBox(height: 48),
-
-              // Brand
-              Text(
-                'Sowing',
-                style: GoogleFonts.outfit(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: accentColor,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Credits
-              _buildSectionText(
-                'Conception et développement :             Claude Azaïs',
-                textColor,
-              ),
-              _buildSectionText(
-                'Projet indépendant',
-                textColor.withOpacity(0.7),
-              ),
-              const SizedBox(height: 48),
-
-              // Contact Header
-              Text(
-                'Contact – évolution du programme',
-                style: GoogleFonts.outfit(
+                h2: GoogleFonts.outfit(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
-                  color: textColor,
+                  color: accentColor, 
                 ),
-              ),
-              const SizedBox(height: 24),
-
-              // Contact Body
-              _buildBodyText(
-                'Pour toute remarque, suggestion, demande d’évolution ou réclamation concernant l’application, vous pouvez écrire à l’adresse suivante :',
-                textColor,
-              ),
-              const SizedBox(height: 16),
-              
-              // Email (Static text)
-              SelectableText(
-                '12sowing21@gmail.com',
-                style: GoogleFonts.robotoMono(
+                h3: GoogleFonts.outfit(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: textColor.withOpacity(0.9),
+                ),
+                code: GoogleFonts.robotoMono(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: accentColor,
+                  backgroundColor: Colors.transparent,
                 ),
+                blockSpacing: 24.0,
               ),
-              const SizedBox(height: 32),
-
-              // Cadre d'échange
-              Text(
-                'Cadre d’échange',
-                style: GoogleFonts.outfit(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: textColor.withOpacity(0.9),
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildBodyText(
-                'Les messages sont lus avec attention et peuvent recevoir une réponse lorsque cela est possible.',
-                textColor,
-              ),
-              const SizedBox(height: 12),
-              _buildBodyText(
-                'Les évolutions de l’application se font par cycles, selon la cohérence globale du projet, le temps disponible et les usages observés.',
-                textColor,
-              ),
-              const SizedBox(height: 12),
-              _buildBodyText(
-                'Toutes les demandes ne donnent pas nécessairement lieu à une modification.',
-                textColor,
-              ),
-
-              const SizedBox(height: 48),
-
-              // About
-              Text(
-                'À propos',
-                style: GoogleFonts.outfit(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: textColor.withOpacity(0.9),
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildBodyText(
-                'Ce projet est développé de manière indépendante, avec une approche sobre et progressive, attentive au temps long et à la qualité des usages.',
-                textColor,
-              ),
-              const SizedBox(height: 12),
-              _buildBodyText(
-                'Aucune donnée personnelle n’est collectée via cette page. Aucun formulaire, aucun système de suivi ou de stockage de messages n’est intégré à l’application.',
-                textColor,
-              ),
-              const SizedBox(height: 12),
-              _buildBodyText(
-                'Tout échange se fait volontairement, en dehors de l’application, par les coordonnées indiquées ci-dessus.',
-                textColor,
-              ),
-              const SizedBox(height: 60),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSectionText(String text, Color color) {
-    return Text(
-      text,
-      style: GoogleFonts.inter(
-        fontSize: 16,
-        color: color,
-        height: 1.5,
-      ),
-    );
-  }
-
-  Widget _buildBodyText(String text, Color color) {
-    return Text(
-      text,
-      style: GoogleFonts.inter(
-        fontSize: 15,
-        color: color.withOpacity(0.85),
-        height: 1.6,
+              onTapLink: (text, href, title) {
+                // No external links expected for now, but ready for expansion
+              },
+            ),
+          );
+        },
       ),
     );
   }

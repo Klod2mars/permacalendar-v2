@@ -87,7 +87,7 @@
         "companionPlants": [
           "alfaces",
           "rabanetes",
-          "ervilhas (culturas intercalares no primeiro ano)"
+          "ervilhas"
         ]
       },
       "harvestTime": "Cerca de 120 dias após o plantio, dependendo da variedade e clima",
@@ -97,7 +97,7 @@
           "rabanete",
           "ervilha",
           "alfaces",
-          "ervilhas (culturas intercalares no primeiro ano)"
+          "ervilhas"
         ],
         "avoid": [
           "funcho",
@@ -427,8 +427,7 @@
         "companionPlants": [
           "tomate",
           "pimentão",
-          "alface",
-          "favorece a biodiversidade e repele certas pragas"
+          "alface"
         ]
       },
       "harvestTime": "50-60 dias após a semeadura, dependendo das condições de cultivo",
@@ -438,11 +437,10 @@
           "pimentão",
           "alface",
           "cenoura",
-          "aspargo",
-          "favorece a biodiversidade e repele certas pragas"
+          "aspargo"
         ],
         "avoid": [
-          "pepino (risco de competição)",
+          "pepino",
           "arruda"
         ]
       },
@@ -619,13 +617,15 @@
           "pepino",
           "aipo",
           "rabanete",
-          "espinafre",
-          "girassol (suporte e microclima favorável)"
+          "espinafre"
         ],
         "avoid": [
           "alho",
-          "outras leguminosas (ervilhas, favas, tremoço)",
-          "cebola (em excesso)"
+          "ervilhas",
+          "favas",
+          "tremoço",
+          "cebola"
+         
         ]
       },
       "sowingMonths3": [
@@ -797,7 +797,7 @@
           "cebola",
           "rabanete",
           "feijão anão",
-          "evitar espinafre (mesma família)"
+          "evitar espinafre"
         ]
       },
       "harvestTime": "60-90 dias após semeadura conforme variedade e condições",
@@ -972,7 +972,7 @@
         "companionPlants": [
           "alface",
           "espinafre",
-          "feijão (associações benéficas não competitivas)"
+          "feijão"
         ]
       },
       "harvestTime": "60 dias após a semeadura (conforme variedade e condições)",
@@ -983,10 +983,10 @@
           "feijão",
           "tomate",
           "fava",
-          "feijão (associações benéficas não competitivas)"
+          "feijão"
         ],
         "avoid": [
-          "outras crucíferas em rotação imediata",
+          "outras crucíferas",
           "cenoura",
           "repolho",
           "pepino"
@@ -1137,7 +1137,7 @@
         ],
         "companionPlants": [
           "cravo-de-defunto",
-          "plantas aromáticas (repelentes naturais)"
+          "plantas aromáticas"
         ]
       },
       "harvestTime": "70-90 dias após plantio conforme variedade",
@@ -1151,8 +1151,7 @@
           "cebola",
           "alho-poró",
           "rabanete",
-          "cravo-de-defunto",
-          "plantas aromáticas (repelentes naturais)"
+          "plantas aromáticas"
         ],
         "avoid": [
           "outros repolhos",
@@ -1326,11 +1325,15 @@
           "coentro",
           "cravos-de-defunto",
           "tomates",
-          "leguminosas (ervilhas, favas)",
-          "cravos-de-defunto"
+          "ervilhas",
+          "favas"
         ],
         "avoid": [
-          "outras brassicáceas (rabanete, nabo, rúcula, mostarda) na mesma parcela"
+          "outras brassicáceas",
+          "rabanete",
+          "nabo",
+          "rúcula",
+          "mostarda"
         ]
       },
       "sowingMonths3": [
@@ -1484,7 +1487,7 @@
           "aipo",
           "alface",
           "beterraba",
-          "camomila (repelentes naturais)"
+          "camomila"
         ]
       },
       "harvestTime": "Cerca de 90 dias após plantio, conforme variedade e condições",
@@ -1498,10 +1501,12 @@
           "hortelã",
           "sálvia",
           "tomilho",
-          "camomila (repelentes naturais)"
+          "camomila"
         ],
         "avoid": [
-          "outras brassicáceas (repolhos, nabos, rabanetes)",
+          "repolhos",
+          "nabos",
+          "rabanetes",
           "morangos",
           "pimentões",
           "tomates"
@@ -1672,7 +1677,7 @@
           "alho-poró",
           "coentro",
           "endro",
-          "cravos-de-defunto (contra mosca da cenoura)"
+          "cravos-de-defunto"
         ]
       },
       "harvestTime": "90-120 dias após semeadura conforme variedade e tamanho desejado",
@@ -1686,12 +1691,12 @@
           "rabanete",
           "cebola",
           "alho",
-          "repolho",
-          "cravos-de-defunto (contra mosca da cenoura)"
+          "repolho"
         ],
         "avoid": [
-          "outras umbelíferas (aipo, salsa) sem rotação",
-          "plantas ávidas por nitrogênio"
+          "aipo",
+          "salsa"
+          
         ]
       },
       "sowingMonths3": [
@@ -1848,8 +1853,7 @@
         ],
         "companionPlants": [
           "borragem",
-          "hortelã",
-          "funcho (repelentes naturais contra certas pragas)"
+          "hortelã"
         ]
       },
       "harvestTime": "Cerca de 90 dias após plantio, conforme variedade e condições",
@@ -1861,11 +1865,12 @@
           "aipo",
           "feijões",
           "cebolas",
-          "alho",
-          "funcho (repelentes naturais contra certas pragas)"
+          "alho"
         ],
         "avoid": [
-          "outras brassicáceas (repolho, brócolis, nabo...), morangos"
+          "outras brassicáceas",
+          "repolho",
+          "brócolis"
         ]
       },
       "sowingMonths3": [
@@ -2015,9 +2020,7 @@
           "repolho",
           "alho-poró",
           "tomate",
-          "cebola",
-          "evitar plantas ávidas por água como a abobrinha"
-        ]
+          "cebola"
       },
       "harvestTime": "Cerca de 120 dias após semeadura, ou 90 dias após repicagem",
       "companionPlanting": {
@@ -2031,8 +2034,6 @@
         ],
         "avoid": [
           "milho",
-          "plantas ávidas por água como a abobrinha",
-          "plantas muito exigentes em água ou nitrogênio",
           "batatas"
         ],
         "notes": [
@@ -2211,7 +2212,7 @@
           "feijões anões"
         ],
         "avoid": [
-          "beterraba (mesma família)",
+          "beterraba",
           "alho-poró"
         ]
       },
@@ -2381,8 +2382,7 @@
         "companionPlants": [
           "cenoura",
           "tomate",
-          "pepino",
-          "repele certas pragas naturalmente"
+          "pepino"
         ]
       },
       "harvestTime": "60 dias após semeadura, depois colheita regular todo o verão",
@@ -2393,8 +2393,7 @@
           "pepino",
           "aipo",
           "batata",
-          "morango",
-          "repele certas pragas naturalmente"
+          "morango"
         ],
         "avoid": [
           "beterraba",
@@ -2562,8 +2561,7 @@
         ],
         "avoid": [
           "concorrência",
-          "plantas invasoras",
-          "plantas invasoras ou com forte concorrência radicular"
+          "plantas invasoras"
         ],
         "notes": [
           "mas evitar concorrência com plantas invasoras"
@@ -2733,11 +2731,13 @@
           "alho",
           "alface",
           "espinafre",
-          "capuchinha (armadilha)",
-          "alho (repelentes naturais)"
+          "capuchinha"
         ],
         "avoid": [
-          "outras cucurbitáceas (pepino, abóbora, melão)",
+          "outras cucurbitáceas",
+          "pepino",
+          "abóbora",
+          "melão",
           "batatas"
         ]
       },
@@ -2901,7 +2901,7 @@
           "Vespas parasitoides (contra lagartas e pulgões)"
         ],
         "companionPlants": [
-          "capuchinhas (armadilha para pulgões)",
+          "capuchinhas",
           "rabanete",
           "cebola",
           "alface"
@@ -2916,12 +2916,14 @@
           "capuchinha",
           "feijão",
           "milho",
-          "beterraba",
-          "capuchinhas (armadilha para pulgões)"
+          "beterraba"
         ],
         "avoid": [
-          "aromáticas fortes como sálvia",
-          "outras cucurbitáceas (abobrinhas, abóboras, melões)",
+          "aromáticas fortes",
+          "abobrinhas",
+          "bóboras",
+          "melões",
+          "outras cucurbitáceas",
           "batatas"
         ]
       },
@@ -3076,7 +3078,7 @@
           "cebolas",
           "repolhos",
           "pepinos",
-          "brócolis (efeito repelente contra certos nocivos)"
+          "brócolis"
         ]
       },
       "harvestTime": "60-80 dias após semeadura, conforme condições climáticas e variedade",
@@ -3089,7 +3091,7 @@
           "cebolas",
           "repolhos",
           "pepinos",
-          "brócolis (efeito repelente contra certos nocivos)"
+          "brócolis"
         ],
         "avoid": [
           "outras apiáceas",
@@ -3238,7 +3240,7 @@
         ],
         "companionPlants": [
           "manjericão",
-          "calêndulas (contra certas pragas)"
+          "calêndulas"
         ]
       },
       "harvestTime": "90-120 dias após plantio conforme variedade e clima",
@@ -3250,10 +3252,10 @@
           "alface",
           "espinafre",
           "cebola",
-          "calêndulas (contra certas pragas)"
+          "calêndulas"
         ],
         "avoid": [
-          "outras solanáceas no mesmo local",
+          "outras solanáceas",
           "pimentões",
           "batatas",
           "tomates"
@@ -3600,11 +3602,15 @@
           "cravo-de-defunto",
           "tomate",
           "giesta",
-          "sabugueiro",
-          "cravos-de-defunto"
+          "sabugueiro"
         ],
         "avoid": [
-          "outras brassicáceas (couves, nabos, rabanetes, rúcula, mostarda) nos 5-6 anos"
+          "outras brassicáceas",
+          "couves",
+          "nabos",
+          "rabanetes",
+          "rúcula",
+          "mostarda" 
         ]
       },
       "sowingMonths3": [
@@ -3748,6 +3754,8 @@
         "Amontoar terra progressivamente para branquear o talo",
         "Não exceder na água para evitar podridão",
         "Solo bem drenado indispensável",
+        "aliáceas em cultivo simultâneo",
+        "aliáceas em rotação próxima",
         "Instalar a cobertura morta após os primeiros amontoas para não frear o branqueamento"
       ],
       "biologicalControl": {
@@ -3782,8 +3790,6 @@
         ],
         "avoid": [
           "alho",
-          "outras aliáceas em cultivo simultâneo",
-          "outras aliáceas em rotação próxima",
           "cebola",
           "batata"
         ],
@@ -4158,8 +4164,7 @@
           "cenouras tardias"
         ],
         "avoid": [
-          "culturas que tiveram esclerotínia recentemente",
-          "legumes com forte concorrência radicular"
+        
         ]
       },
       "sowingMonths3": [
@@ -4324,7 +4329,9 @@
           "rabanete"
         ],
         "avoid": [
-          "outras cucurbitáceas (pepino, abóbora)",
+          "outras cucurbitáceas",
+          "pepino",
+          "abóbora",
           "batata",
           "tomate"
         ]
@@ -4462,7 +4469,8 @@
         "Evitar estercos frescos (risco de hérnia do nabo)",
         "Proteger os semeaduras precoces com túnel ou estufa (arejar de dia)",
         "Respeitar uma rotação longa das culturas (evitar brassicáceas sucessivas)",
-        "Semear em março-abril ou agosto para evitar estresse térmico"
+        "Semear em março-abril ou agosto para evitar estresse térmico",
+        "plantas ávidas por nitrogênio se o solo for pobre"
       ],
       "biologicalControl": {
         "preparations": [
@@ -4474,7 +4482,7 @@
           "tomilho",
           "alecrim",
           "erva-cidreira",
-          "hissopo (contra as pulgas-do-bosque)"
+          "hissopo"
         ]
       },
       "harvestTime": "Cerca de 50 dias após semeadura conforme variedade e condições",
@@ -4486,12 +4494,14 @@
           "hissopo",
           "alface",
           "ervilha",
-          "feijão",
-          "hissopo (contra as pulgas-do-bosque)"
+          "feijão"
         ],
         "avoid": [
-          "outras brassicáceas (couve, rabanete, mostarda)",
-          "plantas ávidas por nitrogênio se o solo for pobre"
+          "outras brassicáceas",
+          "couve", 
+          "rabanete",
+          "mostarda"
+          
         ]
       },
       "sowingMonths3": [
@@ -4651,9 +4661,7 @@
           "cenoura",
           "beterraba",
           "alface",
-          "tomate",
-          "couve (evitar ervilhas",
-          "favas)"
+          "tomate"
         ]
       },
       "harvestTime": "Quando a folhagem estiver completamente seca, geralmente 4 a 5 meses após semeadura",
@@ -4665,8 +4673,7 @@
           "tomate",
           "couve",
           "rabanete",
-          "espinafre",
-          "favas)"
+          "espinafre"
         ],
         "avoid": [
           "favas",
@@ -4674,7 +4681,7 @@
           "ervilhas"
         ],
         "notes": [
-          "couve (evitar ervilhas"
+          "couve (evitar ervilhas)"
         ]
       },
       "sowingMonths3": [
@@ -4830,11 +4837,13 @@
           "tomate",
           "alho-poró",
           "rabanete",
-          "cenoura (com precaução)",
-          "cebolinha (repele a mosca da cenoura)"
+          "cenoura",
+          "cebolinha"
         ],
         "avoid": [
-          "legumes da mesma família (cenoura, aipo, chirívia) no mesmo local — risco de doenças comuns"
+          "cenoura",
+          "aipo",
+          "chirívia"
         ]
       },
       "sowingMonths3": [
@@ -4994,7 +5003,7 @@
         "companionPlants": [
           "cebola",
           "chalota",
-          "alho (repelentes naturais contra certos insetos)"
+          "alho"
         ]
       },
       "harvestTime": "4 a 6 meses após semeadura, idealmente após as primeiras geadas para adoçar a raiz",
@@ -5006,7 +5015,7 @@
           "alface",
           "rabanete",
           "feijão anão",
-          "alho (repelentes naturais contra certos insetos)"
+          "alho"
         ],
         "avoid": [
           "outras apiáceas",
@@ -5177,9 +5186,7 @@
           "cebola",
           "calêndula",
           "capuchinha",
-          "trevo",
-          "trevo (atraem auxiliares",
-          "repulsivos naturais)"
+          "trevo"
         ],
         "avoid": [
           "berinjela",
@@ -5333,8 +5340,8 @@
         ],
         "companionPlants": [
           "milho",
-          "feijão (método das três irmãs)",
-          "capuchinha (armadilha para pulgões)"
+          "feijão ",
+          "capuchinha "
         ]
       },
       "harvestTime": "Cerca de 90-120 dias após semeadura, conforme variedade",
@@ -5344,9 +5351,9 @@
           "feijão",
           "capuchinha",
           "cravo-de-defunto",
-          "hortelã (afasta certos insetos)",
-          "feijão (método das três irmãs)",
-          "capuchinha (armadilha para pulgões)"
+          "hortelã ",
+          "feijão ",
+          "capuchinha "
         ],
         "avoid": [
           "outras cucurbitáceas",
@@ -5667,7 +5674,7 @@
           "tomilho"
         ],
         "avoid": [
-          "nenhuma incompatibilidade maior conhecida"
+         
         ]
       },
       "sowingMonths3": [
@@ -5825,7 +5832,7 @@
           "oignon"
         ],
         "avoid": [
-          "pas d'incompatibilité majeure notée"
+          
         ]
       },
       "sowingMonths3": [
@@ -5969,7 +5976,7 @@
           "fenouil"
         ],
         "avoid": [
-          "pas d'incompatibilité majeure"
+         
         ]
       },
       "sowingMonths3": [
@@ -6114,7 +6121,7 @@
         "companionPlants": [
           "cenoura",
           "segurelha",
-          "endro (repulsivos naturais contra a mosca da cebola)"
+          "endro"
         ]
       },
       "harvestTime": "Cerca de 90 dias após plantio, quando a folhagem amarela e seca",
@@ -6124,11 +6131,11 @@
           "segurelha",
           "endro",
           "cravo-de-defunto",
-          "endro (repulsivos naturais contra a mosca da cebola)"
+          "endro"
         ],
         "avoid": [
           "alho",
-          "outras aliáceas (risco de doenças comuns)",
+          "outras aliáceas",
           "cebola",
           "alho-poró"
         ]
@@ -6274,7 +6281,7 @@
           "rabanete",
           "ervilha",
           "morango",
-          "couves (favorecem o crescimento ou compartilham espaço eficazmente)"
+          "couves"
         ]
       },
       "harvestTime": "40-50 dias após semeadura, conforme variedade e condições",
@@ -6288,7 +6295,7 @@
           "aipo",
           "cebola",
           "alho",
-          "couves (favorecem o crescimento ou compartilham espaço eficazmente)"
+          "couves"
         ],
         "avoid": [
           "beterraba",
@@ -6449,8 +6456,8 @@
         ],
         "companionPlants": [
           "feijão trepador",
-          "abóboras (sistema milpa)",
-          "girassóis (quebra-vento)"
+          "abóboras(milpa)",
+          "girassóis"
         ]
       },
       "harvestTime": "65-80 dias após semeadura, conforme variedade e condições climáticas",
@@ -6461,13 +6468,12 @@
           "pepino",
           "girassol",
           "ervilha",
-          "abóboras (sistema milpa)",
-          "girassóis (quebra-vento)"
+          "abóboras",
+          "girassóis"
         ],
         "avoid": [
           "beterraba",
-          "aipo",
-          "plantas solitárias (polinização ineficaz)"
+          "aipo"
         ]
       },
       "sowingMonths3": [
@@ -6626,8 +6632,7 @@
         "companionPlants": [
           "alecrim",
           "lavanda",
-          "sálvia",
-          "plantas mediterrâneas com baixa necessidade hídrica"
+          "sálvia"
         ]
       },
       "harvestTime": "Desde a floração, 2 a 3 meses após plantio — colheita possível todo o ano em clima ameno",
@@ -6638,8 +6643,7 @@
           "sálvia",
           "couve",
           "cenoura",
-          "tomate (protege contra certos nocivos)",
-          "plantas mediterrâneas com baixa necessidade hídrica"
+          "tomate"
         ],
         "avoid": [
           "plantas gulosas em água (ex: abobrinha, alface) — incompatibilidade hídrica"
@@ -6984,10 +6988,9 @@
           "coentro",
           "leguminosas",
           "legumes de folha",
-          "coentro (contra escaravelhos da batata)"
+          "coentro"
         ],
         "avoid": [
-          "culturas exigentes em nitrogênio logo após",
           "legumes sensíveis à sombra"
         ]
       },

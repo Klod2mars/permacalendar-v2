@@ -87,7 +87,7 @@
         "companionPlants": [
           "insalate",
           "ravanelli",
-          "piselli (colture intercalari il primo anno)"
+          "piselli "
         ]
       },
       "harvestTime": "Circa 120 giorni dopo la semina, a seconda della varietà e del clima",
@@ -97,7 +97,7 @@
           "ravanello",
           "pisello",
           "insalate",
-          "piselli (colture intercalari il primo anno)"
+          "piselli"
         ],
         "avoid": [
           "finocchio",
@@ -427,8 +427,7 @@
         "companionPlants": [
           "pomodoro",
           "peperone",
-          "lattuga",
-          "favorisce la biodiversità e respinge alcuni parassiti"
+          "lattuga"
         ]
       },
       "harvestTime": "50-60 giorni dopo la semina, secondo le condizioni di coltura",
@@ -438,11 +437,11 @@
           "peperone",
           "lattuga",
           "carota",
-          "asparago",
-          "favorisce la biodiversità e respinge alcuni parassiti"
+          "asparago"
+         
         ],
         "avoid": [
-          "cetriolo (rischio di concorrenza)",
+          "cetriolo",
           "ruta"
         ]
       },
@@ -607,7 +606,7 @@
         ],
         "companionPlants": [
           "mais",
-          "girasole (supporto e microclima favorevole)"
+          "girasole"
         ]
       },
       "harvestTime": "60 giorni dopo la piantagione in media (secondo varietà nana o rampicante)",
@@ -619,13 +618,15 @@
           "cetriolo",
           "sedano",
           "ravanello",
-          "spinacio",
-          "girasole (supporto e microclima favorevole)"
+          "spinacio"
         ],
         "avoid": [
           "aglio",
-          "altre leguminose (piselli, fave, lupino)",
-          "cipolla (in eccesso)"
+          "altre leguminose",
+		  "piselli",
+          "fave",
+          "lupino",
+          "cipolla"
         ]
       },
       "sowingMonths3": [
@@ -956,6 +957,7 @@
         "Evitare associazioni con carote, cetrioli e cavoli",
         "Non bagnare troppo il fogliame per prevenire l'oidio",
         "Privilegiare terreni sciolti e ben drenati per evitare il marciume delle radici",
+        "altre crucifere in rotazione immediata",
         "Alternare con colture come fave, lattughe o pomodori per rigenerare il suolo"
       ],
       "biologicalControl": {
@@ -972,7 +974,7 @@
         "companionPlants": [
           "lattuga",
           "spinacio",
-          "fagiolo (associazioni benefiche non competitive)"
+          "fagiolo"
         ]
       },
       "harvestTime": "60 giorni dopo la semina (secondo varietà e condizioni)",
@@ -983,10 +985,9 @@
           "fagiolo",
           "pomodoro",
           "fava",
-          "fagiolo (associazioni benefiche non competitive)"
+          "fagiolo"
         ],
         "avoid": [
-          "altre crucifere in rotazione immediata",
           "carota",
           "cavolo",
           "cetriolo"
@@ -1137,7 +1138,7 @@
         ],
         "companionPlants": [
           "tagete",
-          "piante aromatiche (repellenti naturali)"
+          "piante aromatiche"
         ]
       },
       "harvestTime": "70-90 giorni dopo la piantagione secondo varietà",
@@ -1152,11 +1153,10 @@
           "porro",
           "ravanello",
           "tagete",
-          "piante aromatiche (repellenti naturali)"
+          "piante aromatiche"
         ],
         "avoid": [
-          "altri cavoli",
-          "piante della famiglia delle brassicacee nello stesso posto"
+          "altri cavoli"
         ]
       },
       "sowingMonths3": [
@@ -1326,11 +1326,17 @@
           "coriandolo",
           "tagete",
           "pomodori",
-          "leguminose (piselli, fave)",
+          "leguminose",
+          "piselli", 
+          "fave",
           "tagete"
         ],
         "avoid": [
-          "altre brassicacee (rafani, rape, rucola, senape) sulla stessa parcella"
+          "altre brassicacee",
+          "rafani", 
+          "rape",
+          "rucola",
+          "senape"
         ]
       },
       "sowingMonths3": [
@@ -1497,11 +1503,13 @@
           "tagete",
           "menta",
           "salvia",
-          "timo",
-          "camomilla (repellenti naturali)"
+          "timo"
         ],
         "avoid": [
-          "altre brassicacee (cavoli, rape, rafani)",
+          "altre brassicacee", 
+          "cavoli",
+          "rape",
+          "rafani",
           "fragole",
           "peperoni",
           "pomodori"
@@ -1672,7 +1680,7 @@
           "porro",
           "coriandolo",
           "aneto",
-          "tagete (contro mosca della carota)"
+          "tagete"
         ]
       },
       "harvestTime": "90-120 giorni dopo la semina secondo varietà e dimensione desiderata",
@@ -1687,10 +1695,12 @@
           "cipolla",
           "aglio",
           "cavolo",
-          "tagete (contro mosca della carota)"
+          "tagete"
         ],
         "avoid": [
-          "altre ombrellifere (sedano, prezzemolo) senza rotazione",
+          "altre ombrellifere",
+          "sedano",
+          "prezzemolo",
           "piante esigenti in azoto"
         ]
       },
@@ -1849,7 +1859,7 @@
         "companionPlants": [
           "borragine",
           "menta",
-          "finocchio (repellenti naturali contro certi parassiti)"
+          "finocchio"
         ]
       },
       "harvestTime": "Circa 90 giorni dopo la piantagione, secondo varietà e condizioni",
@@ -1862,10 +1872,14 @@
           "fagioli",
           "cipolle",
           "aglio",
-          "finocchio (repellenti naturali contro certi parassiti)"
+          "finocchio"
         ],
         "avoid": [
-          "altre brassicacee (cavolo, broccolo, rapa...), fragole"
+          "altre brassicacee",
+          "cavolo",
+          "broccolo",
+          "rapa",
+          "fragole"
         ]
       },
       "sowingMonths3": [
@@ -1999,6 +2013,8 @@
         "Rotazione delle colture obbligatoria (3-4 anni senza sedano nello stesso posto)",
         "Rincalzare le piante 15 giorni prima della raccolta per imbiancare le coste e addolcire il sapore",
         "Evitare ogni lavorazione del suolo o manipolazione con tempo umido per limitare le malattie crittogamiche",
+        "piante esigenti in acqua come la zucchina",
+        "piante molto esigenti in acqua o in azoto",
         "Proteggere le giovani piante da lumache e chiocciole (Ferramol o trappole biologiche)",
         "Non lasciare mai asciugare il suolo: il sedano è molto sensibile allo stress idrico"
       ],
@@ -2017,8 +2033,7 @@
           "cavolo",
           "porro",
           "pomodoro",
-          "cipolla",
-          "evitare le piante esigenti in acqua come la zucchina"
+          "cipolla"
         ]
       },
       "harvestTime": "Circa 120 giorni dopo la semina, o 90 giorni dopo il trapianto",
@@ -2033,8 +2048,6 @@
         ],
         "avoid": [
           "mais",
-          "piante esigenti in acqua come la zucchina",
-          "piante molto esigenti in acqua o in azoto",
           "patate"
         ],
         "notes": [
@@ -2215,7 +2228,7 @@
           "fagioli nani"
         ],
         "avoid": [
-          "barbabietola (stessa famiglia)",
+          "barbabietola",
           "porro"
         ]
       },
@@ -2397,8 +2410,7 @@
           "cetriolo",
           "sedano",
           "patata",
-          "fragola",
-          "respinge certi parassiti naturalmente"
+          "fragola"
         ],
         "avoid": [
           "barbabietola",
@@ -2543,6 +2555,7 @@
         "Rotazione delle colture: non ripiantare il coriandolo nello stesso posto ogni anno",
         "Preferisce un suolo ben drenato",
         "Sopporta la mezz'ombra ma preferisce il pieno sole",
+        "piante invadenti o a forte concorrenza radicale",
         "Non lasciare asciugare completamente il suolo per prolungare la raccolta delle foglie"
       ],
       "biologicalControl": {
@@ -2566,8 +2579,8 @@
         ],
         "avoid": [
           "concorrenza",
-          "piante invadenti",
-          "piante invadenti o a forte concorrenza radicale"
+          "piante invadenti"
+          
         ],
         "notes": [
           "ma evitare la concorrenza con piante invadenti"
@@ -2730,9 +2743,9 @@
           "fagiolo",
           "mais",
           "ravanello",
-          "nasturzio (trappola)",
+          "nasturzio",
           "cipolla",
-          "aglio (repellenti naturali)"
+          "aglio "
         ]
       },
       "harvestTime": "45-60 giorni dopo piantagione, secondo varietà e condizioni",
@@ -2746,8 +2759,8 @@
           "aglio",
           "lattuga",
           "spinacio",
-          "nasturzio (trappola)",
-          "aglio (repellenti naturali)"
+          "nasturzio",
+          "aglio"
         ],
         "avoid": [
           "altre cucurbitacee (cetriolo, zucca, melone)",
@@ -2914,7 +2927,7 @@
           "Vespe parassitoidi (contro bruchi e afidi)"
         ],
         "companionPlants": [
-          "nasturzi (trappola per afidi)",
+          "nasturzi",
           "ravanello",
           "cipolla",
           "lattuga"
@@ -2930,11 +2943,14 @@
           "fagiolo",
           "mais",
           "barbabietola",
-          "nasturzio (trappola per afidi)"
+          "nasturzio"
         ],
         "avoid": [
           "aromatiche forti come la salvia",
-          "altre cucurbitacee (zucchine, zucche, meloni)",
+          "altre cucurbitacee",
+          "zucchine",
+          "zucche",
+          "meloni",
           "patate"
         ]
       },
@@ -3089,7 +3105,7 @@
           "cipolle",
           "cavoli",
           "cetrioli",
-          "broccoli (effetto repellente contro alcuni parassiti)"
+          "broccoli"
         ]
       },
       "harvestTime": "60-80 giorni dopo semina, secondo condizioni climatiche e varietà",
@@ -3101,8 +3117,7 @@
           "broccolo",
           "cipolle",
           "cavoli",
-          "cetrioli",
-          "broccoli (effetto repellente contro alcuni parassiti)"
+          "cetrioli"
         ],
         "avoid": [
           "altre apiacee",
@@ -3273,11 +3288,10 @@
           "fagiolo",
           "lattuga",
           "spinacio",
-          "cipolla",
-          "calendula (contro alcuni parassiti)"
+          "cipolla"
         ],
         "avoid": [
-          "altre solanacee nello stesso posto",
+          "altre solanacee",
           "peperoni",
           "patate",
           "pomodori"
@@ -3760,6 +3774,8 @@
         "Preferire la rotazione con lattughe, rape, crucifere",
         "Rincalzare progressivamente per imbiancare il fusto",
         "Non eccedere con l'acqua per evitare il marciume",
+        "altre alliacee in coltura simultanea",
+        "altre alliacee in rotazione ravvicinata",
         "Suolo ben drenato indispensabile",
         "Installare la pacciamatura dopo i primi rincalzi per non frenare l'imbianchimento"
       ],
@@ -3795,8 +3811,7 @@
         ],
         "avoid": [
           "aglio",
-          "altre alliacee in coltura simultanea",
-          "altre alliacee in rotazione ravvicinata",
+         
           "cipolla",
           "patata"
         ],
@@ -4142,6 +4157,8 @@
         "Pre-raffreddare i semi in frigorifero 3-5 giorni in caso di caldo estivo",
         "Evitare i suoli pesanti o inzuppati (rischio di moria dei semi)",
         "Non apportare azoto in eccesso (gusto insipido, rischio di malattie)",
+        "colture che hanno avuto sclerotinia recentemente",
+        "verdure a forte competizione radicale",
         "Raccogliere tagliando al colletto per favorire eventuali ricrescite",
         "Proteggere dal freddo intenso con un velo P17 se necessario",
         "Associare con porri, cavoli o carote tardive per ottimizzare lo spazio"
@@ -4171,8 +4188,7 @@
           "carote tardive"
         ],
         "avoid": [
-          "colture che hanno avuto sclerotinia recentemente",
-          "verdure a forte competizione radicale"
+          
         ]
       },
       "sowingMonths3": [
@@ -4507,7 +4523,7 @@
           "timo",
           "rosmarino",
           "melissa",
-          "issopo (contro le altiche)"
+          "issopo"
         ]
       },
       "harvestTime": "Circa 50 giorni dopo la semina secondo varietà e condizioni",
@@ -4520,11 +4536,14 @@
           "lattuga",
           "pisello",
           "fagiolo",
-          "issopo (contro le altiche)"
+          "issopo"
         ],
         "avoid": [
-          "altre brassicacee (cavolo, ravanello, senape)",
-          "piante esigenti in azoto se suolo povero"
+          "altre brassicacee", 
+          "cavolo", 
+          "ravanello",
+          "senape"
+
         ]
       },
       "sowingMonths3": [
@@ -4692,8 +4711,8 @@
           "barbabietola",
           "lattuga",
           "pomodoro",
-          "cavolo (evitare piselli",
-          "fave)"
+          "cavolo",
+          "fave"
         ]
       },
       "harvestTime": "Quando il fogliame è completamente secco, generalmente 4 a 5 mesi dopo semina",
@@ -4874,7 +4893,7 @@
           "Insetti ausiliari vari (sirfidi, crisope)"
         ],
         "companionPlants": [
-          "erba cipollina (respinge la mosca della carota)"
+          "erba cipollina"
         ]
       },
       "harvestTime": "90 giorni dopo la semina, raccolta possibile tutta l'estate e fino all'inverno nei climi dolci",
@@ -4884,11 +4903,13 @@
           "pomodoro",
           "porro",
           "ravanello",
-          "carota (con precauzione)",
-          "erba cipollina (respinge la mosca della carota)"
+          "carota",
+          "erba cipollina"
         ],
         "avoid": [
-          "verdure della stessa famiglia (carota, sedano, pastinaca) nello stesso posto — rischio di malattie comuni"
+          "carota",
+          "sedano",
+          "pastinaca"
         ]
       },
       "sowingMonths3": [
@@ -5057,7 +5078,7 @@
         "companionPlants": [
           "cipolla",
           "scalogno",
-          "aglio (repellenti naturali contro certi insetti)"
+          "aglio "
         ]
       },
       "harvestTime": "4-6 mesi dopo semina, idealmente dopo le prime gelate per addolcire la radice",
@@ -5069,7 +5090,7 @@
           "lattuga",
           "ravanello",
           "fagiolo nano",
-          "aglio (repellenti naturali contro certi insetti)"
+          "aglio "
         ],
         "avoid": [
           "altre apiacee",
@@ -5226,9 +5247,7 @@
         ],
         "companionPlants": [
           "nasturzio",
-          "calendula",
-          "trifoglio (attirano ausiliari",
-          "repellenti naturali)"
+          "calendula"
         ]
       },
       "harvestTime": "Circa 90-120 giorni dopo piantagione, secondo varietà",
@@ -5240,9 +5259,7 @@
           "cipolla",
           "calendula",
           "nasturzio",
-          "trifoglio",
-          "trifoglio (attirano ausiliari",
-          "repellenti naturali)"
+          "trifogli"
         ],
         "avoid": [
           "melanzana",
@@ -5398,8 +5415,8 @@
         ],
         "companionPlants": [
           "mais",
-          "fagioli (metodo delle tre sorelle)",
-          "nasturzio (trappola per afidi)"
+          "fagioli",
+          "nasturzio"
         ]
       },
       "harvestTime": "Circa 90-120 giorni dopo la semina, secondo varietà",
@@ -5409,9 +5426,9 @@
           "fagioli",
           "nasturzio",
           "tagete",
-          "menta (allontana certi insetti)",
-          "fagioli (metodo delle tre sorelle)",
-          "nasturzio (trappola per afidi)"
+          "mentati",
+          "fagioli",
+          "nasturzio"
         ],
         "avoid": [
           "altre cucurbitacee",
@@ -5544,6 +5561,7 @@
         "Rotazione delle colture ogni 3 anni per evitare malattie ed esaurimento del suolo",
         "Evitare i periodi di forte caldo — privilegiare la mezz'ombra in estate",
         "Non fertilizzare troppo con azoto per conservare un sapore equilibrato",
+        "piante molto esigenti in azoto o spazio (es: cavoli voluminosi)",
         "Pacciamare per mantenere il suolo fresco e limitare la montata a seme",
         "Lasciare delle zone non raccolte per favorire la biodiversità e la regolazione naturale dei parassiti"
       ],
@@ -5558,8 +5576,7 @@
           "Crisope contro afidi"
         ],
         "companionPlants": [
-          "lasciare a bordo campo per attirare ausiliari",
-          "evitare la competizione con piante ingombranti"
+        
         ]
       },
       "harvestTime": "30 giorni dopo la semina (foglie giovani da tagliare regolarmente)",
@@ -5571,13 +5588,12 @@
           "spinacio",
           "cipolla",
           "porro",
-          "nasturzio",
-          "lasciare a bordo campo per attirare ausiliari"
+          "nasturzio"
         ],
         "avoid": [
           "competizione",
-          "piante ingombranti",
-          "piante molto esigenti in azoto o spazio (es: cavoli voluminosi)"
+          "piante ingombranti"
+          
         ],
         "notes": [
           "evitare la competizione con piante ingombranti"
@@ -5731,8 +5747,7 @@
         "companionPlants": [
           "cavoli",
           "carote",
-          "fagioli",
-          "repulsione naturale degli insetti grazie agli oli essenziali"
+          "fagioli"
         ]
       },
       "harvestTime": "Foglie raccoglibili tutto l'anno una volta stabilita la pianta (dopo 3-4 mesi)",
@@ -5748,11 +5763,10 @@
           "salvia",
           "cavoli",
           "carote",
-          "fagioli",
-          "repulsione naturale degli insetti grazie agli oli essenziali"
+          "fagioli"
         ],
         "avoid": [
-          "piante esigenti in acqua o suolo ricco (es: zucche, lattughe)"
+          
         ]
       },
       "sowingMonths3": [
