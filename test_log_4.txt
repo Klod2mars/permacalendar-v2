@@ -1,0 +1,15 @@
+00:00 +0: loading C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart
+test/features/garden/providers/garden_deletion_test.dart:24:14: Error: The method 'testLoad' isn't defined for the type 'DotEnv'.
+ - 'DotEnv' is from 'package:flutter_dotenv/src/dotenv.dart' ('../../../AppData/Local/Pub/Cache/hosted/pub.dev/flutter_dotenv-6.0.0/lib/src/dotenv.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'testLoad'.
+      dotenv.testLoad(fileInput: "MAX_GARDENS_PER_USER=10");
+             ^^^^^^^^
+00:00 +0 -1: loading C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart [E]
+  Failed to load "C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart":
+  Compilation failed for testPath=C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart: test/features/garden/providers/garden_deletion_test.dart:24:14: Error: The method 'testLoad' isn't defined for the type 'DotEnv'.
+   - 'DotEnv' is from 'package:flutter_dotenv/src/dotenv.dart' ('../../../AppData/Local/Pub/Cache/hosted/pub.dev/flutter_dotenv-6.0.0/lib/src/dotenv.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'testLoad'.
+        dotenv.testLoad(fileInput: "MAX_GARDENS_PER_USER=10");
+               ^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.

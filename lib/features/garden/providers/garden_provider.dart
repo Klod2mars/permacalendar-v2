@@ -11,6 +11,9 @@ import '../../../core/events/garden_events.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/services/migration/providers.dart';
 import '../../garden_bed/providers/garden_bed_scoped_provider.dart';
+import '../../../core/providers/active_garden_provider.dart';
+import '../../export/presentation/providers/export_builder_provider.dart';
+import '../../statistics/presentation/providers/statistics_filters_provider.dart';
 
 /// Notifier pour la gestion de l'état des jardins
 /// Utilise GardenHiveRepository pour les opérations CRUD
@@ -208,6 +211,54 @@ class GardenNotifier extends Notifier<GardenState> {
 
         // Recharger la liste des jardins
         await loadGardens();
+
+        // --- 6. Nettoyage Explicite des Références Actives ("Zombie Selectors") ---
+        // (Patch pour s'assurer que le gardenId supprimé ne reste pas sélectionné quelque part)
+
+        // 6.a Nettoyage de l'active garden s'il pointe sur le jardin supprimé.
+        try {
+          final currentActive = ref.read(activeGardenIdProvider);
+          if (currentActive != null && currentActive == gardenId) {
+            ref.read(activeGardenIdProvider.notifier).setActiveGarden(null);
+          }
+        } catch (e) {
+          print('[GardenNotifier] WARN: Failed to clear active garden: $e');
+        }
+
+        // 6.b Nettoyage explicite des filtres statistiques pour retirer l'ID supprimé.
+        try {
+          final filters = ref.read(statisticsFiltersProvider);
+          if (filters.selectedGardenIds.contains(gardenId)) {
+            final newIds = Set<String>.from(filters.selectedGardenIds)
+              ..remove(gardenId);
+            ref.read(statisticsFiltersProvider.notifier).setGardens(newIds);
+          }
+        } catch (e) {
+          print(
+              '[GardenNotifier] WARN: Failed to update statistics filters: $e');
+        }
+
+        // 6.c Purger les références dans l'Export Builder (préférences persistées)
+        try {
+          final exportState = ref.read(exportBuilderProvider);
+          final scope = exportState.config.scope;
+          if (scope.gardenIds.contains(gardenId)) {
+            final newGardenIds = List<String>.from(scope.gardenIds)
+              ..removeWhere((id) => id == gardenId);
+            final newScope = scope.copyWith(gardenIds: newGardenIds);
+            await ref
+                .read(exportBuilderProvider.notifier)
+                .updateScope(newScope);
+          }
+        } catch (e) {
+          print('[GardenNotifier] WARN: Failed to clean export prefs: $e');
+        }
+
+        // 6.d Invalider les providers potentiellement liés (défensive)
+        try {
+          ref.invalidate(statisticsFiltersProvider);
+          // autres invalidations si requises...
+        } catch (_) {}
 
         // Invalider le cache des lits pour ce jardin (nettoyage Riverpod)
         ref.invalidate(gardenBedsForGardenProvider(gardenId));

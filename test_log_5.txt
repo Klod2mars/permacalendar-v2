@@ -1,0 +1,14 @@
+00:00 +0: loading C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart
+00:00 +0: Garden Deletion Integration Test Deleting a garden should remove it from Active, Filters, and Export Scope
+00:00 +0 -1: Garden Deletion Integration Test Deleting a garden should remove it from Active, Filters, and Export Scope [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+  LateInitializationError: Local 'container' has not been initialized.
+  dart:_internal                                                 LateError._throwLocalNotInitialized
+  test\features\garden\providers\garden_deletion_test.dart       main.<fn>.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                     _CustomZone.registerUnaryCallback
+  test\features\garden\providers\garden_deletion_test.dart 49:7  main.<fn>.<fn>
+  
+00:00 +0 -1: Some tests failed.

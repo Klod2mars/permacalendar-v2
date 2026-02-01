@@ -1,0 +1,20 @@
+00:00 +0: loading C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart
+00:00 +0: Garden Deletion Integration Test Deleting a garden should remove it from Active, Filters, and Export Scope
+[GardenBoxes] harvests box opened: harvests
+[GardenHiveRepository] Box initialisée avec succès
+[ActiveGarden] setActiveGarden -> garden_delete_test_1 (prev=null)
+[Registry] stopAllExcept: kept=garden_delete_test_1
+[Registry] forcePersistentFor: no state for garden_delete_test_1
+[ActiveGarden] registry.forcePersistentFor called for garden_delete_test_1 (registered=false)
+[DualWriteService] ðŸ—ï¸ Dual Write Service Créé
+[ActiveGarden] setActiveGarden -> null (prev=garden_delete_test_1)
+[Registry] stopAllExcept: kept=null
+[Registry] stopAllExcept: kept=null
+[GardenNotifier] WARN: Failed to update statistics filters: CircularDependencyError: Circular dependency detected.
+This happens when a provider somehow depends on itself.
+
+The circular dependency chain is as follows:
+  NotifierProvider<StatisticsFiltersNotifier, StatisticsFiltersState>#cfdfe
+
+
+00:00 +1: All tests passed!

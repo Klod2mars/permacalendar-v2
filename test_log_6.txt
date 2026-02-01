@@ -1,0 +1,18 @@
+00:00 +0: loading C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/garden/providers/garden_deletion_test.dart
+00:00 +0: Garden Deletion Integration Test Deleting a garden should remove it from Active, Filters, and Export Scope
+[GardenBoxes] harvests box opened: harvests
+[GardenHiveRepository] Box initialisée avec succès
+GardenBoxes initialized.
+Gardens box open: true
+Starting test body...
+Checking GardenBoxes.gardens again: true
+[GardenHiveRepository] Erreur lors de la Création: Instance of 'NotInitializedError'
+00:00 +0 -1: Garden Deletion Integration Test Deleting a garden should remove it from Active, Filters, and Export Scope [E]
+  Expected: <1>
+    Actual: <0>
+  
+  package:matcher                                                expect
+  package:flutter_test/src/widget_tester.dart 473:18             expect
+  test\features\garden\providers\garden_deletion_test.dart 85:7  main.<fn>.<fn>
+  
+00:00 +0 -1: Some tests failed.
