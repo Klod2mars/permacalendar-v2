@@ -43,7 +43,7 @@ class _CreatePlantingDialogCustomState
   bool _isPreset = false;
 
   // UI state
-  bool _customPlantExpanded = false;
+
   bool _notesExpanded = false;
   bool _tipsExpanded = false;
 
@@ -53,14 +53,7 @@ class _CreatePlantingDialogCustomState
     _isPreset = widget.planting?.metadata['preset'] == true;
     if (widget.planting != null) _initializeForEdit();
 
-    _plantNameController.addListener(() {
-      final text = _plantNameController.text;
-      if (text.trim().isNotEmpty && _selectedPlantId != null) {
-        setState(() {
-          _selectedPlantId = null;
-        });
-      }
-    });
+
   }
 
   void _initializeForEdit() {
@@ -144,8 +137,7 @@ class _CreatePlantingDialogCustomState
                           const SizedBox(height: 12),
                           _buildPlantReminder(theme),
                           const SizedBox(height: 8),
-                          _buildCustomPlantTile(theme),
-                          const SizedBox(height: 8),
+
                           ExpansionTile(
                             title: Text(AppLocalizations.of(context)!.planting_notes_label,
                                 style: theme.textTheme.bodyMedium),
@@ -346,36 +338,7 @@ class _CreatePlantingDialogCustomState
     );
   }
 
-  Widget _buildCustomPlantTile(ThemeData theme) {
-    return ExpansionTile(
-      title: Text(AppLocalizations.of(context)!.planting_custom_plant_title, style: theme.textTheme.bodyMedium),
-      initiallyExpanded: _customPlantExpanded,
-      onExpansionChanged: (v) => setState(() => _customPlantExpanded = v),
-      childrenPadding:
-          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-      children: [
-        CustomTextField(
-          controller: _plantNameController,
-          label: AppLocalizations.of(context)!.planting_plant_name_label,
-          hint: AppLocalizations.of(context)!.planting_plant_name_hint,
-          onChanged: (text) {
-            if (text.trim().isNotEmpty && _selectedPlantId != null) {
-              setState(() {
-                _selectedPlantId = null;
-              });
-            }
-          },
-          validator: (value) {
-            if (_plantNameController.text.trim().isNotEmpty) {
-              if (value == null || value.trim().isEmpty)
-                return AppLocalizations.of(context)!.planting_plant_name_required;
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
+
 
   // --------------------
   // Helpers & Actions (identical logic)
@@ -400,7 +363,6 @@ class _CreatePlantingDialogCustomState
       setState(() {
         _selectedPlantId = selectedPlant;
         _plantNameController.clear();
-        _customPlantExpanded = false;
       });
     }
   }
@@ -438,9 +400,15 @@ class _CreatePlantingDialogCustomState
     setState(() => _isLoading = true);
 
     try {
-      final plantName = (_selectedPlantId != null)
-          ? _getPlantName(_selectedPlantId!)
-          : _plantNameController.text.trim();
+      if (_selectedPlantId == null) {
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)!.planting_no_plant_selected),
+            backgroundColor: Colors.orange));
+         setState(() => _isLoading = false);
+         return;
+      }
+
+      final plantName = _getPlantName(_selectedPlantId!);
       final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
       final notes = _notesController.text.trim().isEmpty
           ? null

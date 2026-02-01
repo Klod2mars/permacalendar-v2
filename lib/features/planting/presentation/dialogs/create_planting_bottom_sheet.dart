@@ -55,7 +55,6 @@ class _CreatePlantingBottomSheetContentState
   bool _isLoading = false;
   bool _isPreset = false;
 
-  bool _customPlantExpanded = false;
   bool _notesExpanded = false;
   bool _tipsExpanded = false;
 
@@ -64,14 +63,6 @@ class _CreatePlantingBottomSheetContentState
     super.initState();
     _isPreset = widget.planting?.metadata['preset'] == true;
     if (widget.planting != null) _initializeForEdit();
-    _plantNameController.addListener(() {
-      final text = _plantNameController.text;
-      if (text.trim().isNotEmpty && _selectedPlantId != null) {
-        setState(() {
-          _selectedPlantId = null;
-        });
-      }
-    });
   }
 
   void _initializeForEdit() {
@@ -143,8 +134,6 @@ class _CreatePlantingBottomSheetContentState
                         _buildActionBlock(theme),
                         const SizedBox(height: 12),
                         _buildPlantReminder(theme),
-                        const SizedBox(height: 8),
-                        _buildCustomPlantTile(theme),
                         const SizedBox(height: 8),
                         ExpansionTile(
                           title: Text('Notes (optionnel)',
@@ -339,36 +328,7 @@ class _CreatePlantingBottomSheetContentState
     );
   }
 
-  Widget _buildCustomPlantTile(ThemeData theme) {
-    return ExpansionTile(
-      title: Text('Plante personnalisée', style: theme.textTheme.bodyMedium),
-      initiallyExpanded: _customPlantExpanded,
-      onExpansionChanged: (v) => setState(() => _customPlantExpanded = v),
-      childrenPadding:
-          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-      children: [
-        CustomTextField(
-          controller: _plantNameController,
-          label: 'Nom de la plante',
-          hint: 'Ex: Tomate cerise',
-          onChanged: (text) {
-            if (text.trim().isNotEmpty && _selectedPlantId != null) {
-              setState(() {
-                _selectedPlantId = null;
-              });
-            }
-          },
-          validator: (value) {
-            if (_plantNameController.text.trim().isNotEmpty) {
-              if (value == null || value.trim().isEmpty)
-                return 'Le nom de la plante est requis';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
+
 
   // --------------------
   // Helpers & Actions (same as dialog)
@@ -393,7 +353,6 @@ class _CreatePlantingBottomSheetContentState
       setState(() {
         _selectedPlantId = selectedPlant;
         _plantNameController.clear();
-        _customPlantExpanded = false;
       });
     }
   }
@@ -432,13 +391,20 @@ class _CreatePlantingBottomSheetContentState
     setState(() => _isLoading = true);
 
     try {
-      final plantName = (_plantNameController.text.trim().isNotEmpty)
-          ? _plantNameController.text.trim()
-          : (_selectedPlantId != null ? _getPlantName(_selectedPlantId!) : '');
       final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
       final notes = _notesController.text.trim().isEmpty
           ? null
           : _notesController.text.trim();
+
+      if (_selectedPlantId == null) {
+         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Veuillez sélectionner une plante'),
+            backgroundColor: Colors.orange));
+         setState(() => _isLoading = false);
+         return;
+      }
+      
+      final plantName = _getPlantName(_selectedPlantId!);
 
       if (quantity <= 0) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
