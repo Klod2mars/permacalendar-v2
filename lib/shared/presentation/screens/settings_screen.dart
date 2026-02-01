@@ -38,62 +38,42 @@ class SettingsScreen extends ConsumerWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          _buildAppInfoSection(context, theme),
+          // 1. Essentiel (Langue, Localisation, Devise)
+          _buildEssentialSection(context, theme, ref),
           const SizedBox(height: 24),
+          
+          // 2. Jardin (Zone, Gelée)
           _buildGardenConfigSection(context, theme, ref),
           const SizedBox(height: 24),
-          _buildDisplaySection(context, theme, ref),
+
+          // 3. Outils (Catalogue, Calibration)
+          _buildToolsSection(context, theme, ref),
           const SizedBox(height: 24),
-          _buildScientificToolsSection(context, theme, ref),
-          const SizedBox(height: 24),
-          _buildQuickAccessSection(context, theme),
-          const SizedBox(height: 24),
-          const CalibrationSettingsSection(),
-          const SizedBox(height: 24),
+
+          // 4. Sauvegarde
           const BackupRestoreSection(),
           const SizedBox(height: 24),
+
+          // 5. À propos
           _buildAboutSection(context, theme),
         ]),
       ),
     );
   }
 
-  Widget _buildAppInfoSection(BuildContext context, ThemeData theme) {
-    final l10n = AppLocalizations.of(context)!;
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        l10n.settings_application,
-        style:
-            theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 16),
-      CustomCard(
-        child: Column(children: [
-          ListTile(
-            leading: const Icon(Icons.info_outline),
-            title: Text(l10n.settings_version),
-            subtitle: const Text(AppConstants.appVersion),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showVersionInfo(context),
-          ),
-        ]),
-      ),
-    ]);
-  }
-
-  Widget _buildDisplaySection(
+  Widget _buildEssentialSection(
       BuildContext context, ThemeData theme, WidgetRef ref) {
-    final settings = ref.watch(appSettingsProvider);
     final l10n = AppLocalizations.of(context)!;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        l10n.settings_display,
+        l10n.settings_application, // "Application" maps to "Essentiel" per plan
         style:
             theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
       const SizedBox(height: 16),
       CustomCard(
         child: Column(children: [
+          // Langue
           ListTile(
             leading: const Icon(Icons.language),
             title: Text(l10n.language_title),
@@ -106,55 +86,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           const Divider(height: 1),
-          ListTile(
-            leading: Icon(ref.watch(currencyProvider).icon ?? Icons.attach_money),
-            title: const Text('Devise'),
-            subtitle: Text('${ref.watch(currencyProvider).symbol} (${ref.watch(currencyProvider).code})'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showCurrencySelector(context, ref),
-          ),
-        ]),
-      ),
-    ]);
-  }
-
-  Widget _buildQuickAccessSection(BuildContext context, ThemeData theme) {
-    final l10n = AppLocalizations.of(context)!;
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        l10n.settings_quick_access,
-        style:
-            theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 16),
-      CustomCard(
-        child: Column(children: [
-          ListTile(
-            leading: const Icon(Icons.menu_book),
-            title: Text(l10n.settings_plants_catalog),
-            subtitle: Text(l10n.settings_plants_catalog_subtitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push(AppRoutes.plants),
-          ),
-        ]),
-      ),
-    ]);
-  }
-
-
-
-  Widget _buildScientificToolsSection(
-      BuildContext context, ThemeData theme, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        l10n.settings_weather_selector,
-        style:
-            theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 16),
-      CustomCard(
-        child: Column(children: [
+          // Localisation (Météo)
           Builder(builder: (ctx) {
             final selected = ref.watch(selectedCommuneProvider);
             final defaultLabel = EnvironmentService.defaultCommuneName;
@@ -169,10 +101,52 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => _showCommuneSelector(context, ref),
             );
           }),
+          const Divider(height: 1),
+          // Devise
+          ListTile(
+            leading: Icon(ref.watch(currencyProvider).icon ?? Icons.attach_money),
+            title: const Text('Devise'),
+            subtitle: Text('${ref.watch(currencyProvider).symbol} (${ref.watch(currencyProvider).code})'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _showCurrencySelector(context, ref),
+          ),
         ]),
       ),
     ]);
   }
+
+  Widget _buildToolsSection(BuildContext context, ThemeData theme, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(
+        l10n.settings_quick_access, // "Accès rapide" maps to "Outils" per plan
+        style:
+            theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 16),
+      CustomCard(
+        child: Column(children: [
+          // Catalogue
+          ListTile(
+            leading: const Icon(Icons.menu_book),
+            title: Text(l10n.settings_plants_catalog),
+            subtitle: Text(l10n.settings_plants_catalog_subtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(AppRoutes.plants),
+          ),
+          const Divider(height: 1),
+          // Calibration (Integrated directly to avoid nested cards)
+          const CalibrationSettingsSection(),
+        ]),
+      ),
+    ]);
+  }
+
+
+
+
+
+
 
   void _showCommuneSelector(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
@@ -411,16 +385,6 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showVersionInfo(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    showDialog(
-      context: context,
-      builder: (context) => InfoDialog(
-        title: l10n.settings_version_dialog_title,
-        content: l10n.settings_version_dialog_content("1.2"),
-      ),
-    );
-  }
 
 
 

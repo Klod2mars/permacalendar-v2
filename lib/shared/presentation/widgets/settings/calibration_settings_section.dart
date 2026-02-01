@@ -12,53 +12,17 @@ class CalibrationSettingsSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calibrationState = ref.watch(calibrationStateProvider);
-    final isCalibrating = calibrationState.activeType != CalibrationType.none;
     final l10n = AppLocalizations.of(context)!;
 
-    return Card(
-      margin: const EdgeInsets.all(16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header
-            Row(
-              children: [
-                const Icon(Icons.tune, color: Colors.green),
-                const SizedBox(width: 12),
-                Text(
-                  l10n.calibration_title,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 8),
-
-            Text(
-              l10n.calibration_subtitle,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-
-            const Divider(height: 32),
-
-            // Calibration Organique Unifiée
-            _buildCalibrationTile(
-              context: context,
-              ref: ref,
-              icon: Icons.auto_fix_high,
-              title: l10n.calibration_organic_title,
-              subtitle: l10n.calibration_organic_subtitle,
-              isActive: calibrationState.activeType == CalibrationType.organic,
-              onTap: () => _toggleOrganicCalibration(context, ref),
-            ),
-
-
-
-          ],
-        ),
-      ),
+    // Calibration Organique Unifiée
+    return _buildCalibrationTile(
+      context: context,
+      ref: ref,
+      icon: Icons.auto_fix_high,
+      title: l10n.calibration_organic_title,
+      subtitle: l10n.calibration_organic_subtitle,
+      isActive: calibrationState.activeType == CalibrationType.organic,
+      onTap: () => _toggleOrganicCalibration(context, ref),
     );
   }
 
