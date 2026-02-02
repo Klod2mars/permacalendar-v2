@@ -157,7 +157,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
     // S'assurer que les plantings pour cette parcelle sont chargés
     final plantingState = ref.watch(plantingProvider);
     final bedPlantings = plantingState.plantings
-        .where((p) => p.gardenBedId == gardenBed.id)
+        .where((p) => p.gardenBedId == gardenBed.id && p.isActive)
         .toList();
     if (bedPlantings.isEmpty && !plantingState.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -265,7 +265,7 @@ class GardenBedDetailScreen extends ConsumerWidget {
       GardenBed gardenBed, ThemeData theme, AppLocalizations l10n) {
     final plantingState = ref.watch(plantingProvider);
     final plantings = plantingState.plantings
-        .where((planting) => planting.gardenBedId == gardenBed.id)
+        .where((planting) => planting.gardenBedId == gardenBed.id && planting.isActive)
         .toList();
     final plants = ref.watch(plantsListProvider);
 

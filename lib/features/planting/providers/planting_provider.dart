@@ -60,8 +60,10 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
     try {
       final plantings = GardenBoxes.getPlantings(gardenBedId);
+      // Charger uniquement les plantings actifs pour la vue "courante"
+      final activePlantings = plantings.where((p) => p.isActive).toList();
       state = state.copyWith(
-        plantings: plantings,
+        plantings: activePlantings,
         isLoading: false,
       );
     } catch (e) {
@@ -78,8 +80,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
 
     try {
       final allPlantings = GardenBoxes.plantings.values.toList();
+      final activePlantings = allPlantings.where((p) => p.isActive).toList();
       state = state.copyWith(
-        plantings: allPlantings,
+        plantings: activePlantings,
         isLoading: false,
       );
     } catch (e) {
@@ -381,29 +384,38 @@ class PlantingNotifier extends Notifier<PlantingState> {
         orElse: () => throw Exception('Plantation non trouvée'),
       );
 
-      await GardenBoxes.deletePlanting(plantingId);
+      // Ne plus supprimer physiquement : marquer comme inactive
+      final updatedPlanting = plantingToDelete.copyWith(
+        isActive: false,
+        updatedAt: DateTime.now(),
+      );
+
+      await GardenBoxes.savePlanting(updatedPlanting);
 
       // ✅ Tracker l'activité via ActivityObserverService
-      final bed = GardenBoxes.getGardenBedById(plantingToDelete.gardenBedId);
+      final bed = GardenBoxes.getGardenBedById(updatedPlanting.gardenBedId);
       if (bed != null) {
-        await ActivityObserverService().captureGardenBedDeleted(
-          gardenBedId: plantingToDelete.id,
-          gardenBedName: plantingToDelete.plantName,
+        await ActivityObserverService().capturePlantingUpdated(
+          plantingId: updatedPlanting.id,
+          plantName: updatedPlanting.plantName,
+          gardenBedId: updatedPlanting.gardenBedId,
+          gardenBedName: bed.name,
           gardenId: bed.gardenId,
-          gardenName: bed.name,
+          status: 'Retiré',
         );
       }
 
       // ✅ REFACTORÉ (SYNC-2) : Émettre événement via GardenEventBus
       try {
-        final bed = GardenBoxes.getGardenBedById(plantingToDelete.gardenBedId);
+        final bed = GardenBoxes.getGardenBedById(updatedPlanting.gardenBedId);
         if (bed != null) {
           GardenEventBus().emit(
             GardenEvent.activityPerformed(
               gardenId: bed.gardenId,
-              activityType: 'planting_deleted',
-              targetId: plantingToDelete.id,
+              activityType: 'planting_removed',
+              targetId: updatedPlanting.id,
               timestamp: DateTime.now(),
+              metadata: {'reason': 'user_removed'},
             ),
           );
         }
@@ -411,7 +423,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
         print('Erreur émission événement: $e');
       }
 
-      // Update state
+      // Update state: retirer de l'affichage courant
       final updatedPlantings = state.plantings
           .where((planting) => planting.id != plantingId)
           .toList();
