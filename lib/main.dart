@@ -1,33 +1,104 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
-// import 'package:path_provider/path_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-// âœ… IMPORTS CRITIQUES (mentionnés dans le doc)
 import 'app_initializer.dart';
 import 'app_router.dart';
 import 'core/feature_flags.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/app_theme_m3.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/locale_provider.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  print('DEBUG: [MAIN] App starting...');
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
 
-  // âœ… NOUVEAU : Utiliser AppInitializer pour une initialisation complète
-  await AppInitializer.initialize();
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (kDebugMode) FlutterError.dumpErrorToConsole(details);
+    Zone.current.handleUncaughtError(details.exception, details.stack ?? StackTrace.current);
+  };
 
-  // Initialires les données locales pour les dates
-  await initializeDateFormatting('fr_FR', null);
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Material(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline, size: 64, color: Colors.red),
+              const SizedBox(height: 12),
+              Text('Erreur interne : ${details.exception}', textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+      ),
+    );
+  };
 
-  runApp(const ProviderScope(child: MyApp()));
+  runZonedGuarded<Future<void>>(() async {
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    await AppInitializer.initialize();
+    await initializeDateFormatting('fr_FR', null);
+    runApp(const ProviderScope(child: MyApp()));
+  }, (error, stack) {
+    // force le dump complet dans log natif -> visible via adb logcat
+    print('UNCAUGHT ERROR (zone): $error\n$stack');
+  });
+}
+
+/// Widget d'affichage d'erreur minimal/optionnel
+class ErrorScreenContent extends StatefulWidget {
+  final Object error;
+  final StackTrace? stack;
+  const ErrorScreenContent(this.error, this.stack, {Key? key}) : super(key: key);
+
+  @override
+  State<ErrorScreenContent> createState() => _ErrorScreenContentState();
+}
+
+class _ErrorScreenContentState extends State<ErrorScreenContent> {
+  bool _showDetails = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final shortMsg = widget.error.toString();
+    final stackStr = widget.stack?.toString() ?? 'No stack available';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 24),
+        const Icon(Icons.error_outline, size: 72, color: Colors.red),
+        const SizedBox(height: 16),
+        Text('Une erreur interne est survenue', style: Theme.of(context).textTheme.headlineSmall),
+        const SizedBox(height: 12),
+        Text(shortMsg, style: const TextStyle(fontSize: 14)),
+        const SizedBox(height: 12),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              _showDetails = !_showDetails;
+            });
+          },
+          child: Text(_showDetails ? 'Masquer les détails' : 'Afficher les détails'),
+        ),
+        if (_showDetails) ...[
+          const SizedBox(height: 12),
+          SelectableText(stackStr, style: const TextStyle(fontSize: 12)),
+        ],
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () => SystemNavigator.pop(),
+          child: const Text('Quitter'),
+        ),
+      ],
+    );
+  }
 }
 
 class MyApp extends ConsumerWidget {
