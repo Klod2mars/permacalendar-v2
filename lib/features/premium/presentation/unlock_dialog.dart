@@ -17,8 +17,8 @@ class _UnlockDialogState extends State<UnlockDialog> {
   String? _errorText;
   bool _isAlreadyPremium = false;
 
-  // Code: "perma2024"
-  // python -c "import hashlib; print(hashlib.sha256(b'perma2024').hexdigest())"
+  // Code: [REDACTED]
+  // python -c "import hashlib; print(hashlib.sha256(b'...').hexdigest())"
   static const String _targetHash = 'd94ff634c718afd85bad52b5995845d436f8020c99c1c9c70de7a8c0230ff7ee';
   
   // Code to modify: "reset_me"

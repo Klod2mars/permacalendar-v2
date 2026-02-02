@@ -57,11 +57,34 @@ class EntitlementRepository {
   Future<void> saveEntitlement(Entitlement entitlement) async {
     if (_box == null || _limitsBox == null) await init();
     
+    // SECURITY: Block bypass in release mode
+    if (!kDebugMode && entitlement.source == 'bypass') {
+      debugPrint('⛔ Bypass entitlement blocked in release');
+      return;
+    }
+
     if (_box != null && _box!.isOpen) {
       await _box!.put(_keyName, entitlement);
       debugPrint('✅ Entitlement saved: ${entitlement.isPremium ? "PREMIUM" : "FREE"}');
     } else {
       debugPrint('❌ EntitlementRepository: Impossible to save, box closed');
+    }
+  }
+
+  /// Check and revoke bypass entitlement if found in release mode.
+  /// Should be called at app startup.
+  Future<void> auditRevokeBypassIfNeeded() async {
+    // Ensure boxes are open
+    if (_box == null || _limitsBox == null) await init();
+
+    if (_box == null || !_box!.isOpen) return;
+
+    final ent = getCurrentEntitlement();
+    if (!kDebugMode && ent.source == 'bypass') {
+      debugPrint('⛔ Audit: Bypass entitlement detected in release mode. Revoking...');
+      await clearEntitlement();
+      await resetExportQuota();
+      debugPrint('✅ Audit: Bypass revoked and quotas reset.');
     }
   }
 

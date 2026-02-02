@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permacalendar/features/premium/presentation/unlock_dialog.dart';
 import 'package:permacalendar/features/premium/application/purchase_service.dart';
@@ -116,12 +117,14 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
           // Restore
           GestureDetector(
             onLongPress: () async {
-              final result = await showDialog(
-                context: context,
-                builder: (context) => const UnlockDialog(),
-              );
-              if (result == true && mounted) {
-                Navigator.pop(context); // Close paywall if unlocked
+              if (kDebugMode) {
+                final result = await showDialog(
+                  context: context,
+                  builder: (context) => const UnlockDialog(),
+                );
+                if (result == true && mounted) {
+                  Navigator.pop(context); // Close paywall if unlocked
+                }
               }
             },
             child: TextButton(

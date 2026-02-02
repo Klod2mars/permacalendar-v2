@@ -330,6 +330,7 @@ class SettingsScreen extends ConsumerWidget {
             title: const Text('Version 1.0.0'),
             subtitle: const Text('Build 1234'),
             onLongPress: () async {
+              if (!kDebugMode) return;
               // SECRET TRIGGER
               await showDialog(
                 context: context,

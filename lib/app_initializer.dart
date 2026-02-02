@@ -21,7 +21,8 @@ import 'core/services/activity_observer_service.dart';
 import 'core/hive/type_ids.dart';
 import 'core/models/entitlement.dart'; // Added
 import 'features/climate/data/initialization/soil_metrics_initialization.dart';
-import 'features/premium/application/purchase_service.dart'; // Added
+import 'features/premium/application/purchase_service.dart'; 
+import 'features/premium/data/entitlement_repository.dart'; // Added
 // Generated Hive adapters
 import 'models/plant_localized.dart';
 
@@ -141,6 +142,13 @@ class AppInitializer {
 
     // Validation des données
     await _validatePlantData();
+
+    // SECURITY: Audit entitlements to revoke any bypass in release mode
+    try {
+      await EntitlementRepository().auditRevokeBypassIfNeeded();
+    } catch (e) {
+      print('❌ Erreur lors de l\'audit de sécurité: $e');
+    }
   }
 
   /// Validation simple des données
