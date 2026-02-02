@@ -68,22 +68,17 @@ class GardenBubbleWidget extends StatelessWidget {
               // We use CompositedTransformTarget on the bubble and Follower for the Aura 
               // to ensuring perfect centering relative to the visual target.
               if (isActive)
-                Positioned(
-                  // Center the follower in the stack (it will follow target anyway, 
-                  // but we need it in the tree)
-                  left: 0, top: 0, right: 0, bottom: 0,
-                  child: Center(
-                    child: OverflowBox(
-                      maxWidth: radius * 6, // Allow large bloom
-                      maxHeight: radius * 6,
-                      child: SizedBox(
-                        width: radius * 2, // Reference size matches bubble
-                        height: radius * 2,
-                        child: ActiveGardenAura(
-                          size: radius * 2,
-                          color: auraColor,
-                          isActive: true,
-                        ),
+                Center(
+                  child: OverflowBox(
+                    maxWidth: radius * 6, // Allow large bloom
+                    maxHeight: radius * 6,
+                    child: SizedBox(
+                      width: radius * 2, // Reference size matches bubble
+                      height: radius * 2,
+                      child: ActiveGardenAura(
+                        size: radius * 2,
+                        color: auraColor,
+                        isActive: true,
                       ),
                     ),
                   ),

@@ -207,32 +207,37 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
           '[Audit] _showDebugOverlay inserting rect=$rect for slot=${widget.slotNumber}');
 
     final overlayEntry = OverlayEntry(builder: (ctx) {
-      return Positioned(
-        left: rect.left,
-        top: rect.top,
-        width: rect.width,
-        height: rect.height,
-        child: IgnorePointer(
-          ignoring: true,
-          child: Center(
-            child: Container(
-              width: rect.width * 0.9,
-              height: rect.height * 0.9,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.yellow.withOpacity(0.22),
-                border:
-                    Border.all(color: Colors.orange.withOpacity(0.6), width: 2),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.orange.withOpacity(0.35),
-                      blurRadius: 18,
-                      spreadRadius: 4),
-                ],
+      // Défensive : s'assurer que Positioned a un Stack parent -> évite le cast ParentData error
+      return Stack(
+        children: [
+          Positioned(
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height,
+            child: IgnorePointer(
+              ignoring: true,
+              child: Center(
+                child: Container(
+                  width: rect.width * 0.9,
+                  height: rect.height * 0.9,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.yellow.withOpacity(0.22),
+                    border: Border.all(
+                        color: Colors.orange.withOpacity(0.6), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.orange.withOpacity(0.35),
+                          blurRadius: 18,
+                          spreadRadius: 4),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       );
     });
 
@@ -258,14 +263,19 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
   @override
   Widget build(BuildContext context) {
     // Use Positioned.fromRect so the caller can place this zone inside a Stack
-    return Positioned.fromRect(
-      rect: widget.zoneRect,
-      child: CompositedTransformTarget(
-        link: _layerLink,
-        child: GestureDetector(
-          behavior: HitTestBehavior
-              .translucent, // important pour capter le long press
-          onLongPress: _handleLongPress,
+    // [DEFENSIVE FIX] Wrapped in Stack to ensure Positioned always has a StackParentData context.
+    // If used nested in another Stack, this inner Stack provides the context.
+    return Stack(
+      fit: StackFit.passthrough, // Try to respect constraints
+      children: [
+        Positioned.fromRect(
+          rect: widget.zoneRect,
+          child: CompositedTransformTarget(
+            link: _layerLink,
+            child: GestureDetector(
+              behavior: HitTestBehavior
+                  .translucent, // important pour capter le long press
+              onLongPress: _handleLongPress,
           child: Stack(
             children: [
               // --- 1) Ton contenu visible habituel (icône/bulle) ---
@@ -324,6 +334,8 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
           ),
         ),
       ),
+    );
+      ],
     );
   }
 }
