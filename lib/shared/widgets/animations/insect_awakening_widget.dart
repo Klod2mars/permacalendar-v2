@@ -312,24 +312,28 @@ class InsectAwakeningWidgetState extends ConsumerState<InsectAwakeningWidget>
       }
 
       _overlayEntry = OverlayEntry(builder: (ctx) {
-        return Positioned(
-          left: left,
-          top: top,
-          width: width,
-          height: height,
-          child: IgnorePointer(
-            ignoring: true,
-            child: Material(
-              color: Colors.transparent,
-              child: CustomPaint(
-                size: Size(width, height),
-                painter: GlowPainter(
-                  color: Colors.greenAccent,
-                  intensity: _isPersistent ? 1.0 : _glowAnim.value,
+        return Stack(
+          children: [
+            Positioned(
+              left: left,
+              top: top,
+              width: width,
+              height: height,
+              child: IgnorePointer(
+                ignoring: true,
+                child: Material(
+                  color: Colors.transparent,
+                  child: CustomPaint(
+                    size: Size(width, height),
+                    painter: GlowPainter(
+                      color: Colors.greenAccent,
+                      intensity: _isPersistent ? 1.0 : _glowAnim.value,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         );
       });
     }

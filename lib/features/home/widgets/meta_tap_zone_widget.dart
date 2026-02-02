@@ -43,40 +43,49 @@ class MetaTapZoneWidget extends ConsumerWidget {
     final double effectiveSize = zoneDiameter >= minTapSizeDp ? zoneDiameter : minTapSizeDp;
     final double inflation = (effectiveSize - zoneDiameter) / 2.0;
 
-    return Positioned(
-      left: left - inflation,
-      top: top - inflation,
-      width: effectiveSize,
-      height: effectiveSize,
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          if (isCalibrationMode) {
-            return;
-          }
-          HapticFeedback.lightImpact();
-          onTap();
-        },
-        // --- Calibration Drag Logic ---
-        onPanUpdate: isCalibrationMode
-            ? (details) {
-                // Calculate normalized delta
-                final dx = details.delta.dx / containerSize.width;
-                final dy = details.delta.dy / containerSize.height;
-                
-                final newPos = Offset(
-                  (config.position.dx + dx).clamp(0.0, 1.0),
-                  (config.position.dy + dy).clamp(0.0, 1.0),
-                );
+    return SizedBox(
+      width: containerSize.width,
+      height: containerSize.height,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            left: left - inflation,
+            top: top - inflation,
+            width: effectiveSize,
+            height: effectiveSize,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                if (isCalibrationMode) {
+                  return;
+                }
+                HapticFeedback.lightImpact();
+                onTap();
+              },
+              // --- Calibration Drag Logic ---
+              onPanUpdate: isCalibrationMode
+                  ? (details) {
+                      // Calculate normalized delta
+                      final dx = details.delta.dx / containerSize.width;
+                      final dy = details.delta.dy / containerSize.height;
+                      
+                      final newPos = Offset(
+                        (config.position.dx + dx).clamp(0.0, 1.0),
+                        (config.position.dy + dy).clamp(0.0, 1.0),
+                      );
 
-                ref.read(metaTapZonesProvider.notifier).setPosition(config.id, newPos);
-                ref.read(calibrationStateProvider.notifier).markAsModified();
-              }
-            : null,
-        // ------------------------------
-        child: isCalibrationMode
-            ? _buildCalibrationOverlay(zoneDiameter)
-            : const SizedBox.expand(),
+                      ref.read(metaTapZonesProvider.notifier).setPosition(config.id, newPos);
+                      ref.read(calibrationStateProvider.notifier).markAsModified();
+                    }
+                  : null,
+              // ------------------------------
+              child: isCalibrationMode
+                  ? _buildCalibrationOverlay(zoneDiameter)
+                  : const SizedBox.expand(),
+            ),
+          ),
+        ],
       ),
     );
   }

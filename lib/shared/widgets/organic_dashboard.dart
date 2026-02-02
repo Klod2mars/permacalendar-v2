@@ -100,56 +100,60 @@ class TapZone extends StatelessWidget {
               'TapZone "${label ?? ''}" rect01=$rect01 -> left=$computedLeft top=$computedTop width=$computedWidth height=$computedHeight | safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
         }
 
-        return Positioned(
-          left: safeLeft,
-          top: safeTop,
-          width: safeWidth,
-          height: safeHeight,
-          child: SizedBox(
-            width: safeWidth,
-            height: safeHeight,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque, // IMPORTANT
-              // NEW: log the exact tap position and which zone received it.
-              onTapDown: (details) {
-                if (kDebugMode) {
-                  final renderBox = context.findRenderObject() as RenderBox?;
-                  final size = renderBox?.size;
-                  final globalPos = renderBox?.localToGlobal(Offset.zero);
-                  debugPrint(
-                      'TapDown "${label ?? ''}" global=${details.globalPosition} local=${details.localPosition} rect01=$rect01 -> safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
-                  debugPrint(
-                      'TapDownRenderBox "${label ?? ''}" renderBox.size=$size renderBox.topLeftGlobal=$globalPos');
-                }
-              },
-              onTap: onTap,
-              child: kShowTapZonesDebug
-                  ? DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        border: Border.all(color: Colors.cyanAccent, width: 2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          (label ?? '').toLowerCase(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            shadows: [
-                              Shadow(
-                                  blurRadius: 10,
-                                  color: Colors.black,
-                                  offset: Offset(0, 2))
-                            ],
+        return Stack(
+          children: [
+            Positioned(
+              left: safeLeft,
+              top: safeTop,
+              width: safeWidth,
+              height: safeHeight,
+              child: SizedBox(
+                width: safeWidth,
+                height: safeHeight,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque, // IMPORTANT
+                  // NEW: log the exact tap position and which zone received it.
+                  onTapDown: (details) {
+                    if (kDebugMode) {
+                      final renderBox = context.findRenderObject() as RenderBox?;
+                      final size = renderBox?.size;
+                      final globalPos = renderBox?.localToGlobal(Offset.zero);
+                      debugPrint(
+                          'TapDown "${label ?? ''}" global=${details.globalPosition} local=${details.localPosition} rect01=$rect01 -> safeLeft=$safeLeft safeTop=$safeTop safeWidth=$safeWidth safeHeight=$safeHeight');
+                      debugPrint(
+                          'TapDownRenderBox "${label ?? ''}" renderBox.size=$size renderBox.topLeftGlobal=$globalPos');
+                    }
+                  },
+                  onTap: onTap,
+                  child: kShowTapZonesDebug
+                      ? DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.cyanAccent, width: 2),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      ),
-                    )
-                  : const SizedBox.expand(),
+                          child: Center(
+                            child: Text(
+                              (label ?? '').toLowerCase(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                shadows: [
+                                  Shadow(
+                                      blurRadius: 10,
+                                      color: Colors.black,
+                                      offset: Offset(0, 2))
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.expand(),
+                ),
+              ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -541,7 +545,10 @@ class _OrganicDashboardWidgetState
   Widget build(BuildContext context) {
     if (kDebugMode) {
       debugPrint('OrganicDashboard: build called -> ${widget.assetPath}');
+    } else {
+        print('DEBUG: [OrganicDashboardWidget] build called (RELEASE MODE)');
     }
+
 
     final zones = ref.watch(organicZonesProvider);
     final calibState = ref.watch(calibrationStateProvider);
