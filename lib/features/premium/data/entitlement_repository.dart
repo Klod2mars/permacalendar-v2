@@ -111,4 +111,12 @@ class EntitlementRepository {
     }
     return _box!.listenable(keys: [_keyName]);
   }
+
+  /// Listen to limits changes
+  ValueListenable<Box>? get limitsListenable {
+    if (_limitsBox == null || !_limitsBox!.isOpen) {
+       return null;
+    }
+    return _limitsBox!.listenable(keys: [_keyRemainingExports]);
+  }
 }

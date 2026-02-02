@@ -22,6 +22,8 @@ import 'dart:developer' as developer;
 import '../../../features/premium/domain/can_perform_action_checker.dart';
 import '../../../features/premium/presentation/paywall_sheet.dart';
 import '../../../features/premium/data/entitlement_repository.dart';
+import '../../../features/premium/presentation/premium_banner.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// Vue calendrier simplifiée des plantations et récoltes prévues
 class CalendarViewScreen extends ConsumerStatefulWidget {
@@ -467,6 +469,23 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
       ),
       body: Column(
         children: [
+          
+          // Banner Pro
+           AnimatedBuilder(
+            animation: EntitlementRepository().limitsListenable ?? ValueNotifier(0),
+            builder: (context, _) {
+              final repo = EntitlementRepository();
+              final remaining = repo.getRemainingExports();
+              
+              return PremiumBanner(
+                remaining: remaining,
+                limit: EntitlementRepository.kDefaultExportLimit,
+                message: remaining > 0
+                    ? '$remaining envois gratuits restants'
+                    : 'Limite d\'envois atteinte',
+              );
+            },
+          ),
 
           // Sélecteur de mois
           _buildMonthSelector(theme),

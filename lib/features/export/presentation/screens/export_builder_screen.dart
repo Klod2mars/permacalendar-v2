@@ -14,6 +14,8 @@ import 'package:permacalendar/l10n/app_localizations.dart';
 import 'package:permacalendar/features/premium/domain/can_perform_action_checker.dart';
 import 'package:permacalendar/features/premium/presentation/paywall_sheet.dart';
 import 'package:permacalendar/features/premium/data/entitlement_repository.dart';
+import 'package:permacalendar/features/premium/presentation/premium_banner.dart';
+import 'package:hive_flutter/hive_flutter.dart'; // For ValueListenableBuilder
 
 class ExportBuilderScreen extends ConsumerStatefulWidget {
   const ExportBuilderScreen({super.key});
@@ -50,6 +52,23 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Banner Pro
+                  AnimatedBuilder(
+                    animation: EntitlementRepository().limitsListenable ?? ValueNotifier(0),
+                    builder: (context, _) {
+                      final repo = EntitlementRepository();
+                      final remaining = repo.getRemainingExports();
+                      
+                      return PremiumBanner(
+                        remaining: remaining,
+                        limit: EntitlementRepository.kDefaultExportLimit,
+                        message: remaining > 0
+                            ? '$remaining exports gratuits restants'
+                            : 'Limite d\'exports atteinte',
+                      );
+                    },
+                  ),
+
                   _buildSectionHeader(l10n.export_scope_section),
                   _buildScopeSection(state, notifier, l10n),
                   const SizedBox(height: 24),

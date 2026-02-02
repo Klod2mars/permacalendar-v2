@@ -15,6 +15,7 @@ class _UnlockDialogState extends State<UnlockDialog> {
   final TextEditingController _controller = TextEditingController();
   bool _obscureText = true;
   String? _errorText;
+  bool _isAlreadyPremium = false;
 
   // Code: "perma2024"
   // python -c "import hashlib; print(hashlib.sha256(b'perma2024').hexdigest())"
@@ -22,6 +23,21 @@ class _UnlockDialogState extends State<UnlockDialog> {
   
   // Code to modify: "reset_me"
   static const String _resetHash = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'; 
+
+  @override
+  void initState() {
+    super.initState();
+    _checkStatus();
+  }
+
+  void _checkStatus() {
+    final status = EntitlementRepository().getCurrentEntitlement();
+    if (status.isPremium && status.source == 'bypass') {
+      setState(() {
+        _isAlreadyPremium = true;
+      });
+    }
+  } 
 
   void _verifyCode() async {
     final input = _controller.text.trim();
@@ -63,8 +79,37 @@ class _UnlockDialogState extends State<UnlockDialog> {
     }
   }
 
+  void _revokePremium() async {
+      final repo = EntitlementRepository();
+      await repo.clearEntitlement();
+       if (mounted) {
+        Navigator.pop(context, true);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('🔒 Premium révoqué (Reset).')),
+        );
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_isAlreadyPremium) {
+      return AlertDialog(
+        title: const Text('Mode Développeur Actif'),
+        content: const Text('Vous bénéficiez actuellement du statut Premium via le bypass développeur.\n\nVoulez-vous le révoquer pour tester le Paywall ?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fermer'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+            onPressed: _revokePremium,
+            child: const Text('RÉVOQUER'),
+          ),
+        ],
+      );
+    }
+
     return AlertDialog(
       title: const Text('Code Secret'),
       content: Column(

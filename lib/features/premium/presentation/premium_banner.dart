@@ -4,19 +4,30 @@ import 'package:permacalendar/features/premium/presentation/paywall_sheet.dart';
 import 'package:permacalendar/features/premium/data/entitlement_repository.dart';
 
 class PremiumBanner extends StatelessWidget {
-  final int currentCount;
+  final int remaining;
+  final int limit;
+  final String message;
+  final String subMessage;
   
-  const PremiumBanner({super.key, required this.currentCount});
+  const PremiumBanner({
+    super.key, 
+    required this.remaining,
+    required this.limit,
+    required this.message,
+    this.subMessage = 'Passez Premium pour illimité',
+  });
 
   @override
   Widget build(BuildContext context) {
     if (EntitlementRepository().getCurrentEntitlement().isActive) {
-      return const SizedBox.shrink(); // Hide if premium (or show "Premium Active" badge?)
+      return const SizedBox.shrink(); 
     }
 
-    final limit = CanPerformActionChecker.kFreePlantLimit;
-    final remaining = limit - currentCount;
-    final progress = currentCount / limit;
+    // Safety check just in case
+    final safeLimit = limit > 0 ? limit : 1;
+    final currentCount = limit - remaining;
+    // Cap progress at 1.0
+    final progress = (currentCount / safeLimit).clamp(0.0, 1.0);
 
     return GestureDetector(
       onTap: () => PaywallSheet.show(context),
@@ -42,14 +53,12 @@ class PremiumBanner extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    remaining > 0 
-                        ? '$remaining plantes gratuites restantes' 
-                        : 'Limite gratuite atteinte',
+                    message,
                     style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.brown),
                   ),
-                  const Text(
-                    'Passez Premium pour illimité',
-                    style: TextStyle(fontSize: 12, color: Colors.brown),
+                  Text(
+                    subMessage,
+                    style: const TextStyle(fontSize: 12, color: Colors.brown),
                   ),
                 ],
               ),

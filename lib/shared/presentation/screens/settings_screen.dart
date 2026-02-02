@@ -23,6 +23,7 @@ import '../../../features/settings/presentation/screens/language_settings_page.d
 import '../../../features/climate/presentation/providers/zone_providers.dart';
 import '../../../core/providers/currency_provider.dart';
 import '../../../core/models/currency_info.dart';
+import '../../../features/premium/presentation/unlock_dialog.dart';
 
 
 class SettingsScreen extends ConsumerWidget {
@@ -322,6 +323,19 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: Text(l10n.settings_terms_subtitle),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showTermsOfService(context),
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('Version 1.0.0'),
+            subtitle: const Text('Build 1234'),
+            onLongPress: () async {
+              // SECRET TRIGGER
+              await showDialog(
+                context: context,
+                builder: (_) => const UnlockDialog(),
+              );
+            },
           ),
         ]),
       ),

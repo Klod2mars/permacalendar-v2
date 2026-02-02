@@ -1,4 +1,4 @@
-// lib/features/plant_catalog/presentation/screens/plant_catalog_screen.dart
+import 'package:permacalendar/features/premium/domain/can_perform_action_checker.dart';
 
 import 'dart:convert';
 import 'dart:io';
@@ -460,7 +460,21 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
           return Column(
             children: [
               // Premium Banner
-              PremiumBanner(currentCount: ref.watch(plantingProvider).plantings.length),
+              Builder(
+                builder: (context) {
+                   final count = ref.watch(plantingProvider).plantings.length;
+                   final limit = CanPerformActionChecker.kFreePlantLimit;
+                   final remaining = (limit - count).clamp(0, limit);
+                   
+                   return PremiumBanner(
+                     remaining: remaining,
+                     limit: limit,
+                     message: remaining > 0 
+                        ? '$remaining plantes gratuites restantes' 
+                        : 'Limite gratuite atteinte',
+                   );
+                }
+              ),
 
               Padding(
                 padding: const EdgeInsets.symmetric(
