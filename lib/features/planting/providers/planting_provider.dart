@@ -11,6 +11,7 @@ import '../../../core/utils/calibration_storage.dart';
 import '../../harvest/data/repositories/harvest_repository.dart';
 import '../../harvest/domain/models/harvest_record.dart'; // Import HarvestRecord
 import '../../harvest/application/harvest_records_provider.dart'; // Import HarvestRecordsProvider
+import '../../activities/application/providers/garden_history_provider.dart'; // Import History
 import 'package:uuid/uuid.dart'; // Import Uuid
 import '../../../core/services/nutrition_normalizer.dart';
 import '../../plant_catalog/providers/plant_catalog_provider.dart';
@@ -212,6 +213,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
       final finalPlanting = planting.copyWith(metadata: metaFinal);
 
       await GardenBoxes.savePlanting(finalPlanting);
+      ref.invalidate(gardenHistoryProvider); // Refresh History
 
       // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(gardenBedId);
@@ -324,6 +326,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
       }
 
       await GardenBoxes.savePlanting(updatedPlanting);
+      ref.invalidate(gardenHistoryProvider); // Refresh History
 
       // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(updatedPlanting.gardenBedId);
@@ -391,6 +394,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
       );
 
       await GardenBoxes.savePlanting(updatedPlanting);
+      ref.invalidate(gardenHistoryProvider); // Refresh History
 
       // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(updatedPlanting.gardenBedId);
@@ -508,6 +512,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
       );
 
       await GardenBoxes.savePlanting(updatedPlanting);
+      ref.invalidate(gardenHistoryProvider); // Refresh History
 
       // ✅ Tracker l'activité via ActivityObserverService
       final bed = GardenBoxes.getGardenBedById(planting.gardenBedId);
@@ -687,6 +692,7 @@ class PlantingNotifier extends Notifier<PlantingState> {
           '[recordHarvest] AFTER update: plantName="${updatedPlanting.plantName}" status="${updatedPlanting.status}"');
 
       await GardenBoxes.savePlanting(updatedPlanting);
+      ref.invalidate(gardenHistoryProvider); // Refresh History
 
       final updatedPlantings = state.plantings
           .map((p) => p.id == plantingId ? updatedPlanting : p)
