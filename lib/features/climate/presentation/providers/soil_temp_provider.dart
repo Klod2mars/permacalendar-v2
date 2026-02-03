@@ -37,6 +37,9 @@ class SoilTempController extends Notifier<SoilTempState> {
   SoilMetricsRepository get _repo => ref.watch(soilMetricsRepositoryProvider);
   final _compute = ComputeSoilTempNextDayUsecase();
 
+  // --- Guard to avoid concurrent loads for same scope
+  final Set<String> _loadingScopes = {};
+
   @override
   SoilTempState build() {
     return const SoilTempState(temperatures: {});
@@ -46,6 +49,9 @@ class SoilTempController extends Notifier<SoilTempState> {
   ///
   /// Recalculates estimated temperature if necessary based on anchor.
   Future<void> load(String scopeKey) async {
+    // If a load for this scopeKey is already in-progress, return early.
+    if (_loadingScopes.contains(scopeKey)) return;
+    _loadingScopes.add(scopeKey);
     print('[SoilTempController] Loading for scope: $scopeKey');
     try {
       final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
@@ -141,6 +147,8 @@ class SoilTempController extends Notifier<SoilTempState> {
       final updated = Map<String, AsyncValue<SoilMetricsDto?>>.from(state.temperatures);
       updated[scopeKey] = AsyncValue.error(e, st);
       state = state.copyWith(temperatures: updated);
+    } finally {
+      _loadingScopes.remove(scopeKey);
     }
   }
 
@@ -332,13 +340,10 @@ final soilTempProviderByScope =
   final dtoAsync = controller.getMetrics(scopeKey);
 
   // Load data only once: schedule load only if we don't yet have an entry
-  // in the controller state for this scopeKey. This avoids rescheduling
-  // load repeatedly while a previous load is still in-progress.
+  // in the controller state for this scopeKey. We call load immediately
+  // (not via microtask) — the controller itself guards concurrent invocations.
   if (!controller.temperatures.containsKey(scopeKey)) {
-    Future.microtask(() {
-      // Use read(notifier) to call the async load
-      ref.read(soilTempProvider.notifier).load(scopeKey);
-    });
+    ref.read(soilTempProvider.notifier).load(scopeKey);
   }
   
   return dtoAsync.whenData((dto) => dto?.soilTempEstimatedC);
