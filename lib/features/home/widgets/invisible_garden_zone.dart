@@ -14,6 +14,8 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 // InsectAwakeningWidget - assure-toi que ce chemin package: est correct
 import 'package:permacalendar/core/providers/active_garden_provider.dart';
@@ -315,15 +317,22 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
                       duration: GardenLabelStyle.transitionDuration,
                       curve: GardenLabelStyle.transitionCurve,
                       opacity: targetOpacity,
-                      child: Text(
-                        gardenName,
+                      child: AutoSizeText(
+                        gardenName.toUpperCase(), // garder cohérence avec les autres bulles
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Outfit', // Theme default
+                        maxLines: 3,
+                        minFontSize: 6,
+                        maxFontSize: targetFontSize,
+                        stepGranularity: 0.1,
+                        overflow: TextOverflow.ellipsis,
+                        wrapWords: false, // évite la césure au milieu des mots lorsque possible
+                        style: GoogleFonts.outfit(
+                          color: Colors.white,
                           fontSize: targetFontSize,
                           fontWeight: targetWeight,
-                          color: Colors.white,
                           shadows: [GardenLabelStyle.textShadow],
+                          height: 1.05,
+                          letterSpacing: 0.6,
                         ),
                       ),
                     ),
