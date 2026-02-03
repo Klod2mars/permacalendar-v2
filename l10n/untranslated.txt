@@ -1,1 +1,17 @@
-{}
+{
+  "de": [
+    "limit_gardens_reached_message"
+  ],
+
+  "es": [
+    "limit_gardens_reached_message"
+  ],
+
+  "it": [
+    "limit_gardens_reached_message"
+  ],
+
+  "pt": [
+    "limit_gardens_reached_message"
+  ]
+}

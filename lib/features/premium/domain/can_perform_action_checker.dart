@@ -13,6 +13,13 @@ class CanPerformActionChecker {
   /// Constants for limits
   static const int kFreePlantLimit = 3;
   static const int kFreeGardenLimit = 1;
+  static const int kFreeBedLimit = 1;
+
+  /// Check if user can create a new garden bed.
+  bool canCreateBed(int currentBedCount) {
+    if (_isPremium()) return true;
+    return currentBedCount < kFreeBedLimit;
+  }
 
   /// Check if user can add a new plant.
   /// 

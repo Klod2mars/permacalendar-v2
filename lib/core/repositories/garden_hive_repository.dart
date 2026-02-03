@@ -123,17 +123,26 @@ class GardenHiveRepository {
       }
 
       // Vérification que le jardin existe
-      if (!_gardenBox.containsKey(garden.id)) {
+      final existingHiveGarden = _gardenBox.get(garden.id);
+      if (existingHiveGarden == null) {
         throw GardenHiveException('Jardin avec ID ${garden.id} non trouvé');
       }
 
       // Marquer comme mis à jour
       final updatedGarden = garden.markAsUpdated();
 
-      // Conversion vers GardenHive
-      final hiveGarden = _convertToGardenHive(updatedGarden);
+      // Mise à jour NON-DESTRUCTIVE
+      // On conserve les gardenBeds existants en utilisant copyWith sur l'objet Hive existant
+      // au lieu de recréer un objet vierge.
+      final hiveGarden = existingHiveGarden.copyWith(
+        name: updatedGarden.name,
+        description: updatedGarden.description ?? '',
+        // Pas de mise à jour de createdDate
+      );
 
       // Sauvegarde dans Hive
+      // Note: Comme c'est un HiveObject, on pourrait aussi faire hiveGarden.save() 
+      // si on modifiait les champs en place, mais put() est explicite.
       await _gardenBox.put(hiveGarden.id, hiveGarden);
 
       return true;

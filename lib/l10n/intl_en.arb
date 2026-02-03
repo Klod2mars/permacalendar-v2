@@ -896,6 +896,10 @@
   "@limit_plantings_reached_message": {
     "description": "Error message limit plants"
   },
+  "limit_gardens_reached_message": "Limit of 5 active gardens reached.\nPlease archive or delete a garden to create a new one.",
+  "@limit_gardens_reached_message": {
+    "description": "Error message limit gardens"
+  },
   "calendar_filter_maintenance": "Maintenance",
   "@calendar_filter_maintenance": {
     "description": "Filtre entretien"

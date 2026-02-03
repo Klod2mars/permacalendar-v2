@@ -712,6 +712,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Limite de 6 plantas atingido.\nPor favor, remova uma planta desta parcela para adicionar uma nova.';
 
   @override
+  String get limit_gardens_reached_message =>
+      'Limite de 5 jardins actifs atteinte.\nVeuillez archiver ou supprimer un jardin pour en créer un nouveau.';
+
+  @override
   String get calendar_filter_maintenance => 'Manutenção';
 
   @override

@@ -3,6 +3,8 @@ import 'package:hive/hive.dart';
 import '../services/aggregation/garden_aggregation_hub.dart';
 import '../repositories/garden_hive_repository.dart';
 import '../data/migration/garden_data_migration.dart';
+import '../services/aggregation/legacy_data_adapter.dart';
+import '../services/aggregation/modern_data_adapter.dart';
 
 /// Module d'injection de dépendances pour le système Garden
 ///
@@ -52,9 +54,15 @@ class GardenModule {
   /// L'Intelligence Végétale est un CONSOMMATEUR du hub, pas un fournisseur.
   /// Cela évite la dépendance circulaire Hub â†’ Intelligence â†’ Hub.
   static final aggregationHubProvider = Provider<GardenAggregationHub>((ref) {
-    // Créer le hub avec Legacy + Modern uniquement
-    // L'Intelligence adapter n'est pas ajouté ici pour éviter les cycles
-    return GardenAggregationHub();
+    // Créer les adaptateurs requis
+    final legacyAdapter = LegacyDataAdapter();
+    final modernAdapter = ModernDataAdapter();
+
+    // Créer le hub avec Legacy + Modern
+    return GardenAggregationHub(
+      legacyAdapter: legacyAdapter,
+      modernAdapter: modernAdapter,
+    );
   });
 
   // ==================== REPOSITORIES ====================

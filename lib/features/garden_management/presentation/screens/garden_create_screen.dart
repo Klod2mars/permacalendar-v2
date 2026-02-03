@@ -10,6 +10,7 @@ import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/custom_button.dart';
 import '../../../../shared/widgets/custom_input.dart';
 import '../../../../shared/widgets/loading_widgets.dart';
+import '../../../../features/premium/presentation/paywall_sheet.dart'; // Added import
 
 /// Écran de création d'un jardin.
 class GardenCreateScreen extends ConsumerStatefulWidget {
@@ -88,12 +89,29 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
         );
         context.pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l10n.garden_management_create_error),
-            backgroundColor: Colors.red,
-          ),
-        );
+        // Retrieve error from state if possible, though provider is not watching state here directly.
+        // But the notifier returns false, and sets state error.
+        // We can read the error from the provider.
+        final errorState = ref.read(gardenProvider);
+        final String? errorKey = errorState.error;
+
+        if (errorKey == 'paywall_limit_reached') {
+           // Show Paywall
+           if (mounted) await PaywallSheet.show(context);
+           // Do not show snackbar 
+        } else {
+           // Standard error
+           ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                  (errorKey == 'limit_gardens_reached_message')
+                    ? l10n.limit_gardens_reached_message 
+                    : l10n.garden_management_create_error
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

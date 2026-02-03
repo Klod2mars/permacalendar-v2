@@ -811,6 +811,10 @@
   "@limit_plantings_reached_message": {
     "description": "Message erreur limite plantes"
   },
+  "limit_gardens_reached_message": "Limite de 5 jardins actifs atteinte.\nVeuillez archiver ou supprimer un jardin pour en créer un nouveau.",
+  "@limit_gardens_reached_message": {
+    "description": "Message erreur limite jardins"
+  },
   "calendar_filter_maintenance": "Entretien",
   "@calendar_filter_maintenance": { "description": "Filtre entretien" },
   "calendar_filter_harvests": "Récoltes",

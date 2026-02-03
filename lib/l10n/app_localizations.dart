@@ -1348,6 +1348,12 @@ abstract class AppLocalizations {
   /// **'Limite de 6 plantes atteinte.\nVeuillez retirer une plante de cette parcelle pour en ajouter une nouvelle.'**
   String get limit_plantings_reached_message;
 
+  /// Message erreur limite jardins
+  ///
+  /// In fr, this message translates to:
+  /// **'Limite de 5 jardins actifs atteinte.\nVeuillez archiver ou supprimer un jardin pour en créer un nouveau.'**
+  String get limit_gardens_reached_message;
+
   /// Filtre entretien
   ///
   /// In fr, this message translates to:

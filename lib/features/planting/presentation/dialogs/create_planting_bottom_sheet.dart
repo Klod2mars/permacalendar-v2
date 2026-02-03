@@ -479,13 +479,6 @@ class _CreatePlantingBottomSheetContentState
             String errorMessage = errorKey;
             final l10n = AppLocalizations.of(context)!;
             
-            if (errorKey == 'limit_beds_reached_message' || errorKey == 'limit_plantings_reached_message') {
-               // Show Paywall
-               await PaywallSheet.show(context);
-               setState(() => _isLoading = false);
-               return;
-            }
-
             if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
             if (errorKey == 'limit_plantings_reached_message') errorMessage = l10n.limit_plantings_reached_message;
 

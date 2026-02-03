@@ -20,6 +20,7 @@ import '../../../core/models/activity.dart';
 import '../../../core/models/plant.dart';
 import '../../../core/services/notification_service.dart';
 import '../../../shared/utils/plant_image_resolver.dart';
+import '../../premium/domain/can_perform_action_checker.dart';
 
 // Planting State
 class PlantingState {
@@ -112,6 +113,14 @@ class PlantingNotifier extends Notifier<PlantingState> {
   }) async {
     try {
       // Validate planting limits
+      // 1) Vérifier limite globale (total plants)
+      final totalActivePlantings = GardenBoxes.plantings.values.where((p) => p.isActive).length;
+      final actionChecker = CanPerformActionChecker();
+      if (!actionChecker.canAddPlant(totalActivePlantings)) {
+        state = state.copyWith(error: 'paywall_limit_reached');
+        return false;
+      }
+
       // On récupère les plantations de la parcelle pour compter les actives
       final bedPlantings = GardenBoxes.getPlantings(gardenBedId);
       final activeCount = bedPlantings.where((p) => p.isActive).length;

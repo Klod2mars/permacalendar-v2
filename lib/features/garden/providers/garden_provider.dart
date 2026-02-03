@@ -14,6 +14,7 @@ import '../../garden_bed/providers/garden_bed_scoped_provider.dart';
 import '../../../core/providers/active_garden_provider.dart';
 import '../../export/presentation/providers/export_builder_provider.dart';
 import '../../statistics/presentation/providers/statistics_filters_provider.dart';
+import '../../premium/domain/can_perform_action_checker.dart';
 
 /// Notifier pour la gestion de l'état des jardins
 /// Utilise GardenHiveRepository pour les opérations CRUD
@@ -42,8 +43,18 @@ class GardenNotifier extends Notifier<GardenState> {
   Future<bool> createGarden(GardenFreezed garden) async {
     try {
       // Vérifier la limite de jardins avant création
-      if (!state.canAddGarden) {
-        state = GardenState.error('Limite de 5 jardins atteinte');
+      final totalActiveGardens = GardenBoxes.gardens.values.where((g) => g.isActive).length;
+      final checker = CanPerformActionChecker();
+      if (!checker.canCreateGarden(totalActiveGardens)) {
+        state = GardenState.error('paywall_limit_reached');
+        return false;
+      }
+
+      // Remplacer l'ancien test "state.canAddGarden" par le checker central
+      final currentGardenCount = state.activeGardensCount;
+      final canPerformChecker = CanPerformActionChecker();
+      if (!canPerformChecker.canCreateGarden(currentGardenCount)) {
+        state = GardenState.error('paywall_limit_reached');
         return false;
       }
 

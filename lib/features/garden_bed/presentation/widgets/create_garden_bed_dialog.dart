@@ -14,6 +14,7 @@ import '../../../../core/events/garden_event_bus.dart';
 import '../../../../core/events/garden_events.dart';
 import '../../../../core/data/hive/garden_boxes.dart';
 import '../../providers/garden_bed_scoped_provider.dart';
+import '../../../../features/premium/presentation/paywall_sheet.dart'; // Added import
 
 class CreateGardenBedDialog extends ConsumerStatefulWidget {
   final String gardenId;
@@ -291,6 +292,14 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
         
         if (!validation.isValid) {
            final errorKey = validation.errorMessage ?? 'limit_beds_reached_message';
+           
+           if (errorKey == 'paywall_limit_reached') {
+               // Show Paywall
+               if (mounted) await PaywallSheet.show(context);
+               setState(() => _isLoading = false);
+               return;
+           }
+
            String errorMessage = errorKey;
            if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
            // Fallback or other keys if needed

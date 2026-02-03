@@ -1,0 +1,32 @@
+﻿00:00 +0: loading C:/Users/roman/Documents/apppklod/permacalendarv2/test/features/premium/paywall_bypass_test.dart
+00:00 +0: Paywall Global Limits CanPerformActionChecker enforces global limits
+[GardenBoxes] harvests box opened: harvests
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+00:00 +0 -1: Paywall Global Limits CanPerformActionChecker enforces global limits [E]
+  Expected: <true>
+    Actual: <false>
+  
+  package:matcher                                      expect
+  package:flutter_test/src/widget_tester.dart 473:18   expect
+  test\features\premium\paywall_bypass_test.dart 79:7  main.<fn>.<fn>
+  
+  LateInitializationError: Local 'container' has not been initialized.
+  dart:_internal                                       LateError._throwLocalNotInitialized
+  test\features\premium\paywall_bypass_test.dart       main.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                           _CustomZone.registerUnaryCallback
+  test\features\premium\paywall_bypass_test.dart 51:5  main.<fn>
+  
+00:00 +0 -1: Paywall Global Limits PlantingNotifier.createPlanting blocks 4th plant
+[GardenBoxes] harvests box opened: harvests
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+00:00 +1 -1: Paywall Global Limits GardenBedNotifier.createGardenBed blocks 2nd bed
+[GardenBoxes] harvests box opened: harvests
+ÔÜá´©Å EntitlementRepository: Box not open, returning Free
+00:00 +2 -1: Some tests failed.

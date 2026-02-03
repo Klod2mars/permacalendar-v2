@@ -10,6 +10,7 @@ import '../../../core/events/garden_event_bus.dart';
 
 import '../../../core/events/garden_events.dart';
 import 'garden_bed_scoped_provider.dart';
+import '../../premium/domain/can_perform_action_checker.dart';
 
 // Garden Bed State
 
@@ -80,6 +81,15 @@ class GardenBedNotifier extends Notifier<GardenBedState> {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
+      // Validate garden bed limits
+      // PAYWALL CHECK : empêcher création de parcelle si l'utilisateur gratuit a déjà 3 plantes
+      final totalActivePlantings = GardenBoxes.plantings.values.where((p) => p.isActive).length;
+      final checker = CanPerformActionChecker();
+      if (!checker.canAddPlant(totalActivePlantings)) {
+        state = state.copyWith(isLoading: false, error: 'paywall_limit_reached');
+        return false;
+      }
+
       // Validate garden bed limits
       // On compte d'abord les parcelles existantes
       final currentBeds = GardenBoxes.getGardenBeds(gardenBed.gardenId);
