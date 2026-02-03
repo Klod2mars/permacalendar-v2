@@ -97,7 +97,10 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
         if (errorKey == 'paywall_limit_reached' || 
             errorKey == 'limit_gardens_reached_message') {
            // Show Paywall
-           if (mounted) await PaywallSheet.show(context);
+           if (mounted) {
+             await PaywallSheet.show(context);
+             ref.read(gardenProvider.notifier).clearError();
+           }
            // Do not show snackbar 
         } else {
            // Standard error

@@ -46,7 +46,8 @@ class GardenNotifier extends Notifier<GardenState> {
       final totalActiveGardens = GardenBoxes.gardens.values.where((g) => g.isActive).length;
       final checker = CanPerformActionChecker();
       if (!checker.canCreateGarden(totalActiveGardens)) {
-        state = GardenState.error('paywall_limit_reached');
+        print('DEBUG: Paywall limit reached. Gardens in state: ${state.gardens.length}');
+        state = state.copyWith(error: 'paywall_limit_reached');
         return false;
       }
 
@@ -54,7 +55,7 @@ class GardenNotifier extends Notifier<GardenState> {
       final currentGardenCount = state.activeGardensCount;
       final canPerformChecker = CanPerformActionChecker();
       if (!canPerformChecker.canCreateGarden(currentGardenCount)) {
-        state = GardenState.error('paywall_limit_reached');
+        state = state.copyWith(error: 'paywall_limit_reached');
         return false;
       }
 
@@ -86,11 +87,12 @@ class GardenNotifier extends Notifier<GardenState> {
         await loadGardens();
         return true;
       } else {
-        state = GardenState.error('Échec de la création du jardin');
+        state = state.copyWith(error: 'Échec de la création du jardin');
         return false;
       }
     } catch (e) {
-      state = GardenState.error('Erreur lors de la création: $e');
+
+      state = state.copyWith(error: 'Erreur lors de la création: $e');
       return false;
     }
   }
@@ -127,11 +129,12 @@ class GardenNotifier extends Notifier<GardenState> {
         await loadGardens();
         return true;
       } else {
-        state = GardenState.error('Échec de la mise à jour du jardin');
+        state = state.copyWith(error: 'Échec de la mise à jour du jardin');
         return false;
       }
     } catch (e) {
-      state = GardenState.error('Erreur lors de la mise à jour: $e');
+
+      state = state.copyWith(error: 'Erreur lors de la mise à jour: $e');
       return false;
     }
   }
@@ -276,12 +279,13 @@ class GardenNotifier extends Notifier<GardenState> {
 
         return true;
       } else {
-        state = GardenState.error(
+        state = state.copyWith(error: 
             'Échec de la suppression du jardin (Legacy & Modern failed)');
         return false;
       }
     } catch (e) {
-      state = GardenState.error('Erreur inattendue lors de la suppression: $e');
+
+      state = state.copyWith(error: 'Erreur inattendue lors de la suppression: $e');
       return false;
     }
   }
@@ -291,8 +295,9 @@ class GardenNotifier extends Notifier<GardenState> {
   Future<bool> toggleGardenStatus(String gardenId) async {
     try {
       final garden = state.findGardenById(gardenId);
+
       if (garden == null) {
-        state = GardenState.error('Jardin non trouvé');
+        state = state.copyWith(error: 'Jardin non trouvé');
         return false;
       }
 
@@ -303,7 +308,8 @@ class GardenNotifier extends Notifier<GardenState> {
 
       return await updateGarden(updatedGarden);
     } catch (e) {
-      state = GardenState.error('Erreur lors du changement de statut: $e');
+
+      state = state.copyWith(error: 'Erreur lors du changement de statut: $e');
       return false;
     }
   }
@@ -337,7 +343,8 @@ class GardenNotifier extends Notifier<GardenState> {
           DashboardSlotsRepository.getGardenIdForSlotSync(slotNumber);
 
       if (existingId != null) {
-        state = GardenState.error('Slot $slotNumber déjà occupé par un jardin');
+
+        state = state.copyWith(error: 'Slot $slotNumber déjà occupé par un jardin');
         return false;
       }
 
@@ -352,7 +359,7 @@ class GardenNotifier extends Notifier<GardenState> {
       await loadGardens();
       return true;
     } catch (e) {
-      state = GardenState.error(
+      state = state.copyWith(error:
           'Erreur lors de la Création pour slot $slotNumber: $e');
       return false;
     }
