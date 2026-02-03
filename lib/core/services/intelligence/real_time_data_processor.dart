@@ -4,6 +4,7 @@
 
 import 'dart:async';
 import 'dart:developer' as developer;
+import 'package:flutter/widgets.dart';
 
 /// Processing priority
 enum ProcessingPriority {
@@ -110,7 +111,7 @@ class StreamStatistics {
 }
 
 /// Real-time data processor for stream processing
-class RealTimeDataProcessor {
+class RealTimeDataProcessor with WidgetsBindingObserver {
   // Event streams by priority
   final Map<ProcessingPriority, StreamController<DataEvent>> _eventStreams = {};
 
@@ -134,6 +135,12 @@ class RealTimeDataProcessor {
   final Duration _processingTimeout;
   final bool _enableBackpressure;
   bool _isRunning = false;
+
+  // Adaptive Scheduling
+  Timer? _processingTimer;
+  Duration _currentInterval = const Duration(milliseconds: 100);
+  static const Duration _minInterval = Duration(milliseconds: 100);
+  static const Duration _maxInterval = Duration(seconds: 5);
 
   RealTimeDataProcessor({
     int? maxQueueSize,
@@ -161,14 +168,11 @@ class RealTimeDataProcessor {
     _firstEventTime = DateTime.now();
     _log('Real-time processor started');
 
-    // Process queue periodically
-    Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      if (!_isRunning) {
-        timer.cancel();
-        return;
-      }
-      _processQueue();
-    });
+    // Register lifecycle observer
+    WidgetsBinding.instance.addObserver(this);
+
+    // Start adaptive processing loop
+    _scheduleNextProcessing();
   }
 
   /// Stop the processor
@@ -176,6 +180,8 @@ class RealTimeDataProcessor {
     if (!_isRunning) return;
 
     _isRunning = false;
+    WidgetsBinding.instance.removeObserver(this);
+    _processingTimer?.cancel();
 
     // Cancel all subscriptions
     for (final subscription in _subscriptions.values) {
@@ -212,6 +218,12 @@ class RealTimeDataProcessor {
 
     // Add to queue
     _eventQueue.add(event);
+
+    // Instant Wake: If we are idling, wake up immediately
+    if (_currentInterval > _minInterval) {
+      _currentInterval = _minInterval;
+      _scheduleNextProcessing();
+    }
 
     _log('Event submitted: ${event.id} (priority: ${event.priority})');
   }
@@ -476,6 +488,51 @@ class RealTimeDataProcessor {
     await stop();
     _eventQueue.clear();
     _log('Real-time processor disposed');
+  }
+
+  // --- Lifecycle & Adaptive Scheduling ---
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      _processingTimer?.cancel();
+      _log('App backgrounded - pausing processor');
+    } else if (state == AppLifecycleState.resumed && _isRunning) {
+      _log('App resumed - restarting processor');
+      _scheduleNextProcessing();
+    }
+  }
+
+  void _scheduleNextProcessing() {
+    _processingTimer?.cancel();
+    if (!_isRunning) return;
+    _processingTimer = Timer(_currentInterval, _processTick);
+  }
+
+  void _processTick() {
+    if (!_isRunning) return;
+
+    // Process work if available
+    bool processedSomething = false;
+    if (_eventQueue.isNotEmpty) {
+      _processQueue();
+      processedSomething = true;
+    }
+
+    // Adaptive Backoff Logic
+    if (processedSomething || _eventQueue.isNotEmpty) {
+      // If busy, stay fast
+      _currentInterval = _minInterval;
+    } else {
+      // If idle, backoff exponentially
+      _currentInterval = _currentInterval * 1.5;
+      if (_currentInterval > _maxInterval) {
+        _currentInterval = _maxInterval;
+      }
+    }
+
+    _scheduleNextProcessing();
   }
 }
 
