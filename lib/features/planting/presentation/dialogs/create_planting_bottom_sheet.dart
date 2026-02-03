@@ -473,12 +473,24 @@ class _CreatePlantingBottomSheetContentState
 
         if (!success) {
           if (mounted) {
-            final errorKey = ref.read(plantingProvider).error ??
-                'Erreur lors de la Création';
-            
-            String errorMessage = errorKey;
+            final errorKey = ref.read(plantingProvider).error ?? 'Erreur lors de la Création';
             final l10n = AppLocalizations.of(context)!;
-            
+
+            // --- PAYWALL KEYS: afficher systématiquement la fiche premium (PaywallSheet)
+            const paywallKeys = [
+              'limit_beds_reached_message',
+              'limit_plantings_reached_message',
+              'paywall_limit_reached'
+            ];
+            if (paywallKeys.contains(errorKey)) {
+              // Affiche la belle fenêtre beige orientée conversion
+              await PaywallSheet.show(context);
+              setState(() => _isLoading = false);
+              return;
+            }
+
+            // --- Sinon : localiser / afficher un message d'erreur classique
+            String errorMessage = errorKey;
             if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
             if (errorKey == 'limit_plantings_reached_message') errorMessage = l10n.limit_plantings_reached_message;
 

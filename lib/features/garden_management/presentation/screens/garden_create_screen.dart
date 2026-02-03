@@ -89,13 +89,13 @@ class _GardenCreateScreenState extends ConsumerState<GardenCreateScreen> {
         );
         context.pop();
       } else {
-        // Retrieve error from state if possible, though provider is not watching state here directly.
-        // But the notifier returns false, and sets state error.
-        // We can read the error from the provider.
+        // Retrieve error from state
         final errorState = ref.read(gardenProvider);
         final String? errorKey = errorState.error;
 
-        if (errorKey == 'paywall_limit_reached') {
+        // --- PAYWALL KEYS
+        if (errorKey == 'paywall_limit_reached' || 
+            errorKey == 'limit_gardens_reached_message') {
            // Show Paywall
            if (mounted) await PaywallSheet.show(context);
            // Do not show snackbar 

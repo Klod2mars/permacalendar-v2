@@ -293,7 +293,8 @@ class _CreateGardenBedDialogState extends ConsumerState<CreateGardenBedDialog> {
         if (!validation.isValid) {
            final errorKey = validation.errorMessage ?? 'limit_beds_reached_message';
            
-           if (errorKey == 'paywall_limit_reached') {
+           // --- PAYWALL CHECK
+           if (errorKey == 'paywall_limit_reached' || errorKey == 'limit_beds_reached_message') {
                // Show Paywall
                if (mounted) await PaywallSheet.show(context);
                setState(() => _isLoading = false);
