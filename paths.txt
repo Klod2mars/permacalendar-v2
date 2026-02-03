@@ -1,2 +1,0 @@
-C:\Users\roman\Documents\apppklod\permacalendarv2\lib\core\providers____garden_awakening_registry.dart
-C:\Users\roman\Documents\apppklod\permacalendarv2\lib\shared\widgets\animations____insect_awakening_widget.dart
