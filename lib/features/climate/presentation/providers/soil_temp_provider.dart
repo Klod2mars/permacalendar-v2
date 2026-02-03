@@ -331,9 +331,12 @@ final soilTempProviderByScope =
   final controller = ref.watch(soilTempProvider);
   final dtoAsync = controller.getMetrics(scopeKey);
 
-  // Load data if not already loaded
-  if (dtoAsync.isLoading) {
+  // Load data only once: schedule load only if we don't yet have an entry
+  // in the controller state for this scopeKey. This avoids rescheduling
+  // load repeatedly while a previous load is still in-progress.
+  if (!controller.temperatures.containsKey(scopeKey)) {
     Future.microtask(() {
+      // Use read(notifier) to call the async load
       ref.read(soilTempProvider.notifier).load(scopeKey);
     });
   }
