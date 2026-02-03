@@ -55,7 +55,7 @@ class SoilMetricsDto {
     double? soilPH,
     DateTime? lastComputed,
     double? anchorTempC,
-    DateTime? anchorTimestamp,
+    DateTime? anchorTimestamp, // <-- corrigé ici
   }) {
     return SoilMetricsDto(
       soilTempEstimatedC: soilTempEstimatedC ?? this.soilTempEstimatedC,
@@ -67,7 +67,8 @@ class SoilMetricsDto {
   }
 
   /// Check if this DTO has any data
-  bool get hasData => soilTempEstimatedC != null || soilPH != null || anchorTempC != null;
+  bool get hasData =>
+      soilTempEstimatedC != null || soilPH != null || anchorTempC != null;
 
   /// Check if soil temperature was updated today
   bool get isSoilTempUpdatedToday {
@@ -135,34 +136,51 @@ abstract class SoilMetricsLocalDataSource {
 /// Implementation of soil metrics local data source using Hive
 class SoilMetricsLocalDataSourceImpl implements SoilMetricsLocalDataSource {
   static const String _boxName = 'soil_metrics.box';
+
+  /// Valeur par défaut : 8°C
+  static const double kDefaultSoilTempC = 8.0;
+
+  // Désactive les logs par défaut pour éviter les messages en masse.
+  final bool _enableLogs;
+  SoilMetricsLocalDataSourceImpl({bool enableLogs = false})
+      : _enableLogs = enableLogs;
+
+  void _log(String msg) {
+    if (_enableLogs) {
+      // Remplacez par votre logger si besoin (logger nommé, niveaux, etc.)
+      print(msg);
+    }
+  }
+
   Box<SoilMetricsDto>? _box;
   bool _initializing = false;
 
   /// Initialize the data source and open Hive box
   Future<void> initialize() async {
     if (_box != null && _box!.isOpen) return;
-    
+
     if (_initializing) {
-        // Wait minor delay to avoid race if multiple calls?
-        // Simple spin-wait or just proceed (Hive handles double open usually but best to lock)
-        print('[SoilMetricsLocalDS] Already initializing, waiting...');
-        while (_initializing) {
-            await Future.delayed(const Duration(milliseconds: 50));
-            if (_box != null && _box!.isOpen) return;
-        }
-        return;
+      // Wait minor delay to avoid race if multiple calls?
+      // Simple spin-wait or just proceed (Hive handles double open usually but best to lock)
+      _log('[SoilMetricsLocalDS] Already initializing, waiting...');
+      while (_initializing) {
+        await Future.delayed(const Duration(milliseconds: 50));
+        if (_box != null && _box!.isOpen) return;
+      }
+      return;
     }
 
     _initializing = true;
-    print('[SoilMetricsLocalDS] Initializing Hive Box: $_boxName');
+    _log('[SoilMetricsLocalDS] Initializing Hive Box: $_boxName');
     try {
       if (!Hive.isBoxOpen(_boxName)) {
         _box = await Hive.openBox<SoilMetricsDto>(_boxName);
       } else {
         _box = Hive.box<SoilMetricsDto>(_boxName);
       }
-      print('[SoilMetricsLocalDS] Box opened. Keys: ${_box?.keys.toList()}');
+      _log('[SoilMetricsLocalDS] Box opened. Keys: ${_box?.keys.toList()}');
     } catch (e) {
+      // Keep a visible error for failures to open the box.
       print('[SoilMetricsLocalDS] FATAL Error opening box: $e');
     } finally {
       _initializing = false;
@@ -180,9 +198,25 @@ class SoilMetricsLocalDataSourceImpl implements SoilMetricsLocalDataSource {
     await _ensureInitialized();
     try {
       final val = _box?.get(scopeKey);
-      print('[SoilMetricsLocalDS] Read $scopeKey: $val');
+
+      // If no data exists, create a default DTO with 8°C and persist it.
+      if (val == null) {
+        final defaultDto = SoilMetricsDto.create(
+          soilTempEstimatedC: kDefaultSoilTempC,
+          lastComputed: DateTime.now(),
+        );
+
+        // Silent write unless logs enabled
+        await _box?.put(scopeKey, defaultDto);
+        _log(
+            '[SoilMetricsLocalDS] Default soil metrics created for $scopeKey (soilTempEstimatedC: $kDefaultSoilTempC)');
+        return defaultDto;
+      }
+
+      _log('[SoilMetricsLocalDS] Read $scopeKey: $val');
       return val;
     } catch (e) {
+      // Errors are printed to ensure they are visible (rare).
       print('[SoilMetricsLocalDS] Error reading $scopeKey: $e');
       return null;
     }
@@ -192,11 +226,11 @@ class SoilMetricsLocalDataSourceImpl implements SoilMetricsLocalDataSource {
   Future<void> write(String scopeKey, SoilMetricsDto value) async {
     await _ensureInitialized();
     try {
-      print('[SoilMetricsLocalDS] Writing $scopeKey: $value');
+      _log('[SoilMetricsLocalDS] Writing $scopeKey: $value');
       await _box?.put(scopeKey, value);
       // Verify write
       final verify = _box?.get(scopeKey);
-      print('[SoilMetricsLocalDS] Verification read after write: $verify');
+      _log('[SoilMetricsLocalDS] Verification read after write: $verify');
     } catch (e) {
       print('[SoilMetricsLocalDS] Error writing $scopeKey: $e');
     }
@@ -206,7 +240,7 @@ class SoilMetricsLocalDataSourceImpl implements SoilMetricsLocalDataSource {
   Future<void> delete(String scopeKey) async {
     await _ensureInitialized();
     try {
-      print('[SoilMetricsLocalDS] Deleting $scopeKey');
+      _log('[SoilMetricsLocalDS] Deleting $scopeKey');
       await _box?.delete(scopeKey);
     } catch (e) {
       print('[SoilMetricsLocalDS] Error deleting $scopeKey: $e');
@@ -227,11 +261,11 @@ class SoilMetricsLocalDataSourceImpl implements SoilMetricsLocalDataSource {
   /// Get all scope keys (for debugging/migration)
   @override
   List<String> getAllScopeKeys() {
-     // Sync method can't await. We assume initialized or return empty.
-     if (_box == null || !_box!.isOpen) {
-         print('[SoilMetricsLocalDS] Warning: getAllScopeKeys called before init');
-         return [];
-     }
+    // Sync method can't await. We assume initialized or return empty.
+    if (_box == null || !_box!.isOpen) {
+      _log('[SoilMetricsLocalDS] Warning: getAllScopeKeys called before init');
+      return [];
+    }
     try {
       return _box!.keys.cast<String>().toList();
     } catch (e) {
