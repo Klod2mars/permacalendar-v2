@@ -15,35 +15,41 @@ import 'l10n/app_localizations.dart';
 import 'providers/locale_provider.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded<Future<void>>(() async {
+    // <-- ENSURE INITIALIZED DANS LA MÊME ZONE QUE runApp
+    WidgetsFlutterBinding.ensureInitialized();
 
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (kDebugMode) FlutterError.dumpErrorToConsole(details);
-    Zone.current.handleUncaughtError(details.exception, details.stack ?? StackTrace.current);
-  };
+    // Enregistrer FlutterError.onError dans la même zone
+    FlutterError.onError = (FlutterErrorDetails details) {
+      if (kDebugMode) FlutterError.dumpErrorToConsole(details);
+      // Utiliser Zone.current ici garantit que l'erreur est routée dans la zone active
+      Zone.current.handleUncaughtError(details.exception, details.stack ?? StackTrace.current);
+    };
 
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    return Material(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 12),
-              Text('Erreur interne : ${details.exception}', textAlign: TextAlign.center),
-            ],
+    // ErrorWidget aussi dans la zone : utile pour affichage d'erreur UI
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      return Material(
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                const SizedBox(height: 12),
+                Text('Erreur interne : ${details.exception}', textAlign: TextAlign.center),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  };
+      );
+    };
 
-  runZonedGuarded<Future<void>>(() async {
+    // Suite de l'initialisation (inchangée)
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
     await AppInitializer.initialize();
     await initializeDateFormatting('fr_FR', null);
+
+    // runApp dans la même zone que WidgetsFlutterBinding.ensureInitialized() ci-dessous
     runApp(const ProviderScope(child: MyApp()));
   }, (error, stack) {
     // force le dump complet dans log natif -> visible via adb logcat

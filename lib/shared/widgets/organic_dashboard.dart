@@ -115,7 +115,8 @@ class TapZone extends StatelessWidget {
                   // NEW: log the exact tap position and which zone received it.
                   onTapDown: (details) {
                     if (kDebugMode) {
-                      final renderBox = context.findRenderObject() as RenderBox?;
+                      final renderBox =
+                          context.findRenderObject() as RenderBox?;
                       final size = renderBox?.size;
                       final globalPos = renderBox?.localToGlobal(Offset.zero);
                       debugPrint(
@@ -129,7 +130,8 @@ class TapZone extends StatelessWidget {
                       ? DecoratedBox(
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border: Border.all(color: Colors.cyanAccent, width: 2),
+                            border:
+                                Border.all(color: Colors.cyanAccent, width: 2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
@@ -294,7 +296,7 @@ class OrganicDashboardWidget extends ConsumerStatefulWidget {
 
 extension _WidgetExt on Widget {
   Widget wrappedInIgnorePointer({required bool ignoring}) {
-    // If not ignoring, just return the widget to avoid unnecessary depth, 
+    // If not ignoring, just return the widget to avoid unnecessary depth,
     // or return IgnorePointer(ignoring: false, child: this).
     // IgnorePointer with ignoring:false allows hits.
     return IgnorePointer(ignoring: ignoring, child: this);
@@ -305,7 +307,7 @@ class _OrganicDashboardWidgetState
     extends ConsumerState<OrganicDashboardWidget> {
   final GlobalKey _containerKey = GlobalKey();
   double? _initialSizeForScale;
-  
+
   // [GESTURE STATE]
   double _baseZoom = 1.0;
   double _baseAlignX = 0.0;
@@ -438,7 +440,7 @@ class _OrganicDashboardWidgetState
     const String kMetaCreditsId = 'meta_credits';
     // Default position for the credits bubble (small bubble to the right of central cluster)
     // Adjust these coordinates based on the visual layout or user guidance
-    metaDefaultsPositions[kMetaCreditsId] = const Offset(0.66, 0.28); 
+    metaDefaultsPositions[kMetaCreditsId] = const Offset(0.66, 0.28);
     metaDefaultsSizes[kMetaCreditsId] = 0.08; // Small visual size
     metaDefaultsEnabled[kMetaCreditsId] = true;
 
@@ -448,8 +450,6 @@ class _OrganicDashboardWidgetState
           defaultEnabled: metaDefaultsEnabled,
         );
   }
-
-
 
   Future<void> _onGardenTap(int slot) async {
     final gardenId = await DashboardSlotsRepository.getGardenIdForSlot(slot);
@@ -546,9 +546,8 @@ class _OrganicDashboardWidgetState
     if (kDebugMode) {
       debugPrint('OrganicDashboard: build called -> ${widget.assetPath}');
     } else {
-        print('DEBUG: [OrganicDashboardWidget] build called (RELEASE MODE)');
+      print('DEBUG: [OrganicDashboardWidget] build called (RELEASE MODE)');
     }
-
 
     final zones = ref.watch(organicZonesProvider);
     final calibState = ref.watch(calibrationStateProvider);
@@ -562,7 +561,6 @@ class _OrganicDashboardWidgetState
     final activeGardenId = ref.watch(activeGardenIdProvider);
     final metaZones = ref.watch(metaTapZonesProvider); // [NEW]
     final l10n = AppLocalizations.of(context)!;
-
 
     String getLocalizedLabel(String id) {
       if (id.startsWith('garden_')) {
@@ -624,8 +622,9 @@ class _OrganicDashboardWidgetState
               Positioned.fill(
                 child: GestureDetector(
                   onScaleStart: (details) {
-                    if (!isCalibrating || activeTool != CalibrationTool.image) return;
-                    
+                    if (!isCalibrating || activeTool != CalibrationTool.image)
+                      return;
+
                     final settings = ref.read(dashboardImageSettingsProvider);
                     _baseZoom = settings.zoom;
                     _baseAlignX = settings.alignX;
@@ -633,10 +632,12 @@ class _OrganicDashboardWidgetState
                     _lastFocalPoint = details.localFocalPoint;
                   },
                   onScaleUpdate: (details) {
-                    if (!isCalibrating || activeTool != CalibrationTool.image) return;
+                    if (!isCalibrating || activeTool != CalibrationTool.image)
+                      return;
 
-                    final notifier = ref.read(dashboardImageSettingsProvider.notifier);
-                    
+                    final notifier =
+                        ref.read(dashboardImageSettingsProvider.notifier);
+
                     // 1. ZOOM (Scale)
                     // details.scale is the scale factor since the start of the gesture.
                     // New zoom = base * current_scale_factor
@@ -646,30 +647,30 @@ class _OrganicDashboardWidgetState
                     // 2. PAN (Translation)
                     // We need to calculate how much the focal point moved in pixels
                     if (_lastFocalPoint != null) {
-                      // Calculate delta in pixels since START of gesture? 
+                      // Calculate delta in pixels since START of gesture?
                       // No, onScaleUpdate gives us the current focal point.
                       // Relative to the start of gesture?
                       // Actually, if we use details.focalPointDelta, it's the delta since the PREVIOUS update.
-                      // But since we are setting state every frame, relying on incremental updates might drift 
+                      // But since we are setting state every frame, relying on incremental updates might drift
                       // if we don't assume the base.
                       // HOWEVER, Align is absolute.
                       // Let's use the displacement from START.
                       // details.localFocalPoint is the current position.
                       // But we need the start position. We didn't store startFocalPoint?
-                      // Let's just use incremental delta provided by GestureDetector for simplicity 
+                      // Let's just use incremental delta provided by GestureDetector for simplicity
                       // IF we trust it, or use (current - last) if we track last.
-                      
+
                       // Better approach with Aliases:
                       // Delta in pixels = details.focalPointDelta (since last frame)
                       // We can just apply this small delta to the CURRENT settings?
                       // NO, because we are rewriting settings based on _base variables for Zoom.
-                      // If we mix "Base * Scale" for Zoom and "Current + Delta" for Pan, it works 
+                      // If we mix "Base * Scale" for Zoom and "Current + Delta" for Pan, it works
                       // because Zoom is absolute-ish (relative to start), Pan is incremental.
                       // Let's try incremental Pan.
-                      
+
                       final dx = details.focalPointDelta.dx;
                       final dy = details.focalPointDelta.dy;
-                      
+
                       // Convert pixel delta to Alignment units (-1..1).
                       // Total width represented by Align(-1) to Align(1) is "width - imageWidth"?
                       // No, Alignment units are awkward.
@@ -678,37 +679,43 @@ class _OrganicDashboardWidgetState
                       // Wait, OverflowBox child size is: containerWidth * Zoom.
                       // The "play area" for alignment is (ChildWidth - ContainerWidth).
                       // If ChildWidth == ContainerWidth, Alignment has no effect (division by zero effectively).
-                      
+
                       final childW = width * newZoom;
                       final childH = height * newZoom;
-                      
+
                       final playW = childW - width;
                       final playH = childH - height;
-                      
+
                       // If playW is 0, we can't pan.
                       if (playW.abs() > 1.0) {
                         // Movement of 1 pixel corresponds to what change in Align?
                         // Total Range of Align (2.0) covers `playW` pixels.
                         // So 1 pixel = 2.0 / playW;
-                        
+
                         // Dragging content Right (+dx) means we want to see Left (Align decreases).
                         // So Align -= dx * (2.0 / playW).
-                        
+
                         final alignDeltaX = dx * (2.0 / playW);
                         // However, we must apply this to the LATEST alignment state?
-                        // Or can we calculate from base? 
+                        // Or can we calculate from base?
                         // Since newZoom changes playW every frame, incremental is risky if we don't integrate perfectly.
-                        // Let's update the "current" align directly via the notifier, 
-                        // but we need to fetch the LATEST value, which might be `settings.alignX` 
+                        // Let's update the "current" align directly via the notifier,
+                        // but we need to fetch the LATEST value, which might be `settings.alignX`
                         // from the closure? No, `ref.read` gets fresh value.
-                        final currentSettings = ref.read(dashboardImageSettingsProvider);
-                        notifier.setAlignX((currentSettings.alignX - alignDeltaX).clamp(-1.5, 1.5));
+                        final currentSettings =
+                            ref.read(dashboardImageSettingsProvider);
+                        notifier.setAlignX(
+                            (currentSettings.alignX - alignDeltaX)
+                                .clamp(-1.5, 1.5));
                       }
-                      
+
                       if (playH.abs() > 1.0) {
                         final alignDeltaY = dy * (2.0 / playH);
-                        final currentSettings = ref.read(dashboardImageSettingsProvider);
-                        notifier.setAlignY((currentSettings.alignY - alignDeltaY).clamp(-1.5, 1.5));
+                        final currentSettings =
+                            ref.read(dashboardImageSettingsProvider);
+                        notifier.setAlignY(
+                            (currentSettings.alignY - alignDeltaY)
+                                .clamp(-1.5, 1.5));
                       }
                     }
                   },
@@ -751,16 +758,17 @@ class _OrganicDashboardWidgetState
 
                   if (isCalibrating) {
                     // [UNIFIED] Only show interactive hotspots if Modules tool is active
-                    final areModulesEditable = activeTool == CalibrationTool.modules;
-                    
+                    final areModulesEditable =
+                        activeTool == CalibrationTool.modules;
+
                     if (!areModulesEditable) {
-                       // If not editing modules, we might want to show them as static or hidden?
-                       // If editing Image or Sky, modules usually distract or block view.
-                       // Let's show them but non-interactive? Or just hide them?
-                       // User request: "calibration des modules" is one mode.
-                       // Maybe show them semi-transparent if not active?
-                       // Let's keep them visible but not draggable.
-                       // ACTUALLY, checking current map logic below...
+                      // If not editing modules, we might want to show them as static or hidden?
+                      // If editing Image or Sky, modules usually distract or block view.
+                      // Let's show them but non-interactive? Or just hide them?
+                      // User request: "calibration des modules" is one mode.
+                      // Maybe show them semi-transparent if not active?
+                      // Let's keep them visible but not draggable.
+                      // ACTUALLY, checking current map logic below...
                     }
 
                     return Stack(
@@ -782,23 +790,25 @@ class _OrganicDashboardWidgetState
                                 top: top,
                                 width: diameter,
                                 height: diameter,
-                                  child: _CalibratableHotspot(
-                                    id: cfg.id,
-                                    cfg: cfg,
-                                    localizedLabel: getLocalizedLabel(cfg.id),
-                                    isCalibrating: areModulesEditable, // Only draggable if modules tool
-                                    onTapRoute: null,
-                                    containerKey: _containerKey,
-                                    ref: ref,
-                                    showDebugOutline: areModulesEditable, // Show outline only if editable
-                                  ),
+                                child: _CalibratableHotspot(
+                                  id: cfg.id,
+                                  cfg: cfg,
+                                  localizedLabel: getLocalizedLabel(cfg.id),
+                                  isCalibrating:
+                                      areModulesEditable, // Only draggable if modules tool
+                                  onTapRoute: null,
+                                  containerKey: _containerKey,
+                                  ref: ref,
+                                  showDebugOutline:
+                                      areModulesEditable, // Show outline only if editable
+                                ),
                               );
                             })(),
 
-                         // [NEW] Calibration display for Meta Zones
-                         // Restrict to 'modules' tool as requested (no erratic movement in Image mode).
-                         if (activeTool == CalibrationTool.modules)
-                           for (final entry in metaZones.entries)
+                        // [NEW] Calibration display for Meta Zones
+                        // Restrict to 'modules' tool as requested (no erratic movement in Image mode).
+                        if (activeTool == CalibrationTool.modules)
+                          for (final entry in metaZones.entries)
                             if (entry.value.enabled)
                               MetaTapZoneWidget(
                                 config: entry.value,
@@ -812,7 +822,7 @@ class _OrganicDashboardWidgetState
 
                   // Mode normal (non-calibration) : utiliser les positions persistées depuis le provider
                   final gardenState = ref.watch(gardenProvider);
-                  
+
                   return Stack(
                     children: [
                       // [NEW] 0) Meta Tap Zones (Rendered FIRST -> Bottom of Stack -> Lower priority)
@@ -822,12 +832,13 @@ class _OrganicDashboardWidgetState
                         if (entry.value.enabled)
                           MetaTapZoneWidget(
                             config: entry.value,
-                            isCalibrationMode: false, // In normal mode, no calibration overlay
+                            isCalibrationMode:
+                                false, // In normal mode, no calibration overlay
                             containerSize: Size(w, h),
                             onTap: () {
-                                if (entry.key == 'meta_credits') {
-                                  context.push(AppRoutes.credits);
-                                }
+                              if (entry.key == 'meta_credits') {
+                                context.push(AppRoutes.credits);
+                              }
                             },
                           ),
 
@@ -880,7 +891,9 @@ class _OrganicDashboardWidgetState
                                     radius: diameter / 2,
                                     onTap: () => _onGardenTap(slot),
                                     isActive: activeGardenId == garden.id,
-                                    auraColor: Theme.of(context).colorScheme.primaryContainer,
+                                    auraColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
                                   );
                                 }
                               }
@@ -911,8 +924,9 @@ class _OrganicDashboardWidgetState
                   );
                 }),
               ).wrappedInIgnorePointer(
-                  ignoring: isCalibrating && activeTool != CalibrationTool.modules),
-
+                ignoring:
+                    isCalibrating && activeTool != CalibrationTool.modules,
+              ),
               // [NEW] Global "+" Button if no gardens exist
               if (!isCalibrating && ref.watch(activeGardensCountProvider) == 0)
                 Positioned(
