@@ -922,10 +922,10 @@ class _OrganicDashboardWidgetState
                           })(),
                     ],
                   );
-                }),
-              ).wrappedInIgnorePointer(
-                ignoring:
-                    isCalibrating && activeTool != CalibrationTool.modules,
+                }).wrappedInIgnorePointer(
+                  ignoring:
+                      isCalibrating && activeTool != CalibrationTool.modules,
+                ),
               ),
               // [NEW] Global "+" Button if no gardens exist
               if (!isCalibrating && ref.watch(activeGardensCountProvider) == 0)
