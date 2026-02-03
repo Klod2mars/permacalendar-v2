@@ -462,7 +462,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
               // Premium Banner
               Builder(
                 builder: (context) {
-                   final count = ref.watch(plantingProvider).plantings.length;
+                   final count = ref.watch(globalActivePlantCountProvider);
                    final limit = CanPerformActionChecker.kFreePlantLimit;
                    final remaining = (limit - count).clamp(0, limit);
                    

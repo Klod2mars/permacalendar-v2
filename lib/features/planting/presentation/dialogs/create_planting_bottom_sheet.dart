@@ -473,7 +473,7 @@ class _CreatePlantingBottomSheetContentState
 
         if (!success) {
           if (mounted) {
-            final errorKey = ref.read(plantingProvider).error ?? 'Erreur lors de la Création';
+            final errorKey = (ref.read(plantingProvider).error ?? 'Erreur lors de la Création').trim();
             final l10n = AppLocalizations.of(context)!;
 
             // --- PAYWALL KEYS: afficher systématiquement la fiche premium (PaywallSheet)
@@ -482,7 +482,7 @@ class _CreatePlantingBottomSheetContentState
               'limit_plantings_reached_message',
               'paywall_limit_reached'
             ];
-            if (paywallKeys.contains(errorKey)) {
+            if (paywallKeys.contains(errorKey) || errorKey.contains('paywall_limit')) {
               // Affiche la belle fenêtre beige orientée conversion
               await PaywallSheet.show(context);
               setState(() => _isLoading = false);

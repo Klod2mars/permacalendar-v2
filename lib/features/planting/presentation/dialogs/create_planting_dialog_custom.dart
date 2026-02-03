@@ -11,9 +11,10 @@ import '../../../plant_catalog/presentation/screens/plant_catalog_screen.dart';
 import '../../../plant_catalog/providers/plant_catalog_provider.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/providers/activity_tracker_v3_provider.dart';
+import '../../../premium/presentation/paywall_sheet.dart'; // Paywall import
 
-/// Usage:
-/// showDialog(context: context, builder: (_) => CreatePlantingDialogCustom(gardenBedId: 'bed1', planting: null));
+// ... (existing imports, but replace_file_content handles the block)
+
 class CreatePlantingDialogCustom extends ConsumerStatefulWidget {
   final String gardenBedId;
   final Planting? planting;
@@ -478,15 +479,28 @@ class _CreatePlantingDialogCustomState
 
         if (!success) {
           if (mounted) {
-            final errorKey = ref.read(plantingProvider).error ??
-                'Erreur lors de la Création';
-            
-            String errorMessage = errorKey;
+            final errorKey = (ref.read(plantingProvider).error ?? 'Erreur lors de la Création').trim();
             final l10n = AppLocalizations.of(context)!;
+
+            // --- PAYWALL KEYS
+            final paywallKeys = [
+              'limit_beds_reached_message',
+              'limit_plantings_reached_message',
+              'paywall_limit_reached'
+            ];
+            
+            // Check exact match or substring for robust matching
+            if (paywallKeys.contains(errorKey) || errorKey.contains('paywall_limit')) {
+               await PaywallSheet.show(context);
+               setState(() => _isLoading = false);
+               return;
+            }
+
+            String errorMessage = errorKey;
             if (errorKey == 'limit_beds_reached_message') errorMessage = l10n.limit_beds_reached_message;
             if (errorKey == 'limit_plantings_reached_message') errorMessage = l10n.limit_plantings_reached_message;
 
-            // Afficher une Dialog pour être sur qu'elle soit visible
+            // Fallback Dialog
             showDialog(
               context: context,
               builder: (ctx) => AlertDialog(

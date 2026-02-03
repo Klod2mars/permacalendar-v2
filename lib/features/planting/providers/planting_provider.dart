@@ -51,6 +51,11 @@ class PlantingState {
   }
 }
 
+// Global Active Plant Count Provider
+final globalActivePlantCountProvider = Provider<int>((ref) {
+  return GardenBoxes.plantings.values.where((p) => p.isActive).length;
+});
+
 // Planting Notifier
 class PlantingNotifier extends Notifier<PlantingState> {
   @override
@@ -319,6 +324,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
         error: null,
       );
 
+      // Refresh global count
+      ref.invalidate(globalActivePlantCountProvider);
+
       return true;
     } catch (e) {
       state = state.copyWith(error: 'Erreur lors de la Création: $e');
@@ -379,6 +387,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
         plantings: updatedPlantings,
         error: null,
       );
+
+      // Refresh global count
+      ref.invalidate(globalActivePlantCountProvider);
 
       return true;
     } catch (e) {
@@ -445,6 +456,9 @@ class PlantingNotifier extends Notifier<PlantingState> {
         plantings: updatedPlantings,
         error: null,
       );
+
+      // Refresh global count
+      ref.invalidate(globalActivePlantCountProvider);
 
       return true;
     } catch (e) {
