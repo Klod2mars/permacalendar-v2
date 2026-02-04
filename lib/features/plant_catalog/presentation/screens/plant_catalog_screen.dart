@@ -479,8 +479,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 12.0, vertical: 10.0),
+                padding: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, top: 10.0, bottom: 2.0),
                 child: TextField(
                   controller: _searchController,
                   textInputAction: TextInputAction.search,

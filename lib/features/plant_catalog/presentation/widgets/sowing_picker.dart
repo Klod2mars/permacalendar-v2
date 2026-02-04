@@ -164,36 +164,12 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
         // Filter Chips Row
 
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 0.0), // Reduced from 4.0
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use min size for Column
             crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
             children: [
-              // Date Picker Button (centered)
-               OutlinedButton.icon(
-                onPressed: () async {
-                  final pick = await showDatePicker(
-                    context: context, 
-                    initialDate: _date, 
-                    firstDate: DateTime(2000), 
-                    lastDate: DateTime(2100),
-                    locale: const Locale('fr'),
-                  );
-                  if (pick != null) setState(() => _date = pick);
-                },
-                icon: Icon(Icons.calendar_month, color: Theme.of(context).primaryColor),
-                label: Text(
-                  '${_date.day}/${_date.month}', 
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Theme.of(context).primaryColor.withOpacity(0.5)),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                ),
-              ),
-              const SizedBox(height: 12), // Vertical spacing between date and filter
-              
-              // Filter Chip centered below
+              // 1. Filter Chip (Only element remaining)
               FilterChip(
                 label: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_only),
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -201,9 +177,8 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                 onSelected: (val) {
                   setState(() => _showAll = !val);
                 },
-                // Avatar always visible (green dot)
                 avatar: const CircleAvatar(backgroundColor: Colors.green, radius: 4),
-                selectedColor: Colors.green.withOpacity(0.1), // Lighter selection color
+                selectedColor: Colors.green.withOpacity(0.1),
                 checkmarkColor: Colors.green,
                 showCheckmark: false, 
                 labelStyle: TextStyle(
@@ -212,7 +187,7 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                       : Theme.of(context).colorScheme.onSurface,
                   fontWeight: !_showAll ? FontWeight.bold : FontWeight.normal,
                 ),
-                backgroundColor: Colors.transparent, // Always transparent background when not selected
+                backgroundColor: Colors.transparent,
                 shape: StadiumBorder(
                   side: BorderSide(
                     color: !_showAll ? Colors.green : Theme.of(context).colorScheme.outline
