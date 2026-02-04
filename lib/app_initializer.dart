@@ -149,6 +149,18 @@ class AppInitializer {
       print('❌ Erreur initialisation NotificationService: $e');
     }
 
+    // Check global notification definition and cleanup if needed
+    try {
+       final prefs = await SharedPreferences.getInstance();
+       final notificationsEnabled = prefs.getBool('app_settings_notifications_enabled') ?? true;
+       if (!notificationsEnabled) {
+          print('🔕 Notifications disabled in settings: Ensuring all schedules are cancelled.');
+          await NotificationService().cancelAllNotifications();
+       }
+    } catch (e) {
+       print('⚠️ Error checking/cancelling notifications on boot: $e');
+    }
+
     // Validation des données
     await _validatePlantData();
 

@@ -151,4 +151,16 @@ class NotificationService {
     if (!_initialized) await init();
     await flutterLocalNotificationsPlugin.cancelAll();
   }
+
+  /// Cancels all notifications and logs the result.
+  Future<void> cancelAllNotifications() async {
+    if (!_initialized) await init();
+    try {
+      await flutterLocalNotificationsPlugin.cancelAll();
+      print('[NotificationService] cancelAllNotifications: all scheduled notifications cancelled');
+    } catch (e) {
+      print('[NotificationService] cancelAllNotifications failed: $e');
+      rethrow;
+    }
+  }
 }

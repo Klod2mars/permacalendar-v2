@@ -20,6 +20,7 @@ import '../../core/models/garden.dart';
 import '../../core/models/garden_bed.dart';
 import '../../core/models/garden_freezed.dart';
 import '../../features/garden/providers/garden_provider.dart';
+import '../../core/providers/app_settings_provider.dart';
 
 import '../../l10n/app_localizations.dart';
 
@@ -440,7 +441,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
         }
 
         // Schedule new notifications if enabled
-        if (_personalNotification) {
+        if (_personalNotification && ref.read(appSettingsProvider).notificationsEnabled) {
           final List<int> scheduledIds = [];
           if (_recurrenceMap != null) {
              // Calculate occurrences for recurrence
