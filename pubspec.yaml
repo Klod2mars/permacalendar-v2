@@ -106,6 +106,13 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   path: ^1.9.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/icon/app_icon.png
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
