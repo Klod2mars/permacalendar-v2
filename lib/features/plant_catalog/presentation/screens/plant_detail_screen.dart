@@ -37,59 +37,7 @@ class PlantDetailScreen extends ConsumerWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: plant.commonName,
-        actions: [
-          IconButton(
-            onPressed: () {
-              // TODO: Add to favorites
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('${plant.commonName} ajouté aux favoris')),
-              );
-            },
-            icon: const Icon(Icons.favorite_border),
-          ),
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              switch (value) {
-                case 'share':
-                  // TODO: Implement share
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Partage à implémenter')),
-                  );
-                  break;
-                case 'add_to_garden':
-                  // TODO: Navigate to planting creation
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Ajout au jardin à implémenter')),
-                  );
-                  break;
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'add_to_garden',
-                child: Row(
-                  children: [
-                    Icon(Icons.add_circle),
-                    SizedBox(width: 8),
-                    Text('Ajouter au jardin'),
-                  ],
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'share',
-                child: Row(
-                  children: [
-                    Icon(Icons.share),
-                    SizedBox(width: 8),
-                    Text('Partager'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
