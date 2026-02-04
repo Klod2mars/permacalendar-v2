@@ -2660,6 +2660,14 @@
   "calendar_personal_notification": "Benachrichtigung",
   "calendar_personal_notification_on": "Aktiviert",
   "calendar_personal_notification_off": "Deaktiviert",
+  "limit_gardens_reached_message": "Limit erreicht. Bitte löschen Sie einen Garten, um einen neuen zu erstellen.",
   "calendar_notify_before": "Benachrichtigen vor",
-  "minutes": "Minuten"
+  "minutes": "Minuten",
+  "calendar_task_personal_notification_title": "Persönliche Benachrichtigung",
+  "calendar_task_personal_notification_subtitle": "Erhalten Sie eine Benachrichtigung auf diesem Gerät",
+  "calendar_task_notify_before_label": "Mich benachrichtigen",
+  "notify_at_time": "Zum Zeitpunkt",
+  "minutes_short": "Min",
+  "hour_short": "Std",
+  "day_short": "T"
 }

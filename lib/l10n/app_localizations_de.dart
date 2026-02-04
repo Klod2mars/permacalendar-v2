@@ -747,7 +747,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get limit_gardens_reached_message =>
-      'Limite de 5 jardins actifs atteinte.\nVeuillez archiver ou supprimer un jardin pour en créer un nouveau.';
+      'Limit erreicht. Bitte löschen Sie einen Garten, um einen neuen zu erstellen.';
 
   @override
   String get calendar_filter_maintenance => 'Wartung';
@@ -2901,24 +2901,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get calendar_task_personal_notification_title =>
-      'Notification personnelle';
+      'Persönliche Benachrichtigung';
 
   @override
   String get calendar_task_personal_notification_subtitle =>
-      'Recevoir une alerte sur cet appareil';
+      'Erhalten Sie eine Benachrichtigung auf diesem Gerät';
 
   @override
-  String get calendar_task_notify_before_label => 'Me prévenir';
+  String get calendar_task_notify_before_label => 'Mich benachrichtigen';
 
   @override
-  String get notify_at_time => 'À l\'heure';
+  String get notify_at_time => 'Zum Zeitpunkt';
 
   @override
-  String get minutes_short => 'min';
+  String get minutes_short => 'Min';
 
   @override
-  String get hour_short => 'h';
+  String get hour_short => 'Std';
 
   @override
-  String get day_short => 'j';
+  String get day_short => 'T';
 }
