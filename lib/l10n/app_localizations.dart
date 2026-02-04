@@ -214,6 +214,36 @@ abstract class AppLocalizations {
   /// **'Sélectionnée: {label}'**
   String settings_commune_selected(String label);
 
+  /// Titre du paramètre notifications
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get settings_notifications_title;
+
+  /// Sous-titre du paramètre notifications
+  ///
+  /// In fr, this message translates to:
+  /// **'Activer les rappels et alertes'**
+  String get settings_notifications_subtitle;
+
+  /// Titre dialogue permission
+  ///
+  /// In fr, this message translates to:
+  /// **'Permission requise'**
+  String get settings_notification_permission_dialog_title;
+
+  /// Contenu dialogue permission
+  ///
+  /// In fr, this message translates to:
+  /// **'Les notifications sont désactivées. Veuillez les activer dans les paramètres système pour recevoir les rappels.'**
+  String get settings_notification_permission_dialog_content;
+
+  /// Bouton pour ouvrir paramètres système
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir les paramètres'**
+  String get settings_open_system_settings;
+
   /// Titre de la zone Accès rapide dans les paramètres
   ///
   /// In fr, this message translates to:

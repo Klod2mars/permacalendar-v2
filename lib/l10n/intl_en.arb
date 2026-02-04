@@ -66,6 +66,26 @@
       }
     }
   },
+  "settings_notifications_title": "Notifications",
+  "@settings_notifications_title": {
+    "description": "Title for notifications settings"
+  },
+  "settings_notifications_subtitle": "Enable reminders and alerts",
+  "@settings_notifications_subtitle": {
+    "description": "Subtitle for notifications settings"
+  },
+  "settings_notification_permission_dialog_title": "Permission Required",
+  "@settings_notification_permission_dialog_title": {
+    "description": "Title of request permission dialog"
+  },
+  "settings_notification_permission_dialog_content": "Notifications are disabled. Please enable them in system settings to receive reminders.",
+  "@settings_notification_permission_dialog_content": {
+    "description": "Content of request permission dialog"
+  },
+  "settings_open_system_settings": "Open Settings",
+  "@settings_open_system_settings": {
+    "description": "Button to open system settings"
+  },
   "settings_quick_access": "Quick Access",
   "@settings_quick_access": {
     "description": "Titre de la zone Accès rapide dans les paramètres"

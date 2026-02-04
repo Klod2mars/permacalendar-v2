@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // pour debugPrint
 import '../../../features/climate/presentation/providers/weather_providers.dart';
 import '../../../l10n/app_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/services/environment_service.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../core/utils/constants.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
 import '../../../shared/widgets/custom_card.dart';
@@ -111,6 +113,47 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showCurrencySelector(context, ref),
           ),
+          const Divider(height: 1),
+          // Notifications toggle
+          Builder(builder: (ctx) {
+            final settings = ref.watch(appSettingsProvider);
+            return SwitchListTile(
+              title: Text(l10n.settings_notifications_title),
+              subtitle: Text(l10n.settings_notifications_subtitle),
+              value: settings.notificationsEnabled,
+              onChanged: (v) async {
+                // Optimistically update local state
+                await ref.read(appSettingsProvider.notifier).setNotificationsEnabled(v);
+
+                if (v) {
+                  // Request runtime permission (Android 13+, iOS)
+                  final status = await Permission.notification.request();
+                  if (status.isGranted) {
+                    // OK
+                  } else if (status.isPermanentlyDenied || status.isDenied) {
+                    // Offer to open system settings
+                    final open = await showDialog<bool>(
+                      context: ctx,
+                      builder: (_) => AlertDialog(
+                        title: Text(l10n.settings_notification_permission_dialog_title),
+                        content: Text(l10n.settings_notification_permission_dialog_content),
+                        actions: [
+                          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(l10n.common_cancel)),
+                          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(l10n.settings_open_system_settings)),
+                        ],
+                      ),
+                    );
+                    if (open == true) {
+                      openAppSettings(); // from permission_handler
+                    }
+                  }
+                } else {
+                  // Cancel all scheduled notifications
+                  await NotificationService().cancelAll();
+                }
+              },
+            );
+          }),
         ]),
       ),
     ]);

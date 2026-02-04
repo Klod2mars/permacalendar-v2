@@ -79,6 +79,26 @@
       }
     }
   },
+  "settings_notifications_title": "Notifications",
+  "@settings_notifications_title": {
+    "description": "Titre du paramètre notifications"
+  },
+  "settings_notifications_subtitle": "Activer les rappels et alertes",
+  "@settings_notifications_subtitle": {
+    "description": "Sous-titre du paramètre notifications"
+  },
+  "settings_notification_permission_dialog_title": "Permission requise",
+  "@settings_notification_permission_dialog_title": {
+    "description": "Titre dialogue permission"
+  },
+  "settings_notification_permission_dialog_content": "Les notifications sont désactivées. Veuillez les activer dans les paramètres système pour recevoir les rappels.",
+  "@settings_notification_permission_dialog_content": {
+    "description": "Contenu dialogue permission"
+  },
+  "settings_open_system_settings": "Ouvrir les paramètres",
+  "@settings_open_system_settings": {
+    "description": "Bouton pour ouvrir paramètres système"
+  },
 
   "settings_quick_access": "Accès rapide",
   "@settings_quick_access": {

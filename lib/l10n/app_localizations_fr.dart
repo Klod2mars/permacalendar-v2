@@ -68,6 +68,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get settings_notifications_title => 'Notifications';
+
+  @override
+  String get settings_notifications_subtitle =>
+      'Activer les rappels et alertes';
+
+  @override
+  String get settings_notification_permission_dialog_title =>
+      'Permission requise';
+
+  @override
+  String get settings_notification_permission_dialog_content =>
+      'Les notifications sont désactivées. Veuillez les activer dans les paramètres système pour recevoir les rappels.';
+
+  @override
+  String get settings_open_system_settings => 'Ouvrir les paramètres';
+
+  @override
   String get settings_quick_access => 'Accès rapide';
 
   @override

@@ -68,6 +68,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get settings_notifications_title => 'Notifications';
+
+  @override
+  String get settings_notifications_subtitle => 'Enable reminders and alerts';
+
+  @override
+  String get settings_notification_permission_dialog_title =>
+      'Permission Required';
+
+  @override
+  String get settings_notification_permission_dialog_content =>
+      'Notifications are disabled. Please enable them in system settings to receive reminders.';
+
+  @override
+  String get settings_open_system_settings => 'Open Settings';
+
+  @override
   String get settings_quick_access => 'Quick Access';
 
   @override

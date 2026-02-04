@@ -146,4 +146,9 @@ class NotificationService {
     if (!_initialized) await init();
     await flutterLocalNotificationsPlugin.cancel(id);
   }
+
+  Future<void> cancelAll() async {
+    if (!_initialized) await init();
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
 }

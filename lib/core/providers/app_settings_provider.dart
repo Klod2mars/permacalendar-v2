@@ -8,6 +8,7 @@ final appSettingsProvider =
     NotifierProvider<AppSettingsNotifier, AppSettings>(AppSettingsNotifier.new);
 
 class AppSettingsNotifier extends Notifier<AppSettings> {
+  static const String _keyNotificationsEnabled = 'app_settings_notifications_enabled';
   static const String _keyShowNutritionInterpretation = 'app_settings_nutrition_interpretation';
   static const String _keyCustomZoneId = 'app_settings_custom_zone_id';
   static const String _keyCustomLastFrostDate = 'app_settings_custom_last_frost_date';
@@ -20,6 +21,7 @@ class AppSettingsNotifier extends Notifier<AppSettings> {
 
   Future<void> _loadPersistence() async {
     final prefs = await SharedPreferences.getInstance();
+    final notificationsEnabled = prefs.getBool(_keyNotificationsEnabled) ?? true;
     final showInterpretation = prefs.getBool(_keyShowNutritionInterpretation) ?? false;
     final zoneId = prefs.getString(_keyCustomZoneId);
     final frostStr = prefs.getString(_keyCustomLastFrostDate);
@@ -29,6 +31,7 @@ class AppSettingsNotifier extends Notifier<AppSettings> {
     }
     
     state = state.copyWith(
+      notificationsEnabled: notificationsEnabled,
       showNutritionInterpretation: showInterpretation,
       customZoneId: zoneId,
       customLastFrostDate: frostDate,
@@ -55,6 +58,12 @@ class AppSettingsNotifier extends Notifier<AppSettings> {
 
   Future<void> setShowHistoryHint(bool value) async {
     state = state.copyWith(showHistoryHint: value);
+  }
+  
+  Future<void> setNotificationsEnabled(bool value) async {
+    state = state.copyWith(notificationsEnabled: value);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyNotificationsEnabled, value);
   }
 
   Future<void> toggleShowNutritionInterpretation(bool value) async {
