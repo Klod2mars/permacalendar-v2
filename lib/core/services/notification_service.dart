@@ -1,7 +1,10 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart' as fln;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -20,42 +23,76 @@ class NotificationService {
   Future<void> init() async {
     if (_initialized) return;
 
+    // --- Timezone init (important) ---
     tz.initializeTimeZones();
-    final timeZoneInfo = await FlutterTimezone.getLocalTimezone();
-    final String timeZoneName = timeZoneInfo.identifier;
-    tz.setLocalLocation(tz.getLocation(timeZoneName));
+    try {
+      final String timeZoneName = (await FlutterTimezone.getLocalTimezone()).identifier;
+      tz.setLocalLocation(tz.getLocation(timeZoneName));
+      print('[NotificationService] Timezone set to $timeZoneName');
+    } catch (e) {
+      // fallback: tz.local may still be usable, but log
+      print('[NotificationService] Failed to set local timezone: $e');
+    }
 
-    // Use 'mipmap/ic_launcher' for Android icon
+    // --- Android icon ---
     const fln.AndroidInitializationSettings initializationSettingsAndroid =
         fln.AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // Minimal Darwin settings for iOS/macOS
-    const fln.DarwinInitializationSettings initializationSettingsDarwin =
-        fln.DarwinInitializationSettings();
+    // --- iOS / macOS minimal + request permissions on initialization ---
+    final fln.DarwinInitializationSettings initializationSettingsDarwin =
+        const fln.DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
 
-    const fln.InitializationSettings initializationSettings = fln.InitializationSettings(
+    final fln.InitializationSettings initializationSettings = fln.InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
       macOS: initializationSettingsDarwin,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    
-    // Request permissions for iOS/macOS
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<fln.IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      // Optionally add onDidReceiveNotificationResponse callbacks here
+    );
 
-    // Request permissions for Android 13+
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<fln.AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
+    // --- Request runtime permission for notifications (Android 13+) ---
+    try {
+      if (Platform.isAndroid || Platform.isIOS) {
+        final status = await Permission.notification.status;
+        if (!status.isGranted) {
+          final result = await Permission.notification.request();
+          print('[NotificationService] Notification permission: $result');
+        } else {
+          print('[NotificationService] Notification permission already granted');
+        }
+      }
+    } catch (e) {
+      print('[NotificationService] permission request failed: $e');
+    }
+
+    // --- Create Android channel explicitly (robustness) ---
+    try {
+      final fln.AndroidNotificationChannel channel = const fln.AndroidNotificationChannel(
+        'planting_steps_channel', // id
+        'Planting Steps', // name
+        description: 'Reminders for planting steps',
+        importance: fln.Importance.max,
+      );
+
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              fln.AndroidFlutterLocalNotificationsPlugin>()
+          ?.createNotificationChannel(channel);
+
+      print('[NotificationService] Android channel created: planting_steps_channel');
+    } catch (e) {
+      print('[NotificationService] creating Android channel failed: $e');
+    }
 
     _initialized = true;
+    print('[NotificationService] initialized');
   }
 
   Future<int> scheduleNotification({
@@ -67,31 +104,40 @@ class NotificationService {
   }) async {
     if (!_initialized) await init();
 
-    // Use provided ID or generate a unique one (within int32 range)
     final int notificationId = id ?? DateTime.now().millisecondsSinceEpoch.remainder(2147483647);
 
-    // If date is in the past, the plugin might fire immediately or fail. 
-    // We pass it to zonedSchedule anyway.
-    
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      notificationId,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledDate, tz.local),
-      const fln.NotificationDetails(
-        android: fln.AndroidNotificationDetails(
-          'planting_steps_channel',
-          'Planting Steps',
-          channelDescription: 'Reminders for planting steps',
-          importance: fln.Importance.max,
-          priority: fln.Priority.high,
-        ),
-        iOS: fln.DarwinNotificationDetails(),
-      ),
-      androidScheduleMode: fln.AndroidScheduleMode.exactAllowWhileIdle,
+    // Debug log
+    print('[NotificationService] Scheduling notification id=$notificationId at $scheduledDate (local tz: ${tz.local.name})');
 
-      payload: payload,
+    final fln.NotificationDetails details = const fln.NotificationDetails(
+      android: fln.AndroidNotificationDetails(
+        'planting_steps_channel',
+        'Planting Steps',
+        channelDescription: 'Reminders for planting steps',
+        importance: fln.Importance.max,
+        priority: fln.Priority.high,
+      ),
+      iOS: fln.DarwinNotificationDetails(),
     );
+
+    // Convert DateTime to TZDateTime in local zone
+    final tz.TZDateTime tzScheduled = tz.TZDateTime.from(scheduledDate, tz.local);
+
+    try {
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        notificationId,
+        title,
+        body,
+        tzScheduled,
+        details,
+        androidScheduleMode: fln.AndroidScheduleMode.exactAllowWhileIdle,
+        payload: payload,
+      );
+      print('[NotificationService] scheduled (id=$notificationId) for $tzScheduled');
+    } catch (e) {
+      print('[NotificationService] zonedSchedule failed: $e');
+      rethrow;
+    }
 
     return notificationId;
   }
