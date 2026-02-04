@@ -2900,4 +2900,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get common_done => 'Fait';
+
+  @override
+  String get calendar_task_personal_notification_title =>
+      'Notification personnelle';
+
+  @override
+  String get calendar_task_personal_notification_subtitle =>
+      'Recevoir une alerte sur cet appareil';
+
+  @override
+  String get calendar_task_notify_before_label => 'Me prévenir';
+
+  @override
+  String get notify_at_time => 'À l\'heure';
+
+  @override
+  String get minutes_short => 'min';
+
+  @override
+  String get hour_short => 'h';
+
+  @override
+  String get day_short => 'j';
 }

@@ -57,6 +57,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   // Personal Notification
   bool _personalNotification = false;
   int _notifyBeforeMinutes = 0; // 0,5,10,30,60
+  final List<int> _notifyOptionsMinutes = [0, 5, 10, 30, 60, 720, 1440];
 
   // Recurrence
   Map<String, dynamic>? _recurrenceMap;
@@ -460,6 +461,8 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                     payload: '/activities/${savedTask.id}',
                  );
                  scheduledIds.add(id);
+               } else {
+                 developer.log('[CreateTask] Notification skipped (past): $notifyAt');
                }
              }
           } else {
@@ -474,6 +477,8 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
                   payload: '/activities/${savedTask.id}',
                 );
                 scheduledIds.add(id);
+             } else {
+               developer.log('[CreateTask] Notification skipped (past): $notifyAt');
              }
           }
 
@@ -808,28 +813,37 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
               // Personal Notification
               SwitchListTile(
-                title: Text(l10n.calendar_personal_notification),
-                subtitle: Text(_personalNotification 
-                    ? l10n.calendar_personal_notification_on 
-                    : l10n.calendar_personal_notification_off),
+                title: Text(l10n.calendar_task_personal_notification_title),
+                subtitle: Text(l10n.calendar_task_personal_notification_subtitle),
                 value: _personalNotification,
                 onChanged: (v) => setState(() => _personalNotification = v),
                 contentPadding: EdgeInsets.zero,
               ),
               if (_personalNotification)
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
-                  child: DropdownButtonFormField<int>(
-                    decoration: InputDecoration(
-                        labelText: l10n.calendar_notify_before,
-                        border: const OutlineInputBorder(),
-                    ),
-                    value: _notifyBeforeMinutes,
-                    items: [0, 5, 10, 30, 60]
-                        .map((m) => DropdownMenuItem(
-                            value: m, child: Text('$m ${l10n.minutes}')))
-                        .toList(),
-                    onChanged: (v) => setState(() => _notifyBeforeMinutes = v ?? 0),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Text(l10n.calendar_task_notify_before_label),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: DropdownButton<int>(
+                          isExpanded: true,
+                          value: _notifyOptionsMinutes.contains(_notifyBeforeMinutes) ? _notifyBeforeMinutes : 0,
+                          items: _notifyOptionsMinutes.map((m) {
+                            String label;
+                            if (m == 0) label = l10n.notify_at_time;
+                            else if (m < 60) label = '$m ${l10n.minutes_short}';
+                            else if (m == 60) label = '1 ${l10n.hour_short}';
+                            else if (m == 720) label = '12 ${l10n.hour_short}';
+                            else if (m == 1440) label = '1 ${l10n.day_short}';
+                            else label = '$m ${l10n.minutes_short}';
+                            return DropdownMenuItem<int>(value: m, child: Text(label));
+                          }).toList(),
+                          onChanged: (val) => setState(() => _notifyBeforeMinutes = val ?? 0),
+                        ),
+                      )
+                    ],
                   ),
                 ),
 

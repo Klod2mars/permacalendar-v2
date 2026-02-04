@@ -2649,5 +2649,12 @@
   "step_dialog_no_date": "No date",
   "step_dialog_pick_date": "Select date",
   "common_add": "Add",
-  "common_done": "Done"
+  "common_done": "Done",
+  "calendar_task_personal_notification_title": "Personal Notification",
+  "calendar_task_personal_notification_subtitle": "Get an alert on this device",
+  "calendar_task_notify_before_label": "Notify me",
+  "notify_at_time": "At time",
+  "minutes_short": "min",
+  "hour_short": "h",
+  "day_short": "d"
 }

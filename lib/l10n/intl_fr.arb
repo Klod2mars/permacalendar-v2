@@ -1940,7 +1940,14 @@
   "step_dialog_no_date": "Pas de date",
   "step_dialog_pick_date": "Sélectionner date",
   "common_add": "Ajouter",
-  "common_done": "Fait"
+  "common_done": "Fait",
+  "calendar_task_personal_notification_title": "Notification personnelle",
+  "calendar_task_personal_notification_subtitle": "Recevoir une alerte sur cet appareil",
+  "calendar_task_notify_before_label": "Me prévenir",
+  "notify_at_time": "À l'heure",
+  "minutes_short": "min",
+  "hour_short": "h",
+  "day_short": "j"
 }
 
 

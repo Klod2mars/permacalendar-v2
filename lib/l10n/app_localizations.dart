@@ -5325,6 +5325,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Fait'**
   String get common_done;
+
+  /// No description provided for @calendar_task_personal_notification_title.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification personnelle'**
+  String get calendar_task_personal_notification_title;
+
+  /// No description provided for @calendar_task_personal_notification_subtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recevoir une alerte sur cet appareil'**
+  String get calendar_task_personal_notification_subtitle;
+
+  /// No description provided for @calendar_task_notify_before_label.
+  ///
+  /// In fr, this message translates to:
+  /// **'Me prévenir'**
+  String get calendar_task_notify_before_label;
+
+  /// No description provided for @notify_at_time.
+  ///
+  /// In fr, this message translates to:
+  /// **'À l\'heure'**
+  String get notify_at_time;
+
+  /// No description provided for @minutes_short.
+  ///
+  /// In fr, this message translates to:
+  /// **'min'**
+  String get minutes_short;
+
+  /// No description provided for @hour_short.
+  ///
+  /// In fr, this message translates to:
+  /// **'h'**
+  String get hour_short;
+
+  /// No description provided for @day_short.
+  ///
+  /// In fr, this message translates to:
+  /// **'j'**
+  String get day_short;
 }
 
 class _AppLocalizationsDelegate

@@ -5,7 +5,14 @@
     "calendar_personal_notification_off",
     "calendar_notify_before",
     "minutes",
-    "limit_gardens_reached_message"
+    "limit_gardens_reached_message",
+    "calendar_task_personal_notification_title",
+    "calendar_task_personal_notification_subtitle",
+    "calendar_task_notify_before_label",
+    "notify_at_time",
+    "minutes_short",
+    "hour_short",
+    "day_short"
   ],
 
   "es": [
@@ -14,7 +21,14 @@
     "calendar_personal_notification_off",
     "calendar_notify_before",
     "minutes",
-    "limit_gardens_reached_message"
+    "limit_gardens_reached_message",
+    "calendar_task_personal_notification_title",
+    "calendar_task_personal_notification_subtitle",
+    "calendar_task_notify_before_label",
+    "notify_at_time",
+    "minutes_short",
+    "hour_short",
+    "day_short"
   ],
 
   "it": [
@@ -23,7 +37,14 @@
     "calendar_personal_notification_off",
     "calendar_notify_before",
     "minutes",
-    "limit_gardens_reached_message"
+    "limit_gardens_reached_message",
+    "calendar_task_personal_notification_title",
+    "calendar_task_personal_notification_subtitle",
+    "calendar_task_notify_before_label",
+    "notify_at_time",
+    "minutes_short",
+    "hour_short",
+    "day_short"
   ],
 
   "pt": [
@@ -32,6 +53,13 @@
     "calendar_personal_notification_off",
     "calendar_notify_before",
     "minutes",
-    "limit_gardens_reached_message"
+    "limit_gardens_reached_message",
+    "calendar_task_personal_notification_title",
+    "calendar_task_personal_notification_subtitle",
+    "calendar_task_notify_before_label",
+    "notify_at_time",
+    "minutes_short",
+    "hour_short",
+    "day_short"
   ]
 }
