@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart' as fln;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -20,6 +21,9 @@ class NotificationService {
     if (_initialized) return;
 
     tz.initializeTimeZones();
+    final timeZoneInfo = await FlutterTimezone.getLocalTimezone();
+    final String timeZoneName = timeZoneInfo.identifier;
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
 
     // Use 'mipmap/ic_launcher' for Android icon
     const fln.AndroidInitializationSettings initializationSettingsAndroid =
@@ -36,6 +40,21 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    
+    // Request permissions for iOS/macOS
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<fln.IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+
+    // Request permissions for Android 13+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<fln.AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+
     _initialized = true;
   }
 

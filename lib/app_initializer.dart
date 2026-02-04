@@ -25,6 +25,7 @@ import 'features/premium/application/purchase_service.dart';
 import 'features/premium/data/entitlement_repository.dart'; // Added
 // Generated Hive adapters
 import 'models/plant_localized.dart';
+import 'core/services/notification_service.dart';
 
 class AppInitializer {
   static Future<void> initialize() async {
@@ -138,6 +139,14 @@ class AppInitializer {
       await PurchaseService().initialize();
     } catch (e) {
       print('❌ Erreur initialisation PurchaseService: $e');
+    }
+
+    // Initialize Notification Service (Requests permissions on startup)
+    try {
+      await NotificationService().init();
+      print('✅ NotificationService initialisé');
+    } catch (e) {
+      print('❌ Erreur initialisation NotificationService: $e');
     }
 
     // Validation des données

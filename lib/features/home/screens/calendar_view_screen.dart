@@ -11,6 +11,7 @@ import '../../planting/providers/planting_provider.dart';
 import '../../../core/analytics/ui_analytics.dart';
 import '../../../core/data/hive/garden_boxes.dart';
 import '../../../core/models/activity.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../core/repositories/repository_providers.dart';
 import '../../calendar/presentation/providers/calendar_filter_provider.dart';
 import '../../../features/home/providers/calendar_aggregation_provider.dart';
@@ -322,6 +323,14 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
     final l10n = AppLocalizations.of(context)!;
     final Activity deletedCopy = activity;
     try {
+      // Cancel notifications if any
+      final notifIds = activity.metadata['personalNotification']?['notificationIds'];
+      if (notifIds is List) {
+        for (final nid in notifIds) {
+          try { await NotificationService().cancelNotification(nid as int); } catch (_) {}
+        }
+      }
+
       await GardenBoxes.activities.delete(activity.id);
       await _loadCalendarData();
 

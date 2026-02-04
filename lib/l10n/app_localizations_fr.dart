@@ -643,6 +643,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get calendar_personal_notification => 'Notification';
+
+  @override
+  String get calendar_personal_notification_on => 'Activée';
+
+  @override
+  String get calendar_personal_notification_off => 'Désactivée';
+
+  @override
+  String get calendar_notify_before => 'Prévenir avant';
+
+  @override
+  String get minutes => 'minutes';
+
+  @override
   String get calendar_previous_month => 'Mois précédent';
 
   @override

@@ -1222,6 +1222,36 @@ abstract class AppLocalizations {
   /// **'Erreur export PDF: {error}'**
   String calendar_export_error(Object error);
 
+  /// No description provided for @calendar_personal_notification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification'**
+  String get calendar_personal_notification;
+
+  /// No description provided for @calendar_personal_notification_on.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activée'**
+  String get calendar_personal_notification_on;
+
+  /// No description provided for @calendar_personal_notification_off.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivée'**
+  String get calendar_personal_notification_off;
+
+  /// No description provided for @calendar_notify_before.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prévenir avant'**
+  String get calendar_notify_before;
+
+  /// No description provided for @minutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'minutes'**
+  String get minutes;
+
   /// Tooltip mois précédent
   ///
   /// In fr, this message translates to:

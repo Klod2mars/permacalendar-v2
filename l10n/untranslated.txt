@@ -1,17 +1,37 @@
 {
   "de": [
+    "calendar_personal_notification",
+    "calendar_personal_notification_on",
+    "calendar_personal_notification_off",
+    "calendar_notify_before",
+    "minutes",
     "limit_gardens_reached_message"
   ],
 
   "es": [
+    "calendar_personal_notification",
+    "calendar_personal_notification_on",
+    "calendar_personal_notification_off",
+    "calendar_notify_before",
+    "minutes",
     "limit_gardens_reached_message"
   ],
 
   "it": [
+    "calendar_personal_notification",
+    "calendar_personal_notification_on",
+    "calendar_personal_notification_off",
+    "calendar_notify_before",
+    "minutes",
     "limit_gardens_reached_message"
   ],
 
   "pt": [
+    "calendar_personal_notification",
+    "calendar_personal_notification_on",
+    "calendar_personal_notification_off",
+    "calendar_notify_before",
+    "minutes",
     "limit_gardens_reached_message"
   ]
 }

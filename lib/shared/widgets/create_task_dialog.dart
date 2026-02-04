@@ -13,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 import '../../core/data/hive/garden_boxes.dart';
 import '../../core/models/activity.dart';
 import '../../shared/services/task_document_generator.dart';
+import '../../core/services/notification_service.dart';
+import '../../core/services/recurrence_service.dart';
 import '../../core/models/activity.dart';
 import '../../core/models/garden.dart';
 import '../../core/models/garden_bed.dart';
@@ -51,6 +53,10 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
   late DateTime _startDate;
   TimeOfDay? _startTime;
   int _durationMinutes = 60;
+
+  // Personal Notification
+  bool _personalNotification = false;
+  int _notifyBeforeMinutes = 0; // 0,5,10,30,60
 
   // Recurrence
   Map<String, dynamic>? _recurrenceMap;
@@ -130,6 +136,12 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
         // We can't await in initState.
         // We'll trigger a load method.
         _loadAttachedImage(path);
+      }
+      
+      if (a.metadata['personalNotification'] is Map) {
+        final pn = a.metadata['personalNotification'];
+        _personalNotification = pn['enabled'] == true;
+        _notifyBeforeMinutes = pn['notifyBeforeMinutes'] is int ? pn['notifyBeforeMinutes'] : 0;
       }
     } else {
       _startDate = widget.initialDate ?? DateTime.now();
@@ -319,7 +331,9 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
 
     try {
       final f = await TaskDocumentGenerator.generateTaskPdf(tmpTask);
-      await TaskDocumentGenerator.shareFile(f, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF - Brouillon)');
+      if (mounted) {
+        await TaskDocumentGenerator.shareFile(f, 'application/pdf', context, shareText: 'Tâche PermaCalendar (PDF - Brouillon)');
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('PDF envoyé (brouillon). Appuyez sur Créer pour enregistrer la tâche.'),
@@ -390,6 +404,17 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
         if (widget.activityToEdit != null) {
           // Update Mode
           final existing = widget.activityToEdit!;
+
+          // Cancel previous notifications if any
+          final existingNotifIds = existing.metadata['personalNotification']?['notificationIds'];
+          if (existingNotifIds is List) {
+            try { 
+               for (final nid in existingNotifIds) {
+                 await NotificationService().cancelNotification(nid as int);
+               }
+            } catch (_) {}
+          }
+
           savedTask = Activity(
              id: existing.id, // Preserve ID
              type: existing.type,
@@ -411,6 +436,72 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
           savedTask = newTask;
           await GardenBoxes.activities.put(savedTask.id, savedTask);
           developer.log('[CreateTask] written activity id=${savedTask.id}');
+        }
+
+        // Schedule new notifications if enabled
+        if (_personalNotification) {
+          final List<int> scheduledIds = [];
+          if (_recurrenceMap != null) {
+             // Calculate occurrences for recurrence
+             // Use RecurrenceService from imports
+             final occurrences = RecurrenceService.computeOccurrences(_recurrenceMap!, finalDate, 12);
+             for (final occ in occurrences) {
+               final notifyAt = occ.subtract(Duration(minutes: _notifyBeforeMinutes));
+               // Generate unique ID for occurrence
+               final id = ('${savedTask.id}_${occ.millisecondsSinceEpoch}').hashCode.abs();
+               
+               // Avoid scheduling in the past
+               if (notifyAt.isAfter(DateTime.now())) {
+                 await NotificationService().scheduleNotification(
+                    id: id,
+                    title: 'Sowing: ${savedTask.title}',
+                    body: savedTask.description ?? '',
+                    scheduledDate: notifyAt,
+                    payload: '/activities/${savedTask.id}',
+                 );
+                 scheduledIds.add(id);
+               }
+             }
+          } else {
+             final notifyAt = finalDate.subtract(Duration(minutes: _notifyBeforeMinutes));
+             final id = savedTask.id.hashCode.abs();
+             if (notifyAt.isAfter(DateTime.now())) {
+                await NotificationService().scheduleNotification(
+                  id: id,
+                  title: 'Sowing: ${savedTask.title}',
+                  body: savedTask.description ?? '',
+                  scheduledDate: notifyAt,
+                  payload: '/activities/${savedTask.id}',
+                );
+                scheduledIds.add(id);
+             }
+          }
+
+          // Update metadata with scheduled IDs
+          if (scheduledIds.isNotEmpty) {
+             final newMeta = Map<String, dynamic>.from(savedTask.metadata);
+             newMeta['personalNotification'] = {
+               'enabled': true,
+               'notifyBeforeMinutes': _notifyBeforeMinutes,
+               'notificationIds': scheduledIds,
+             };
+             
+             final updatedWithNotif = Activity(
+               id: savedTask.id,
+               type: savedTask.type,
+               title: savedTask.title,
+               description: savedTask.description,
+               entityId: savedTask.entityId,
+               entityType: savedTask.entityType,
+               timestamp: savedTask.timestamp,
+               metadata: newMeta,
+               createdAt: savedTask.createdAt,
+               updatedAt: DateTime.now(),
+               isActive: savedTask.isActive,
+             );
+             await GardenBoxes.activities.put(updatedWithNotif.id, updatedWithNotif);
+             savedTask = updatedWithNotif; // Update local ref for dialog
+          }
         }
 
         if (mounted) {
@@ -712,6 +803,35 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
               const SizedBox(height: 16),
 
 
+
+              const SizedBox(height: 16),
+
+              // Personal Notification
+              SwitchListTile(
+                title: Text(l10n.calendar_personal_notification),
+                subtitle: Text(_personalNotification 
+                    ? l10n.calendar_personal_notification_on 
+                    : l10n.calendar_personal_notification_off),
+                value: _personalNotification,
+                onChanged: (v) => setState(() => _personalNotification = v),
+                contentPadding: EdgeInsets.zero,
+              ),
+              if (_personalNotification)
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
+                  child: DropdownButtonFormField<int>(
+                    decoration: InputDecoration(
+                        labelText: l10n.calendar_notify_before,
+                        border: const OutlineInputBorder(),
+                    ),
+                    value: _notifyBeforeMinutes,
+                    items: [0, 5, 10, 30, 60]
+                        .map((m) => DropdownMenuItem(
+                            value: m, child: Text('$m ${l10n.minutes}')))
+                        .toList(),
+                    onChanged: (v) => setState(() => _notifyBeforeMinutes = v ?? 0),
+                  ),
+                ),
 
               const SizedBox(height: 12),
               Text(l10n.task_editor_photo_label ?? 'Photo de la tâche', style: Theme.of(context).textTheme.titleSmall),
@@ -1143,7 +1263,7 @@ class _AssigneeSelectorState extends State<_AssigneeSelector> {
                   margin: const EdgeInsets.only(top: 4),
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
-                    border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                    border: Border.all(color: Colors.grey.withAlpha(77)),
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(

@@ -803,6 +803,11 @@
       }
     }
   },
+  "calendar_personal_notification": "Notification",
+  "calendar_personal_notification_on": "Enabled",
+  "calendar_personal_notification_off": "Disabled",
+  "calendar_notify_before": "Notify before",
+  "minutes": "minutes",
   "calendar_previous_month": "Previous month",
   "@calendar_previous_month": {
     "description": "Tooltip mois précédent"
