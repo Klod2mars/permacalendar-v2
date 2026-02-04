@@ -68,17 +68,20 @@ class CreditContactScreen extends StatelessWidget {
                   color: textColor.withOpacity(0.85),
                   height: 1.6,
                 ),
-                h1: GoogleFonts.outfit(
+                h1: TextStyle(
+                  fontFamily: 'Outfit',
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
                   color: textColor,
                 ),
-                h2: GoogleFonts.outfit(
+                h2: TextStyle(
+                  fontFamily: 'Outfit',
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                   color: accentColor, 
                 ),
-                h3: GoogleFonts.outfit(
+                h3: TextStyle(
+                  fontFamily: 'Outfit',
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                   color: textColor.withOpacity(0.9),
