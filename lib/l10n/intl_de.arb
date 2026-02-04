@@ -2641,5 +2641,25 @@
   "step_dialog_no_date": "Kein Datum",
   "step_dialog_pick_date": "Datum wählen",
   "common_add": "Hinzufügen",
-  "common_done": "Erledigt"
+  "common_done": "Erledigt",
+  "settings_notifications_title": "Benachrichtigungen",
+  "@settings_notifications_title": { "description": "Title for notifications settings" },
+
+  "settings_notifications_subtitle": "Erinnerungen und Warnungen aktivieren",
+  "@settings_notifications_subtitle": { "description": "Subtitle for notifications settings" },
+
+  "settings_notification_permission_dialog_title": "Berechtigung erforderlich",
+  "@settings_notification_permission_dialog_title": { "description": "Title of request permission dialog" },
+
+  "settings_notification_permission_dialog_content": "Benachrichtigungen sind deaktiviert. Bitte aktivieren Sie sie in den Systemeinstellungen, um Erinnerungen zu erhalten.",
+  "@settings_notification_permission_dialog_content": { "description": "Content of request permission dialog" },
+
+  "settings_open_system_settings": "Einstellungen öffnen",
+  "@settings_open_system_settings": { "description": "Button to open system settings" },
+
+  "calendar_personal_notification": "Benachrichtigung",
+  "calendar_personal_notification_on": "Aktiviert",
+  "calendar_personal_notification_off": "Deaktiviert",
+  "calendar_notify_before": "Benachrichtigen vor",
+  "minutes": "Minuten"
 }

@@ -2641,5 +2641,25 @@
   "step_dialog_no_date": "Sem data",
   "step_dialog_pick_date": "Selecionar data",
   "common_add": "Adicionar",
-  "common_done": "Feito"
+  "common_done": "Feito",
+  "settings_notifications_title": "Notificações",
+  "@settings_notifications_title": { "description": "Title for notifications settings" },
+
+  "settings_notifications_subtitle": "Ativar lembretes e alertas",
+  "@settings_notifications_subtitle": { "description": "Subtitle for notifications settings" },
+
+  "settings_notification_permission_dialog_title": "Permissão necessária",
+  "@settings_notification_permission_dialog_title": { "description": "Title of request permission dialog" },
+
+  "settings_notification_permission_dialog_content": "As notificações estão desativadas. Por favor, ative-as nas configurações do sistema para receber lembretes.",
+  "@settings_notification_permission_dialog_content": { "description": "Content of request permission dialog" },
+
+  "settings_open_system_settings": "Abrir configurações",
+  "@settings_open_system_settings": { "description": "Button to open system settings" },
+
+  "calendar_personal_notification": "Notificação",
+  "calendar_personal_notification_on": "Ativada",
+  "calendar_personal_notification_off": "Desativada",
+  "calendar_notify_before": "Notificar antes",
+  "minutes": "minutos"
 }

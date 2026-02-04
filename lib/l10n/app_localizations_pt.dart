@@ -68,22 +68,21 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get settings_notifications_title => 'Notifications';
+  String get settings_notifications_title => 'Notificações';
 
   @override
-  String get settings_notifications_subtitle =>
-      'Activer les rappels et alertes';
+  String get settings_notifications_subtitle => 'Ativar lembretes e alertas';
 
   @override
   String get settings_notification_permission_dialog_title =>
-      'Permission requise';
+      'Permissão necessária';
 
   @override
   String get settings_notification_permission_dialog_content =>
-      'Les notifications sont désactivées. Veuillez les activer dans les paramètres système pour recevoir les rappels.';
+      'As notificações estão desativadas. Por favor, ative-as nas configurações do sistema para receber lembretes.';
 
   @override
-  String get settings_open_system_settings => 'Ouvrir les paramètres';
+  String get settings_open_system_settings => 'Abrir configurações';
 
   @override
   String get settings_quick_access => 'Acesso rápido';
@@ -661,19 +660,19 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get calendar_personal_notification => 'Notification';
+  String get calendar_personal_notification => 'Notificação';
 
   @override
-  String get calendar_personal_notification_on => 'Activée';
+  String get calendar_personal_notification_on => 'Ativada';
 
   @override
-  String get calendar_personal_notification_off => 'Désactivée';
+  String get calendar_personal_notification_off => 'Desativada';
 
   @override
-  String get calendar_notify_before => 'Prévenir avant';
+  String get calendar_notify_before => 'Notificar antes';
 
   @override
-  String get minutes => 'minutes';
+  String get minutes => 'minutos';
 
   @override
   String get calendar_previous_month => 'Mês anterior';
