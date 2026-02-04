@@ -472,8 +472,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                      remaining: remaining,
                      limit: limit,
                      message: remaining > 0 
-                        ? '$remaining plantes gratuites restantes' 
-                        : 'Limite gratuite atteinte',
+                        ? '$remaining free plants remaining' 
+                        : 'Free limit reached',
                    );
                 }
               ),

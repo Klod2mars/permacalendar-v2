@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:permacalendar/features/premium/domain/can_perform_action_checker.dart';
+
 import 'package:permacalendar/features/premium/presentation/paywall_sheet.dart';
 import 'package:permacalendar/features/premium/data/entitlement_repository.dart';
 
@@ -14,7 +14,7 @@ class PremiumBanner extends StatelessWidget {
     required this.remaining,
     required this.limit,
     required this.message,
-    this.subMessage = 'Passez Premium pour illimité',
+    this.subMessage = 'Go Premium for unlimited',
   });
 
   @override

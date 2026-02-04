@@ -43,7 +43,7 @@ void main() {
     await EntitlementRepository().init();
     final box = Hive.box<Entitlement>('entitlements');
     await box.clear();
-    await box.put('current_entitlement', Entitlement.premium()); // Force Premium to Ignore Paywall logic for now, we want to test Technical Limit leakage
+    await box.put('current_entitlement', Entitlement.premium(productId: 'test_id')); // Force Premium to Ignore Paywall logic for now, we want to test Technical Limit leakage
   });
 
   tearDown(() async {

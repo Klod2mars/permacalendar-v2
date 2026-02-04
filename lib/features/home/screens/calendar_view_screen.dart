@@ -386,7 +386,7 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
         if (mounted) {
            final remaining = repo.getRemainingExports();
            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-             content: Text('Export effectué. Il vous reste $remaining exports gratuits.'),
+             content: Text('Export successful. You have $remaining free exports remaining.'),
              duration: const Duration(seconds: 4),
            ));
         }
@@ -481,8 +481,8 @@ class _CalendarViewScreenState extends ConsumerState<CalendarViewScreen> {
                 remaining: remaining,
                 limit: EntitlementRepository.kDefaultExportLimit,
                 message: remaining > 0
-                    ? '$remaining envois gratuits restants'
-                    : 'Limite d\'envois atteinte',
+                    ? '$remaining free exports remaining'
+                    : 'Export limit reached',
               );
             },
           ),

@@ -64,6 +64,9 @@ void main() {
        final box = Hive.box<Entitlement>('entitlements');
        await box.put('current_entitlement', Entitlement.premium(productId: 'bypass_id', source: 'bypass'));
        
+       // Initialize repo to pick up the box
+       await repository.init();
+       
        // Verify it exists
        expect(repository.getCurrentEntitlement().source, 'bypass');
        

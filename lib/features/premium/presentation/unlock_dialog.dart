@@ -59,7 +59,7 @@ class _UnlockDialogState extends State<UnlockDialog> {
       if (mounted) {
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('🔓 Mode Développeur / Premium activé !')),
+          const SnackBar(content: Text('🔓 Developer / Premium mode activated!')),
         );
       }
     } else if (hash == _resetHash) {
@@ -69,12 +69,12 @@ class _UnlockDialogState extends State<UnlockDialog> {
        if (mounted) {
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('🔒 Premium révoqué (Reset).')),
+          const SnackBar(content: Text('🔒 Premium revoked (Reset).')),
         );
       }
     } else {
       setState(() {
-        _errorText = 'Code incorrect';
+        _errorText = 'Incorrect code';
       });
     }
   }
@@ -85,7 +85,7 @@ class _UnlockDialogState extends State<UnlockDialog> {
        if (mounted) {
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('🔒 Premium révoqué (Reset).')),
+          const SnackBar(content: Text('🔒 Premium revoked (Reset).')),
         );
       }
   }
@@ -94,31 +94,31 @@ class _UnlockDialogState extends State<UnlockDialog> {
   Widget build(BuildContext context) {
     if (_isAlreadyPremium) {
       return AlertDialog(
-        title: const Text('Mode Développeur Actif'),
-        content: const Text('Vous bénéficiez actuellement du statut Premium via le bypass développeur.\n\nVoulez-vous le révoquer pour tester le Paywall ?'),
+        title: const Text('Developer Mode Active'),
+        content: const Text('You are currently Premium via the developer bypass.\n\nDo you want to revoke it to test the Paywall?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Fermer'),
+            child: const Text('Close'),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
             onPressed: _revokePremium,
-            child: const Text('RÉVOQUER'),
+            child: const Text('REVOKE'),
           ),
         ],
       );
     }
 
     return AlertDialog(
-      title: const Text('Code Secret'),
+      title: const Text('Secret Code'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _controller,
             decoration: InputDecoration(
-              hintText: 'Entrez le code',
+              hintText: 'Enter the code',
               errorText: _errorText,
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
@@ -134,7 +134,7 @@ class _UnlockDialogState extends State<UnlockDialog> {
           ),
           const SizedBox(height: 16),
           const Text(
-            'Usage réservé aux développeurs et validateurs.',
+            'For developers and validators only.',
             style: TextStyle(fontSize: 12, color: Colors.grey),
           ),
         ],
@@ -142,11 +142,11 @@ class _UnlockDialogState extends State<UnlockDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: const Text('Cancel'),
         ),
         ElevatedButton(
           onPressed: _verifyCode,
-          child: const Text('Valider'),
+          child: const Text('Validate'),
         ),
       ],
     );

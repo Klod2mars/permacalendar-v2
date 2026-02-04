@@ -63,8 +63,8 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
                         remaining: remaining,
                         limit: EntitlementRepository.kDefaultExportLimit,
                         message: remaining > 0
-                            ? '$remaining exports gratuits restants'
-                            : 'Limite d\'exports atteinte',
+                            ? '$remaining free exports remaining'
+                            : 'Export limit reached',
                       );
                     },
                   ),
@@ -403,7 +403,7 @@ class _ExportBuilderScreenState extends ConsumerState<ExportBuilderScreen> {
         final remaining = repo.getRemainingExports();
         if (context.mounted) {
            ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(content: Text('Export réussi. Il vous reste $remaining exports gratuits.'))
+             SnackBar(content: Text('Export successful. You have $remaining free exports remaining.'))
            );
         }
       }

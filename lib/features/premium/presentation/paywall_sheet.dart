@@ -49,7 +49,7 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
       if (success) {
         Navigator.pop(context); // Close paywall on success
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Bienvenue dans Premium ! 🌿')),
+          const SnackBar(content: Text('Welcome to Premium! 🌿')),
         );
       }
     }
@@ -63,11 +63,11 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
       if (success) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Achats restaurés avec succès ! 🔄')),
+          const SnackBar(content: Text('Purchases restored successfully! 🔄')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Aucun achat trouvé à restaurer.')),
+          const SnackBar(content: Text('No purchases found to restore.')),
         );
       }
     }
@@ -86,13 +86,13 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
         children: [
           // Header
           const Text(
-            'Débloquez tout le potentiel 🌱',
+            'Unlock the full potential 🌱',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),
           const Text(
-            'Déployez votre potager sans contrainte :\n5 jardins, 100 parcelles chacun,\n6 plantes par parcelle\n👉 3 000 cultures suivies simultanément.',
+            'Grow your garden without limits:\n5 gardens, 100 plots each,\n6 plants per plot\n👉 Up to 3,000 plants tracked simultaneously.',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey, fontSize: 16, height: 1.5),
           ),
@@ -102,7 +102,7 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
           if (_isLoading)
             const Center(child: CircularProgressIndicator())
           else if (_offerings == null || _offerings!.current == null)
-            const Text("Aucune connection au store. Veuillez réessayer.")
+            const Text("No connection to the store. Please try again.")
           else ...[
             // Packages
             if (_offerings!.current!.monthly != null)
@@ -129,14 +129,14 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
             },
             child: TextButton(
               onPressed: _onRestore,
-              child: const Text("Restaurer les achats"),
+              child: const Text("Restore purchases"),
             ),
           ),
           
           const SizedBox(height: 24),
           // Legal
           const Text(
-            "L'abonnement se renouvelle automatiquement sauf annulation 24h avant la fin. Gérez votre abonnement dans les réglages du Store.",
+            "Subscription auto-renews unless canceled 24 hours before the end. Manage your subscription in the Store settings.",
             style: TextStyle(fontSize: 10, color: Colors.grey),
             textAlign: TextAlign.center,
           ),
@@ -162,7 +162,7 @@ class _PaywallSheetState extends ConsumerState<PaywallSheet> {
         child: Column(
           children: [
             Text(
-              isAnnual ? "Annuel (Meilleure offre)" : "Mensuel",
+              isAnnual ? "Annual (Best value)" : "Monthly",
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
