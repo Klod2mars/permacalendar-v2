@@ -2472,7 +2472,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get plant_catalog_filter_green_only =>
-      'Legumes adaptés aux conditions';
+      'Légumes adaptés aux conditions';
 
   @override
   String get plant_catalog_filter_green_orange => 'Verts + Oranges';

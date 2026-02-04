@@ -4543,7 +4543,7 @@ abstract class AppLocalizations {
   /// Filtre afficher uniquement les plantes vertes (idéal ce mois)
   ///
   /// In fr, this message translates to:
-  /// **'Legumes adaptés aux conditions'**
+  /// **'Légumes adaptés aux conditions'**
   String get plant_catalog_filter_green_only;
 
   /// Filtre afficher les plantes vertes et oranges

@@ -1676,7 +1676,7 @@
   "plant_catalog_show_selection": "Afficher sélection",
   "@plant_catalog_show_selection": { "description": "Bouton pour afficher la sélection Semer/Planter" },
 
-  "plant_catalog_filter_green_only": "Legumes adaptés aux conditions",
+  "plant_catalog_filter_green_only": "Légumes adaptés aux conditions",
   "@plant_catalog_filter_green_only": { "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)" },
 
   "plant_catalog_filter_green_orange": "Verts + Oranges",

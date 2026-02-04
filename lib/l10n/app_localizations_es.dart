@@ -2456,7 +2456,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get plant_catalog_show_selection => 'Mostrar selección';
 
   @override
-  String get plant_catalog_filter_green_only => 'Verdes solo';
+  String get plant_catalog_filter_green_only =>
+      'Hortalizas adaptadas a las condiciones';
 
   @override
   String get plant_catalog_filter_green_orange => 'Verdes + Naranjas';

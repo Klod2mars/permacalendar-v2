@@ -2302,10 +2302,8 @@
   "@plant_catalog_show_selection": {
     "description": "Bouton pour afficher la sélection Semer/Planter"
   },
-  "plant_catalog_filter_green_only": "Nur Grüne",
-  "@plant_catalog_filter_green_only": {
-    "description": "Filtre afficher uniquement les plantes vertes (idéal ce mois)"
-  },
+  "plant_catalog_filter_green_only": "An die Bedingungen angepasstes Gemüse",
+  "@plant_catalog_filter_green_only": { "description": "Filter zum Anzeigen nur grüner Pflanzen (ideal in diesem Monat)" },
   "plant_catalog_filter_green_orange": "Grün + Orange",
   "@plant_catalog_filter_green_orange": {
     "description": "Filtre afficher les plantes vertes et oranges"

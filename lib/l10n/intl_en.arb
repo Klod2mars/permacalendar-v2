@@ -2342,10 +2342,8 @@
   "@plant_catalog_show_selection": {
     "description": "Button to show selection"
   },
-  "plant_catalog_filter_green_only": "Vegetables adapted to conditions",
-  "@plant_catalog_filter_green_only": {
-    "description": "Filter green plants only"
-  },
+  "plant_catalog_filter_green_only": "Vegetables suitable for the conditions",
+  "@plant_catalog_filter_green_only": { "description": "Filter to show only 'green' plants (ideal this month)" },
   "plant_catalog_filter_green_orange": "Green + Orange",
   "@plant_catalog_filter_green_orange": {
     "description": "Filter green and orange plants"
