@@ -165,10 +165,11 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
 
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Use min size for Column
+            crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
             children: [
-              // Date Picker Button (if needed, keeping it as is but centered)
+              // Date Picker Button (centered)
                OutlinedButton.icon(
                 onPressed: () async {
                   final pick = await showDatePicker(
@@ -188,42 +189,40 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Theme.of(context).primaryColor.withOpacity(0.5)),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  // removed visualDensity compact to enlarge
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(height: 12), // Vertical spacing between date and filter
               
-              // Simplification: Toggle Filter "Adapté à la saison"
+              // Filter Chip centered below
               FilterChip(
                 label: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_only),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8), // Added padding to enlarge chip
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 selected: !_showAll,
                 onSelected: (val) {
                   setState(() => _showAll = !val);
                 },
-                // Avatar always visible to link with green dots in list
+                // Avatar always visible (green dot)
                 avatar: const CircleAvatar(backgroundColor: Colors.green, radius: 4),
-                selectedColor: Colors.green.withOpacity(0.2),
+                selectedColor: Colors.green.withOpacity(0.1), // Lighter selection color
                 checkmarkColor: Colors.green,
-                showCheckmark: false, // Don't show checkmark, just the green dot state
-                // Ensure label is visible in dark mode when unselected
+                showCheckmark: false, 
                 labelStyle: TextStyle(
                   color: !_showAll 
                       ? Colors.green.shade900 
                       : Theme.of(context).colorScheme.onSurface,
                   fontWeight: !_showAll ? FontWeight.bold : FontWeight.normal,
                 ),
-                // Ensure the chip is visible (outlined) when inactive
-                backgroundColor: !_showAll ? null : Colors.transparent,
+                backgroundColor: Colors.transparent, // Always transparent background when not selected
                 shape: StadiumBorder(
                   side: BorderSide(
-                    color: !_showAll ? Colors.transparent : Theme.of(context).colorScheme.outline
+                    color: !_showAll ? Colors.green : Theme.of(context).colorScheme.outline
                   ),
                 ),
               ),
             ],
           ),
         ),
+
         SizedBox(height: 8),
         Row(
           children: [
