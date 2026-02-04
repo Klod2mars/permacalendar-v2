@@ -10,6 +10,7 @@
 // - Logs réduits mais informatifs (kDebugMode).
 //
 
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,23 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
 
     // NOTE: awakening/registry registration removed. InvisibleGardenZone no longer
     // manages the insect awakening overlay or registry.
+
+    // FIX: Force a layout recalculation after stabilization.
+    // We use a small delay to allow fonts (GoogleFonts) to fully load and metrics to stabilize.
+    // The immediate PostFrameCallback is sometimes too fast if assets are still decoding.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          setState(() {
+            _frameStabilized = true; // Will trigger a Key change to force AutoSizeText flush
+          });
+        }
+      });
+    });
   }
+  
+  // Flag to force AutoSizeText refresh
+  bool _frameStabilized = false;
 
   @override
   void didUpdateWidget(covariant InvisibleGardenZone oldWidget) {
@@ -318,6 +335,7 @@ class _InvisibleGardenZoneState extends ConsumerState<InvisibleGardenZone> {
                       curve: GardenLabelStyle.transitionCurve,
                       opacity: targetOpacity,
                       child: AutoSizeText(
+                        key: ValueKey('garden_label_${_frameStabilized ? 'stable' : 'init'}'),
                         gardenName.toUpperCase(), // garder cohérence avec les autres bulles
                         textAlign: TextAlign.center,
                         maxLines: 3,
