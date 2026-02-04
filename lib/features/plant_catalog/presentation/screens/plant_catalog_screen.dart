@@ -32,12 +32,14 @@ class PlantCatalogScreen extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
   final void Function(PlantFreezed plant)? onPlantSelected;
   final bool isSelectionMode;
+  final ActionType? initialAction;
 
   const PlantCatalogScreen({
     Key? key,
     this.plants = const [],
     this.onPlantSelected,
     this.isSelectionMode = false,
+    this.initialAction,
   }) : super(key: key);
 
   @override
@@ -224,10 +226,27 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     );
   }
 
+  void _handlePlantSelection(PlantFreezed plant) {
+    if (widget.onPlantSelected != null) {
+      widget.onPlantSelected!(plant);
+    } else if (widget.isSelectionMode) {
+      Navigator.of(context).pop(plant.id);
+    } else {
+      // Si c'est une plante perso, on permet l'édition, sinon détails
+      if (plant.metadata['isCustom'] == true) {
+         Navigator.of(context).push(
+           MaterialPageRoute(builder: (_) => CustomPlantFormScreen(plantToEdit: plant))
+         );
+      } else {
+         _navigateToDetail(plant);
+      }
+    }
+  }
+
   // Build Plant Card
   Widget _buildPlantCard(PlantFreezed plant, Zone? zone, DateTime? lastFrost, [int index = -1]) {
     final raw = _resolveImagePathFromPlant(plant);
-    const imageHeight = 180.0;
+    final imageHeight = widget.isSelectionMode ? 140.0 : 180.0;
     Widget imageWidget;
     
     // Détection plante perso pour badge (optionnel)
@@ -293,24 +312,7 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
     }
 
     return GestureDetector(
-      onTap: () {
-        if (widget.onPlantSelected != null) {
-          widget.onPlantSelected!(plant);
-        } else if (widget.isSelectionMode) {
-          Navigator.of(context).pop(plant.id);
-        } else {
-          // Si c'est une plante custom, on permet l'édition
-          if (isCustom) {
-             Navigator.of(context).push(
-               MaterialPageRoute(builder: (_) => CustomPlantFormScreen(plantToEdit: plant))
-             );
-          } else {
-             // Afficher les détails ou rien si pas selection mode
-             // Afficher les détails
-             _navigateToDetail(plant);
-          }
-        }
-      },
+      onTap: () => _handlePlantSelection(plant),
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -509,7 +511,8 @@ class _PlantCatalogScreenState extends ConsumerState<PlantCatalogScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: SowingPicker(
                   plants: sourcePlants,
-                  onPlantSelected: _navigateToDetail,
+                  onPlantSelected: _handlePlantSelection,
+                  initialAction: widget.initialAction ?? ActionType.sow,
                 ),
               ),
               Padding(

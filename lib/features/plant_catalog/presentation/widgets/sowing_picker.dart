@@ -12,16 +12,39 @@ class SowingPicker extends ConsumerStatefulWidget {
   final List<PlantFreezed> plants;
   final void Function(PlantFreezed) onPlantSelected;
 
-  const SowingPicker({Key? key, required this.plants, required this.onPlantSelected}) : super(key: key);
+  final ActionType initialAction;
+
+  const SowingPicker({
+    Key? key,
+    required this.plants,
+    required this.onPlantSelected,
+    this.initialAction = ActionType.sow,
+  }) : super(key: key);
 
   @override
   ConsumerState<SowingPicker> createState() => _SowingPickerState();
 }
 
 class _SowingPickerState extends ConsumerState<SowingPicker> {
-  ActionType _action = ActionType.sow;
+  late ActionType _action;
   DateTime _date = DateTime.now();
-  int _filterMode = 2; // 0 = verts only, 1 = verts+oranges, 2 = tous
+  bool _showAll = true; // false = verts only, true = all
+
+  @override
+  void initState() {
+    super.initState();
+    _action = widget.initialAction;
+  }
+  
+  @override
+  void didUpdateWidget(SowingPicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialAction != widget.initialAction) {
+      setState(() {
+        _action = widget.initialAction;
+      });
+    }
+  }
 
   List<PlantFreezed> _computeResults(Zone? zone, DateTime? lastFrost) {
     if (zone == null) return []; // Loading or error
@@ -41,14 +64,12 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
       if (r != 0) return r;
       return aInfo.distance.compareTo(bInfo.distance);
     });
-    if (_filterMode == 0) {
+    
+    if (!_showAll) {
+      // Show only Green
       return list.where((p) => computeSeasonInfoForPlant(plant: p, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost).status == SeasonStatus.green).toList();
-    } else if (_filterMode == 1) {
-      return list.where((p) {
-        final s = computeSeasonInfoForPlant(plant: p, date: _date, action: _action, zone: zone, lastFrostDate: lastFrost).status;
-        return s == SeasonStatus.green || s == SeasonStatus.orange;
-      }).toList();
     } else {
+      // Show All
       return list;
     }
   }
@@ -140,29 +161,68 @@ class _SowingPickerState extends ConsumerState<SowingPicker> {
 
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: ToggleButtons(
-                isSelected: [_action == ActionType.sow, _action == ActionType.plant],
-                onPressed: (i) => setState(() => _action = (i==0?ActionType.sow:ActionType.plant)),
-                children: [Padding(padding: EdgeInsets.all(8), child: Text(AppLocalizations.of(context)!.plant_catalog_sow)), Padding(padding: EdgeInsets.all(8), child: Text(AppLocalizations.of(context)!.plant_catalog_plant))],
+        // Filter Chips Row
+
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Date Picker Button (if needed, keeping it as is but centered)
+               OutlinedButton.icon(
+                onPressed: () async {
+                  final pick = await showDatePicker(
+                    context: context, 
+                    initialDate: _date, 
+                    firstDate: DateTime(2000), 
+                    lastDate: DateTime(2100),
+                    locale: const Locale('fr'),
+                  );
+                  if (pick != null) setState(() => _date = pick);
+                },
+                icon: Icon(Icons.calendar_month, color: Theme.of(context).primaryColor),
+                label: Text(
+                  '${_date.day}/${_date.month}', 
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  // removed visualDensity compact to enlarge
+                ),
               ),
-            ),
-            IconButton(icon: Icon(Icons.calendar_today), onPressed: () async {
-              final pick = await showDatePicker(context: context, initialDate: _date, firstDate: DateTime(2000), lastDate: DateTime(2100));
-              if (pick != null) setState(() => _date = pick);
-            }),
-            PopupMenuButton<int>(
-              onSelected: (v) => setState(() => _filterMode = v),
-              itemBuilder: (_) => [
-                PopupMenuItem(value: 0, child: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_only)),
-                PopupMenuItem(value: 1, child: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_orange)),
-                PopupMenuItem(value: 2, child: Text(AppLocalizations.of(context)!.plant_catalog_filter_all)),
-              ],
-              child: Icon(Icons.filter_list),
-            )
-          ],
+              const SizedBox(width: 12),
+              
+              // Simplification: Toggle Filter "Adapté à la saison"
+              FilterChip(
+                label: Text(AppLocalizations.of(context)!.plant_catalog_filter_green_only),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8), // Added padding to enlarge chip
+                selected: !_showAll,
+                onSelected: (val) {
+                  setState(() => _showAll = !val);
+                },
+                // Avatar always visible to link with green dots in list
+                avatar: const CircleAvatar(backgroundColor: Colors.green, radius: 4),
+                selectedColor: Colors.green.withOpacity(0.2),
+                checkmarkColor: Colors.green,
+                showCheckmark: false, // Don't show checkmark, just the green dot state
+                // Ensure label is visible in dark mode when unselected
+                labelStyle: TextStyle(
+                  color: !_showAll 
+                      ? Colors.green.shade900 
+                      : Theme.of(context).colorScheme.onSurface,
+                  fontWeight: !_showAll ? FontWeight.bold : FontWeight.normal,
+                ),
+                // Ensure the chip is visible (outlined) when inactive
+                backgroundColor: !_showAll ? null : Colors.transparent,
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: !_showAll ? Colors.transparent : Theme.of(context).colorScheme.outline
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(height: 8),
         Row(

@@ -350,7 +350,10 @@ class _CreatePlantingBottomSheetContentState
         context,
         MaterialPageRoute(
             builder: (context) =>
-                const PlantCatalogScreen(isSelectionMode: true)));
+                PlantCatalogScreen(
+                  isSelectionMode: true,
+                  initialAction: _status == 'Semé' ? ActionType.sow : ActionType.plant,
+                )));
     if (selectedPlant != null && selectedPlant is String) {
       setState(() {
         _selectedPlantId = selectedPlant;
